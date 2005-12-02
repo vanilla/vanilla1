@@ -52,7 +52,7 @@ if (
 		$OppositeMode = $Context->GetDefinition("Off");
 	}		
 	$Panel->AddString("<div class=\"PanelInformation TextMode".$CurrentModeCSS."\">".$Context->GetDefinition("TextOnlyModeIs")." ".$CurrentMode." (<a class=\"PanelLink\" href=\"".$Context->SelfUrl.$Params->GetQueryString()."\">".$Context->GetDefinition("Turn")." ".$OppositeMode."</a>)</div>",
-		100);
+		200);
 }
 
 // TODO: Handle integrating this switch in the comments and account pages here (rather than in-place)
@@ -84,7 +84,14 @@ if ($Context->SelfUrl == "account.php") {
 		"Account_HideImages");
 }
 
-if ($Context->SelfUrl == "comments.php") {
-	
+// Add the option to the accounts pag
+if ($Context->SelfUrl == "account.php" && ForceIncomingString("PostBackAction", "") == "Functionality") {
+	function PreferencesForm_AddTextModeSwitch(&$PreferencesForm) {
+		$PreferencesForm->AddPreference("ControlPanel", "DisplayTextOnlyToggle", "ShowTextToggle", 1);
+	}
+	$Context->AddToDelegate("PreferencesForm",
+		"Constructor",
+		"PreferencesForm_AddTextModeSwitch");
 }
+
 ?>

@@ -117,4 +117,13 @@ if ($Context->SelfUrl == "search.php") {
       "SearchForm_LoadSavedSearch");	
 }
 
+// Add the switch to the preferences form
+if ($Context->SelfUrl == "account.php" && ForceIncomingString("PostBackAction", "") == "Functionality") {
+	function PreferencesForm_AddSavedSearchSwitch(&$PreferencesForm) {
+		$PreferencesForm->AddPreference("ControlPanel", "DisplaySavedSearches", "ShowSavedSearches");
+	}
+	$Context->AddToDelegate("PreferencesForm",
+		"Constructor",
+		"PreferencesForm_AddSavedSearchSwitch");
+}
 ?>
