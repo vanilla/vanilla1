@@ -94,7 +94,7 @@ function ReturnWrappedFeedForAtom(&$Context, $FeedItems) {
 
 function ReturnFeedItemForAtom($Properties) {
 	return "<entry>
-		<title>".$Properties["Title"]."</title>
+		<title>".htmlspecialchars($Properties["Title"])."</title>
 		<link rel=\"alternate\" href=\"".$Properties["Link"]."\" type=\"application/xhtml+xml\" hreflang=\"en\"/>
 		<id>".$Properties["Link"]."</id>
 		<published>".$Properties["Published"]."</published>
