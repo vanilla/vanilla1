@@ -58,42 +58,43 @@ if ($Context->SelfUrl == "index.php") {
       
       // Attach to the Constructor Delegate of the DiscussionGrid control
       function DiscussionGrid_InjectAtomFeed($DiscussionGrid) {
-
-         // Authenticate the user
-         AuthenticateUserForAtom($DiscussionGrid->Context);
-         
-         // Loop through the data
-         $Feed = "";
-         $Properties = array();
-         while ($DataSet = $DiscussionGrid->Context->Database->GetRow($DiscussionGrid->DiscussionData)) {
-            $Properties["Title"] = FormatHtmlStringInline(ForceString($DataSet["Name"], ""));
-            $Properties["Link"] = PrependString("http://", AppendFolder($DiscussionGrid->Context->Configuration["DOMAIN"], "comments.php?DiscussionID=".ForceInt($DataSet["DiscussionID"], 0)));
-            $Properties["Published"] = FixDateForAtom(@$DataSet["DateCreated"]);
-            $Properties["Updated"] = FixDateForAtom(@$DataSet["DateLastActive"]);
-            $Properties["AuthorName"] = FormatHtmlStringInline(ForceString($DataSet["AuthUsername"], ""));
-            $Properties["AuthorUrl"] = PrependString("http://", AppendFolder($DiscussionGrid->Context->Configuration["DOMAIN"], "account.php?u=".ForceInt($DataSet["AuthUserID"], 0)));
+         if ($DiscussionGrid->Context->WarningCollector->Count() == 0) {
+            // Authenticate the user
+            AuthenticateUserForAtom($DiscussionGrid->Context);
             
-            // Format the comment according to the defined formatter for that comment
-            $FormatType = ForceString(@$DataSet["FormatType"], $DiscussionGrid->Context->Configuration["DEFAULT_STRING_FORMAT"]);
-            $Properties["Content"] = $DiscussionGrid->Context->FormatString(@$DataSet["Body"], $DiscussionGrid, $FormatType, FORMAT_STRING_FOR_DISPLAY);
-            $Properties["Summary"] = FormatStringForAtomSummary(@$DataSet["Body"]);
+            // Loop through the data
+            $Feed = "";
+            $Properties = array();
+            while ($DataSet = $DiscussionGrid->Context->Database->GetRow($DiscussionGrid->DiscussionData)) {
+               $Properties["Title"] = FormatHtmlStringInline(ForceString($DataSet["Name"], ""));
+               $Properties["Link"] = PrependString("http://", AppendFolder($DiscussionGrid->Context->Configuration["DOMAIN"], "comments.php?DiscussionID=".ForceInt($DataSet["DiscussionID"], 0)));
+               $Properties["Published"] = FixDateForAtom(@$DataSet["DateCreated"]);
+               $Properties["Updated"] = FixDateForAtom(@$DataSet["DateLastActive"]);
+               $Properties["AuthorName"] = FormatHtmlStringInline(ForceString($DataSet["AuthUsername"], ""));
+               $Properties["AuthorUrl"] = PrependString("http://", AppendFolder($DiscussionGrid->Context->Configuration["DOMAIN"], "account.php?u=".ForceInt($DataSet["AuthUserID"], 0)));
+               
+               // Format the comment according to the defined formatter for that comment
+               $FormatType = ForceString(@$DataSet["FormatType"], $DiscussionGrid->Context->Configuration["DEFAULT_STRING_FORMAT"]);
+               $Properties["Content"] = $DiscussionGrid->Context->FormatString(@$DataSet["Body"], $DiscussionGrid, $FormatType, FORMAT_STRING_FOR_DISPLAY);
+               $Properties["Summary"] = FormatStringForAtomSummary(@$DataSet["Body"]);
+               
+               $Feed .= ReturnFeedItemForAtom($Properties);
+            }
             
-            $Feed .= ReturnFeedItemForAtom($Properties);
+            $Feed = ReturnWrappedFeedForAtom($DiscussionGrid->Context, $Feed);
+            
+            // Set the content type to xml
+            header("Content-type: text/xml\n");
+            
+            // Dump the feed
+            echo($Feed);
+      
+            // When all finished, unload the context object
+            $DiscussionGrid->Context->Unload();
+            
+            // And now stop processing the page
+            die();
          }
-         
-         $Feed = ReturnWrappedFeedForAtom($DiscussionGrid->Context, $Feed);
-         
-         // Set the content type to xml
-         header("Content-type: text/xml\n");
-         
-         // Dump the feed
-         echo($Feed);
-   
-         // When all finished, unload the context object
-         $DiscussionGrid->Context->Unload();
-         
-         // And now stop processing the page
-         die();
       }
       
       $Context->AddToDelegate("DiscussionGrid",
@@ -122,46 +123,47 @@ if ($Context->SelfUrl == "index.php") {
          
          // Attach to the PostLoadData Delegate of the SearchForm control
          function SearchForm_InjectAtomFeedToTopicSearch($SearchForm) {
-   
-            // Authenticate the user
-            AuthenticateUserForAtom($SearchForm->Context);
-            
-            // Loop through the data
-            $Counter = 0;
-            $Feed = "";
-            $Properties = array();
-            while ($DataSet = $SearchForm->Context->Database->GetRow($SearchForm->Data)) {
-               if ($Counter < $SearchForm->Context->Configuration["SEARCH_RESULTS_PER_PAGE"]) {
-                  $Properties["Title"] = FormatHtmlStringInline(ForceString($DataSet["Name"], ""));
-                  $Properties["Link"] = PrependString("http://", AppendFolder($SearchForm->Context->Configuration["DOMAIN"], "comments.php?DiscussionID=".ForceInt($DataSet["DiscussionID"], 0)));
-                  $Properties["Published"] = FixDateForAtom(@$DataSet["DateCreated"]);
-                  $Properties["Updated"] = FixDateForAtom(@$DataSet["DateLastActive"]);
-                  $Properties["AuthorName"] = FormatHtmlStringInline(ForceString($DataSet["AuthUsername"], ""));
-                  $Properties["AuthorUrl"] = PrependString("http://", AppendFolder($SearchForm->Context->Configuration["DOMAIN"], "account.php?u=".ForceInt($DataSet["AuthUserID"], 0)));
-                  
-                  // Format the comment according to the defined formatter for that comment
-                  $FormatType = ForceString(@$DataSet["FormatType"], $SearchForm->Context->Configuration["DEFAULT_STRING_FORMAT"]);
-                  $Properties["Content"] = $SearchForm->Context->FormatString(@$DataSet["Body"], $SearchForm, $FormatType, FORMAT_STRING_FOR_DISPLAY);
-                  $Properties["Summary"] = FormatStringForAtomSummary(@$DataSet["Body"]);
-                  
-                  $Feed .= ReturnFeedItemForAtom($Properties);
+            if ($SearchForm->Context->WarningCollector->Count() == 0) {   
+               // Authenticate the user
+               AuthenticateUserForAtom($SearchForm->Context);
+               
+               // Loop through the data
+               $Counter = 0;
+               $Feed = "";
+               $Properties = array();
+               while ($DataSet = $SearchForm->Context->Database->GetRow($SearchForm->Data)) {
+                  if ($Counter < $SearchForm->Context->Configuration["SEARCH_RESULTS_PER_PAGE"]) {
+                     $Properties["Title"] = FormatHtmlStringInline(ForceString($DataSet["Name"], ""));
+                     $Properties["Link"] = PrependString("http://", AppendFolder($SearchForm->Context->Configuration["DOMAIN"], "comments.php?DiscussionID=".ForceInt($DataSet["DiscussionID"], 0)));
+                     $Properties["Published"] = FixDateForAtom(@$DataSet["DateCreated"]);
+                     $Properties["Updated"] = FixDateForAtom(@$DataSet["DateLastActive"]);
+                     $Properties["AuthorName"] = FormatHtmlStringInline(ForceString($DataSet["AuthUsername"], ""));
+                     $Properties["AuthorUrl"] = PrependString("http://", AppendFolder($SearchForm->Context->Configuration["DOMAIN"], "account.php?u=".ForceInt($DataSet["AuthUserID"], 0)));
+                     
+                     // Format the comment according to the defined formatter for that comment
+                     $FormatType = ForceString(@$DataSet["FormatType"], $SearchForm->Context->Configuration["DEFAULT_STRING_FORMAT"]);
+                     $Properties["Content"] = $SearchForm->Context->FormatString(@$DataSet["Body"], $SearchForm, $FormatType, FORMAT_STRING_FOR_DISPLAY);
+                     $Properties["Summary"] = FormatStringForAtomSummary(@$DataSet["Body"]);
+                     
+                     $Feed .= ReturnFeedItemForAtom($Properties);
+                  }
+                  $Counter++;
                }
-               $Counter++;
+               
+               $Feed = ReturnWrappedFeedForAtom($SearchForm->Context, $Feed);
+               
+               // Set the content type to xml
+               header("Content-type: text/xml\n");
+               
+               // Dump the feed
+               echo($Feed);
+         
+               // When all finished, unload the context object
+               $SearchForm->Context->Unload();
+               
+               // And now stop processing the page
+               die();
             }
-            
-            $Feed = ReturnWrappedFeedForAtom($SearchForm->Context, $Feed);
-            
-            // Set the content type to xml
-            header("Content-type: text/xml\n");
-            
-            // Dump the feed
-            echo($Feed);
-      
-            // When all finished, unload the context object
-            $SearchForm->Context->Unload();
-            
-            // And now stop processing the page
-            die();
          }
          
          $Context->AddToDelegate("SearchForm",
@@ -171,51 +173,53 @@ if ($Context->SelfUrl == "index.php") {
          
          // Attach to the PostLoadData Delegate of the SearchForm control
          function SearchForm_InjectAtomFeedToCommentSearch($SearchForm) {
-   
-            // Authenticate the user
-            AuthenticateUserForAtom($SearchForm->Context);
-            
-            // Loop through the data
-            $Counter = 0;
-            $Feed = "";
-            $Properties = array();
-            $Comment = $SearchForm->Context->ObjectFactory->NewContextObject($SearchForm->Context, "Comment");
-            $Domain = PrependString("http://", $SearchForm->Context->Configuration["DOMAIN"]);
-            while ($Row = $SearchForm->Context->Database->GetRow($SearchForm->Data)) {
-               $Comment->Clear();
-               $Comment->GetPropertiesFromDataSet($Row, $SearchForm->Context->Session->UserID);
-               $Comment->FormatPropertiesForDisplay();
-                  
-               if ($Counter < $SearchForm->Context->Configuration["SEARCH_RESULTS_PER_PAGE"]) {
-                  $Properties["Title"] = $Comment->Discussion;
-                  $Properties["Link"] = AppendFolder($Domain, "comments.php?DiscussionID=".$Comment->DiscussionID."&amp;Focus=".$Comment->CommentID."#Comment_".$Comment->CommentID);
-                  $Properties["Published"] = FixDateForAtom(@$Row["DateCreated"]);
-                  $Properties["Updated"] = FixDateForAtom(@$Row["DateEdited"]);
-                  $Properties["AuthorName"] = $Comment->AuthUsername;
-                  $Properties["AuthorUrl"] = AppendFolder($Domain, "account.php?u=".$Comment->AuthUserID);
-                  
-                  // Format the comment according to the defined formatter for that comment
-                  $Properties["Content"] = $Comment->Body;
-                  $Properties["Summary"] = FormatStringForAtomSummary(@$Row["Body"]);
-                  
-                  $Feed .= ReturnFeedItemForAtom($Properties);
+            if ($SearchForm->Context->WarningCollector->Count() == 0) {
+               
+               // Authenticate the user
+               AuthenticateUserForAtom($SearchForm->Context);
+               
+               // Loop through the data
+               $Counter = 0;
+               $Feed = "";
+               $Properties = array();
+               $Comment = $SearchForm->Context->ObjectFactory->NewContextObject($SearchForm->Context, "Comment");
+               $Domain = PrependString("http://", $SearchForm->Context->Configuration["DOMAIN"]);
+               while ($Row = $SearchForm->Context->Database->GetRow($SearchForm->Data)) {
+                  $Comment->Clear();
+                  $Comment->GetPropertiesFromDataSet($Row, $SearchForm->Context->Session->UserID);
+                  $Comment->FormatPropertiesForDisplay();
+                     
+                  if ($Counter < $SearchForm->Context->Configuration["SEARCH_RESULTS_PER_PAGE"]) {
+                     $Properties["Title"] = $Comment->Discussion;
+                     $Properties["Link"] = AppendFolder($Domain, "comments.php?DiscussionID=".$Comment->DiscussionID."&amp;Focus=".$Comment->CommentID."#Comment_".$Comment->CommentID);
+                     $Properties["Published"] = FixDateForAtom(@$Row["DateCreated"]);
+                     $Properties["Updated"] = FixDateForAtom(@$Row["DateEdited"]);
+                     $Properties["AuthorName"] = $Comment->AuthUsername;
+                     $Properties["AuthorUrl"] = AppendFolder($Domain, "account.php?u=".$Comment->AuthUserID);
+                     
+                     // Format the comment according to the defined formatter for that comment
+                     $Properties["Content"] = $Comment->Body;
+                     $Properties["Summary"] = FormatStringForAtomSummary(@$Row["Body"]);
+                     
+                     $Feed .= ReturnFeedItemForAtom($Properties);
+                  }
+                  $Counter++;
                }
-               $Counter++;
+               
+               $Feed = ReturnWrappedFeedForAtom($SearchForm->Context, $Feed);
+               
+               // Set the content type to xml
+               header("Content-type: text/xml\n");
+               
+               // Dump the feed
+               echo($Feed);
+         
+               // When all finished, unload the context object
+               $SearchForm->Context->Unload();
+               
+               // And now stop processing the page
+               die();
             }
-            
-            $Feed = ReturnWrappedFeedForAtom($SearchForm->Context, $Feed);
-            
-            // Set the content type to xml
-            header("Content-type: text/xml\n");
-            
-            // Dump the feed
-            echo($Feed);
-      
-            // When all finished, unload the context object
-            $SearchForm->Context->Unload();
-            
-            // And now stop processing the page
-            die();
          }
          
          $Context->AddToDelegate("SearchForm",
@@ -231,50 +235,51 @@ if ($Context->SelfUrl == "index.php") {
    if ($FeedType == "Atom") {      
       // Attach to the Constructor Delegate of the CommentGrid control
       function CommentGrid_InjectAtomFeed($CommentGrid) {
-
-         // Authenticate the user
-         AuthenticateUserForAtom($CommentGrid->Context);
-         
-         // Make sure the page title is defined
-         $CommentGrid->Context->PageTitle = $CommentGrid->Discussion->Name;
-         
-         // Loop through the data
-         $Feed = "";
-         $Properties = array();
-         $Comment = $CommentGrid->Context->ObjectFactory->NewContextObject($CommentGrid->Context, "Comment");
-         $Domain = PrependString("http://", $CommentGrid->Context->Configuration["DOMAIN"]);
-         while ($Row = $CommentGrid->Context->Database->GetRow($CommentGrid->CommentData)) {
-            $Comment->Clear();
-            $Comment->GetPropertiesFromDataSet($Row, $CommentGrid->Context->Session->UserID);
-            $Comment->FormatPropertiesForDisplay();
+         if ($CommentGrid->Context->WarningCollector->Count() == 0) {
+            // Authenticate the user
+            AuthenticateUserForAtom($CommentGrid->Context);
+            
+            // Make sure the page title is defined
+            $CommentGrid->Context->PageTitle = $CommentGrid->Discussion->Name;
+            
+            // Loop through the data
+            $Feed = "";
+            $Properties = array();
+            $Comment = $CommentGrid->Context->ObjectFactory->NewContextObject($CommentGrid->Context, "Comment");
+            $Domain = PrependString("http://", $CommentGrid->Context->Configuration["DOMAIN"]);
+            while ($Row = $CommentGrid->Context->Database->GetRow($CommentGrid->CommentData)) {
+               $Comment->Clear();
+               $Comment->GetPropertiesFromDataSet($Row, $CommentGrid->Context->Session->UserID);
+               $Comment->FormatPropertiesForDisplay();
+                  
+               $Properties["Title"] = $CommentGrid->Discussion->Name;
+               $Properties["Link"] = AppendFolder($Domain, "comments.php?DiscussionID=".$Comment->DiscussionID."&amp;Focus=".$Comment->CommentID."#Comment_".$Comment->CommentID);
+               $Properties["Published"] = FixDateForAtom(@$Row["DateCreated"]);
+               $Properties["Updated"] = FixDateForAtom(@$Row["DateEdited"]);
+               $Properties["AuthorName"] = $Comment->AuthUsername;
+               $Properties["AuthorUrl"] = AppendFolder($Domain, "account.php?u=".$Comment->AuthUserID);
                
-            $Properties["Title"] = $CommentGrid->Discussion->Name;
-            $Properties["Link"] = AppendFolder($Domain, "comments.php?DiscussionID=".$Comment->DiscussionID."&amp;Focus=".$Comment->CommentID."#Comment_".$Comment->CommentID);
-            $Properties["Published"] = FixDateForAtom(@$Row["DateCreated"]);
-            $Properties["Updated"] = FixDateForAtom(@$Row["DateEdited"]);
-            $Properties["AuthorName"] = $Comment->AuthUsername;
-            $Properties["AuthorUrl"] = AppendFolder($Domain, "account.php?u=".$Comment->AuthUserID);
+               // Format the comment according to the defined formatter for that comment
+               $Properties["Content"] = $Comment->Body;
+               $Properties["Summary"] = FormatStringForAtomSummary(@$Row["Body"]);
+               
+               $Feed .= ReturnFeedItemForAtom($Properties);
+            }
             
-            // Format the comment according to the defined formatter for that comment
-            $Properties["Content"] = $Comment->Body;
-            $Properties["Summary"] = FormatStringForAtomSummary(@$Row["Body"]);
+            $Feed = ReturnWrappedFeedForAtom($CommentGrid->Context, $Feed);
             
-            $Feed .= ReturnFeedItemForAtom($Properties);
+            // Set the content type to xml
+            header("Content-type: text/xml\n");
+            
+            // Dump the feed
+            echo($Feed);
+      
+            // When all finished, unload the context object
+            $CommentGrid->Context->Unload();
+            
+            // And now stop processing the page
+            die();
          }
-         
-         $Feed = ReturnWrappedFeedForAtom($CommentGrid->Context, $Feed);
-         
-         // Set the content type to xml
-         header("Content-type: text/xml\n");
-         
-         // Dump the feed
-         echo($Feed);
-   
-         // When all finished, unload the context object
-         $CommentGrid->Context->Unload();
-         
-         // And now stop processing the page
-         die();
       }
       
       $Context->AddToDelegate("CommentGrid",

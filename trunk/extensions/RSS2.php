@@ -58,42 +58,43 @@ if ($Context->SelfUrl == "index.php") {
       
       // Attach to the Constructor Delegate of the DiscussionGrid control
       function DiscussionGrid_InjectRSS2Feed($DiscussionGrid) {
-
-         // Authenticate the user
-         AuthenticateUserForRSS2($DiscussionGrid->Context);
-         
-         // Loop through the data
-         $Feed = "";
-         $Properties = array();
-         while ($DataSet = $DiscussionGrid->Context->Database->GetRow($DiscussionGrid->DiscussionData)) {
-            $Properties["Title"] = FormatHtmlStringInline(ForceString($DataSet["Name"], ""));
-            $Properties["Link"] = PrependString("http://", AppendFolder($DiscussionGrid->Context->Configuration["DOMAIN"], "comments.php?DiscussionID=".ForceInt($DataSet["DiscussionID"], 0)));
-            $Properties["Published"] = FixDateForRSS2(@$DataSet["DateCreated"]);
-            $Properties["Updated"] = FixDateForRSS2(@$DataSet["DateLastActive"]);
-            $Properties["AuthorName"] = FormatHtmlStringInline(ForceString($DataSet["AuthUsername"], ""));
-            $Properties["AuthorUrl"] = PrependString("http://", AppendFolder($DiscussionGrid->Context->Configuration["DOMAIN"], "account.php?u=".ForceInt($DataSet["AuthUserID"], 0)));
+         if ($DiscussionGrid->Context->WarningCollector->Count() == 0) {
+            // Authenticate the user
+            AuthenticateUserForRSS2($DiscussionGrid->Context);
             
-            // Format the comment according to the defined formatter for that comment
-            $FormatType = ForceString(@$DataSet["FormatType"], $DiscussionGrid->Context->Configuration["DEFAULT_STRING_FORMAT"]);
-            $Properties["Content"] = $DiscussionGrid->Context->FormatString(@$DataSet["Body"], $DiscussionGrid, $FormatType, FORMAT_STRING_FOR_DISPLAY);
-            $Properties["Summary"] = FormatStringForRSS2Summary(@$DataSet["Body"]);
+            // Loop through the data
+            $Feed = "";
+            $Properties = array();
+            while ($DataSet = $DiscussionGrid->Context->Database->GetRow($DiscussionGrid->DiscussionData)) {
+               $Properties["Title"] = FormatHtmlStringInline(ForceString($DataSet["Name"], ""));
+               $Properties["Link"] = PrependString("http://", AppendFolder($DiscussionGrid->Context->Configuration["DOMAIN"], "comments.php?DiscussionID=".ForceInt($DataSet["DiscussionID"], 0)));
+               $Properties["Published"] = FixDateForRSS2(@$DataSet["DateCreated"]);
+               $Properties["Updated"] = FixDateForRSS2(@$DataSet["DateLastActive"]);
+               $Properties["AuthorName"] = FormatHtmlStringInline(ForceString($DataSet["AuthUsername"], ""));
+               $Properties["AuthorUrl"] = PrependString("http://", AppendFolder($DiscussionGrid->Context->Configuration["DOMAIN"], "account.php?u=".ForceInt($DataSet["AuthUserID"], 0)));
+               
+               // Format the comment according to the defined formatter for that comment
+               $FormatType = ForceString(@$DataSet["FormatType"], $DiscussionGrid->Context->Configuration["DEFAULT_STRING_FORMAT"]);
+               $Properties["Content"] = $DiscussionGrid->Context->FormatString(@$DataSet["Body"], $DiscussionGrid, $FormatType, FORMAT_STRING_FOR_DISPLAY);
+               $Properties["Summary"] = FormatStringForRSS2Summary(@$DataSet["Body"]);
+               
+               $Feed .= ReturnFeedItemForRSS2($Properties);
+            }
             
-            $Feed .= ReturnFeedItemForRSS2($Properties);
+            $Feed = ReturnWrappedFeedForRSS2($DiscussionGrid->Context, $Feed);
+            
+            // Set the content type to xml
+            header("Content-type: text/xml\n");
+            
+            // Dump the feed
+            echo($Feed);
+      
+            // When all finished, unload the context object
+            $DiscussionGrid->Context->Unload();
+            
+            // And now stop processing the page
+            die();
          }
-         
-         $Feed = ReturnWrappedFeedForRSS2($DiscussionGrid->Context, $Feed);
-         
-         // Set the content type to xml
-         header("Content-type: text/xml\n");
-         
-         // Dump the feed
-         echo($Feed);
-   
-         // When all finished, unload the context object
-         $DiscussionGrid->Context->Unload();
-         
-         // And now stop processing the page
-         die();
       }
       
       $Context->AddToDelegate("DiscussionGrid",
@@ -122,46 +123,47 @@ if ($Context->SelfUrl == "index.php") {
          
          // Attach to the PostLoadData Delegate of the SearchForm control
          function SearchForm_InjectRSS2FeedToTopicSearch($SearchForm) {
-   
-            // Authenticate the user
-            AuthenticateUserForRSS2($SearchForm->Context);
-            
-            // Loop through the data
-            $Counter = 0;
-            $Feed = "";
-            $Properties = array();
-            while ($DataSet = $SearchForm->Context->Database->GetRow($SearchForm->Data)) {
-               if ($Counter < $SearchForm->Context->Configuration["SEARCH_RESULTS_PER_PAGE"]) {
-                  $Properties["Title"] = FormatHtmlStringInline(ForceString($DataSet["Name"], ""));
-                  $Properties["Link"] = PrependString("http://", AppendFolder($SearchForm->Context->Configuration["DOMAIN"], "comments.php?DiscussionID=".ForceInt($DataSet["DiscussionID"], 0)));
-                  $Properties["Published"] = FixDateForRSS2(@$DataSet["DateCreated"]);
-                  $Properties["Updated"] = FixDateForRSS2(@$DataSet["DateLastActive"]);
-                  $Properties["AuthorName"] = FormatHtmlStringInline(ForceString($DataSet["AuthUsername"], ""));
-                  $Properties["AuthorUrl"] = PrependString("http://", AppendFolder($SearchForm->Context->Configuration["DOMAIN"], "account.php?u=".ForceInt($DataSet["AuthUserID"], 0)));
-                  
-                  // Format the comment according to the defined formatter for that comment
-                  $FormatType = ForceString(@$DataSet["FormatType"], $SearchForm->Context->Configuration["DEFAULT_STRING_FORMAT"]);
-                  $Properties["Content"] = $SearchForm->Context->FormatString(@$DataSet["Body"], $SearchForm, $FormatType, FORMAT_STRING_FOR_DISPLAY);
-                  $Properties["Summary"] = FormatStringForRSS2Summary(@$DataSet["Body"]);
-                  
-                  $Feed .= ReturnFeedItemForRSS2($Properties);
+            if ($SearchForm->Context->WarningCollector->Count() == 0) {   
+               // Authenticate the user
+               AuthenticateUserForRSS2($SearchForm->Context);
+               
+               // Loop through the data
+               $Counter = 0;
+               $Feed = "";
+               $Properties = array();
+               while ($DataSet = $SearchForm->Context->Database->GetRow($SearchForm->Data)) {
+                  if ($Counter < $SearchForm->Context->Configuration["SEARCH_RESULTS_PER_PAGE"]) {
+                     $Properties["Title"] = FormatHtmlStringInline(ForceString($DataSet["Name"], ""));
+                     $Properties["Link"] = PrependString("http://", AppendFolder($SearchForm->Context->Configuration["DOMAIN"], "comments.php?DiscussionID=".ForceInt($DataSet["DiscussionID"], 0)));
+                     $Properties["Published"] = FixDateForRSS2(@$DataSet["DateCreated"]);
+                     $Properties["Updated"] = FixDateForRSS2(@$DataSet["DateLastActive"]);
+                     $Properties["AuthorName"] = FormatHtmlStringInline(ForceString($DataSet["AuthUsername"], ""));
+                     $Properties["AuthorUrl"] = PrependString("http://", AppendFolder($SearchForm->Context->Configuration["DOMAIN"], "account.php?u=".ForceInt($DataSet["AuthUserID"], 0)));
+                     
+                     // Format the comment according to the defined formatter for that comment
+                     $FormatType = ForceString(@$DataSet["FormatType"], $SearchForm->Context->Configuration["DEFAULT_STRING_FORMAT"]);
+                     $Properties["Content"] = $SearchForm->Context->FormatString(@$DataSet["Body"], $SearchForm, $FormatType, FORMAT_STRING_FOR_DISPLAY);
+                     $Properties["Summary"] = FormatStringForRSS2Summary(@$DataSet["Body"]);
+                     
+                     $Feed .= ReturnFeedItemForRSS2($Properties);
+                  }
+                  $Counter++;
                }
-               $Counter++;
+               
+               $Feed = ReturnWrappedFeedForRSS2($SearchForm->Context, $Feed);
+               
+               // Set the content type to xml
+               header("Content-type: text/xml\n");
+               
+               // Dump the feed
+               echo($Feed);
+         
+               // When all finished, unload the context object
+               $SearchForm->Context->Unload();
+               
+               // And now stop processing the page
+               die();
             }
-            
-            $Feed = ReturnWrappedFeedForRSS2($SearchForm->Context, $Feed);
-            
-            // Set the content type to xml
-            header("Content-type: text/xml\n");
-            
-            // Dump the feed
-            echo($Feed);
-      
-            // When all finished, unload the context object
-            $SearchForm->Context->Unload();
-            
-            // And now stop processing the page
-            die();
          }
          
          $Context->AddToDelegate("SearchForm",
@@ -171,51 +173,52 @@ if ($Context->SelfUrl == "index.php") {
          
          // Attach to the PostLoadData Delegate of the SearchForm control
          function SearchForm_InjectRSS2FeedToCommentSearch($SearchForm) {
-   
-            // Authenticate the user
-            AuthenticateUserForRSS2($SearchForm->Context);
-            
-            // Loop through the data
-            $Counter = 0;
-            $Feed = "";
-            $Properties = array();
-            $Comment = $SearchForm->Context->ObjectFactory->NewContextObject($SearchForm->Context, "Comment");
-            $Domain = PrependString("http://", $SearchForm->Context->Configuration["DOMAIN"]);
-            while ($Row = $SearchForm->Context->Database->GetRow($SearchForm->Data)) {
-               $Comment->Clear();
-               $Comment->GetPropertiesFromDataSet($Row, $SearchForm->Context->Session->UserID);
-               $Comment->FormatPropertiesForDisplay();
-                  
-               if ($Counter < $SearchForm->Context->Configuration["SEARCH_RESULTS_PER_PAGE"]) {
-                  $Properties["Title"] = $Comment->Discussion;
-                  $Properties["Link"] = AppendFolder($Domain, "comments.php?DiscussionID=".$Comment->DiscussionID."&amp;Focus=".$Comment->CommentID."#Comment_".$Comment->CommentID);
-                  $Properties["Published"] = FixDateForRSS2(@$Row["DateCreated"]);
-                  $Properties["Updated"] = FixDateForRSS2(@$Row["DateEdited"]);
-                  $Properties["AuthorName"] = $Comment->AuthUsername;
-                  $Properties["AuthorUrl"] = AppendFolder($Domain, "account.php?u=".$Comment->AuthUserID);
-                  
-                  // Format the comment according to the defined formatter for that comment
-                  $Properties["Content"] = $Comment->Body;
-                  $Properties["Summary"] = FormatStringForRSS2Summary(@$Row["Body"]);
-                  
-                  $Feed .= ReturnFeedItemForRSS2($Properties);
+            if ($SearchForm->Context->WarningCollector->Count() == 0) {   
+               // Authenticate the user
+               AuthenticateUserForRSS2($SearchForm->Context);
+               
+               // Loop through the data
+               $Counter = 0;
+               $Feed = "";
+               $Properties = array();
+               $Comment = $SearchForm->Context->ObjectFactory->NewContextObject($SearchForm->Context, "Comment");
+               $Domain = PrependString("http://", $SearchForm->Context->Configuration["DOMAIN"]);
+               while ($Row = $SearchForm->Context->Database->GetRow($SearchForm->Data)) {
+                  $Comment->Clear();
+                  $Comment->GetPropertiesFromDataSet($Row, $SearchForm->Context->Session->UserID);
+                  $Comment->FormatPropertiesForDisplay();
+                     
+                  if ($Counter < $SearchForm->Context->Configuration["SEARCH_RESULTS_PER_PAGE"]) {
+                     $Properties["Title"] = $Comment->Discussion;
+                     $Properties["Link"] = AppendFolder($Domain, "comments.php?DiscussionID=".$Comment->DiscussionID."&amp;Focus=".$Comment->CommentID."#Comment_".$Comment->CommentID);
+                     $Properties["Published"] = FixDateForRSS2(@$Row["DateCreated"]);
+                     $Properties["Updated"] = FixDateForRSS2(@$Row["DateEdited"]);
+                     $Properties["AuthorName"] = $Comment->AuthUsername;
+                     $Properties["AuthorUrl"] = AppendFolder($Domain, "account.php?u=".$Comment->AuthUserID);
+                     
+                     // Format the comment according to the defined formatter for that comment
+                     $Properties["Content"] = $Comment->Body;
+                     $Properties["Summary"] = FormatStringForRSS2Summary(@$Row["Body"]);
+                     
+                     $Feed .= ReturnFeedItemForRSS2($Properties);
+                  }
+                  $Counter++;
                }
-               $Counter++;
+               
+               $Feed = ReturnWrappedFeedForRSS2($SearchForm->Context, $Feed);
+               
+               // Set the content type to xml
+               header("Content-type: text/xml\n");
+               
+               // Dump the feed
+               echo($Feed);
+         
+               // When all finished, unload the context object
+               $SearchForm->Context->Unload();
+               
+               // And now stop processing the page
+               die();
             }
-            
-            $Feed = ReturnWrappedFeedForRSS2($SearchForm->Context, $Feed);
-            
-            // Set the content type to xml
-            header("Content-type: text/xml\n");
-            
-            // Dump the feed
-            echo($Feed);
-      
-            // When all finished, unload the context object
-            $SearchForm->Context->Unload();
-            
-            // And now stop processing the page
-            die();
          }
          
          $Context->AddToDelegate("SearchForm",
@@ -231,50 +234,51 @@ if ($Context->SelfUrl == "index.php") {
    if ($FeedType == "RSS2") {      
       // Attach to the Constructor Delegate of the CommentGrid control
       function CommentGrid_InjectRSS2Feed($CommentGrid) {
-
-         // Authenticate the user
-         AuthenticateUserForRSS2($CommentGrid->Context);
-         
-         // Make sure the page title is defined
-         $CommentGrid->Context->PageTitle = $CommentGrid->Discussion->Name;
-         
-         // Loop through the data
-         $Feed = "";
-         $Properties = array();
-         $Comment = $CommentGrid->Context->ObjectFactory->NewContextObject($CommentGrid->Context, "Comment");
-         $Domain = PrependString("http://", $CommentGrid->Context->Configuration["DOMAIN"]);
-         while ($Row = $CommentGrid->Context->Database->GetRow($CommentGrid->CommentData)) {
-            $Comment->Clear();
-            $Comment->GetPropertiesFromDataSet($Row, $CommentGrid->Context->Session->UserID);
-            $Comment->FormatPropertiesForDisplay();
+         if ($CommentGrid->Context->WarningCollector->Count() == 0) {   
+            // Authenticate the user
+            AuthenticateUserForRSS2($CommentGrid->Context);
+            
+            // Make sure the page title is defined
+            $CommentGrid->Context->PageTitle = $CommentGrid->Discussion->Name;
+            
+            // Loop through the data
+            $Feed = "";
+            $Properties = array();
+            $Comment = $CommentGrid->Context->ObjectFactory->NewContextObject($CommentGrid->Context, "Comment");
+            $Domain = PrependString("http://", $CommentGrid->Context->Configuration["DOMAIN"]);
+            while ($Row = $CommentGrid->Context->Database->GetRow($CommentGrid->CommentData)) {
+               $Comment->Clear();
+               $Comment->GetPropertiesFromDataSet($Row, $CommentGrid->Context->Session->UserID);
+               $Comment->FormatPropertiesForDisplay();
+                  
+               $Properties["Title"] = $CommentGrid->Discussion->Name;
+               $Properties["Link"] = AppendFolder($Domain, "comments.php?DiscussionID=".$Comment->DiscussionID."&amp;Focus=".$Comment->CommentID."#Comment_".$Comment->CommentID);
+               $Properties["Published"] = FixDateForRSS2(@$Row["DateCreated"]);
+               $Properties["Updated"] = FixDateForRSS2(@$Row["DateEdited"]);
+               $Properties["AuthorName"] = $Comment->AuthUsername;
+               $Properties["AuthorUrl"] = AppendFolder($Domain, "account.php?u=".$Comment->AuthUserID);
                
-            $Properties["Title"] = $CommentGrid->Discussion->Name;
-            $Properties["Link"] = AppendFolder($Domain, "comments.php?DiscussionID=".$Comment->DiscussionID."&amp;Focus=".$Comment->CommentID."#Comment_".$Comment->CommentID);
-            $Properties["Published"] = FixDateForRSS2(@$Row["DateCreated"]);
-            $Properties["Updated"] = FixDateForRSS2(@$Row["DateEdited"]);
-            $Properties["AuthorName"] = $Comment->AuthUsername;
-            $Properties["AuthorUrl"] = AppendFolder($Domain, "account.php?u=".$Comment->AuthUserID);
+               // Format the comment according to the defined formatter for that comment
+               $Properties["Content"] = $Comment->Body;
+               $Properties["Summary"] = FormatStringForRSS2Summary(@$Row["Body"]);
+               
+               $Feed .= ReturnFeedItemForRSS2($Properties);
+            }
             
-            // Format the comment according to the defined formatter for that comment
-            $Properties["Content"] = $Comment->Body;
-            $Properties["Summary"] = FormatStringForRSS2Summary(@$Row["Body"]);
+            $Feed = ReturnWrappedFeedForRSS2($CommentGrid->Context, $Feed);
             
-            $Feed .= ReturnFeedItemForRSS2($Properties);
+            // Set the content type to xml
+            header("Content-type: text/xml\n");
+            
+            // Dump the feed
+            echo($Feed);
+      
+            // When all finished, unload the context object
+            $CommentGrid->Context->Unload();
+            
+            // And now stop processing the page
+            die();
          }
-         
-         $Feed = ReturnWrappedFeedForRSS2($CommentGrid->Context, $Feed);
-         
-         // Set the content type to xml
-         header("Content-type: text/xml\n");
-         
-         // Dump the feed
-         echo($Feed);
-   
-         // When all finished, unload the context object
-         $CommentGrid->Context->Unload();
-         
-         // And now stop processing the page
-         die();
       }
       
       $Context->AddToDelegate("CommentGrid",

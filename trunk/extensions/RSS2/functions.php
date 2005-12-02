@@ -76,7 +76,7 @@ function ReturnWrappedFeedForRSS2(&$Context, $FeedItems) {
 
 function ReturnFeedItemForRSS2($Properties) {
 	return "<item>
-		<title>".$Properties["Title"]."</title>
+		<title>".htmlspecialchars($Properties["Title"])."</title>
 		<link>".$Properties["Link"]."</link>
 		<guid isPermaLink=\"false\">".$Properties["Link"]."</guid>
 		<pubDate>".$Properties["Published"]."</pubDate>
