@@ -20,7 +20,7 @@ class UserManager extends Delegation {
 		$s->SetMainTable("UserBookmark", "b");
 		$s->AddFieldNameValue("UserID", $UserID);
 		$s->AddFieldNameValue("DiscussionID", $DiscussionID);
-		$this->Context->Database->Insert($this->Context, $s, $this->Name, "AddBookmark", "An error occurred while adding the bookmark.");
+		$this->Context->Database->Insert($s, $this->Name, "AddBookmark", "An error occurred while adding the bookmark.");
 	}
 	
 	function AddCategoryBlock($CategoryID) {
@@ -30,12 +30,12 @@ class UserManager extends Delegation {
 		$s->AddFieldNameValue("CategoryID", $CategoryID);
 		$s->AddFieldNameValue("Blocked", 1);
 		// Don't stress over errors (ie. duplicate entries) since this is indexed and duplicates cannot be inserted
-		if ($this->Context->Database->Insert($this->Context, $s, $this->Name, "AddCategoryBlock", "Failed to add category block.", 0, 0)) {
+		if ($this->Context->Database->Insert($s, $this->Name, "AddCategoryBlock", "Failed to add category block.", 0, 0)) {
 			$s->Clear();
 			$s->SetMainTable("User", "u");
 			$s->AddFieldNameValue("UserBlocksCategories", "1");
 			$s->AddWhere("UserID", $this->Context->Session->UserID, "=");
-			$this->Context->Database->Update($this->Context, $s, $this->Name, "AddCategoryBlock", "Failed to update category block.", 0);
+			$this->Context->Database->Update($s, $this->Name, "AddCategoryBlock", "Failed to update category block.", 0);
 		}
 	}
 
@@ -46,7 +46,7 @@ class UserManager extends Delegation {
 		$s->AddFieldNameValue("BlockedCommentID", $CommentID);
 		$s->AddFieldNameValue("Blocked", 1);
 		// Don't stress over errors (ie. duplicate entries) since this is indexed and duplicates cannot be inserted
-		$this->Context->Database->Insert($this->Context, $s, $this->Name, "AddCommentBlock", "Failed to add comment block.", 0, 0);
+		$this->Context->Database->Insert($s, $this->Name, "AddCommentBlock", "Failed to add comment block.", 0, 0);
 	}
 
 	function AddUserBlock($UserID) {
@@ -56,7 +56,7 @@ class UserManager extends Delegation {
 		$s->AddFieldNameValue("BlockedUserID", $UserID);
 		$s->AddFieldNameValue("Blocked", 1);
 		// Don't stress over errors (ie. duplicate entries) since this is indexed and duplicates cannot be inserted
-		$this->Context->Database->Insert($this->Context, $s, $this->Name, "AddCommentBlock", "Failed to add user block.", 0, 0);
+		$this->Context->Database->Insert($s, $this->Name, "AddCommentBlock", "Failed to add user block.", 0, 0);
 	}
 	
 	function ApproveApplicant($ApplicantID) {
@@ -80,7 +80,7 @@ class UserManager extends Delegation {
 			$s->SetMainTable("User", "u");
 			$s->AddFieldNameValue("RoleID", $UserRoleHistory->RoleID);
 			$s->AddWhere("UserID", $UserRoleHistory->UserID, "=");
-			$this->Context->Database->Update($this->Context, $s, $this->Name, "AssignRole", "An error occurred while assigning the user to a role.");
+			$this->Context->Database->Update($s, $this->Name, "AssignRole", "An error occurred while assigning the user to a role.");
 			
 			// Now record the change
 			$UserRoleHistory->Notes = FormatStringForDatabaseInput($UserRoleHistory->Notes);
@@ -92,7 +92,7 @@ class UserManager extends Delegation {
 			$s->AddFieldNameValue("AdminUserID", ($NewUser?0:$this->Context->Session->UserID));
 			$s->AddFieldNameValue("Notes", $UserRoleHistory->Notes);
 			$s->AddFieldNameValue("RemoteIp", GetRemoteIp(1));
-			$this->Context->Database->Insert($this->Context, $s, $this->Name, "AssignRole", "An error occurred while recording the role change.");
+			$this->Context->Database->Insert($s, $this->Name, "AssignRole", "An error occurred while recording the role change.");
 			
 			// Now email the user about the role change
          if (!$NewUser) {
@@ -135,7 +135,7 @@ class UserManager extends Delegation {
 			$s->AddWhere("Password", $User->OldPassword, "=", "or");
 			$s->EndWhereGroup();
 			$s->AddWhere("UserID", $User->UserID, "=");
-			$Result = $this->Context->Database->Select($this->Context, $s, $this->Name, "ChangePassword", "An error occurred while validating the user's old password.");
+			$Result = $this->Context->Database->Select($s, $this->Name, "ChangePassword", "An error occurred while validating the user's old password.");
 			if ($this->Context->Database->RowCount($Result) == 0) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrOldPasswordBad"));
 		}
 		
@@ -148,7 +148,7 @@ class UserManager extends Delegation {
 			$s->SetMainTable("User", "u");
 			$s->AddFieldNameValue("Password", $User->NewPassword, 1, "md5");
 			$s->AddWhere("UserID", $User->UserID, "=");
-			$this->Context->Database->Update($this->Context, $s, $this->Name, "ChangePassword", "An error occurred while attempting to update the password.");
+			$this->Context->Database->Update($s, $this->Name, "ChangePassword", "An error occurred while attempting to update the password.");
 		}
 		return $this->Context->WarningCollector->Iif();
 	}
@@ -169,7 +169,7 @@ class UserManager extends Delegation {
 		$s->AddSelect("UserID", "u");
 		$s->AddWhere("Name", $User->Name, "=");
 		$MatchCount = 0;
-		$result = $this->Context->Database->Select($this->Context, $s, $this->Name, "CreateUser", "A fatal error occurred while validating your input.");
+		$result = $this->Context->Database->Select($s, $this->Name, "CreateUser", "A fatal error occurred while validating your input.");
 		$MatchCount = $this->Context->Database->RowCount($result);
 		if ($MatchCount > 0) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrUsernameTaken"));
 
@@ -200,7 +200,7 @@ class UserManager extends Delegation {
 			$this->DelegateParameters["SqlBuilder"] = &$s;
 			$this->CallDelegate("PreDataInsert");
 			
-			$User->UserID = $this->Context->Database->Insert($this->Context, $s, $this->Name, "CreateUser", "An error occurred while creating a new user.");
+			$User->UserID = $this->Context->Database->Insert($s, $this->Name, "CreateUser", "An error occurred while creating a new user.");
 				
 			$Urh = $this->Context->ObjectFactory->NewObject($this->Context, "UserRoleHistory");
 			$Urh->UserID = $User->UserID;
@@ -223,7 +223,7 @@ class UserManager extends Delegation {
 				$s->AddWhere("r.PERMISSION_RECEIVE_APPLICATION_NOTIFICATION", 1, "=");
 				$s->AddWhere("u.SendNewApplicantNotifications", 1, "=");
 				$s->AddSelect(array("Name", "Email"), "u");
-				$Administrators = $this->Context->Database->Select($this->Context, $s, $this->Name, "CreateUser", "An error occurred while retrieving administrator email addresses.", 0);
+				$Administrators = $this->Context->Database->Select($s, $this->Name, "CreateUser", "An error occurred while retrieving administrator email addresses.", 0);
 				// Fail silently if an error occurs while notifying administrators
 				if ($Administrators) {
 					if ($this->Context->Database->RowCount($Administrators) > 0) {
@@ -267,7 +267,7 @@ class UserManager extends Delegation {
 		$s->AddSelect("RemoteIp", "i");
 		$s->AddGroupBy("RemoteIp", "i");
 		$s->AddWhere("UserID", $UserID, "=");
-		$ResultSet = $this->Context->Database->Select($this->Context, $s, $this->Name, "GetIpHistory", "An error occurred while retrieving historical IP usage data.");
+		$ResultSet = $this->Context->Database->Select($s, $this->Name, "GetIpHistory", "An error occurred while retrieving historical IP usage data.");
 		$IpData = array();
 		$SharedWith = array();
 		$CurrentIp = "";
@@ -314,7 +314,7 @@ class UserManager extends Delegation {
 			$s->AddWhere("u.UserID", $UserID, "=");
 	
 			$User = $this->Context->ObjectFactory->NewContextObject($this->Context, "User");
-			$UserData = $this->Context->Database->Select($this->Context, $s, $this->Name, "GetUserById", "An error occurred while attempting to retrieve the requested user.");
+			$UserData = $this->Context->Database->Select($s, $this->Name, "GetUserById", "An error occurred while attempting to retrieve the requested user.");
 			if ($this->Context->Database->RowCount($UserData) == 0) {
 				$this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrUserNotFound"));
 			} else {
@@ -336,7 +336,7 @@ class UserManager extends Delegation {
 			$s->SetMainTable("User", "u");
 			$s->AddSelect("UserID", "u");
 			$s->AddWhere("Name", $Username, "=");
-			$result = $this->Context->Database->Select($this->Context, $s, $this->Name, "GetUserIdByName", "An error occurred while attempting to retrieve the requested user information.");
+			$result = $this->Context->Database->Select($s, $this->Name, "GetUserIdByName", "An error occurred while attempting to retrieve the requested user information.");
 			while ($rows = $this->Context->Database->GetRow($result)) {
 				$UserID = ForceInt($rows["UserID"], 0);
 			}
@@ -360,7 +360,7 @@ class UserManager extends Delegation {
 		$s->AddSelect("Icon", "r", "RoleIcon");
 		$s->AddWhere("h.UserID", $UserID, "=");
 		$s->AddOrderBy("Date", "h", "desc");
-		return $this->Context->Database->Select($this->Context, $s, $this->Name, "GetUserRoleHistoryByUserId", "An error occurred while attempting to retrieve the user's role history.");
+		return $this->Context->Database->Select($s, $this->Name, "GetUserRoleHistoryByUserId", "An error occurred while attempting to retrieve the user's role history.");
 	}
 	
 	function GetUsersByIp($Ip) {
@@ -369,7 +369,7 @@ class UserManager extends Delegation {
 		$s->AddJoin("IpHistory", "i", "UserID and i.RemoteIp = '".$Ip."'", "u", "UserID", "inner join");
 		$s->AddSelect(array("UserID", "Name"), "u");
 		$s->AddGroupBy("UserID", "u");
-		return $this->Context->Database->Select($this->Context, $s, $this->Name, "GetUsersByIp", "An error occurred while retrieving users by IP.");
+		return $this->Context->Database->Select($s, $this->Name, "GetUsersByIp", "An error occurred while retrieving users by IP.");
 	}
 	
 	function GetUsersByRoleId($RoleID, $RecordsToReturn = "0") {
@@ -377,7 +377,7 @@ class UserManager extends Delegation {
 		$s = $this->GetUserBuilder();
 		$s->AddWhere("u.RoleID", $RoleID, "=");
 		if ($RecordsToReturn > 0) $s->AddLimit(0,$RecordsToReturn);
-		return $this->Context->Database->Select($this->Context, $s, $this->Name, "GetUsersByRoleId", "An error occurred while attempting to retrieve users from the specified role.");
+		return $this->Context->Database->Select($s, $this->Name, "GetUsersByRoleId", "An error occurred while attempting to retrieve users from the specified role.");
 	}
 	
 	function GetUserSearch($Search, $RowsPerPage, $CurrentPage) {
@@ -394,7 +394,7 @@ class UserManager extends Delegation {
 			$FirstRecord = ($CurrentPage * $RowsPerPage) - $RowsPerPage;
 		}		
 		if ($RowsPerPage > 0) $s->AddLimit($FirstRecord, $RowsPerPage+1);
-		return $this->Context->Database->Select($this->Context, $s, $this->Name, "GetUserSearch", "An error occurred while retrieving search results.");
+		return $this->Context->Database->Select($s, $this->Name, "GetUserSearch", "An error occurred while retrieving search results.");
 	}
 	
 	function GetSearchBuilder($Search) {
@@ -452,7 +452,7 @@ class UserManager extends Delegation {
 		$s->AddWhere("u.UserID", $UserID, "=");
 
 		$User = $this->Context->ObjectFactory->NewContextObject($this->Context, "User");
-		$UserData = $this->Context->Database->Select($this->Context, $s, $this->Name, "GetSessionDataById", "An error occurred while attempting to retrieve the requested user.");
+		$UserData = $this->Context->Database->Select($s, $this->Name, "GetSessionDataById", "An error occurred while attempting to retrieve the requested user.");
 		if ($this->Context->Database->RowCount($UserData) == 0) {
 			// This warning is in plain english, because at the point that
          // this method is called, the dictionary object is not yet loaded
@@ -473,7 +473,7 @@ class UserManager extends Delegation {
 			$s->AddFieldNameValue("UserID", $UserID);
 			$s->AddFieldNameValue("RemoteIp", GetRemoteIp(1));
 			$s->AddFieldNameValue("DateLogged", MysqlDateTime());
-			$this->Context->Database->Insert($this->Context, $s, $this->Name, "LogIp", "An error occurred while logging user data.");
+			$this->Context->Database->Insert($s, $this->Name, "LogIp", "An error occurred while logging user data.");
 		}
 	}
 	
@@ -485,7 +485,7 @@ class UserManager extends Delegation {
 		$s->SetMainTable("Style", "s");
 		$s->AddSelect("StyleID", "s");
 		$s->AddWhere("AuthUserID", $UserID, "=");
-		$Result = $this->Context->Database->Select($this->Context, $s, $this->Name, "RemoveApplicant", "An error occurred while removing the user.");
+		$Result = $this->Context->Database->Select($s, $this->Name, "RemoveApplicant", "An error occurred while removing the user.");
 		if ($this->Context->Database->RowCount($Result) > 0) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrRemoveUserStyle"));
 		if ($this->Context->WarningCollector->Count() > 0) return false;
 		
@@ -494,7 +494,7 @@ class UserManager extends Delegation {
 		$s->SetMainTable("Comment", "m");
 		$s->AddSelect("CommentID", "m");
 		$s->AddWhere("AuthUserID", $UserID, "=");
-		$Result = $this->Context->Database->Select($this->Context, $s, $this->Name, "RemoveApplicant", "An error occurred while removing the user.");
+		$Result = $this->Context->Database->Select($s, $this->Name, "RemoveApplicant", "An error occurred while removing the user.");
 		if ($this->Context->Database->RowCount($Result) > 0) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrRemoveUserComments"));
 		if ($this->Context->WarningCollector->Count() > 0) return false;
 		
@@ -503,7 +503,7 @@ class UserManager extends Delegation {
 		$s->SetMainTable("Discussion", "t");
 		$s->AddSelect("DiscussionID", "t");
 		$s->AddWhere("AuthUserID", $UserID, "=");
-		$Result = $this->Context->Database->Select($this->Context, $s, $this->Name, "RemoveApplicant", "An error occurred while removing the user.");
+		$Result = $this->Context->Database->Select($s, $this->Name, "RemoveApplicant", "An error occurred while removing the user.");
 		if ($this->Context->Database->RowCount($Result) > 0) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrRemoveUserDiscussions"));
 		if ($this->Context->WarningCollector->Count() > 0) return false;
 		
@@ -512,31 +512,31 @@ class UserManager extends Delegation {
 		$s->Clear();
 		$s->SetMainTable("UserBookmark", "b");
 		$s->AddWhere("UserID", $UserID, "=");
-		$this->Context->Database->Delete($this->Context, $s, $this->Name, "RemoveApplicant", "An error occurred while removing the user's bookmarks.");
+		$this->Context->Database->Delete($s, $this->Name, "RemoveApplicant", "An error occurred while removing the user's bookmarks.");
 		
 		// Role History
 		$s->Clear();
 		$s->SetMainTable("UserRoleHistory", "r");
 		$s->AddWhere("UserID", $UserID, "=");
-		$this->Context->Database->Delete($this->Context, $s, $this->Name, "RemoveApplicant", "An error occurred while removing the user's role history.");
+		$this->Context->Database->Delete($s, $this->Name, "RemoveApplicant", "An error occurred while removing the user's role history.");
       
 		// Searches
 		$s->Clear();
 		$s->SetMainTable("UserSearch", "s");
 		$s->AddWhere("UserID", $UserID, "=");
-		$this->Context->Database->Delete($this->Context, $s, $this->Name, "RemoveApplicant", "An error occurred while removing the user's saved searches.");
+		$this->Context->Database->Delete($s, $this->Name, "RemoveApplicant", "An error occurred while removing the user's saved searches.");
 		
 		// Discussion Watch
 		$s->Clear();
 		$s->SetMainTable("UserDiscussionWatch", "w");
 		$s->AddWhere("UserID", $UserID, "=");
-		$this->Context->Database->Delete($this->Context, $s, $this->Name, "RemoveApplicant", "An error occurred while removing the user's discussion history.");
+		$this->Context->Database->Delete($s, $this->Name, "RemoveApplicant", "An error occurred while removing the user's discussion history.");
 		
 		// Remove the user
 		$s->Clear();
 		$s->SetMainTable("User", "u");
 		$s->AddWhere("UserID", $UserID, "=");
-		$this->Context->Database->Delete($this->Context, $s, $this->Name, "RemoveApplicant", "An error occurred while removing the user.");
+		$this->Context->Database->Delete($s, $this->Name, "RemoveApplicant", "An error occurred while removing the user.");
 		
 		return true;
 	}
@@ -546,7 +546,7 @@ class UserManager extends Delegation {
 		$s->SetMainTable("UserBookmark", "b");
 		$s->AddWhere("UserID", $UserID, "=");
 		$s->AddWhere("DiscussionID", $DiscussionID, "=");
-		$this->Context->Database->Delete($this->Context, $s, $this->Name, "RemoveBookmark", "An error occurred while removing the bookmark.");
+		$this->Context->Database->Delete($s, $this->Name, "RemoveBookmark", "An error occurred while removing the bookmark.");
 	}
 	
 	function RemoveCategoryBlock($CategoryID) {
@@ -555,18 +555,18 @@ class UserManager extends Delegation {
 		$s->AddWhere("CategoryID", $CategoryID, "=");
 		$s->AddWhere("UserID", $this->Context->Session->UserID, "=");
 		// Don't stress over errors (ie. duplicate entries) since this is indexed and duplicates cannot be inserted
-		if ($this->Context->Database->Delete($this->Context, $s, $this->Name, "RemoveCategoryBlock", "An error occurred while removing the category block.", 0)) {
+		if ($this->Context->Database->Delete($s, $this->Name, "RemoveCategoryBlock", "An error occurred while removing the category block.", 0)) {
 			$s->Clear();
 			$s->SetMainTable("CategoryBlock", "b");
 			$s->AddWhere("UserID", $this->Context->Session->UserID, "=");			
 			$s->AddSelect("CategoryID", "b");
-			if ($this->Context->Database->Select($this->Context, $s, $this->Name, "RemoveCategoryBlock", "Related category block information could not be found.", 0)) {
+			if ($this->Context->Database->Select($s, $this->Name, "RemoveCategoryBlock", "Related category block information could not be found.", 0)) {
 				if ($this->Context->Database->RowCount($Result) == 0) {
 					$s->Clear();
 					$s->SetMainTable("User", "u");
 					$s->AddFieldNameValue("UserBlocksCategories", "0");
 					$s->AddWhere("UserID", $this->Context->Session->UserID, "=");
-					$this->Context->Database->Update($this->Context, $s, $this->Name, "RemoveCategoryBlock", "An error occurred while updating category block information.", 0);
+					$this->Context->Database->Update($s, $this->Name, "RemoveCategoryBlock", "An error occurred while updating category block information.", 0);
 				}
 			}			
 		}
@@ -578,7 +578,7 @@ class UserManager extends Delegation {
 		$s->AddWhere("BlockedCommentID", $CommentID, "=");
 		$s->AddWhere("BlockingUserID", $this->Context->Session->UserID, "=");
 		// Don't stress over errors (ie. duplicate entries) since this is indexed and duplicates cannot be inserted
-      $this->Context->Database->Delete($this->Context, $s, $this->Name, "RemoveCommentBlock", "An error occurred while removing the comment block.", 0);
+      $this->Context->Database->Delete($s, $this->Name, "RemoveCommentBlock", "An error occurred while removing the comment block.", 0);
 	}
 
 	function RemoveUserBlock($UserID) {
@@ -587,7 +587,7 @@ class UserManager extends Delegation {
 		$s->AddFieldNameValue("BlockingUserID", $this->Context->Session->UserID);
 		$s->AddFieldNameValue("BlockedUserID", $UserID);
 		// Don't stress over errors (ie. duplicate entries) since this is indexed and duplicates cannot be inserted
-      $this->Context->Database->Delete($this->Context, $s, $this->Name, "RemoveUserBlock", "An error occurred while removing the user block.", 0);
+      $this->Context->Database->Delete($s, $this->Name, "RemoveUserBlock", "An error occurred while removing the user block.", 0);
 	}
 	
 	function RequestPasswordReset($Username) {
@@ -603,7 +603,7 @@ class UserManager extends Delegation {
 			$s->AddWhere("Name", $Username, "=");
 			
 			
-			$UserResult = $this->Context->Database->Select($this->Context, $s, $this->Name, "RequestPasswordReset", "An error occurred while retrieving account information.");
+			$UserResult = $this->Context->Database->Select($s, $this->Name, "RequestPasswordReset", "An error occurred while retrieving account information.");
 			if ($this->Context->Database->RowCount($UserResult) == 0) {
 				$this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrAccountNotFound"));
 			} else {
@@ -623,7 +623,7 @@ class UserManager extends Delegation {
 				$s->SetMainTable("User");
 				$s->AddFieldNameValue("EmailVerificationKey", $EmailVerificationKey,1);
 				$s->AddWhere("UserID", $UserID, "=");
-				$this->Context->Database->Update($this->Context, $s, $this->Name, "RequestPasswordReset", "An error occurred while managing your account information.");
+				$this->Context->Database->Update($s, $this->Name, "RequestPasswordReset", "An error occurred while managing your account information.");
 				
 				// If there are no errors, send the user an email
 				if ($this->Context->WarningCollector->Count() == 0) {
@@ -666,7 +666,7 @@ class UserManager extends Delegation {
 			$s->AddFieldNameValue("Password", $NewPassword, 1, "md5");
 			$s->AddWhere("UserID", $PassUserID, "=");
 			$s->AddWhere("EmailVerificationKey", $EmailVerificationKey, "=");
-			$this->Context->Database->Update($this->Context, $s, $this->Name, "ResetPassword", "An error occurred while updating your password.");
+			$this->Context->Database->Update($s, $this->Name, "ResetPassword", "An error occurred while updating your password.");
 		}
 		return $this->Context->WarningCollector->Iif();
 	}
@@ -691,7 +691,7 @@ class UserManager extends Delegation {
 				$s->AddFieldNameValue("Picture", $User->Picture);
 				$s->AddFieldNameValue("Attributes", $User->Attributes);
 				$s->AddWhere("UserID", $User->UserID, "=");
-				$this->Context->Database->Update($this->Context, $s, $this->Name, "SaveIdentity", "An error occurred while attempting to update the identity data.");
+				$this->Context->Database->Update($s, $this->Name, "SaveIdentity", "An error occurred while attempting to update the identity data.");
 			}
 		}
 		return $this->Context->WarningCollector->Iif();
@@ -711,7 +711,7 @@ class UserManager extends Delegation {
 			$s->AddFieldNameValue("StyleID", $User->StyleID);
 			if ($User->StyleID == 0) $s->AddFieldNameValue("CustomStyle", $User->CustomStyle);
 			$s->AddWhere("UserID", $User->UserID, "=");
-			$this->Context->Database->Update($this->Context, $s, $this->Name, "SaveStyle", "An error occurred while attempting to update the style data.");
+			$this->Context->Database->Update($s, $this->Name, "SaveStyle", "An error occurred while attempting to update the style data.");
 		}
 		$this->Context->Session->User->StyleID = $User->StyleID;
 		$this->Context->Session->User->CustomStyle = $User->CustomStyle;
@@ -735,7 +735,7 @@ class UserManager extends Delegation {
 			$s->SetMainTable("User");
 			$s->AddFieldNameValue($PropertyName, $Switch);
 			$s->AddWhere("UserID", $UserID, "=");
-			$this->Context->Database->Update($this->Context, $s, $this->Name, "SwitchUserProperty", "An error occurred while manipulating user properties.");
+			$this->Context->Database->Update($s, $this->Name, "SwitchUserProperty", "An error occurred while manipulating user properties.");
 		}
 		return $this->Context->WarningCollector->Iif();
 	}	
@@ -754,7 +754,7 @@ class UserManager extends Delegation {
 			$s->SetMainTable("User");
 			$s->AddFieldNameValue("Preferences", $SerializedPreferences);
 			$s->AddWhere("UserID", $this->Context->Session->User->UserID, "=");
-			$this->Context->Database->Update($this->Context, $s, $this->Name, "SwitchUserPreference", "An error occurred while manipulating user preferences.");
+			$this->Context->Database->Update($s, $this->Name, "SwitchUserPreference", "An error occurred while manipulating user preferences.");
 		}
 		return $this->Context->WarningCollector->Iif();
 	}
@@ -774,7 +774,7 @@ class UserManager extends Delegation {
 	
 			$DateDiff = "";
 			$CommentSpamCheck = 0;
-			$result = $this->Context->Database->Select($this->Context, $s, $this->Name, "UpdateUserCommentCount", "An error occurred while retrieving user activity data.");
+			$result = $this->Context->Database->Select($s, $this->Name, "UpdateUserCommentCount", "An error occurred while retrieving user activity data.");
 			while ($rows = $this->Context->Database->GetRow($result)) {
 				$DateDiff = ForceString($rows["DateDiff"], "");
 				// echo($s->GetSelect()."<br />");
@@ -813,13 +813,13 @@ class UserManager extends Delegation {
 					$s->AddFieldNameValue("LastCommentPost", MysqlDateTime());
 				}
 				$s->AddWhere("UserID", $UserID, "=");
-				$this->Context->Database->Update($this->Context, $s, $this->Name, "UpdateUserCommentCount", "An error occurred while updating the user profile.");
+				$this->Context->Database->Update($s, $this->Name, "UpdateUserCommentCount", "An error occurred while updating the user profile.");
 			} else {
 				// Update the "Waiting period" every time they try to post again
             $s->AddFieldNameValue("DateLastActive", MysqlDateTime());
 				$s->AddFieldNameValue("LastCommentPost", MysqlDateTime());
 				$s->AddWhere("UserID", $UserID, "=");
-				$this->Context->Database->Update($this->Context, $s, $this->Name, "UpdateUserCommentCount", "An error occurred while updating the user profile.");
+				$this->Context->Database->Update($s, $this->Name, "UpdateUserCommentCount", "An error occurred while updating the user profile.");
 			}
 		}
 	
@@ -840,7 +840,7 @@ class UserManager extends Delegation {
 			$s->AddWhere("UserID", $UserID, "=");
 			$DateDiff = "";
 			$DiscussionSpamCheck = 0;
-			$result = $this->Context->Database->Select($this->Context, $s, $this->Name, "UpdateUserDiscussionCount", "An error occurred while retrieving user activity data.");
+			$result = $this->Context->Database->Select($s, $this->Name, "UpdateUserDiscussionCount", "An error occurred while retrieving user activity data.");
 			while ($rows = $this->Context->Database->GetRow($result)) {
 				$DateDiff = ForceString($rows['DateDiff'], "");
 				$DiscussionSpamCheck = ForceInt($rows['DiscussionSpamCheck'], 0);
@@ -873,13 +873,13 @@ class UserManager extends Delegation {
 					$s->AddFieldNameValue("LastDiscussionPost", MysqlDateTime());
 				}
 				$s->AddWhere("UserID", $UserID, "=");
-				$this->Context->Database->Update($this->Context, $s, $this->Name, "UpdateUserDiscussionCount", "An error occurred while updating the user profile.");
+				$this->Context->Database->Update($s, $this->Name, "UpdateUserDiscussionCount", "An error occurred while updating the user profile.");
 			} else {
 				// Update the "Waiting period" every time they try to post again
             $s->AddFieldNameValue("DateLastActive", MysqlDateTime());
 				$s->AddFieldNameValue("LastDiscussionPost", MysqlDateTime());
 				$s->AddWhere("UserID", $UserID, "=");
-				$this->Context->Database->Update($this->Context, $s, $this->Name, "UpdateUserCommentCount", "An error occurred while updating the user profile.");
+				$this->Context->Database->Update($s, $this->Name, "UpdateUserCommentCount", "An error occurred while updating the user profile.");
 			}
 		}
 		
@@ -912,7 +912,7 @@ class UserManager extends Delegation {
 		$s->AddWhere("Name", $SafeUser->Name, "=");
 		if ($User->UserID > 0) $s->AddWhere("UserID", $User->UserID, "<>");
 		$MatchCount = 0;
-		$result = $this->Context->Database->Select($this->Context, $s, $this->Name, "ValidateUser", "A fatal error occurred while validating your input.");
+		$result = $this->Context->Database->Select($s, $this->Name, "ValidateUser", "A fatal error occurred while validating your input.");
 		$MatchCount = $this->Context->Database->RowCount($result);
 		
 		if ($MatchCount > 0) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrUsernameTaken"));
@@ -950,7 +950,7 @@ class UserManager extends Delegation {
 		$s->AddSelect("UserID");
 		$s->AddWhere("UserID", $VerificationUserID, "=");
 		$s->AddWhere("EmailVerificationKey", $EmailVerificationKey, "=");
-		$UserResult = $this->Context->Database->Select($this->Context, $s, $this->Name, "VerifyPasswordResetRequest", "An error occurred while retrieving account information.");
+		$UserResult = $this->Context->Database->Select($s, $this->Name, "VerifyPasswordResetRequest", "An error occurred while retrieving account information.");
 		if ($this->Context->Database->RowCount($UserResult) == 0) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrPasswordResetRequest"));
 		return $this->Context->WarningCollector->Iif();
 	}	

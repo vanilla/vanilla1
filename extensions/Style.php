@@ -109,7 +109,7 @@ if (in_array($Context->SelfUrl, array("settings.php", "account.php"))) {
 			$s->AddWhere("s.StyleID", $StyleID, "=");
 	
 			$Style = $this->Context->ObjectFactory->NewContextObject($this->Context, "Style");
-			$result = $this->Context->Database->Select($this->Context, $s, $this->Name, "GetStyleById", "An error occurred while attempting to retrieve the requested style.");
+			$result = $this->Context->Database->Select($s, $this->Name, "GetStyleById", "An error occurred while attempting to retrieve the requested style.");
 			if ($this->Context->Database->RowCount($result) == 0) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrStyleNotFound"));
 			while ($rows = $this->Context->Database->GetRow($result)) {
 				$Style->GetPropertiesFromDataSet($rows);
@@ -124,7 +124,7 @@ if (in_array($Context->SelfUrl, array("settings.php", "account.php"))) {
 			$s->SetMainTable("Style", "s");
 			$s->AddSelect("StyleID", "s", "Count", "count");
 			
-			$result = $this->Context->Database->Select($this->Context, $s, $this->Name, "GetStyleCount", "An error occurred while retrieving the style count.");
+			$result = $this->Context->Database->Select($s, $this->Name, "GetStyleCount", "An error occurred while retrieving the style count.");
 			while ($rows = $this->Context->Database->GetRow($result)) {
 				$TotalNumberOfRecords = $rows['Count'];
 			}
@@ -140,7 +140,7 @@ if (in_array($Context->SelfUrl, array("settings.php", "account.php"))) {
 			$s->AddOrderBy("StyleID", "s", "asc");
 			if ($RowsPerPage > 0) $s->Limit($FirstRecord, $RowsPerPage);
 				
-			return $this->Context->Database->Select($this->Context, $s, $this->Name, "GetDataList", "An error occurred while attempting to retrieve styles.");
+			return $this->Context->Database->Select($s, $this->Name, "GetDataList", "An error occurred while attempting to retrieve styles.");
 		}
 		
 		// Returns the styles in a format more suitable for the select list
@@ -151,7 +151,7 @@ if (in_array($Context->SelfUrl, array("settings.php", "account.php"))) {
 			$s->AddJoin("User", "u", "UserID", "s", "AuthUserID", "left join");
 			$s->AddSelect("Name", "s", "Name", "concat", "' ".$this->Context->GetDefinition("By")." ',coalesce(u.Name,'".$this->Context->GetDefinition("System")."')");
 			$s->AddOrderBy("Name", "s", "asc");
-			return $this->Context->Database->Select($this->Context, $s, $this->Name, "GetStylesForSelectList", "An error occurred while attempting to retrieve styles.");
+			return $this->Context->Database->Select($s, $this->Name, "GetStylesForSelectList", "An error occurred while attempting to retrieve styles.");
 		}
 	
 		function RemoveStyle($RemoveStyleID, $ReplacementStyleID) {
@@ -160,12 +160,12 @@ if (in_array($Context->SelfUrl, array("settings.php", "account.php"))) {
 			$s->SetMainTable("User", "u");
 			$s->AddFieldNameValue("StyleID", $ReplacementStyleID);
 			$s->AddWhere("StyleID", $RemoveStyleID, "=");
-			$this->Context->Database->Update($this->Context, $s, $this->Name, "RemoveStyle", "An error occurred while attempting to re-assign user styles.");
+			$this->Context->Database->Update($s, $this->Name, "RemoveStyle", "An error occurred while attempting to re-assign user styles.");
 			// Now remove the style itself
 			$s->Clear();
 			$s->SetMainTable("Style", "s");
 			$s->AddWhere("StyleID", $RemoveStyleID, "=");
-			$this->Context->Database->Delete($this->Context, $s, $this->Name, "RemoveStyle", "An error occurred while attempting to remove the style.");
+			$this->Context->Database->Delete($s, $this->Name, "RemoveStyle", "An error occurred while attempting to remove the style.");
 		}
 		
 		function SaveStyle(&$Style) {
@@ -186,9 +186,9 @@ if (in_array($Context->SelfUrl, array("settings.php", "account.php"))) {
 					$s->AddFieldNameValue("PreviewImage", $Style->PreviewImage);
 					if ($Style->StyleID > 0) {
 						$s->AddWhere("StyleID", $Style->StyleID, "=");
-						$this->Context->Database->Update($this->Context, $s, $this->Name, "SaveStyle", "An error occurred while attempting to update the style.");
+						$this->Context->Database->Update($s, $this->Name, "SaveStyle", "An error occurred while attempting to update the style.");
 					} else {
-						$Style->StyleID = $this->Context->Database->Insert($this->Context, $s, $this->Name, "SaveStyle", "An error occurred while creating a new style.");
+						$Style->StyleID = $this->Context->Database->Insert($s, $this->Name, "SaveStyle", "An error occurred while creating a new style.");
 					}
 				}
 			}

@@ -17,37 +17,44 @@ class Database {
    
    // Private
    var $Name;              // The name of this class
-   var $Connection;        // The connection to the database
+   var $Context;				// A reference to the context object
+   var $Connection;        // A connection to the default database
+   var $FarmConnection;		// A connection to a farm database (for inserting, updating, and deleting)
+   
    
 	function CloseConnection() {}
 	
 	function ConnectionError() {}
 	
-   function Database($Host, $Name, $User, $Password, &$Context) {
+   function Database(&$Context) {
 		$this->Name = "Database";
 		$Context->AddError($Context, $this->Name, "Constructor", "You can not generate a database object with the database interface. You must use an implementation of the interface like the MySQL implementation.");
 	}
    
    // Returns the affected rows if successful (kills page execution if there is an error)
-   function Delete(&$Context, $SqlBuilder, $SenderObject, $SenderMethod, $ErrorMessage, $KillOnFail = "1") {}
+   function Delete($SqlBuilder, $SenderObject, $SenderMethod, $ErrorMessage, $KillOnFail = "1") {}
 	
 	// Executes a string of sql
-   function Execute(&$Context, $Sql, $SenderObject, $SenderMethod, $ErrorMessage, $KillOnFail = "1") {}
+   function Execute($Sql, $SenderObject, $SenderMethod, $ErrorMessage, $KillOnFail = "1") {}
+	
+	function GetConnection() {}
+	
+	function GetFarmConnection() {}
 	
 	function GetRow($DataSet) {}
    
    // Returns the inserted ID (kills page execution if there is an error)
-   function Insert(&$Context, $SqlBuilder, $SenderObject, $SenderMethod, $ErrorMessage, $KillOnFail = "1") {}
+   function Insert($SqlBuilder, $SenderObject, $SenderMethod, $ErrorMessage, $KillOnFail = "1") {}
 	
 	function RewindDataSet(&$DataSet, $Position = "0") {}
 	
 	function RowCount($DataSet) {}
    
    // Returns a dataset (kills page execution if there is an error)
-   function Select(&$Context, $SqlBuilder, $SenderObject, $SenderMethod, $ErrorMessage, $KillOnFail = "1") {}
+   function Select($SqlBuilder, $SenderObject, $SenderMethod, $ErrorMessage, $KillOnFail = "1") {}
 
    // Returns the affected rows if successful (kills page execution if there is an error)
-   function Update(&$Context, $SqlBuilder, $SenderObject, $SenderMethod, $ErrorMessage, $KillOnFail = "1") {}
+   function Update($SqlBuilder, $SenderObject, $SenderMethod, $ErrorMessage, $KillOnFail = "1") {}
 	
 }
 
@@ -63,24 +70,61 @@ class MySQL extends Database {
 	}
 	
    // Returns the affected rows if successful (kills page execution if there is an error)
-   function Delete(&$Context, $SqlBuilder, $SenderObject, $SenderMethod, $ErrorMessage, $KillOnFail = "1") {
+   function Delete($SqlBuilder, $SenderObject, $SenderMethod, $ErrorMessage, $KillOnFail = "1") {
+		$Connection = $this->GetFarmConnection();
       $KillOnFail = ForceBool($KillOnFail, 0);
-		if (!mysql_query($SqlBuilder->GetDelete(), $this->Connection)) {
-			$Context->ErrorManager->AddError($Context, $SenderObject, $SenderMethod, $ErrorMessage, mysql_error($this->Connection), $KillOnFail);
+		if (!mysql_query($SqlBuilder->GetDelete(), $Connection)) {
+			$this->Context->ErrorManager->AddError($this->Context, $SenderObject, $SenderMethod, $ErrorMessage, mysql_error($Connection), $KillOnFail);
 			return false;
 		} else {
-			return mysql_affected_rows($this->Connection);
+			return mysql_affected_rows($Connection);
 		}
    }
 	
-   function Execute(&$Context, $Sql, $SenderObject, $SenderMethod, $ErrorMessage, $KillOnFail = "1") {
+   function Execute($Sql, $SenderObject, $SenderMethod, $ErrorMessage, $KillOnFail = "1") {
+		if (strtolower(substr($Sql, 0, 6)) == "select") {
+			$Connection = $this->GetConnection();
+		} else {
+			$Connection = $this->GetFarmConnection();
+		}
       $KillOnFail = ForceBool($KillOnFail, 0);
-		$DataSet = mysql_query($Sql, $this->Connection);
+		$DataSet = mysql_query($Sql, $Connection);
 		if (!$DataSet) {
-			$Context->ErrorManager->AddError($Context, $SenderObject, $SenderMethod, $ErrorMessage, mysql_error($this->Connection), $KillOnFail);
+			$this->Context->ErrorManager->AddError($this->Context, $SenderObject, $SenderMethod, $ErrorMessage, mysql_error($Connection), $KillOnFail);
 			return false;
 		} else {
 			return $DataSet;
+		}
+	}
+	
+	function GetConnection() {
+		if (!$this->Connection) {
+			$this->Connection = @mysql_connect($this->Context->Configuration["DATABASE_HOST"],
+				$this->Context->Configuration["DATABASE_USER"],
+				$this->Context->Configuration["DATABASE_PASSWORD"]);
+				
+			if (!$this->Connection) $this->Context->ErrorManager->AddError($this->Context, $this->Name, "OpenConnection", "The connection to the database failed.");
+			
+			if (!mysql_select_db($this->Context->Configuration["DATABASE_NAME"], $this->Connection)) $this->Context->ErrorManager->AddError($this->Context, $this->Name, "OpenConnection", "Failed to connect to the '".$this->Context->Configuration["DATABASE_NAME"]."' database.");
+		}
+		return $this->Connection;		
+	}
+	
+	function GetFarmConnection() {
+		if ($this->FarmConnection) {
+			return $this->FarmConnection;
+		} elseif ($this->Context->Configuration["FARM_DATABASE_HOST"] != "") {
+			$this->FarmConnection = @mysql_connect($this->Context->Configuration["FARM_DATABASE_HOST"],
+			$this->Context->Configuration["FARM_DATABASE_USER"],
+			$this->Context->Configuration["FARM_DATABASE_PASSWORD"]);
+			
+			if (!$this->FarmConnection) $this->Context->ErrorManager->AddError($this->Context, $this->Name, "GetFarmConnection", "The connection to the database farm failed.");
+			
+			if (!mysql_select_db($this->Context->Configuration["FARM_DATABASE_NAME"], $this->FarmConnection)) $this->Context->ErrorManager->AddError($this->Context, $this->Name, "GetFarmConnection", "Failed to connect to the '".$this->Context->Configuration["FARM_DATABASE_NAME"]."' database.");
+			
+			return $this->FarmConnection;
+		} else {
+			return $this->GetConnection();			
 		}
 	}
 	
@@ -89,23 +133,22 @@ class MySQL extends Database {
 	}
    
    // Returns the inserted ID (kills page execution if there is an error)
-   function Insert(&$Context, $SqlBuilder, $SenderObject, $SenderMethod, $ErrorMessage, $UseIgnore = "0", $KillOnFail = "1") {
+   function Insert($SqlBuilder, $SenderObject, $SenderMethod, $ErrorMessage, $UseIgnore = "0", $KillOnFail = "1") {
       $KillOnFail = ForceBool($KillOnFail, 0);
-		if (!mysql_query($SqlBuilder->GetInsert($UseIgnore), $this->Connection)) {
-			$Context->ErrorManager->AddError($Context, $SenderObject, $SenderMethod, $ErrorMessage, mysql_error($this->Connection), $KillOnFail);
+		$Connection = $this->GetFarmConnection();
+		if (!mysql_query($SqlBuilder->GetInsert($UseIgnore), $Connection)) {
+			$this->Context->ErrorManager->AddError($this->Context, $SenderObject, $SenderMethod, $ErrorMessage, mysql_error($Connection), $KillOnFail);
 			return false;
 		} else {
-			return ForceInt(mysql_insert_id($this->Connection), 0);
+			return ForceInt(mysql_insert_id($Connection), 0);
 		}
    }
 	
-   function MySql($Host, $Name, $User, $Password, &$Context) {
+   function MySql(&$Context) {			
       $this->Name = "Database";
-		$this->Connection = @mysql_connect($Host, $User, $Password);
-		if (!$this->Connection) $Context->ErrorManager->AddError($Context, $this->Name, "OpenConnection", "The connection to the database failed.");
-		if (!mysql_select_db($Name, $this->Connection)) $Context->ErrorManager->AddError($Context, $this->Name, "OpenConnection", "Failed to connect to the '".$Name."' database.");
+		$this->Context = &$Context;
    }
-   
+
 	function RewindDataSet(&$DataSet, $Position = "0") {
 		$Position = ForceInt($Position, 0);
 		mysql_data_seek($DataSet, $Position);
@@ -116,11 +159,12 @@ class MySQL extends Database {
 	}
    
    // Returns a dataset (kills page execution if there is an error)
-   function Select(&$Context, $SqlBuilder, $SenderObject, $SenderMethod, $ErrorMessage, $KillOnFail = "1") {
+   function Select($SqlBuilder, $SenderObject, $SenderMethod, $ErrorMessage, $KillOnFail = "1") {
       $KillOnFail = ForceBool($KillOnFail, 0);
-		$DataSet = mysql_query($SqlBuilder->GetSelect(), $this->Connection);
+		$Connection = $this->GetConnection();
+		$DataSet = mysql_query($SqlBuilder->GetSelect(), $Connection);
 		if (!$DataSet) {
-			$Context->ErrorManager->AddError($Context, $SenderObject, $SenderMethod, $ErrorMessage, mysql_error($this->Connection), $KillOnFail);
+			$this->Context->ErrorManager->AddError($this->Context, $SenderObject, $SenderMethod, $ErrorMessage, mysql_error($Connection), $KillOnFail);
 			return false;
 		} else {
 			return $DataSet;
@@ -128,13 +172,14 @@ class MySQL extends Database {
 	 }
 
    // Returns the affected rows if successful (kills page execution if there is an error)
-   function Update(&$Context, $SqlBuilder, $SenderObject, $SenderMethod, $ErrorMessage, $KillOnFail = "1") {
+   function Update($SqlBuilder, $SenderObject, $SenderMethod, $ErrorMessage, $KillOnFail = "1") {
       $KillOnFail = ForceBool($KillOnFail, 0);
-		if (!mysql_query($SqlBuilder->GetUpdate(), $this->Connection)) {
-			$Context->ErrorManager->AddError($Context, $SenderObject, $SenderMethod, $ErrorMessage, mysql_error($this->Connection), $KillOnFail);
+		$Connection = $this->GetFarmConnection();
+		if (!mysql_query($SqlBuilder->GetUpdate(), $Connection)) {
+			$this->Context->ErrorManager->AddError($this->Context, $SenderObject, $SenderMethod, $ErrorMessage, mysql_error($Connection), $KillOnFail);
 			return false;
 		} else {
-			return ForceInt(mysql_affected_rows($this->Connection), 0);
+			return ForceInt(mysql_affected_rows($Connection), 0);
 		}
    }
 }

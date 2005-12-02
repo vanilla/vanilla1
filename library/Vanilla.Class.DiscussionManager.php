@@ -33,7 +33,7 @@ class DiscussionManager extends Delegation {
 		$s->AddWhere("t.DiscussionID", $IncludeDiscussionID, "=", "or");
 		$s->AddOrderBy("DateLastActive", "t", "desc");
 		if ($RecordsToReturn > 0) $s->AddLimit(0, $RecordsToReturn);
-		return $this->Context->Database->Select($this->Context, $s, $this->Name, "GetBookmarkedDiscussionsByUserID", "An error occurred while retrieving discussions.");
+		return $this->Context->Database->Select($s, $this->Name, "GetBookmarkedDiscussionsByUserID", "An error occurred while retrieving discussions.");
 	}
 	
 	// Returns a SqlBuilder object with all of the Discussion properties already defined in the select
@@ -137,7 +137,7 @@ class DiscussionManager extends Delegation {
 		$s->AddWhere("t.DiscussionID", $DiscussionID, "=");
 		$this->GetDiscussionWhisperFilter($s);
 
-		$result = $this->Context->Database->Select($this->Context, $s, $this->Name, "GetDiscussionById", "An error occurred while attempting to retrieve the requested discussion.");
+		$result = $this->Context->Database->Select($s, $this->Name, "GetDiscussionById", "An error occurred while attempting to retrieve the requested discussion.");
 		if ($this->Context->Database->RowCount($result) == 0) {
 			$this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrDiscussionNotFound"));
 			$Discussion = false;
@@ -155,13 +155,13 @@ class DiscussionManager extends Delegation {
 				$s->AddFieldNameValue("UserID", $this->Context->Session->UserID);
 				$s->AddFieldNameValue("DiscussionID", $DiscussionID);
 				// fail silently
-            $this->Context->Database->Insert($this->Context, $s, $this->Name, "GetDiscussionById", "An error occurred while recording this discussion viewing.", 0, 0);
+            $this->Context->Database->Insert($s, $this->Name, "GetDiscussionById", "An error occurred while recording this discussion viewing.", 0, 0);
 			} else {
 				// otherwise update
             $s->AddWhere("UserID", $this->Context->Session->UserID, "=");
             $s->AddWhere("DiscussionID", $Discussion->DiscussionID, "=");
 				// fail silently
-            $this->Context->Database->Update($this->Context, $s, $this->Name, "GetDiscussionById", "An error occurred while recording this discussion viewing.", 0);
+            $this->Context->Database->Update($s, $this->Name, "GetDiscussionById", "An error occurred while recording this discussion viewing.", 0);
 			}
 		}
 		return $this->Context->WarningCollector->Iif($Discussion, false);
@@ -221,7 +221,7 @@ class DiscussionManager extends Delegation {
 		
 		$this->GetDiscussionWhisperFilter($s);
 
-		$result = $this->Context->Database->Select($this->Context, $s, $this->Name, "GetDiscussionCount", "An error occurred while retrieving Discussion information.");
+		$result = $this->Context->Database->Select($s, $this->Name, "GetDiscussionCount", "An error occurred while retrieving Discussion information.");
 		while ($rows = $this->Context->Database->GetRow($result)) {
 			$TotalNumberOfRecords = $rows['Count'];
 		}
@@ -278,7 +278,7 @@ class DiscussionManager extends Delegation {
 		$s->AddOrderBy("Sticky", "t");
 		$s->AddOrderBy("t.DateLastActive", "", "desc");
 		if ($RowsPerPage > 0) $s->AddLimit($FirstRecord, $RowsPerPage);
-		return $this->Context->Database->Select($this->Context, $s, $this->Name, "GetDiscussionList", "An error occurred while retrieving discussions.");
+		return $this->Context->Database->Select($s, $this->Name, "GetDiscussionList", "An error occurred while retrieving discussions.");
 	}
 
 	function GetDiscussionsByUserID($UserID, $RecordsToReturn = "0") {
@@ -292,7 +292,7 @@ class DiscussionManager extends Delegation {
 		$s->AddOrderBy("DateLastActive", "t", "desc");
 		if ($RecordsToReturn > 0) $s->AddLimit(0, $RecordsToReturn);
 
-		return $this->Context->Database->Select($this->Context, $s, $this->Name, "GetDiscussionsByUserID", "An error occurred while retrieving discussions.");
+		return $this->Context->Database->Select($s, $this->Name, "GetDiscussionsByUserID", "An error occurred while retrieving discussions.");
 	}
 	
 	function GetDiscussionSearch($RowsPerPage, $CurrentPage, $Search) {
@@ -312,7 +312,7 @@ class DiscussionManager extends Delegation {
 			if ($this->Context->Configuration["ENABLE_WHISPERS"]) $s->AddOrderBy("greatest(tuwt.DateLastActive, tuwf.DateLastActive, t.DateLastActive)", "", "desc");
 		}
 
-		return $this->Context->Database->Select($this->Context, $s, $this->Name, "GetDiscussionSearch", "An error occurred while retrieving search results.");
+		return $this->Context->Database->Select($s, $this->Name, "GetDiscussionSearch", "An error occurred while retrieving search results.");
 	}
 	
 	function GetDiscussionWhisperFilter(&$SqlBuilder) {
@@ -351,7 +351,7 @@ class DiscussionManager extends Delegation {
 		$s->AddOrderBy("DateLastActive", "t", "desc");
 		if ($RecordsToReturn > 0) $s->AddLimit(0, $RecordsToReturn);
 
-		return $this->Context->Database->Select($this->Context, $s, $this->Name, "GetPrivateDiscussionsByUserID", "An error occurred while retrieving private discussions.");
+		return $this->Context->Database->Select($s, $this->Name, "GetPrivateDiscussionsByUserID", "An error occurred while retrieving private discussions.");
 	}
 	
 	function GetSearchBuilder($Search) {
@@ -389,7 +389,7 @@ class DiscussionManager extends Delegation {
 		$s->AddOrderBy("LastViewed", "utw", "desc");
 		if ($RecordsToReturn > 0) $s->AddLimit(0, $RecordsToReturn);
 
-		return $this->Context->Database->Select($this->Context, $s, $this->Name, "GetViewedDiscussionsByUserID", "An error occurred while retrieving discussions.");
+		return $this->Context->Database->Select($s, $this->Name, "GetViewedDiscussionsByUserID", "An error occurred while retrieving discussions.");
 	}
 	
 	function SaveDiscussion($Discussion) {
@@ -408,7 +408,7 @@ class DiscussionManager extends Delegation {
 				$s->AddWhere("AuthUserID", $this->Context->Session->UserID, "=");
 				$s->AddOrderBy("DateCreated", "d", "desc");
 				$s->AddLimit(0,1);
-				$LastDiscussionData = $this->Context->Database->Select($this->Context, $s, $this->Name, "SaveDiscussion", "An error occurred while retrieving your last discussion.");
+				$LastDiscussionData = $this->Context->Database->Select($s, $this->Name, "SaveDiscussion", "An error occurred while retrieving your last discussion.");
 				while ($Row = $this->Context->Database->GetRow($LastDiscussionData)) {
 					$Discussion->DiscussionID = ForceInt($Row["DiscussionID"], 0);
 				}
@@ -468,11 +468,11 @@ class DiscussionManager extends Delegation {
 							$s->AddFieldNameValue("DateLastactive", MysqlDateTime());
 							$s->AddFieldNameValue("CountComments", 0);
                      $s->AddFieldNameValue("WhisperUserID", $Discussion->WhisperUserID);
-							$Discussion->DiscussionID = $this->Context->Database->Insert($this->Context, $s, $this->Name, "NewDiscussion", "An error occurred while creating a new discussion.");
+							$Discussion->DiscussionID = $this->Context->Database->Insert($s, $this->Name, "NewDiscussion", "An error occurred while creating a new discussion.");
 							$Discussion->Comment->DiscussionID = $Discussion->DiscussionID;
 						} else {
 							$s->AddWhere("DiscussionID", $Discussion->DiscussionID, "=");
-							$this->Context->Database->Update($this->Context, $s, $this->Name, "NewDiscussion", "An error occurred while updating the discussion.");
+							$this->Context->Database->Update($s, $this->Name, "NewDiscussion", "An error occurred while updating the discussion.");
 						}
 					}
 					
@@ -486,7 +486,7 @@ class DiscussionManager extends Delegation {
 							$s->SetMainTable("Discussion", "d");
 							$s->AddFieldNameValue("FirstCommentID", $Discussion->Comment->CommentID);
 							$s->AddWhere("DiscussionID", $Discussion->Comment->DiscussionID, "=");
-							$this->Context->Database->Update($this->Context, $s, $this->Name, "NewDiscussion", "An error occurred while updating discussion properties.");
+							$this->Context->Database->Update($s, $this->Name, "NewDiscussion", "An error occurred while updating discussion properties.");
 						}
 					}
 				}
@@ -515,7 +515,7 @@ class DiscussionManager extends Delegation {
 					if (!$this->Context->Session->User->Permission("PERMISSION_STICK_DISCUSSIONS")) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrPermissionStickDiscussions"));
 					break;
 			}	
-			if ($this->Context->Database->Update($this->Context, $s, $this->Name, "SwitchDiscussionProperty", "An error occurred while manipulating the ".$PropertyName." property of the discussion.", 0) <= 0) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrPermissionDiscussionEdit"));
+			if ($this->Context->Database->Update($s, $this->Name, "SwitchDiscussionProperty", "An error occurred while manipulating the ".$PropertyName." property of the discussion.", 0) <= 0) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrPermissionDiscussionEdit"));
 		}
 		return $this->Context->WarningCollector->Iif();
 	}

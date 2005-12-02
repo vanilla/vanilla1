@@ -86,7 +86,7 @@ if (in_array($Context->SelfUrl, array("account.php", "comments.php", "post.php",
          $s->AddSelect(array("ClippingID", "UserID", "Label", "Contents"), "c");
          $s->AddWhere("ClippingID", $ClippingID, "=");
          $s->AddWhere("UserID", $this->Context->Session->UserID, "=");
-         $ResultSet = $this->Context->Database->Select($this->Context, $s, $this->Name, "GetClippingById", "An error occurred while attempting to retrieve the requested Clipping.");
+         $ResultSet = $this->Context->Database->Select($s, $this->Name, "GetClippingById", "An error occurred while attempting to retrieve the requested Clipping.");
          $Clipping = false;
          while ($rows = $this->Context->Database->GetRow($ResultSet)) {
             $Clipping = $this->Context->ObjectFactory->NewObject($this->Context, "Clipping");
@@ -100,7 +100,7 @@ if (in_array($Context->SelfUrl, array("account.php", "comments.php", "post.php",
          $s->SetMainTable("Clipping", "c");
          $s->AddSelect(array("ClippingID", "UserID", "Label", "Contents"), "c");
          $s->AddWhere("UserID", $UserID, "=");
-         return $this->Context->Database->Select($this->Context, $s, $this->Name, "GetClippingsByUserID", "An error occurred while attempting to retrieve Clipping items.");
+         return $this->Context->Database->Select($s, $this->Name, "GetClippingsByUserID", "An error occurred while attempting to retrieve Clipping items.");
       }
       
       function RemoveClipping($ClippingID) {
@@ -108,7 +108,7 @@ if (in_array($Context->SelfUrl, array("account.php", "comments.php", "post.php",
          $s->SetMainTable("Clipping", "c");
          $s->AddWhere("ClippingID", $ClippingID, "=");
          $s->AddWhere("UserID", $this->Context->Session->UserID, "=");
-         $this->Context->Database->Delete($this->Context, $s, $this->Name, "RemoveClipping", "An error occurred while removing the Clipping item.");
+         $this->Context->Database->Delete($s, $this->Name, "RemoveClipping", "An error occurred while removing the Clipping item.");
          return true;
       }
       
@@ -124,10 +124,10 @@ if (in_array($Context->SelfUrl, array("account.php", "comments.php", "post.php",
             if ($Clipping->ClippingID > 0) {
                $s->AddWhere("ClippingID", $Clipping->ClippingID, "=");
                $s->AddWhere("UserID", $this->Context->Session->UserID, "=");
-               $this->Context->Database->Update($this->Context, $s, $this->Name, "SaveClipping", "An error occurred while saving your Clipping item.");
+               $this->Context->Database->Update($s, $this->Name, "SaveClipping", "An error occurred while saving your Clipping item.");
             } else {
                $s->AddFieldNameValue("UserID", $this->Context->Session->UserID);
-               $this->Context->Database->Insert($this->Context, $s, $this->Name, "SaveClipping", "An error occurred while creating a new item for your Clipping.");
+               $this->Context->Database->Insert($s, $this->Name, "SaveClipping", "An error occurred while creating a new item for your Clipping.");
             }
          }
          return $this->Context->WarningCollector->Iif();

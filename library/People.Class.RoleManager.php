@@ -29,7 +29,7 @@ class RoleManager {
 		$s->AddWhere("r.RoleID", $RoleID, "=");
 
 		$Role = $this->Context->ObjectFactory->NewContextObject($this->Context, "Role");
-		$result = $this->Context->Database->Select($this->Context, $s, $this->Name, "GetRoleById", "An error occurred while attempting to retrieve the requested role.");
+		$result = $this->Context->Database->Select($s, $this->Name, "GetRoleById", "An error occurred while attempting to retrieve the requested role.");
 		if ($this->Context->Database->RowCount($result) == 0) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrRoleNotFound"));
 		while ($rows = $this->Context->Database->GetRow($result)) {
 			$Role->GetPropertiesFromDataSet($rows);
@@ -43,7 +43,7 @@ class RoleManager {
 		$s = $this->GetRoleBuilder();
 		$s->AddOrderBy("Priority", "r", "asc");
 		$s->AddWhere("RoleID", $RoleToExclude, "<>");
-		return $this->Context->Database->Select($this->Context, $s, $this->Name, "GetRoles", "An error occurred while attempting to retrieve roles.");
+		return $this->Context->Database->Select($s, $this->Name, "GetRoles", "An error occurred while attempting to retrieve roles.");
 	}
 	
 	function RemoveRole($RemoveRoleID, $ReplacementRoleID) {
@@ -51,7 +51,7 @@ class RoleManager {
 		$s->SetMainTable("User", "u");
 		$s->AddSelect("UserID", "u");
 		$s->AddWhere("RoleID", $RemoveRoleID, "=");
-		$OldRoleUsers = $this->Context->Database->Select($this->Context, $s, $this->Name, "RemoveRole", "An error occurred while attempting to remove the role.");
+		$OldRoleUsers = $this->Context->Database->Select($s, $this->Name, "RemoveRole", "An error occurred while attempting to remove the role.");
 		
 		if ($this->Context->Database->RowCount($OldRoleUsers) > 0) {
 			$um = $this->Context->ObjectFactory->NewContextObject($this->Context, "UserManager");
@@ -70,7 +70,7 @@ class RoleManager {
 		$s->SetMainTable("Role", "r");
 		$s->AddFieldNameValue("Active", "0");
 		$s->AddWhere("RoleID", $RemoveRoleID, "=");
-		$this->Context->Database->Update($this->Context, $s, $this->Name, "RemoveRole", "An error occurred while attempting to remove the role.");
+		$this->Context->Database->Update($s, $this->Name, "RemoveRole", "An error occurred while attempting to remove the role.");
 		return 1;
 	}
 	
@@ -98,9 +98,9 @@ class RoleManager {
 				$s->AddFieldNameValue("Permissions", $Role->Permissions);
 				if ($Role->RoleID > 0) {
 					$s->AddWhere("RoleID", $Role->RoleID, "=");
-					$this->Context->Database->Update($this->Context, $s, $this->Name, "SaveRole", "An error occurred while attempting to update the role.");
+					$this->Context->Database->Update($s, $this->Name, "SaveRole", "An error occurred while attempting to update the role.");
 				} else {
-					$Role->RoleID = $this->Context->Database->Insert($this->Context, $s, $this->Name, "SaveRole", "An error occurred while creating a new role.");
+					$Role->RoleID = $this->Context->Database->Insert($s, $this->Name, "SaveRole", "An error occurred while creating a new role.");
 				}
 			}
 		}

@@ -30,7 +30,7 @@ if ($Search != "") {
    $s->AddWhere("Name", $Search."%", "like");
    $s->AddOrderBy("Name", "u", "asc");
    $s->AddLimit(0,10);
-   $ResultSet = $Context->Database->Select($Context, $s, "Ajax", "AutoComplete", "An error occurred while retrieving autocomplete items.", 0);
+   $ResultSet = $Context->Database->Select($s, "Ajax", "AutoComplete", "An error occurred while retrieving autocomplete items.", 0);
    $Name = "";
    $Loop = 1;
    if ($ResultSet) {

@@ -29,7 +29,7 @@ class CategoryManager {
 		}
 		// Order by the category name
 		$s->AddOrderBy("Order", "c", "asc");
-		return $this->Context->Database->Select($this->Context, $s, $this->Name, "GetCategories", "An error occurred while retrieving categories.");
+		return $this->Context->Database->Select($s, $this->Name, "GetCategories", "An error occurred while retrieving categories.");
 	}
 	
 	function GetCategoryBuilder($IncludeCount = "0") {
@@ -61,7 +61,7 @@ class CategoryManager {
 		$Category = $this->Context->ObjectFactory->NewObject($this->Context, "Category");
 		$s = $this->GetCategoryBuilder();
 		$s->AddWhere("c.CategoryID", $CategoryID, "=");
-		$ResultSet = $this->Context->Database->Select($this->Context, $s, $this->Name, "GetCategoryById", "An error occurred while attempting to retrieve the requested category.");
+		$ResultSet = $this->Context->Database->Select($s, $this->Name, "GetCategoryById", "An error occurred while attempting to retrieve the requested category.");
 		if ($this->Context->Database->RowCount($ResultSet) == 0) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrCategoryNotFound"));
 		while ($rows = $this->Context->Database->GetRow($ResultSet)) {
 			$Category->GetPropertiesFromDataSet($rows);
@@ -77,7 +77,7 @@ class CategoryManager {
 		$s->AddSelect("Blocked", "crb", "Blocked", "coalesce", "0");
 		$s->AddWhere("r.Active", "1", "=");
 		$s->AddOrderBy("Priority", "r", "asc");
-		return $this->Context->Database->Select($this->Context, $s, $this->Name, "GetCategoryRoleBlocks", "An error occurred while retrieving category role blocks.");
+		return $this->Context->Database->Select($s, $this->Name, "GetCategoryRoleBlocks", "An error occurred while retrieving category role blocks.");
 	}
 		
 	function RemoveCategory($RemoveCategoryID, $ReplacementCategoryID) {
@@ -91,19 +91,19 @@ class CategoryManager {
 		$s->SetMainTable("Discussion", "d");
 		$s->AddFieldNameValue("CategoryID", $ReplacementCategoryID);
 		$s->AddWhere("CategoryID", $RemoveCategoryID, "=");
-		$this->Context->Database->Update($this->Context, $s, $this->Name, "RemoveCategory", "An error occurred while attempting to re-assign user categorizations.");
+		$this->Context->Database->Update($s, $this->Name, "RemoveCategory", "An error occurred while attempting to re-assign user categorizations.");
 		
 		// remove user blocks
 		$s->Clear();
 		$s->SetMainTable("CategoryBlock", "b");
 		$s->AddWhere("CategoryID", $RemoveCategoryID, "=");
-		$this->Context->Database->Delete($this->Context, $s, $this->Name, "RemoveCategory", "An error occurred while attempting to remove user-assigned blocks on the selected category.");
+		$this->Context->Database->Delete($s, $this->Name, "RemoveCategory", "An error occurred while attempting to remove user-assigned blocks on the selected category.");
 		
 		// Now remove the category itself
       $s->Clear();
 		$s->SetMainTable("Category", "c");
 		$s->AddWhere("CategoryID", $RemoveCategoryID, "=");
-		$this->Context->Database->Delete($this->Context, $s, $this->Name, "RemoveCategory", "An error occurred while attempting to remove the category.");
+		$this->Context->Database->Delete($s, $this->Name, "RemoveCategory", "An error occurred while attempting to remove the category.");
 		return true;
 	}
 	
@@ -117,17 +117,17 @@ class CategoryManager {
 			
 			// If creating a new object
 			if ($Category->CategoryID == 0) {
-				$Category->CategoryID = $this->Context->Database->Insert($this->Context, $s, $this->Name, "SaveCategory", "An error occurred while creating a new category.");
+				$Category->CategoryID = $this->Context->Database->Insert($s, $this->Name, "SaveCategory", "An error occurred while creating a new category.");
 			} else 	{
 				$s->AddWhere("CategoryID", $Category->CategoryID, "=");
-				$this->Context->Database->Update($this->Context, $s, $this->Name, "SaveCategory", "An error occurred while attempting to update the category.");
+				$this->Context->Database->Update($s, $this->Name, "SaveCategory", "An error occurred while attempting to update the category.");
 			}
 			
 			// Now update the blocked roles
          $s->Clear();
 			$s->SetMainTable("CategoryRoleBlock", "crb");
 			$s->AddWhere("CategoryID", $Category->CategoryID, "=");
-			$this->Context->Database->Delete($this->Context, $s, $this->Name, "SaveCategory", "An error occurred while removing old role block definitions for this category.");
+			$this->Context->Database->Delete($s, $this->Name, "SaveCategory", "An error occurred while removing old role block definitions for this category.");
 			
 			$Category->AllowedRoles[] = 0;
 			
@@ -136,7 +136,7 @@ class CategoryManager {
 			$s->AddSelect("RoleID", "r");
 			$s->AddWhere("Active", 1, "=");
 			$s->AddWhere("RoleID", "(".implode(",",$Category->AllowedRoles).")", "not in", "and", "", 0);
-			$BlockedRoles = $this->Context->Database->Select($this->Context, $s, $this->Name, "SaveCategory", "An error occurred while retrieving blocked roles.");
+			$BlockedRoles = $this->Context->Database->Select($s, $this->Name, "SaveCategory", "An error occurred while retrieving blocked roles.");
 			
 			while ($Row = $this->Context->Database->GetRow($BlockedRoles)) {
 				$RoleID = ForceInt($Row["RoleID"], 0);
@@ -146,7 +146,7 @@ class CategoryManager {
 					$s->AddFieldNameValue("CategoryID", $Category->CategoryID);
 					$s->AddFieldNameValue("RoleID", $RoleID);
 					$s->AddFieldNameValue("Blocked", 1);
-					$this->Context->Database->Insert($this->Context, $s, $this->Name, "SaveCategory", "An error occurred while adding new role block definitions for this category.");
+					$this->Context->Database->Insert($s, $this->Name, "SaveCategory", "An error occurred while adding new role block definitions for this category.");
 				}
 			}
 		}
@@ -163,7 +163,7 @@ class CategoryManager {
 				$s->SetMainTable("Category", "c");
 				$s->AddFieldNameValue("`Order`", $i);
 				$s->AddWhere("CategoryID", $CategoryID, "=");
-				$this->Context->Database->Update($this->Context, $s, $this->Name, "SaveCategoryOrder", "An error occurred while attempting to update the category sort order.", 0);
+				$this->Context->Database->Update($s, $this->Name, "SaveCategoryOrder", "An error occurred while attempting to update the category sort order.", 0);
 			}
 		}
 	}

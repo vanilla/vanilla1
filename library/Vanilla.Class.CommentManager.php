@@ -74,7 +74,7 @@ class CommentManager {
 		
 		$s->AddWhere("m.CommentID", $CommentID, "=");
 			
-		$result = $this->Context->Database->Select($this->Context, $s, $this->Name, "GetCommentById", "An error occurred while attempting to retrieve the requested comment.");
+		$result = $this->Context->Database->Select($s, $this->Name, "GetCommentById", "An error occurred while attempting to retrieve the requested comment.");
 		if ($this->Context->Database->RowCount($result) == 0) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrCommentNotFound"));
 		while ($rows = $this->Context->Database->GetRow($result)) {
 			$Comment->GetPropertiesFromDataSet($rows, $UserID);
@@ -115,7 +115,7 @@ class CommentManager {
 		}
 
 		$s->AddWhere("m.DiscussionID", $DiscussionID, "=");
-		$result = $this->Context->Database->Select($this->Context, $s, $this->Name, "GetCommentCount", "An error occurred while retrieving comment information.");
+		$result = $this->Context->Database->Select($s, $this->Name, "GetCommentCount", "An error occurred while retrieving comment information.");
 		while ($rows = $this->Context->Database->GetRow($result)) {
 			$TotalNumberOfRecords = $rows['Count'];
 		}
@@ -162,7 +162,7 @@ class CommentManager {
 		$s->AddOrderBy("DateCreated", "m", "asc");
 		if ($RowsPerPage > 0) $s->AddLimit($FirstRecord, $RowsPerPage);
 
-		return $this->Context->Database->Select($this->Context, $s, $this->Name, "GetCommentList", "An error occurred while attempting to retrieve the requested comments.");
+		return $this->Context->Database->Select($s, $this->Name, "GetCommentList", "An error occurred while attempting to retrieve the requested comments.");
 	}
 	
 	function GetCommentSearch($RowsPerPage, $CurrentPage, $Search) {
@@ -176,7 +176,7 @@ class CommentManager {
 			$FirstRecord = ($CurrentPage * $RowsPerPage) - $RowsPerPage;
 		}		
 		if ($RowsPerPage > 0) $s->AddLimit($FirstRecord, $RowsPerPage+1);
-		return $this->Context->Database->Select($this->Context, $s, $this->Name, "GetCommentSearch", "An error occurred while retrieving search results.");
+		return $this->Context->Database->Select($s, $this->Name, "GetCommentSearch", "An error occurred while retrieving search results.");
 	}
 	
 	function GetSearchBuilder($Search) {
@@ -284,7 +284,7 @@ class CommentManager {
 				$s->AddWhere("DiscussionID", $Comment->DiscussionID, "=");
 				$s->AddOrderBy("DateCreated", "c", "desc");
 				$s->AddLimit(0,1);
-				$LastCommentData = $this->Context->Database->Select($this->Context, $s, $this->Name, "SaveComment", "An error occurred while retrieving your last comment in this discussion.");
+				$LastCommentData = $this->Context->Database->Select($s, $this->Name, "SaveComment", "An error occurred while retrieving your last comment in this discussion.");
 				while ($Row = $this->Context->Database->GetRow($LastCommentData)) {
 					$Comment->CommentID = ForceInt($Row["CommentID"], 0);
 				}
@@ -323,7 +323,7 @@ class CommentManager {
 							$s->AddFieldNameValue("DateCreated", MysqlDateTime());
                      $s->AddFieldNameValue("WhisperUserID", $Comment->WhisperUserID);
 							
-							$Comment->CommentID = $this->Context->Database->Insert($this->Context, $s, $this->Name, "SaveComment", "An error occurred while creating a new discussion comment.");
+							$Comment->CommentID = $this->Context->Database->Insert($s, $this->Name, "SaveComment", "An error occurred while creating a new discussion comment.");
 						
 							// If there were no errors, update the discussion count & time
 							if ($Comment->WhisperUserID) {
@@ -337,7 +337,7 @@ class CommentManager {
 									$s->AddFieldNameValue("LastUserID", $this->Context->Session->UserID);
 									$s->AddWhere("DiscussionID", $Comment->DiscussionID, "=");
 									$s->AddWhere("WhisperToUserID", $Comment->WhisperUserID, "=");
-									if ($this->Context->Database->Update($this->Context, $s, $this->Name, "SaveComment", "An error occurred while updating the discussion's comment summary.") <= 0) {
+									if ($this->Context->Database->Update($s, $this->Name, "SaveComment", "An error occurred while updating the discussion's comment summary.") <= 0) {
 										// If no records were updated, then insert a new row to the table for this discussion/user whisper
 										$s->Clear();
 										$s->SetMainTable("DiscussionUserWhisperTo", "tuwt");
@@ -346,7 +346,7 @@ class CommentManager {
 										$s->AddFieldNameValue("DiscussionID", $Comment->DiscussionID);
 										$s->AddFieldNameValue("WhisperToUserID", $Comment->WhisperUserID);
 										$s->AddFieldNameValue("LastUserID", $this->Context->Session->UserID);
-										$this->Context->Database->Insert($this->Context, $s, $this->Name, "SaveComment", "An error occurred while updating the discussion's comment summary.");
+										$this->Context->Database->Insert($s, $this->Name, "SaveComment", "An error occurred while updating the discussion's comment summary.");
 									}
 								}
 								// Whisper-from table
@@ -357,7 +357,7 @@ class CommentManager {
 								$s->AddFieldNameValue("LastUserID", $this->Context->Session->UserID);
 								$s->AddWhere("DiscussionID", $Comment->DiscussionID, "=");
 								$s->AddWhere("WhisperFromUserID", $this->Context->Session->UserID, "=");
-								if ($this->Context->Database->Update($this->Context, $s, $this->Name, "SaveComment", "An error occurred while updating the discussion's comment summary.") <= 0) {
+								if ($this->Context->Database->Update($s, $this->Name, "SaveComment", "An error occurred while updating the discussion's comment summary.") <= 0) {
 									// If no records were updated, then insert a new row to the table for this discussion/user whisper
 									$s->Clear();
 									$s->SetMainTable("DiscussionUserWhisperFrom", "tuwf");
@@ -366,7 +366,7 @@ class CommentManager {
 									$s->AddFieldNameValue("DiscussionID", $Comment->DiscussionID);
 									$s->AddFieldNameValue("WhisperFromUserID", $this->Context->Session->UserID);
 									$s->AddFieldNameValue("LastUserID", $this->Context->Session->UserID);
-									$this->Context->Database->Insert($this->Context, $s, $this->Name, "SaveComment", "An error occurred while updating the discussion's comment summary.");
+									$this->Context->Database->Insert($s, $this->Name, "SaveComment", "An error occurred while updating the discussion's comment summary.");
 								}
 								// Update the discussion table
 								$s->Clear();
@@ -376,7 +376,7 @@ class CommentManager {
 								$s->AddFieldNameValue("WhisperFromLastUserID", $this->Context->Session->UserID);
 								$s->AddFieldNameValue("TotalWhisperCount", "TotalWhisperCount+1", 0);
 								$s->AddWhere("DiscussionID", $Comment->DiscussionID, "=");
-								$this->Context->Database->Update($this->Context, $s, $this->Name, "SaveComment", "An error occurred while updating the discussion's whisper summary.");
+								$this->Context->Database->Update($s, $this->Name, "SaveComment", "An error occurred while updating the discussion's whisper summary.");
 							} else {
 								$s->Clear();
 								$s->SetMainTable("Discussion", "t");
@@ -384,7 +384,7 @@ class CommentManager {
 								$s->AddFieldNameValue("DateLastActive", MysqlDateTime());
 								$s->AddFieldNameValue("LastUserID", $this->Context->Session->UserID);
 								$s->AddWhere("DiscussionID", $Comment->DiscussionID, "=");
-								$this->Context->Database->Update($this->Context, $s, $this->Name, "SaveComment", "An error occurred while updating the discussion's comment summary.");
+								$this->Context->Database->Update($s, $this->Name, "SaveComment", "An error occurred while updating the discussion's comment summary.");
 							}
 						}
 					} else {
@@ -397,7 +397,7 @@ class CommentManager {
 						$s->SetMainTable("Comment", "m");
 						$s->AddSelect(array("AuthUserID", "WhisperUserID"), "m");
 						$s->AddWhere("CommentID", $Comment->CommentID, "=");
-						$CommentData = $this->Context->Database->Select($this->Context, $s, $this->Name, "SaveComment", "An error occurred while retrieving information about the comment.");
+						$CommentData = $this->Context->Database->Select($s, $this->Name, "SaveComment", "An error occurred while retrieving information about the comment.");
 						$WhisperToUserID = 0;
 						$WhisperFromUserID = 0;
 						while ($Row = $this->Context->Database->GetRow($CommentData)) {
@@ -440,7 +440,7 @@ class CommentManager {
 						$s->AddFieldNameValue("EditUserID", $this->Context->Session->UserID);
 						$s->AddFieldNameValue("DateEdited", MysqlDateTime());
 						$s->AddWhere("CommentID", $Comment->CommentID, "=");
-						$this->Context->Database->Update($this->Context, $s, $this->Name, "SaveComment", "An error occurred while attempting to update the discussion comment.");
+						$this->Context->Database->Update($s, $this->Name, "SaveComment", "An error occurred while attempting to update the discussion comment.");
 					}
 				}
 			}
@@ -463,7 +463,7 @@ class CommentManager {
 			$s->AddWhere("CommentID", $CommentID, "=");
 			// Don't touch comments that are already switched to the selected status
 			$s->AddWhere("Deleted", $Switch, "<>");
-			$CommentData = $this->Context->Database->Select($this->Context, $s, $this->Name, "SwitchCommentProperty", "An error occurred while retrieving information about the comment.");
+			$CommentData = $this->Context->Database->Select($s, $this->Name, "SwitchCommentProperty", "An error occurred while retrieving information about the comment.");
 			$WhisperToUserID = 0;
 			$WhisperFromUserID = 0;
 			while ($Row = $this->Context->Database->GetRow($CommentData)) {
@@ -490,7 +490,7 @@ class CommentManager {
 				$s->AddFieldNameValue("DateDeleted", MysqlDateTime());
 			}
 			$s->AddWhere("CommentID", $CommentID, "=");
-			$this->Context->Database->Update($this->Context, $s, $this->Name, "SwitchCommentProperty", "An error occurred while marking the comment as inactive.");
+			$this->Context->Database->Update($s, $this->Name, "SwitchCommentProperty", "An error occurred while marking the comment as inactive.");
 		}
 		return $this->Context->WarningCollector->Iif();
 	}
@@ -504,7 +504,7 @@ class CommentManager {
 		$s->SetMainTable("Discussion", "d");
 		$s->AddFieldNameValue("CountComments", "CountComments".$Math."1", 0);
 		$s->AddWhere("DiscussionID", $DiscussionID, "=");
-		$this->Context->Database->Update($this->Context, $s, $this->Name, "UpdateCommentCount", "An error occurred while manipulating the comment count for the discussion.");
+		$this->Context->Database->Update($s, $this->Name, "UpdateCommentCount", "An error occurred while manipulating the comment count for the discussion.");
 	}
 	
 	// Handles manipulating the count values for a discussion when adding, hiding, or removing a whispered comment
@@ -518,7 +518,7 @@ class CommentManager {
 		$s->SetMainTable("Discussion", "t");
 		$s->AddFieldNameValue("TotalWhisperCount", "TotalWhisperCount".$Math."1", 0);
 		$s->AddWhere("DiscussionID", $DiscussionID, "=");
-		$this->Context->Database->Update($this->Context, $s, $this->Name, "UpdateWhisperCount", "An error occurred while manipulating the discussion's comment count.");
+		$this->Context->Database->Update($s, $this->Name, "UpdateWhisperCount", "An error occurred while manipulating the discussion's comment count.");
 		
 		// 2. Update the DiscussionUserWhisperFrom table
 		$s->Clear();
@@ -527,7 +527,7 @@ class CommentManager {
 		$s->AddWhere("DiscussionID", $DiscussionID, "=");
 		$s->AddWhere("WhisperFromUserID", $WhisperFromUserID, "=");
 		// If no rows were affected, make sure to insert the data
-		if ($this->Context->Database->Update($this->Context, $s, $this->Name, "UpdateWhisperCount", "An error occurred while manipulating the whisper count for the user who sent the whisper.") == 0 && $Math == "+") {
+		if ($this->Context->Database->Update($s, $this->Name, "UpdateWhisperCount", "An error occurred while manipulating the whisper count for the user who sent the whisper.") == 0 && $Math == "+") {
 			$s->Clear();
 			$s->SetMainTable("DiscussionUserWhisperFrom", "tuwf");
 			$s->AddFieldNameValue("CountWhispers", "1");
@@ -535,7 +535,7 @@ class CommentManager {
 			$s->AddFieldNameValue("DiscussionID", $DiscussionID);
 			$s->AddFieldNameValue("WhisperFromUserID", $WhisperFromUserID);
 			$s->AddFieldNameValue("LastUserID", $WhisperFromUserID);
-			$this->Context->Database->Insert($this->Context, $s, $this->Name, "UpdateWhisperCount", "An error occurred while updating the discussion's comment summary.");
+			$this->Context->Database->Insert($s, $this->Name, "UpdateWhisperCount", "An error occurred while updating the discussion's comment summary.");
 		}
 		
 		// 3. Update the DiscussionUserWhisperTo table
@@ -547,7 +547,7 @@ class CommentManager {
 			$s->AddWhere("DiscussionID", $DiscussionID, "=");
 			$s->AddWhere("WhisperToUserID", $WhisperToUserID, "=");
 			// If no rows were affected, make sure to insert the data
-			if ($this->Context->Database->Update($this->Context, $s, $this->Name, "UpdateWhisperCount", "An error occurred while manipulating the whisper count for the user who received the whisper.") == 0 && $Math == "+") {
+			if ($this->Context->Database->Update($s, $this->Name, "UpdateWhisperCount", "An error occurred while manipulating the whisper count for the user who received the whisper.") == 0 && $Math == "+") {
 				$s->Clear();
 				$s->SetMainTable("DiscussionUserWhisperTo", "tuwt");
 				$s->AddFieldNameValue("CountWhispers", "1");
@@ -555,7 +555,7 @@ class CommentManager {
 				$s->AddFieldNameValue("DiscussionID", $DiscussionID);
 				$s->AddFieldNameValue("WhisperToUserID", $WhisperToUserID);
 				$s->AddFieldNameValue("LastUserID", $WhisperFromUserID);
-				$this->Context->Database->Insert($this->Context, $s, $this->Name, "UpdateWhisperCount", "An error occurred while updating the discussion's comment summary.");
+				$this->Context->Database->Insert($s, $this->Name, "UpdateWhisperCount", "An error occurred while updating the discussion's comment summary.");
 			}
 		}
 	}
@@ -585,7 +585,7 @@ class CommentManager {
 			$s->SetMainTable("User", "u");
 			$s->AddSelect("UserID", "u");
 			$s->AddWhere("Name", $Name, "=");
-			$Result = $this->Context->Database->Select($this->Context, $s, $this->Name, "ValidateWhisperUsername", "An error occurred while attempting to validate the username entered as the whisper recipient.");
+			$Result = $this->Context->Database->Select($s, $this->Name, "ValidateWhisperUsername", "An error occurred while attempting to validate the username entered as the whisper recipient.");
 			while ($Row = $this->Context->Database->GetRow($Result)) {
 				$Comment->WhisperUserID = ForceInt($Row["UserID"], 0);
 			}
