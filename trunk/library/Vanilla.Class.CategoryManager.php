@@ -45,15 +45,25 @@ class CategoryManager {
 			}
 			$s->AddSelect("DiscussionID", "d", "DiscussionCount", "count");
 		}
+		
+		$BlockCategoriesByRole = 1;
+		if ($this->Context->Session->User->Permission("PERMISSION_ADD_CATEGORIES")
+			|| $this->Context->Session->User->Permission("PERMISSION_EDIT_CATEGORIES")
+			|| $this->Context->Session->User->Permission("PERMISSION_REMOVE_CATEGORIES")) {
+				
+			$BlockCategoriesByRole = 0;
+		}
+		
+		
 		if ($this->Context->Session->UserID > 0) {
+			if ($BlockCategoriesByRole) $s->AddJoin("CategoryRoleBlock", "crb", "CategoryID and crb.RoleID = ".$this->Context->Session->User->RoleID, "c", "CategoryID", "left join");
 			$s->AddJoin("CategoryBlock", "b", "CategoryID and b.UserID = ".$this->Context->Session->UserID, "c", "CategoryID", "left join");
-			$s->AddJoin("CategoryRoleBlock", "crb", "CategoryID and crb.RoleID = ".$this->Context->Session->User->RoleID, "c", "CategoryID", "left join");
 			$s->AddSelect("Blocked", "b", "Blocked", "coalesce", "0");
 		} else {
 			$s->AddJoin("CategoryRoleBlock", "crb", "CategoryID and crb.RoleID = 1", "c", "CategoryID", "left join");
 		}
 		
-		$s->AddWhere("coalesce(crb.Blocked, 0)", "0", "=", "and", "", 0, 0);
+		if ($BlockCategoriesByRole) $s->AddWhere("coalesce(crb.Blocked, 0)", "0", "=", "and", "", 0, 0);
 		return $s;
 	}
 
