@@ -275,7 +275,7 @@ function FormatStringForDatabaseInput($inValue, $bStripHtml = "0") {
 	// $sReturn = stripslashes($inValue);
    $sReturn = $inValue;
 	if ($bStripHtml) $sReturn = trim(strip_tags($sReturn));
-	return addslashes($sReturn);
+	return MAGIC_QUOTES_ON ? $sReturn : addslashes($sReturn);
 }
 
 // Takes a user defined string and formats it for page display. 
@@ -427,7 +427,7 @@ function SliceString($InString, $Length) {
 }
 
 function Strip_Slashes($InString) {
-	return get_magic_quotes_gpc() ? stripslashes($InString) : $InString;		
+	return MAGIC_QUOTES_ON ? stripslashes($InString) : $InString;		
 }
 
 function SubtractDaysFromTimeStamp($TimeStamp, $NumberOfDaysToSubtract) {
@@ -481,7 +481,7 @@ function TimeDiff(&$Context, $Time, $TimeToCompare = "") {
 
 // Convert a datetime to a timestamp
 function UnixTimestamp($DateTime) {
-	if (preg_match("/^(\d\d\d\d)-(\d\d)-(\d\d) (\d\d):(\d\d):(\d\d)$/", $DateTime, $Matches)) {
+	if (preg_match("/^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/", $DateTime, $Matches)) {
 		$Year = $Matches[1];
 		$Month = $Matches[2];
 		$Day = $Matches[3];
@@ -490,7 +490,7 @@ function UnixTimestamp($DateTime) {
 		$Second = $Matches[6];
 		return mktime($Hour, $Minute, $Second, $Month, $Day, $Year);
 	
-	} elseif (preg_match("/^(\d\d\d\d)-(\d\d)-(\d\d)$/", $DateTime, $Matches)) {
+	} elseif (preg_match("/^(\d{4})-(\d{2})-(\d{2})$/", $DateTime, $Matches)) {
 		$Year = $Matches[1];
 		$Month = $Matches[2];
 		$Day = $Matches[3];	
