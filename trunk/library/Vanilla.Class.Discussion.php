@@ -168,7 +168,7 @@ class Discussion {
 		$this->WhisperUsername = Strip_Slashes($this->WhisperUsername);
 
 		// Load the comment
-      $this->Comment = $Context->ObjectFactory->NewContextObject($this->Context, "Comment");
+      $this->Comment = $Context->ObjectFactory->NewContextObject($Context, "Comment");
 		$this->Comment->GetPropertiesFromForm();
 	}
 	
