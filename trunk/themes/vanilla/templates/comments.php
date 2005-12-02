@@ -44,7 +44,7 @@ if ($this->Context->WarningCollector->Count() > 0) {
       
       $CommentList .= "<a name=\"Comment_".$Comment->CommentID."\"></a>
          <a name=\"Item_".$RowNumber."\"></a>
-         <div class=\"Comment ".$Comment->Status.($RowNumber==1?" FirstComment":"")."\">";
+         <div class=\"Comment ".$Comment->Status.($RowNumber==1?" FirstComment":"")."\" id=\"Comment_".$Comment->CommentID."\">";
          if ($Comment->Deleted) {
              $CommentList .= "<div class=\"ErrorContainer CommentHidden\">
                <div class=\"Error\">".$this->Context->GetDefinition("CommentHiddenOn")." ".date("F jS Y \a\\t g:ia", $Comment->DateDeleted)." ".$this->Context->GetDefinition("By")." ".$Comment->DeleteUsername.".</div>
@@ -83,7 +83,7 @@ if ($this->Context->WarningCollector->Count() > 0) {
          $this->CallDelegate("PostCommentOptionsRender");
          $CommentList .= "</div>";
          if ($Comment->AuthRoleDesc != "") $CommentList .= "<div class=\"CommentNotice\">".$Comment->AuthRoleDesc."</div>";
-         $CommentList .= "<div class=\"CommentBody\" id=\"Comment_".$Comment->CommentID."\">".$Comment->Body."</div>";
+         $CommentList .= "<div class=\"CommentBody\" id=\"CommentContents_".$Comment->CommentID."\">".$Comment->Body."</div>";
          if ($Comment->WhisperUserID > 0 && $Comment->WhisperUserID == $this->Context->Session->UserID) $CommentList .= "<div class=\"WhisperBack\"><a href=\"Javascript:WhisperBack('".$Comment->DiscussionID."', '".str_replace("'", "\'", $Comment->AuthUsername)."');\">".$this->Context->GetDefinition("WhisperBack")."</a></div>";
       $CommentList .= "</div>";
    }
