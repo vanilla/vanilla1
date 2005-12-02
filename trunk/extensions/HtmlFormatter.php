@@ -3,26 +3,28 @@
 Extension Name: Html Formatter
 Extension Url: http://lussumo.com/docs/
 Description: Allows html to be used in strings, but breaks out all "script" related activities.
-Version: 1.0
+Version: 2.0
 Author: SirNot
-Author Url: mailto:sirnot@gmail.com
+Author Url: N/A
 */
 
-//thanks to http://ha.ckers.org/xss.html and jos, for pointing that out to me
 class HtmlFormatter extends StringFormatter
 {
 	function Execute($String)
 	{
+		//because of those annoying possibilities such as <img src=">" onerror="alert('hi');">
+		$String = $this->ParseTags($String);
+		
 		$Patterns = array(
-			"/<[\/]*(link|iframe|frame|object|embed|style|applet).*?>/i", //inline styles'll be allowed, though
-			"/<(.+?)>/esi", //doing most of the work inside all tags
+			"/<[\/]*(link|iframe|frame|frameset|object|embed|style|applet|meta)[^<]*?>/i", //inline styles'll be allowed, though
+			"/<([^>]+)>/ei", 
 			"/s(?i)(cript)/", //now we can go through and cancel out any script tags
 			"/S(?i)(cript)/", 
 			"/&{(.+?)}/i" //js includes (haven't actually tried this XSS method, just read about it)
-		);//unused: "/<(.+?)\s+?on[\w]+\s*=[^>]+? >/i"
+		);
 		$Replacements = array(
 			'', 
-			'"<".$this->RemoveEvilAttribs(stripslashes("\\1")).">"', 
+			'"<".$this->RemoveEvilAttribs(str_replace(array(\'<\', \'>\', chr(0)), array(\'&lt;\', \'&gt;\', \' \'), $this->DecodeEntities(stripslashes("\\1")))).">"', 
 			"&#115;\\1", 
 			"&#83;\\1", 
 			"&amp;{\\1}" 
@@ -36,11 +38,69 @@ class HtmlFormatter extends StringFormatter
 		);
 	}
 	
+	function DecodeEntities($String)
+	{
+		$String = preg_replace(
+			array("/&#x([0-9a-f]{2})/ei", "/&#(0{0,7})([0-9]{0,7})[;]{0,1}/ei"), //note that order DOES matter
+			array('"&#".hexdec("\\1").";"', '"&#".stripslashes("\\2").";"'), 
+			$String);
+		return html_entity_decode($String);
+	}
+	
+	function ParseTags($String)
+	{
+		$Len = strlen($String);
+		$Out = '';
+		for($i = $Escape = $CurStr = $InTag = 0; $i < $Len; $i++)
+		{
+			$Got = 0;
+			if($InTag)
+			{
+				if($String[$i] == '"' || $String[$i] == '\'' || $String[$i] == '`')
+				{
+					if(!$Escape)
+					{
+						if(!$CurStr) $CurStr = $String[$i];
+						else $CurStr = 0;
+					}
+					else if($CurStr && @$String[$i+1] == '>') $InTag = $CurStr = 0; //in case we're mistaking escaped quotes for folder paths
+				}
+				else if($String[$i] == '<')
+				{
+					$Out .= '&lt;';
+					$Got = 1;
+				}
+				else if($String[$i] == '>')
+				{
+					if($CurStr)
+					{
+						$Out .= '&gt;';
+						$Got = 1;
+					}
+					else $InTag = 0;
+				}
+				else if($String[$i] == "\\") {if(!$Escape && $CurStr) $Escape = 1;}
+			}
+			else
+			{
+				if($String[$i] == '<') $InTag = 1;
+				else if($String[$i] == '>') {$Out .= '&gt;'; $Got = 1;}
+			}
+			
+			if(!$Got) $Out .= $String[$i];
+			if($Escape == 1) $Escape = 2;
+			else if($Escape == 2) $Escape = 0;
+		}
+		if($InTag) $Out .= '>';
+		
+		return $Out;
+	}
+	
 	function RemoveEvilAttribs($String)
 	{
 		$AllowedProtocols = array('http', 'ftp', 'https', 'irc', 'gopher', 'mailto');
 		$P = array(
-			"/(\s+?)(href|src|background|url)\s*=(\W*)(.+?):([^\\3]+?)/ei", 
+			"/(\s+?)(href|src|background|url|dynsrc|lowsrc)\s*=(\W*)(.+?):([^\\3]+?)/ei", 
 			"/(\s+?)on([\w]+)\s*=(.+?)/i"
 		);
 		$R = array(
@@ -50,11 +110,11 @@ class HtmlFormatter extends StringFormatter
 		$sReturn = preg_replace($P, $R, $String);
 		
 		//for situations like: <div style="ex/* */pres/* " */sion(alert('hi'));"></div>
-		//ParseCSS() will get nested comments, but if there's a qoute buried in there, this's needed
+		//ParseCSS() will get sub-comments, but if there's a qoute buried in there, this's needed
 		do
 		{
 			$String = $sReturn;
-			$sReturn = preg_replace("/style\s*=(\W*)(.+?)\\1/ei", '"style=\\1".$this->ParseCSS(stripslashes("\\2"))."\\1"', $String);
+			$sReturn = preg_replace("/style\s*=(\W*)(.+)\\1/ei", '"style=".stripslashes("\\1").$this->ParseCSS(stripslashes("\\2")).stripslashes("\\1")', $String);
 		}
 		while($sReturn != $String);
 		
@@ -64,24 +124,20 @@ class HtmlFormatter extends StringFormatter
 	function ParseCSS($String)
 	{
 		return preg_replace(
-			array("!/\*((?>[^*\/]+)|(?R)|.*)\*/!i", "/expression\((.+?)\)/i"), //first remove comments, then the expression() functionality 
-			array('', '\\1'), //admittadly, there's still probably ways around this, but this was the best I could do short of 
+			array("#/\*(.*|(?R))\*/#i", "/expression\((.+)\)/i"), //first remove comments, then the expression() functionality 
+			array('', '\\1'), //admittedly, there's still probably ways around this, but this was the best I could do short of 
 			$String //looping through the entire string
 		);
 	}
 	
 	function Parse($String, $Object, $FormatPurpose)
 	{
-		if($FormatPurpose == agFORMATSTRINGFORDISPLAY)
-			// Do this transformation if the string is being displayed
-			return $this->Execute($String);
-		else
-			// Do not perform this transformation if the string is being saved to the db
-			return $String;
+		if($FormatPurpose == agFORMATSTRINGFORDISPLAY) return $this->Execute($String);
+		else return $String;
 	}
 }
 
-// Instantiate the formatter and add it to the context object's string manipulator
 $HtmlFormatter = $Context->ObjectFactory->NewContextObject($Context, "HtmlFormatter");
 $Context->StringManipulator->AddManipulator("Html", $HtmlFormatter);
+
 ?>
