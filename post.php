@@ -28,7 +28,7 @@ include("appg/init_vanilla.php");
 
 	// Only people with active sessions can post
 	if ($Context->Session->UserID == 0) {
-		$Context->WarningCollector->Add($this->Context->GetDefinition("ErrSignInToDiscuss"));
+		$Context->WarningCollector->Add($Context->GetDefinition("ErrSignInToDiscuss"));
 		$CommentForm->FatalError = 1;
 	}
 	
