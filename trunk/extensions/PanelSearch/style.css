@@ -1,0 +1,26 @@
+.PanelSearch {
+		background: #F5F9FF;
+		border-top: 1px solid #C7D3EA;
+		border-bottom: 1px solid #C7D3EA;
+		margin-bottom: 20px;
+		display: block;
+		width: 180px;
+      text-align: center;
+      padding-top: 6px;
+      padding-bottom: 6px;
+}
+.PanelInput {
+	width: 100px;
+	font-size: 11px;
+	font-family: verdana;
+}
+.PanelSearchButton {
+   font-family: verdana;
+   font-size: 11px;
+   border: 0px;
+   background: none;
+   text-decoration: underline;
+   color: #062971;
+   font-weight: bold;
+   cursor: pointer;
+}

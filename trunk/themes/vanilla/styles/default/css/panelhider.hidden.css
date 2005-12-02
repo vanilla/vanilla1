@@ -1,0 +1,42 @@
+#HiddenPanel {
+   position: absolute;
+   left: 21px;
+   top: 96px;
+   margin: 0px;
+   padding: 0px;
+}
+#HiddenPanel a,
+#HiddenPanel a:link,
+#HiddenPanel a:visited,
+#HiddenPanel a:hover {
+   display: block;
+   height: 59px;
+   width: 17px;
+   background: url("../images/btn.revealpanel.gif") top left no-repeat;
+   text-decoration: none;
+}
+#HidePanel {
+   display: none;
+   position: absolute;
+   left: 238px;
+   top: 100px;
+   margin: 0px;
+   padding: 0px;
+}
+#HidePanel a,
+#HidePanel a:link,
+#HidePanel a:visited,
+#HidePanel a:hover {
+   display: block;
+   height: 54px;
+   width: 18px;
+   background: url("../images/btn.hidepanel.gif") top left no-repeat;
+   text-decoration: none;
+}
+#Panel {
+   display: none;
+}
+#Body {
+   margin-left: 0px;
+   border-left: 0px;
+}

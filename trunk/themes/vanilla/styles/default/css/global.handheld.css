@@ -1,0 +1,444 @@
+body { 
+	background: #F5F9FF;
+	margin: 4px;
+}
+body, div, table, td, input, select {
+	font-family: Trebuchet MS, Verdana, Tahoma, Arial;
+	font-size: 11px;
+	color: #062971;
+}
+.SiteContainer {
+	margin: 0px;
+	padding: 0px;
+}
+.Session {
+	position: relative;
+	font-size: 10px;
+	color: #919EBE;
+	padding-bottom: 2px;
+	text-align: right;
+}
+.Head {
+	background: #F5F9FF;
+	border: 0px;
+	margin: 0px;
+	padding: 0px;
+}
+.Logo {
+	text-align: center;
+	font-size: 16px;
+	font-weight: bold;
+	padding: 4px;
+	color: #000;
+}
+.Logo strong {
+	font-weight: normal;
+	color: orange;
+}
+.Head ul {
+	list-style: none; 
+	padding: 0px;
+	margin: 0px;
+	text-align: center;
+}
+.Head ul li {
+	display: inline;
+	margin-right: 1px;
+	margin-left: 1px;
+}
+.TabOn, .TabOn:link, .TabOn:visited, .TabOn:hover,
+.TabOff, .TabOff:link, .TabOff:visited, .TabOff:hover {
+	position: relative;
+	padding: 2px;
+	font-size: 10px;
+	text-align: center;
+	text-decoration: none;
+	line-height: 100%;
+	border: 0px;
+	border-right: 1px solid #C7D3EA;
+}
+.SearchTab, .SearchTab:link, .SearchTab:visited, .SearchTab:hover {
+	border-right: 0px;
+}
+.SettingsTab,
+.AccountTab {
+	display: none;
+}
+.TabOn, .TabOn:link, .TabOn:visited, .TabOn:hover {
+	font-weight: bold;
+	background: #F5F9FF;
+	color: #062971;
+}
+.TabOff, .TabOff:link, .TabOff:visited {
+	color: #333;
+	background: #F5F9FF;
+}
+.TabOff:hover {
+	background: #F5F9FF;
+	color: #000;
+}
+.Body {
+	border: 0px;
+	background: #F5F9FF;
+	float: none;
+	padding: 0px;
+}
+.Panel {
+	margin: 0px;
+	padding: 0px;
+	float: none;
+	border-right: 0px;
+	display: block;
+}
+.PanelButton {
+	width: 100%;
+	display: block;
+	margin-bottom: 0px;
+	text-align: center;
+}
+.PanelButton, .PanelButton:link, .PanelButton:visited {
+	font-size: 12px;
+	font-weight: bold;
+	color: #CC0000;
+}
+.PanelButton:hover {
+	font-size: 12px;
+	font-weight: bold;
+	color: #FF0000;
+}
+.Panel h2,
+.Panel p,
+.PanelInformation,
+.CategoryJumper,
+.TextModeOFF,
+.TextModeON
+.PanelInformation h1,
+.PanelInformation p,
+.LinkedList
+.PanelLink,
+.SavedSearchContainer,
+.PanelForm,
+.Legend, 
+.Panel ul,
+.Panel li,
+.LinkedList li {
+	display: none;
+}
+
+/* Body begins */
+  
+.PageBody {
+	border-left: 0px;
+	margin-left: 0px;
+	padding-right: 4px;
+	padding-left: 4px;
+}
+
+.PageJump {
+	display: none;
+}
+.PageNav,
+.PageDetails,
+.Title {
+	padding-top: 0px;
+	padding-bottom: 3px;
+	font-weight: bold;
+	font-size: 13px;
+	border-bottom: 1px solid #ddd;
+	text-align: center;
+}
+.PageList {
+	margin: 0px;
+	padding: 3px;
+	font-weight: bold;
+	font-size: 13px;
+	border-bottom: 1px solid #ddd;
+	overflow: hidden;
+	color: #000;
+	list-style: none;
+	float: none;
+	text-align: center;
+}
+.PageList li {
+	display: inline;
+	padding-right: 2px;
+}
+.PageList a, .PageList a:link, .PageList a:visited, .PageList a:hover {
+	font-weight: bold;
+	font-size: 13px;
+	text-decoration: none;
+}
+.PageDetails {
+	display: none;
+}
+img,
+.StarterLabel,
+.Starter,
+.CommentCountLabel,
+.CommentCount,
+.LastReplierLabel,
+.LastReplier,
+.LastActiveLabel,
+.LastActive,
+.CategoryMonitorLabel,
+.CategoryMonitor,
+#AdvancedSearchButton,
+.SearchTypeLabel,
+.SearchLabelForm,
+.SearchCommentTimeLabel,
+.SearchUserAccountCreatedLabel,
+.SearchUserAccountCreated,
+.SearchUserVisitCountLabel,
+.SearchUserVisitCount,
+.SearchUserDiscussionsCreatedLabel,
+.SearchUserDiscussionsCreated,
+.SearchUserCommentsAddedLabel,
+.SearchUserCommentsAdded {
+	display: none;
+}
+.SearchUser a, .SearchUser a:link, .SearchUser a:visited,
+.DiscussionTopic, 
+.DiscussionTopic a, .DiscussionTopic a:link, .DiscussionTopic a:visited,
+.CategoryName a, .CategoryName a:link, .CategoryName a:visited,
+.DiscussionTopic .Value {
+	font-weight: bold;
+	font-size: 12px;
+}
+.SearchForm {
+	margin: 0px;
+	margin-top: 8px;
+	margin-bottom: 8px;
+}
+.SearchInput {
+	width: 100px;
+}
+.SearchType {
+	display: inline;
+	margin-right: 0px;
+	float: none;
+	margin-bottom: 0px;
+	margin-right: 6px;
+	text-transform: lowercase;
+}
+.SearchButton {
+	font-size: 10px;
+}
+
+.Search .Title {
+	display: none;
+}
+.SearchErrors,
+.SearchComment {
+	margin-top: 0px;
+}
+.Search .PageList {
+	background: #F5F9FF;
+	border: 0px;
+}
+.Search .FirstDiscussion,
+.Search .FirstComment,
+.Search .FirstUser {
+	border-top: 1px solid #ddd;
+}
+
+/* Search Comments */
+.SearchComment {
+	background: #FFFEEC;
+}
+.SearchCommentCategory,
+.SearchCommentInformationLabel {
+	padding-left: 0px;
+}
+.SearchCommentInformation {
+	padding-right: 0px;
+}
+.SearchCommentCategory {
+	padding-right: 7px;
+}
+.SearchComment {
+	margin: 0px;
+	padding: 8px;
+	padding-top: 0px;
+	border-bottom: 1px solid #DEDEDF;
+}
+.SearchCommentTopic {
+	padding-left: 0px;
+}
+.SearchCommentBody a, .SearchCommentBody a:link, .SearchCommentBody a:visited, .SearchCommentBody a:hover {
+	display: block;
+	text-decoration: none;
+	color: #000;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+.SearchCommentTime {
+	padding-left: 4px;
+}
+
+/* Search Users */
+.Search .User,
+.Search .UserAlternate {
+	background: #FFFEEC;
+}
+
+
+/* Account Page */
+.Account {
+	padding-right: 0px;
+	float: none;
+	border-right: 0px;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	background: #FFFEEC;
+}
+.Account h1 {
+	color: #000;
+	font-size: 14px;
+	xline-height: 200%;
+	padding: 6px;
+	margin: 0px;
+}
+.AccountBody {
+	padding: 6px;
+	clear: left;
+	width: 100%;
+}
+.Account .Picture {
+	display: none;
+}
+.AccountBody dl {
+	margin-top: 0px;
+}
+.AccountBody dt {
+	position: relative;
+	font-weight: bold;
+	width: 140px;
+	overflow: hidden;
+}
+.AccountBody dd {
+	margin-left: 0px;
+	padding-left: 20px;
+}
+.Discovery,
+.IpHistory,
+.RoleHistory {
+	display: none;
+}
+
+/* Comments */
+.Comment {
+	background: #FFFEEC;
+	padding-top: 4px;
+}
+.CommentIcon,
+.CommentOptions {
+	display: none;
+}
+.CommentAuthor,
+.CommentTime {
+	float: none;
+	display: inline;
+}
+.CommentBody {
+	font-size: 12px;
+	padding: 0px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	margin-top: 0px;
+	color: #333;
+}
+.AddCommentsTitle,
+#CommentBoxController {
+	display: none;
+}
+.Comments .PageList {
+	border-bottom: 0px;
+}
+
+.DiscussionForm,
+.CommentForm {
+	margin-top: 0px;
+	background: #FEF9E9;
+	border-top: 1px solid #FFEDAE;
+	border-bottom: 1px solid #FFEDAE;
+	padding-left: 8px;
+	padding-right: 8px;
+	padding-bottom: 0px;
+	color: #834300;
+}
+.CommentForm .ErrorContainer,
+.DiscussionForm .ErrorContainer {
+	margin-top: 3px;
+	margin-bottom: 6px;
+	width: 160px;
+}
+
+.SmallCommentBox,
+.LargeCommentBox {
+	height: 20px;
+	width: 200px;
+	font-size: 12px;
+	
+}
+.FormatTypeRadio {
+	padding-left: 6px;
+}
+.Button {
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 12px;
+	color: #996600;
+	border: 0px;
+}
+.Comments .PageNav {
+	border-bottom: 0px;
+	text-align: center;
+	padding-bottom: 8px;
+	width: 100%;
+}
+
+/* New Discussion */
+  
+.ErrorContainer {
+	border: 1px solid #FFC2CA;
+	border-left: 0px;
+	border-right: 0px;
+	background: #FFEDEF;
+	padding: 4px;
+	margin: 0px;
+	margin-left: 8px;
+	margin-right: 8px;
+}
+.Error {
+	font-size: 11px;
+	color: #CC0000;
+	text-align: center;
+}
+.ErrorTitle,
+.StartDiscussion .Title {
+	display: none;
+}
+.CommentForm .ErrorContainer,
+.DiscussionForm .ErrorContainer {
+	margin-top: 5px;
+	margin-bottom: 10px;
+	width: 100%;
+}
+
+/* Footer */
+
+.Foot {
+	margin-top: 6px;
+	text-align: center;
+}
+.Copyright,
+.Links {
+	font-size: 10px;
+	color: #C7D3EA;
+	line-height: 100%;
+	margin-bottom: 0px;
+}

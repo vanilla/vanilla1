@@ -1,0 +1,1474 @@
+/* BEGIN GLOBAL DEFINITIONS (common to all pages) */
+	body { 
+		background: #F5F9FF;
+		margin-top: 28px;
+	}
+	body, div, table, td {
+		font-family: Trebuchet MS, Verdana, Tahoma, Arial;
+		font-size: 11px;
+		color: #07378F;
+	}
+	input, textarea, select {
+		font-family: arial, sans-serif, verdana;
+		font-size: 11px;
+		color: #000;
+	}
+	a, a:link, a:visited {
+		color: #07378F;
+		text-decoration: none;
+	}
+	a:hover {
+		color: #C7D3EA;
+		text-decoration: none;
+	}
+	ul {
+		margin-bottom: 0px;
+		margin-top: 0px;
+	}
+	form {
+		display: inline;
+	}
+	.ErrorContainer {
+		background: #FFEDEF;
+		padding: 4px;
+	}
+	.ErrorTitle {
+		font-size: 12px;
+		font-weight: bold;
+		color: #CC0000;
+		margin-bottom: 2px;
+	}
+	.Error {
+		font-size: 11px;
+		color: #CC0000; 
+	}
+	
+	/* Autocomplete results style */
+		.AutoCompleteContainer {
+			border: 1px solid #000;
+		}
+		/* ListOptionOn/ListOptionOff: Used on the autocomplete feature to highlight
+		  when navigating through the faux-autocomplete results. */
+		.ListOptionOn, .ListOptionOn:link, .ListOptionOn:visited, .ListOptionOn:hover {
+			font-family: arial, sans-serif, verdana;
+			font-size: 12px;
+			background: #0A246A;
+			color: #fff;
+			text-decoration: none;
+			display: block;
+			width: 100%;
+		}
+		.ListOptionOff, .ListOptionOff:link, .ListOptionOff:visited, .ListOptionOff:hover {
+			font-family: arial, sans-serif, verdana;
+			font-size: 12px;
+			background: #fff;
+			color: #000;
+			text-decoration: none;
+			display: block;
+			width: 100%;
+		}
+	
+	
+	/* NAMED ELEMENTS COMMON TO EVERY PAGE */
+		/* LoadStatus: A tiny window that becomes visible when an AJAX action is performed */
+		#LoadStatus {
+			z-index: 2;
+			position: fixed;
+			top: 0px;
+			left: 0px;
+			border-right: 1px solid #ACBEDF;
+			border-bottom: 1px solid #ACBEDF;
+			background: #fff;
+			padding-top: 4px;
+			padding-bottom: 4px;
+			padding-left: 8px;
+			padding-right: 8px;
+			color: #07378F;
+			font-size: 11px;
+		}
+		
+		/* InlineSelect: A small-font style of select meant to go inline with
+		  paragraph text. Currently used on the "settings > application
+		  settings" form. */
+		.InlineSelect {
+			font-size: 10px;
+		}
+		
+		/* Session: The message about who you are signed in as w/ option to sign out. */
+		.Session {
+			top: 32px;
+			position: relative;
+			font-family: verdana;
+			font-size: 10px;
+			color: #C7D3EA;
+			text-transform: lowercase;
+			text-align: right;
+			margin-left: 450px;
+		}
+		.Session a, .Session a:link, .Session a:visited {
+			text-decoration: none;
+			color: #C7D3EA;
+		}
+		.Session a:hover {
+			color: #07378F;
+			text-decoration: none;
+		}
+		
+		/* SiteContainer: A div that encloses the entire application - allowing for borders and special padding. */
+		.SiteContainer {
+			xclear: left;
+			width: 650px;
+			xmargin-top: 20px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		
+		/* Head: The banner/menu container. */
+		.Head {
+			background: url("../images/ico.vanilla.gif") no-repeat left top;
+		}
+		
+		/* Logo: A container for the logo above the menu. */
+		.Logo {
+			margin-left: 60px;
+			font-family: trebuchet ms, verdana, arial, tahoma;
+			font-size: 11px;
+			color: #C7D3EA;
+			text-transform: uppercase;
+			border-bottom: 1px dotted #C7D3EA;
+		}
+		.Logo a,
+		.Logo a:link,
+		.Logo a:visited,
+		.Logo a:hover {
+			color: #C7D3EA;
+			text-decoration: none;
+		}
+		.Logo strong,
+		.Logo strong a,
+		.Logo strong a:link,
+		.Logo strong a:visited,
+		.Logo strong a:hover {
+			font-weight: normal;
+			color: #C7D3EA;
+			text-decoration: none;
+		}
+		
+		/* MenuForum: The main menu, an unordered-list, contained within 
+		  the Head class. */
+		#MenuForum {
+			font-family: verdana, arial, trebuchet ms, tahoma;
+			font-size: 10px;
+			margin-top: 4px;
+			margin-bottom: 15px;
+			margin-left: 60px;
+		}
+		
+		/* TabOn/TabOff: The tabs in the main menu, which can appear different if
+		  they are identified as the current tab (TabOn). */
+		.TabOn, .TabOn:link, .TabOn:visited, .TabOn:hover,
+		.TabOff, .TabOff:link, .TabOff:visited, .TabOff:hover {
+			text-transform: lowercase;
+			color: #07378F;
+			text-decoration: none;
+		}
+		.TabOn:hover,
+		.TabOff:hover {
+			color: #000;
+		}
+		
+		.StartDiscussionButton, .StartDiscussionButton:link, .StartDiscussionButton:visited, .StartDiscussionButton:active, .StartDiscussionButton:hover {
+			text-transform: lowercase;
+			text-decoration: none;
+			margin-bottom: 15px;
+			display: block;
+			width: 120px;
+		}
+		.StartDiscussionButton, .StartDiscussionButton:link, .StartDiscussionButton:visited, .StartDiscussionButton:active {
+			xcolor: #CC0000;
+		}
+		.StartDiscussionButton:hover {
+			xcolor: #FF0000;
+		}
+		
+		
+		/* Body: The element containing everything below the Head (panel and
+		  page content). */
+		.Body {
+		}
+/* END GLOBAL DEFINITIONS */
+  
+  
+
+/* BEGIN PANEL */
+	.Panel {
+		display: none;
+		padding-right:18px;
+		float: left;
+		xdisplay: inline;
+		border-right: 1px solid #ccc;
+	}
+	/* PanelTitle: Only used for the "welcome, guest" text when
+	  unauthenticated users are allowed to browse the forum. */
+	.PanelTitle {
+		width: 180px;
+		padding: 0px;
+		margin: 0px;
+		text-indent: 4px;
+		font-size: 11px;
+		font-weight: bold;
+		color: #000;	
+	}
+	.Panel h2 {
+		width: 180px;
+		padding-top: 0px;
+		margin-top: 0px;
+		margin-bottom: 0px;
+		text-indent: 4px;
+		border-bottom: 1px solid #ccc;
+		font-size: 11px;
+		font-weight: bold;
+		color: #000;	
+	}
+	.Panel p {
+		padding: 0px;
+		margin: 0px;
+		padding-left: 4px;
+		padding-bottom: 12px;
+	}
+	.PanelInformation {
+		background: #F5F9FF;
+		border-top: 1px solid #ACBEDF;
+		border-bottom: 1px solid #ACBEDF;
+		margin-bottom: 20px;
+		display: block;
+		width: 180px;
+	}
+	.PanelInformation p {
+		margin: 0px;
+		padding: 4px;
+	}
+
+	/* SPECIAL PANEL ELEMENTS */
+	  
+		/* CategoryJumper: An extension that allows the categories to
+	    be navigated by a select list in the panel. */
+		.CategoryJumper {
+			margin-top: 4px;
+			margin-bottom: 8px;
+			margin-left: 2px;
+		}
+		.CategoryJumper select {
+			width: 170px;
+			font-size: 11px;
+		}
+		
+		/* TextMode: Text-Only mode switches */
+		.TextModeOFF {
+			border-top: 1px solid #EBC8C6;
+			border-bottom: 1px solid #ebc8c6;
+			color: #741703;
+			background: #FEE8EF;
+		}
+		.TextModeON a, .TextModeON a:link, .TextModeON a:visited,
+		.TextModeOFF a, .TextModeOFF a:link, .TextModeOFF a:visited {
+			padding-left: 0px;
+			padding-right: 0px;
+			display: inline;
+			text-decoration: underline;
+			background: none;
+		}
+		.TextModeON a:hover,
+		.TextModeOFF a:hover {
+			padding-left: 0px;
+			padding-right: 0px;
+			display: inline;
+			text-decoration: none;
+			background: none;
+		}
+		.TextModeOFF a, .TextModeOFF a:link, .TextModeOFF a:visited, .TextModeOff a:hover {
+			color: #741703;
+		}
+		.TextModeON,
+		.TextModeOFF {
+			margin-top: 20px;
+			text-align: center;
+			padding-top: 5px;
+			padding-bottom: 5px;
+		}
+		
+		/* LinkedList: Used for discussion lists & searches in the panel */
+		.LinkedList {
+			width: 180px;
+			margin-left: 0px;
+			padding-left: 0px;
+			margin-bottom: 10px;
+			list-style: none;
+		}
+		.LinkedList li {
+			padding-top: 2px;
+			padding-bottom: 2px;
+			color: #999;
+			font-size: 10px;
+		}
+		.LinkedList li small {
+			color: #999;
+			font-size: 10px;
+			padding-left: 5px;
+			padding-right: 5px;
+		}
+		.LinkedList strong {
+			font-weight: normal;
+			color: #c00;
+		}
+		.LinkedListFootNote {
+			text-align: right;
+			font-size: 11px;
+		}
+		
+		/* PanelLink: A special class sometimes applied to LinkedList items
+		  for special formatting. */
+		.PanelLink {
+			display: block;
+			padding-left: 4px;
+			padding-right: 4px;
+		}
+		.PanelLink, .PanelLink:link, .PanelLink:visited {
+			text-decoration: none;
+			font-size: 11px;
+		}
+		.PanelLink:hover {
+			background: #ffc;
+			font-size: 11px;
+		}
+		.SavedSearchContainer .PanelLink {
+			display: inline;
+		}
+		
+		/* Legend: Used to display color co-ordination appendices on various pages */
+		.Legend {
+			margin: 0px;
+			padding: 0px;
+			width: 180px;
+		}
+		.Legend li {
+			text-indent: 6px;
+			font-size: 11px;
+			border-bottom: 1px solid #ccc;
+		}
+
+/* END PANEL */
+  
+/* BEGIN PAGEBODY (All content within the body that is not in the panel) */
+
+	.PageBody {
+	}
+	
+	/* PAGEBODY ELEMENTS */
+
+	/* Title: used to write the page title (heading on each page). */
+	.Title a, .Title a:link, .Title a:visited {
+		text-decoration: none;
+	}
+	.Title a:hover {
+		text-decoration: none;
+		color: #000;
+	}
+	
+	/* DataItem & MetaItem: common classes used to identify themes
+	  among the discussion list, category list, and search results. */
+   .DataTable {
+		border: 1px solid #C7D3EA;
+		border-bottom: 0px;
+		background: #F9FBFF;
+		width: 100%;
+	}
+	.DataTableHead {
+		background: #E5EAF6;
+		font-family: trebuchet ms, verdana, tahoma, arial;
+		font-size: 10px;
+		font-weight: bold;
+		text-transform: uppercase;
+		text-decoration: none;
+		padding: 2px;
+		border-bottom: 1px solid #C7D3EA;
+		padding-left: 6px;
+	}
+	.MetaHead {
+		text-align: center;
+	}
+	.DataTableItem {
+		padding: 6px;
+		font-family: verdana;
+		font-size: 12px;
+		color: #73819E;
+		border-bottom: 1px solid #C7D3EA;
+	}
+	.MetaItem {
+		font-size: 10px;
+		text-align: center;
+		white-space: nowrap;
+	}
+
+	/* Discussion: Container for a discussion on the discussion index page. */
+	.NewComments { background: #F5F9FF; }
+	
+
+	/* Category: Container for a category on the category page. */
+	.Category {
+		margin: 0px;
+		border-bottom: 1px solid #ccc;
+		padding: 8px;
+		padding-top: 6px;
+	}
+	.CategoryDescription {
+		display: block;
+		padding: 4px;
+	}
+	.UnblockedCategory { background: #f5f9ff; }
+
+  
+	/* Comment: Container for a comment on the comment page. */
+	.Comment {
+		padding: 8px;
+		padding-bottom: 2px;
+		border-bottom: 1px solid #DEDEDF;
+	}
+	/* Some special formatting for comments */
+		.Comment code {
+			border-left: 6px solid #FFFFAA;
+			background: #FFFFEE;
+			padding: 8px;
+			padding-left: 16px;
+			display: block;
+		}
+		.WhisperTo { background: #FEEBFA; }
+		.WhisperFrom { background: #FEFCEB; }
+		.CommentAuthor,
+		.CommentWhisper,
+		.CommentTime {
+			color: #aaa;
+			float: left;
+		}
+		.CommentTime em {
+			font-style: normal;
+			color: #ccc;
+			padding-left: 4px;
+		}
+		.CommentAuthor {
+			margin-top: 5px;
+			font-size: 13px;
+			font-weight: bold;
+			margin-right: 8px;
+		}
+		.CommentAuthor a, .CommentAuthor a:link, .CommentAuthor a:visited, .CommentAuthor a:hover {
+			text-decoration: none;
+		}
+		.CommentWhisper,
+		.CommentTime {
+			margin-top: 7px;
+			font-size: 11px;
+		}
+		.CommentWhisper {
+			margin-right: 4px;
+		}
+		.CommentNotice {
+			margin-top: 24px;
+		}
+		.CommentBody {
+			font-size: 12px;
+			padding: 8px;
+			padding-top: 0px;
+			margin-top: 24px;
+			color: #333;
+		}
+		.CommentHidden {
+			margin-bottom: 4px;
+		}
+		.Highlight {
+			background: #ff9;
+		}
+		.CommentOptions,
+		.WhisperBack {
+			margin-top: 0px;
+			text-align: right;
+			font-size: 10px;
+		}
+		.WhisperBack a, .WhisperBack a:link, .WhisperBack a:visited,
+		.CommentOptions div a, .CommentOptions div a:link, .CommentOptions div a:visited {
+			color: #bbb;
+			text-decoration: none;
+		}
+		.CommentOptions {
+			height: 15px;
+		}
+		.WhisperBack a:hover,
+		.CommentOptions div a:hover {
+			color: #3354AA;
+			text-decoration: underline;
+		}
+		.CommentIp,
+		.CommentEdit,
+		.CommentHide,
+		.CommentBlockUser,
+		.CommentBlockComment {
+			display: inline;
+			font-size: 10px;
+			color: #ccc;
+		}
+		.CommentIp {
+			padding-right: 4px;
+			border-right: 1px solid #eee;
+			margin-right: 4px;
+		}
+		.CommentHide,
+		.CommentBlockUser,
+		.CommentBlockComment {
+			margin-left: 4px;
+			border-left: 1px solid #eee;
+			padding-left: 4px;
+		}
+		.CommentAuthorWithIcon {
+		  position: relative;
+		  padding-left: 40px;
+		}
+		
+		.CommentIcon {
+		  position: absolute;
+		  top: 50%;
+		  margin: -16px 0 0 -40px;
+		  display: block;
+		  height: 32px;
+		  width: 32px;
+		  background: #fff center center no-repeat;
+		}		
+
+
+	/* Page Navigation (above and below discussions, categories, and searches. */
+		.PageNav,
+		.PageJump,
+		.Title {
+			padding-top: 3px;
+			padding-bottom: 3px;
+			font-weight: bold;
+			xfont-size: 14px;
+			xborder-bottom: 1px solid #ccc;
+			overflow: hidden;
+			color: #000;
+		}
+		.PageList {
+			margin: 0px;
+			padding: 0px;
+			margin-bottom: 15px;
+			overflow: hidden;
+			color: #07378F;
+			list-style: none;
+		}
+		.PageListBottom {
+			padding-top: 15px;
+		}
+		.PageList li {
+			display: inline;
+		}
+		.PageList a, .PageList a:link, .PageList a:visited, .PageList a:hover {
+			text-decoration: none;
+		}
+		.CurrentPage {
+			font-weight: bold;
+		}
+		.SettingsTitle {
+			border-bottom: 0px;
+		}
+		.PageDetails {
+			text-align: right;
+			margin-bottom: 15px;
+		}
+		.PageNav {
+			display: block;
+			width: 160px;
+			border-bottom: 0px;
+		}
+		.PageJump {
+			padding-left: 10px;
+			border: 0px;
+		}
+		.AllDiscussions,
+		.Bottom {
+			border-bottom: 1px solid #ccc;
+		}
+		.PageJump,
+		.PageList {
+			background: none;
+			color: #07378F;
+		}
+		.PageNav .PageNav:link, .PageNav:visited,
+		.PageJump, .PageJump:link, .PageJump:visited {
+			text-decoration: none;
+			color: #ccc;
+		}
+		.PageNav:hover,
+		.PageJump:hover {
+			text-decoration: none;
+			color: #3354AA;
+		}
+		
+
+	/* Basic Search Results Definitions */
+		.Search .Title {
+			display: block;
+			border-top: 1px solid #ACBEDF;
+			border-bottom: 0px;
+			background: #F2F3FF;
+			text-indent: 4px;
+		}
+		.SearchErrors,
+		.SearchComment {
+			margin-top: 30px;
+		}
+		.Search .PageDetails {
+			background: #f9faff;
+			color: #ccc;
+			text-indent: 4px;
+		}
+		.Search .PageList {
+			background: #f9faff;
+		}
+		.Search .PageList,
+		.Search .PageJump {
+			padding-right: 4px;
+		}
+		
+		/* SearchLabelForm: The tiny form above search results that allows
+		  you to save the search. */
+		.SearchLabelForm {
+			position: relative;
+			top: 25px;
+			z-index: 10;
+			height: 22px;
+			padding-top: 2px;
+			padding-right: 3px;
+			text-align: right;
+		}
+		.SearchLabelInput,
+		.SearchLabelButton {
+			font-size: 10px;
+		}
+		.SearchLabelInput {
+			border-top: 1px solid #666;
+			border-left: 1px solid #666;
+			border-bottom: 1px solid #ccc;
+			border-right: 1px solid #ccc;
+			width: 100px;
+			text-indent: 2px;
+		}
+		.SearchLabelButton {
+			border-top: 1px solid #ccc;
+			border-left: 1px solid #ccc;
+			border-bottom: 1px solid #666;
+			border-right: 1px solid #666;
+			cursor: pointer;
+			width: 76px;
+		}
+
+
+	/* User Search Results */
+		.UserAlternate { background: #f6f6f6; }
+		.User, .UserAlternate {
+			padding-left: 8px;
+			padding-right: 8px;
+			padding-top: 5px;
+			padding-bottom: 8px;
+			border-bottom: 1px solid #ccc;
+			margin: 0px;
+		}
+		.SearchUser {
+			line-height: 28px;
+			font-size: 11px;
+			color: #999;
+			margin-bottom: 5px;
+			margin-left: 0px;
+			font-weight: normal;
+		}
+		.SearchUserWithIcon {
+			position: relative;
+			padding-left: 40px;
+			padding-bottom: 4px;
+		}
+		.SearchIcon {
+			position: absolute;
+			margin: 0 0 0 -40px;
+			display: block;
+			height: 32px;
+			width: 32px;
+			background: #fff center center no-repeat;
+		}
+
+
+	/* Comment Search Results */
+		.SearchComment {
+			margin: 0px;
+			padding: 0px;
+			padding-bottom: 6px;
+			border-bottom: 1px solid #DEDEDF;
+		}
+		.SearchCommentTopic {
+			padding-left: 8px;
+		}
+		.SearchCommentBody a, .SearchCommentBody a:link, .SearchCommentBody a:visited, .SearchCommentBody a:hover {
+			display: block;
+			text-decoration: none;
+			color: #000;
+			padding: 8px;
+			padding-top: 4px;
+			padding-bottom: 4px;
+			margin-top: 4px;
+			margin-bottom: 4px;
+		}
+		.SearchCommentBody a:hover {
+			background: #ffc;
+		}
+		.SearchCommentInformationLabel {
+			padding-left: 8px;
+		}
+
+	/* [Administrative] Settings Page Layout */
+	  
+		/* SettingsBody: Really only used on the "instruction" page when you
+		  first click the settings tab. */
+		.SettingsBody h1 {
+			font-size: 14px;
+			margin: 0px;
+			padding: 0px;
+			margin-bottom: 6px;
+		}
+		.SettingsBody {
+			color: #999;
+			padding: 4px;
+			margin-top: 10px;
+		}
+		.SettingsBody p {
+			padding-left: 10px;
+			padding-right: 10px;
+			margin-top: 0px;
+			margin-bottom: 10px;
+		}
+		
+
+	/* Account Page Layout */
+		.AccountPanel {
+			border-right: 1px solid #ccc;
+			display: inline;
+		}
+		.Account {
+			padding-right: 19px;
+			float: left;
+			border-right: 1px solid #ccc;
+		}
+		.Account h1 {
+			color: #000;
+			font-size: 14px;
+			padding: 0px;
+			margin: 0px;
+		}
+		.AccountWithIcon {
+			position: relative;
+			left: 40px;
+		}
+		.AccountIcon {
+		  position: absolute;
+		  margin: -7px 0 0 -40px;
+		  display: block;
+		  height: 32px;
+		  width: 32px;
+		  background: #fff center center no-repeat;
+		}
+		.Account small {
+			display: block;
+			text-align: right;
+			position: relative;
+			margin-top: -17px;
+			font-size: 11px;
+			color: #ccc;
+			padding-left: 10px;
+		}
+		.AccountBody {
+			margin-top: 8px;
+			clear: left;
+			width: 281px;
+			overflow: hidden;
+		}
+		/* AccountBody blockquote & CommentNotice: If a role has an alert
+		  associated with it, it will be encompassed by these classes on
+        the account page and the comment list. */
+			.AccountBody blockquote,
+			.CommentNotice {
+				border: 1px solid #FFC2CA;
+				background: #FFEDEF;
+				padding: 8px;
+				font-size: 12px;
+				color: #CC0000; 
+			}
+			.AccountBody blockquote {
+				margin: 0px;
+				margin-top: 10px;
+				margin-bottom: 4px;
+			}
+		/* .Account .Picture: A bug cropped up where the dl's below the
+		  account picture would partially slide up the page if the picture
+        didn't load for some reason. This fixed height repairs that bug. */
+			.Account .Picture {
+				height: 218px;
+			}
+		.Account .Picture img {
+			margin-top: 8px;
+			margin-bottom: 10px;
+			height: 200px;
+			width: 280px;
+		}
+		.AccountBody dl {
+			margin-top: 0px;
+		}
+		.AccountBody dt {
+			position: absolute;
+			font-weight: bold;
+			width: 120px;
+			overflow: hidden;
+		}
+		.AccountBody dd {
+			margin-left: 0px;
+			padding-left: 126px;
+			padding-bottom: 2px;
+		}
+		
+		/* .Discovery & .IpHistory are only visible to user-adminning roles,
+		  but should be styled almost exactly like the Role History. */
+			.Discovery,
+			.IpHistory,
+			.RoleHistory {
+				border-left: 1px solid #ccc;
+				margin-left: 300px;
+				padding-left: 18px;
+			}
+			.RoleAlternate,
+			.Role {
+				border-top: 1px solid #DEDEDF;
+				padding: 8px;
+			}
+			.Discovery h1,
+			.IpHistory h1, 
+			.RoleHistory h1 {
+				border-bottom: 1px solid #ccc;
+				font-size: 14px;
+				font-weight: bold;
+				color: #000;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				padding-bottom: 4px;
+			}
+			.Discovery,
+			.IpHistory {
+				padding-top: 20px;
+			}
+			.Discovery blockquote,
+			.IpHistory blockquote,
+			.RoleHistory blockquote {
+				margin: 0px;
+				padding: 6px;
+				border-bottom: 1px solid #ccc;
+			}
+			.RoleHistory blockquote {
+				color: #999;
+			}			
+			.RoleDetails {
+				font-size: 11px;
+				color: #999;
+			}
+			.RoleDetails blockquote {
+				padding: 4px;
+				margin: 0px;
+				margin-top: 2px;
+				font-style: italic;
+				background: #f9f9f9;
+				color: #999;
+			}
+			.Discovery h2,
+			.RoleHistory h2,
+			.IpHistory h2 {
+				font-size: 11px;
+				color: #666;
+				font-weight: bold;
+				display: inline;
+			}
+			.Discovery small,
+			.RoleHistory small,
+			.IpHistory small {
+				font-size: 11px;
+				color: #999;
+			}
+			.Discovery h3,
+			.RoleHistory h3,
+			.IpHistory h3 {
+				font-size: 11px;
+				color: #999;
+				font-weight: normal;
+				margin: 0px;
+				margin-top: 2px;
+			}
+			.Discovery p,
+			.RoleHistory p,
+			.IpHistory p {
+				padding: 0px;
+				padding-left: 6px;
+				padding-right: 6px;
+				margin: 0px;
+				margin-bottom: 5px;
+				background: #f9f9f9;
+				font-style: italic;
+			}
+
+	/* Generic styling for Forms */
+		.Form,
+		.ExtensionsForm {
+			background: #FEF9E9;
+			border: 1px solid #FFEDAE;
+			padding: 8px;
+			padding-bottom: 0px;
+			width: 400px;
+		}
+		.Form dl {
+			margin: 0px;
+			margin-top: 4px;
+			margin-bottom: 2px;
+			padding-left: 6px;
+		}
+		.Form .InputLabel,
+		.Form dt,
+		.Form dd {
+			color: #A99861;
+		}
+		.Form .InputLabel,
+		.Form dt {
+			margin-left: 0px;
+			font-weight: bold;
+			position: absolute;
+			width: 160px;
+			overflow: hidden;
+		}
+		.Form dd {
+			margin-left: 0px;
+			padding-left: 170px;
+		}
+		.Form h2 {
+			margin: 0px;
+			margin-bottom: 10px;
+			font-size: 14px;
+			font-weight: bold;
+			color: #84733D;
+			background: #FBF8DE;
+			padding: 3px;
+		}
+		.InputNote {
+			padding: 6px;
+			margin-bottom: 10px;
+			color: #A99861;
+			background: #FBF8DE;
+			text-align: left;
+		}
+		.InputBlock {
+			margin-bottom: 12px;
+		}
+		.InputBlock .Radio,
+		.InputBlock .CheckBox {
+			padding-left: 4px;
+			color: #84733D;
+		}
+		.InputNote .CheckBox,
+		.InputNote .Radio {
+			padding-top: 4px;
+			color: #84733D;
+		}
+		.CheckBox {
+			text-align: left;
+			line-height: 200%;
+		}
+		.Button {
+			cursor: pointer;
+			font-weight: bold;
+			font-size: 12px;
+			color: #996600;
+			border: 1px solid #FFEDAE;
+			background: #FEF2C9;
+			padding: 4px;
+		}
+		.SmallInput {
+			width: 138px;
+		}
+		.LargeTextbox {
+			width: 218px;
+			height: 100px;
+		}
+		.CancelButton, .CancelButton:link, .CancelButton:visited, .CancelButton:hover {
+			position: relative;
+			top: -10px;
+			margin-left: 40px;
+			text-decoration: underline;
+		}
+		.CancelButton, .CancelButton:link, .CancelButton:visited {
+			color: #FF6600;
+		}
+		.CancelButton:hover {
+			color: #000;
+		}		
+		
+	/* .GlobalsForm: Elements specific to the "Settings > Application
+	Settings" form. */
+		.GlobalsForm dt {
+			margin-top: 5px;
+			width: 230px;
+		}
+		.GlobalsForm dd {
+			padding-top: 6px;
+			padding-left: 230px;
+		}
+
+	/* ExtensionsForm: Elements specific to the "Settings > Manage
+	Extensions" form. */
+		.ExtensionsForm dl {
+			margin: 0px;
+			margin-top: 4px;
+			margin-bottom: 2px;
+		}
+		.ExtensionsForm dt,
+		.ExtensionsForm dd {
+			margin-left: 0px;
+			color: #A99861;
+		}
+		.ExtensionsForm dt {
+			font-weight: bold;
+			position: absolute;
+			width: 90px;
+			overflow: hidden;
+		}
+		.ExtensionsForm dd {
+			padding-left: 100px;
+		}
+		.ExtensionsForm h2 {
+			font-size: 14px;
+			color: #000;
+			margin: 0px;
+			padding: 4px;
+			padding-top: 0px;
+		}
+		.ExtensionsForm .InputBlock {
+			background: #FBF8DE;
+			padding: 6px;
+			margin-bottom: 20px;
+		}
+		.DisableExtension,
+		.EnableExtension {
+			text-align: right;
+			margin: 10px;
+			margin-top: 15px;
+			margin-bottom: 5px;
+		}
+		.EnableExtension a, .EnableExtension a:link, .EnableExtension a:visited {
+			color: #FF6600;
+		}
+		.DisableExtension a, .DisableExtension a:link, .DisableExtension a:visited {
+			color: #aaa;
+		}
+		.EnableExtension a:hover,
+		.DisableExtension a:hover {
+			color: #000;
+		}
+
+  
+	/* SearchForm: Elements specific to the Search page. */
+		.SearchForm {
+			margin: 10px;
+		}
+		.SearchInput {
+			color: #333;
+			width: 300px;
+		}
+		.SearchTypeLabel { margin-left: 12px; }
+		.SearchTypeLabel,
+		.SearchType {
+			margin-right: 16px;
+			float: left;
+		}
+		.SearchType {
+			margin-bottom: 10px;
+			margin-right: 10px;
+			text-transform: lowercase;
+		}
+		.SearchType a, .SearchType a:link, .SearchType a:visited, .SearchType a:hover {
+			text-decoration: none;
+			color: #000;
+		}
+		.SearchType input {
+			vertical-align: text-top;
+		}
+		.SearchButton {
+			cursor: pointer;
+		}
+		#AdvancedSearchButton {
+			font-size: 10px;
+			margin-left: 10px;
+		}
+		
+		/* SearchTitle: Appears above the different search types on the
+		  advanced search form.*/
+		.SearchTitle {
+			font-weight: bold;
+			font-size: 14px;
+			padding: 4px;
+			padding-top: 10px;
+		}
+		.SearchLabels td {
+			padding-left: 4px;
+			padding-right: 4px;
+			padding-top: 6px;
+			background: #f3f3f3;
+		}
+		.SearchInputs td {
+			padding: 4px;
+			padding-top: 0px;
+			padding-bottom: 8px;
+			background: #f3f3f3;
+		}
+		.AdvancedUserInput {
+			width: 140px;
+		}
+		.AdvancedSearchInput {
+			width: 200px;
+		}
+		/* Autocomplete containers on the advanced search form. */
+		#SearchTopicsACContainer, #SearchCommentsACContainer {
+			position: absolute;
+			width: 140px;
+		}
+
+	/* Discussion & Comment forms */
+		.StartDiscussion .Title {
+			margin-bottom: 0px;
+			border-bottom: 0px;
+		}
+		.DiscussionForm {
+			padding-top: 10px;
+		}
+		.DiscussionForm,
+		.CommentForm {
+			margin-top: 0px;
+			background: #FEF9E9;
+			border-top: 1px solid #FFEDAE;
+			border-bottom: 1px solid #FFEDAE;
+			padding-left: 12px;
+			padding-right: 12px;
+			padding-bottom: 0px;
+			color: #834300;
+		}
+		.DiscussionForm dl,
+		.CommentForm dl {
+			margin-bottom: 0px;
+			margin-top: 0px;
+		}
+		.DiscussionForm dt,
+		.CommentForm dt {
+			font-weight: bold;
+		}
+		.DiscussionForm dt small,
+		.CommentForm dt small {
+			font-weight: normal;
+			font-size: 10px;
+			color: #A6730D;
+		}
+		.DiscussionForm dd,
+		.CommentForm dd {
+			margin-left: 2px;
+		}
+		.AddCommentsTitle {
+			border-bottom: 0px;
+		}
+		.CommentForm .ErrorContainer,
+		.DiscussionForm .ErrorContainer {
+			margin-top: 5px;
+			margin-bottom: 10px;
+			width: 444px;
+		}
+		.CategorySelect {
+			width: 230px;
+		}
+		.CategoryInput,
+		.DiscussionInput {
+			margin-bottom: 6px;
+		}
+		.SubmitButton {
+			margin-bottom: 10px;
+		}
+		/* DiscussionBox: The discussion title input. */
+		.DiscussionBox {
+			width: 460px;
+		}
+		
+		/* CommentBoxController: The switch between viewing the comment box
+		  as a large or small input. */
+			#CommentBoxController {
+				border: 1px solid #FFEDAE;
+				border-bottom: 0px;
+				background: #fff;
+				padding-left: 4px;
+				padding-right: 4px;
+				padding-top: 2px;
+				padding-bottom: 3px;
+				font-weight: normal;
+				margin-left: 260px;
+			}
+			#CommentBoxController, #CommentBoxController:link, #CommentBoxController:visited {
+				color: #A99861;
+				text-decoration: none;
+				cursor: hand;
+			}
+			#CommentBoxController:hover {
+				color: #663300;
+				cursor: hand;
+			}
+			.SmallCommentBox,
+			.LargeCommentBox {
+				width: 460px;
+				font-size: 12px;
+			}
+			.SmallCommentBox {
+				height: 130px;
+			}
+			.LargeCommentBox {
+				height: 400px;
+			}
+		
+		/* FormatType: A radio list of the various comment formatting options. */
+			.FormatType {
+				padding-top: 4px;
+				font-size: 11px;
+				font-weight: bold;
+				color: #996600;
+			}
+			.FormatTypeRadio {
+				font-weight: normal;
+				color: #996600;
+				display: inline;
+				padding-left: 16px;
+			}
+			.FormatTypeRadio input {
+				vertical-align: text-top;
+			}
+			.FormatTypeRadio a, .FormatTypeRadio a:link, .FormatTypeRadio a:visited, .FormatTypeRadio a:hover {
+				text-decoration: none;
+				color: #996600;
+			}
+			
+		/* Whisper & Clipboard elements */
+			.WhisperBox,
+			.ClipboardSelect,
+			#WhisperACContainer {
+				width: 200px;
+			}
+			/* WhisperACContainer: The whisper autocomplete container. */
+			#WhisperACContainer {
+				z-index: 3;
+				position: absolute;
+			}
+			.CommentInputLabel,
+			.WhisperInputLabel {
+				margin-top: 10px;
+			}
+			.ClipboardInput {
+				margin-bottom: -12px;
+			}
+			.CommentButtons,
+			.DiscussionButtons {
+				margin-top: 10px;
+				margin-bottom: 6px;
+			}
+
+	/* Settings & Account forms & buttons */
+	  
+		/* SettingsForm h1, AccountForm h1: Generic styles for headings on
+		  the settings & account pages. */
+		.SettingsForm h1,
+		.AccountForm h1 {
+			margin: 0px;
+			padding-bottom: 3px;
+			font-weight: bold;
+			font-size: 14px;
+			overflow: hidden;
+			color: #000;
+		}
+		/* InputCustom & DefinitionHeading: The custom, user-defined
+		  account properties. */
+		.Form .InputCustom dt,
+		.Form .InputCustom dd {
+			font-weight: normal;
+		}
+		.Form .InputCustom .DefinitionHeading {
+			font-weight: bold;
+		}
+
+		/* AppearanceForm: The form in "Settings > Forum Appearance". */
+		.AppearanceForm {
+			padding-bottom: 16px;
+		}
+		
+		/* RoleAbilities .InputLabel: Fixes a glitch on the "Settings > Role
+		  Management > Edit Role" form && the "Settings > Category Management
+        > Edit Category" form. */
+      #CategoryRoles .InputLabel,
+		#RoleAbilities .InputLabel {
+			position: relative;
+			padding-top: 4px;
+			padding-bottom: 4px;
+		}
+		
+		.AccountPersonal .FormButtons {
+			margin-top: 30px;
+		}
+		
+		/* StyleAuthorACContainer: Autocomplete definition for the style
+		  extension. */
+		#StyleAuthorACContainer {
+			position: absolute;
+			width: 138px;
+			margin-top: 21px;
+		}
+		
+		.FormLink {
+			margin: 10px;
+		}
+		.FormLink a, .FormLink a:link, .FormLink a:visited {
+			color: #FF6600;
+			text-decoration: underline;
+		}
+		.FormLink a:hover {
+			color: brown;
+			text-decoration: underline;
+		}
+
+	/* Style Preview Form */
+		.Preview {
+			background: #FBF8DE;
+			padding-bottom: 4px;
+			margin-bottom: 8px;
+		}
+		.PreviewTitle {
+			font-size: 14px;
+			font-weight: bold;
+			color: #84733D;
+			padding: 3px;
+		}
+		.PreviewImage, .PreviewImage:link, .PreviewImage:visited, .PreviewImage:hover {
+			display: block;
+			text-align: center;
+			margin: 6px;
+		}
+		.PreviewEmpty, .PreviewEmpty:link, .PreviewEmpty:visited, .PreviewEmpty:hover {
+			text-decoration: none;
+			display: block;
+			margin: 6px;
+			text-align: center;
+			line-height: 400%;
+			background: #FFFEF6;
+		}
+		.PreviewEmpty, .PreviewEmpty:link, .PreviewEmpty:visited {
+			color: #D4C080;
+			border: 1px solid #F7EED1;
+		}
+		.PreviewEmpty:hover {
+			color: #B49D55;
+			border: 1px solid #EDE2C0;
+		}
+
+	/* Footer */
+	   .Foot {
+			width: 650px;
+			xmargin-top: 20px;
+			margin-bottom: 20px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		.Copyright,
+		.Links {
+			color: #ACBEDF;
+		}
+		.Foot a, .Foot a:link, .Foot a:visited {
+			color: #ACBEDF;
+			text-decoration: none;
+		}
+		.Foot a:hover {
+			color: #07378F;
+			text-decoration: none;
+		}
+
+	/* SortList: Styles for the "sortable list" on the category form */
+		.SortList,
+		.SortList ul {
+			list-style: none;
+			padding: 0px;
+			margin: 0px;
+		}
+		.SortList a, .SortList a:link, .SortList a:visited {
+			text-decoration: none;
+			color: #84733D;
+		}
+		.SortList a:hover {
+			color: #000;
+			text-decoration: none;
+		}
+		.SortListItem {
+			border-bottom: 1px solid #FFEDAE;
+			padding-bottom: 3px;
+			margin-bottom: 3px;
+		}
+		.SortOption img,
+		.SortRemove img {
+			margin-bottom: -2px;
+			padding-bottom: 0px;
+		}
+		.SortItem {
+			margin: 0px;
+			padding: 0px;
+			display: inline;
+		}
+		.SortBottom {
+			margin-right: 10px;
+		}
+		.SortRemove {
+			position: absolute;
+			text-align: right;
+			margin-left: 370px;
+		}
+
+	/* Timer Extension */
+		.Timer {
+			position: absolute;
+			top: 22px;
+			left: 36px;
+			color: #ACBEDF;
+		}
+		
+/* END PAGE BODY */
+
+
+/* BEGIN DEBUG OPTIONS */
+	.DebugBar {
+		margin-left: auto;
+		margin-right: auto;
+		width: 650px;
+		text-align: left;
+		margin-bottom: 20px;
+	}
+	.Sql {
+		border-top: 1px dotted #C7D3EA;
+		margin-top: 8px;
+		padding-top: 8px;
+		color: #73819E;
+	}
+/* END DEBUG OPTIONS */

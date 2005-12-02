@@ -1,0 +1,105 @@
+body {
+   background: #F5F9FF;
+   margin: 0px;
+   padding: 0px;
+}
+body, div, input, textarea, select {
+	font-family: Trebuchet MS, Verdana, Tahoma, Arial;
+	font-size: 11px;
+	color: #062971;
+}
+a, a:link, a:visited {
+	color: #3354AA;
+	text-decoration: none;
+	background: #F5F9FF;
+}
+a:hover {
+	color: #4B6DB7;
+	text-decoration: none;
+	background: #ffb;
+}
+
+/* Hide anything we don't need */
+.Form h1,
+.Form p,
+.ForgotPasswordLink,
+.ForgotPasswordLink:link,
+.ForgotPasswordLink:visited,
+.ForgotPasswordLink:hover,
+.ErrorTitle,
+.About,
+.DebugBar {
+	display: none;
+}
+.SignInInputs, 
+.Form {
+   text-align: center;
+   margin: 0px;
+   padding: 0px;
+}
+dt {
+   font-weight: bold;
+   position: relative;
+}
+dd {
+   margin-left: 0px;
+   padding-left: 0px;
+}
+.SignInInputs dd,
+.SignInInputs dt {
+	padding: 0px;
+	margin: 0px;
+}
+.FormContainer {
+	float: none;
+	border: 0px;
+	background: #F5F9FF;
+}
+.PageTitle {
+   text-align: left;
+	text-align: center;
+	background: #F5F9FF;
+	margin-top: 4px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+   margin-right: 0px;
+   border: 0px;
+	font-weight: normal;
+}
+.RememberMe {
+   padding: 0px;
+	margin: 0px;
+}
+.FormButtons {
+   text-align: center;
+}
+.InputBlock {
+   background: #F5F9FF;
+}
+.Links {
+	float: none;
+   margin-top: 10px;
+}
+.ErrorContainer {
+	border: 1px solid #FFC2CA;
+	border-left: 0px;
+	border-right: 0px;
+	background: #FFEDEF;
+	padding: 4px;
+	margin: 0px;
+	margin-left: 8px;
+	margin-right: 8px;
+}
+.Error {
+	font-size: 11px;
+	color: #CC0000;
+	text-align: center;
+}
+.Foot {
+	margin-top: 4px;
+}
+.Foot,
+.Foot div {
+	text-align: center;
+	font-size: 10px;
+}

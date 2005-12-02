@@ -1,0 +1,32 @@
+#HiddenPanel {
+   display: none;
+   position: absolute;
+   left: 21px;
+   top: 96px;
+   z-index: 8;
+}
+#HiddenPanel a,
+#HiddenPanel a:link,
+#HiddenPanel a:visited,
+#HiddenPanel a:hover {
+   display: block;
+   height: 59px;
+   width: 17px;
+   background: url("../images/btn.revealpanel.gif") top left no-repeat;
+   text-decoration: none;
+}
+#HidePanel {
+   position: absolute;
+   left: 238px;
+   top: 100px;
+}
+#HidePanel a,
+#HidePanel a:link,
+#HidePanel a:visited,
+#HidePanel a:hover {
+   display: block;
+   height: 54px;
+   width: 18px;
+   background: url("../images/btn.hidepanel.gif") top left no-repeat;
+   text-decoration: none;
+}
