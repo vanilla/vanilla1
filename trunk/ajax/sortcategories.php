@@ -20,6 +20,6 @@ $SortOrder = ForceIncomingArray("CategoryID", array());
 $ItemCount = count($SortOrder);
 for ($i = 0; $i < $ItemCount; $i++) {
    $ExecSql = str_replace(array("\\1", "\\2"), array($i, $SortOrder[$i]), $Sql);
-   $Context->Database->Execute($Context, $ExecSql, "AJAX", "ReorderCategories", "Failed to reorder categories", 0);
+   $Context->Database->Execute($ExecSql, "AJAX", "ReorderCategories", "Failed to reorder categories", 0);
 }
 ?>

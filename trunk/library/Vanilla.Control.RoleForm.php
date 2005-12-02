@@ -46,7 +46,7 @@ class RoleForm extends PostBackControl {
 						$s->SetMainTable("Category", "c");
 						$s->AddSelect("CategoryID", "c");
 						$s->AddWhere("CategoryID", "(".implode(",",$IncomingCategories).")", "not in", "and", "", 0);
-						$BlockedCategories = $this->Context->Database->Select($this->Context, $s, "RoleForm", "Constructor", "An error occurred while retrieving blocked categories.");
+						$BlockedCategories = $this->Context->Database->Select($s, "RoleForm", "Constructor", "An error occurred while retrieving blocked categories.");
 						
 						while ($Row = $this->Context->Database->GetRow($BlockedCategories)) {
 							$CategoryID = ForceInt($Row["CategoryID"], 0);
@@ -56,7 +56,7 @@ class RoleForm extends PostBackControl {
 								$s->AddFieldNameValue("CategoryID", $CategoryID);
 								$s->AddFieldNameValue("RoleID", $NewRole->RoleID);
 								$s->AddFieldNameValue("Blocked", 1);
-								$this->Context->Database->Insert($this->Context, $s, $this->Name, "SaveCategory", "An error occurred while adding new category block definitions for this role.");
+								$this->Context->Database->Insert($s, $this->Name, "SaveCategory", "An error occurred while adding new category block definitions for this role.");
 							}
 						}
                   

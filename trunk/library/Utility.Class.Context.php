@@ -82,11 +82,7 @@ class Context {
       $this->ErrorManager = new ErrorManager();
       
       // Instantiate a Database object (for performing database actions)
-      $this->Database = new MySQL($Configuration["DATABASE_HOST"],
-			$Configuration["DATABASE_NAME"],
-			$Configuration["DATABASE_USER"],
-			$Configuration["DATABASE_PASSWORD"],
-			$this);
+      $this->Database = new MySQL($this);
       
 		// Instantiate the string manipulation object
       $this->StringManipulator = new StringManipulator($Configuration);
@@ -124,8 +120,9 @@ class Context {
 			$this->StyleUrl = "";
 			if ($this->Session->User->StyleID == 0) $this->StyleUrl = $this->Session->User->StyleUrl;
 			$this->StyleUrl = ForceString($this->StyleUrl, ConcatenatePath($this->Configuration["THEME_PATH"], $this->Configuration["DEFAULT_STYLE"]));
+			// Make sure that the Database object knows what the StyleUrl is
+         $this->Database->Context->StyleUrl = $this->StyleUrl;
 		}
-		
 	}
 }
 ?>

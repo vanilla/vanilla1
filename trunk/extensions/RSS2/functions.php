@@ -18,7 +18,7 @@ function AuthenticateUserForRSS2(&$Context) {
          $s->AddWhere("Password", FormatStringForDatabaseInput($PHP_AUTH_PW), "=", "or");
          $s->EndWhereGroup();
          
-         $ValidationData = $Context->Database->Select($Context, $s, "Feed", "ValidateCredentials", "An error occurred while validating user credentials.");
+         $ValidationData = $Context->Database->Select($s, "Feed", "ValidateCredentials", "An error occurred while validating user credentials.");
          if ($Context->Database->RowCount($ValidationData) > 0) $UserIsAuthenticated = true;
       }         
       

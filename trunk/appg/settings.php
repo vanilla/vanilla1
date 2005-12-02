@@ -24,7 +24,13 @@ $Configuration["DATABASE_HOST"] = "localhost";
 $Configuration["DATABASE_NAME"] = "your_vanilla_database_name"; 
 $Configuration["DATABASE_USER"] = "your_vanilla_database_user_name"; 
 $Configuration["DATABASE_PASSWORD"] = "your_vanilla_database_password"; 
-$Configuration["DATABASE_TABLE_PREFIX"] = "LUM_"; 
+$Configuration["DATABASE_TABLE_PREFIX"] = "LUM_";
+
+// Further Database Settings (for a server farm)
+$Configuration["FARM_DATABASE_HOST"] = ""; 
+$Configuration["FARM_DATABASE_NAME"] = "your_farm_database_name"; 
+$Configuration["FARM_DATABASE_USER"] = "your_farm_database_user_name"; 
+$Configuration["FARM_DATABASE_PASSWORD"] = "your_farm_database_password"; 
 
 // Path Settings
 $Configuration["APPLICATION_PATH"] = "/path/to/vanilla/";

@@ -20,7 +20,7 @@ class SearchManager {
 		$s->SetMainTable("UserSearch", "us");
 		$s->AddWhere("SearchID", $SearchID, "=");
 		$s->AddWhere("UserID", $this->Context->Session->UserID, "=");
-		$this->Context->Database->Delete($this->Context, $s, $this->Name, "DeleteSearch", "An error occurred while deleting your search.");
+		$this->Context->Database->Delete($s, $this->Name, "DeleteSearch", "An error occurred while deleting your search.");
 		return true;
 	}
 	
@@ -37,7 +37,7 @@ class SearchManager {
       $s = $this->GetSearchBuilder();
       $s->AddWhere("us.SearchID", $SearchID, "=");
       $s->AddWhere("UserID", $this->Context->Session->UserID, "=");
-      $result = $this->Context->Database->Select($this->Context, $s, $this->Name, "GetSearchById", "An error occurred while attempting to retrieve the requested search.");
+      $result = $this->Context->Database->Select($s, $this->Name, "GetSearchById", "An error occurred while attempting to retrieve the requested search.");
 		if ($this->Context->Database->RowCount($result) == 0) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrSearchNotFound"));
 		while ($rows = $this->Context->Database->GetRow($result)) {
 			$Search->GetPropertiesFromDataSet($rows, 1);
@@ -54,7 +54,7 @@ class SearchManager {
       $s->SetMainTable("VanillaUserSearch", "us");
       $s->AddWhere("UserID", $UserID, "=");
          
-      $result = $this->Context->Database->Select($this->Context, $s, $this->Name, "GetSearchCount", "An error occurred while retrieving search summary data.");
+      $result = $this->Context->Database->Select($s, $this->Name, "GetSearchCount", "An error occurred while retrieving search summary data.");
 		while ($rows = $this->Context->Database->GetRow($result)) {
 			$TotalNumberOfRecords = $rows['Count'];
 		}
@@ -69,7 +69,7 @@ class SearchManager {
 		$s->AddWhere("UserID", $UserID, "=");
       if ($RecordsToRetrieve > 0) $s->AddLimit(0, $RecordsToRetrieve);
    
-      return $this->Context->Database->Select($this->Context, $s, $this->Name, "GetSearchList", "An error occurred while retrieving saved searches.");
+      return $this->Context->Database->Select($s, $this->Name, "GetSearchList", "An error occurred while retrieving saved searches.");
    }
 
 	function SaveSearch(&$Search) {
@@ -90,9 +90,9 @@ class SearchManager {
 				$s->AddFieldNameValue("Keywords", $SearchToSave->Keywords);
 				if ($SearchToSave->SearchID > 0) {
 					$s->AddWhere("SearchID", $SearchToSave->SearchID, "=");
-					$this->Context->Database->Update($this->Context, $s, $this->Name, "SaveSearch", "An error occurred while saving your search.");
+					$this->Context->Database->Update($s, $this->Name, "SaveSearch", "An error occurred while saving your search.");
 				} else {
-					$Search->SearchID = $this->Context->Database->Insert($this->Context, $s, $this->Name, "SaveSearch", "An error occurred while creating your search.");
+					$Search->SearchID = $this->Context->Database->Insert($s, $this->Name, "SaveSearch", "An error occurred while creating your search.");
 				}
          }
          
