@@ -8,10 +8,11 @@
 * The latest source code for Vanilla is available at www.lussumo.com
 * Contact Mark O'Sullivan at mark [at] lussumo [dot] com
 *
-* Description: Create a copy of this file named settings.php and specify your own custom information
-* inside. DO NOT ADD your settings.php file to the repository or others will see your db password (and
-* other sensitive information).
+* Description: Create a copy of this file and name it settings.php. Use that file to specify your own
+* custom information. DO NOT ADD your settings.php file to the repository or others will see your db
+* password (and other sensitive information).
 */
+
 // Database Settings
 $Configuration["DATABASE_HOST"] = "your_database_host"; 
 $Configuration["DATABASE_NAME"] = "your_database_name"; 
@@ -19,22 +20,22 @@ $Configuration["DATABASE_USER"] = "your_database_user";
 $Configuration["DATABASE_PASSWORD"] = "your_database_password"; 
 
 // Path Settings
-$Configuration["APPLICATION_PATH"] = "/subversion/vanilla/"; 
+$Configuration["APPLICATION_PATH"] = "/path/to/vanilla/"; 
 $Configuration["LIBRARY_PATH"] = $Configuration["APPLICATION_PATH"] . "library/"; 
 $Configuration["EXTENSIONS_PATH"] = $Configuration["APPLICATION_PATH"] . "extensions/"; 
 $Configuration["LANGUAGES_PATH"] = $Configuration["APPLICATION_PATH"] . "languages/";
 
-// Vanilla Settings
-$Configuration["ENABLE_WHISPERS"] = "0"; 
+// People Settings
+$Configuration["COOKIE_DOMAIN"] = ".yourdomain.com"; 
+$Configuration["COOKIE_PATH"] = "/"; 
+$Configuration["SUPPORT_EMAIL"] = "support@yourdomain.com"; 
 
-// URL Rewriting Definitions
-$Configuration["REWRITE_BASE_URL"] = "http://localhost:8020/vanilla/";
+// Framework Settings
+$Configuration["DOMAIN"] = "http://www.yourdomain.com/vanilla/"; 
+
+// Url Rewriting Definitions (not yet functional)
+$Configuration["REWRITE_BASE_URL"] = "http://your.base.url/to/vanilla/";
 
 // Extension Configuration Parameters
 $Configuration["PERMISSION_DATABASE_CLEANUP"] = "0";
-
-// Other Items Defined by "Application Settings" Form
-$Configuration["APPLICATION_TITLE"] = "Vanilla"; 
-$Configuration["BANNER_TITLE"] = "Vanilla 093"; 
-$Configuration["MAX_COMMENT_LENGTH"] = "8000"; 
 ?>
