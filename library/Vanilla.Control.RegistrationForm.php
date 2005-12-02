@@ -45,7 +45,7 @@ class RegistrationForm extends PostBackControl {
 				$AllowImmediateAccess = 0;
 				if ($RoleID > 0) {
 					$Role = $this->RoleManager->GetRoleById($RoleID);
-					$AllowImmediateAccess = $Role->CanLogin?"1":"0";
+					$AllowImmediateAccess = $Role->PERMISSION_SIGN_IN?"1":"0";
 				}
 				
 				$ConstantsFile = $this->Context->Configuration["APPLICATION_PATH"]."appg/settings.php";
