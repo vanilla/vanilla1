@@ -16,4 +16,5 @@ include($Configuration["EXTENSIONS_PATH"]."Atom.php");
 include($Configuration["EXTENSIONS_PATH"]."RSS2.php");
 include($Configuration["EXTENSIONS_PATH"]."PanelLists.php");
 include($Configuration["EXTENSIONS_PATH"]."Legends.php");
+include($Configuration["EXTENSIONS_PATH"]."HtmlFormatter.php");
 ?>
