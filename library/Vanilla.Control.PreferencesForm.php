@@ -26,16 +26,16 @@ class PreferencesForm extends PostBackControl {
 			$this->User = $User;
 			
 			// Add the default preferences
-         $this->AddPreference("ControlPanel", "DisplayListAppendices", "ShowAppendices", 1);
-         $this->AddPreference("ControlPanel", "DisplayTextOnlyToggle", "ShowTextToggle", 1, 1);
-         $this->AddPreference("ControlPanel", "DisplaySavedSearches", "ShowSavedSearches", 1);
+         $this->AddPreference("ControlPanel", "DisplayListAppendices", "ShowAppendices");
+         $this->AddPreference("ControlPanel", "DisplayTextOnlyToggle", "ShowTextToggle", 1);
+         $this->AddPreference("ControlPanel", "DisplaySavedSearches", "ShowSavedSearches");
 			
-         $this->AddPreference("DiscussionIndex", "JumpToLastReadComment", "JumpToLastReadComment", 1);
+         $this->AddPreference("DiscussionIndex", "JumpToLastReadComment", "JumpToLastReadComment");
 			
-         $this->AddPreference("CommentsForm", "ShowFormatTypeSelector", "ShowFormatSelector", 1);
+         $this->AddPreference("CommentsForm", "ShowFormatTypeSelector", "ShowFormatSelector");
 
 			if ($this->Context->Session->User->Permission("PERMISSION_RECEIVE_APPLICATION_NOTIFICATION")) {
-	         $this->AddPreference("NewUsers", "NewApplicantNotifications", "SendNewApplicantNotifications", 1);
+	         $this->AddPreference("NewUsers", "NewApplicantNotifications", "SendNewApplicantNotifications");
 			}
 			if ($this->Context->Session->User->Permission("PERMISSION_HIDE_DISCUSSIONS")) $this->AddPreference("HiddenInformation", "DisplayHiddenDiscussions", "ShowDeletedDiscussions", 0);
 			if ($this->Context->Session->User->Permission("PERMISSION_HIDE_COMMENTS")) $this->AddPreference("HiddenInformation", "DisplayHiddenComments", "ShowDeletedComments", 0);
@@ -43,12 +43,11 @@ class PreferencesForm extends PostBackControl {
 		$this->CallDelegate("Constructor");
 	}
 	
-	function AddPreference($SectionLanguageCode, $PreferenceLanguageCode, $PreferenceName, $DefaultValue, $RefreshPageAfterSetting = "0") {
+	function AddPreference($SectionLanguageCode, $PreferenceLanguageCode, $PreferenceName, $RefreshPageAfterSetting = "0") {
 		if (!array_key_exists($SectionLanguageCode, $this->Preferences)) $this->Preferences[$SectionLanguageCode] = array();
 		$Preference = array();
 		$Preference["LanguageCode"] = $PreferenceLanguageCode;
 		$Preference["Name"] = $PreferenceName;
-		$Preference["DefaultValue"] = $DefaultValue;
 		$Preference["RefreshPageAfterSetting"] = $RefreshPageAfterSetting;
 		$this->Preferences[$SectionLanguageCode][] = $Preference;		
 	}

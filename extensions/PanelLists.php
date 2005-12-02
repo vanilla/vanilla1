@@ -20,11 +20,11 @@ Author Url: http://www.markosullivan.ca/
 
 if ($Context->SelfUrl == "account.php") {
    $Context->AddToDelegate("PreferencesForm", "PreRender", "AddPanelLists");
-   function AddPanelLists(&$PreferencesForm, &$FunctionParameters) {
-      $PreferencesForm->AddPreference("ControlPanel", "DisplayBookmarks", "ShowBookmarks", 0);
-      $PreferencesForm->AddPreference("ControlPanel", "DisplayYourDiscussions", "ShowRecentDiscussions", 0);
-      $PreferencesForm->AddPreference("ControlPanel", "DisplayBrowsingHistory", "ShowBrowsingHistory", 0);
-		if ($Configuration["ENABLE_WHISPERS"]) $PreferencesForm->AddPreference("ControlPanel", "DisplayPrivateDiscussions", "ShowPrivateDiscussions", 0);
+   function AddPanelLists(&$PreferencesForm) {
+      $PreferencesForm->AddPreference("ControlPanel", "DisplayBookmarks", "ShowBookmarks");
+      $PreferencesForm->AddPreference("ControlPanel", "DisplayYourDiscussions", "ShowRecentDiscussions");
+      $PreferencesForm->AddPreference("ControlPanel", "DisplayBrowsingHistory", "ShowBrowsingHistory");
+		if ($PreferencesForm->Context->Configuration["ENABLE_WHISPERS"]) $PreferencesForm->AddPreference("ControlPanel", "DisplayPrivateDiscussions", "ShowPrivateDiscussions");
    }
 }
 
@@ -66,7 +66,7 @@ if (in_array($Context->SelfUrl, array("index.php", "comments.php"))) {
             $sReturn = "<form name=\"frmBookmark\" action=\"\"><input type=\"hidden\" name=\"OtherBookmarksExist\" value=\"1\" /></form>";
          }
       }
-      $Panel->AddString($sReturn);
+      $Panel->AddString($sReturn, 20);
    }
    
    function AddDiscussionsToPanel(&$Context, &$Panel, $DataManager, $GetDataMethod, $MaxRecords, $ListTitle, $UrlAction, $PermissionRequirement) {
@@ -74,6 +74,7 @@ if (in_array($Context->SelfUrl, array("index.php", "comments.php"))) {
          $Data = $DataManager->$GetDataMethod($Context->Session->UserID, $MaxRecords);
          $ActualRecords = $Context->Database->RowCount($Data);
          if ($ActualRecords > 0) {
+				$Panel->AddList($ListTitle, 21);
             $Discussion = $Context->ObjectFactory->NewObject($Context, "Discussion");
             while ($Row = $Context->Database->GetRow($Data)) {
                $Discussion->Clear();

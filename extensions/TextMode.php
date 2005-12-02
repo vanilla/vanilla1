@@ -73,7 +73,7 @@ $Context->AddToDelegate("Comment",
 if ($Context->SelfUrl == "account.php") {
 	// Make sure that the pictures aren't displayed on the page if the user has turned text-only mode on
    function Account_HideImages(&$Account) {
-		if (!$this->Context->Session->User->Preference("HtmlOn")) {
+		if (!$Account->Context->Session->User->Preference("HtmlOn")) {
 			$Account->User->DisplayIcon = "";
 			$Account->User->Picture = "";
 		}		
