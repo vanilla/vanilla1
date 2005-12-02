@@ -164,7 +164,7 @@ class ExtensionForm extends PostBackControl {
 						
 						// If everything was successful, redirect back to this page
 						if ($this->Context->WarningCollector->Iif()) {
-							header("Location: settings.php?PostBackAction=Extensions&Detail=".$ExtensionKey."#".$ExensionKey);
+							header("Location: settings.php?PostBackAction=Extensions&Detail=".$ExtensionKey."#".$ExtensionKey);
 							die();
 						} else {
 							$this->PostBackAction = "Extensions";
