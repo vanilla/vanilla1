@@ -13,7 +13,7 @@ echo("<div class=\"AccountForm FunctionalityForm\">
             $SectionPreferencesCount = count($SectionPreferences);
             for ($i = 0; $i < $SectionPreferencesCount; $i++) {
                $Preference = $SectionPreferences[$i];
-               $PreferenceDefault = ForceBool($this->Context->Configuration["PREFERENCE_".$Preference["Name"]], 0);
+               $PreferenceDefault = ForceBool(@$this->Context->Configuration["PREFERENCE_".$Preference["Name"]], 0);
                echo("<div class=\"CheckBox\">"
                   .GetDynamicCheckBox($Preference["Name"], $PreferenceDefault, $this->Context->Session->User->Preference($Preference["Name"]), "PanelSwitch('".$Preference["Name"]."', ".ForceBool($Preference["RefreshPageAfterSetting"], 0).");", $this->Context->GetDefinition($Preference["LanguageCode"]))
                ."</div>");									
