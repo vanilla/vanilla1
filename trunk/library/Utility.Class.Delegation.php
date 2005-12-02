@@ -33,7 +33,7 @@ class Delegation {
 		if (array_key_exists($DelegateName, $this->Delegates)) {
 			$FunctionCount = count($this->Delegates[$DelegateName]);
 			for ($i = 0; $i < $FunctionCount; $i++) {
-				return $this->Delegates[$DelegateName][$i]($this);
+            $this->Delegates[$DelegateName][$i]($this);
 			}
 		}
 	}

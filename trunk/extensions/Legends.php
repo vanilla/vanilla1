@@ -17,24 +17,35 @@ Author Url: http://www.markosullivan.ca/
 * The latest source code for Vanilla is available at www.lussumo.com
 * Contact Mark O'Sullivan at mark [at] lussumo [dot] com
 */
+
+// Add the preference switch to the account functionality form
+if ($Context->SelfUrl == "account.php" && ForceIncomingString("PostBackAction", "") == "Functionality") {
+	function PreferencesForm_AddLegendSwitch(&$PreferencesForm) {
+		$PreferencesForm->AddPreference("ControlPanel", "DisplayListAppendices", "ShowAppendices");
+	}
+	$Context->AddToDelegate("PreferencesForm",
+		"Constructor",
+		"PreferencesForm_AddLegendSwitch");
+}
+
 if (in_array($Context->SelfUrl, array("index.php", "categories.php")) && $Context->Session->UserID > 0 && $Context->Session->User->Preference("ShowAppendices")) {
 	$Panel->AddString("<h2>".$Context->GetDefinition("Legend")."</h2>
 		<ul class=\"LinkedList Legend\">
 			<li class=\"Legend NewComments\">".$Context->GetDefinition("NewComments")."</li>
 			<li class=\"Legend NoNewComments\">".$Context->GetDefinition("NoNewComments")."</li>
-		</ul>");
+		</ul>", 100);
 } elseif ($Context->SelfUrl == "categories.php" && $Context->Session->UserID > 0 && $Context->Session->User->Preference("ShowAppendices")) {
 	$Panel->AddString("<h2>".$Context->GetDefinition("Legend")."</h2>
 		<ul class=\"LinkedList Legend\">
 			<li class=\"Legend UnblockedCategory\">".$Context->GetDefinition("UnblockedCategory")."</li>
 			<li class=\"Legend BlockedCategory\">".$Context->GetDefinition("BlockedCategory")."</li>
-   	</ul>");
+   	</ul>", 100);
 } elseif ($Configuration["ENABLE_WHISPERS"] && $Context->SelfUrl == "comments.php" && $Context->Session->UserID > 0 && $Context->Session->User->Preference("ShowAppendices")) {
 	$Panel->AddString("<h2>".$Context->GetDefinition("Legend")."</h2>
       <ul class=\"LinkedList Legend\">
          <li class=\"Legend WhisperFrom\">".$Context->GetDefinition("YouWhispered")."</li>
          <li class=\"Legend WhisperTo\">".$Context->GetDefinition("WhisperedToYou")."</li>
-      </ul>");
+      </ul>", 100);
 }
 
 ?>

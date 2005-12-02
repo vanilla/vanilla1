@@ -26,12 +26,7 @@ class PreferencesForm extends PostBackControl {
 			$this->User = $User;
 			
 			// Add the default preferences
-         $this->AddPreference("ControlPanel", "DisplayListAppendices", "ShowAppendices");
-         $this->AddPreference("ControlPanel", "DisplayTextOnlyToggle", "ShowTextToggle", 1);
-         $this->AddPreference("ControlPanel", "DisplaySavedSearches", "ShowSavedSearches");
-			
          $this->AddPreference("DiscussionIndex", "JumpToLastReadComment", "JumpToLastReadComment");
-			
          $this->AddPreference("CommentsForm", "ShowFormatTypeSelector", "ShowFormatSelector");
 
 			if ($this->Context->Session->User->Permission("PERMISSION_RECEIVE_APPLICATION_NOTIFICATION")) {
