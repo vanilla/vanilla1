@@ -81,9 +81,9 @@ if ($Context->Session->UserID > 0) {
 }
 
 // BUILD THE MAIN MENU
-$Menu->AddTab($Context->GetDefinition("Discussions"), "discussions", "./", "DiscussionsTab");
-if ($Configuration["USE_CATEGORIES"]) $Menu->AddTab($Context->GetDefinition("Categories"), "categories", "categories.php", "CategoriesTab");
-$Menu->AddTab($Context->GetDefinition("Search"), "search", "search.php", "SearchTab");
+$Menu->AddTab($Context->GetDefinition("Discussions"), "discussions", "./", "DiscussionsTab", "", $Configuration["TAB_POSITION_DISCUSSIONS"]);
+if ($Configuration["USE_CATEGORIES"]) $Menu->AddTab($Context->GetDefinition("Categories"), "categories", "categories.php", "CategoriesTab", "", $Configuration["TAB_POSITION_CATEGORIES"]);
+$Menu->AddTab($Context->GetDefinition("Search"), "search", "search.php", "SearchTab", "", $Configuration["TAB_POSITION_SEARCH"]);
 if ($Context->Session->UserID > 0) {
 	// Make sure they should be seeing the settings tab
 	$RequiredPermissions = array("PERMISSION_CHECK_FOR_UPDATES",
@@ -105,13 +105,13 @@ if ($Context->Session->UserID > 0) {
 	$i = 0;
 	for ($i = 0; $i < $RequiredPermissionsCount; $i++) {
 		if ($Context->Session->User->Permission($RequiredPermissions[$i])) {
-			$Menu->AddTab($Context->GetDefinition("Settings"), "settings", "settings.php", "SettingsTab");
+			$Menu->AddTab($Context->GetDefinition("Settings"), "settings", "settings.php", "SettingsTab", "", $Configuration["TAB_POSITION_SETTINGS"]);
 			break;
 		}
 	}
 
 	// Add the account tab   
-	$Menu->AddTab($Context->GetDefinition("Account"), "account", "account.php", "AccountTab");
+	$Menu->AddTab($Context->GetDefinition("Account"), "account", "account.php", "AccountTab", "", $Configuration["TAB_POSITION_ACCOUNT"]);
 }
 
 // INCLUDE EXTENSIONS

@@ -106,6 +106,13 @@ $Configuration["CONTROL_POSITION_BODY_ITEM"] = "400";
 $Configuration["CONTROL_POSITION_FOOT"] = "500";
 $Configuration["CONTROL_POSITION_PAGE_END"] = "600";
 
+// Vanilla Tab Positions
+$Configuration["TAB_POSITION_DISCUSSIONS"] = "10";
+$Configuration["TAB_POSITION_CATEGORIES"] = "20";
+$Configuration["TAB_POSITION_SEARCH"] = "30";
+$Configuration["TAB_POSITION_SETTINGS"] = "40";
+$Configuration["TAB_POSITION_ACCOUNT"] = "50";
+
 // Url Rewriting Definitions
 $Configuration["REWRITE_BASE_URL"] = "http://your.base.url/to/vanilla/";
 $Configuration["REWRITE_CATEGORIES"] = "Categories";
