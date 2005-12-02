@@ -64,7 +64,7 @@ function ReturnWrappedFeedForRSS2(&$Context, $FeedItems) {
 	return "<?xml version=\"1.0\" encoding=\"utf-8\"?>
 	<rss version=\"2.0\">
 		<channel>
-			<title>".$Context->Configuration["APPLICATION_TITLE"]." - ".$Context->PageTitle."</title>
+			<title>".htmlspecialchars($Context->Configuration["APPLICATION_TITLE"]." - ".$Context->PageTitle)."</title>
 			<lastBuildDate>".FixDateForRSS2()."</lastBuildDate>
 			<link>".PrependString("http://", $Context->Configuration["DOMAIN"])."</link>
 			<description></description>
@@ -76,7 +76,7 @@ function ReturnWrappedFeedForRSS2(&$Context, $FeedItems) {
 
 function ReturnFeedItemForRSS2($Properties) {
 	return "<item>
-		<title>".htmlspecialchars($Properties["Title"])."</title>
+		<title>".$Properties["Title"]."</title>
 		<link>".$Properties["Link"]."</link>
 		<guid isPermaLink=\"false\">".$Properties["Link"]."</guid>
 		<pubDate>".$Properties["Published"]."</pubDate>

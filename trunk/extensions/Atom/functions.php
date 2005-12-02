@@ -80,7 +80,7 @@ function ReturnWrappedFeedForAtom(&$Context, $FeedItems) {
 			
 	return "<?xml version=\"1.0\" encoding=\"utf-8\"?>
 		<feed xmlns=\"http://www.w3.org/2005/Atom\">
-		  <title type=\"text\">".$Context->Configuration["APPLICATION_TITLE"]." - ".$Context->PageTitle."</title>
+		  <title type=\"text\">".htmlspecialchars($Context->Configuration["APPLICATION_TITLE"]." - ".$Context->PageTitle)."</title>
 		  <updated>".FixDateForAtom()."</updated>
 		  <id>".$Domain."</id>
 		  <link rel=\"alternate\" type=\"text/html\" hreflang=\"en\" href=\"".$AlternateLink."\"/>
@@ -94,7 +94,7 @@ function ReturnWrappedFeedForAtom(&$Context, $FeedItems) {
 
 function ReturnFeedItemForAtom($Properties) {
 	return "<entry>
-		<title>".htmlspecialchars($Properties["Title"])."</title>
+		<title>".$Properties["Title"]."</title>
 		<link rel=\"alternate\" href=\"".$Properties["Link"]."\" type=\"application/xhtml+xml\" hreflang=\"en\"/>
 		<id>".$Properties["Link"]."</id>
 		<published>".$Properties["Published"]."</published>
