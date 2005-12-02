@@ -336,6 +336,23 @@ class DiscussionManager extends Delegation {
 			$SqlBuilder->EndWhereGroup();
 		}
 	}
+
+	function GetPrivateDiscussionsByUserID($UserID, $RecordsToReturn = "0") {
+		$UserID = ForceInt($UserID, 0);
+		$RecordsToReturn = ForceInt($RecordsToReturn, 0);
+		
+		$s = $this->GetDiscussionBuilder();
+		if (!$this->Context->Session->User->AdminCategories || !$this->Context->Session->User->Setting("ShowDeletedDiscussions")) $s->AddWhere("t.Active", "1", "=");
+		$s->AddWhere("t.WhisperUserID", $UserID, "=", "and", "", 0, 1);
+		$s->AddWhere("t.AuthUserID", $UserID, "=", "or", "", 0, 1);
+		$s->AddWhere("t.WhisperUserID", 0, ">", "and");
+		$s->EndWhereGroup();
+		$s->EndWhereGroup();
+		$s->AddOrderBy("DateLastActive", "t", "desc");
+		if ($RecordsToReturn > 0) $s->AddLimit(0, $RecordsToReturn);
+
+		return $this->Context->Database->Select($this->Context, $s, $this->Name, "GetPrivateDiscussionsByUserID", "An error occurred while retrieving private discussions.");
+	}
 	
 	function GetSearchBuilder($Search) {
 		$Search->FormatPropertiesForDatabaseInput();

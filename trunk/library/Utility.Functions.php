@@ -109,7 +109,7 @@ function ForceBool($InValue, $DefaultBool) {
 	$InValue = strtoupper($InValue);
 	if ($InValue == 1) {
 		return 1;
-	} elseif ($InValue == 0) {
+	} elseif ($InValue === 0) {
 		return 0;
 	} elseif ($InValue == "Y") {
 		return 1;

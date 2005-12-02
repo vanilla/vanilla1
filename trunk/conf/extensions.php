@@ -7,7 +7,6 @@ the system.
 */
 include($Configuration["EXTENSIONS_PATH"]."Timer.php");
 include($Configuration["EXTENSIONS_PATH"]."Style.php");
-include($Configuration["EXTENSIONS_PATH"]."PanelLists.php");
 include($Configuration["EXTENSIONS_PATH"]."TextMode.php");
 include($Configuration["EXTENSIONS_PATH"]."DiscussionFilters.php");
 include($Configuration["EXTENSIONS_PATH"]."SavedSearches.php");
@@ -15,4 +14,5 @@ include($Configuration["EXTENSIONS_PATH"]."Discovery.php");
 include($Configuration["EXTENSIONS_PATH"]."CommentProtection.php");
 include($Configuration["EXTENSIONS_PATH"]."Atom.php");
 include($Configuration["EXTENSIONS_PATH"]."RSS2.php");
+include($Configuration["EXTENSIONS_PATH"]."PanelLists.php");
 ?>
