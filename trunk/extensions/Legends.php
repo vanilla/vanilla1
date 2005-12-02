@@ -28,7 +28,7 @@ if ($Context->SelfUrl == "account.php" && ForceIncomingString("PostBackAction", 
 		"PreferencesForm_AddLegendSwitch");
 }
 
-if (in_array($Context->SelfUrl, array("index.php", "categories.php")) && $Context->Session->UserID > 0 && $Context->Session->User->Preference("ShowAppendices")) {
+if ($Context->SelfUrl == "index.php" && $Context->Session->UserID > 0 && $Context->Session->User->Preference("ShowAppendices")) {
 	$Panel->AddString("<h2>".$Context->GetDefinition("Legend")."</h2>
 		<ul class=\"LinkedList Legend\">
 			<li class=\"Legend NewComments\">".$Context->GetDefinition("NewComments")."</li>
