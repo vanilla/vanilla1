@@ -69,7 +69,6 @@ $Head->AddScript("./js/global.js");
 $Head->AddScript("./js/vanilla.js");
 $Head->AddScript("./js/prototype.js");
 $Head->AddScript("./js/scriptaculous.js");
-$Head->AddScript("./js/sort.js");
 $Head->AddStyleSheet($Context->StyleUrl."css/global.css", "screen");
 $Head->AddStyleSheet($Context->StyleUrl."css/global.handheld.css", "handheld");
 $Head->AddString("<link rel=\"alternate\" type=\"application/atom+xml\" href=\"".PrependString("http://", AppendFolder($Configuration["DOMAIN"], "feeds/?Type=atom"))."\" title=\"".$Context->GetDefinition("Atom")." ".$Context->GetDefinition("Feed")."\" />");
