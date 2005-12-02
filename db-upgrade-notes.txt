@@ -1,0 +1,28 @@
+In order for your vanilla installation to work, you will need to make some changes 
+to your existing vanilla database. The required SQL is included below. Something to
+be aware of is that Roles have been completely changed. Aside from three basic columns
+in the LUM_Role table, all other role permissions are now managed through a serialized 
+array. The SQL below removes all old role definitions and inserts a new "ALLOW ALL"
+setup in every single role in your forum. So, DO NOT under any circumstances place
+this code on a live server before first altering your roles so that basic members
+do not have administrative priviledges.
+
+
+
+
+alter table LUM_Role change CanLogin PERMISSION_SIGN_IN enum('1','0') not null default '0';
+alter table LUM_Role change CanPostHtml PERMISSION_HTML_ALLOWED enum('1','0') not null default '0';
+alter table LUM_Role drop CanPostDiscussion;
+alter table LUM_Role drop CanPostComment;
+alter table LUM_Role drop AdminUsers;
+alter table LUM_Role drop AdminCategories;
+alter table LUM_Role drop ShowAllWhispers;
+alter table LUM_Role drop MasterAdmin;
+alter table LUM_Role drop CanViewIps;
+alter table LUM_Role add PERMISSION_RECEIVE_APPLICATION_NOTIFICATION enum('1','0') not null default '0';
+alter table LUM_Role add Permissions text not null default '';
+alter table LUM_Role add Priority int not null default '0';
+
+alter table LUM_User change Settings Preferences text;
+
+update LUM_Role set Permissions = 'a:33:{s:28:\"PERMISSION_CHECK_FOR_UPDATES\";s:1:\"1\";s:18:\"PERMISSION_SIGN_IN\";s:1:\"1\";s:23:\"PERMISSION_ADD_COMMENTS\";s:1:\"1\";s:44:\"PERMISSION_ADD_COMMENTS_TO_CLOSED_DISCUSSION\";s:1:\"1\";s:27:\"PERMISSION_START_DISCUSSION\";s:1:\"1\";s:23:\"PERMISSION_HTML_ALLOWED\";s:1:\"1\";s:31:\"PERMISSION_IP_ADDRESSES_VISIBLE\";s:1:\"1\";s:29:\"PERMISSION_APPROVE_APPLICANTS\";s:1:\"1\";s:30:\"PERMISSION_MANAGE_REGISTRATION\";s:1:\"1\";s:21:\"PERMISSION_EDIT_USERS\";s:1:\"1\";s:27:\"PERMISSION_CHANGE_USER_ROLE\";s:1:\"1\";s:20:\"PERMISSION_ADD_ROLES\";s:1:\"1\";s:21:\"PERMISSION_EDIT_ROLES\";s:1:\"1\";s:23:\"PERMISSION_REMOVE_ROLES\";s:1:\"1\";s:28:\"PERMISSION_STICK_DISCUSSIONS\";s:1:\"1\";s:27:\"PERMISSION_HIDE_DISCUSSIONS\";s:1:\"1\";s:28:\"PERMISSION_CLOSE_DISCUSSIONS\";s:1:\"1\";s:27:\"PERMISSION_EDIT_DISCUSSIONS\";s:1:\"1\";s:24:\"PERMISSION_HIDE_COMMENTS\";s:1:\"1\";s:24:\"PERMISSION_EDIT_COMMENTS\";s:1:\"1\";s:25:\"PERMISSION_ADD_CATEGORIES\";s:1:\"1\";s:26:\"PERMISSION_EDIT_CATEGORIES\";s:1:\"1\";s:28:\"PERMISSION_REMOVE_CATEGORIES\";s:1:\"1\";s:26:\"PERMISSION_SORT_CATEGORIES\";s:1:\"1\";s:34:\"PERMISSION_VIEW_HIDDEN_DISCUSSIONS\";s:1:\"1\";s:31:\"PERMISSION_VIEW_HIDDEN_COMMENTS\";s:1:\"1\";s:28:\"PERMISSION_VIEW_ALL_WHISPERS\";s:1:\"1\";s:38:\"PERMISSION_CHANGE_APPLICATION_SETTINGS\";s:1:\"1\";s:28:\"PERMISSION_MANAGE_EXTENSIONS\";s:1:\"1\";s:26:\"PERMISSION_MANAGE_LANGUAGE\";s:1:\"1\";s:24:\"PERMISSION_MANAGE_STYLES\";s:1:\"1\";s:43:\"PERMISSION_RECEIVE_APPLICATION_NOTIFICATION\";s:1:\"1\";s:27:\"PERMISSION_ALLOW_DEBUG_INFO\";s:1:\"1\";}'
