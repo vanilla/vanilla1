@@ -109,7 +109,7 @@ class UserManager extends Delegation {
 				$e->BodyText = str_replace(array("\\1", "\\2"),
 					array($this->Context->Configuration["APPLICATION_TITLE"], strtolower($AffectedUser->Role)),
 					$this->Context->GetDefinition("RoleChangeMessage"));
-				if ($AffectedUser->CanLogin) {
+				if ($AffectedUser->PERMISSION_SIGN_IN) {
 					$e->BodyText .= str_replace(array("\\1", "\\2"),
 						array($this->Context->Configuration["APPLICATION_TITLE"], $this->Context->Configuration["DOMAIN"].(substr($this->Context->Configuration["DOMAIN"], strlen($this->Context->Configuration["DOMAIN"])-1) == "/" ? "":"/")."signin.php"),
 						$this->Context->GetDefinition("SignInMessage"));
