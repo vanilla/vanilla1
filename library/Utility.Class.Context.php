@@ -112,7 +112,7 @@ class Context {
 	}
 	
 	function StartSession() {
-      $this->Authenticator = $this->ObjectFactory->NewObject($this, "Authenticator", $this->Configuration, $this->Database->Connection);
+      $this->Authenticator = $this->ObjectFactory->NewContextObject($this, "Authenticator");
 		$this->Session = $this->ObjectFactory->NewObject($this, "PeopleSession");
 		$this->Session->Start($this, $this->Authenticator);
 		// The style url (as defined by the user session)

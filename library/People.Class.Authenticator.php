@@ -14,8 +14,7 @@
 * Applications utilizing this file: Vanilla;
 */
 class Authenticator {
-   var $Configuration;
-   var $Connection;
+   var $Context;
 	
 	// Returning "0" indicates that the username and password combination weren't found.
    // Returning "-1" indicates that the user does not have permission to sign in.
@@ -28,13 +27,13 @@ class Authenticator {
 		
 		// Retrieve matching username/password values
       $Query = "select u.UserID, md5(u.UserID) as EncryptedUserID, r.PERMISSION_SIGN_IN
-			from ".$this->Configuration["DATABASE_TABLE_PREFIX"]."User u
-			inner join ".$this->Configuration["DATABASE_TABLE_PREFIX"]."Role r
+			from ".$this->Context->Configuration["DATABASE_TABLE_PREFIX"]."User u
+			inner join ".$this->Context->Configuration["DATABASE_TABLE_PREFIX"]."Role r
 				on u.RoleID = r.RoleID
 			where u.Name = '".$Username."'
 				and (u.Password = md5('".$Password."') or u.Password = '".$Password."')";
 
-		$UserResult = @mysql_query($Query, $this->Connection);
+		$UserResult = @mysql_query($Query, $this->Context->Database->GetConnection());
 		if (!$UserResult) {
 			$UserID = -2;
 		} elseif (mysql_num_rows($UserResult) > 0) {
@@ -63,38 +62,37 @@ class Authenticator {
 		return $UserID;
 	}
    
-   function Authenticator($configuration, $connection) {
-      $this->Configuration = &$configuration;
-      $this->Connection = &$connection;
+   function Authenticator(&$Context) {
+      $this->Context = &$Context;
    }
    
    function DeAuthenticate() {
 		if (session_id()) session_destroy();
       
 		// Destroy the cookies as well
-		setcookie($this->Configuration["COOKIE_USER_KEY"],
+		setcookie($this->Context->Configuration["COOKIE_USER_KEY"],
 			" ",
 			time()-3600,
-			$this->Configuration["COOKIE_PATH"],
-			$this->Configuration["COOKIE_DOMAIN"]);
-		unset($_COOKIE[$this->Configuration["COOKIE_USER_KEY"]]);
-		setcookie($this->Configuration["COOKIE_VERIFICATION_KEY"],
+			$this->Context->Configuration["COOKIE_PATH"],
+			$this->Context->Configuration["COOKIE_DOMAIN"]);
+		unset($_COOKIE[$this->Context->Configuration["COOKIE_USER_KEY"]]);
+		setcookie($this->Context->Configuration["COOKIE_VERIFICATION_KEY"],
 			" ",
 			time()-3600,
-			$this->Configuration["COOKIE_PATH"],
-			$this->Configuration["COOKIE_DOMAIN"]);
-		unset($_COOKIE[$this->Configuration["COOKIE_VERIFICATION_KEY"]]);
+			$this->Context->Configuration["COOKIE_PATH"],
+			$this->Context->Configuration["COOKIE_DOMAIN"]);
+		unset($_COOKIE[$this->Context->Configuration["COOKIE_VERIFICATION_KEY"]]);
 		return true;      
    }
    
 	function GetIdentity() {
       if (!session_id()) session_start();
-      $UserID = ForceInt(@$_SESSION[$this->Configuration["SESSION_USER_IDENTIFIER"]], 0);
+      $UserID = ForceInt(@$_SESSION[$this->Context->Configuration["SESSION_USER_IDENTIFIER"]], 0);
       if ($UserID == 0) {
          // UserID wasn't found in the session, so attempt to retrieve it from the cookies
    		// Retrieve cookie values         
-   		$EncryptedUserID = ForceIncomingCookieString($this->Configuration["COOKIE_USER_KEY"], "");
-   		$VerificationKey = ForceIncomingCookieString($this->Configuration["COOKIE_VERIFICATION_KEY"], "");
+   		$EncryptedUserID = ForceIncomingCookieString($this->Context->Configuration["COOKIE_USER_KEY"], "");
+   		$VerificationKey = ForceIncomingCookieString($this->Context->Configuration["COOKIE_VERIFICATION_KEY"], "");
 		
    		if ($EncryptedUserID != "" && $VerificationKey != "") {
             
@@ -105,7 +103,7 @@ class Authenticator {
                where md5(UserID) = '".FormatStringForDatabaseInput($EncryptedUserID)."'
                and VerificationKey = '".FormatStringForDatabaseInput($VerificationKey)."'";
                
-            $Result = @mysql_query($Query, $this->Connection);
+            $Result = @mysql_query($Query, $this->Context->Database->GetConnection());
             if ($Result) {
 					while ($rows = mysql_fetch_array($Result)) {
 						$UserID = ForceInt($rows["UserID"], 0);
@@ -138,31 +136,31 @@ class Authenticator {
    // properties and methods appear above.
    
 	function AssignSessionUserID($UserID) {
-		if ($UserID > 0) @$_SESSION[$this->Configuration["SESSION_USER_IDENTIFIER"]] = $UserID;
+		if ($UserID > 0) @$_SESSION[$this->Context->Configuration["SESSION_USER_IDENTIFIER"]] = $UserID;
 	}
 	
 	function LogIp($UserID) {
-		if ($this->Configuration["LOG_ALL_IPS"]) {
+		if ($this->Context->Configuration["LOG_ALL_IPS"]) {
 			$Query = "insert into LUM_IpHistory
 				(UserID, RemoteIp, DateLogged)
 				values ('".$UserID."', '".GetRemoteIp(1)."', '".MysqlDateTime()."')";
 			// Again, fail silently
-			mysql_query($Query, $this->Connection);
+			mysql_query($Query, $this->Context->Database->GetFarmConnection());
 		}
 	}
 	
 	function SetCookieCredentials($EncryptedUserID, $VerificationKey) {
 		// Note: 31104000 is 60*60*24*30*12.. or 1 year
-		setcookie($this->Configuration["COOKIE_USER_KEY"],
+		setcookie($this->Context->Configuration["COOKIE_USER_KEY"],
 			$EncryptedUserID,
 			time()+31104000,
-			$this->Configuration["COOKIE_PATH"],
-			$this->Configuration["COOKIE_DOMAIN"]);
-		setcookie($this->Configuration["COOKIE_VERIFICATION_KEY"],
+			$this->Context->Configuration["COOKIE_PATH"],
+			$this->Context->Configuration["COOKIE_DOMAIN"]);
+		setcookie($this->Context->Configuration["COOKIE_VERIFICATION_KEY"],
 			$VerificationKey,
 			time()+31104000,
-			$this->Configuration["COOKIE_PATH"],
-			$this->Configuration["COOKIE_DOMAIN"]);
+			$this->Context->Configuration["COOKIE_PATH"],
+			$this->Context->Configuration["COOKIE_DOMAIN"]);
 	}
 	
 	function UpdateLastVisit($UserID, $VerificationKey) {
@@ -172,7 +170,7 @@ class Authenticator {
 				CountVisit = CountVisit + 1,
 			where UserID = ".$UserID;
 		// Fail silently
-		mysql_query($Query, $this->Connection);
+		mysql_query($Query, $this->Context->Database->GetFarmConnection());
 	}
 }
 ?>
