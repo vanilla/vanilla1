@@ -1,6 +1,6 @@
 function BlockComment(CommentID, CurrentStatus, PermanentBlock, ForceStatus, UnblockInnerHtml, UnblockTitle, BlockInnerHtml, BlockTitle) {
 	var Anchor = document.getElementById("BlockComment_"+CommentID);
-	var Comment = document.getElementById("Comment_"+CommentID);
+	var Comment = document.getElementById("CommentContents_"+CommentID);
 	if (Anchor && Comment) {
 		var HtmlStatus = 0;
 		if (ForceStatus) {
@@ -28,11 +28,11 @@ function BlockComment(CommentID, CurrentStatus, PermanentBlock, ForceStatus, Unb
 
 function BlockUser (AuthUserID, CurrentStatus, UnblockInnerHtml, UnblockTitle, BlockInnerHtml, BlockTitle, UnblockCommentInnerHtml, UnblockCommentTitle, BlockCommentInnerHtml, BlockCommentTitle) {
 	// Retrieve & Loop through all relevant elements
-	var Comments = GetElements("div", "Comment_");
+	var Comments = GetElements("div", "CommentContents_");
 	var CommentID = 0;
 	var HtmlStatus = -1;
 	for(i = 0; i < Comments.length; i++) {
-		CommentID = Comments[i].id.replace("Comment_","");
+		CommentID = Comments[i].id.replace("CommentContents_","");
 		// See if the comment belongs to this user
 		var Anchor = document.getElementById("BlockUser_"+AuthUserID+"_Comment_"+CommentID);
 		if (Anchor) {
