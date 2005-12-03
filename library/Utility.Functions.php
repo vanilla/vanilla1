@@ -275,7 +275,8 @@ function FormatStringForDatabaseInput($inValue, $bStripHtml = "0") {
 	// $sReturn = stripslashes($inValue);
    $sReturn = $inValue;
 	if ($bStripHtml) $sReturn = trim(strip_tags($sReturn));
-	return MAGIC_QUOTES_ON ? $sReturn : addslashes($sReturn);
+	// return MAGIC_QUOTES_ON ? $sReturn : addslashes($sReturn);
+   return addslashes($sReturn);
 }
 
 // Takes a user defined string and formats it for page display. 
