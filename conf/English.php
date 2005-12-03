@@ -84,4 +84,11 @@ $Context->Dictionary["CustomStyleNotes"] = "Any web-accessable folder will work,
 $Context->Dictionary["UseCustomStyle"] = "Click here to use your custom style";
 $Context->Dictionary["By"] = "by";
 $Context->Dictionary["Styles"] = "Styles";
+
+// DiscussionFilters Extension
+$Context->Dictionary["DiscussionFilters"] = "Discussion filters";
+$Context->Dictionary["BookmarkedDiscussions"] = "Bookmarked discussions";
+$Context->Dictionary["YourDiscussions"] = "Your discussions";
+$Context->Dictionary["PrivateDiscussions"] = "Whispered discussions";
+$Context->Dictionary["PrivateComments"] = "Whispered comments";
 ?>

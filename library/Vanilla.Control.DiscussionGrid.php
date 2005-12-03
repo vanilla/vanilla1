@@ -18,50 +18,45 @@ class DiscussionGrid extends Control {
 	var $DiscussionData;
 	var $DiscussionDataCount;
 	
-	function DiscussionGrid(&$Context, $DiscussionManager, $CategoryID, $View) {
+	function DiscussionGrid(&$Context) {
 		$this->Name = "DiscussionGrid";
 		$this->Control($Context);
-		$DiscussionStarterUserID = 0;
-		$BookmarkedDiscussionsOnly = 0;
-		$PrivateDiscussionsOnly = 0;
+
+
+		$DiscussionManager = $this->Context->ObjectFactory->NewContextObject($this->Context, "DiscussionManager");
 		$this->CurrentPage = ForceIncomingInt("page", 1);
-		$this->View = $View;
+		$this->DiscussionData = false;
+		$this->DiscussionDataCount = false;
+		
 		
 		// Get the category if filtered
 		$Category = false;
+		$CategoryID = ForceIncomingInt("CategoryID", 0);
 		if ($CategoryID > 0) {
 			$cm = $this->Context->ObjectFactory->NewContextObject($this->Context, "CategoryManager");
 			$Category = $cm->GetCategoryById($CategoryID);
 		}
 		$this->PageJump = "<a class=\"PageJump AllDiscussions\" href=\"./\">".$this->Context->GetDefinition("ShowAll")."</a>";
-		switch ($View) {
-			case "Bookmarks":
-				$this->Context->PageTitle = $this->Context->GetDefinition("BookmarkedDiscussions");
-				$BookmarkedDiscussionsOnly = 1;
-				break;
-			case "YourDiscussions":
-				$this->Context->PageTitle = $this->Context->GetDefinition("YourDiscussions");
-				$DiscussionStarterUserID = $this->Context->Session->UserID;
-				break;
-			case "Private":
-				$this->Context->PageTitle = $this->Context->GetDefinition("PrivateDiscussions");
-				$PrivateDiscussionsOnly = 1;
-				break;
-			default:
-				if ($Category) {
-					$this->Context->PageTitle = $Category->Name;
+
+		$this->DelegateParameters["DiscussionManager"] = &$DiscussionManager;
+		$this->CallDelegate("PreDataLoad");
+		
+		if (!$this->DiscussionData) {
+			$this->DiscussionData = $DiscussionManager->GetDiscussionList($this->Context->Configuration["DISCUSSIONS_PER_PAGE"], $this->CurrentPage, $CategoryID);
+			$this->DiscussionDataCount = $DiscussionManager->GetDiscussionCount($CategoryID);		
+		
+			if ($Category) {
+				$this->Context->PageTitle = $Category->Name;
+			} else {
+				if ($this->Context->Session->User->BlocksCategories) {
+					$this->Context->PageTitle = $this->Context->GetDefinition("WatchedDiscussions");
 				} else {
-					if ($this->Context->Session->User->BlocksCategories) {
-						$this->Context->PageTitle = $this->Context->GetDefinition("WatchedDiscussions");
-					} else {
-						$this->Context->PageTitle = $this->Context->GetDefinition("AllDiscussions");
-					}
-					$this->PageJump = "";
+					$this->Context->PageTitle = $this->Context->GetDefinition("AllDiscussions");
 				}
-				break;
+				$this->PageJump = "";
+			}
 		}
-		$this->DiscussionData = $DiscussionManager->GetDiscussionList($this->Context->Configuration["DISCUSSIONS_PER_PAGE"], $this->CurrentPage, $CategoryID, $BookmarkedDiscussionsOnly, $PrivateDiscussionsOnly, $DiscussionStarterUserID);
-		$this->DiscussionDataCount = $DiscussionManager->GetDiscussionCount($CategoryID, $BookmarkedDiscussionsOnly, $PrivateDiscussionsOnly, $DiscussionStarterUserID);
+		
 		$this->CallDelegate("Constructor");
 	}
 	
