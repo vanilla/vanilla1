@@ -100,6 +100,7 @@ if (in_array($Context->SelfUrl, array("comments.php", "post.php"))) {
          $Comment->AuthBlocked = 0;
          $Comment->CommentBlocked = 0;
          $Comment->FormatPropertiesForDisplay();
+         $Comment->Body = Strip_Slashes($Comment->Body);
          
          echo("<div class=\"Title PreviewPostTitle\">".$DiscussionForm->Context->GetDefinition("Preview")."</div>
             <div class=\"CommentBody CommentPreview\">".$Comment->Body."</div>");
