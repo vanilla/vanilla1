@@ -10,6 +10,14 @@ Author Url: N/A
 
 class HtmlFormatter extends StringFormatter
 {
+	var $Table;
+	
+	function HtmlFormatter()
+	{
+		$this->Table = array_flip(get_html_translation_table(HTML_ENTITIES));
+		unset($this->Table['&amp;'], $this->Table['&lt;'], $this->Table['&gt;']);
+	}
+	
 	function Execute($String)
 	{
 		//because of those annoying possibilities such as <img src=">" onerror="alert('hi');">
@@ -24,27 +32,28 @@ class HtmlFormatter extends StringFormatter
 		);
 		$Replacements = array(
 			'', 
-			'"<".$this->RemoveEvilAttribs(str_replace(array(\'<\', \'>\', chr(0)), array(\'&lt;\', \'&gt;\', \' \'), $this->DecodeEntities(stripslashes("\\1")))).">"', 
+			'"<".$this->RemoveEvilAttribs(str_replace(chr(0), \' \', $this->DecodeEntities(stripslashes("\\1")))).">"', 
 			"&#115;\\1", 
 			"&#83;\\1", 
 			"&amp;{\\1}" 
 		);
 		
 		$String = str_replace(chr(0), ' ', $String);
-		return str_replace(
+		return '<xmp>'.str_replace(
 			array("\r\n", "\r", "\n"), 
 			array("\n", "\n", '<br>'), 
 			preg_replace($Patterns, $Replacements, $String)
-		);
+		).'</xmp>';
 	}
 	
 	function DecodeEntities($String)
 	{
 		$String = preg_replace(
-			array("/&#x([0-9a-f]{2})/ei", "/&#(0{0,7})([0-9]{0,7})[;]{0,1}/ei"), //note that order DOES matter
-			array('"&#".hexdec("\\1").";"', '"&#".stripslashes("\\2").";"'), 
+			array("/&#x([0-9a-f]{2});?/ei", "/&#(0{0,7})([0-9]{0,7});?/ei", "/&#([0-9]+?);?/ei"), //note that order DOES matter
+			array('chr(hexdec("\\1"))', 'chr((int)"\\2")', 'chr((int)"\\1")'), 
 			$String);
-		return html_entity_decode($String);
+		$String = strtr($String, $this->Table);
+		return $String;
 	}
 	
 	function ParseTags($String)
@@ -132,12 +141,10 @@ class HtmlFormatter extends StringFormatter
 	
 	function Parse($String, $Object, $FormatPurpose)
 	{
-		if($FormatPurpose == FORMAT_STRING_FOR_DISPLAY) return $this->Execute($String);
+		if($FormatPurpose == agFORMATSTRINGFORDISPLAY) return $this->Execute($String);
 		else return $String;
 	}
 }
-// Add the Html FormatType to the FormatType collection
-$Configuration["FORMAT_TYPES"][] = "Html";
 
 $HtmlFormatter = $Context->ObjectFactory->NewContextObject($Context, "HtmlFormatter");
 $Context->StringManipulator->AddManipulator("Html", $HtmlFormatter);
