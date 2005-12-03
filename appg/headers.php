@@ -17,7 +17,7 @@ header ("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
 header ("Pragma: no-cache"); // HTTP/1.0
 
 // PROPERLY ENCODE THE CONTENT
-header ($Configuration["CONTENT_ENCODING"]);
+header ("content-type: text/html; charset=".$Configuration["CHARSET"]);
 
 // REPORT ALL ERRORS
 error_reporting(E_ALL);
