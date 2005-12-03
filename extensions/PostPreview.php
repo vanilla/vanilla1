@@ -58,7 +58,6 @@ if (in_array($Context->SelfUrl, array("comments.php", "post.php"))) {
          } elseif ($DiscussionForm->PostBackAction == "SaveComment") {
             $DiscussionForm->Comment->Clear();
             $DiscussionForm->Comment->GetPropertiesFromForm();
-            if ($DiscussionForm->Context->Session->UserID == 1) echo("<div>From Form: ".$DiscussionForm->Comment->Body."</div>");
             $DiscussionForm->Comment->DiscussionID = $DiscussionForm->DiscussionID;
             $DiscussionForm->Discussion = $DiscussionForm->DelegateParameters["DiscussionManager"]->GetDiscussionById($DiscussionForm->Comment->DiscussionID);
          }
@@ -100,9 +99,7 @@ if (in_array($Context->SelfUrl, array("comments.php", "post.php"))) {
          $Comment->AuthCanPostHtml = 1;
          $Comment->AuthBlocked = 0;
          $Comment->CommentBlocked = 0;
-         if ($DiscussionForm->Context->Session->UserID == 1) echo("<div>".$Comment->Body."</div>");
          $Comment->FormatPropertiesForDisplay();
-         if ($DiscussionForm->Context->Session->UserID == 1) echo("<div>".$Comment->Body."</div>");
          
          echo("<div class=\"Title PreviewPostTitle\">".$DiscussionForm->Context->GetDefinition("Preview")."</div>
             <div class=\"CommentBody CommentPreview\">".$Comment->Body."</div>");
