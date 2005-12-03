@@ -94,7 +94,7 @@ class StringManipulator {
          $Formatter = $this->Formatters[$Format];
       } else {
          // If the requested formatter wasn't found, use the default
-         $Formatter = $this->Formatters[$this->Configuration["DEFAULT_STRING_FORMAT"]];
+         $Formatter = $this->Formatters[$this->Configuration["DEFAULT_FORMAT_TYPE"]];
       }
       return $Formatter->Parse($String, $Object, $FormatPurpose);
    }

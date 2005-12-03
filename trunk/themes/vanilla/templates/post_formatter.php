@@ -15,7 +15,7 @@ if ($this->Context->Session->User->Preference("ShowFormatSelector") && $FormatCo
 } else {
    $FormatTypeToUse = $this->Context->Session->User->DefaultFormatType;
    if (!array_key_exists($FormatTypeToUse, $this->Context->StringManipulator->Formatters)) {
-      $FormatTypeToUse = $this->Context->Configuration["DEFAULT_STRING_FORMAT"];
+      $FormatTypeToUse = $this->Context->Configuration["DEFAULT_FORMAT_TYPE"];
    }
    
    $sReturn .= "<input type=\"hidden\" name=\"FormatType\" value=\"".$FormatTypeToUse."\" />";

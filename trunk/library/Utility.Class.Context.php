@@ -88,7 +88,7 @@ class Context {
       $this->StringManipulator = new StringManipulator($Configuration);
 		// Add the plain text manipulator
       $TextFormatter = new TextFormatter();
-		$this->StringManipulator->AddManipulator($Configuration["DEFAULT_STRING_FORMAT"], $TextFormatter);
+		$this->StringManipulator->AddManipulator($Configuration["DEFAULT_FORMAT_TYPE"], $TextFormatter);
    }
 	
 	function FormatString($String, $Object, $Format, $FormatPurpose) {

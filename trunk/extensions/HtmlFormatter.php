@@ -136,6 +136,8 @@ class HtmlFormatter extends StringFormatter
 		else return $String;
 	}
 }
+// Add the Html FormatType to the FormatType collection
+$Configuration["FORMAT_TYPES"][] = "Html";
 
 $HtmlFormatter = $Context->ObjectFactory->NewContextObject($Context, "HtmlFormatter");
 $Context->StringManipulator->AddManipulator("Html", $HtmlFormatter);

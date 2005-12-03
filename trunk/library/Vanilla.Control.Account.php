@@ -30,6 +30,7 @@ class Account extends Control {
 			if ($this->Context->WarningCollector->Count() > 0) {
 				echo($this->Get_Warnings());
 			} else {
+				$this->User->FormatPropertiesForDisplay();
 				include($this->Context->Configuration["THEME_PATH"]."templates/account_profile.php");
 			}
 		}
