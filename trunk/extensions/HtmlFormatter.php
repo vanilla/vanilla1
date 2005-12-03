@@ -39,11 +39,11 @@ class HtmlFormatter extends StringFormatter
 		);
 		
 		$String = str_replace(chr(0), ' ', $String);
-		return '<xmp>'.str_replace(
+		return str_replace(
 			array("\r\n", "\r", "\n"), 
 			array("\n", "\n", '<br>'), 
 			preg_replace($Patterns, $Replacements, $String)
-		).'</xmp>';
+		);
 	}
 	
 	function DecodeEntities($String)
@@ -87,6 +87,7 @@ class HtmlFormatter extends StringFormatter
 						$Got = 1;
 					}
 					else $InTag = 0;
+
 				}
 				else if($String[$i] == "\\") {if(!$Escape && $CurStr) $Escape = 1;}
 			}
@@ -141,10 +142,11 @@ class HtmlFormatter extends StringFormatter
 	
 	function Parse($String, $Object, $FormatPurpose)
 	{
-		if($FormatPurpose == FORMAT_STRING_FOR_DISPLAY) return $this->Execute($String);
+		if($FormatPurpose == agFORMATSTRINGFORDISPLAY) return $this->Execute($String);
 		else return $String;
 	}
 }
+
 $HtmlFormatter = $Context->ObjectFactory->NewContextObject($Context, "HtmlFormatter");
 $Context->StringManipulator->AddManipulator("Html", $HtmlFormatter);
 
