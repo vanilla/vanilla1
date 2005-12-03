@@ -155,7 +155,8 @@ class Comment extends Delegation {
 		$this->DateCreated = UnixTimestamp(@$DataSet["DateCreated"]);
 		$this->DateEdited = UnixTimestamp(@$DataSet["DateEdited"]);
 		$this->Body = ForceString(@$DataSet["Body"], "");
-		$this->FormatType = ForceString(@$DataSet["FormatType"], "Text");
+		$this->FormatType = ForceString(@$DataSet["FormatType"], $this->Context->Configuration["DEFAULT_FORMAT_TYPE"]);
+		if (!in_array($this->FormatType, $this->Context->Configuration["FORMAT_TYPES"])) $this->FormatType = $this->Context->Configuration["DEFAULT_FORMAT_TYPE"];
 		$this->Deleted = ForceBool(@$DataSet["Deleted"], 0);
 		$this->DateDeleted = UnixTimestamp(@$DataSet["DateDeleted"]);
 		$this->DeleteUserID = ForceInt(@$DataSet["DeleteUserID"], 0);

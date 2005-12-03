@@ -85,7 +85,7 @@ class Context {
       $this->Database = new MySQL($this);
       
 		// Instantiate the string manipulation object
-      $this->StringManipulator = new StringManipulator($Configuration);
+      $this->StringManipulator = new StringManipulator($this->Configuration);
 		// Add the plain text manipulator
       $TextFormatter = new TextFormatter();
 		$this->StringManipulator->AddManipulator($Configuration["DEFAULT_FORMAT_TYPE"], $TextFormatter);

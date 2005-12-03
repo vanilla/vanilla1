@@ -8,9 +8,6 @@ Author: SirNot
 Author Url: N/A
 */
 
-// Add this formatter to the FORMAT_TYPES array
-$Configuration["FORMAT_TYPES"][] = "Html";
-
 class HtmlFormatter extends StringFormatter
 {
 	var $Table;
@@ -148,7 +145,6 @@ class HtmlFormatter extends StringFormatter
 		else return $String;
 	}
 }
-
 $HtmlFormatter = $Context->ObjectFactory->NewContextObject($Context, "HtmlFormatter");
 $Context->StringManipulator->AddManipulator("Html", $HtmlFormatter);
 
