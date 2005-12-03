@@ -75,10 +75,10 @@ class StringManipulator {
    var $Configuration;  // The configuration properties of the application
    
    // Constructor
-   function StringManipulator($Configuration) {
+   function StringManipulator(&$Configuration) {
       $this->Formatters = array();
 		$this->GlobalFormatters = array();
-      $this->Configuration = $Configuration;
+      $this->Configuration = &$Configuration;
    }
    
 	function AddGlobalManipulator($ObjectName, $Object) {
@@ -86,6 +86,7 @@ class StringManipulator {
 	}
 	
    function AddManipulator($ObjectName, $Object) {
+		$this->Configuration["FORMAT_TYPES"][] = $ObjectName;
       $this->Formatters[$ObjectName] = $Object;
    }
    

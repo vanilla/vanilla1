@@ -44,8 +44,6 @@ class BBCodeFormatter extends StringFormatter {
       return $String;
    }
 }
-// Add the BBCode FormatType to the FormatType collection
-$Configuration["FORMAT_TYPES"][] = "BBCode";
 // Instantiate the bbcode object and add it to the string manipulation methods
 $BBCodeFormatter = $Context->ObjectFactory->NewObject($Context, "BBCodeFormatter");
 $Context->StringManipulator->AddManipulator("BBCode", $BBCodeFormatter);
