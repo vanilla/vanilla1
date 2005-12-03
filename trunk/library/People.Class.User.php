@@ -140,9 +140,9 @@ class User {
 		$this->FullName = FormatStringForDisplay($this->FullName, 1);
 		$this->Email = FormatStringForDisplay($this->Email, 1);
 		$this->Password = "";
-		$this->Picture = FormatStringForDisplay($this->Picture, 1);
-		$this->Icon = FormatStringForDisplay($this->Icon, 1);
-		$this->DisplayIcon = FormatStringForDisplay($this->DisplayIcon, 1);
+		$this->Picture = FormatStringForDisplay($this->Picture, 1, 0);
+		$this->Icon = FormatStringForDisplay($this->Icon, 1, 0);
+		$this->DisplayIcon = FormatStringForDisplay($this->DisplayIcon, 1, 0);
 		$this->Style = FormatStringForDisplay($this->Style, 0);
 	}
 	

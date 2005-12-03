@@ -57,7 +57,7 @@ $Configuration["SAFE_REDIRECT"] = "signin.php?PageAction=SignOut";
 
 // Framework Settings
 $Configuration["URL_BUILDING_METHOD"] = "Standard";  // Standard or Rewrite
-$Configuration["CONTENT_ENCODING"] = "content-type:text/html;charset=utf-8";
+$Configuration["CHARSET"] = "utf-8";
 $Configuration["PAGE_EVENTS"] = array("Page_Init", "Page_Render", "Page_Unload");
 $Configuration["PAGELIST_NEXT_TEXT"] = "Prev";
 $Configuration["PAGELIST_PREVIOUS_TEXT"] = "Next";

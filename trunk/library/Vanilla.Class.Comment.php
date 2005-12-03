@@ -114,7 +114,7 @@ class Comment extends Delegation {
 			if (!$this->ShowHtml) $this->FormatType = $this->Context->Configuration["DEFAULT_FORMAT_TYPE"];
 			$this->Body = $this->Context->FormatString($this->Body, $this, $this->FormatType, FORMAT_STRING_FOR_DISPLAY);
 		}
-		$this->AuthIcon = FormatStringForDisplay($this->AuthIcon);
+		$this->AuthIcon = FormatStringForDisplay($this->AuthIcon, 1, 0);
 		return $this->ShowHtml;
 	}
 	
@@ -129,7 +129,7 @@ class Comment extends Delegation {
 		$this->Discussion = FormatStringForDisplay($this->Discussion);
 		$this->Category = FormatStringForDisplay($this->Category);
 		$this->Body = FormatHtmlStringInline($this->Body);
-		$this->AuthIcon = FormatStringForDisplay($this->AuthIcon);
+		$this->AuthIcon = FormatStringForDisplay($this->AuthIcon, 1, 0);
 	}
 
 	// Retrieve a properties from current DataRowSet
