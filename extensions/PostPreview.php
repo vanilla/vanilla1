@@ -99,8 +99,9 @@ if (in_array($Context->SelfUrl, array("comments.php", "post.php"))) {
          $Comment->AuthCanPostHtml = 1;
          $Comment->AuthBlocked = 0;
          $Comment->CommentBlocked = 0;
+         if ($DiscussionForm->Context->Session->UserID == 1) echo("<div>".$Comment->Body."</div>");
          $Comment->FormatPropertiesForDisplay();
-         $Comment->Body = Strip_Slashes($Comment->Body);
+         if ($DiscussionForm->Context->Session->UserID == 1) echo("<div>".$Comment->Body."</div>");
          
          echo("<div class=\"Title PreviewPostTitle\">".$DiscussionForm->Context->GetDefinition("Preview")."</div>
             <div class=\"CommentBody CommentPreview\">".$Comment->Body."</div>");
