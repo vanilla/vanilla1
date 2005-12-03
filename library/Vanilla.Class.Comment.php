@@ -89,6 +89,8 @@ class Comment extends Delegation {
 	}
 	
 	function FormatPropertiesForDatabaseInput() {
+		// Pass the body into a formatter for db input
+      $this->Body = $this->Context->FormatString($this->Body, $this, $this->FormatType, FORMAT_STRING_FOR_DATABASE);
 		$this->Body = FormatStringForDatabaseInput($this->Body);
       $this->WhisperUsername = FormatStringForDatabaseInput($this->WhisperUsername);
 	}
@@ -180,8 +182,6 @@ class Comment extends Delegation {
 		if (!in_array($this->FormatType, $this->Context->Configuration["FORMAT_TYPES"])) $this->FormatType = $this->Context->Configuration["DEFAULT_FORMAT_TYPE"];
 		$this->Body = ForceIncomingString("Body", "");
 		$this->UserCommentCount = ForceIncomingInt("UserCommentCount", 0);
-		// Pass the body into a formatter for db input
-      $this->Body = $this->Context->FormatString($this->Body, $this, $this->FormatType, FORMAT_STRING_FOR_DATABASE);
 		$this->AuthUserID = ForceIncomingInt("AuthUserID", 0);
       $this->WhisperUsername = ForceIncomingString("WhisperUsername", "");
 	}
