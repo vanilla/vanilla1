@@ -111,7 +111,7 @@ class Comment extends Delegation {
 			$this->Body = htmlspecialchars($this->Body);
 		} else {
 			// Force the comment into plain text mode if html is turned off
-			if (!$this->ShowHtml) $this->FormatType = $this->Context->Configuration["DEFAULT_STRING_FORMAT"];
+			if (!$this->ShowHtml) $this->FormatType = $this->Context->Configuration["DEFAULT_FORMAT_TYPE"];
 			$this->Body = $this->Context->FormatString($this->Body, $this, $this->FormatType, FORMAT_STRING_FOR_DISPLAY);
 		}
 		$this->AuthIcon = FormatStringForDisplay($this->AuthIcon);
@@ -175,7 +175,8 @@ class Comment extends Delegation {
 	function GetPropertiesFromForm() {
 		$this->CommentID = ForceIncomingInt("CommentID", 0);
 		$this->DiscussionID = ForceIncomingInt("DiscussionID", 0);
-		$this->FormatType = ForceIncomingString("FormatType", "Text");
+		$this->FormatType = ForceIncomingString("FormatType", $this->Context->Configuration["DEFAULT_FORMAT_TYPE"]);
+		if (!in_array($this->FormatType, $this->Context->Configuration["FORMAT_TYPES"])) $this->FormatType = $this->Context->Configuration["DEFAULT_FORMAT_TYPE"];
 		$this->Body = ForceIncomingString("Body", "");
 		$this->UserCommentCount = ForceIncomingInt("UserCommentCount", 0);
 		// Pass the body into a formatter for db input

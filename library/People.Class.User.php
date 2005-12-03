@@ -98,11 +98,11 @@ class User {
 		$this->ReadTerms = 0;
 		$this->BlocksCategories = 0;
 		if ($this->Context) {
-			$this->DefaultFormatType = $this->Context->Configuration["DEFAULT_STRING_FORMAT"];
+			$this->DefaultFormatType = $this->Context->Configuration["DEFAULT_FORMAT_TYPE"];
 			$this->StyleUrl = $this->Context->Configuration["DEFAULT_STYLE"];
 		} else {
 			global $Configuration;
-			$this->DefaultFormatType = $Configuration["DEFAULT_STRING_FORMAT"];
+			$this->DefaultFormatType = $Configuration["DEFAULT_FORMAT_TYPE"];
 			$this->StyleUrl = $Configuration["DEFAULT_STYLE"];
 		}
 		$this->Discovery = "";
@@ -140,9 +140,9 @@ class User {
 		$this->FullName = FormatStringForDisplay($this->FullName, 1);
 		$this->Email = FormatStringForDisplay($this->Email, 1);
 		$this->Password = "";
-		$this->Picture = FormatStringForDisplay($this->Picture, 0);
-		$this->Icon = FormatStringForDisplay($this->Icon, 0);
-		$this->DisplayIcon = FormatStringForDisplay($this->DisplayIcon, 0);
+		$this->Picture = FormatStringForDisplay($this->Picture, 1);
+		$this->Icon = FormatStringForDisplay($this->Icon, 1);
+		$this->DisplayIcon = FormatStringForDisplay($this->DisplayIcon, 1);
 		$this->Style = FormatStringForDisplay($this->Style, 0);
 	}
 	
@@ -188,7 +188,7 @@ class User {
 		$this->CountComments = ForceInt(@$DataSet["CountComments"],0);
 		$this->RemoteIp = ForceString(@$DataSet["RemoteIp"],"");
 		$this->BlocksCategories = ForceBool(@$DataSet["UserBlocksCategories"], 0);
-		$this->DefaultFormatType = ForceString(@$DataSet["DefaultFormatType"], $this->Context->Configuration["DEFAULT_STRING_FORMAT"]);
+		$this->DefaultFormatType = ForceString(@$DataSet["DefaultFormatType"], $this->Context->Configuration["DEFAULT_FORMAT_TYPE"]);
 
 		// User Role Permissions
       $this->PERMISSION_SIGN_IN = ForceBool(@$DataSet["PERMISSION_SIGN_IN"], $this->Context->Configuration["PERMISSION_SIGN_IN"]);
@@ -197,6 +197,9 @@ class User {
 		$this->Permissions = "";
 		$this->Permissions = ForceString(@$DataSet["Permissions"],"");
 		$this->Permissions = UnserializeAssociativeArray($this->Permissions);
+		$this->Permissions["PERMISSION_SIGN_IN"] = $this->PERMISSION_SIGN_IN;
+		$this->Permissions["PERMISSION_HTML_ALLOWED"] = $this->PERMISSION_HTML_ALLOWED;
+		$this->Permissions["PERMISSION_RECEIVE_APPLICATION_NOTIFICATION"] = $this->PERMISSION_RECEIVE_APPLICATION_NOTIFICATION;
 		
 		// If this user doesn't have permission to do things, force their preferences to abide.
 		if (!$this->Permission("PERMISSION_VIEW_HIDDEN_DISCUSSIONS")) $this->Setting["ShowDeletedDiscussions"] = 0;

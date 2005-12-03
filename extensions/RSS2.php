@@ -74,7 +74,7 @@ if ($Context->SelfUrl == "index.php") {
                $Properties["AuthorUrl"] = PrependString("http://", AppendFolder($DiscussionGrid->Context->Configuration["DOMAIN"], "account.php?u=".ForceInt($DataSet["AuthUserID"], 0)));
                
                // Format the comment according to the defined formatter for that comment
-               $FormatType = ForceString(@$DataSet["FormatType"], $DiscussionGrid->Context->Configuration["DEFAULT_STRING_FORMAT"]);
+               $FormatType = ForceString(@$DataSet["FormatType"], $DiscussionGrid->Context->Configuration["DEFAULT_FORMAT_TYPE"]);
                $Properties["Content"] = $DiscussionGrid->Context->FormatString(@$DataSet["Body"], $DiscussionGrid, $FormatType, FORMAT_STRING_FOR_DISPLAY);
                $Properties["Summary"] = FormatStringForRSS2Summary(@$DataSet["Body"]);
                
@@ -141,7 +141,7 @@ if ($Context->SelfUrl == "index.php") {
                      $Properties["AuthorUrl"] = PrependString("http://", AppendFolder($SearchForm->Context->Configuration["DOMAIN"], "account.php?u=".ForceInt($DataSet["AuthUserID"], 0)));
                      
                      // Format the comment according to the defined formatter for that comment
-                     $FormatType = ForceString(@$DataSet["FormatType"], $SearchForm->Context->Configuration["DEFAULT_STRING_FORMAT"]);
+                     $FormatType = ForceString(@$DataSet["FormatType"], $SearchForm->Context->Configuration["DEFAULT_FORMAT_TYPE"]);
                      $Properties["Content"] = $SearchForm->Context->FormatString(@$DataSet["Body"], $SearchForm, $FormatType, FORMAT_STRING_FOR_DISPLAY);
                      $Properties["Summary"] = FormatStringForRSS2Summary(@$DataSet["Body"]);
                      

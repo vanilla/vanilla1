@@ -287,7 +287,7 @@ function FormatStringForDisplay($inValue, $bStripHtml = true) {
 		$sReturn = strip_tags($sReturn);
 		$sReturn = str_replace("\r\n", "<br />", $sReturn);
 	}
-	return htmlspecialchars($sReturn);
+	return htmlspecialchars($sReturn, ENT_QUOTES);
 }
 
 function GetBasicCheckBox($Name, $Value = 1, $Checked, $Attributes = "") {

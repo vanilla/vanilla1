@@ -48,11 +48,11 @@ if (in_array($Context->SelfUrl, array("comments.php", "post.php"))) {
    $ExtendedTextFormatter = $Context->ObjectFactory->NewObject($Context, "ExtendedTextFormatter");
    /*
    $TextFormatter = 0;
-   $TextFormatter &= $Context->StringManipulator->Formatters[$Configuration["DEFAULT_STRING_FORMAT"]];
+   $TextFormatter &= $Context->StringManipulator->Formatters[$Configuration["DEFAULT_FORMAT_TYPE"]];
    if ($TextFormatter) $TextFormatter->AddChildFormatter($ExtendedTextFormatter);
    */
    
-   $Context->StringManipulator->Formatters[$Configuration["DEFAULT_STRING_FORMAT"]]->AddChildFormatter($ExtendedTextFormatter);
+   $Context->StringManipulator->Formatters[$Configuration["DEFAULT_FORMAT_TYPE"]]->AddChildFormatter($ExtendedTextFormatter);
 }
 
 ?>
