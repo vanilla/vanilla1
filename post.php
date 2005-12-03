@@ -19,10 +19,6 @@ include("appg/init_vanilla.php");
 	// Ensure the user is allowed to view this page
 	$Context->Session->Check($Configuration);
 	
-	// Create the post begin (post title)
-	$PostBegin = $Context->ObjectFactory->CreateControl($Context, "PostBegin");
-	$PostBegin->Title = $Context->GetDefinition("StartANewDiscussion");
-	
 	// Create the comment form
 	$CommentForm = $Context->ObjectFactory->CreateControl($Context, "DiscussionForm");
 
@@ -36,18 +32,6 @@ include("appg/init_vanilla.php");
 	$Menu->CurrentTab = "discussions";
 	$Panel->CssClass = "PostPanel";
 	$Panel->BodyCssClass = "StartDiscussion";
-	$Context->PageTitle = FormatStringForDisplay($CommentForm->Discussion->Name, 1);
-	if ($Context->PageTitle == "") {
-		$Context->PageTitle = $Context->GetDefinition("StartANewDiscussion");
-	} else {
-		if ($CommentForm->CommentID == 0) {
-			$PostBegin->Title = $Context->GetDefinition("AddYourComments");
-		} elseif ($CommentForm->CommentID > 0) {
-			$PostBegin->Title = $Context->GetDefinition("EditComments");
-		} else {
-			$PostBegin->Title = $Context->GetDefinition("EditDiscussion");
-		}
-	}
 
 // 2. BUILD PAGE CONTROLS
 
@@ -60,8 +44,7 @@ include("appg/init_vanilla.php");
 	$Page->AddRenderControl($Head, $Configuration["CONTROL_POSITION_HEAD"]);
 	$Page->AddRenderControl($Menu, $Configuration["CONTROL_POSITION_MENU"]);
 	$Page->AddRenderControl($Panel, $Configuration["CONTROL_POSITION_PANEL"]);
-	$Page->AddRenderControl($PostBegin, $Configuration["CONTROL_POSITION_BODY_ITEM"]);
-	$Page->AddRenderControl($CommentForm, $Configuration["CONTROL_POSITION_BODY_ITEM"] + 20);
+	$Page->AddRenderControl($CommentForm, $Configuration["CONTROL_POSITION_BODY_ITEM"]);
 	$Page->AddRenderControl($Foot, $Configuration["CONTROL_POSITION_FOOT"]);
 	$Page->AddRenderControl($PageEnd, $Configuration["CONTROL_POSITION_PAGE_END"]);	
 	

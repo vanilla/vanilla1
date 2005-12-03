@@ -1,7 +1,7 @@
 <?php
 // Note: This file is included from the library/Vanilla.Control.DiscussionForm.php class.
-
-echo("<div class=\"CommentForm\">"
+echo("<div class=\"Title CommentInputTitle\">".$this->Title."</div>
+<div class=\"CommentForm\">"
    .$this->Get_PostBackForm("frmPostComment", "post", "post.php")
    .$this->Get_Warnings()
    ."<dl>");
@@ -32,6 +32,7 @@ echo("<div class=\"CommentForm\">"
    
    echo("<div class=\"FormButtons CommentButtons\">"
       ."<input type=\"button\" name=\"btnSave\" value=\"".($Comment->CommentID > 0?$this->Context->GetDefinition("SaveYourChanges"):$this->Context->GetDefinition("AddYourComments"))."\" class=\"Button SubmitButton\" onclick=\"SubmitForm('frmPostComment', this, '".$this->Context->GetDefinition("Wait")."');\" />");
+      $this->CallDelegate("CommentForm_PostSubmitRender");
       if ($this->PostBackAction == "SaveComment" || ($this->PostBackAction == "" && $Comment->CommentID > 0)) {
          if ($this->Comment->DiscussionID > 0) {
             echo("<a href=\"./comments.php?DiscussionID=".$this->Comment->DiscussionID."\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>");

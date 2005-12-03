@@ -1098,7 +1098,7 @@
 			line-height: 200%;
 		}
 		.Button {
-			xcursor: pointer;
+			cursor: pointer;
 			xfont-weight: bold;
 			xfont-size: 12px;
 			xcolor: #996600;
@@ -1293,6 +1293,9 @@
 			padding-right: 12px;
 			padding-bottom: 0px;
 			color: #834300;
+		}
+		.CommentInputTitle {
+			border-bottom: 0px;
 		}
 		.DiscussionForm dl,
 		.CommentForm dl {

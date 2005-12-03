@@ -75,7 +75,7 @@ if ($this->Context->WarningCollector->Count() > 0) {
          $CommentList .= $this->CallDelegate("PreCommentOptionsRender");
          if ($this->Context->Session->UserID > 0) {
             if ($Comment->AuthUserID == $this->Context->Session->UserID || $PERMISSION_EDIT_COMMENTS) {
-               if (!$this->Discussion->Closed && $this->Discussion->Active) $CommentList .= "<div class=\"CommentEdit\"><a href=\"post.php?CommentID=".$Comment->CommentID."\">".$this->Context->GetDefinition("edit")."</a></div>";
+               if ((!$this->Discussion->Closed && $this->Discussion->Active) || $PERMISSION_EDIT_COMMENTS) $CommentList .= "<div class=\"CommentEdit\"><a href=\"post.php?CommentID=".$Comment->CommentID."\">".$this->Context->GetDefinition("edit")."</a></div>";
             }
             if ($PERMISSION_HIDE_COMMENTS) $CommentList .= "<div class=\"CommentHide\"><a href=\"javascript:ManageComment('".($Comment->Deleted?"0":"1")."', '".$this->Discussion->DiscussionID."', '".$Comment->CommentID."', '".$this->Context->GetDefinition("ShowConfirm")."', '".$this->Context->GetDefinition("HideConfirm")."');\">".$this->Context->GetDefinition($Comment->Deleted?"Show":"Hide")."</a></div>";
          }
@@ -92,8 +92,8 @@ if ($this->Context->WarningCollector->Count() > 0) {
       ."<div class=\"PageDetails\">".$PageDetails."</div>";
    }
    if ($this->ShowForm) {
-      $CommentList .= "<a name=\"addcomments\"></a>
-      <div class=\"Title AddCommentsTitle\">".$this->Context->GetDefinition("AddYourComments")."</div>";
+      $CommentList .= "<a name=\"addcomments\"></a>";
+      // <div class=\"Title AddCommentsTitle\">".$this->Context->GetDefinition("AddYourComments")."</div>";
    }
 }
 echo($CommentList);
