@@ -8,6 +8,9 @@ Author: SirNot
 Author Url: N/A
 */
 
+// Add this formatter to the FORMAT_TYPES array
+$Configuration["FORMAT_TYPES"][] = "Html";
+
 class HtmlFormatter extends StringFormatter
 {
 	var $Table;
