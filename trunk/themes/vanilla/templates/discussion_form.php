@@ -1,7 +1,7 @@
 <?php
 // Note: This file is included from the library/Vanilla.Control.DiscussionForm.php class.
-
-echo("<div class=\"DiscussionForm\">"
+echo("<div class=\"Title\">".$this->Title."</div>
+<div class=\"DiscussionForm\">"
    .$this->Get_PostBackForm("frmPostDiscussion", "post", "post.php")
    .$this->Get_Warnings()
    ."<dl>");
@@ -37,8 +37,9 @@ echo("<div class=\"DiscussionForm\">"
    $this->CallDelegate("DiscussionForm_PreButtonsRender");
    
    echo("<div class=\"FormButtons DiscussionButtons\">
-      <input type=\"button\" name=\"btnSave\" value=\"".$this->Context->GetDefinition(($Discussion->DiscussionID > 0) ? "SaveYourChanges" : "StartYourDiscussion")."\" class=\"Button SubmitButton\" onclick=\"SubmitForm('frmPostDiscussion', this, '".$this->Context->GetDefinition("Wait")."');\" />
-      <a href=\"".($Discussion->DiscussionID == 0?"javascript:history.back();":"./comments.php?DiscussionID=".$Discussion->DiscussionID)."\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>
+      <input type=\"button\" name=\"btnSave\" value=\"".$this->Context->GetDefinition(($Discussion->DiscussionID > 0) ? "SaveYourChanges" : "StartYourDiscussion")."\" class=\"Button SubmitButton\" onclick=\"SubmitForm('frmPostDiscussion', this, '".$this->Context->GetDefinition("Wait")."');\" />");
+      $this->CallDelegate("DiscussionForm_PostSubmitRender");
+      echo("<a href=\"".(!$this->IsPostBack?"javascript:history.back();":"./")."\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>
    </div>");
    
    $this->CallDelegate("DiscussionForm_PostButtonsRender");

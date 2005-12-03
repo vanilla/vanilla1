@@ -45,6 +45,8 @@ class DiscussionForm extends PostBackControl {
 		
 		$cm = $this->Context->ObjectFactory->NewContextObject($this->Context, "CommentManager");
 		$dm = $this->Context->ObjectFactory->NewContextObject($this->Context, "DiscussionManager");
+		$this->DelegateParameters["CommentManager"] = &$cm;
+		$this->DelegateParameters["DiscussionManager"] = &$dm;
 
 		// If editing a comment, define it and validate the user's permissions
 		if ($this->CommentID > 0) {
@@ -81,7 +83,10 @@ class DiscussionForm extends PostBackControl {
 		} elseif ($this->DiscussionID > 0 && $this->PostBackAction == "Reply") {
 			$this->Comment->GetPropertiesFromForm();
 		}
-	// If saving a discussion
+		
+		$this->CallDelegate("PostLoadData");
+		
+		// If saving a discussion
 		if ($this->PostBackAction == "SaveDiscussion") {
 			$this->Discussion->Clear();
 			$this->Discussion->GetPropertiesFromForm($this->Context);
@@ -95,6 +100,7 @@ class DiscussionForm extends PostBackControl {
 				header("location:comments.php?DiscussionID=".$ResultDiscussion->DiscussionID);
 				die();
 			}
+		// If saving a comment
 		} elseif ($this->PostBackAction == "SaveComment") {
 			$this->Comment->Clear();
 			$this->Comment->GetPropertiesFromForm();
@@ -107,14 +113,14 @@ class DiscussionForm extends PostBackControl {
 				header("location:comments.php?DiscussionID=".$ResultComment->DiscussionID."&page=".$this->Discussion->LastPage.($ResultComment->CommentID > 0 ? "#Comment_".$ResultComment->CommentID:"#pgbottom"));
 				die();
 			}
-		} 
-		
+		}
 		if (!$this->IsPostBack && $this->Comment->DiscussionID == 0 && $this->Comment->CommentID == 0) {
 			if (!$this->Discussion->Comment) $this->Discussion->Comment = $this->Context->ObjectFactory->NewContextObject($this->Context, "Comment");
+			
 			$this->Discussion->Comment->FormatType = $this->Context->Session->User->DefaultFormatType;
 			$this->Comment->FormatType = $this->Context->Session->User->DefaultFormatType;
 		}
-		
+			
 		$this->PostBackParams->Set("CommentID", $this->Comment->CommentID);
 		$this->PostBackParams->Set("DiscussionID", $this->DiscussionID);
 		$this->Title = $this->Context->GetDefinition("StartANewDiscussion");
@@ -128,7 +134,8 @@ class DiscussionForm extends PostBackControl {
 				$this->Title = $this->Context->GetDefinition("AddYourComments");
 			}
 		}
-		$this->CallDelegate("PostLoadData");
+		$this->Context->PageTitle = $this->Title;
+		$this->CallDelegate("PostSaveData");
 	}
 	
 	function GetCommentForm($Comment) {
