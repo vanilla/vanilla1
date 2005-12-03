@@ -6,18 +6,50 @@ Description: Allows administrators to define and create multiple styles for Vani
 Version: 2.0
 Author: Mark O'Sullivan
 Author Url: http://www.markosullivan.ca/
-*/
 
-/*
-* Copyright 2003 - 2005 Mark O'Sullivan
-* This file is part of Vanilla.
-* Vanilla is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
-* Vanilla is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-* You should have received a copy of the GNU General Public License along with Vanilla; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-* The latest source code for Vanilla is available at www.lussumo.com
-* Contact Mark O'Sullivan at mark [at] lussumo [dot] com
-* 
-* Description: Container for style properties and a style management class.
+ 
+Copyright 2003 - 2005 Mark O'Sullivan
+This file is part of Vanilla.
+Vanilla is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+Vanilla is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+You should have received a copy of the GNU General Public License along with Vanilla; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+The latest source code for Vanilla is available at www.lussumo.com
+Contact Mark O'Sullivan at mark [at] lussumo [dot] com
+
+
+You must add the following definitions to your conf/your_language.php file
+(replace "your_language" with your chosen language, of course):
+
+
+$Context->Dictionary["SelectStyleToEdit"] = "1. Select the style you would like to edit";
+$Context->Dictionary["ModifyStyleDefinition"] = "2. Modify the style definition";
+$Context->Dictionary["DefineTheNewStyle"] = "Define the new style";
+$Context->Dictionary["StyleName"] = "Style name";
+$Context->Dictionary["StyleNameNotes"] = "The style name will be visible on the user's account modification page. Html is not allowed.";
+$Context->Dictionary["StyleAuthor"] = "Style author";
+$Context->Dictionary["StyleAuthorNotes"] = "The name of the author of this style. Enter the name exactly as it appears on the user's account.";
+$Context->Dictionary["StyleUrl"] = "Style url";
+$Context->Dictionary["StyleUrlNotes"] = "You can enter any valid URL to a web-based directory here, such as: <strong>http://www.mywebsite.com/mynewstyle/</strong>
+	<br />The folder must contain all of the files relevant to styling the forum, such as: global.css";
+$Context->Dictionary["PreviewImageFilename"] = "Preview image filename";
+$Context->Dictionary["PreviewImageFilenameNotes"] = "If there is a preview image in the style folder, enter the image name here. Preview images are automatically sized to 200 pixels high by 370 pixels wide.";
+$Context->Dictionary["StyleManagement"] = "Style Management";
+$Context->Dictionary["SelectStyleToRemove"] = "1. Select the style you would like to remove";
+$Context->Dictionary["SelectAReplacementStyle"] = "2. Select a replacement style";
+$Context->Dictionary["ReplacementStyleNotes"] = "When you remove a style from the system, any users using that style will not be able to view the site properly. The replacement style will be assigned to all users who are currently assigned to the style you are removing.";
+$Context->Dictionary["CreateANewStyle"] = "Create a new style";
+$Context->Dictionary["ChangeYourStylesheet"] = "Change Stylesheet";
+$Context->Dictionary["ForumAppearanceNotes"] = "Change the way the forum appears by changing your style. Listed below are available styles. Alternately, you can specify your own style using the input at the bottom of the page.";
+$Context->Dictionary["NoPreview"] = "No preview available";
+$Context->Dictionary["CustomStyle"] = "Use your own, custom style";
+$Context->Dictionary["CustomStyleUrl"] = "Custom style url";
+$Context->Dictionary["CustomStyleNotes"] = "Any web-accessable folder will work, such as: http://www.mysite.com/mystyle/
+	<p>Your custom style folder should contain all files relevant to your style, including a global.css file.</p>
+	<p>For more information about how to style the forum, <a href=\"http://lussumo.com/docs\">read the documentation</a>.</p>";
+$Context->Dictionary["UseCustomStyle"] = "Click here to use your custom style";
+$Context->Dictionary["By"] = "by";
+$Context->Dictionary["Styles"] = "Styles";
+
 */
 
 // Load the javascript if we're on a page that should allow changing of the style
@@ -437,7 +469,7 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 								echo("<div class=\"Preview\">
 									<div class=\"PreviewTitle\">".$Style->Name.($Style->AuthUserID > 0?" ".$this->Context->GetDefinition("By")." <a href=\"account.php?u=".$Style->AuthUserID."\">".$Style->AuthUsername."</a>":"")."</div>");
 									if ($Style->PreviewImage != "") {
-										echo("<a class=\"PreviewImage\" href=\"javascript:SetStyle('".$Style->StyleID."', '');\"><img src=\"".$this->Context->Configuration["THEME_PATH"].$Style->Url."images/".$Style->PreviewImage."\" border=\"0\" height=\"200\" width=\"370\" /></a>");
+										echo("<a class=\"PreviewImage\" href=\"javascript:SetStyle('".$Style->StyleID."', '');\"><img src=\"".AppendFolder($Style->Url, "images/").$Style->PreviewImage."\" border=\"0\" height=\"200\" width=\"370\" /></a>");
 									} else {
 										echo("<a class=\"PreviewEmpty\" href=\"javascript:SetStyle('".$Style->StyleID."', '');\">".$this->Context->GetDefinition("NoPreview")."</a>");
 									}
