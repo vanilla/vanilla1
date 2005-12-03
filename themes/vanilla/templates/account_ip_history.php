@@ -14,8 +14,8 @@ echo("<div class=\"IpHistory\">
             <h2>".$this->History[$i]["IP"]."</h2>
             <small>(".
                FormatPlural($this->History[$i]["UsageCount"],
-                  str_replace("\\1", $this->History[$i]["UsageCount"], $this->Context->GetDefinition("time")),
-                  str_replace("\\1", $this->History[$i]["UsageCount"], $this->Context->GetDefinition("times")))
+                  str_replace("//1", $this->History[$i]["UsageCount"], $this->Context->GetDefinition("time")),
+                  str_replace("//1", $this->History[$i]["UsageCount"], $this->Context->GetDefinition("times")))
                .")</small>");
             if ($SharedCount > 0) {
                echo("<h3>".$this->Context->GetDefinition("IpAlsoUsedBy")."</h3>

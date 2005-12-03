@@ -15,11 +15,11 @@ include("../appg/settings.php");
 include("../conf/settings.php");
 include("../appg/init_ajax.php");
 
-$Sql = "update ".$Configuration["DATABASE_TABLE_PREFIX"]."Category set `Order` = '\\1' where `CategoryID` = '\\2';";
+$Sql = "update ".$Configuration["DATABASE_TABLE_PREFIX"]."Category set `Order` = '//1' where `CategoryID` = '//2';";
 $SortOrder = ForceIncomingArray("CategoryID", array());
 $ItemCount = count($SortOrder);
 for ($i = 0; $i < $ItemCount; $i++) {
-   $ExecSql = str_replace(array("\\1", "\\2"), array($i, $SortOrder[$i]), $Sql);
+   $ExecSql = str_replace(array("//1", "//2"), array($i, $SortOrder[$i]), $Sql);
    $Context->Database->Execute($ExecSql, "AJAX", "ReorderCategories", "Failed to reorder categories", 0);
 }
 ?>

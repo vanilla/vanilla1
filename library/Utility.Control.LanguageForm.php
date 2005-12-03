@@ -21,7 +21,7 @@ class LanguageForm extends PostBackControl {
       // Look in the provided path for files
       $FolderHandle = @opendir($this->Context->Configuration["LANGUAGES_PATH"]);
       if (!$FolderHandle) {
-         $this->Context->WarningCollector->Add(str_replace("\\1", $this->Context->Configuration["LANGUAGES_PATH"], $this->Context->GetDefinition("ErrOpenDirectoryLanguages")));
+         $this->Context->WarningCollector->Add(str_replace("//1", $this->Context->Configuration["LANGUAGES_PATH"], $this->Context->GetDefinition("ErrOpenDirectoryLanguages")));
       } else {
 			$this->Languages = array();
          
@@ -73,7 +73,7 @@ include(\$Configuration[\"APPLICATION_PATH\"].\"conf/".$Language.".php\");
 					// Place the file pointer at the beginning of the file and truncate the file to zero length. 
 					$FileHandle = @fopen($LanguageFile, "wb");
 					if (!$FileHandle) {
-						$this->Context->WarningCollector->Add(str_replace("\\1", $LanguageFile, $this->Context->GetDefinition("ErrOpenFileEnd")));
+						$this->Context->WarningCollector->Add(str_replace("//1", $LanguageFile, $this->Context->GetDefinition("ErrOpenFileEnd")));
 					} else {
 						if (!@fwrite($FileHandle, $LanguageFileContents)) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrWriteFile"));
 					}

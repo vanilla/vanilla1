@@ -460,33 +460,33 @@ function TimeDiff(&$Context, $Time, $TimeToCompare = "") {
 	if ($Days > 7) {
 		return date($Context->GetDefinition("OldPostDateFormatCode"), $Time);
 	} elseif ($Days > 1) {
-		return str_replace("\\1", $Days, $Context->GetDefinition("XDaysAgo"));
+		return str_replace("//1", $Days, $Context->GetDefinition("XDaysAgo"));
 	} elseif ($Days == 1) {
-		return str_replace("\\1", $Days, $Context->GetDefinition("XDayAgo"));
+		return str_replace("//1", $Days, $Context->GetDefinition("XDayAgo"));
 	} else {
 		
 		$Difference -= $Days*60*60*24;
 		$Hours = floor($Difference/60/60);
 		if ($Hours > 1) {
-			return str_replace("\\1", $Hours, $Context->GetDefinition("XHoursAgo"));
+			return str_replace("//1", $Hours, $Context->GetDefinition("XHoursAgo"));
 		} elseif ($Hours == 1) {
-			return str_replace("\\1", $Hours, $Context->GetDefinition("XHourAgo"));
+			return str_replace("//1", $Hours, $Context->GetDefinition("XHourAgo"));
 		} else {
 			
 			$Difference -= $Hours*60*60;
 			$Minutes = floor($Difference/60);			
 			if ($Minutes > 1) {
-				return str_replace("\\1", $Minutes, $Context->GetDefinition("XMinutesAgo"));
+				return str_replace("//1", $Minutes, $Context->GetDefinition("XMinutesAgo"));
 			} elseif ($Minutes == 1) {
-				return str_replace("\\1", $Minutes, $Context->GetDefinition("XMinuteAgo"));
+				return str_replace("//1", $Minutes, $Context->GetDefinition("XMinuteAgo"));
 			} else {
 				
 				$Difference -= $Minutes*60;
 				$Seconds = $Difference;
 				if ($Seconds == 1) {
-					return str_replace("\\1", $Seconds, $Context->GetDefinition("XSecondAgo"));
+					return str_replace("//1", $Seconds, $Context->GetDefinition("XSecondAgo"));
 				} else {
-					return str_replace("\\1", $Seconds, $Context->GetDefinition("XSecondsAgo"));
+					return str_replace("//1", $Seconds, $Context->GetDefinition("XSecondsAgo"));
 				}
 			}
 		}

@@ -106,11 +106,11 @@ class UserManager extends Delegation {
 				$e->AddFrom($this->Context->Configuration["SUPPORT_EMAIL"], $this->Context->Configuration["SUPPORT_NAME"]);
 				$e->AddRecipient($AffectedUser->Email, $AffectedUser->Name);
 				$e->Subject = $this->Context->Configuration["APPLICATION_TITLE"]." ".$this->Context->GetDefinition("AccountChangeNotification");
-				$e->BodyText = str_replace(array("\\1", "\\2"),
+				$e->BodyText = str_replace(array("//1", "//2"),
 					array($this->Context->Configuration["APPLICATION_TITLE"], strtolower($AffectedUser->Role)),
 					$this->Context->GetDefinition("RoleChangeMessage"));
 				if ($AffectedUser->PERMISSION_SIGN_IN) {
-					$e->BodyText .= str_replace(array("\\1", "\\2"),
+					$e->BodyText .= str_replace(array("//1", "//2"),
 						array($this->Context->Configuration["APPLICATION_TITLE"], $this->Context->Configuration["DOMAIN"].(substr($this->Context->Configuration["DOMAIN"], strlen($this->Context->Configuration["DOMAIN"])-1) == "/" ? "":"/")."signin.php"),
 						$this->Context->GetDefinition("SignInMessage"));
 				}
@@ -240,7 +240,7 @@ class UserManager extends Delegation {
 							if ($AdminEmail != "") $e->AddRecipient($AdminEmail, $AdminName);
 						}
 						$e->Subject = $this->Context->GetDefinition("NewCaps")." ".$this->Context->Configuration["APPLICATION_TITLE"]." ".$this->Context->GetDefinition("Applicant");
-						$e->BodyText = str_replace(array("\\1", "\\2", "\\3", "\\4"),
+						$e->BodyText = str_replace(array("//1", "//2", "//3", "//4"),
 							array($User->Name, $this->Context->Configuration["APPLICATION_TITLE"], FormatHtmlStringInline($User->Discovery, 1), $this->Context->Configuration["DOMAIN"]),
 							$this->Context->GetDefinition("ApplicationMessage"));
 						@$e->Send();
@@ -634,7 +634,7 @@ class UserManager extends Delegation {
 					$e->AddFrom($this->Context->Configuration["SUPPORT_EMAIL"], $this->Context->Configuration["SUPPORT_NAME"]);
 					$e->AddRecipient($Email, $Name);
 					$e->Subject = $this->Context->Configuration["APPLICATION_TITLE"]." ".$this->Context->GetDefinition("PasswordResetRequest");
-					$e->BodyText = str_replace(array("\\1", "\\2"),
+					$e->BodyText = str_replace(array("//1", "//2"),
 						array($this->Context->Configuration["APPLICATION_TITLE"],
 								PrependString("http://", $this->Context->Configuration["DOMAIN"])
 								.(substr($this->Context->Configuration["DOMAIN"], strlen($this->Context->Configuration["DOMAIN"])-1) == "/" ? "":"/")
@@ -786,10 +786,9 @@ class UserManager extends Delegation {
 			// If the LastCommentPost is less than 30 seconds ago 
 			// and the CommentSpamCheck is greater than five, throw a warning
 			if ($SecondsSinceLastPost < $this->Context->Configuration["COMMENT_THRESHOLD_PUNISHMENT"] && $CommentSpamCheck >= $this->Context->Configuration["COMMENT_POST_THRESHOLD"] && $DateDiff != "") {
-				$WarningMessage = str_replace("\\1", $this->Context->Configuration["COMMENT_POST_THRESHOLD"], $this->Context->GetDefinition("ErrSpamComments"));
-				$WarningMessage = str_replace("\\2", $this->Context->Configuration["COMMENT_TIME_THRESHOLD"], $this->Context->GetDefinition("ErrSpamComments"));
-				$WarningMessage = str_replace("\\3", $this->Context->Configuration["COMMENT_THRESHOLD_PUNISHMENT"], $this->Context->GetDefinition("ErrSpamComments"));
-				$this->Context->WarningCollector->Add($WarningMessage);
+				$this->Context->WarningCollector->Add(str_replace(array("//1", "//2", "//3"),
+					array($this->Context->Configuration["COMMENT_POST_THRESHOLD"], $this->Context->Configuration["COMMENT_TIME_THRESHOLD"], $this->Context->Configuration["COMMENT_THRESHOLD_PUNISHMENT"]),
+					$this->Context->GetDefinition("ErrSpamComments")));
 			}
 	
 			$s->Clear();
@@ -850,7 +849,7 @@ class UserManager extends Delegation {
 			// If the LastDiscussionPost is less than 1 minute ago 
 			// and the DiscussionSpamCheck is greater than three, throw a warning
 			if ($SecondsSinceLastPost < $this->Context->Configuration["DISCUSSION_THRESHOLD_PUNISHMENT"] && $DiscussionSpamCheck >= $this->Context->Configuration["DISCUSSION_POST_THRESHOLD"] && $DateDiff != "") {
-				$this->Context->WarningCollector->Add(str_replace(array("\\1", "\\2", "\\3"),
+				$this->Context->WarningCollector->Add(str_replace(array("//1", "//2", "//3"),
 					array($this->Context->Configuration["DISCUSSION_POST_THRESHOLD"], $this->Context->Configuration["DISCUSSION_TIME_THRESHOLD"], $this->Context->Configuration["DISCUSSION_THRESHOLD_PUNISHMENT"]),
 					$this->Context->GetDefinition("ErrSpamDiscussions")));
 			}

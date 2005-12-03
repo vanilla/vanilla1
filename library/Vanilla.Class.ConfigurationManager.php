@@ -121,7 +121,7 @@ class ConfigurationManager {
       if ($this->Context->WarningCollector->Iif()) {
          $FileHandle = @fopen($File, "wb");
          if (!$FileHandle) {
-            $this->Context->WarningCollector->Add(str_replace("\\1", $File, $this->Context->GetDefinition("ErrOpenFile")));
+            $this->Context->WarningCollector->Add(str_replace("//1", $File, $this->Context->GetDefinition("ErrOpenFile")));
          } else {
             if (!@fwrite($FileHandle, $FileContents)) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrWriteFile"));
          }
