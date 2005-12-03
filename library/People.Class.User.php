@@ -76,7 +76,6 @@ class User {
 		$this->RoleDescription = "";
 		$this->StyleID = 0;
 		$this->Style = "";
-		$this->StyleUrl = "";
 		$this->CustomStyle = "";
 		$this->Name = "";
 		$this->FirstName = "";
@@ -100,9 +99,11 @@ class User {
 		$this->BlocksCategories = 0;
 		if ($this->Context) {
 			$this->DefaultFormatType = $this->Context->Configuration["DEFAULT_STRING_FORMAT"];
+			$this->StyleUrl = $this->Context->Configuration["DEFAULT_STYLE"];
 		} else {
 			global $Configuration;
 			$this->DefaultFormatType = $Configuration["DEFAULT_STRING_FORMAT"];
+			$this->StyleUrl = $Configuration["DEFAULT_STYLE"];
 		}
 		$this->Discovery = "";
 		$this->DisplayIcon = "";
