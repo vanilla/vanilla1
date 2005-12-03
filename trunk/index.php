@@ -19,19 +19,13 @@ include("appg/init_vanilla.php");
 	// Ensure the user is allowed to view this page
 	$Context->Session->Check($Configuration);
 	
-	// Instantiate data managers to be used in this page
-	$DiscussionManager = $Context->ObjectFactory->NewContextObject($Context, "DiscussionManager");
-	
 	// Define properties of the page controls that are specific to this page
 	$Menu->CurrentTab = "discussions";
 	$Panel->CssClass = "DiscussionPanel";
    $Panel->BodyCssClass = "Discussions";
 
 // 2. BUILD PAGE CONTROLS
-	// Add the discussion grid to the body
-	$CategoryID = ForceIncomingInt("CategoryID", 0);
-	$View = ForceIncomingString("View", "");
-	$DiscussionGrid = $Context->ObjectFactory->CreateControl($Context, "DiscussionGrid", $DiscussionManager, $CategoryID, $View);
+	$DiscussionGrid = $Context->ObjectFactory->CreateControl($Context, "DiscussionGrid");
 
 // 3. ADD CONTROLS TO THE PAGE
 

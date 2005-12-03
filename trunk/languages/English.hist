@@ -882,5 +882,13 @@ $Context->Dictionary["AvailableFeedNotes"] = "";
 $Context->Dictionary["FailedFeedAuthenticationTitle"] = "Failed Authentication";
 $Context->Dictionary["FailedFeedAuthenticationText"] = "Feeds for this forum require user authentication.";
 
+// 2005-12-03 - Removed the following codes:
+
+$Context->Dictionary["DiscussionFilters"] = "Discussion filters";
+$Context->Dictionary["BookmarkedDiscussions"] = "Bookmarked discussions";
+$Context->Dictionary["YourDiscussions"] = "Your discussions";
+$Context->Dictionary["PrivateDiscussions"] = "Private discussions";
+
+
 */
 ?>
