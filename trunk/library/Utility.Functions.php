@@ -184,9 +184,9 @@ function ForceIncomingInt($VariableName, $DefaultValue) {
 // Check both the get and post incoming data for a variable
 function ForceIncomingString($VariableName, $DefaultValue) {
 	if (isset($_GET[$VariableName])) {
-		return ForceString($_GET[$VariableName], $DefaultValue);
+		return Strip_Slashes(ForceString($_GET[$VariableName], $DefaultValue));
 	} elseif (isset($_POST[$VariableName])) {
-		return ForceString($_POST[$VariableName], $DefaultValue);
+		return Strip_Slashes(ForceString($_POST[$VariableName], $DefaultValue));
 	} else {
 		return $DefaultValue;
 	}
