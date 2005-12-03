@@ -58,6 +58,7 @@ if (in_array($Context->SelfUrl, array("comments.php", "post.php"))) {
          } elseif ($DiscussionForm->PostBackAction == "SaveComment") {
             $DiscussionForm->Comment->Clear();
             $DiscussionForm->Comment->GetPropertiesFromForm();
+            if ($DiscussionForm->Context->Session->UserID == 1) echo("<div>From Form: ".$DiscussionForm->Comment->Body."</div>");
             $DiscussionForm->Comment->DiscussionID = $DiscussionForm->DiscussionID;
             $DiscussionForm->Discussion = $DiscussionForm->DelegateParameters["DiscussionManager"]->GetDiscussionById($DiscussionForm->Comment->DiscussionID);
          }
