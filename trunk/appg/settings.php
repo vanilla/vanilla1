@@ -66,7 +66,7 @@ $Configuration["LIBRARY_NAMESPACE_ARRAY"] = array("Utility", "People", "Vanilla"
 $Configuration["DEFAULT_STRING_FORMAT"] = "Text";
 $Configuration["APPLICATION_TITLE"] = "Vanilla"; 
 $Configuration["BANNER_TITLE"] = "Vanilla"; 
-$Configuration["DEFAULT_STYLE"] = "styles/default/"; 
+$Configuration["DEFAULT_STYLE"] = "./themes/vanilla/styles/default/"; 
 $Configuration["DOMAIN"] = "http://www.domain.com/vanilla/"; 
 
 // Vanilla Settings
