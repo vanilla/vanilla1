@@ -88,14 +88,14 @@ class Validator {
 			$ForcedValue = ForceString($this->Value, "");
 			if ($ForcedValue == "") {
 				$this->isValid = 0;
-				$this->Context->WarningCollector->Add(str_replace("\\1", $this->InputName, $this->Context->GetDefinition("ErrRequiredInput")));
+				$this->Context->WarningCollector->Add(str_replace("//1", $this->InputName, $this->Context->GetDefinition("ErrRequiredInput")));
 			}
 		}
 		// Ensure the value is not too long if maxlength is specified
 		if (($this->MaxLength > 0) && (strlen($this->Value) > $this->MaxLength)) {
 			$CharsToLong = (strlen($this->Value) - $this->MaxLength);
 			$this->isValid = 0;
-			$this->Context->WarningCollector->Add(str_replace(array("\\1", "\\2"),
+			$this->Context->WarningCollector->Add(str_replace(array("//1", "//2"),
 				array($this->InputName, $CharsToLong),
 				$this->Context->GetDefinition("ErrInputLength")));
 		}

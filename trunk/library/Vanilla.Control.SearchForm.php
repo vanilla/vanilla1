@@ -131,7 +131,7 @@ class SearchForm extends PostBackControl {
 			if ($this->DataCount == 0) {
 				$this->PageDetails = $this->Context->GetDefinition("NoSearchResultsMessage");
 			} else {
-				$this->PageDetails = str_replace(array("\\1", "\\2", "\\3"), array($pl->FirstRecord, $pl->LastRecord, "<strong>".$Query."</strong>"), $this->Context->GetDefinition("SearchResultsMessage"));
+				$this->PageDetails = str_replace(array("//1", "//2", "//3"), array($pl->FirstRecord, $pl->LastRecord, "<strong>".$Query."</strong>"), $this->Context->GetDefinition("SearchResultsMessage"));
 			}
       }
 		$this->CallDelegate("PostLoadData");

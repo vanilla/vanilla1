@@ -37,7 +37,7 @@ class ExtensionForm extends PostBackControl {
 		$FolderHandle = @opendir($this->Context->Configuration["EXTENSIONS_PATH"]);
 		if (!$FolderHandle) {
 			$this->Context->WarningCollector->Add(
-				str_replace("\\1", $this->Context->Configuration["EXTENSIONS_PATH"], $this->Context->GetDefinition('ErrOpenDirectoryExtensions')));
+				str_replace("//1", $this->Context->Configuration["EXTENSIONS_PATH"], $this->Context->GetDefinition('ErrOpenDirectoryExtensions')));
 		} else {
 			// Loop through each Extension file
 			while (false !== ($Item = readdir($FolderHandle))) {
@@ -156,7 +156,7 @@ class ExtensionForm extends PostBackControl {
 						$FileHandle = @fopen($ExtensionsFile, "wb");
 						$FileContents = implode("", $CurrentExtensions);
 						if (!$FileHandle) {
-							$this->Context->WarningCollector->Add(str_replace("\\1", $ExtensionsFile, $this->Context->GetDefinition("ErrOpenFile")));
+							$this->Context->WarningCollector->Add(str_replace("//1", $ExtensionsFile, $this->Context->GetDefinition("ErrOpenFile")));
 						} else {
 							if (!@fwrite($FileHandle, $FileContents)) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrWriteFile"));
 						}

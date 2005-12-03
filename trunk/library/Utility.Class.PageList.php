@@ -206,9 +206,9 @@ class PageList {
 		$sReturn = "";
 		if ($this->TotalRecords > 0) {
 			if ($IncludeTotal) {
-				$sReturn = str_replace(array("\\1", "\\2", "\\3"), array($this->FirstRecord, $this->LastRecord, $this->TotalRecords), $Context->GetDefinition("PageDetailsMessageFull"));
+				$sReturn = str_replace(array("//1", "//2", "//3"), array($this->FirstRecord, $this->LastRecord, $this->TotalRecords), $Context->GetDefinition("PageDetailsMessageFull"));
 			} else {
-				$sReturn = str_replace(array("\\1", "\\2"), array($this->FirstRecord, $this->LastRecord), $Context->GetDefinition("PageDetailsMessage"));
+				$sReturn = str_replace(array("//1", "//2"), array($this->FirstRecord, $this->LastRecord), $Context->GetDefinition("PageDetailsMessage"));
 			}
 		} else {
 			$sReturn = 0;
