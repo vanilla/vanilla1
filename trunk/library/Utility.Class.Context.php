@@ -117,9 +117,7 @@ class Context {
 		$this->Session->Start($this, $this->Authenticator);
 		// The style url (as defined by the user session)
       if (@$this->Session->User) {
-			$this->StyleUrl = "";
-			if ($this->Session->User->StyleID == 0) $this->StyleUrl = $this->Session->User->StyleUrl;
-			$this->StyleUrl = ForceString($this->StyleUrl, ConcatenatePath($this->Configuration["THEME_PATH"], $this->Configuration["DEFAULT_STYLE"]));
+			$this->StyleUrl = $this->Session->User->StyleUrl;
 			// Make sure that the Database object knows what the StyleUrl is
          $this->Database->Context->StyleUrl = $this->StyleUrl;
 		}
