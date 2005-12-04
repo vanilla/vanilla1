@@ -1,0 +1,10 @@
+#PrePreviewPost {
+	display: none;
+	border: 1px solid;
+	margin-bottom: 10px;
+	margin-top: 0;
+}
+
+#PreviewPost {
+	padding: 0;
+}
