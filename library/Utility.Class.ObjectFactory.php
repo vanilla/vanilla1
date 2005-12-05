@@ -27,13 +27,13 @@ class ObjectFactory {
 			$PrefixArrayCount = count($PrefixArray);
 			$i = 0;
 			for ($i = 0; $i < $PrefixArrayCount; $i++) {
-				if (class_exists($ClassName)) {
+            $File = $Context->Configuration["LIBRARY_PATH"].$PrefixArray[$i].".Class.".$ClassName.".php";
+				if (file_exists($File)) {
+					include($File);
 					break;
-				} else {
-					// Try to include the class from the library
-					@include($Context->Configuration["LIBRARY_PATH"].$PrefixArray[$i].".Class.".$ClassName.".php");
 				}
 			}
+	
 			// If it failed to find the class, throw a fatal error
 			if (!class_exists($ClassName)) $Context->ErrorManager->AddError($Context, "ObjectFactory", "NewObject", "The \"".$ClassName."\" class referenced by \"".$ClassLabel."\" does not appear to exist.");
 		}
@@ -56,11 +56,10 @@ class ObjectFactory {
 			$PrefixArrayCount = count($PrefixArray);
 			$i = 0;
 			for ($i = 0; $i < $PrefixArrayCount; $i++) {
-				if (class_exists($ClassName)) {
+            $File = $Context->Configuration["LIBRARY_PATH"].$PrefixArray[$i].".Control.".$ClassName.".php";
+				if (file_exists($File)) {
+					include($File);
 					break;
-				} else {
-					// Try to include the control class from the library
-					@include($Context->Configuration["LIBRARY_PATH"].$PrefixArray[$i].".Control.".$ClassName.".php");
 				}
 			}
 			// If it failed to find the class, throw a fatal error

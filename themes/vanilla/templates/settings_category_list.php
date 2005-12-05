@@ -23,7 +23,7 @@ echo("<div class=\"SettingsForm\">
       echo("</ul>
       <script type=\"text/javascript\" language=\"javascript\">
       // <![CDATA[
-         Sortable.create('SortCategories', {dropOnEmpty:true, tag:'li', constraint: 'vertical', ghosting: true, onUpdate: function() {new Ajax.Updater('LoadStatus', './ajax/sortcategories.php', {onComplete: function(request) { new Effect.Highlight('SortCategories',{startcolor:'#ffff99'});}, parameters:Sortable.serialize('SortCategories', {tag:'li', name:'CategoryID'}), evalScripts:true, asynchronous:true})}});
+         Sortable.create('SortCategories', {dropOnEmpty:true, tag:'li', constraint: 'vertical', ghosting: false, onUpdate: function() {new Ajax.Updater('LoadStatus', './ajax/sortcategories.php', {onComplete: function(request) { new Effect.Highlight('SortCategories',{startcolor:'#ffff99'});}, parameters:Sortable.serialize('SortCategories', {tag:'li', name:'CategoryID'}), evalScripts:true, asynchronous:true})}});
       // ]]>
       </script>
       <div class=\"FormLink\"><a href=\"settings.php?PostBackAction=Category\">".$this->Context->GetDefinition("CreateNewCategory")."</a></div>

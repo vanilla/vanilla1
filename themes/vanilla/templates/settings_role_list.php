@@ -24,7 +24,7 @@ echo("<div class=\"SettingsForm\">
       echo("</ul>
       <script type=\"text/javascript\" language=\"javascript\">
       // <![CDATA[
-         Sortable.create('SortRoles', {dropOnEmpty:true, tag:'li', constraint: 'vertical', ghosting: true, onUpdate: function() {new Ajax.Updater('LoadStatus', './ajax/sortroles.php', {onComplete: function(request) { new Effect.Highlight('SortRoles',{startcolor:'#ffff99'});}, parameters:Sortable.serialize('SortRoles', {tag:'li', name:'RoleID'}), evalScripts:true, asynchronous:true})}});
+         Sortable.create('SortRoles', {dropOnEmpty:true, tag:'li', constraint: 'vertical', ghosting: false, onUpdate: function() {new Ajax.Updater('LoadStatus', './ajax/sortroles.php', {onComplete: function(request) { new Effect.Highlight('SortRoles',{startcolor:'#ffff99'});}, parameters:Sortable.serialize('SortRoles', {tag:'li', name:'RoleID'}), evalScripts:true, asynchronous:true})}});
       // ]]>
       </script>
       <div class=\"FormLink\"><a href=\"settings.php?PostBackAction=Role\">".$this->Context->GetDefinition("CreateANewRole")."</a></div>
