@@ -48,15 +48,15 @@ class RegistrationForm extends PostBackControl {
 					$AllowImmediateAccess = $Role->PERMISSION_SIGN_IN?"1":"0";
 				}
 				
-				$ConstantsFile = $this->Context->Configuration["APPLICATION_PATH"]."appg/settings.php";
-				$ConstantManager = $this->Context->ObjectFactory->NewContextObject($this->Context, "ConstantManager");
-				$ConstantManager->DefineConstantsFromFile($ConstantsFile);
+				$ConstantsFile = $this->Context->Configuration["APPLICATION_PATH"]."conf/settings.php";
+				$ConstantManager = $this->Context->ObjectFactory->NewContextObject($this->Context, "ConfigurationManager");
 				// Set the constants to their new values
-				$ConstantManager->SetConstant("agDEFAULT_ROLE", $RoleID);
-				$ConstantManager->SetConstant("agALLOW_IMMEDIATE_ACCESS", $AllowImmediateAccess);
-				$ConstantManager->SetConstant("agAPPROVAL_ROLE", $ApprovedRoleID);
+				$ConstantManager->DefineSetting('DEFAULT_ROLE', $RoleID);
+				$ConstantManager->DefineSetting('ALLOW_IMMEDIATE_ACCESS', $AllowImmediateAccess);
+				$ConstantManager->DefineSetting('APPROVAL_ROLE', $ApprovedRoleID);
 				// Save the settings file
-				$ConstantManager->SaveConstantsToFile($ConstantsFile);
+				$ConstantManager->SaveSettingsToFile($ConstantsFile);
+				
 				if ($this->Context->WarningCollector->Iif()) $this->PostBackValidated = 1;
 			}
 		}
