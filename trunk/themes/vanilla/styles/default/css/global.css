@@ -1162,6 +1162,7 @@
 	}
 	.ExtensionsForm dl {
 		border: 1px solid #ddd;
+		margin-bottom: 10px;
 	}
 	.ExtensionsForm dt {
 		padding-right: 6px;
