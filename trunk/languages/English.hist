@@ -889,6 +889,8 @@ $Context->Dictionary["BookmarkedDiscussions"] = "Bookmarked discussions";
 $Context->Dictionary["YourDiscussions"] = "Your discussions";
 $Context->Dictionary["PrivateDiscussions"] = "Private discussions";
 
+// 2005-12-05 - Added
+$Context->Dictionary["Wait"] = "Wait";
 
 */
 ?>
