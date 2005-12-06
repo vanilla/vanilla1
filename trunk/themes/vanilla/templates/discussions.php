@@ -2,7 +2,7 @@
 // Note: This file is included from the library/Vanilla.Control.DiscussionGrid.php class.
 
 echo($this->PageJump
-."<div class=\"Title\">s".$this->Context->PageTitle."</div>"
+."<div class=\"Title\">".$this->Context->PageTitle."</div>"
 .$PageList
 ."<div class=\"PageDetails\">".($PageDetails == 0 ? $this->Context->GetDefinition("NoDiscussionsFound") : $PageDetails)."</div>");
 $Discussion = $this->Context->ObjectFactory->NewObject($this->Context, "Discussion");
