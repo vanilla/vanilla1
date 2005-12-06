@@ -11,6 +11,8 @@ Author Url: N/A
 class HtmlFormatter extends StringFormatter
 {
 	var $Table;
+	var $AllowedProtocols = array('http', 'ftp', 'https', 'irc', 'gopher', 'mailto');
+	var $DefaultProtocol = 'http://';
 	
 	function HtmlFormatter()
 	{
@@ -87,7 +89,6 @@ class HtmlFormatter extends StringFormatter
 						$Got = 1;
 					}
 					else $InTag = 0;
-
 				}
 				else if($String[$i] == "\\") {if(!$Escape && $CurStr) $Escape = 1;}
 			}
@@ -108,13 +109,12 @@ class HtmlFormatter extends StringFormatter
 	
 	function RemoveEvilAttribs($String)
 	{
-		$AllowedProtocols = array('http', 'ftp', 'https', 'irc', 'gopher', 'mailto');
 		$P = array(
 			"/(\s+?)(href|src|background|url|dynsrc|lowsrc)\s*=(\W*)(.+?):([^\\3]+?)/ei", 
 			"/(\s+?)on([\w]+)\s*=(.+?)/i"
 		);
 		$R = array(
-			'stripslashes("\\1\\2=\\3").(in_array(strtolower("\\4"), $AllowedProtocols) ? "\\4:" : "http://").stripslashes("\\5")', 
+			'stripslashes("\\1\\2=\\3").(in_array(strtolower("\\4"), $this->AllowedProtocols) ? "\\4:" : $this->DefaultProtocol).stripslashes("\\5")', 
 			'\\1&#79;n\\2=\\3'
 		);
 		$sReturn = preg_replace($P, $R, $String);
@@ -134,8 +134,8 @@ class HtmlFormatter extends StringFormatter
 	function ParseCSS($String)
 	{
 		return preg_replace(
-			array("#/\*(.*|(?R))\*/#i", "/expression\((.+)\)/i"), //first remove comments, then the expression() functionality 
-			array('', '\\1'), //admittedly, there's still probably ways around this, but this was the best I could do short of 
+			array("#/\*(.*|(?R))\*/#i", "/expression\((.+)\)/i", "/url\s*\((\W*)(.+?):([^\\1)]+?)/ei"), //first remove comments, then the expression() functionality 
+			array('', '\\1', 'stripslashes("url(\\1".(in_array("\\2", $this->AllowedProtocols) ? "\\2" : $this->DefaultProtocol).":\\3")'), //admittedly, there's still probably ways around this, but this was the best I could do short of 
 			$String //looping through the entire string
 		);
 	}

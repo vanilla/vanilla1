@@ -79,7 +79,7 @@ else if(in_array($Context->SelfUrl, array('post.php', 'comments.php')))
 		echo('
 			<fieldset id="PrePreviewPost">
 				<legend>'.$Context->GetDefinition('PostPreview').'</legend>
-				<div class="CommentBody" id="PreviewPost"></div>
+				<div class="CommentBody Comment" id="PreviewPost"></div>
 			</fieldset>');
 	}
 }
