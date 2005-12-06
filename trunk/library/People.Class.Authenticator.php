@@ -110,7 +110,6 @@ class Authenticator {
                   $EncryptedUserID = $rows["EncryptedUserID"];
 					}
 					if ($UserID > 0) {
-						if ($UserID == 1) echo("Validated from cookies as UserID 1, setting up session");
 						// 1. Set a new verification key
                   $VerificationKey = DefineVerificationKey();
                   
@@ -168,7 +167,7 @@ class Authenticator {
 		$Query = "update LUM_User
 			set DateLastActive = '".MysqlDateTime()."',
 				VerificationKey = '".$VerificationKey."',
-				CountVisit = CountVisit + 1,
+				CountVisit = CountVisit + 1
 			where UserID = ".$UserID;
 		// Fail silently
 		mysql_query($Query, $this->Context->Database->GetFarmConnection());
