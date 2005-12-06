@@ -1,10 +1,10 @@
 <?php
 // Note: This file is included from the library/Vanilla.Control.DiscussionGrid.php class.
 
-echo($this->PageJump);
-echo("<div class=\"Title\">".$this->Context->PageTitle."</div>");
-echo($PageList);
-echo("<div class=\"PageDetails\">".($PageDetails == 0 ? $this->Context->GetDefinition("NoDiscussionsFound") : $PageDetails)."</div>");
+echo($this->PageJump
+."<div class=\"Title\">s".$this->Context->PageTitle."</div>"
+.$PageList
+."<div class=\"PageDetails\">".($PageDetails == 0 ? $this->Context->GetDefinition("NoDiscussionsFound") : $PageDetails)."</div>");
 $Discussion = $this->Context->ObjectFactory->NewObject($this->Context, "Discussion");
 $FirstRow = 1;
 $CurrentUserJumpToLastCommentPref = $this->Context->Session->User->Preference("JumpToLastReadComment");

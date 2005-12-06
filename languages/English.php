@@ -618,4 +618,5 @@ $Context->Dictionary["PERMISSION_MANAGE_LANGUAGE"] = "Change language";
 $Context->Dictionary["PERMISSION_MANAGE_STYLES"] = "Manage styles";
 $Context->Dictionary["PERMISSION_RECEIVE_APPLICATION_NOTIFICATION"] = "Notify by email of new applicants";
 $Context->Dictionary["PERMISSION_ALLOW_DEBUG_INFO"] = "Can view debug info";
+$Context->Dictionary["Wait"] = "Wait";
 ?>
