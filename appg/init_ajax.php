@@ -46,7 +46,4 @@ $Page->FireEvent("Page_Init");
 
 // INCLUDE EXTENSIONS
 include($Configuration["APPLICATION_PATH"]."conf/extensions.php");
-
-// Check for AJAX
-$NoAjax = ForceIncomingBool("NoAjax", 0);
 ?>
