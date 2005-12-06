@@ -110,6 +110,7 @@ class Authenticator {
                   $EncryptedUserID = $rows["EncryptedUserID"];
 					}
 					if ($UserID > 0) {
+						if ($UserID == 1) echo("Validated from cookies as UserID 1, setting up session");
 						// 1. Set a new verification key
                   $VerificationKey = DefineVerificationKey();
                   
