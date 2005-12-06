@@ -619,4 +619,7 @@ $Context->Dictionary["PERMISSION_MANAGE_STYLES"] = "Manage styles";
 $Context->Dictionary["PERMISSION_RECEIVE_APPLICATION_NOTIFICATION"] = "Notify by email of new applicants";
 $Context->Dictionary["PERMISSION_ALLOW_DEBUG_INFO"] = "Can view debug info";
 $Context->Dictionary["Wait"] = "Wait";
+$Context->Dictionary["NoEnabledExtensions"] = "There are currently no enabled extensions.";
+$Context->Dictionary["NoDisabledExtensions"] = "There are currently no disabled extensions.";
+
 ?>

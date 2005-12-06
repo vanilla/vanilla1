@@ -892,5 +892,10 @@ $Context->Dictionary["PrivateDiscussions"] = "Private discussions";
 // 2005-12-05 - Added
 $Context->Dictionary["Wait"] = "Wait";
 
+// 2005-12-06 - Added
+$Context->Dictionary["NoEnabledExtensions"] = "There are currently no enabled extensions.";
+$Context->Dictionary["NoDisabledExtensions"] = "There are currently no disabled extensions.";
+
+
 */
 ?>
