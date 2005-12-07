@@ -60,7 +60,7 @@ class HtmlFormatter extends StringFormatter
 	
 	function ParseTags($String)
 	{
-		$String = preg_replace("/<([^a-z/]+)/", '&lt;\\1', $String);
+		$String = preg_replace("/<([^a-z\/]+)/", '&lt;\\1', $String);
 		$Len = strlen($String);
 		$Out = '';
 		for($i = $Escape = $CurStr = $InTag = 0; $i < $Len; $i++)
