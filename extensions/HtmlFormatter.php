@@ -41,11 +41,11 @@ class HtmlFormatter extends StringFormatter
 		);
 		
 		$String = str_replace(chr(0), ' ', $String);
-		return str_replace(
+		return '<xmp>'.str_replace(
 			array("\r\n", "\r", "\n"), 
 			array("\n", "\n", '<br>'), 
 			preg_replace($Patterns, $Replacements, $String)
-		);
+		).'</xmp>';
 	}
 	
 	function DecodeEntities($String)
@@ -60,7 +60,10 @@ class HtmlFormatter extends StringFormatter
 	
 	function ParseTags($String)
 	{
-		$String = preg_replace("/<([^a-z\/]+)/", '&lt;\\1', $String);
+		$String = preg_replace(
+			array("/<code>(.+?)<\/code>/sei", "/<(?![a-z\/])/i"), //yet again, order is important
+			array('"<code>".htmlspecialchars(stripslashes("\\1"))."</code>"', '&lt;'), 
+			$String);
 		$Len = strlen($String);
 		$Out = '';
 		for($i = $Escape = $CurStr = $InTag = 0; $i < $Len; $i++)
@@ -135,7 +138,7 @@ class HtmlFormatter extends StringFormatter
 	function ParseCSS($String)
 	{
 		return preg_replace(
-			array("#/\*(.*|(?R))\*/#i", "/expression\((.+)\)/i", "/url\s*\((\W*)(.+?):([^\\1)]+?)/ei"), //first remove comments, then the expression() functionality 
+			array("/\/\*(.*|(?R))\*\//i", "/expression\((.+)\)/i", "/url\s*\((\W*)(.+?):([^\\1)]+?)/ei"), //first remove comments, then the expression() functionality 
 			array('', '\\1', 'stripslashes("url(\\1".(in_array("\\2", $this->AllowedProtocols) ? "\\2" : $this->DefaultProtocol).":\\3")'), //admittedly, there's still probably ways around this, but this was the best I could do short of 
 			$String //looping through the entire string
 		);
