@@ -3,7 +3,7 @@
 Extension Name: Html Formatter
 Extension Url: http://lussumo.com/docs/
 Description: Allows html to be used in strings, but breaks out all "script" related activities.
-Version: 2.0
+Version: 1.0
 Author: SirNot
 Author Url: N/A
 */
@@ -60,6 +60,7 @@ class HtmlFormatter extends StringFormatter
 	
 	function ParseTags($String)
 	{
+		$String = preg_replace("/<([^a-z]+)/", '&lt;\\1', $String);
 		$Len = strlen($String);
 		$Out = '';
 		for($i = $Escape = $CurStr = $InTag = 0; $i < $Len; $i++)
