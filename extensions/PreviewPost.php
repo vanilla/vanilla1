@@ -8,7 +8,8 @@ Author: SirNot
 Author Url: N/A
 */
 
-if(realpath($_SERVER['SCRIPT_FILENAME']) == realpath(__FILE__) && !defined('EXTENSION_IN_PREVIEW')) //a preview?
+$PreviewSelf = substr(str_replace("\\", '/', __FILE__), strlen(__FILE__)-strlen($_SERVER['PHP_SELF']));
+if(!strcasecmp($PreviewSelf, $_SERVER['PHP_SELF']) && !defined('EXTENSION_IN_PREVIEW')) //a preview?
 {
 	define('EXTENSION_IN_PREVIEW', 		1); //so we don't reinclude ourselves
 	
