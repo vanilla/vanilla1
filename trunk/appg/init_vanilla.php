@@ -116,4 +116,12 @@ if ($Context->Session->UserID > 0) {
 
 // INCLUDE EXTENSIONS
 include($Configuration["APPLICATION_PATH"]."conf/extensions.php");
+
+// Make sure to get all delegates from the extensions into objects which were
+// constructed before the extensions were loaded.
+$Head->GetDelegatesFromContext();
+$Menu->GetDelegatesFromContext();
+$Panel->GetDelegatesFromContext();
+$Foot->GetDelegatesFromContext();
+$PageEnd->GetDelegatesFromContext();
 ?>

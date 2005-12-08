@@ -261,10 +261,12 @@ class User {
 	}
 	
 	function Permission($PermissionName) {
-		if (@array_key_exists($PermissionName, $this->Permissions)) {
-			return ForceBool($this->Permissions[$PermissionName], $this->Context->Configuration[$PermissionName]);
+		$Default = 0;
+		if (is_array($this->Context->Configuration) && array_key_exists($PermissionName, $this->Context->Configuration)) $Default = $this->Context->Configuration[$PermissionName];
+		if (array_key_exists($PermissionName, $this->Permissions)) {
+			return ForceBool($this->Permissions[$PermissionName], $Default);
 		} else {
-			return ForceBool(@$this->Context->Configuration[$PermissionName], 0);
+			return $Default;
 		}
 	}
 	

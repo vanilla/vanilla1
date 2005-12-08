@@ -20,7 +20,7 @@ if (!$this->Context->Session->User->Permission("PERMISSION_MANAGE_LANGUAGE")) {
          <div class=\"InputNote\">".$this->Context->GetDefinition("ChangeLanguageNotes")."</div>
          <div class=\"FormButtons\">
             <input type=\"submit\" name=\"btnSave\" value=\"".$this->Context->GetDefinition("Save")."\" class=\"Button SubmitButton\" />
-            <a href=\"./settings.php\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>
+            <a href=\"./".$this->Context->SelfUrl."\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>
          </div>
          </form>
       </div>

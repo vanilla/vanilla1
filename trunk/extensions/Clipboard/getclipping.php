@@ -11,15 +11,8 @@
 * Description: File used by Dynamic Data Management object to retrieve a clipboard item
 */
 
-include("../appg/settings.php");
-include("../conf/settings.php");
-include("../appg/init_ajax.php");
-
-// Check for AJAX
-if ($NoAjax) {
-   header("location: http://lussumo.com/upgrade.html");
-   die();
-}
+include("../../appg/settings.php");
+include("../../appg/init_ajax.php");
 
 $ClippingID = ForceIncomingInt("c", 0);
 if ($ClippingID > 0 && $Context->Session->UserID > 0) {

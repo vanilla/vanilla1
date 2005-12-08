@@ -34,9 +34,8 @@ $Context->Dictionary["ClickHereToContinueToCategories"] = "Click here to continu
 $Context->Dictionary["ReviewNewApplicants"] = "Review new membership applicants";
 $Context->Dictionary["New"] = "new";
 $Context->Dictionary["NewCaps"] = "New";
-$Context->Dictionary["AboutVanilla"] = "<h1>About Vanilla</h1>
-	<p>Welcome to Lussumo Vanilla: the sweetest forum on the web. Vanilla is a simple, extensible, multi-lingual web forum.</p>
-	<p>We are not openly allowing members to join the forum, but feel free to fill out the <a href=\"apply.php\">membership application form</a>.</p>";
+$Context->Dictionary["AboutApplication"] = "<h1>About Vanilla</h1>
+	<p>Welcome to Lussumo Vanilla: the sweetest forum on the web. Vanilla is a simple, extensible, multi-lingual web forum.</p>";
 $Context->Dictionary["MemberSignIn"] = "<h1>Existing member sign in</h1>
  	<p>Enter your username and password to sign in now.</p>";
 $Context->Dictionary["Username"] = "Username";

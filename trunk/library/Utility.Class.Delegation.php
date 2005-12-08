@@ -42,11 +42,15 @@ class Delegation {
 		$this->Delegates = array();
 		$this->DelegateParameters = array();
       $this->Context = &$Context;
+		$this->GetDelegatesFromContext();
+   }
+	
+	function GetDelegatesFromContext() {
 		// Get delegates from the context object that were added before this object was instantiated
 		if (array_key_exists($this->Name, $this->Context->DelegateCollection)) {
 			$this->Delegates = array_merge($this->Delegates, $this->Context->DelegateCollection[$this->Name]);
 		}
-   }
+	}
   
 }
 ?>

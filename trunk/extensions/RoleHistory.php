@@ -61,6 +61,6 @@ if ($Context->SelfUrl == "account.php") {
    if (!@$UserManager) $UserManager = $Context->ObjectFactory->NewContextObject($Context, "UserManager");
    $AccountUserID = ForceIncomingInt("u", $Context->Session->UserID);
    if (!@$AccountUser) $AccountUser = $UserManager->GetUserById($AccountUserID);
-  	$Body->AddControl($Context->ObjectFactory->NewContextObject($Context, "RoleHistory", $UserManager, $AccountUserID), 30);
+  	$Page->AddRenderControl($Context->ObjectFactory->NewContextObject($Context, "RoleHistory", $UserManager, $AccountUserID), $Configuration["CONTROL_POSITION_BODY_ITEM"]);
 }
 ?>

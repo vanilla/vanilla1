@@ -98,6 +98,7 @@ $Configuration["TEXT_HIDDEN"] = "Hidden";
 $Configuration["TEXT_BOOKMARKED"] = ""; 
 $Configuration["TEXT_PREFIX"] = "["; 
 $Configuration["TEXT_SUFFIX"] = "]";
+$Configuration["UPDATE_URL"] = "http://lussumo.com/updatecheck/vanilla.php";
 
 // Vanilla Control Positions
 $Configuration["CONTROL_POSITION_HEAD"] = "100";
