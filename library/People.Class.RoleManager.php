@@ -81,12 +81,26 @@ class RoleManager {
 
 	function SaveRole(&$Role) {
 		// Ensure that the person performing this action has access to do so
-		if ($Role->RoleID > 0 && !$this->Context->Session->User->Permission("PERMISSION_EDIT_ROLES")) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrPermissionInsufficient"));
-		if ($Role->RoleID == 0 && !$this->Context->Session->User->Permission("PERMISSION_ADD_ROLES")) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrPermissionInsufficient"));
+		if (($Role->RoleID > 0 && !$this->Context->Session->User->Permission("PERMISSION_EDIT_ROLES"))
+			|| ($Role->RoleID == 0 && !$this->Context->Session->User->Permission("PERMISSION_ADD_ROLES"))) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrPermissionInsufficient"));
 		
 		if ($this->Context->WarningCollector->Count() == 0) {
+			// In order to make sure we don't overwrite permissions from other applications,
+			// we should reload the current permissions first
+			if ($Role->RoleID > 0) {
+				$TempRole = $this->GetRoleById($Role->RoleID);
+				while (list($Permission, $Value) = each($TempRole->Permissions)) {
+					if ($Permission != "PERMISSION_SIGN_IN"
+						&& $Permission != "PERMISSION_HTML_ALLOWED"
+						&& $Permission != "PERMISSION_RECEIVE_APPLICATION_NOTIFICATION"
+						&& !array_key_exists($Permission, $Role->Permissions)) {
+						$Role->Permissions[$Permission] = $Value;
+					}
+				}
+			}            
+			
 			// Validate the properties
-			if ($this->ValidateRole($Role)) {
+			if ($this->ValidateRole($Role)) {				
 				$s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
 				$s->SetMainTable("Role", "r");
 				$s->AddFieldNameValue("Name", $Role->RoleName);

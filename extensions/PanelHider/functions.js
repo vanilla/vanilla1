@@ -11,10 +11,12 @@ function HidePanel() {
    HidePanel.style.display = "none";
    HiddenPanel.style.display = "inline";
    
-   var dm = new DataManager();
-   dm.RequestCompleteEvent = HandleSwitch;
-   dm.RequestFailedEvent = HandleFailure;
-   dm.LoadData("./ajax/switch.php?Type=HidePanel&Switch=1");
+   var Url = "./ajax/switch.php";
+   var Parameters = "Type=HidePanel&Switch=1";
+   var DataManager = new Ajax.Request(
+      Url,
+      { method: 'get', parameters: Parameters, onComplete: HandleSwitch }
+   );   
 }
 function RevealPanel() {
    var Panel = document.getElementById("Panel");
@@ -29,8 +31,10 @@ function RevealPanel() {
    HidePanel.style.display = "inline";
    HiddenPanel.style.display = "none";
    
-   var dm = new DataManager();
-   dm.RequestCompleteEvent = HandleSwitch;
-   dm.RequestFailedEvent = HandleFailure;
-   dm.LoadData("./ajax/switch.php?Type=HidePanel&Switch=0");   
+   var Url = "./ajax/switch.php";
+   var Parameters = "Type=HidePanel&Switch=0";
+   var DataManager = new Ajax.Request(
+      Url,
+      { method: 'get', parameters: Parameters, onComplete: HandleSwitch }
+   );   
 }

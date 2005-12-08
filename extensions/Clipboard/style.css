@@ -1,0 +1,17 @@
+.ClipboardSelect {
+   width: 200px;
+}
+.ClipboardInputLabel {
+   margin-top: 10px;
+}
+.ClipboardTextbox dt {
+   width: 388px;
+}
+.ClipboardTextbox dd {
+   margin: 0px;
+   padding: 0px;
+   padding-top: 20px;
+}
+.ClipboardTextbox textarea {
+   width: 388px;
+}

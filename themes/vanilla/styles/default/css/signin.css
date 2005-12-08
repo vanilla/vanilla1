@@ -253,18 +253,27 @@ input {
 	padding-top: 0px;
 	padding-left: 65px;
 }
-.ForgotPasswordLink, .ForgotPasswordLink:link, .ForgotPasswordLink:visited, .ForgotPasswordLink:hover {
+.ApplyForMembershipLink, .ApplyForMembershipLink:link, .ApplyForMembershipLink:visited, .ApplyForMembershipLink:hover {
 	margin-bottom: 6px;
+	font-size: 11px;
+	padding: 4px;
+	text-decoration: none;
+	display: block;
+}
+.ForgotPasswordLink, .ForgotPasswordLink:link, .ForgotPasswordLink:visited, .ForgotPasswordLink:hover {
+	margin-bottom: 2px;
 	margin-top: 2px;
 	font-size: 11px;
 	padding: 4px;
 	text-decoration: none;
 	display: block;
 }
+.ApplyForMembershipLink, .ApplyForMembershipLink:link, .ApplyForMembershipLink:visited,
 .ForgotPasswordLink, .ForgotPasswordLink:link, .ForgotPasswordLink:visited {
 	background: #ffd;
 	color: #c96;
 }
+.ApplyForMembershipLink:hover,
 .ForgotPasswordLink:hover {
 	background: #ffc;
 	color: #c90;

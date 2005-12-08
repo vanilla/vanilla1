@@ -1396,17 +1396,13 @@
 				color: #996600;
 			}
 			
-		/* Whisper & Clipboard elements */
-			.WhisperBox,
-			.ClipboardSelect {
+		/* Whisper & Comment elements */
+			.WhisperBox {
 				width: 200px;
 			}
 			.CommentInputLabel,
 			.WhisperInputLabel {
 				margin-top: 10px;
-			}
-			.ClipboardInput {
-				margin-bottom: -12px;
 			}
 			.CommentButtons,
 			.DiscussionButtons {

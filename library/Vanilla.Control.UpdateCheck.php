@@ -24,7 +24,7 @@ class UpdateCheck extends PostBackControl {
 			$this->IsPostBack = 0;
 		} elseif ($this->IsPostBack && $this->PostBackAction == "ProcessUpdateCheck") {
          // Ping lussumo.com for the latest version of Vanilla
-         $Lines = file("http://lussumo.com/updatecheck/vanilla.php");
+         $Lines = file($this->Context->Configuration["UPDATE_URL"]);
          if (count($Lines) == 1) {
             $this->MostRecentVanillaVersion = trim($Lines[0]);
             $this->PostBackValidated = 1;

@@ -45,7 +45,7 @@ if ($Context->SelfUrl == "account.php") {
    if (!@$UserManager) $UserManager = $Context->ObjectFactory->NewContextObject($Context, "UserManager");
    $AccountUserID = ForceIncomingInt("u", $Context->Session->UserID);
    if (!@$AccountUser) $AccountUser = $UserManager->GetUserById($AccountUserID);
-  	$Body->AddControl($Context->ObjectFactory->NewContextObject($Context, "IpHistory", $UserManager, $AccountUserID), 50);
+  	$Page->AddRenderControl($Context->ObjectFactory->NewContextObject($Context, "IpHistory", $UserManager, $AccountUserID), $Configuration["CONTROL_POSITION_BODY_ITEM"]);
 }
 
 // Displays the user's ip address next to his/her comment if the viewing user is an administrator
