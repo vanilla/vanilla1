@@ -64,6 +64,6 @@ include($Configuration["APPLICATION_PATH"]."conf/extensions.php");
 // BUILD THE PAGE HEAD
 // Every page will require some basic definitions for the header.
 $Head->AddScript("./js/global.js");
-$Head->AddStyleSheet($Context->StyleUrl."css/signin.css", "screen");
-$Head->AddStyleSheet($Context->StyleUrl."css/signin.handheld.css", "handheld");
+$Head->AddStyleSheet($Context->StyleUrl."css/people.css", "screen");
+$Head->AddStyleSheet($Context->StyleUrl."css/people.handheld.css", "handheld");
 ?>
