@@ -103,6 +103,7 @@ $Configuration["UPDATE_URL"] = "http://lussumo.com/updatecheck/vanilla.php";
 // Vanilla Control Positions
 $Configuration["CONTROL_POSITION_HEAD"] = "100";
 $Configuration["CONTROL_POSITION_MENU"] = "200";
+$Configuration["CONTROL_POSITION_BANNER"] = "200";
 $Configuration["CONTROL_POSITION_PANEL"] = "300";
 $Configuration["CONTROL_POSITION_BODY_ITEM"] = "400";
 $Configuration["CONTROL_POSITION_FOOT"] = "500";

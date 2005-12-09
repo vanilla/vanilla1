@@ -54,7 +54,7 @@ $Page->FireEvent("Page_Init");
 
 // DEFINE THE MASTER PAGE CONTROLS
 $Head = $Context->ObjectFactory->CreateControl($Context, "Head");
-$PeopleMenu = $Context->ObjectFactory->CreateControl($Context, "PeopleMenu");
+$Banner = $Context->ObjectFactory->CreateControl($Context, "Filler", "people_banner.php");
 $Foot = $Context->ObjectFactory->CreateControl($Context, "PeopleFoot");
 $PageEnd = $Context->ObjectFactory->CreateControl($Context, "PageEnd");
 

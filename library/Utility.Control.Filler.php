@@ -8,25 +8,29 @@
 * The latest source code for Vanilla is available at www.lussumo.com
 * Contact Mark O'Sullivan at mark [at] lussumo [dot] com
 *
-* Description: Handle's user sign-outs
+* Description: The Filler control can be used to dump any custom template in the page.
 */
 
-include("appg/settings.php");
-include("appg/init_people.php");
-
-// Define properties of the page controls that are specific to this page
-$Banner->Properties["CssClass"] = "SignOut";
-$Foot->CssClass = "SignOut";
-$Context->PageTitle = $Context->GetDefinition("SignOut");
-$Leave = $Context->ObjectFactory->CreateControl($Context, "Leave");
-
-// Add the controls to the page
-$Page->AddRenderControl($Head, $Configuration["CONTROL_POSITION_HEAD"]);
-$Page->AddRenderControl($Banner, $Configuration["CONTROL_POSITION_BANNER"]);
-$Page->AddRenderControl($Leave, $Configuration["CONTROL_POSITION_BODY_ITEM"]);
-$Page->AddRenderControl($Foot, $Configuration["CONTROL_POSITION_FOOT"]);
-$Page->AddRenderControl($PageEnd, $Configuration["CONTROL_POSITION_PAGE_END"]);
-
-// 4. FIRE PAGE EVENTS
-$Page->FireEvents();
+class Filler extends Control {
+   var $TemplateFile;
+	var $Properties;
+   
+	function Filler(&$Context, $templateFile = "") {
+		$this->Name = "Filler";
+		$this->Control($Context);
+		$this->Properties = array();
+      if ($templateFile != "") $this->TemplateFile = $templateFile;
+	}
+	
+   function Render() {
+      if ($this->TemplateFile != "") {
+         $Template = $this->Context->Configuration["THEME_PATH"]."templates/".$this->TemplateFile;
+         if (file_exists($Template)) {
+            $this->CallDelegate("PreRender");
+            include($Template);
+            $this->CallDelegate("PostRender");
+         }
+      }
+   }
+}
 ?>

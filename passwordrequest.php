@@ -15,14 +15,14 @@ include("./appg/settings.php");
 include("appg/init_people.php");
 
 // Define properties of the page controls that are specific to this page
-$PeopleMenu->CssClass = "PasswordRequest";
+$Banner->Properties["CssClass"] = "PasswordRequest";
 $Foot->CssClass = "PasswordRequest";
 $Context->PageTitle = $Context->GetDefinition("PasswordResetRequest");
 $PasswordRequestForm = $Context->ObjectFactory->CreateControl($Context, "PasswordRequestForm", "PasswordRequestForm");
 
 // Add the controls to the page
 $Page->AddRenderControl($Head, $Configuration["CONTROL_POSITION_HEAD"]);
-$Page->AddRenderControl($PeopleMenu, $Configuration["CONTROL_POSITION_MENU"]);
+$Page->AddRenderControl($Banner, $Configuration["CONTROL_POSITION_BANNER"]);
 $Page->AddRenderControl($PasswordRequestForm, $Configuration["CONTROL_POSITION_BODY_ITEM"]);
 $Page->AddRenderControl($Foot, $Configuration["CONTROL_POSITION_FOOT"]);
 $Page->AddRenderControl($PageEnd, $Configuration["CONTROL_POSITION_PAGE_END"]);
