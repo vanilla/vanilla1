@@ -48,6 +48,7 @@ if (in_array($Context->SelfUrl, array("index.php", "search.php", "comments.php")
 if ($Context->SelfUrl == "index.php") {
    // Add the RSS2 link to the foot
    $Foot->AddLink("index.php".$p->GetQueryString(), $Context->GetDefinition("RSS2Feed"), "", 20);
+   $Head->AddString("<link rel=\"alternate\" type=\"application/rss+xml\" href=\"index.php".$p->GetQueryString()."\" title=\"".$Context->GetDefinition("RSS2Feed")."\" />");
 
    // Add the discussion indexes RSS2 feed
    if ($FeedType == "RSS2") {
@@ -110,7 +111,10 @@ if ($Context->SelfUrl == "index.php") {
       $Search = $SearchManager->GetSearchById($SearchID);
       if ($Search) $SearchType = $Search->Type;
    }
-   if ($SearchType == "Topics" || $SearchType == "Comments") $Foot->AddLink("search.php".$p->GetQueryString(), $Context->GetDefinition("RSS2Feed"), "", 20);
+   if ($SearchType == "Topics" || $SearchType == "Comments") {
+      $Foot->AddLink("search.php".$p->GetQueryString(), $Context->GetDefinition("RSS2Feed"), "", 20);
+      $Head->AddString("<link rel=\"alternate\" type=\"application/rss+xml\" href=\"search.php".$p->GetQueryString()."\" title=\"".$Context->GetDefinition("RSS2Feed")."\" />");
+   }
    
    // Handle searches
    if ($FeedType == "RSS2") {      
@@ -229,6 +233,7 @@ if ($Context->SelfUrl == "index.php") {
    }
 } elseif ($Context->SelfUrl == "comments.php") {
    $Foot->AddLink("comments.php".$p->GetQueryString(), $Context->GetDefinition("RSS2Feed"), "", 20);
+   $Head->AddString("<link rel=\"alternate\" type=\"application/rss+xml\" href=\"comments.php".$p->GetQueryString()."\" title=\"".$Context->GetDefinition("RSS2Feed")."\" />");
    
    // Handle searches
    if ($FeedType == "RSS2") {      

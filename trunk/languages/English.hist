@@ -451,7 +451,7 @@ $Context->Dictionary["StyleAuthor"] = "Style author";
 $Context->Dictionary["StyleAuthorNotes"] = "The name of the author of this style. Enter the name exactly as it appears on the user's account.";
 $Context->Dictionary["StyleUrl"] = "Style url";
 $Context->Dictionary["StyleUrlNotes"] = "You can enter any valid URL to an web-based directory here, such as: <strong>http://www.mywebsite.com/mynewstyle/</strong>
-	<br />The folder must contain all of the files relevant to styling the forum, such as: global.css";
+	<br />The folder must contain all of the files relevant to styling the forum, such as: vanilla.css";
 $Context->Dictionary["PreviewImageFilename"] = "Preview image filename";
 $Context->Dictionary["PreviewImageFilenameNotes"] = "If there is a preview image in the style folder, enter the image name here. Preview images are automatically sized to 200 pixels high by 370 pixels wide.";
 $Context->Dictionary["StyleManagement"] = "Style Management";
@@ -465,7 +465,7 @@ $Context->Dictionary["NoPreview"] = "No preview available";
 $Context->Dictionary["CustomStyle"] = "Use your own, custom style";
 $Context->Dictionary["CustomStyleUrl"] = "Custom style url";
 $Context->Dictionary["CustomStyleNotes"] = "Any web-accessable folder will work, such as: http://www.mysite.com/mystyle/
-	<p>Your custom style folder should contain all files relevant to your style, including a global.css file.</p>
+	<p>Your custom style folder should contain all files relevant to your style, including a vanilla.css file.</p>
 	<p>For more information about how to style the forum, <a href=\"http://lussumo.com/docs\">read the documentation</a>.</p>";
 $Context->Dictionary["UseCustomStyle"] = "Click here to use your custom style";
 $Context->Dictionary["By"] = "by";
@@ -903,6 +903,8 @@ $Context->Dictionary["AboutVanilla"] = "<h1>About Vanilla</h1>
 $Context->Dictionary["AboutApplication"] = "<h1>About Vanilla</h1>
 	<p>Welcome to Lussumo Vanilla: the sweetest forum on the web. Vanilla is a simple, extensible, multi-lingual web forum.</p>";
 
-
+// 2005-12-08 - Removed
+$Context->Dictionary["Enable"] = "Enable extension";
+$Context->Dictionary["Disable"] = "Disable extension";
 */
 ?>

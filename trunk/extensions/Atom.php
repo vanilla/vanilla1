@@ -48,6 +48,7 @@ if (in_array($Context->SelfUrl, array("index.php", "search.php", "comments.php")
 if ($Context->SelfUrl == "index.php") {
    // Add the atom link to the foot
    $Foot->AddLink("index.php".$p->GetQueryString(), $Context->GetDefinition("AtomFeed"), "", 10);
+   $Head->AddString("<link rel=\"alternate\" type=\"application/atom+xml\" href=\"index.php".$p->GetQueryString()."\" title=\"".$Context->GetDefinition("AtomFeed")."\" />");
 
    // Add the discussion indexes atom feed
    if ($FeedType == "Atom") {
@@ -110,7 +111,10 @@ if ($Context->SelfUrl == "index.php") {
       $Search = $SearchManager->GetSearchById($SearchID);
       if ($Search) $SearchType = $Search->Type;
    }
-   if ($SearchType == "Topics" || $SearchType == "Comments") $Foot->AddLink("search.php".$p->GetQueryString(), $Context->GetDefinition("AtomFeed"), "", 10);
+   if ($SearchType == "Topics" || $SearchType == "Comments") {
+      $Foot->AddLink("search.php".$p->GetQueryString(), $Context->GetDefinition("AtomFeed"), "", 10);
+      $Head->AddString("<link rel=\"alternate\" type=\"application/atom+xml\" href=\"search.php".$p->GetQueryString()."\" title=\"".$Context->GetDefinition("AtomFeed")."\" />");
+   }
    
    // Handle searches
    if ($FeedType == "Atom") {      
@@ -230,6 +234,7 @@ if ($Context->SelfUrl == "index.php") {
    }
 } elseif ($Context->SelfUrl == "comments.php") {
    $Foot->AddLink("comments.php".$p->GetQueryString(), $Context->GetDefinition("AtomFeed"), "", 10);
+   $Head->AddString("<link rel=\"alternate\" type=\"application/atom+xml\" href=\"comments.php".$p->GetQueryString()."\" title=\"".$Context->GetDefinition("AtomFeed")."\" />");
    
    // Handle searches
    if ($FeedType == "Atom") {      

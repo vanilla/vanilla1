@@ -69,10 +69,8 @@ $Head->AddScript("./js/global.js");
 $Head->AddScript("./js/vanilla.js");
 $Head->AddScript("./js/prototype.js");
 $Head->AddScript("./js/scriptaculous.js");
-$Head->AddStyleSheet($Context->StyleUrl."css/global.css", "screen");
-$Head->AddStyleSheet($Context->StyleUrl."css/global.handheld.css", "handheld");
-$Head->AddString("<link rel=\"alternate\" type=\"application/atom+xml\" href=\"".PrependString("http://", AppendFolder($Configuration["DOMAIN"], "feeds/?Type=atom"))."\" title=\"".$Context->GetDefinition("Atom")." ".$Context->GetDefinition("Feed")."\" />");
-
+$Head->AddStyleSheet($Context->StyleUrl."css/vanilla.css", "screen");
+$Head->AddStyleSheet($Context->StyleUrl."css/vanilla.handheld.css", "handheld");
 
 // Add the start button to the panel
 if ($Context->Session->UserID > 0) {
