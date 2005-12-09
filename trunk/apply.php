@@ -14,14 +14,14 @@ include("appg/settings.php");
 include("appg/init_people.php");
 
 // Define properties of the page controls that are specific to this page
-$PeopleMenu->CssClass = "Apply";
+$Banner->Properties["CssClass"] = "Apply";
 $Foot->CssClass = "Apply";
 $Context->PageTitle = $Context->GetDefinition("ApplyForMembership");
 $ApplyForm = $Context->ObjectFactory->CreateControl($Context, "ApplyForm", "ApplicationForm");
 	
 // Add the controls to the page
 $Page->AddRenderControl($Head, $Configuration["CONTROL_POSITION_HEAD"]);
-$Page->AddRenderControl($PeopleMenu, $Configuration["CONTROL_POSITION_MENU"]);
+$Page->AddRenderControl($Banner, $Configuration["CONTROL_POSITION_BANNER"]);
 $Page->AddRenderControl($ApplyForm, $Configuration["CONTROL_POSITION_BODY_ITEM"]);
 $Page->AddRenderControl($Foot, $Configuration["CONTROL_POSITION_FOOT"]);
 $Page->AddRenderControl($PageEnd, $Configuration["CONTROL_POSITION_PAGE_END"]);
