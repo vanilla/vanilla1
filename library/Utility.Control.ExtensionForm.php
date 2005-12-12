@@ -120,13 +120,13 @@ class ExtensionForm extends PostBackControl {
 	            $Extension = $this->EnabledExtensions[$ExtensionKey];
 					$ExtensionInUse = true;
 					$this->DelegateParameters["ExtensionName"] = $ExtensionKey;
-					$this->CallDeletate("PostExtensionDisable");
+					$this->CallDelegate("PostExtensionDisable");
 					
 				} elseif (array_key_exists($ExtensionKey, $this->DisabledExtensions)) {
 					// The extension is currently disabled, so enable it
 	            $Extension = $this->DisabledExtensions[$ExtensionKey];
 					$this->DelegateParameters["ExtensionName"] = $ExtensionKey;
-					$this->CallDeletate("PostExtensionEnable");
+					$this->CallDelegate("PostExtensionEnable");
                
 				} else {
 					$this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrExtensionNotFound"));
