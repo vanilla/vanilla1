@@ -34,9 +34,10 @@ $Configuration["FARM_DATABASE_PASSWORD"] = "your_farm_database_password";
 
 // Path Settings
 $Configuration["APPLICATION_PATH"] = "/path/to/vanilla/";
-$Configuration["LIBRARY_PATH"] = $Configuration["APPLICATION_PATH"]. "library/"; 
-$Configuration["EXTENSIONS_PATH"] = $Configuration["APPLICATION_PATH"]. "extensions/"; 
-$Configuration["LANGUAGES_PATH"] = $Configuration["APPLICATION_PATH"]. "languages/";
+$Configuration["DATABASE_PATH"] = "/path/to/your/database/file.php"; 
+$Configuration["LIBRARY_PATH"] = "/path/to/your/library/"; 
+$Configuration["EXTENSIONS_PATH"] = "/path/to/your/extensions/"; 
+$Configuration["LANGUAGES_PATH"] = "/path/to/your/languages/";
 $Configuration["THEME_PATH"] = "themes/vanilla/";
 
 // People Settings

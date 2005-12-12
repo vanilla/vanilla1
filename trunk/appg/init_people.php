@@ -12,6 +12,7 @@
 */
 
 // GLOBAL INCLUDES
+include($Configuration["DATABASE_PATH"]);
 include($Configuration["APPLICATION_PATH"]."appg/headers.php");
 include($Configuration["LIBRARY_PATH"]."Utility.Functions.php");
 include($Configuration["LIBRARY_PATH"]."Utility.Class.Database.php");

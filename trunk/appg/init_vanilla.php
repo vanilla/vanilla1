@@ -12,6 +12,7 @@
 */
 
 // GLOBAL INCLUDES
+include($Configuration["DATABASE_PATH"]);
 include($Configuration["APPLICATION_PATH"]."appg/headers.php");
 include($Configuration["LIBRARY_PATH"]."Utility.Functions.php");
 include($Configuration["LIBRARY_PATH"]."Utility.Class.Database.php");
@@ -21,7 +22,6 @@ include($Configuration["LIBRARY_PATH"]."Utility.Class.ErrorManager.php");
 include($Configuration["LIBRARY_PATH"]."Utility.Class.ObjectFactory.php");
 include($Configuration["LIBRARY_PATH"]."Utility.Class.StringManipulator.php");
 include($Configuration["LIBRARY_PATH"]."Utility.Class.Context.php");
-
 include($Configuration["LIBRARY_PATH"]."Utility.Class.Delegation.php");
 include($Configuration["LIBRARY_PATH"]."Utility.Class.Control.php");
 include($Configuration["LIBRARY_PATH"]."People.Class.Authenticator.php");
