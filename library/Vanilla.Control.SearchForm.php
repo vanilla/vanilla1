@@ -31,9 +31,8 @@ class SearchForm extends PostBackControl {
       $this->SearchID = ForceIncomingInt("SearchID", 0);
       $this->DataCount = 0;
 		$this->Constructor($Context);
-	}
-	
-	function LoadData() {
+		if ($this->PostBackAction == "") $this->IsPostBack = 1;
+		
 		$CurrentPage = ForceIncomingInt("page", 1);
 		
       // Load a search object
