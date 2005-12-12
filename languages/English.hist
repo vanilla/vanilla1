@@ -906,5 +906,16 @@ $Context->Dictionary["AboutApplication"] = "<h1>About Vanilla</h1>
 // 2005-12-08 - Removed
 $Context->Dictionary["Enable"] = "Enable extension";
 $Context->Dictionary["Disable"] = "Disable extension";
+
+// 2005-12-12 - Removed
+$Context->Dictionary["Other"] = "Other";
+$Context->Dictionary["UseQuickKeys"] = "Use quick-keys to access common forum pages";
+$Context->Dictionary["Discussions_QuickKey"] = "<u>D</u>iscussions";
+$Context->Dictionary["Categories_QuickKey"] = "<u>C</u>ategories";
+$Context->Dictionary["Search_QuickKey"] = "<u>S</u>earch";
+$Context->Dictionary["Settings_QuickKey"] = "S<u>e</u>ttings";
+$Context->Dictionary["Account_QuickKey"] = "<u>A</u>ccount";
+$Context->Dictionary["StartANewDiscussion_Quickkey"] = "Start a <u>n</u>ew discussion";
+
 */
 ?>

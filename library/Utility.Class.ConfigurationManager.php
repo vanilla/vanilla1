@@ -9,7 +9,6 @@
 * Contact Mark O'Sullivan at mark [at] lussumo [dot] com
 * 
 * Description: Manages retrieving and setting configuration properties
-* Applications utilizing this file: Vanilla;
 */
 
 class ConfigurationManager {
@@ -34,7 +33,8 @@ class ConfigurationManager {
    }
    
    function EncodeSettingValueForSaving($Value) {
-      return str_replace("\"", "\\\"", html_entity_decode($Value, ENT_QUOTES));
+      $Value = str_replace("\"", "\\\"", html_entity_decode($Value, ENT_QUOTES));
+      return str_replace("\\", "\\\\", $Value);
    }
    
    function GetSetting($SettingName) {
