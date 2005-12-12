@@ -44,35 +44,14 @@ class PasswordRequestForm extends PostBackControl {
 	
 	function Render_ValidPostBack() {
 		$this->CallDelegate("PreValidPostBackRender");
-		echo("<div class=\"FormComplete\">
-			<h1>".$this->Context->GetDefinition("RequestProcessed")."</h1>
-			<ul>
-				<li>".$this->Context->GetDefinition("MessageSentTo")." <strong>".FormatStringForDisplay($this->EmailSentTo, 1)."</strong> ".$this->Context->GetDefinition("ContainingPasswordInstructions")."</li>
-			</ul>
-		</div>");
+		include($this->Context->Configuration["THEME_PATH"]."templates/people_password_request_form_validpostback.php");
 		$this->CallDelegate("PostValidPostBackRender");
 	}
 	
 	function Render_NoPostBack() {
 		$this->CallDelegate("PreNoPostBackRender");
 		$this->PostBackParams->Add("PostBackAction", "RequestPasswordReset");
-		$this->Render_Warnings();
-		echo("<div class=\"About\">
-			<h1>".$this->Context->GetDefinition("AboutYourPassword")."</h1>
-			<p>".$this->Context->GetDefinition("AboutYourPasswordRequestNotes")."</p>
-			<p><a href=\"people.php\">".$this->Context->GetDefinition("BackToSignInForm")."</a></p>
-		</div>
-		<div class=\"Form\">
-			<h1>".$this->Context->GetDefinition("PasswordResetRequestForm")."</h1>
-			<p>".$this->Context->GetDefinition("PasswordResetRequestFormNotes")."</p>");
-		$this->Render_PostBackForm($this->FormName);
-		echo("<dl class=\"InputBlock PasswordRequestInputs\">
-				<dt>".$this->Context->GetDefinition("Username")."</dt>
-				<dd><input type=\"text\" name=\"Username\" value=\"".FormatStringForDisplay($this->Username, 1)."\" class=\"Input\" maxlength=\"20\" /></dd>
-			</dl>
-			<div class=\"FormButtons\"><input type=\"submit\" name=\"btnPassword\" value=\"".$this->Context->GetDefinition("SendRequest")."\" class=\"Button\" /></div>
-			</form>
-		</div>");
+		include($this->Context->Configuration["THEME_PATH"]."templates/people_password_request_form_nopostback.php");
 		$this->CallDelegate("PostNoPostBackRender");
 	}
 }
