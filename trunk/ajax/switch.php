@@ -31,14 +31,11 @@ if (in_array($Type, array("Active", "Closed", "Sticky"))) {
 }
 // Handle the switches
 if ($Type == "Bookmark" && $DiscussionID > 0) {
+	if ($Context->Session->UserID == 0) die();	
 	if ($Switch) {
 		$um->AddBookmark($Context->Session->UserID, $DiscussionID);
 	} else {
 		$um->RemoveBookmark($Context->Session->UserID, $DiscussionID);
-	}
-	if ($NoAjax) {
-		header("location: comments.php?DiscussionID=".$DiscussionID);
-		die();
 	}
 } elseif ($DiscussionID > 0 && (
 	($Type == "Active" && $Context->Session->User->Permission("PERMISSION_HIDE_DISCUSSIONS"))
@@ -46,16 +43,8 @@ if ($Type == "Bookmark" && $DiscussionID > 0) {
 	|| ($Type == "Sticky" && $Context->Session->User->Permission("PERMISSION_STICK_DISCUSSIONS"))
 	)) {
 	$dm->SwitchDiscussionProperty($DiscussionID, $Type, $Switch);
-	if ($NoAjax) {
-		header("location: comments.php?DiscussionID=".$DiscussionID);
-		die();
-	}
 } elseif ($Type == "Comment" && $CommentID > 0 && $DiscussionID > 0 && $Context->Session->User->Permission("PERMISSION_HIDE_COMMENTS")) {
 	$cm->SwitchCommentProperty($CommentID, $DiscussionID, $Switch);
-	if ($NoAjax) {
-		header("location: comments.php?DiscussionID=".$DiscussionID."&Focus=".$CommentID."#Comment_".$CommentID);
-		die();
-	}
 } elseif ($Type == "SendNewApplicantNotifications") {
 	$um->SwitchUserProperty($Context->Session->UserID, $Type, $Switch);
 } elseif ($Type != "") {
