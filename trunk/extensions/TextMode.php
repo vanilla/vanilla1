@@ -59,7 +59,7 @@ if (
 
 // Make sure that a comment follows the user's preference and enables or disabled html where required
 function Comment_UserHtmlPreference(&$Comment) {
-	if (!$Comment->Context->Session->User->Preference("HtmlOn")) {
+	if ($Comment->Context->Session->UserID > 0 && !$Comment->Context->Session->User->Preference("HtmlOn")) {
 		$Comment->ShowHtml = 0;
 		$Comment->AuthIcon = "";
 	}
