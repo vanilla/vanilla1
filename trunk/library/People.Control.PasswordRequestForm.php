@@ -20,20 +20,26 @@ class PasswordRequestForm extends PostBackControl {
 	
 	function PasswordRequestForm(&$Context, $FormName = "") {
 		$this->Name = "PasswordRequestForm";
-		$this->ValidActions = array("RequestPasswordReset");
-		$this->FormName = $FormName;
-		$this->Username = ForceIncomingString("Username", "");
+		$this->ValidActions = array("PasswordRequestForm", "RequestPasswordReset");
 		$this->Constructor($Context);
-
-		$this->UserManager = $this->Context->ObjectFactory->NewContextObject($this->Context, "UserManager");
 		
 		if ($this->IsPostBack) {
+			$this->FormName = $FormName;
+			$this->Username = ForceIncomingString("Username", "");
+			// Set up the page
+			global $Banner, $Foot;
+			$Banner->Properties["CssClass"] = "PasswordRequest";
+			$Foot->CssClass = "PasswordRequest";
+			$this->Context->PageTitle = $this->Context->GetDefinition("PasswordResetRequest");			
+	
+			$this->UserManager = $this->Context->ObjectFactory->NewContextObject($this->Context, "UserManager");
+		
 			if ($this->PostBackAction == "RequestPasswordReset") {
 				$this->EmailSentTo = $this->UserManager->RequestPasswordReset($this->Username);
 				if ($this->EmailSentTo) $this->PostBackValidated = 1;
 			} 
+			$this->CallDelegate("LoadData");
 		}
-		$this->CallDelegate("LoadData");
 	}
 	
 	function Render_ValidPostBack() {
@@ -54,7 +60,7 @@ class PasswordRequestForm extends PostBackControl {
 		echo("<div class=\"About\">
 			<h1>".$this->Context->GetDefinition("AboutYourPassword")."</h1>
 			<p>".$this->Context->GetDefinition("AboutYourPasswordRequestNotes")."</p>
-			<p><a href=\"signin.php\">".$this->Context->GetDefinition("BackToSignInForm")."</a></p>
+			<p><a href=\"people.php\">".$this->Context->GetDefinition("BackToSignInForm")."</a></p>
 		</div>
 		<div class=\"Form\">
 			<h1>".$this->Context->GetDefinition("PasswordResetRequestForm")."</h1>

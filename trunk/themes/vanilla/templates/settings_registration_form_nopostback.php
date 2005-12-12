@@ -10,7 +10,7 @@ if (!$this->Context->Session->User->Permission("PERMISSION_MANAGE_REGISTRATION")
    $this->PostBackParams->Set("PostBackAction", "ProcessRegistrationChange");
    echo("<div class=\"SettingsForm\">
       <h1>".$this->Context->GetDefinition("RegistrationManagement")."</h1>
-      <div class=\"Form RegistrationChange\">
+      <div class=\"Form RegistrationForm\">
          ".$this->Get_Warnings()."
          ".$this->Get_PostBackForm("frmRegistrationChange")."
          <dl>

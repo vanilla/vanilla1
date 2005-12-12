@@ -15,23 +15,31 @@ class Leave extends PostBackControl {
 	
 	function Leave(&$Context) {
 		$this->Name = "Leave";
-		$this->ValidActions = array("SignOut");
+		$this->ValidActions = array("SignOutNow", "SignOut");
 		$this->Constructor($Context);
-
-		// Occassionally cookies cannot be removed, and rather than
-      // cause an infinite loop where the page continually refreshes
-      // until it crashes (attempting to remove the cookies over and
-      // over again), I just fail out and treat the user as if s/he
-      // has been signed out successfully.
-		if ($this->Context->Session->UserID > 0) $this->Context->Session->End($this->Context->Authenticator);
-		$this->PostBackValidated = 1;
+		
+		if ($this->IsPostBack) {
+			// Set up the page
+			global $Banner, $Foot;
+			$Banner->Properties["CssClass"] = "SignOut";
+			$Foot->CssClass = "SignOut";
+			$this->Context->PageTitle = $this->Context->GetDefinition("SignOut");		
+	
+			// Occassionally cookies cannot be removed, and rather than
+			// cause an infinite loop where the page continually refreshes
+			// until it crashes (attempting to remove the cookies over and
+			// over again), I just fail out and treat the user as if s/he
+			// has been signed out successfully.
+			if ($this->PostBackAction == "SignOutNow") $this->Context->Session->End($this->Context->Authenticator);
+			$this->PostBackValidated = 1;
+		}
 	}
 	
 	function Render_ValidPostBack() {
 		echo("<div class=\"FormComplete\">
 			<h1>".$this->Context->GetDefinition("SignOutSuccessful")."</h1>
 			<ul>
-				<li><a href=\"signin.php\">".$this->Context->GetDefinition("SignInAgain")."</a></li>
+				<li><a href=\"".$this->Context->SelfUrl."\">".$this->Context->GetDefinition("SignInAgain")."</a></li>
 			</ul>
 		</div>");
 	}
@@ -39,7 +47,7 @@ class Leave extends PostBackControl {
 	function Render_NoPostBack() {
 		echo("<div class=\"BlankMessage\">".$this->Context->GetDefinition("Processing")."</div>
 		<script>
-			setTimeout(\"window.location='leave.php'\",600);
+			setTimeout(\"window.location='".$this->Context->SelfUrl."?PostBackAction=SignOut'\",600);
 		</script>");
 	}
 }

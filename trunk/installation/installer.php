@@ -571,7 +571,7 @@ echo("<".chr(63)."xml version=\"1.0\" encoding=\"utf-8\"".chr(63).">");
                <li>Allow new users to be automatically granted access when they apply for membership</li>
             </ul>
             <p>And that's not all. There's also the latest version of the Lussumo Filebrowser and Thumbnailer sitting in your images folder.</p>
-            <div class=\"Button\"><a href=\"signin.php\">Go sign in and have some fun!</a></div>");       
+            <div class=\"Button\"><a href=\"people.php\">Go sign in and have some fun!</a></div>");       
          }
          ?>
          </div>

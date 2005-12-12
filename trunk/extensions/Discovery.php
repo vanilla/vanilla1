@@ -49,7 +49,7 @@ if ($Context->SelfUrl == "account.php") {
 	$Page->AddRenderControl($Context->ObjectFactory->NewContextObject($Context, "Discovery", $AccountUser), $Configuration["CONTROL_POSITION_BODY_ITEM"] + 5);   
 }
 
-if ($Context->SelfUrl == "apply.php") {
+if ($Context->SelfUrl == "people.php" && in_array(ForceIncomingString("PostBackAction", ""), array("ApplyForm", "Apply"))) {
 	
 	function ApplyForm_DiscoveryQuestion(&$FormControl) {
 		echo("<div class=\"InputBlock DiscoveryInput\">

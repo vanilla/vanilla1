@@ -1,6 +1,6 @@
 <?php
 
-if ($Context->SelfUrl == "apply.php") {
+if ($Context->SelfUrl == "people.php" && in_array(ForceIncomingString("PostBackAction", ""), array("ApplyForm", "Apply"))) {
    
    // Add the Real name inputs to the application form
    function ApplicationForm_AddRealNameInputs($ApplyForm) {

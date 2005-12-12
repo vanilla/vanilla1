@@ -3,7 +3,7 @@
 
 echo("<div class=\"SettingsForm\">
    <h1>".$this->Context->GetDefinition("RegistrationManagement")."</h1>
-   <div class=\"Form RegistrationChange\">
+   <div class=\"Form RegistrationForm\">
       <div class=\"InputNote\">".$this->Context->GetDefinition("RoleChangesSaved")."</div>
       <div class=\"FormLink\"><a href=\"./".$this->Context->SelfUrl."?PostBackAction=RegistrationChange\">".$this->Context->GetDefinition("ClickHereToContinue")."</a></div>
    </div>

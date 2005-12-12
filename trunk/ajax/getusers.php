@@ -15,11 +15,6 @@ include("../appg/settings.php");
 include("../conf/settings.php");
 include("../appg/init_ajax.php");
 
-if ($NoAjax) {
-   header("location: http://lussumo.com/upgrade.html");
-   die();
-}
-
 $Search = ForceIncomingString("Search", "");
 $Search = urldecode($Search);
 $Search = FormatStringForDatabaseInput($Search);

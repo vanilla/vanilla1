@@ -74,7 +74,7 @@ class MySQL extends Database {
 		$Connection = $this->GetFarmConnection();
       $KillOnFail = ForceBool($KillOnFail, 0);
 		if (!mysql_query($SqlBuilder->GetDelete(), $Connection)) {
-			$this->Context->ErrorManager->AddError($this->Context, $SenderObject, $SenderMethod, $ErrorMessage, mysql_error($Connection), $KillOnFail);
+			$this->Context->ErrorManager->AddError($SqlBuilder->Context, $SenderObject, $SenderMethod, $ErrorMessage, mysql_error($Connection), $KillOnFail);
 			return false;
 		} else {
 			return mysql_affected_rows($Connection);
@@ -137,7 +137,7 @@ class MySQL extends Database {
       $KillOnFail = ForceBool($KillOnFail, 0);
 		$Connection = $this->GetFarmConnection();
 		if (!mysql_query($SqlBuilder->GetInsert($UseIgnore), $Connection)) {
-			$this->Context->ErrorManager->AddError($this->Context, $SenderObject, $SenderMethod, $ErrorMessage, mysql_error($Connection), $KillOnFail);
+			$this->Context->ErrorManager->AddError($SqlBuilder->Context, $SenderObject, $SenderMethod, $ErrorMessage, mysql_error($Connection), $KillOnFail);
 			return false;
 		} else {
 			return ForceInt(mysql_insert_id($Connection), 0);
@@ -164,7 +164,7 @@ class MySQL extends Database {
 		$Connection = $this->GetConnection();
 		$DataSet = mysql_query($SqlBuilder->GetSelect(), $Connection);
 		if (!$DataSet) {
-			$this->Context->ErrorManager->AddError($this->Context, $SenderObject, $SenderMethod, $ErrorMessage, mysql_error($Connection), $KillOnFail);
+			$this->Context->ErrorManager->AddError($SqlBuilder->Context, $SenderObject, $SenderMethod, $ErrorMessage, mysql_error($Connection), $KillOnFail);
 			return false;
 		} else {
 			return $DataSet;
@@ -176,7 +176,7 @@ class MySQL extends Database {
       $KillOnFail = ForceBool($KillOnFail, 0);
 		$Connection = $this->GetFarmConnection();
 		if (!mysql_query($SqlBuilder->GetUpdate(), $Connection)) {
-			$this->Context->ErrorManager->AddError($this->Context, $SenderObject, $SenderMethod, $ErrorMessage, mysql_error($Connection), $KillOnFail);
+			$this->Context->ErrorManager->AddError($SqlBuilder->Context, $SenderObject, $SenderMethod, $ErrorMessage, mysql_error($Connection), $KillOnFail);
 			return false;
 		} else {
 			return ForceInt(mysql_affected_rows($Connection), 0);

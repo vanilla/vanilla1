@@ -111,7 +111,7 @@ class UserManager extends Delegation {
 					$this->Context->GetDefinition("RoleChangeMessage"));
 				if ($AffectedUser->PERMISSION_SIGN_IN) {
 					$e->BodyText .= str_replace(array("//1", "//2"),
-						array($this->Context->Configuration["APPLICATION_TITLE"], $this->Context->Configuration["DOMAIN"].(substr($this->Context->Configuration["DOMAIN"], strlen($this->Context->Configuration["DOMAIN"])-1) == "/" ? "":"/")."signin.php"),
+						array($this->Context->Configuration["APPLICATION_TITLE"], $this->Context->Configuration["DOMAIN"].(substr($this->Context->Configuration["DOMAIN"], strlen($this->Context->Configuration["DOMAIN"])-1) == "/" ? "":"/")."people.php"),
 						$this->Context->GetDefinition("SignInMessage"));
 				}
 				$e->Send();
@@ -638,7 +638,7 @@ class UserManager extends Delegation {
 						array($this->Context->Configuration["APPLICATION_TITLE"],
 								PrependString("http://", $this->Context->Configuration["DOMAIN"])
 								.(substr($this->Context->Configuration["DOMAIN"], strlen($this->Context->Configuration["DOMAIN"])-1) == "/" ? "":"/")
-								."passwordreset.php?u="
+								."passwordreset.php?PostBackAction=PasswordResetForm&u="
 								.$UserID
 								."&k="
 								.$EmailVerificationKey),
@@ -745,7 +745,6 @@ class UserManager extends Delegation {
 		if ($this->Context->Session->UserID == 0) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrUserID"));
 		
 		if ($this->Context->WarningCollector->Count() == 0) {
-			$s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
 			// Set the value for the user
          $this->Context->Session->User->Preferences[$PreferenceName] = $Switch;
 			// Serialize and save the settings
@@ -757,6 +756,19 @@ class UserManager extends Delegation {
 			$this->Context->Database->Update($s, $this->Name, "SwitchUserPreference", "An error occurred while manipulating user preferences.");
 		}
 		return $this->Context->WarningCollector->Iif();
+	}
+	
+	function SaveUserPreferences($User) {
+		if ($User->UserID > 0) {
+			// Serialize and save the settings
+         $SerializedPreferences = SerializeArray($User->Preferences);
+			$s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
+			$s->SetMainTable("User");
+			$s->AddFieldNameValue("Preferences", $SerializedPreferences);
+			$s->AddWhere("UserID", $User->UserID, "=");
+			$this->Context->Database->Update($s, $this->Name, "SaveUserPreferences", "An error occurred while manipulating user preferences.");
+		}
+		return true;
 	}
 	
 	function UpdateUserCommentCount($UserID) {

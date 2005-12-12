@@ -5,7 +5,7 @@ if ($this->Context->Configuration["ALLOW_IMMEDIATE_ACCESS"]) {
    echo("<div class=\"FormComplete\">
       <h1>".$this->Context->GetDefinition("ApplicationComplete")."</h1>
       <ul>
-         <li><a href=\"signin.php\">".$this->Context->GetDefinition("SignInNow")."</a></li>
+         <li><a href=\"people.php\">".$this->Context->GetDefinition("SignInNow")."</a></li>
       </ul>
    </div>");
 } else {

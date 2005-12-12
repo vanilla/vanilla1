@@ -3,7 +3,7 @@
 
 echo("<div class=\"About\">
    ".$this->Context->GetDefinition("AboutMembership")."
-         <p><a href=\"signin.php\">".$this->Context->GetDefinition("BackToSignInForm")."</a></p>
+         <p><a href=\"people.php\">".$this->Context->GetDefinition("BackToSignInForm")."</a></p>
       </div>
       <div class=\"Form\">
          <h1>".$this->Context->GetDefinition("MembershipApplicationForm")."</h1>

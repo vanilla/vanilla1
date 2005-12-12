@@ -10,7 +10,7 @@ if (!$this->Context->Session->User->Permission("PERMISSION_MANAGE_LANGUAGE")) {
    $this->PostBackParams->Set("PostBackAction", "ProcessLanguageChange");
    echo("<div class=\"SettingsForm\">
       <h1>".$this->Context->GetDefinition("LanguageManagement")."</h1>
-      <div class=\"Form LanguageChange\">
+      <div class=\"Form LanguageForm\">
          ".$this->Get_Warnings()."
          ".$this->Get_PostBackForm("frmLanguageChange")."
          <dl>
