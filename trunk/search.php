@@ -29,7 +29,6 @@ include("appg/init_vanilla.php");
 
 	// Search form
 	$SearchForm = $Context->ObjectFactory->CreateControl($Context, "SearchForm");
-	$SearchForm->LoadData();
 	
 // 3. ADD CONTROLS TO THE PAGE
 
