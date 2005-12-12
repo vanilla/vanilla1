@@ -9,37 +9,31 @@
 * Contact Mark O'Sullivan at mark [at] lussumo [dot] com
 * 
 * Description: Class that builds and maintains a checkbox list.
-* Applications utilizing this file: Vanilla;
 */
 class Checkbox {
-	var $Name;		      	// Name of the select list
-	var $CssClass;	   	   // Stylesheet class name
-	var $Attributes;     	// Additional attributes for each checkbox element
-   var $LabelAttributes;	// Specifically target the label attributes
-   var $LabelOnClick;      // Specifically target the label onclick event
+	var $Name;		      	// Name of the checkbox list
 	var $aOptions;	      	// Array for holding checkbox options
    
-	function AddOption($IdValue, $DisplayValue, $Checked, $FlipCheckedValue, $ElementID = "") {
+	function AddOption($IdValue, $DisplayValue, $Checked, $Attributes = "") {
 		$this->aOptions[] = array("IdValue" => $IdValue,
          "DisplayValue" => $DisplayValue,
          "Checked" => $Checked,
-         "FlipCheckedValue" => $FlipCheckedValue,
-         "ElementID" => $ElementID);
+         "Attributes" => $Attributes);
 	}
 	
-	function AddOptionsFromDataSet(&$Database, $DataSet, $IdField, $DisplayField, $CheckedField, $FlipCheckedValue = "0") {
+	function AddOptionsFromDataSet(&$Database, $DataSet, $IdField, $DisplayField, $CheckedField, $Attributes = "") {
       $FlipCheckedValue = ForceBool($FlipCheckedValue, 0);
 		while ($rows = $Database->GetRow($DataSet)) {
-			$this->AddOption($rows[$IdField], $rows[$DisplayField], $rows[$CheckedField], $FlipCheckedValue);
+			$this->AddOption($rows[$IdField], $rows[$DisplayField], $rows[$CheckedField], $Attributes);
 		}	
 	}	
 	
+	function Checkbox() {
+		$this->Clear();
+	}
+	
 	function Clear() {
 		$this->Name = "";
-		$this->CssClass = "MultilineRadio";
-		$this->Attributes = "";
-		$this->LabelAttributes = "";
-		$this->LabelOnClick = "";
 		$this->aOptions = array();
 	}
 	
@@ -47,24 +41,18 @@ class Checkbox {
 		$this->aOptions = array();
 	}
 	
+	function Count() {
+		return count($this->aOptions);
+	}
+	
 	function Get() {
 		$sReturn = "";
 		$OptionCount = count($this->aOptions);
 		for ($i = 0; $i < $OptionCount ; $i++) {
-			$ElementID = str_replace(" ", "_",$this->Name)."_".$this->aOptions[$i]["IdValue"];
          $Checked = $this->aOptions[$i]["Checked"];
-         if ($this->aOptions[$i]["FlipCheckedValue"]) $Checked = FlipBool($Checked);
-			$sReturn .= "<div class=\"".$this->CssClass."\"";
-   			if ($this->aOptions[$i]["ElementID"] != "") $sReturn .= " id=\"".$this->aOptions[$i]["ElementID"]."\"";
-			$sReturn .= ">"
-            .GetDynamicCheckBox($ElementID, $this->aOptions[$i]["IdValue"], $Checked, "", $this->aOptions[$i]["DisplayValue"], $this->Attributes)
-				."</div>\r\n";
+  			$sReturn .= GetDynamicCheckBox($this->Name, $this->aOptions[$i]["IdValue"], $Checked, "", $this->aOptions[$i]["DisplayValue"], $this->aOptions[$i]["Attributes"]);
 		}
 		return $sReturn;
-	}
-	
-	function Checkbox() {
-		$this->Clear();
 	}
 	
 	function Write() {

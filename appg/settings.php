@@ -53,7 +53,7 @@ $Configuration["FORWARD_VALIDATED_USER_URL"] = "./";
 $Configuration["DEFAULT_ROLE"] = "0"; 
 $Configuration["ALLOW_IMMEDIATE_ACCESS"] = "0"; 
 $Configuration["APPROVAL_ROLE"] = "4"; 
-$Configuration["SAFE_REDIRECT"] = "signin.php?PageAction=SignOut"; 
+$Configuration["SAFE_REDIRECT"] = "people.php?PageAction=SignOutNow"; 
 
 // Framework Settings
 $Configuration["URL_BUILDING_METHOD"] = "Standard";  // Standard or Rewrite

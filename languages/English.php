@@ -21,8 +21,8 @@ $Context->Dictionary["WhisperYourCommentsTo"] = "Whisper your comments to <small
 $Context->Dictionary["And"] = "and";
 $Context->Dictionary["Or"] = "or";
 $Context->Dictionary["GuestWelcomeTitle"] = "Welcome, Guest";
-$Context->Dictionary["GuestWelcomeBody"] = "<p>Did you know that there is a whole world of functionality you're not seeing? If you have an account, <a href=\"signin.php\">sign in now</a>.</p>
-   <p>If you don't have an account, <a href=\"apply.php\">apply for one now</a>.</p>";
+$Context->Dictionary["GuestWelcomeBody"] = "<p>Did you know that there is a whole world of functionality you're not seeing? If you have an account, <a href=\"people.php\">sign in now</a>.</p>
+   <p>If you don't have an account, <a href=\"people.php?PostBackAction=ApplyForm\">apply for one now</a>.</p>";
 $Context->Dictionary["NoSavedSearches"] = "You have no saved searches.";
 $Context->Dictionary["TextOnlyModeIs"] = "Text-only mode is";
 $Context->Dictionary["OffCaps"] = "OFF";

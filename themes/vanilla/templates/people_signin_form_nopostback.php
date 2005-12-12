@@ -2,11 +2,7 @@
 // Note: This file is included from the library/People.Control.SignInForm.php control.
 
 $this->Render_Warnings();
-echo("<div class=\"About\">
-   ".$this->Context->GetDefinition("AboutApplication")."
-</div>
-<div class=\"Form\">
-   ".$this->Context->GetDefinition("MemberSignIn"));
+echo("<div class=\"Form SignInForm\">");
 $this->Render_PostBackForm($this->FormName);
 echo("<dl class=\"InputBlock SignInInputs\">
       <dt>".$this->Context->GetDefinition("Username")."</dt>
@@ -15,8 +11,8 @@ echo("<dl class=\"InputBlock SignInInputs\">
       <dd><input type=\"password\" name=\"Password\" value=\"\" class=\"Input\" /></dd>
    </dl>
    <div class=\"InputBlock RememberMe\">".GetDynamicCheckBox("RememberMe", 1, ForceIncomingBool("RememberMe", 0), "", $this->Context->GetDefinition("RememberMe"))."</div>
-   <a class=\"ForgotPasswordLink\" href=\"passwordrequest.php\">".$this->Context->GetDefinition("ForgotYourPassword")."</a>
-   <a class=\"ApplyForMembershipLink\" href=\"apply.php\">".$this->Context->GetDefinition("ApplyForMembership")."</a>
+   <a class=\"ForgotPasswordLink\" href=\"".$this->Context->SelfUrl."?PostBackAction=PasswordRequestForm\">".$this->Context->GetDefinition("ForgotYourPassword")."</a>
+   <a class=\"ApplyForMembershipLink\" href=\"".$this->Context->SelfUrl."?PostBackAction=ApplyForm\">".$this->Context->GetDefinition("ApplyForMembership")."</a>
    <div class=\"FormButtons\"><input type=\"submit\" name=\"btnSignIn\" value=\"".$this->Context->GetDefinition("Proceed")."\" class=\"Button\" /></div>
    </form>
 </div>");

@@ -3,7 +3,7 @@
 
 echo("<div class=\"SettingsForm\">
    <h1>".$this->Context->GetDefinition("UpdateCheck")."</h1>
-   <div class=\"Form GlobalsForm\">
+   <div class=\"Form UpdateForm\">
       ".$this->Get_Warnings()."
       ".$this->Get_PostBackForm("frmUpdateCheck")."
       <div class=\"InputNote\">".$this->Context->GetDefinition("UpdateCheckNotes")."</div>

@@ -45,6 +45,10 @@ class Select {
 	function ClearOptions() {
 		$this->aOptions = array();
 	}
+	
+	function Count() {
+		return count($this->aOptions);
+	}
 
 	function Get() {
 		$sReturn = "<select name=\"".$this->Name."\" class=\"".$this->CssClass."\" ".$this->Attributes.">\r\n";

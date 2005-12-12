@@ -17,14 +17,21 @@ class ApplyForm extends PostBackControl {
 	
 	function ApplyForm(&$Context, $FormName = "") {
 		$this->Name = "ApplyForm";
-		$this->ValidActions = array("Apply");
-		$this->FormName = $FormName;
+		$this->ValidActions = array("ApplyForm", "Apply");
 		$this->Constructor($Context);
-		$this->Applicant = $Context->ObjectFactory->NewContextObject($Context, "User");
-		$this->Applicant->GetPropertiesFromForm();
-		$this->CallDelegate("Constructor");
-
+		
 		if ($this->IsPostBack) {
+			// Set up the page
+			global $Banner, $Foot;
+			$Banner->Properties["CssClass"] = "Apply";
+			$Foot->CssClass = "Apply";
+			$this->Context->PageTitle = $this->Context->GetDefinition("ApplyForMembership");
+			$this->FormName = $FormName;
+			
+			$this->Applicant = $Context->ObjectFactory->NewContextObject($Context, "User");
+			$this->Applicant->GetPropertiesFromForm();
+			$this->CallDelegate("Constructor");
+	
 			if ($this->PostBackAction == "Apply") {
 				$um = $this->Context->ObjectFactory->NewContextObject($this->Context, "UserManager");
 				
@@ -32,8 +39,8 @@ class ApplyForm extends PostBackControl {
 				
 				$this->PostBackValidated = $um->CreateUser($this->Applicant);
 			} 
+			$this->CallDelegate("LoadData");
 		}
-		$this->CallDelegate("LoadData");
 	}
 	
 	function Render_ValidPostBack() {

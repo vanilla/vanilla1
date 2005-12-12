@@ -29,30 +29,38 @@ class PasswordResetForm extends PostBackControl {
 	
 	function PasswordResetForm(&$Context, $FormName = "") {
 		$this->Name = "PasswordResetForm";
-		$this->ValidActions = array("ResetPassword");
-		$this->FormName = $FormName;
-		$this->ValidatedCredentials = 0;
+		$this->ValidActions = array("PasswordResetForm", "ResetPassword");
 		$this->Constructor($Context);
-		// Form properties
-		$this->UserID = ForceIncomingInt("u", 0);
-		$this->EmailVerificationKey = ForceIncomingString("k", "");
-		$this->NewPassword = ForceIncomingString("NewPassword", "");
-		$this->ConfirmPassword = ForceIncomingString("ConfirmPassword", "");
-		$this->CallDelegate("Constructor");
-
-		$um = $this->Context->ObjectFactory->NewContextObject($this->Context, "UserManager");
-		if ($this->IsPostBack) {
-			$this->ValidatedCredentials = 1;
-		} else {
-			$this->ValidatedCredentials = $um->VerifyPasswordResetRequest($this->UserID, $this->EmailVerificationKey);
-		}
 		
-		if ($this->IsPostBack && $this->ValidatedCredentials) {
-			if ($this->PostBackAction == "ResetPassword") {
+		if ($this->IsPostBack) {
+			$this->FormName = $FormName;
+			$this->ValidatedCredentials = 0;
+			
+			// Set up the page
+			global $Banner, $Foot;
+			$Banner->Properties["CssClass"] = "PasswordReset";
+			$Foot->CssClass = "PasswordReset";
+			$this->Context->PageTitle = $this->Context->GetDefinition("ResetYourPassword");			
+			
+			// Form properties
+			$this->UserID = ForceIncomingInt("u", 0);
+			$this->EmailVerificationKey = ForceIncomingString("k", "");
+			$this->NewPassword = ForceIncomingString("NewPassword", "");
+			$this->ConfirmPassword = ForceIncomingString("ConfirmPassword", "");
+			$this->CallDelegate("Constructor");
+	
+			$um = $this->Context->ObjectFactory->NewContextObject($this->Context, "UserManager");
+			if ($this->IsPostBack) {
+				$this->ValidatedCredentials = 1;
+			} else {
+				$this->ValidatedCredentials = $um->VerifyPasswordResetRequest($this->UserID, $this->EmailVerificationKey);
+			}
+			
+			if ($this->ValidatedCredentials && $this->PostBackAction == "ResetPassword") {
 				$this->PostBackValidated = $um->ResetPassword($this->UserID, $this->EmailVerificationKey, $this->NewPassword, $this->ConfirmPassword);
-			} 
+			}
+			$this->CallDelegate("LoadData");
 		}
-		$this->CallDelegate("LoadData");
 	}
 	
 	function Render_ValidPostBack() {
@@ -60,7 +68,7 @@ class PasswordResetForm extends PostBackControl {
 		echo("<div class=\"FormComplete\">
 			<h1>".$this->Context->GetDefinition("PasswordReset")."</h1>
 			<ul>
-				<li><a href=\"signin.php\">".$this->Context->GetDefinition("SignInNow")."</a>.</li>
+				<li><a href=\"people.php\">".$this->Context->GetDefinition("SignInNow")."</a>.</li>
 			</ul>
 		</div>");
 		$this->CallDelegate("PostValidPostBackRender");

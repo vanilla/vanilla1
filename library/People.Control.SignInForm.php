@@ -20,16 +20,25 @@ class SignInForm extends PostBackControl {
    var $ReturnUrl;
 	
 	function SignInForm(&$Context, $FormName) {
-		$this->FormName = $FormName;
+		$this->Name = "SignInForm";
 		$this->ValidActions = array("SignIn");
 		$this->Constructor($Context);
-		$this->ReturnUrl = urldecode(ForceIncomingString("ReturnUrl", ""));
-
-		$this->Username = ForceIncomingString("Username", "");
-		$this->Password = ForceIncomingString("Password", "");
-		$this->RememberMe = ForceIncomingBool("RememberMe", 0);
+				
+		if ($this->PostBackAction == "") $this->IsPostBack = 1;
 		
 		if ($this->IsPostBack) {
+			$this->FormName = $FormName;
+			$this->ReturnUrl = urldecode(ForceIncomingString("ReturnUrl", ""));
+			$this->Username = ForceIncomingString("Username", "");
+			$this->Password = ForceIncomingString("Password", "");
+			$this->RememberMe = ForceIncomingBool("RememberMe", 0);
+			
+			// Set up the page
+			global $Banner, $Foot;
+			$Banner->Properties["CssClass"] = "SignIn";
+			$Foot->CssClass = "SignIn";
+			$this->Context->PageTitle = $this->Context->GetDefinition("SignIn");			
+
 			if ($this->PostBackAction == "SignIn") {
 				$UserManager = $this->Context->ObjectFactory->NewContextObject($this->Context, "UserManager");
 				

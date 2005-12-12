@@ -19,7 +19,6 @@ $Type = ForceIncomingString("Type", "");
 $Switch = ForceIncomingBool("Switch", 0);
 $DiscussionID = ForceIncomingInt("DiscussionID", 0);
 $CommentID = ForceIncomingInt("CommentID", 0);
-$SearchID = ForceIncomingInt("SearchID", 0);
 
 // Don't create unnecessary objects
 if (in_array($Type, array("Active", "Closed", "Sticky"))) {
@@ -63,11 +62,5 @@ if ($Type == "Bookmark" && $DiscussionID > 0) {
 	$um->SwitchUserPreference($Type, $Switch);
 }
 
-if ($NoAjax) {
-	header("location: account.php?PostBackAction=Functionality");
-	die();
-}	
-
-// $Page->FireEvents();
 echo("Complete");
 ?>

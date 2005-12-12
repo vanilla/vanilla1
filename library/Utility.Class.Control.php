@@ -101,14 +101,16 @@ class PostBackControl extends Control {
 	}
 	
 	function Render() {
-		$this->CallDelegate("PreRender");
-		// Call different render methods based on the PostBack state.
-      if ($this->PostBackValidated) {
-			$this->Render_ValidPostBack();
-		} else {
-			$this->Render_NoPostBack();
+		if ($this->IsPostBack) {
+			$this->CallDelegate("PreRender");
+			// Call different render methods based on the PostBack state.
+			if ($this->PostBackValidated) {
+				$this->Render_ValidPostBack();
+			} else {
+				$this->Render_NoPostBack();
+			}
+			$this->CallDelegate("PostRender");
 		}
-		$this->CallDelegate("PostRender");
 	}
 	
 	function Render_NoPostBack() {}
