@@ -3,9 +3,7 @@
 
       echo("</div>
       </div>
-      <div class=\"Foot".$this->CssClass."\">
-   <div class=\"Copyright\"><a href=\"http://lussumo.com\">Lussumo Vanilla, Swell, and People</a> Copyright &copy; 2001-2005</div>
-</div>");
+      <div class=\"Foot".$this->CssClass."\"><a href=\"http://lussumo.com\">Lussumo Vanilla, Swell, and People</a> Copyright &copy; 2001-2005</div>");
 $AllowDebugInfo = 0;
 if ($this->Context->Session->User) {
    if ($this->Context->Session->User->Permission("PERMISSION_ALLOW_DEBUG_INFO")) $AllowDebugInfo = 1;

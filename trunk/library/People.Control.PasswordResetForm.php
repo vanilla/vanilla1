@@ -65,12 +65,7 @@ class PasswordResetForm extends PostBackControl {
 	
 	function Render_ValidPostBack() {
 		$this->CallDelegate("PreValidPostBackRender");
-		echo("<div class=\"FormComplete\">
-			<h1>".$this->Context->GetDefinition("PasswordReset")."</h1>
-			<ul>
-				<li><a href=\"people.php\">".$this->Context->GetDefinition("SignInNow")."</a>.</li>
-			</ul>
-		</div>");
+		include($this->Context->Configuration["THEME_PATH"]."templates/people_password_reset_form_validpostback.php");
 		$this->CallDelegate("PostValidPostBackRender");
 	}
 	
@@ -84,23 +79,7 @@ class PasswordResetForm extends PostBackControl {
 		$this->Render_Warnings();
 		
 		if ($this->ValidatedCredentials) {
-			echo("<div class=\"About\">
-				<h1>".$this->Context->GetDefinition("AboutYourPassword")."</h1>
-				<p>".$this->Context->GetDefinition("AboutYourPasswordNotes")."</p>
-			</div>
-			<div class=\"Form\">
-				<h1>".$this->Context->GetDefinition("PasswordResetForm")."</h1>
-				<p>".$this->Context->GetDefinition("ChooseANewPassword")."</p>");
-			$this->Render_PostBackForm($this->FormName);
-			echo("<dl class=\"InputBlock NewPasswordInputs\">
-					<dt>".$this->Context->GetDefinition("NewPassword")."</dt>
-					<dd><input type=\"password\" name=\"NewPassword\" value=\"\" class=\"Input\" maxlength=\"20\" /></dd>
-					<dt>".$this->Context->GetDefinition("ConfirmPassword")."</dt>
-					<dd><input type=\"password\" name=\"ConfirmPassword\" value=\"\" class=\"Input\" maxlength=\"20\" /></dd>
-				</dl>
-				<div class=\"FormButtons\"><input type=\"submit\" name=\"btnPassword\" value=\"".$this->Context->GetDefinition("Proceed")."\" class=\"Button\" /></div>
-				</form>
-			</div>");
+			include($this->Context->Configuration["THEME_PATH"]."templates/people_password_reset_form_nopostback.php");
 		} else {
 			echo("&nbsp;");
 		}

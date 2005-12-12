@@ -45,7 +45,7 @@ class ApplyForm extends PostBackControl {
 	
 	function Render_ValidPostBack() {
 		$this->CallDelegate("PreValidPostBackRender");
-		include($this->Context->Configuration["THEME_PATH"]."templates/people_apply_validpostback.php");
+		include($this->Context->Configuration["THEME_PATH"]."templates/people_apply_form_validpostback.php");
 		$this->CallDelegate("PostValidPostBackRender");
 	}
 	
@@ -56,7 +56,7 @@ class ApplyForm extends PostBackControl {
 		$this->CallDelegate("PreWarningsRender");
 		$this->Render_Warnings();
 		$this->CallDelegate("PreRender");
-		include($this->Context->Configuration["THEME_PATH"]."templates/people_apply_form.php");
+		include($this->Context->Configuration["THEME_PATH"]."templates/people_apply_form_nopostback.php");
 		$this->CallDelegate("PostRender");
 	}
 }

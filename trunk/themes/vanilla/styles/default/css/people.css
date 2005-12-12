@@ -64,6 +64,7 @@ form {
 	padding-left: 27px;
 	color: #c00;
 	margin: 10px;
+	margin-bottom: 0px;
 }
 .ErrorTitle {
 	font-weight: bold;
@@ -232,10 +233,6 @@ input {
 .PasswordRequestInputs {
 	margin-top: 6px;
 }
-.NewPasswordInputs, 
-.PasswordRequestInputs {
-	margin-bottom: 10px;
-}
 .NewPasswordInputs dt,
 .PasswordRequestInputs dt,
 .ApplyInputs dt,
@@ -251,9 +248,12 @@ input {
 	padding-top: 4px;
 	padding-bottom: 4px;
 }
+.SignInInputs {
+	padding-left: 40px;
+}
 .RememberMe {
 	padding-top: 0px;
-	padding-left: 65px;
+	padding-left: 100px;
 }
 .ApplyForMembershipLink, .ApplyForMembershipLink:link, .ApplyForMembershipLink:visited, .ApplyForMembershipLink:hover {
 	margin-bottom: 6px;
@@ -262,11 +262,21 @@ input {
 	text-decoration: none;
 	display: block;
 }
+.ForgotPasswordLink {
+	position: absolute;
+	width: 139px;
+	text-align: center;
+}
+.ApplyForMembershipLink {
+	margin-left: 141px;
+	margin-top: 2px;
+	text-align: center;
+}
 .ForgotPasswordLink, .ForgotPasswordLink:link, .ForgotPasswordLink:visited, .ForgotPasswordLink:hover {
-	margin-bottom: 2px;
 	margin-top: 2px;
 	font-size: 11px;
-	padding: 4px;
+	padding-top: 4px;
+	padding-bottom: 4px;
 	text-decoration: none;
 	display: block;
 }
@@ -307,39 +317,38 @@ input {
 	width: 226px;
 	height: 40px;
 }
-.TermsOfServiceCheckbox {
-	margin-bottom: 10px;
-}
 
 .Input { width: 130px; }
 
 .FormButtons {
+	background: #f3f3f3;
+	padding-bottom: 8px;
 	text-align: right;
 }
+.SignInForm .FormButtons {
+	text-align: center;
+}
+.ApplyForm .FormButtons {
+	text-align: left;
+	padding-left: 100px;
+}
+.PasswordRequestForm .FormButtons,
+.PasswordResetForm .FormButtons {
+	text-align: left;
+	padding-left: 70px;
+}
 .Button {
-	font-family: Trebuchet MS, Verdana, Tahoma, Arial;
-	background: none;
-	border: 0px;
-	color: #062971;
-	font-weight: bold;
-	text-decoration: underline;
-	text-align: right;
-	font-size: 13px;
 	cursor: pointer;
 }
 .BlankMessage {
 	padding: 18px;
 }
-.Links {
-	float: right;
-}
-.Copyright,
-.Links {
+.Foot, .Foot a, .Foot a:link, .Foot a:visited, .Foot a:hover {
+	text-align: center;
+	background: none;
+	font-size: 11px;
 	color: #DCEAFF;
 	margin-bottom: 20px;
-}
-.Foot a, .Foot a:link, .Foot a:visited, .Foot a:hover {
-	background: none;
 	text-decoration: none;
 }
 .Foot a, .Foot a:link, .Foot a:visited { color: #DCEAFF; }

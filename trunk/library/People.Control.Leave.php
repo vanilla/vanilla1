@@ -36,19 +36,15 @@ class Leave extends PostBackControl {
 	}
 	
 	function Render_ValidPostBack() {
-		echo("<div class=\"FormComplete\">
-			<h1>".$this->Context->GetDefinition("SignOutSuccessful")."</h1>
-			<ul>
-				<li><a href=\"".$this->Context->SelfUrl."\">".$this->Context->GetDefinition("SignInAgain")."</a></li>
-			</ul>
-		</div>");
+		$this->CallDelegate("PreValidPostBackRender");
+		include($this->Context->Configuration["THEME_PATH"]."templates/people_signout_form_validpostback.php");
+		$this->CallDelegate("PostValidPostBackRender");
 	}
 	
 	function Render_NoPostBack() {
-		echo("<div class=\"BlankMessage\">".$this->Context->GetDefinition("Processing")."</div>
-		<script>
-			setTimeout(\"window.location='".$this->Context->SelfUrl."?PostBackAction=SignOut'\",600);
-		</script>");
+		$this->CallDelegate("PreNoPostBackRender");
+		include($this->Context->Configuration["THEME_PATH"]."templates/people_signout_form_validpostback.php");
+		$this->CallDelegate("PostNoPostBackRender");
 	}
 }
 ?>
