@@ -770,10 +770,12 @@
 			font-size: 10px;
 		}
 		.SearchLabelInput {
-			xborder-top: 1px solid #666;
-			xborder-left: 1px solid #666;
-			xborder-bottom: 1px solid #ccc;
-			xborder-right: 1px solid #ccc;
+			/* prefixed with X before, now simply commented out - lech
+			border-top: 1px solid #666;
+			border-left: 1px solid #666;
+			border-bottom: 1px solid #ccc;
+			border-right: 1px solid #ccc;
+			*/
 			width: 100px;
 			text-indent: 2px;
 		}
@@ -1099,12 +1101,14 @@
 		}
 		.Button {
 			cursor: pointer;
+			/* prefixed with X before, now simply commented out - lech
 			xfont-weight: bold;
 			xfont-size: 12px;
 			xcolor: #996600;
 			xborder: 1px solid #FFEDAE;
 			xbackground: #FEF2C9;
 			xpadding: 4px;
+			*/
 		}
 		.SmallInput {
 			width: 138px;
@@ -1203,7 +1207,9 @@
 	}
 	.ExtensionsForm dl input {
 		position: absolute;
+		/* prefixed with X before, now simply commented out - lech
 		xmargin-top: 12px;
+		*/
 		margin-left: -22px;
 	}
 	.ExtensionsForm dt,
@@ -1357,11 +1363,15 @@
 			#CommentBoxController, #CommentBoxController:link, #CommentBoxController:visited {
 				color: #A99861;
 				text-decoration: none;
+				/* Error: Error in parsing value for property 'cursor'.  Declaration dropped. -Mozilla 
 				cursor: hand;
+				*/
 			}
 			#CommentBoxController:hover {
 				color: #663300;
+				/* Error: Error in parsing value for property 'cursor'.  Declaration dropped. -Mozilla 
 				cursor: hand;
+				*/
 			}
 			.SmallCommentBox,
 			.LargeCommentBox {
@@ -1551,7 +1561,9 @@
 			text-decoration: underline;
 		}
 		.SortRemove {
+			/* prefixed with X before, now simply commented out - lech
 			xpadding-left: 4px;
+			*/
 			margin-right: 16px;
 			float: right;
 		}
