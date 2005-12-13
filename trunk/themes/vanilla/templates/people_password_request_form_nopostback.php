@@ -5,7 +5,7 @@ $this->Render_Warnings();
 echo("<div class=\"About\">
    <h1>".$this->Context->GetDefinition("AboutYourPassword")."</h1>
    <p>".$this->Context->GetDefinition("AboutYourPasswordRequestNotes")."</p>
-   <p><a href=\"people.php\">".$this->Context->GetDefinition("BackToSignInForm")."</a></p>
+   <p><a href=\"".$this->Context->SelfUrl."\">".$this->Context->GetDefinition("BackToSignInForm")."</a></p>
 </div>
 <div class=\"Form PasswordRequestForm\">
    <h1>".$this->Context->GetDefinition("PasswordResetRequestForm")."</h1>

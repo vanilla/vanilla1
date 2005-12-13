@@ -4,7 +4,7 @@
 echo("<div class=\"FormComplete\">
    <h1>".$this->Context->GetDefinition("PasswordReset")."</h1>
    <ul>
-      <li><a href=\"people.php\">".$this->Context->GetDefinition("SignInNow")."</a>.</li>
+      <li><a href=\"".$this->Context->SelfUrl."\">".$this->Context->GetDefinition("SignInNow")."</a>.</li>
    </ul>
 </div>");
 ?>

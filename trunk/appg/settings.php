@@ -38,7 +38,7 @@ $Configuration["DATABASE_PATH"] = "/path/to/your/database/file.php";
 $Configuration["LIBRARY_PATH"] = "/path/to/your/library/"; 
 $Configuration["EXTENSIONS_PATH"] = "/path/to/your/extensions/"; 
 $Configuration["LANGUAGES_PATH"] = "/path/to/your/languages/";
-$Configuration["THEME_PATH"] = "themes/vanilla/";
+$Configuration["THEME_PATH"] = "/path/to/vanilla/themes/vanilla/";
 
 // People Settings
 $Configuration["AUTHENTICATION_MODULE"] = "Authenticator";
@@ -69,7 +69,9 @@ $Configuration["FORMAT_TYPES"] = array("Text");
 $Configuration["APPLICATION_TITLE"] = "Vanilla"; 
 $Configuration["BANNER_TITLE"] = "Vanilla"; 
 $Configuration["DEFAULT_STYLE"] = "./themes/vanilla/styles/default/"; 
-$Configuration["DOMAIN"] = "http://www.domain.com/vanilla/"; 
+$Configuration["DOMAIN"] = "http://www.domain.com/vanilla/";
+$Configuration["SIGNIN_URL"] = "./people.php";
+$Configuration["SIGNOUT_URL"] = "./people.php?PostBackAction=SignOutNow";
 
 // Vanilla Settings
 $Configuration["ENABLE_WHISPERS"] = "0";
