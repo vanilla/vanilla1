@@ -29,6 +29,7 @@ $Configuration["DATABASE_PATH"] = $Configuration["APPLICATION_PATH"] . "conf/dat
 $Configuration["LIBRARY_PATH"] = $Configuration["APPLICATION_PATH"] . "library/"; 
 $Configuration["EXTENSIONS_PATH"] = $Configuration["APPLICATION_PATH"] . "extensions/"; 
 $Configuration["LANGUAGES_PATH"] = $Configuration["APPLICATION_PATH"] . "languages/";
+$Configuration["THEME_PATH"] = $Configuration["APPLICATION_PATH"] . "themes/vanilla/";
 
 // People Settings
 $Configuration["COOKIE_DOMAIN"] = ".yourdomain.com"; 

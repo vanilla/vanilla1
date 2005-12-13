@@ -7,9 +7,9 @@ echo("<div class=\"SiteContainer\">
    <div id=\"LoadStatus\" style=\"display: none;\">Loading...</div>
    <div class=\"Session\">");
    if ($this->Context->Session->UserID > 0) {
-      echo($this->Context->GetDefinition("SignedInAs")." ".$this->Context->Session->User->Name." (<a href=\"people.php?PostBackAction=SignOutNow\">".$this->Context->GetDefinition("SignOut")."</a>)");
+      echo($this->Context->GetDefinition("SignedInAs")." ".$this->Context->Session->User->Name." (<a href=\"".$this->Context->Configuration["SIGNOUT_URL"]."\">".$this->Context->GetDefinition("SignOut")."</a>)");
    } else {
-      echo($this->Context->GetDefinition("NotSignedIn")." (<a href=\"people.php\">".$this->Context->GetDefinition("SignIn")."</a>)");
+      echo($this->Context->GetDefinition("NotSignedIn")." (<a href=\"".$this->Context->Configuration["SIGNIN_URL"]."\">".$this->Context->GetDefinition("SignIn")."</a>)");
    }
    echo("</div>
    <div class=\"Head\">
