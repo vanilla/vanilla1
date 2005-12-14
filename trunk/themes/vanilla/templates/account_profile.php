@@ -16,10 +16,12 @@ echo("<div class=\"Account\">");
    <div class=\"AccountBody\">");
       if ($this->User->RoleDescription != "") echo("<blockquote>".$this->User->RoleDescription."</blockquote>");
       if ($this->User->Picture != "" && $this->User->Permission("PERMISSION_HTML_ALLOWED")) echo("<div class=\"Picture\">".GetImage($this->User->Picture,"","","Picture","")."</div>");
-      echo("<dl>
-         <dt>".$this->Context->GetDefinition("RealName")."</dt>
-         <dd>".(($this->User->ShowName || $this->Context->Session->User->Permission("PERMISSION_EDIT_USERS")) ? ReturnNonEmpty($this->User->FullName) : "n/a")."</dd>
-         <dt>".$this->Context->GetDefinition("Email")."</dt>
+      echo("<dl>");
+         if ($this->Context->Configuration["USE_REAL_NAMES"]) {
+            echo("<dt>".$this->Context->GetDefinition("RealName")."</dt>
+            <dd>".(($this->User->ShowName || $this->Context->Session->User->Permission("PERMISSION_EDIT_USERS")) ? ReturnNonEmpty($this->User->FullName) : "n/a")."</dd>");
+         }
+         echo("<dt>".$this->Context->GetDefinition("Email")."</dt>
          <dd>".(($this->Context->Session->UserID > 0 && ($this->User->UtilizeEmail || $this->Context->Session->User->Permission("PERMISSION_EDIT_USERS"))) ? GetEmail($this->User->Email) : "n/a")."</dd>
          <dt>".$this->Context->GetDefinition("AccountCreated")."</dt>
          <dd>".TimeDiff($this->Context, $this->User->DateFirstVisit, mktime())."</dd>
