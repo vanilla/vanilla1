@@ -68,9 +68,14 @@ class CategoryForm extends PostBackControl {
 			}
 			if (in_array($this->PostBackAction, array("Category", "ProcessCategory"))) {
 				$this->CategoryRoles = $this->Context->ObjectFactory->NewObject($this->Context, "Checkbox");
-				$this->CategoryRoles->Name = "CategoryRoleBlock";
+				$this->CategoryRoles->Name = "CategoryRoleBlock[]";
 				$CategoryRoleData = $this->CategoryManager->GetCategoryRoleBlocks($CategoryID);
-				$this->CategoryRoles->AddOptionsFromDataSet($this->Context->Database, $CategoryRoleData, "RoleID", "Name", "Blocked", 1);
+				$this->CategoryRoles->AddOptionsFromDataSet($this->Context->Database,
+					$CategoryRoleData,
+					"RoleID",
+					"Name",
+					"Blocked",
+					1);
 				$this->CategoryRoles->CssClass = "CheckBox";
 			}
 			if ($this->PostBackAction == "Category") {

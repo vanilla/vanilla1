@@ -1099,6 +1099,11 @@
 			text-align: left;
 			line-height: 200%;
 		}
+		.MultiLineCheckBoxes label {
+			padding-left: 8px;
+			display: block;
+			color: #84733D;
+		}		
 		.Button {
 			cursor: pointer;
 			/* prefixed with X before, now simply commented out - lech

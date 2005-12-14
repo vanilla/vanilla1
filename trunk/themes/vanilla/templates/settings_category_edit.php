@@ -34,7 +34,7 @@ echo("<div class=\"SettingsForm\">
    <div class=\"InputBlock\" id=\"CategoryRoles\">
       <div class=\"InputLabel\">".$this->Context->GetDefinition("Roles")."</div>
       <div class=\"InputNote\">".$this->Context->GetDefinition("RolesInCategory")."</div>
-      ".$this->CategoryRoles->Get()."
+      <div class=\"MultiLineCheckBoxes\">".$this->CategoryRoles->Get()."</div>
    </div>
    <div class=\"FormButtons\">
       <input type=\"submit\" name=\"btnSave\" value=\"".$this->Context->GetDefinition("Save")."\" class=\"Button SubmitButton\" />
