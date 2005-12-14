@@ -193,7 +193,7 @@ class UserManager extends Delegation {
 			$s->AddFieldNameValue("CountDiscussions", 0);
 			$s->AddFieldNameValue("CountComments", 0);
 			$s->AddFieldNameValue("RoleID", $this->Context->Configuration["DEFAULT_ROLE"]);
-			$s->AddFieldNameValue("StyleID", 1);
+			$s->AddFieldNameValue("StyleID", 0);
 			$s->AddFieldNameValue("UtilizeEmail", 0);
 			$s->AddFieldNameValue("Attributes", "");
 			$s->AddFieldNameValue("RemoteIP", GetRemoteIp(1));
