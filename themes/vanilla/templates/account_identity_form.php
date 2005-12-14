@@ -20,28 +20,36 @@ echo("<div class=\"AccountForm\">
          </dl>
          <div class=\"InputNote\">".$this->Context->GetDefinition("YourUsernameNotes")."</div>");
       }
+      if ($this->Context->Configuration["USE_REAL_NAMES"] == "1") {
+         echo("<dl>
+            <dt>".$this->Context->GetDefinition("YourFirstName")."</dt>
+            <dd><input type=\"text\" name=\"FirstName\" value=\"".$this->User->FirstName."\" maxlength=\"50\" class=\"SmallInput\" id=\"txtFirstName\" /> ".$Required."</dd>
+         </dl>
+         <div class=\"InputNote\">".$this->Context->GetDefinition("YourFirstNameNotes")."</div>
+         <dl>
+            <dt>".$this->Context->GetDefinition("YourLastName")."</dt>
+            <dd><input type=\"text\" name=\"LastName\" value=\"".$this->User->LastName."\" maxlength=\"50\" class=\"SmallInput\" id=\"txtLastName\" /> ".$Required."</dd>
+         </dl>
+         <div class=\"InputNote\">
+            ".$this->Context->GetDefinition("YourLastNameNotes")."
+            <div class=\"CheckBox\">".GetDynamicCheckBox("ShowName", 1, $this->User->ShowName, "", $this->Context->GetDefinition("MakeRealNameVisible"))."</div>
+         </div>");
+      }
+      if ($this->Context->Configuration["ALLOW_EMAIL_CHANGE"] == "1") {
+         echo("<dl>
+            <dt>".$this->Context->GetDefinition("YourEmailAddress")."</dt>
+            <dd><input type=\"text\" name=\"Email\" value=\"".$this->User->Email."\" maxlength=\"200\" class=\"SmallInput\" id=\"txtEmail\" /> ".$Required."</dd>
+         </dl>
+         <div class=\"InputNote\">
+            ".$this->Context->GetDefinition("YourEmailAddressNotes")."
+            <div class=\"CheckBox\">".GetDynamicCheckBox("UtilizeEmail", 1, $this->User->UtilizeEmail, "", $this->Context->GetDefinition("CheckForVisibleEmail"))."</div>
+         </div>");
+      } else {
+         echo("<div class=\"InputNote\">
+            <div class=\"CheckBox\">".GetDynamicCheckBox("UtilizeEmail", 1, $this->User->UtilizeEmail, "", $this->Context->GetDefinition("CheckForVisibleEmail"))."</div>
+         </div>");
+      }
       echo("<dl>
-         <dt>".$this->Context->GetDefinition("YourFirstName")."</dt>
-         <dd><input type=\"text\" name=\"FirstName\" value=\"".$this->User->FirstName."\" maxlength=\"50\" class=\"SmallInput\" id=\"txtFirstName\" /> ".$Required."</dd>
-      </dl>
-      <div class=\"InputNote\">".$this->Context->GetDefinition("YourFirstNameNotes")."</div>
-      <dl>
-         <dt>".$this->Context->GetDefinition("YourLastName")."</dt>
-         <dd><input type=\"text\" name=\"LastName\" value=\"".$this->User->LastName."\" maxlength=\"50\" class=\"SmallInput\" id=\"txtLastName\" /> ".$Required."</dd>
-      </dl>
-      <div class=\"InputNote\">
-         ".$this->Context->GetDefinition("YourLastNameNotes")."
-         <div class=\"CheckBox\">".GetDynamicCheckBox("ShowName", 1, $this->User->ShowName, "", $this->Context->GetDefinition("MakeRealNameVisible"))."</div>
-      </div>
-      <dl>
-         <dt>".$this->Context->GetDefinition("YourEmailAddress")."</dt>
-         <dd><input type=\"text\" name=\"Email\" value=\"".$this->User->Email."\" maxlength=\"200\" class=\"SmallInput\" id=\"txtEmail\" /> ".$Required."</dd>
-      </dl>
-      <div class=\"InputNote\">
-         ".$this->Context->GetDefinition("YourEmailAddressNotes")."
-         <div class=\"CheckBox\">".GetDynamicCheckBox("UtilizeEmail", 1, $this->User->UtilizeEmail, "", $this->Context->GetDefinition("CheckForVisibleEmail"))."</div>
-      </div>					
-      <dl>
          <dt>".$this->Context->GetDefinition("AccountPicture")."</dt>
          <dd><input type=\"text\" name=\"Picture\" value=\"".$this->User->Picture."\" maxlength=\"255\" class=\"SmallInput\" id=\"txtPicture\" /></dd>
       </dl>

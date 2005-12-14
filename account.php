@@ -58,7 +58,7 @@ include("appg/init_vanilla.php");
 		if (($AccountUser->UserID == $Context->Session->UserID || $Context->Session->User->Permission("PERMISSION_EDIT_USERS")) && $AccountUser) {
 			if ($AccountUser->UserID == $Context->Session->UserID) {
 				$Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangeYourPersonalInformation"), $Context->SelfUrl."?PostBackAction=Identity", "", "", 10);
-				$Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangeYourPassword"), $Context->SelfUrl."?PostBackAction=Password", "", "", 20);				
+				if ($Configuration["ALLOW_PASSWORD_CHANGE"]) $Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangeYourPassword"), $Context->SelfUrl."?PostBackAction=Password", "", "", 20);				
 			} elseif ($AccountUser->UserID != $Context->Session->UserID && $Context->Session->User->Permission("PERMISSION_EDIT_USERS") && $AccountUser) {
 				$Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangePersonalInformation"), $Context->SelfUrl."?PostBackAction=Identity&u=".$AccountUser->UserID, "", "", 10);
 				if ($AccountUser->RoleID == 0) {
@@ -80,7 +80,7 @@ include("appg/init_vanilla.php");
 	
 	// Forms
 	$IdentityForm = $Context->ObjectFactory->CreateControl($Context, "IdentityForm", $UserManager, $AccountUser);
-	$PasswordForm = $Context->ObjectFactory->CreateControl($Context, "PasswordForm", $UserManager, $AccountUserID);
+	if ($Configuration["ALLOW_PASSWORD_CHANGE"]) $PasswordForm = $Context->ObjectFactory->CreateControl($Context, "PasswordForm", $UserManager, $AccountUserID);
 	$PreferencesForm = $Context->ObjectFactory->CreateControl($Context, "PreferencesForm", $UserManager, $AccountUser);
 	$AccountRoleForm = $Context->ObjectFactory->CreateControl($Context, "AccountRoleForm", $UserManager, $AccountUser);
 
@@ -91,7 +91,7 @@ include("appg/init_vanilla.php");
 	$Page->AddRenderControl($Panel, $Configuration["CONTROL_POSITION_PANEL"]);
 	$Page->AddRenderControl($AccountProfile, $Configuration["CONTROL_POSITION_BODY_ITEM"]);
 	$Page->AddRenderControl($IdentityForm, $Configuration["CONTROL_POSITION_BODY_ITEM"]);
-	$Page->AddRenderControl($PasswordForm, $Configuration["CONTROL_POSITION_BODY_ITEM"]);
+	if ($Configuration["ALLOW_PASSWORD_CHANGE"]) $Page->AddRenderControl($PasswordForm, $Configuration["CONTROL_POSITION_BODY_ITEM"]);
 	$Page->AddRenderControl($PreferencesForm, $Configuration["CONTROL_POSITION_BODY_ITEM"]);
 	$Page->AddRenderControl($AccountRoleForm, $Configuration["CONTROL_POSITION_BODY_ITEM"]);
 	$Page->AddRenderControl($Foot, $Configuration["CONTROL_POSITION_FOOT"]);

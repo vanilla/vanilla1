@@ -17,7 +17,7 @@ class PasswordForm extends PostBackControl {
 	
 	function PasswordForm (&$Context, &$UserManager, $UserID) {
 		$this->Name = "PasswordForm";
-		$this->ValidActions = array("ProcessPassword", "Password");
+		if ($this->Context->Configuration["ALLOW_PASSWORD_CHANGE"]) $this->ValidActions = array("ProcessPassword", "Password");
 		$this->Constructor($Context);
 		if ($this->IsPostBack) {
 			$this->UserManager = &$UserManager;

@@ -121,34 +121,36 @@ class UserManager extends Delegation {
 	}
 	
 	function ChangePassword($User) {
-		// Ensure that the person performing this action has access to do so
-		// Everyone can edit themselves
-		if ($this->Context->Session->UserID != $User->UserID && !$this->Context->Session->User->Permission("PERMISSION_EDIT_USERS")) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrPermissionInsufficient"));
-		$User->FormatPropertiesForDatabaseInput();
-		if ($this->Context->WarningCollector->Count() == 0) {
-			// Ensure that the supplied "old password" is valid
-			$s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
-			$s->SetMainTable("User", "u");
-			$s->AddSelect("UserID", "u");
-			$s->StartWhereGroup();
-			$s->AddWhere("Password", $User->OldPassword, "=", "and", "md5");
-			$s->AddWhere("Password", $User->OldPassword, "=", "or");
-			$s->EndWhereGroup();
-			$s->AddWhere("UserID", $User->UserID, "=");
-			$Result = $this->Context->Database->Select($s, $this->Name, "ChangePassword", "An error occurred while validating the user's old password.");
-			if ($this->Context->Database->RowCount($Result) == 0) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrOldPasswordBad"));
-		}
-		
-		// Validate inputs
-		Validate($this->Context->GetDefinition("NewPasswordLower"), 1, $User->NewPassword, 100, "", $this->Context);
-		if ($User->NewPassword != $User->ConfirmPassword) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrNewPasswordMatchBad"));
-
-		if ($this->Context->WarningCollector->Count() == 0) {
-			$s->Clear();
-			$s->SetMainTable("User", "u");
-			$s->AddFieldNameValue("Password", $User->NewPassword, 1, "md5");
-			$s->AddWhere("UserID", $User->UserID, "=");
-			$this->Context->Database->Update($s, $this->Name, "ChangePassword", "An error occurred while attempting to update the password.");
+		if ($this->Context->Configuration["ALLOW_PASSWORD_CHANGE"]) {
+			// Ensure that the person performing this action has access to do so
+			// Everyone can edit themselves
+			if ($this->Context->Session->UserID != $User->UserID && !$this->Context->Session->User->Permission("PERMISSION_EDIT_USERS")) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrPermissionInsufficient"));
+			$User->FormatPropertiesForDatabaseInput();
+			if ($this->Context->WarningCollector->Count() == 0) {
+				// Ensure that the supplied "old password" is valid
+				$s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
+				$s->SetMainTable("User", "u");
+				$s->AddSelect("UserID", "u");
+				$s->StartWhereGroup();
+				$s->AddWhere("Password", $User->OldPassword, "=", "and", "md5");
+				$s->AddWhere("Password", $User->OldPassword, "=", "or");
+				$s->EndWhereGroup();
+				$s->AddWhere("UserID", $User->UserID, "=");
+				$Result = $this->Context->Database->Select($s, $this->Name, "ChangePassword", "An error occurred while validating the user's old password.");
+				if ($this->Context->Database->RowCount($Result) == 0) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrOldPasswordBad"));
+			}
+			
+			// Validate inputs
+			Validate($this->Context->GetDefinition("NewPasswordLower"), 1, $User->NewPassword, 100, "", $this->Context);
+			if ($User->NewPassword != $User->ConfirmPassword) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrNewPasswordMatchBad"));
+	
+			if ($this->Context->WarningCollector->Count() == 0) {
+				$s->Clear();
+				$s->SetMainTable("User", "u");
+				$s->AddFieldNameValue("Password", $User->NewPassword, 1, "md5");
+				$s->AddWhere("UserID", $User->UserID, "=");
+				$this->Context->Database->Update($s, $this->Name, "ChangePassword", "An error occurred while attempting to update the password.");
+			}
 		}
 		return $this->Context->WarningCollector->Iif();
 	}
@@ -682,10 +684,12 @@ class UserManager extends Delegation {
 				$s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
 				$s->SetMainTable("User", "u");
 				if ($this->Context->Configuration["ALLOW_NAME_CHANGE"] == "1") $s->AddFieldNameValue("Name", $User->Name);
-				$s->AddFieldNameValue("FirstName", $User->FirstName);
-				$s->AddFieldNameValue("LastName", $User->LastName);
-				$s->AddFieldNameValue("ShowName", $User->ShowName);
-				$s->AddFieldNameValue("Email", $User->Email);
+				if ($this->Context->Configuration["USE_REAL_NAMES"] == "1") {
+					$s->AddFieldNameValue("FirstName", $User->FirstName);
+					$s->AddFieldNameValue("LastName", $User->LastName);
+					$s->AddFieldNameValue("ShowName", $User->ShowName);
+				}
+				if ($this->Context->Configuration["ALLOW_EMAIL_CHANGE"] == "1") $s->AddFieldNameValue("Email", $User->Email);
 				$s->AddFieldNameValue("UtilizeEmail", $User->UtilizeEmail);
 				$s->AddFieldNameValue("Icon", $User->Icon);
 				$s->AddFieldNameValue("Picture", $User->Picture);
