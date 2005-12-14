@@ -14,17 +14,17 @@ class Checkbox {
 	var $Name;		      	// Name of the checkbox list
 	var $aOptions;	      	// Array for holding checkbox options
    
-	function AddOption($IdValue, $DisplayValue, $Checked, $Attributes = "") {
+	function AddOption($IdValue, $DisplayValue, $Checked, $FlipCheckedValue, $Attributes = "") {
 		$this->aOptions[] = array("IdValue" => $IdValue,
          "DisplayValue" => $DisplayValue,
-         "Checked" => $Checked,
+         "Checked" => ($FlipCheckedValue ? FlipBool($Checked) : $Checked),
          "Attributes" => $Attributes);
 	}
 	
-	function AddOptionsFromDataSet(&$Database, $DataSet, $IdField, $DisplayField, $CheckedField, $Attributes = "") {
+	function AddOptionsFromDataSet(&$Database, $DataSet, $IdField, $DisplayField, $CheckedField, $FlipCheckedValue, $Attributes = "") {
       $FlipCheckedValue = ForceBool($FlipCheckedValue, 0);
 		while ($rows = $Database->GetRow($DataSet)) {
-			$this->AddOption($rows[$IdField], $rows[$DisplayField], $rows[$CheckedField], $Attributes);
+			$this->AddOption($rows[$IdField], $rows[$DisplayField], $rows[$CheckedField], $FlipCheckedValue, $Attributes);
 		}	
 	}	
 	

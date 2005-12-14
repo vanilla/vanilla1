@@ -315,7 +315,8 @@ function GetBool($Bool, $True = "Yes", $False = "No") {
 
 function GetDynamicCheckBox($Name, $Value = 1, $Checked, $OnClick, $Text, $Attributes = "") {
 	$CheckBoxID = $Name."ID";
-	$Attributes .= " id=\"".$CheckBoxID."\" onclick=\"".$OnClick."\"";
+	$Attributes .= " id=\"".$CheckBoxID."\"";
+	if ($OnClick != "") $Attributes .= " onclick=\"".$OnClick."\"";
 	// return GetBasicCheckBox($Name, $Value, $Checked, $Attributes)
 	// 	." <a href=\"javascript:CheckBox('".$CheckBoxID."');".$OnClick."\">".$Text."</a>";
    return "<label>".GetBasicCheckBox($Name, $Value, $Checked, $Attributes)." ".$Text."</label>";

@@ -55,12 +55,7 @@ class Category {
 		$this->CategoryID = ForceIncomingInt("CategoryID", 0);
 		$this->Name = ForceIncomingString("Name", "");
 		$this->Description = ForceIncomingString("Description", "");
-		$p = $Context->ObjectFactory->NewObject($this->Context, "Parameters");
-		$p->DefineCollection($_POST, "CategoryRoleBlock_", 1);
-		while (list($key, $val) = each($p->aParameters)) {
-			$RoleID = ForceInt(str_replace("CategoryRoleBlock_","",$key), 0);
-			if ($RoleID > 0) $this->AllowedRoles[] = $RoleID;
-		}
+		$this->AllowedRoles = ForceIncomingArray("CategoryRoleBlock", array());
 	}
 }
 ?>
