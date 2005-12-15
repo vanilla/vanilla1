@@ -15,9 +15,10 @@ You should have received a copy of the GNU General Public License along with Van
 The latest source code for Vanilla is available at www.lussumo.com
 Contact Mark O'Sullivan at mark [at] lussumo [dot] com
 
+You should cut & paste these language definitions into your
+conf/your_language.php file (replace "your_language" with your chosen language,
+of course):
 */
-
-// You can cut/paste these definitions to your conf/English.php file:
 $Context->Dictionary["MenuOptions"] = "Menu Options";
 $Context->Dictionary["UseQuickKeys"] = "Use quick-keys to access common forum pages";
 $Context->Dictionary["Discussions_QuickKey"] = "<u>D</u>iscussions";

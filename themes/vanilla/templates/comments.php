@@ -47,7 +47,9 @@ if ($this->Context->WarningCollector->Count() > 0) {
          <div class=\"Comment ".$Comment->Status.($RowNumber==1?" FirstComment":"")."\" id=\"Comment_".$Comment->CommentID."\">";
          if ($Comment->Deleted) {
              $CommentList .= "<div class=\"ErrorContainer CommentHidden\">
-               <div class=\"Error\">".$this->Context->GetDefinition("CommentHiddenOn")." ".date("F jS Y \a\\t g:ia", $Comment->DateDeleted)." ".$this->Context->GetDefinition("By")." ".$Comment->DeleteUsername.".</div>
+               <div class=\"Error\">".str_replace(array("//1", "//2"),
+                  array(date("F jS Y \a\\t g:ia", $Comment->DateDeleted), $Comment->DeleteUsername),
+                  $this->Context->GetDefinition("CommentHiddenOnXByY"))."</div>
             </div>";
          }
          $ShowIcon = 0;
@@ -56,13 +58,13 @@ if ($this->Context->WarningCollector->Count() > 0) {
          if ($ShowIcon)  $CommentList .= "<span class=\"CommentIcon\" style=\"background-image:url('".$Comment->AuthIcon."')\"></span>";
          $CommentList .= "<a href=\"account.php?u=".$Comment->AuthUserID."\">".$Comment->AuthUsername."</a></div>";
          if ($Comment->WhisperUserID > 0) {
-            $CommentList .= "<div class=\"CommentWhisper\">".$this->Context->GetDefinition("To")." ";
+            $CommentList .= "<div class=\"CommentWhisper\">";
             if ($Comment->WhisperUserID == $this->Context->Session->UserID && $Comment->AuthUserID == $this->Context->Session->UserID) {
-               $CommentList .= $this->Context->GetDefinition("Yourself");
+               $CommentList .= $this->Context->GetDefinition("ToYourself");
             } elseif ($Comment->WhisperUserID == $this->Context->Session->UserID) {
-               $CommentList .= $this->Context->GetDefinition("You");
+               $CommentList .= $this->Context->GetDefinition("ToYou");
             } else {
-               $CommentList .= $Comment->WhisperUsername;
+               $CommentList .= str_replace("//1", $Comment->WhisperUsername, "ToX");
             }
             $CommentList .= "</div>";
          }

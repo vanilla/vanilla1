@@ -6,29 +6,27 @@ Description: Allows administrators to do various clean-up tasks on the database 
 Version: 1.0
 Author: Mark O'Sullivan
 Author Url: http://www.markosullivan.ca/
-*/
 
-/*
-* Copyright 2003 - 2005 Mark O'Sullivan
-* This file is part of Vanilla.
-* Vanilla is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
-* Vanilla is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-* You should have received a copy of the GNU General Public License along with Vanilla; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-* The latest source code for Vanilla is available at www.lussumo.com
-* Contact Mark O'Sullivan at mark [at] lussumo [dot] com
-*/
+Copyright 2003 - 2005 Mark O'Sullivan
+This file is part of Vanilla.
+Vanilla is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+Vanilla is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+You should have received a copy of the GNU General Public License along with Vanilla; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+The latest source code for Vanilla is available at www.lussumo.com
+Contact Mark O'Sullivan at mark [at] lussumo [dot] com
 
-/*
- You will need to add the following code to your conf/settings.php file in order to enable this
- extension. This code is used to define the default permission value for this extension. Once
- you have enabled the extension, you will then need to grant your role permission to use this
- extension.
+Installation Notes:
+You will need to add the following code to your conf/settings.php file in order
+to enable this extension. This code is used to define the default permission
+value for this extension. Once you have enabled the extension, you will then
+need to grant your role permission to use this extension.
  
 $Configuration["PERMISSION_DATABASE_CLEANUP"] = "0";
- 
- Once you have added this code, you can also add a new definition to the conf/[your_language].php
- file if you wish. It will make a human-readable translation on the role form for this permission,
- like so:
+
+You should also cut & paste these language definitions into your
+conf/your_language.php file (replace "your_language" with your chosen language,
+of course):
+*/
  
 $Context->Dictionary["PERMISSION_DATABASE_CLEANUP"] = "Database Cleanup Permission";
 $Context->Dictionary["XHiddenDiscussions"] = "There are currently //1 hidden discussions.";
@@ -58,8 +56,7 @@ $Context->Dictionary["PurgeDiscussionsConfirm"] = "Are you sure you wish to comp
 $Context->Dictionary["UsersRemovedSuccessfully"] = "//1 members were removed.";
 $Context->Dictionary["MasterAdministrator"] = "Administrative privileges for all other features";
  
- 
-*/
+
 // If looking at the settings page, use this form
 if ($Context->SelfUrl == "settings.php" && $Context->Session->User->Permission("PERMISSION_DATABASE_CLEANUP")) {
 	class CleanupForm extends PostBackControl {

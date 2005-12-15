@@ -917,5 +917,131 @@ $Context->Dictionary["Settings_QuickKey"] = "S<u>e</u>ttings";
 $Context->Dictionary["Account_QuickKey"] = "<u>A</u>ccount";
 $Context->Dictionary["StartANewDiscussion_Quickkey"] = "Start a <u>n</u>ew discussion";
 
+// 2005-12-15 - Removed
+$Context->Dictionary["Discovery"] = "Applicant discovery information";
+$Context->Dictionary["ErrDiscovery"] = "You must provide information about how you discovered this site. Administrators may use this information when deciding to accept your application.";
+$Context->Dictionary["HowDidYouFindUs"] = "Why do you want to join this forum?";
+$Context->Dictionary["FirstName"] = "First name";
+$Context->Dictionary["LastName"] = "Last name";
+$Context->Dictionary["FirstNameLower"] = "first name";
+$Context->Dictionary["LastNameLower"] = "last name";
+$Context->Dictionary["ErrReadTOS"] = "You must READ the terms of service.";
+$Context->Dictionary["GuestWelcomeTitle"] = "Welcome, Guest";
+$Context->Dictionary["GuestWelcomeBody"] = "<p>Did you know that there is a whole world of functionality you're not seeing? If you have an account, <a href=\"".$Configuration["SIGNIN_URL"]."\">sign in now</a>.</p>
+   <p>If you don't have an account, <a href=\"".$Configuration["SIGNIN_URL"]."?PostBackAction=ApplyForm\">apply for one now</a>.</p>";
+$Context->Dictionary["CommentPostedFromX"] = "Comment posted from //1";
+$Context->Dictionary["IpHistory"] = "IP history";
+$Context->Dictionary["Time"] = "//1 time";
+$Context->Dictionary["Times"] = "//1 times";
+$Context->Dictionary["IpAlsoUsedBy"] = "This IP address has also been used by the following users:";
+$Context->Dictionary["IpNotShared"] = "This IP address has not been shared by any other users.";
+$Context->Dictionary["NoIps"] = "This user does not appear to have logged any IP addresses.";
+$Context->Dictionary["Legend"] = "Legend";
+$Context->Dictionary["NewComments"] = "New comments";
+$Context->Dictionary["NoNewComments"] = "No new comments";
+$Context->Dictionary["YouWhispered"] = "You whispered";
+$Context->Dictionary["WhisperedToYou"] = "Whispered to you";
+$Context->Dictionary["UnblockedCategory"] = "Unblocked category";
+$Context->Dictionary["BlockedCategory"] = "Blocked category";
+$Context->Dictionary["Markdown"] = "Markdown";
+$Context->Dictionary["Html"] = "Html";
+$Context->Dictionary["Bookmarks"] = "Bookmarks";
+$Context->Dictionary["YourDiscussions"] = "Your Discussions";
+$Context->Dictionary["History"] = "History";
+$Context->Dictionary["Private"] = "Private";
+$Context->Dictionary["RoleHistory"] = "Role history";
+$Context->Dictionary["NoRoleHistory"] = "This user does not appear to have been assigned to any roles.";
+$Context->Dictionary["Searches"] = "Searches";
+$Context->Dictionary["RemoveLower"] = "remove";
+$Context->Dictionary["NoSavedSearches"] = "You have no saved searches.";
+$Context->Dictionary["SaveSearch"] = "Save Search";
+$Context->Dictionary["TextOnlyModeIs"] = "Text-only mode is";
+$Context->Dictionary["OffCaps"] = "OFF";
+$Context->Dictionary["OnCaps"] = "ON";
+$Context->Dictionary["TurnOff"] = "off";
+$Context->Dictionary["TurnOn"] = "on";
+$Context->Dictionary["AboutApplication"] = "<h1>About Vanilla</h1>
+	<p>Welcome to Lussumo Vanilla: the sweetest forum on the web. Vanilla is a simple, extensible, multi-lingual web forum.</p>";
+$Context->Dictionary["MemberSignIn"] = "<h1>Existing member sign in</h1>
+ 	<p>Enter your username and password to sign in now.</p>";
+DUPLICATE: $Context->Dictionary["LastActive"] = "Last Active";
+DUPLICATE: $Context->Dictionary["VisitCount"] = "Visit Count";
+DUPLICATE: $Context->Dictionary["CommentsAdded"] = "Comments Added";
+OBSELETE: $Context->Dictionary["ControlPanelNotes"] = "The \"control panel\" is the panel on every page that contains links to control the functions and settings of the forum. Using the following settings, you can change the way the control panel appears and functions in various sections.";
+$Context->Dictionary["DisplayTextOnlyToggle"] = "Display text-only mode toggle on all pages";
+$Context->Dictionary["DisplayListAppendices"] = "Display list appendices in the control panel";
+$Context->Dictionary["DisplaySavedSearches"] = "Display your saved searches in the control panel";
+$Context->Dictionary["DisplayBookmarks"] = "Display your bookmarks in the control panel";
+$Context->Dictionary["DisplayPrivateDiscussions"] = "Display your private discussions in the control panel";
+$Context->Dictionary["DisplayYourDiscussions"] = "Display your discussions in the control panel";
+$Context->Dictionary["DisplayBrowsingHistory"] = "Display your browsing history in the control panel";
+OBSELETE: $Context->Dictionary["Turn"] = "turn";
+REPLACED CommentHiddenOn WITH CommentHiddenOnXByY
+Removed To (both of them - there were duplicates)
+ADDED: ToYou, ToYourself, and ToX
+REMOVED: $Context->Dictionary["You"] = "you";
+REMOVED: $Context->Dictionary["Yourself"] = "yourself";
+$Context->Dictionary["MessageSentTo"] = "A message has been sent to ";
+$Context->Dictionary["ContainingPasswordInstructions"] = "containing password reset instructions.";
+DUPLICATE: $Context->Dictionary["AboutYourPassword"] = "About your password";
+DUPLICATE: $Context->Dictionary["Search"] = "Search";
+OBSELETE: $Context->Dictionary["For"] = "for";
+$Context->Dictionary["ForumAppearance"] = "Forum Appearance"; (BOTH INSTANCES)
+DUPLICATE: $Context->Dictionary["RoleManagement"] = "Role Management";
+2 DUPLICATES: $Context->Dictionary["CategoryManagement"] = "Category Management";
+OBSELETE: $Context->Dictionary["HiddenInformationNotes"] = "Changes made on this form take place immediately. You do not need to click a submit button.";
+OBSELETE: $Context->Dictionary["ApplicantNotification"] = "Applicant Notification";
+OBSELETE: $Context->Dictionary["EmailOnNewApplicant"] = "Notify me by email when someone applies for membership";
+DUPLICATE: $Context->Dictionary["Categories"] = "Categories";
+$Context->Dictionary["Up"] = "Up";
+$Context->Dictionary["Down"] = "Down";
+$Context->Dictionary["Top"] = "Top";
+$Context->Dictionary["Bottom"] = "Bottom";
+$Context->Dictionary["SaveChanges"] = "Save Changes";
+$Context->Dictionary["SignInAbility"] = "Sign-in ability";
+$Context->Dictionary["AddCommentsToDiscussions"] = "Add comments to discussions";
+$Context->Dictionary["HtmlAllowedInComments"] = "Html allowed in comments";
+$Context->Dictionary["AdminForUsersAndRoles"] = "Administrative privileges for users &amp; roles";
+$Context->Dictionary["AdminForDiscussionsAndCategories"] = "Administrative privileges for discussions &amp; categories";
+$Context->Dictionary["MakeAllWhispersVisible"] = "Make ALL whispers visible";
+$Context->Dictionary["ExtensionUrl"] = "Extension Url";
+$Context->Dictionary["Description"] = "Description";
+$Context->Dictionary["Version"] = "Version";
+$Context->Dictionary["Author"] = "Author";
+$Context->Dictionary["Apply"] = "Apply";
+$Context->Dictionary["Support"] = "Support";
+$Context->Dictionary["PasswordResetRequest"] = "Request to have your password reset";
+$Context->Dictionary["EditDiscussion"] = "EditDiscussion";
+$Context->Dictionary["EditDiscussion"] = "Edit your discussion";
+$Context->Dictionary["SignedInAs"] = "Signed in as";
+ADDED: $Context->Dictionary["SignedInAsX"] = "Signed in as //1";
+$Context->Dictionary["StyleNameLower"] = "style name";
+$Context->Dictionary["StyleUrlLower"] = "style url";
+$Context->Dictionary["HideThisDiscussion"] = "Hide this discussion";
+$Context->Dictionary["UnhideThisDiscussion"] = "Unhide this discussion";
+$Context->Dictionary["CloseThisDiscussion"] = "Close this discussion";
+$Context->Dictionary["ReOpenThisDiscussion"] = "Re-Open this discussion";
+$Context->Dictionary["MakeThisDiscussionUnsticky"] = "Make this discussion UnSticky";
+$Context->Dictionary["MakeThisDiscussionSticky"] = "Make this discussion sticky";
+$Context->Dictionary["EditComments"] = "Edit comments";
+DUPLICATE: $Context->Dictionary["ErrDiscussionNotFound"] = "The requested discussion could not be found.";
+$Context->Dictionary["ErrPermissionCategoryDiscussions"] = "You do not have permission to administer discussions in this category.";
+$Context->Dictionary["ErrBadCredentials"] = "An error occurred while validating your credentials: ";
+DUPLICATE: $Context->Dictionary["ErrImproperFormat"] = "You did not enter a properly formatted value for";
+$Context->Dictionary["ErrFailedToFindRegistrationSettings"] = "Failed to find required registrations settings in \"appg/settings.php\" file.";
+DUPLICATE: $Context->Dictionary["ErrPermissionAddComments"] = "You do not have permission to add comments to discussions.";
+DUPLICATE: $Context->Dictionary["ErrPermissionStartDiscussions"] = "You do not have permission to start discussions.";
+ADDED: $Context->Dictionary["XDiscussionsYSecondsZFreeze"] = "<p>Members cannot post more than //1 discussions within //2 seconds or their account will be frozen for //3 seconds.</p>";
+ADDED: $Context->Dictionary["XCommentsYSecondsZFreeze"] = "<p>Members cannot post more than //1 comments within //2 seconds or their account will be frozen for //3 seconds.</p>";
+$Context->Dictionary["MembersCannotPostMoreThan"] = "<p>Members cannot post more than ";
+$Context->Dictionary["DiscussionsWithin"] = " discussions within ";
+$Context->Dictionary["CommentsWithin"] = " comments within ";
+$Context->Dictionary["SecondsOrAccountFrozen"] = " seconds or their account will be frozen for ";
+$Context->Dictionary["Seconds"] = " seconds.</p>";
+$Context->Dictionary["CanViewIpAddresses"] = "Can see IP addresses";
+DUPLICATE: $Context->Dictionary["Wait"] = "Wait";
+
+
+
 */
 ?>

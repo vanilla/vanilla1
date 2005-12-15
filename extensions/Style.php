@@ -7,7 +7,6 @@ Version: 2.0
 Author: Mark O'Sullivan
 Author Url: http://www.markosullivan.ca/
 
- 
 Copyright 2003 - 2005 Mark O'Sullivan
 This file is part of Vanilla.
 Vanilla is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
@@ -16,11 +15,11 @@ You should have received a copy of the GNU General Public License along with Van
 The latest source code for Vanilla is available at www.lussumo.com
 Contact Mark O'Sullivan at mark [at] lussumo [dot] com
 
-
-You must add the following definitions to your conf/your_language.php file
-(replace "your_language" with your chosen language, of course):
-
-
+You should cut & paste these language definitions into your
+conf/your_language.php file (replace "your_language" with your chosen language,
+of course):
+*/
+$Context->Dictionary["ForumAppearance"] = "Forum Appearance";
 $Context->Dictionary["SelectStyleToEdit"] = "1. Select the style you would like to edit";
 $Context->Dictionary["ModifyStyleDefinition"] = "2. Modify the style definition";
 $Context->Dictionary["DefineTheNewStyle"] = "Define the new style";
@@ -48,9 +47,16 @@ $Context->Dictionary["CustomStyleNotes"] = "Any web-accessable folder will work,
 	<p>For more information about how to style the forum, <a href=\"http://lussumo.com/docs\">read the documentation</a>.</p>";
 $Context->Dictionary["UseCustomStyle"] = "Click here to use your custom style";
 $Context->Dictionary["By"] = "by";
+$Context->Dictionary["XByY"] = "//1 by //2";
 $Context->Dictionary["Styles"] = "Styles";
+$Context->Dictionary["StyleNameLower"] = "style name";
+$Context->Dictionary["StyleUrlLower"] = "style url";
+$Context->Dictionary["ErrStyleNotFound"] = "The requested style could not be found.";
+$Context->Dictionary["ErrStyleAuthor"] = "A user with the username you provided for \"Style author\" could not be found.";
+$Context->Dictionary["System"] = "System";
 
-*/
+
+
 
 // Load the javascript if we're on a page that should allow changing of the style
 if (in_array($Context->SelfUrl, array("comments.php", "account.php"))) {
@@ -467,7 +473,15 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 								$Style->GetPropertiesFromDataSet($Row);
 								$Style->FormatPropertiesForDisplay();
 								echo("<div class=\"Preview\">
-									<div class=\"PreviewTitle\">".$Style->Name.($Style->AuthUserID > 0?" ".$this->Context->GetDefinition("By")." <a href=\"account.php?u=".$Style->AuthUserID."\">".$Style->AuthUsername."</a>":"")."</div>");
+									<div class=\"PreviewTitle\">");
+									if ($Style->AuthUserID > 0) {
+										echo(str_replace(array("//1", "//2"),
+											array($Style->Name, "<a href=\"account.php?u=".$Style->AuthUserID."\">".$Style->AuthUsername."</a>"),
+											$this->Context->GetDefinition("XByY")));
+									} else {
+										echo($Style->Name);
+									}
+									echo("</div>");
 									if ($Style->PreviewImage != "") {
 										echo("<a class=\"PreviewImage\" href=\"javascript:SetStyle('".$Style->StyleID."', '');\"><img src=\"".AppendFolder($Style->Url, "images/").$Style->PreviewImage."\" border=\"0\" height=\"200\" width=\"370\" /></a>");
 									} else {

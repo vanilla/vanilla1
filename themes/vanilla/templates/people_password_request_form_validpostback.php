@@ -4,7 +4,9 @@
 echo("<div class=\"FormComplete\">
    <h1>".$this->Context->GetDefinition("RequestProcessed")."</h1>
    <ul>
-      <li>".$this->Context->GetDefinition("MessageSentTo")." <strong>".FormatStringForDisplay($this->EmailSentTo, 1)."</strong> ".$this->Context->GetDefinition("ContainingPasswordInstructions")."</li>
+      <li>".str_replace("//1",
+         FormatStringForDisplay($this->EmailSentTo, 1),
+         $this->Context->GetDefinition("MessageSentToXContainingPasswordInstructions"))."</li>
    </ul>
 </div>");
 ?>
