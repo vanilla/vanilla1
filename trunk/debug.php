@@ -25,13 +25,11 @@ include($Configuration["LIBRARY_PATH"]."Utility.Class.Writer.php");
 include($Configuration["LIBRARY_PATH"]."Utility.Class.Delegation.php");
 include($Configuration["LIBRARY_PATH"]."Utility.Class.Control.php");
 include($Configuration["LIBRARY_PATH"]."Vanilla.Functions.php");
+include($Configuration["LIBRARY_PATH"].$Configuration["AUTHENTICATION_MODULE"]);
 include($Configuration["LIBRARY_PATH"]."People.Class.Session.php");
 include($Configuration["LIBRARY_PATH"]."People.Class.User.php");
 
 $Context = new Context($Configuration);
-
-// Set the ObjectFactory's reference for the authentication module
-$Context->ObjectFactory->SetReference("Authenticator", $Configuration["AUTHENTICATION_MODULE"]);
 
 // Start the session management
 $Context->StartSession();
