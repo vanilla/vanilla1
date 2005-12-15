@@ -41,7 +41,7 @@ $Configuration["LANGUAGES_PATH"] = "/path/to/your/languages/";
 $Configuration["THEME_PATH"] = "/path/to/vanilla/themes/vanilla/";
 
 // People Settings
-$Configuration["AUTHENTICATION_MODULE"] = "Authenticator";
+$Configuration["AUTHENTICATION_MODULE"] = "People.Class.Authenticator.php";
 $Configuration["COOKIE_USER_KEY"] = "lussumocookieone";
 $Configuration["COOKIE_VERIFICATION_KEY"] = "lussumocookietwo";
 $Configuration["SESSION_USER_IDENTIFIER"] = "LussumoUserID";

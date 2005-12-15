@@ -24,6 +24,7 @@ include($Configuration["LIBRARY_PATH"]."Utility.Class.StringManipulator.php");
 include($Configuration["LIBRARY_PATH"]."Utility.Class.Context.php");
 include($Configuration["LIBRARY_PATH"]."Utility.Class.Delegation.php");
 include($Configuration["LIBRARY_PATH"]."Utility.Class.Control.php");
+include($Configuration["LIBRARY_PATH"].$Configuration["AUTHENTICATION_MODULE"]);
 include($Configuration["LIBRARY_PATH"]."People.Class.Session.php");
 include($Configuration["LIBRARY_PATH"]."People.Class.User.php");
 
@@ -35,9 +36,6 @@ include($Configuration["LIBRARY_PATH"]."People.Class.User.php");
 // - Instantiate an error manager
 // - Define global variables relative to the current context (SelfUrl
 $Context = new Context($Configuration);
-
-// Set the ObjectFactory's reference for the authentication module
-$Context->ObjectFactory->SetReference("Authenticator", $Configuration["AUTHENTICATION_MODULE"]);
 
 // Start the session management
 $Context->StartSession();
