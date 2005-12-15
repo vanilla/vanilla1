@@ -15,13 +15,14 @@ You should have received a copy of the GNU General Public License along with Van
 The latest source code for Vanilla is available at www.lussumo.com
 Contact Mark O'Sullivan at mark [at] lussumo [dot] com
 
-You must add the following definitions to your conf/your_language.php file
-(replace "your_language" with your chosen language, of course):
-
+You should cut & paste these language definitions into your
+conf/your_language.php file (replace "your_language" with your chosen language,
+of course):
+*/
 $Context->Dictionary["RSS2Feed"] = "RSS2";
 $Context->Dictionary["FailedFeedAuthenticationTitle"] = "Failed Authentication";
 $Context->Dictionary["FailedFeedAuthenticationText"] = "Feeds for this forum require user authentication.";
-*/
+
 
 $FeedType = ForceIncomingString("Feed", "");
 $AuthenticateUser = 0;

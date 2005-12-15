@@ -113,36 +113,27 @@ echo("<div class=\"SettingsForm\">
          }
          $SecondsSelector->Name = "DISCUSSION_TIME_THRESHOLD";
          $SecondsSelector->SelectedID = $this->ConfigurationManager->GetSetting("DISCUSSION_TIME_THRESHOLD");
+         $SecondsSelector2 = $SecondsSelector;
+         $SecondsSelector2->Name = "DISCUSSION_THRESHOLD_PUNISHMENT";
+         $SecondsSelector2->SelectedID = $this->ConfigurationManager->GetSetting("DISCUSSION_THRESHOLD_PUNISHMENT");
          
-         echo($this->Context->GetDefinition("MembersCannotPostMoreThan")
-            .$Selector->Get()
-            .$this->Context->GetDefinition("DiscussionsWithin")
-            .$SecondsSelector->Get()
-            .$this->Context->GetDefinition("SecondsOrAccountFrozen"));
-         
-         $SecondsSelector->Name = "DISCUSSION_THRESHOLD_PUNISHMENT";
-         $SecondsSelector->SelectedID = $this->ConfigurationManager->GetSetting("DISCUSSION_THRESHOLD_PUNISHMENT");
-         
-         echo($SecondsSelector->Get()
-            .$this->Context->GetDefinition("Seconds"));
-         
+         echo(str_replace(array("//1", "//2", "//3"),
+            array($Selector->Get(), $SecondsSelector->Get(), $SecondsSelector2->Get()),
+            $this->Context->GetDefinition("XDiscussionsYSecondsZFreeze")));
+            
          $Selector->Name = "COMMENT_POST_THRESHOLD";
          $Selector->SelectedID = $this->ConfigurationManager->GetSetting("COMMENT_POST_THRESHOLD");
          
          $SecondsSelector->Name = "COMMENT_TIME_THRESHOLD";
          $SecondsSelector->SelectedID = $this->ConfigurationManager->GetSetting("COMMENT_TIME_THRESHOLD");
          
-         echo($this->Context->GetDefinition("MembersCannotPostMoreThan")
-            .$Selector->Get()
-            .$this->Context->GetDefinition("CommentsWithin")
-            .$SecondsSelector->Get()
-            .$this->Context->GetDefinition("SecondsOrAccountFrozen"));
+         $SecondsSelector2->Name = "COMMENT_THRESHOLD_PUNISHMENT";
+         $SecondsSelector2->SelectedID = $this->ConfigurationManager->GetSetting("COMMENT_THRESHOLD_PUNISHMENT");
          
-         $SecondsSelector->Name = "COMMENT_THRESHOLD_PUNISHMENT";
-         $SecondsSelector->SelectedID = $this->ConfigurationManager->GetSetting("COMMENT_THRESHOLD_PUNISHMENT");
-         echo($SecondsSelector->Get()
-            .$this->Context->GetDefinition("Seconds")
-         ."<div class=\"CheckBox\">".GetDynamicCheckBox("LOG_ALL_IPS", 1, $this->ConfigurationManager->GetSetting("LOG_ALL_IPS"), "", $this->Context->GetDefinition("LogAllIps"))."</div>
+         echo(str_replace(array("//1", "//2", "//3"),
+            array($Selector->Get(), $SecondsSelector->Get(), $SecondsSelector2->Get()),
+            $this->Context->GetDefinition("XDiscussionsYSecondsZFreeze"))
+            ."<div class=\"CheckBox\">".GetDynamicCheckBox("LOG_ALL_IPS", 1, $this->ConfigurationManager->GetSetting("LOG_ALL_IPS"), "", $this->Context->GetDefinition("LogAllIps"))."</div>
       </div>
       
       

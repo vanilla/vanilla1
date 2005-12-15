@@ -15,9 +15,10 @@ You should have received a copy of the GNU General Public License along with Van
 The latest source code for Vanilla is available at www.lussumo.com
 Contact Mark O'Sullivan at mark [at] lussumo [dot] com
 
-Installation Notes:
-You must add the following definitions to your conf/your_language.php file
-(replace "your_language" with your chosen language, of course):
+You should cut & paste these language definitions into your
+conf/your_language.php file (replace "your_language" with your chosen language,
+of course):
+*/
 
 $Context->Dictionary["AllowHtml"] = "Allow HTML in this comment";
 $Context->Dictionary["BlockHtml"] = "Block HTML in this comment";
@@ -32,7 +33,7 @@ $Context->Dictionary["BlockUserTitle"] = "Block HTML in all comments by this use
 $Context->Dictionary["UnblockUser"] = "unblock user";
 $Context->Dictionary["UnblockUserTitle"] = "Allow HTML in all comments by this user on the forum";
 
-*/
+
 
 if ($Context->SelfUrl == "comments.php") {
 	// Include required js for ajaxing of comment/user blocking

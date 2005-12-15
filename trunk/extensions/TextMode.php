@@ -6,17 +6,27 @@ Description: Allows users to turn html-enabled comments off so that they appear 
 Version: 1.0
 Author: Mark O'Sullivan
 Author Url: http://www.markosullivan.ca/
+
+Copyright 2003 - 2005 Mark O'Sullivan
+This file is part of Vanilla.
+Vanilla is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+Vanilla is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+You should have received a copy of the GNU General Public License along with Vanilla; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+The latest source code for Vanilla is available at www.lussumo.com
+Contact Mark O'Sullivan at mark [at] lussumo [dot] com
+
+You should cut & paste these language definitions into your
+conf/your_language.php file (replace "your_language" with your chosen language,
+of course):
 */
 
-/*
-* Copyright 2003 - 2005 Mark O'Sullivan
-* This file is part of Vanilla.
-* Vanilla is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
-* Vanilla is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-* You should have received a copy of the GNU General Public License along with Vanilla; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-* The latest source code for Vanilla is available at www.lussumo.com
-* Contact Mark O'Sullivan at mark [at] lussumo [dot] com
-*/
+$Context->Dictionary["TextOnlyModeIsOn"] = "Text-only mode is ON";
+$Context->Dictionary["TextOnlyModeIsOff"] = "Text-only mode is OFF";
+$Context->Dictionary["TurnOff"] = "turn off";
+$Context->Dictionary["TurnOn"] = "turn on";
+$Context->Dictionary["DisplayTextOnlyToggle"] = "Display text-only mode toggle on all pages";
+
+
 
 // Handle performing text mode switches
 $HtmlOn = ForceIncomingString("h", "");
@@ -42,16 +52,16 @@ if (
 	$Params->Remove("PageAction");
 	if ($Context->Session->User->Preference("HtmlOn")) {
 		$Params->Set("h", 0);
-		$CurrentMode = $Context->GetDefinition("OffCaps");
+		$CurrentMode = $Context->GetDefinition("TextOnlyModeIsOff");
 		$CurrentModeCSS = "OFF";
-		$OppositeMode = $Context->GetDefinition("On");
+		$OppositeMode = $Context->GetDefinition("TurnOn");
 	} else {
 		$Params->Set("h", 1);
-		$CurrentMode = $Context->GetDefinition("OnCaps");
+		$CurrentMode = $Context->GetDefinition("TextOnlyModeIsOn");
 		$CurrentModeCSS = "ON";
-		$OppositeMode = $Context->GetDefinition("Off");
+		$OppositeMode = $Context->GetDefinition("TurnOff");
 	}		
-	$Panel->AddString("<div class=\"PanelInformation TextMode".$CurrentModeCSS."\">".$Context->GetDefinition("TextOnlyModeIs")." ".$CurrentMode." (<a class=\"PanelLink\" href=\"".$Context->SelfUrl.$Params->GetQueryString()."\">".$Context->GetDefinition("Turn")." ".$OppositeMode."</a>)</div>",
+	$Panel->AddString("<div class=\"PanelInformation TextMode".$CurrentModeCSS."\">".$CurrentMode." (<a class=\"PanelLink\" href=\"".$Context->SelfUrl.$Params->GetQueryString()."\">".$OppositeMode."</a>)</div>",
 		200);
 }
 

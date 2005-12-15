@@ -6,7 +6,12 @@ Description: Allows users to view a preview of what their post will look like.
 Version: 1.2
 Author: SirNot
 Author Url: N/A
+
+You should cut & paste these language definitions into your
+conf/your_language.php file (replace "your_language" with your chosen language,
+of course):
 */
+$Context->Dictionary["PostPreview"] = "Preview";
 
 $PreviewSelf = substr(str_replace("\\", '/', __FILE__), strlen(__FILE__)-strlen($_SERVER['PHP_SELF']));
 if(!strcasecmp($PreviewSelf, $_SERVER['PHP_SELF']) && !defined('EXTENSION_IN_PREVIEW')) //a preview?
@@ -47,8 +52,6 @@ if(!strcasecmp($PreviewSelf, $_SERVER['PHP_SELF']) && !defined('EXTENSION_IN_PRE
 else if(in_array($Context->SelfUrl, array('post.php', 'comments.php')))
 {
 	//print_r($Context);
-	$Context->Dictionary['PostPreview'] = 'Post Preview';
-	
 	$Head->AddScript('./extensions/PreviewPost/preview.js');
 	$Head->AddStyleSheet('./extensions/PreviewPost/preview.css');
 	
@@ -60,7 +63,7 @@ else if(in_array($Context->SelfUrl, array('post.php', 'comments.php')))
 	function DiscussionForm_PreviewPostButton(&$DiscussionForm)
 	{
 		echo(
-			'<input name="btnPreview" value="Preview" class="Button SubmitButton" type="button" onclick="ShowPreview(\'frmPost'.
+			'<input name="btnPreview" value="'.$DiscussionForm->Context->GetDefinition("PreviewPost").'" class="Button SubmitButton" type="button" onclick="ShowPreview(\'frmPost'.
 			'Discussion\', \'./extensions/'.basename(__FILE__).'\')" />'
 		);
 	}
@@ -68,7 +71,7 @@ else if(in_array($Context->SelfUrl, array('post.php', 'comments.php')))
 	function CommentForm_PreviewPostButton(&$CommentForm)
 	{
 		echo(
-			'<input name="btnPreview" value="Preview" class="Button SubmitButton" type="button" onclick="ShowPreview(\'frmPost'.
+			'<input name="btnPreview" value="'.$CommentForm->Context->GetDefinition("PreviewPost").'" class="Button SubmitButton" type="button" onclick="ShowPreview(\'frmPost'.
 			'Comment\', \'./extensions/'.basename(__FILE__).'\')" />'
 		);
 	}

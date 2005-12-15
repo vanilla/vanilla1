@@ -6,17 +6,23 @@ Description: Adds a complete summary of all role changes to each user's account 
 Version: 1.0
 Author: Mark O'Sullivan
 Author Url: http://www.markosullivan.ca/
-*/
 
-/*
-* Copyright 2003 - 2005 Mark O'Sullivan
-* This file is part of Vanilla.
-* Vanilla is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
-* Vanilla is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-* You should have received a copy of the GNU General Public License along with Vanilla; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-* The latest source code for Vanilla is available at www.lussumo.com
-* Contact Mark O'Sullivan at mark [at] lussumo [dot] com
+Copyright 2003 - 2005 Mark O'Sullivan
+This file is part of Vanilla.
+Vanilla is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+Vanilla is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+You should have received a copy of the GNU General Public License along with Vanilla; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+The latest source code for Vanilla is available at www.lussumo.com
+Contact Mark O'Sullivan at mark [at] lussumo [dot] com
+
+You should cut & paste these language definitions into your
+conf/your_language.php file (replace "your_language" with your chosen language,
+of course):
 */
+$Context->Dictionary["RoleHistory"] = "Role history";
+$Context->Dictionary["NoRoleHistory"] = "This user does not appear to have been assigned to any roles.";
+$Context->Dictionary["RoleAssignedByX"] = "<h3>Role assigned by //1 with the following notes:</h3><p>//2</p>";
+
 
 if ($Context->SelfUrl == "account.php") {
 
@@ -47,9 +53,10 @@ if ($Context->SelfUrl == "account.php") {
                      
                      echo("<blockquote>
                         <h2>".$UserHistory->Role."</strong></h2> <small>(".TimeDiff($this->Context, $UserHistory->Date, mktime()).")</small>
-                        <h3>".$this->Context->GetDefinition("RoleAssignedBy")." ".($UserHistory->AdminUserID == 0?$this->Context->GetDefinition("Applicant"):"<a href=\"account.php?u=".$UserHistory->AdminUserID."\">".$UserHistory->AdminUsername."</a>")." ".$this->Context->GetDefinition("WithTheFollowingNotes")."</h3>
-                        <p>".$UserHistory->Notes."</p>
-                     </blockquote>");
+                        ".str_replace(array("//1", "//2"),
+                           array(($UserHistory->AdminUserID == 0?$this->Context->GetDefinition("Applicant"):"<a href=\"account.php?u=".$UserHistory->AdminUserID."\">".$UserHistory->AdminUsername."</a>"), $UserHistory->Notes),
+                           $this->Context->GetDefinition("RoleAssignedByX"))
+                     ."</blockquote>");
                   }
                }
             echo("</div>");

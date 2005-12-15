@@ -6,7 +6,13 @@ Description: Allows html to be used in strings, but breaks out all "script" rela
 Version: 1.0
 Author: SirNot
 Author Url: N/A
+
+You should cut & paste this language definition into your
+conf/your_language.php file (replace "your_language" with your chosen language,
+of course):
 */
+$Context->Dictionary["Html"] = "Html";
+
 
 class HtmlFormatter extends StringFormatter
 {

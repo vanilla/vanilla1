@@ -15,7 +15,21 @@ Vanilla is distributed in the hope that it will be useful, but WITHOUT ANY WARRA
 You should have received a copy of the GNU General Public License along with Vanilla; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 The latest source code for Vanilla is available at www.lussumo.com
 Contact Mark O'Sullivan at mark [at] lussumo [dot] com
+
+You should cut & paste these language definitions into your
+conf/your_language.php file (replace "your_language" with your chosen language,
+of course):
 */
+
+$Context->Dictionary["Bookmarks"] = "Bookmarks";
+$Context->Dictionary["YourDiscussions"] = "Your Discussions";
+$Context->Dictionary["History"] = "History";
+$Context->Dictionary["Private"] = "Private";
+$Context->Dictionary["DisplayBookmarks"] = "Display your bookmarks in the control panel";
+$Context->Dictionary["DisplayPrivateDiscussions"] = "Display your private discussions in the control panel";
+$Context->Dictionary["DisplayYourDiscussions"] = "Display your discussions in the control panel";
+$Context->Dictionary["DisplayBrowsingHistory"] = "Display your browsing history in the control panel";
+
 
 if ($Context->SelfUrl == "account.php") {
    $Context->AddToDelegate("PreferencesForm", "PreRender", "AddPanelLists");
