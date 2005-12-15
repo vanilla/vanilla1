@@ -342,7 +342,7 @@ class DiscussionManager extends Delegation {
 		$RecordsToReturn = ForceInt($RecordsToReturn, 0);
 		
 		$s = $this->GetDiscussionBuilder();
-		if (!$this->Context->Session->User->Permission("PERMISSION_REMOVE_CATEGORIES") || !$this->Context->Session->User->Setting("ShowDeletedDiscussions")) $s->AddWhere("t.Active", "1", "=");
+		if (!$this->Context->Session->User->Permission("PERMISSION_REMOVE_CATEGORIES") || !$this->Context->Session->User->Preference("ShowDeletedDiscussions")) $s->AddWhere("t.Active", "1", "=");
 		$s->AddWhere("t.WhisperUserID", $UserID, "=", "and", "", 0, 1);
 		$s->AddWhere("t.AuthUserID", $UserID, "=", "or", "", 0, 1);
 		$s->AddWhere("t.WhisperUserID", 0, ">", "and");
