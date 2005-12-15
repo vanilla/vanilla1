@@ -446,7 +446,7 @@ $Context->Dictionary["EnabledExtensions"] = "Enabled Extensions";
 $Context->Dictionary["DisabledExtensions"] = "Disabled Extensions";
 $Context->Dictionary["ErrExtensionNotFound"] = "The specified extension could not be found.";
 $Context->Dictionary["UpdateCheck"] = "Check for Updates";
-$Context->Dictionary["UpdateCheckNotes"] = "Vanilla is constantly being updated by both it's developers and it's community. In order to make sure that your installation is up to date and secure, it is important that you check for updates to the codebase regularly.";
+$Context->Dictionary["UpdateCheckNotes"] = "Vanilla is constantly being updated by both its developers and its community. In order to make sure that your installation is up to date and secure, it is important that you check for updates to the codebase regularly.";
 $Context->Dictionary["CheckForUpdates"] = "Check for updates now";
 $Context->Dictionary["ErrUpdateCheckFailure"] = "Failed to retrieve information from Lussumo about the latest version of Vanilla. Please try again later.";
 $Context->Dictionary["PleaseUpdateYourInstallation"] = "<strong>WARNING:</strong> Your installation of Vanilla is //1, but <span class=\"Highlight\">the most recent version of Vanilla available is //2</span>. Please upgrade your installation immediately by downloading the latest version of Vanilla from <a href=\"http://getvanilla.com\">http://getvanilla.com</a>.";
