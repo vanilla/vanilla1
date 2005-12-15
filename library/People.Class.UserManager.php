@@ -242,8 +242,8 @@ class UserManager extends Delegation {
 							if ($AdminEmail != "") $e->AddRecipient($AdminEmail, $AdminName);
 						}
 						$e->Subject = $this->Context->GetDefinition("NewCaps")." ".$this->Context->Configuration["APPLICATION_TITLE"]." ".$this->Context->GetDefinition("Applicant");
-						$e->BodyText = str_replace(array("//1", "//2", "//3", "//4"),
-							array($User->Name, $this->Context->Configuration["APPLICATION_TITLE"], FormatHtmlStringInline($User->Discovery, 1), $this->Context->Configuration["DOMAIN"]),
+						$e->BodyText = str_replace(array("//1", "//2", "//3"),
+							array($User->Name, FormatHtmlStringInline($User->Discovery, 1), $this->Context->Configuration["DOMAIN"]),
 							$this->Context->GetDefinition("ApplicationMessage"));
 						@$e->Send();
 					}				
