@@ -108,7 +108,6 @@ class SearchForm extends PostBackControl {
          if ($this->Data) $this->DataCount = $this->Context->Database->RowCount($this->Data);
 			
 			$pl = $this->Context->ObjectFactory->NewContextObject($this->Context, "PageList");
-			$pl->UrlBuilder = $this->Context->ObjectFactory->NewObject($this->Context, "UrlBuilder", "", $this->Context->Configuration["URL_BUILDING_METHOD"], $this->Context->Configuration["REWRITE_SEARCH"]);
 			$pl->NextText = $this->Context->GetDefinition("Next");
 			$pl->PreviousText = $this->Context->GetDefinition("Previous");
 			$pl->Totalled = 0;

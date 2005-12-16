@@ -57,6 +57,7 @@ class DiscussionManager extends Delegation {
          // Get Whisper user data
          $s->AddJoin("User", "wt", "UserID", "t", "WhisperUserID", "left join");
          $s->AddSelect("Name", "wt", "WhisperUsername");
+			$s->AddGroupBy("DiscussionID", "t");
          
          // Get data on the last user to send a whisper (to the current user) in the discussion
          if ($this->Context->Session->User->Permission("PERMISSION_VIEW_ALL_WHISPERS")) {
@@ -276,7 +277,11 @@ class DiscussionManager extends Delegation {
 		$this->GetDiscussionWhisperFilter($s);
 
 		$s->AddOrderBy("Sticky", "t");
-		$s->AddOrderBy("t.DateLastActive", "", "desc");
+		if ($this->Context->Configuration["ENABLE_WHISPERS"]) {
+			$s->AddOrderBy("greatest(t.DateLastWhisper, t.DateLastActive)", "", "desc");
+		} else {
+			$s->AddOrderBy("t.DateLastActive", "", "desc");
+		}
 		if ($RowsPerPage > 0) $s->AddLimit($FirstRecord, $RowsPerPage);
 		return $this->Context->Database->Select($s, $this->Name, "GetDiscussionList", "An error occurred while retrieving discussions.");
 	}

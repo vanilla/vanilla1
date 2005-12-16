@@ -25,7 +25,7 @@ if (!$this->Context->Session->User->Permission("PERMISSION_MANAGE_REGISTRATION")
          <div class=\"InputNote\">".$this->Context->GetDefinition("ApprovedMemberRoleNotes")."</div>
          <div class=\"FormButtons\">
             <input type=\"submit\" name=\"btnSave\" value=\"".$this->Context->GetDefinition("Save")."\" class=\"Button SubmitButton\" />
-            <a href=\"./".$this->Context->SelfUrl."\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>
+            <a href=\"".GetUrl($this->Context->Configuration, $this->Context->SelfUrl)."\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>
          </div>
          </form>
       </div>

@@ -32,7 +32,7 @@ echo("<div class=\"AccountForm\">
       
       echo("<div class=\"FormButtons\">
          <input type=\"submit\" name=\"btnSave\" value=\"".$this->Context->GetDefinition("Save")."\" class=\"Button SubmitButton\" />
-         <a href=\"./account.php?u=".$this->User->UserID."\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>
+         <a href=\"".GetUrl($this->Context->Configuration, "account.php", "", "u", $this->User->UserID)."\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>
       </div>
       </form>
    </div>

@@ -66,7 +66,7 @@ function ReturnWrappedFeedForRSS2(&$Context, $FeedItems) {
 		<channel>
 			<title>".htmlspecialchars($Context->Configuration["APPLICATION_TITLE"]." - ".$Context->PageTitle)."</title>
 			<lastBuildDate>".FixDateForRSS2()."</lastBuildDate>
-			<link>".PrependString("http://", $Context->Configuration["DOMAIN"])."</link>
+			<link>".$Context->Configuration["BASE_URL"]."</link>
 			<description></description>
 			<generator>Lussumo Vanilla ".VANILLA_VERSION."</generator>
 			".$FeedItems."

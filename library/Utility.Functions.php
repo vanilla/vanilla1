@@ -358,6 +358,32 @@ function GetRemoteIp($FormatIpForDatabaseInput = "0") {
 	return $sReturn;	
 }
 
+function GetUrl(&$Configuration, $PageName, $Divider = "", $Key = "", $Value = "", $PageNumber="", $Querystring="") {
+	if ($Configuration["URL_BUILDING_METHOD"] == "mod_rewrite") {
+		if ($PageName == "./") $PageName = "index.php";
+		return $Configuration["BASE_URL"]
+			.($PageName == "index.php" && $Value != "" ? "" : $Configuration["REWRITE_".$PageName])
+			.(strlen($Value) != 0 ? $Divider : "")
+			.(strlen($Value) != 0 ? $Value."/" : "")
+			.($PageNumber != "" && ForceInt($PageNumber, 0) > 1? $PageNumber."/" : "")
+			.($Querystring != "" && substr($Querystring, 0, 1) != "#" ? "?" : "")
+			.($Querystring != "" ? $Querystring : "");
+	} else {
+		if ($PageName == "./" || $PageName == "index.php") $PageName = "";
+		$sReturn = ($Value != "" && $Value != "0" ? $Key."=".$Value : "");
+		if ($PageNumber != "") {
+			if ($sReturn != "") $sReturn .= "&amp;";
+			$sReturn .= "page=".$PageNumber;
+		}
+		if ($Querystring != "" && substr($Querystring, 0, 1) != "#") {
+			if ($sReturn != "") $sReturn .= "&amp;";
+			$sReturn .= $Querystring;
+		}
+		if ($sReturn != "") $sReturn = "?".$sReturn;
+		return $Configuration["BASE_URL"].$PageName.$sReturn;
+	}
+}
+
 // Create the html_entity_decode function for users prior to PHP 4.3.0
 if (!function_exists("html_entity_decode")) {
 	function html_entity_decode($String) {

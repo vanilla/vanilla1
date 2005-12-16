@@ -37,7 +37,7 @@ include("appg/init_vanilla.php");
 
 	// Build the control panel
    $Panel->AddList($Context->GetDefinition("Options"), 10);
-	$Panel->AddListItem($Context->GetDefinition("Options"), $Context->GetDefinition("BackToDiscussions"), "./");
+	$Panel->AddListItem($Context->GetDefinition("Options"), $Context->GetDefinition("BackToDiscussions"), GetUrl($Configuration, "index.php"));
 
 // 3. ADD CONTROLS TO THE PAGE
 

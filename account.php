@@ -33,7 +33,7 @@ include("appg/init_vanilla.php");
 	
 	// If a user id was not supplied, assume that this user doesn't have an active account and kick them back to the index
 	if ($AccountUserID == 0) {
-		header("location: index.php");
+		header("location: ".GetUrl($Configuration, "index.php"));
 		die();
 	}
 	
@@ -57,21 +57,21 @@ include("appg/init_vanilla.php");
 		$Panel->AddList($ApplicantOptions, 11);
 		if (($AccountUser->UserID == $Context->Session->UserID || $Context->Session->User->Permission("PERMISSION_EDIT_USERS")) && $AccountUser) {
 			if ($AccountUser->UserID == $Context->Session->UserID) {
-				$Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangeYourPersonalInformation"), $Context->SelfUrl."?PostBackAction=Identity", "", "", 10);
-				if ($Configuration["ALLOW_PASSWORD_CHANGE"]) $Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangeYourPassword"), $Context->SelfUrl."?PostBackAction=Password", "", "", 20);				
+				$Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangeYourPersonalInformation"), GetUrl($Configuration, $Context->SelfUrl, "", "", "", "", "PostBackAction=Identity"), "", "", 10);
+				if ($Configuration["ALLOW_PASSWORD_CHANGE"]) $Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangeYourPassword"), GetUrl($Context->Configuration, $Context->SelfUrl, "", "", "", "", "PostBackAction=Password"), "", "", 20);				
 			} elseif ($AccountUser->UserID != $Context->Session->UserID && $Context->Session->User->Permission("PERMISSION_EDIT_USERS") && $AccountUser) {
-				$Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangePersonalInformation"), $Context->SelfUrl."?PostBackAction=Identity&u=".$AccountUser->UserID, "", "", 10);
+				$Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangePersonalInformation"), GetUrl($Context->Configuration, $Context->SelfUrl, "", "u", $AccountUser->UserID, "", "PostBackAction=Identity"), "", "", 10);
 				if ($AccountUser->RoleID == 0) {
-					$Panel->AddListItem($ApplicantOptions, $Context->GetDefinition("ApproveForMembership"), $Context->SelfUrl."?u=".$AccountUser->UserID."&PostBackAction=ApproveUser", "", "", 10);
-					$Panel->AddListItem($ApplicantOptions, $Context->GetDefinition("DeclineForMembership"), $Context->SelfUrl."?u=".$AccountUser->UserID."&PostBackAction=DeclineUser", "", "", 20);
+					$Panel->AddListItem($ApplicantOptions, $Context->GetDefinition("ApproveForMembership"), GetUrl($Context->Configuration, $Context->SelfUrl, "", "u", $AccountUser->UserID, "", "PostBackAction=ApproveUser"), "", "", 10);
+					$Panel->AddListItem($ApplicantOptions, $Context->GetDefinition("DeclineForMembership"), GetUrl($Context->Configuration, $Context->SelfUrl, "", "u", $AccountUser->UserID, "", "PostBackAction=DeclineUser"), "", "", 20);
 				} else {
-					$Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangeRole"), $Context->SelfUrl."?PostBackAction=Role&u=".$AccountUser->UserID, "", "", 30);
-					$Panel->AddListItem($ApplicantOptions, $Context->GetDefinition("NewApplicantSearch"), "search.php?PostBackAction=Search&Keywords=roles:Applicant;sort:Date;&Type=Users", "", "", 10);
+					$Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangeRole"), GetUrl($Context->Configuration, $Context->SelfUrl, "", "u", $AccountUser->UserID, "", "PostBackAction=Role"), "", "", 30);
+					$Panel->AddListItem($ApplicantOptions, $Context->GetDefinition("NewApplicantSearch"), GetUrl($Context->Configuration, "search.php", "", "", "", "", "PostBackAction=Search&amp;Keywords=roles:Applicant;sort:Date;&amp;Type=Users"), "", "", 10);
 				}
 			}
 		}
 		if ($AccountUser->UserID == $Context->Session->UserID) {
-			$Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangeForumFunctionality"), $Context->SelfUrl."?PostBackAction=Functionality", "", 30);
+			$Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangeForumFunctionality"), GetUrl($Context->Configuration, $Context->SelfUrl, "", "", "", "", "PostBackAction=Functionality"), "", 30);
 		}		
 	}
 	

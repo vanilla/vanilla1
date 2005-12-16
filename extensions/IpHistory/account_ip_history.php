@@ -24,7 +24,7 @@ echo("<div class=\"IpHistory\">
                      $SharedUserName = $this->History[$i]["SharedWith"][$j]["Name"];
                      $SharedUserID = $this->History[$i]["SharedWith"][$j]["UserID"];
                      if ($j > 0) echo(", ");
-                     echo("<a href=\"account.php?u=".$SharedUserID."\">".$SharedUserName."</a>");
+                     echo("<a href=\"".GetUrl($this->Context->Configuration, "account.php", "", "u", $SharedUserID)."\">".$SharedUserName."</a>");
                   }
                   echo("</p>");
             } else {

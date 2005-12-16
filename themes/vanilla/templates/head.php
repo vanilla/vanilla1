@@ -2,9 +2,9 @@
 // Note: This file is included from the library/Utility.Control.Head.php class.
 
 $HeadString = "<".chr(63)."xml version=\"1.0\" encoding=\"utf-8\"".chr(63).">
-<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">";
-// <base href=\"".$this->Context->Configuration["REWRITE_BASE_URL"]."\" />
-$HeadString .= "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en-ca\">
+<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">
+<base href=\"".$this->Context->Configuration["BASE_URL"]."\" />
+<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en-ca\">
    <head>
       <title>".$this->Context->Configuration["APPLICATION_TITLE"]." - ".$this->Context->PageTitle."</title>
       <link rel=\"shortcut icon\" href=\"/favicon.ico\" />";

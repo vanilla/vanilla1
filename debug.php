@@ -11,6 +11,7 @@
 * Description: Uses cookies to turn debugging information on and off
 */
 include("appg/settings.php");
+include($Configuration["DATABASE_PATH"]);
 include($Configuration["APPLICATION_PATH"]."appg/headers.php");
 include($Configuration["LIBRARY_PATH"]."Utility.Functions.php");
 include($Configuration["LIBRARY_PATH"]."Utility.Class.Database.php");
@@ -73,7 +74,7 @@ echo("<?xml version=\"1.0\" encoding=\"utf-8\"?>
 		} else {
 			echo("<p>".$Context->GetDefinition("CurrentApplicationMode")." <strong>".$Mode."</strong></p>
 				<p><a href=\"debug.php?PageAction=ToggleDebug\">".$Context->GetDefinition("SwitchApplicationMode")."</a></p>
-				<p><a href=\"./\">".$Context->GetDefinition("BackToApplication")."</a>");
+				<p><a href=\"".GetUrl($Configuration, "index.php")."\">".$Context->GetDefinition("BackToApplication")."</a>");
 		}
 	echo("</div>
 </body>

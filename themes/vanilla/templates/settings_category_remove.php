@@ -24,7 +24,7 @@ echo("<div class=\"SettingsForm\">
          <div class=\"InputNote\">".$this->Context->GetDefinition("ReplacementCategoryNotes")."</div>
          <div class=\"FormButtons\">
             <input type=\"submit\" name=\"btnSave\" value=\"".$this->Context->GetDefinition("Remove")."\" class=\"Button SubmitButton\" />
-            <a href=\"./".$this->Context->SelfUrl."?PostBackAction=Categories\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>
+            <a href=\"".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=Categories")."\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>
          </div>");
       }
       echo("</form>

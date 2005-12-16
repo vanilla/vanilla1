@@ -57,7 +57,8 @@ $Configuration["APPROVAL_ROLE"] = "4";
 $Configuration["SAFE_REDIRECT"] = "people.php?PageAction=SignOutNow"; 
 
 // Framework Settings
-$Configuration["URL_BUILDING_METHOD"] = "Standard";  // Standard or Rewrite
+$Configuration["URL_BUILDING_METHOD"] = "Standard";  // Standard or mod_rewrite
+$Configuration["BASE_URL"] = "http://your.base.url/to/vanilla/";
 $Configuration["CHARSET"] = "utf-8";
 $Configuration["PAGE_EVENTS"] = array("Page_Init", "Page_Render", "Page_Unload");
 $Configuration["PAGELIST_NEXT_TEXT"] = "Prev";
@@ -123,19 +124,13 @@ $Configuration["TAB_POSITION_SETTINGS"] = "40";
 $Configuration["TAB_POSITION_ACCOUNT"] = "50";
 
 // Url Rewriting Definitions
-$Configuration["REWRITE_BASE_URL"] = "http://your.base.url/to/vanilla/";
-$Configuration["REWRITE_CATEGORIES"] = "Categories";
-$Configuration["REWRITE_DISCUSSIONS"] = "discussions/page";
-$Configuration["REWRITE_COMMENTS"] = "Comments/DiscussionID/page";
-$Configuration["REWRITE_SEARCH"] = "Search/SearchType";
-$Configuration["REWRITE_ACCOUNT"] = "Account/UserID/PostBackAction";
-$Configuration["REWRITE_SETTINGS"] = "Settings/PostBackAction";
-$Configuration["REWRITE_PASSWORD_REQUEST"] = "RequestPassword/PostBackAction";
-$Configuration["REWRITE_PASSWORD_RESET"] = "ResetPassword/PostBackAction";
-$Configuration["REWRITE_SIGNIN"] = "SignIn/PostBackAction";
-$Configuration["REWRITE_APPLY"] = "Apply/PostBackAction";
-$Configuration["REWRITE_LEAVE"] = "Leave";
-$Configuration["REWRITE_POST"] = "Post";
+$Configuration["REWRITE_categories.php"] = "categories/";
+$Configuration["REWRITE_index.php"] = "discussions/";
+$Configuration["REWRITE_comments.php"] = "discussion/";
+$Configuration["REWRITE_search.php"] = "search/";
+$Configuration["REWRITE_account.php"] = "account/";
+$Configuration["REWRITE_settings.php"] = "settings/";
+$Configuration["REWRITE_post.php"] = "post/";
 
 // Default values for role permissions
 $Configuration["PERMISSION_CHECK_FOR_UPDATES"] = "0";

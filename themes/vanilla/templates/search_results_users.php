@@ -6,7 +6,7 @@ $UserList .= "<dl class=\"User".($Switch == 1?"":"Alternate").($FirstRow?" First
    <dt class=\"DataItemLabel SearchUserLabel\">".$this->Context->GetDefinition("User")."</dt>
    <dd class=\"DataItem SearchUser".($ShowIcon?" SearchUserWithIcon":"")."\">";
       if ($ShowIcon) $UserList .= "<span class=\"SearchIcon\" style=\"background-image:url('".$u->DisplayIcon."');\"></span>";
-      $UserList .= "<a href=\"account.php?u=".$u->UserID."\">".$u->Name."</a> (".$u->Role.")
+      $UserList .= "<a href=\"".GetUrl($this->Context->Configuration, "account.php", "", "u", $u->UserID)."\">".$u->Name."</a> (".$u->Role.")
    </dd>
    <dt class=\"MetaItemLabel SearchUserInformationLabel SearchUserAccountCreatedLabel\">".$this->Context->GetDefinition("AccountCreated")."</dt>
    <dd class=\"MetaItem SearchUserInformation SearchUserAccountCreated\">".TimeDiff($this->Context, $u->DateFirstVisit,mktime())."</dd>

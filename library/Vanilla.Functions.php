@@ -30,40 +30,26 @@ function DiscussionPrefix($Configuration, $Discussion) {
 	if ($Prefix != "") return $Configuration["TEXT_PREFIX"].$Prefix.$Configuration["TEXT_SUFFIX"]." ";
 }
 
-function GetCommentResult(&$Context, $Comment, $HighlightWords, $FirstRow = "0") {
-	return "<dl class=\"SearchComment ".$Comment->Status.($FirstRow?" FirstComment":"")."\">
-		<dt class=\"DataItemLabel DiscussionTopicLabel SearchCommentTopicLabel\">".$Context->GetDefinition("DiscussionTopic")."</dt>
-		<dd class=\"DataItem DiscussionTopic SearchCommentTopic\"><a href=\"comments.php?DiscussionID=".$Comment->DiscussionID."\">".$Comment->Discussion."</a></dd>
-		<dt class=\"ExtendedMetaItemLabel SearchCommentBodyLabel\">".$Context->GetDefinition("Comment")."</dt>
-		<dd class=\"ExtendedMetaItem SearchCommentBody\"><a href=\"./comments.php?DiscussionID=".$Comment->DiscussionID."&Focus=".$Comment->CommentID."#Comment_".$Comment->CommentID."\">".HighlightTrimmedString($Comment->Body, $HighlightWords, 300)."</a></dd>
-		<dt class=\"MetaItemLabel SearchCommentInformationLabel SearchCommentCategoryLabel\">".$Context->GetDefinition("Category")."</dt>
-		<dd class=\"MetaItem SearchCommentInformation SearchCommentCategory\"><a href=\"./?CategoryID=".$Comment->CategoryID."\">".$Comment->Category."</a></dd>
-		<dt class=\"MetaItemLabel SearchCommentInformationLabel SearchCommentAuthorLabel\">".$Context->GetDefinition("WrittenBy")."</dt>
-		<dd class=\"MetaItem SearchCommentInformation SearchCommentAuthor\"><a href=\"./account.php?u=".$Comment->AuthUserID."\">".$Comment->AuthUsername."</a></dd>
-		<dt class=\"MetaItemLabel SearchCommentInformationLabel SearchCommentTimeLabel\">".$Context->GetDefinition("Added")."</dt>
-		<dd class=\"MetaItem SearchCommentInformation SearchCommentTime\">".TimeDiff($Context, $Comment->DateCreated,mktime())."</dd>
-	</dl>\n";
-}
-
-function GetLastCommentQuerystring($Discussion, $Configuration) {
-	$sReturn = "";
+function GetLastCommentQuerystring(&$Discussion, &$Configuration) {
    $JumpToItem = $Discussion->CountComments - (($Discussion->LastPage - 1) * $Configuration["COMMENTS_PER_PAGE"]);
 	if ($JumpToItem < 0) $JumpToItem = 0;
-	if ($Discussion->LastPage > 0) $sReturn = "&amp;page=".$Discussion->LastPage;
-	$sReturn .= "#Item_".$JumpToItem;
-	return $sReturn;
+	$LastPage = $Discussion->LastPage;
+	if ($LastPage == 0) $LastPage = "";
+	return GetUrl($Configuration, "comments.php", "", "DiscussionID", $Discussion->DiscussionID, $LastPage, "#Item_".$JumpToItem);
 }
 
-function GetUnreadQuerystring($Discussion, $Configuration) {
-	$sReturn = "";
-	$UnreadCommentCount = $Discussion->CountComments - $Discussion->NewComments + 1;
-	$ReadCommentCount = $Discussion->CountComments - $Discussion->NewComments;
-	$PageNumber = CalculateNumberOfPages($ReadCommentCount, $Configuration["COMMENTS_PER_PAGE"]);
-	$JumpToItem = $ReadCommentCount - (($PageNumber-1) * $Configuration["COMMENTS_PER_PAGE"]);
-	if ($JumpToItem < 0) $JumpToItem = 0;
-	if ($PageNumber > 0) $sReturn = "&amp;page=".$PageNumber;
-	$sReturn .= "#Item_".$JumpToItem;
-	return $sReturn;
+function GetUnreadQuerystring(&$Discussion, &$Configuration, $CurrentUserJumpToLastCommentPref = "0") {
+	if ($CurrentUserJumpToLastCommentPref) {
+		$UnreadCommentCount = $Discussion->CountComments - $Discussion->NewComments + 1;
+		$ReadCommentCount = $Discussion->CountComments - $Discussion->NewComments;
+		$PageNumber = CalculateNumberOfPages($ReadCommentCount, $Configuration["COMMENTS_PER_PAGE"]);
+		$JumpToItem = $ReadCommentCount - (($PageNumber-1) * $Configuration["COMMENTS_PER_PAGE"]);
+		if ($JumpToItem < 0) $JumpToItem = 0;
+		if ($PageNumber == 0) $PageNumber = "";
+		return GetUrl($Configuration, "comments.php", "", "DiscussionID", $Discussion->DiscussionID, $PageNumber, "#Item_".$JumpToItem);
+	} else {
+		return GetUrl($Configuration, "comments.php", "", "DiscussionID", $Discussion->DiscussionID);
+	}
 }
 
 function HighlightTrimmedString($Haystack, $Needles, $TrimLength = "") {	

@@ -97,7 +97,7 @@ class DiscussionForm extends PostBackControl {
 			$ResultDiscussion = $dm->SaveDiscussion($this->Discussion);
 			if ($ResultDiscussion) {
 				// Saved successfully, so send back to the discussion
-				header("location:comments.php?DiscussionID=".$ResultDiscussion->DiscussionID);
+				header("location:".GetUrl($this->Context->Configuration, "comments.php", "", "DiscussionID", $ResultDiscussion->DiscussionID));
 				die();
 			}
 		// If saving a comment
@@ -110,7 +110,7 @@ class DiscussionForm extends PostBackControl {
 			if ($ResultComment) {
 				// Saved successfully, so send back to the discussion
             // print_r($this->Discussion);
-				header("location:comments.php?DiscussionID=".$ResultComment->DiscussionID."&page=".$this->Discussion->LastPage.($ResultComment->CommentID > 0 ? "#Comment_".$ResultComment->CommentID:"#pgbottom"));
+				header("location:".GetUrl($this->Context->Configuration, "comments.php", "", "DiscussionID", $ResultComment->DiscussionID, $this->Discussion->LastPage, ($ResultComment->CommentID > 0 ? "#Comment_".$ResultComment->CommentID:"#pgbottom")));
 				die();
 			}
 		}

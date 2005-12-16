@@ -41,9 +41,9 @@ class AccountRoleForm extends PostBackControl {
 			if ($Redirect) {
 				if ($this->PostBackAction == "DeclineUser") {
 					// Send back to the applicants
-					header("location: search.php?PostBackAction=Search&Keywords=roles:Applicant;sort:Date;&Type=Users");
+					header("location: ".GetUrl($this->Context->Configuration, "search.php", "", "", "", "", "PostBackAction=Search&Keywords=roles:Applicant;sort:Date;&Type=Users"));
 				} else {
-					header("location: ".$this->Context->SelfUrl."?u=".$User->UserID);
+					header("location: ".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "u", $User->UserID));
 				}
 				die();
 			} else {

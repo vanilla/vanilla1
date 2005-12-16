@@ -27,7 +27,7 @@ echo("<div class=\"SettingsForm\">
                            ."<br />".FormatHyperlink($Extension->Url)
                            ."<br />".FormatHyperlink($Extension->AuthorUrl,1,$Extension->Author);
                         } else {
-                           $ExtensionList .= "<a href=\"".$this->Context->SelfUrl."?PostBackAction=Extensions&Detail=".$ExtensionKey."#".$ExtensionKey."\">".SliceString($Extension->Description, 60)."</a>";
+                           $ExtensionList .= "<a href=\"".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=Extensions&Detail=".$ExtensionKey."#".$ExtensionKey)."\">".SliceString($Extension->Description, 60)."</a>";
                         }
                         $ExtensionList .= "</dd>";
                      $FirstExtension = 0;
@@ -54,7 +54,7 @@ echo("<div class=\"SettingsForm\">
                            ."<br />".FormatHyperlink($Extension->Url)
                            ."<br />".FormatHyperlink($Extension->AuthorUrl,1,$Extension->Author);
                         } else {
-                           $ExtensionList .= "<a href=\"".$this->Context->SelfUrl."?PostBackAction=Extensions&Detail=".$ExtensionKey."#".$ExtensionKey."\">".SliceString($Extension->Description, 60)."</a>";
+                           $ExtensionList .= "<a href=\"".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=Extensions&Detail=".$ExtensionKey."#".$ExtensionKey)."\">".SliceString($Extension->Description, 60)."</a>";
                         }
                         $ExtensionList .= "</dd>";
                      $FirstExtension = 0;

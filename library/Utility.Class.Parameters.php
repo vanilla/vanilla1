@@ -71,7 +71,7 @@ class Parameters {
 	}
 	
 	// Return the collection as a string in querystring name/value pair format
-	function GetQueryString() {
+	function GetQueryString($IncludeQuestionMark = "0") {
 		$sReturn = "";
 		while (list($key, $val) = each($this->aParameters)) {
 			if(is_array($val)) {
@@ -85,7 +85,7 @@ class Parameters {
 		}
 		// remove trailing ampersand
 		$sReturn = substr($sReturn,0,strlen($sReturn) - 5);
-		if ($sReturn != "") $sReturn = "?".$sReturn;
+		if ($sReturn != "" && $IncludeQuestionMark) $sReturn = "?".$sReturn;
 		reset($this->aParameters);
 		return $sReturn;
 	}
