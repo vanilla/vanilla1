@@ -14,8 +14,8 @@ echo("<div class=\"SettingsForm\">
                $c->GetPropertiesFromDataSet($Row);
                $c->FormatPropertiesForDisplay();
                echo("<li class=\"SortListItem MovableSortListItem\" id=\"item_".$c->CategoryID."\">
-                  <a class=\"SortRemove\" href=\"".$this->Context->SelfUrl."?PostBackAction=CategoryRemove&CategoryID=".$c->CategoryID."\"><img src=\"".$this->Context->StyleUrl."images/btn.remove.gif\" height=\"15\" width=\"15\" border=\"0\" alt=\"".$this->Context->GetDefinition("Remove")."\" /></a>
-                  <a class=\"SortEdit\" href=\"".$this->Context->SelfUrl."?PostBackAction=Category&CategoryID=".$c->CategoryID."\">".$this->Context->GetDefinition("Edit")."</a>
+                  <a class=\"SortRemove\" href=\"".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=CategoryRemove&CategoryID=".$c->CategoryID)."\"><img src=\"".$this->Context->StyleUrl."images/btn.remove.gif\" height=\"15\" width=\"15\" border=\"0\" alt=\"".$this->Context->GetDefinition("Remove")."\" /></a>
+                  <a class=\"SortEdit\" href=\"".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=Category&CategoryID=".$c->CategoryID)."\">".$this->Context->GetDefinition("Edit")."</a>
                   ".$c->Name."
                </li>");
             }
@@ -26,7 +26,7 @@ echo("<div class=\"SettingsForm\">
          Sortable.create('SortCategories', {dropOnEmpty:true, tag:'li', constraint: 'vertical', ghosting: false, onUpdate: function() {new Ajax.Updater('LoadStatus', './ajax/sortcategories.php', {onComplete: function(request) { new Effect.Highlight('SortCategories',{startcolor:'#ffff99'});}, parameters:Sortable.serialize('SortCategories', {tag:'li', name:'CategoryID'}), evalScripts:true, asynchronous:true})}});
       // ]]>
       </script>
-      <div class=\"FormLink\"><a href=\"".$this->Context->SelfUrl."?PostBackAction=Category\">".$this->Context->GetDefinition("CreateNewCategory")."</a></div>
+      <div class=\"FormLink\"><a href=\"".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=Category")."\">".$this->Context->GetDefinition("CreateNewCategory")."</a></div>
    </div>
 </div>");
 ?>

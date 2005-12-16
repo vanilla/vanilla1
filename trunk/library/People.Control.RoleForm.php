@@ -61,11 +61,11 @@ class RoleForm extends PostBackControl {
 						}
                   
 					}
-					header("location: ".$this->Context->SelfUrl."?PostBackAction=Roles");
+					header("location: ".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=Roles"));
 				}
 			} elseif ($this->PostBackAction == "ProcessRoleRemove" && $this->Context->Session->User->Permission("PERMISSION_REMOVE_ROLES")) {
 				if ($this->RoleManager->RemoveRole($RoleID, $ReplacementRoleID)) {
-					header("location: ".$this->Context->SelfUrl."?PostBackAction=Roles");
+					header("location: ".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=Roles"));
 				}
 			}
 			

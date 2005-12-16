@@ -34,9 +34,9 @@ if (in_array($Context->SelfUrl, array("account.php", "categories.php", "comments
       if ($Context->Session->User->Preference("UseQuickKeys")) {
          // Clear out existing tabs and put in the new quickkey tabs
          $Menu->ClearTabs();
-         $Menu->AddTab($Context->GetDefinition("Discussions_QuickKey"), "discussions", "./", "DiscussionsTab", "accesskey=\"d\"");
-         if ($Context->Configuration["USE_CATEGORIES"]) $Menu->AddTab($Context->GetDefinition("Categories_QuickKey"), "categories", "categories.php", "CategoriesTab", "accesskey=\"c\"");
-         $Menu->AddTab($Context->GetDefinition("Search_QuickKey"), "search", "search.php", "SearchTab", "accesskey=\"s\"");
+         $Menu->AddTab($Context->GetDefinition("Discussions_QuickKey"), "discussions", GetUrl($Configuration, "index.php"), "DiscussionsTab", "accesskey=\"d\"");
+         if ($Context->Configuration["USE_CATEGORIES"]) $Menu->AddTab($Context->GetDefinition("Categories_QuickKey"), "categories", GetUrl($Configuration, "categories.php"), "CategoriesTab", "accesskey=\"c\"");
+         $Menu->AddTab($Context->GetDefinition("Search_QuickKey"), "search", GetUrl($Configuration, "search.php"), "SearchTab", "accesskey=\"s\"");
 
 			// Make sure they should be seeing the settings tab
 			$RequiredPermissions = array("PERMISSION_CHECK_FOR_UPDATES",
@@ -57,19 +57,20 @@ if (in_array($Context->SelfUrl, array("account.php", "categories.php", "comments
 			$RequiredPermissionsCount = count($RequiredPermissions);
 			for ($i = 0; $i < $RequiredPermissionsCount; $i++) {
 				if ($Context->Session->User->Permission($RequiredPermissions[$i])) {
-					$Menu->AddTab($Context->GetDefinition("Settings_QuickKey"), "settings", "settings.php", "SettingsTab", "accesskey=\"e\"");
+					$Menu->AddTab($Context->GetDefinition("Settings_QuickKey"), "settings", GetUrl($Configuration, "settings.php"), "SettingsTab", "accesskey=\"e\"");
 					break;
 				}
 			}
 
-         $Menu->AddTab($Context->GetDefinition("Account_QuickKey"), "account", "account.php", "AccountTab", "accesskey=\"a\"");
+         $Menu->AddTab($Context->GetDefinition("Account_QuickKey"), "account", GetUrl($Configuration, "account.php"), "AccountTab", "accesskey=\"a\"");
          
          // Set up the "Start a new discussion" button
-		   $CategoryID = ForceIncomingInt("CategoryID", 0);
-         $StartANewDiscussionString = "<a class=\"PanelButton StartDiscussionButton\" href=\"post.php".($CategoryID > 0?"?CategoryID=".$CategoryID:"")."\">".$Context->GetDefinition("StartANewDiscussion")."</a>";
+			$CategoryID = ForceIncomingInt("CategoryID", 0);
+			if ($CategoryID == 0) $CategoryID = "";
+         $StartANewDiscussionString = "<a class=\"PanelButton StartDiscussionButton\" href=\"".GetUrl($Configuration, "post.php", "category/", "CategoryID", $CategoryID)."\">".$Context->GetDefinition("StartANewDiscussion")."</a>";
 			$StartButtonKey = array_search($StartANewDiscussionString, $Panel->Strings);
 			if ($StartButtonKey !== false) {
-				$Panel->Strings[$StartButtonKey] = "<a class=\"PanelButton StartDiscussionButton\" href=\"post.php".($CategoryID > 0?"?CategoryID=".$CategoryID:"")."\" accesskey=\"n\">".$Context->GetDefinition("StartANewDiscussion_Quickkey")."</a>";
+				$Panel->Strings[$StartButtonKey] = "<a class=\"PanelButton StartDiscussionButton\" href=\"".GetUrl($Configuration, "post.php", "category/", "CategoryID", $CategoryID)."\" accesskey=\"n\">".$Context->GetDefinition("StartANewDiscussion_Quickkey")."</a>";
 			}
       }
    }
@@ -86,15 +87,6 @@ if ($Context->SelfUrl == "account.php" && $Context->Session->UserID > 0) {
 		$Context->AddToDelegate("PreferencesForm",
 			"Constructor",
 			"PreferencesForm_AddQuickKeysPreference");
-
-
-/*
-      $QuickKeysOption = "<h2>".$Context->GetDefinition("Other")."</h2>
-         <div class=\"InputBlock\">
-				<div class=\"CheckBox\">".GetDynamicCheckBox("UseQuickKeys", 1, $Context->Session->User->Preference("UseQuickKeys"), "PanelSwitch('UseQuickKeys', 1);", $Context->GetDefinition("UseQuickKeys"))."</div>
-         </div>";
-		$Context->ObjectFactory->AddControlString("FunctionalityForm", "RenderCustomPreferences", $QuickKeysOption);
-*/
 	}
 }
 

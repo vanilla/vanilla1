@@ -316,6 +316,12 @@ $Context->Dictionary["LanguageManagement"] = "Language Management";
 $Context->Dictionary["LanguageChangesSaved"] = "The language has been changed successfully.";
 $Context->Dictionary["ChangeLanguage"] = "Choose a language";
 $Context->Dictionary["ChangeLanguageNotes"] = "Once you have clicked \"Save\" you will still need to click the \"click here to continue\" button to see the new language assignment.";
+$Context->Dictionary["CloseThisDiscussion"] = "Close this discussion";
+$Context->Dictionary["ReOpenThisDiscussion"] = "Re-Open this discussion";
+$Context->Dictionary["MakeThisDiscussionUnsticky"] = "Make this discussion UnSticky";
+$Context->Dictionary["MakeThisDiscussionSticky"] = "Make this discussion sticky";
+$Context->Dictionary["HideThisDiscussion"] = "Hide this discussion";
+$Context->Dictionary["UnhideThisDiscussion"] = "Unhide this discussion";
 
 // Warnings
 $Context->Dictionary["ErrOpenDirectoryExtensions"] = "Failed to open the extensions directory. Please ensure that PHP has read access to the //1 directory.";

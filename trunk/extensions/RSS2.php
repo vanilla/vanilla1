@@ -48,8 +48,9 @@ if (in_array($Context->SelfUrl, array("index.php", "search.php", "comments.php")
 
 if ($Context->SelfUrl == "index.php") {
    // Add the RSS2 link to the foot
-   $Foot->AddLink("index.php".$p->GetQueryString(), $Context->GetDefinition("RSS2Feed"), "", 20);
-   $Head->AddString("<link rel=\"alternate\" type=\"application/rss+xml\" href=\"index.php".$p->GetQueryString()."\" title=\"".$Context->GetDefinition("RSS2Feed")."\" />");
+   $FeedUrl = GetUrl($Configuration, "index.php", "", "", "", "", $p->GetQueryString());
+   $Foot->AddLink($FeedUrl, $Context->GetDefinition("RSS2Feed"), "", 20);
+   $Head->AddString("<link rel=\"alternate\" type=\"application/rss+xml\" href=\"".$FeedUrl."\" title=\"".$Context->GetDefinition("RSS2Feed")."\" />");
 
    // Add the discussion indexes RSS2 feed
    if ($FeedType == "RSS2") {
@@ -69,11 +70,11 @@ if ($Context->SelfUrl == "index.php") {
             $Properties = array();
             while ($DataSet = $DiscussionGrid->Context->Database->GetRow($DiscussionGrid->DiscussionData)) {
                $Properties["Title"] = FormatHtmlStringInline(ForceString($DataSet["Name"], ""));
-               $Properties["Link"] = PrependString("http://", AppendFolder($DiscussionGrid->Context->Configuration["DOMAIN"], "comments.php?DiscussionID=".ForceInt($DataSet["DiscussionID"], 0)));
+               $Properties["Link"] = GetUrl($DiscussionGrid->Context->Configuration, "comments.php", "", "DiscussionID", ForceInt($DataSet["DiscussionID"], 0));
                $Properties["Published"] = FixDateForRSS2(@$DataSet["DateCreated"]);
                $Properties["Updated"] = FixDateForRSS2(@$DataSet["DateLastActive"]);
                $Properties["AuthorName"] = FormatHtmlStringInline(ForceString($DataSet["AuthUsername"], ""));
-               $Properties["AuthorUrl"] = PrependString("http://", AppendFolder($DiscussionGrid->Context->Configuration["DOMAIN"], "account.php?u=".ForceInt($DataSet["AuthUserID"], 0)));
+               $Properties["AuthorUrl"] = GetUrl($DiscussionGrid->Context->Configuration, "account.php", "", "u", ForceInt($DataSet["AuthUserID"], 0));
                
                // Format the comment according to the defined formatter for that comment
                $FormatType = ForceString(@$DataSet["FormatType"], $DiscussionGrid->Context->Configuration["DEFAULT_FORMAT_TYPE"]);
@@ -113,8 +114,9 @@ if ($Context->SelfUrl == "index.php") {
       if ($Search) $SearchType = $Search->Type;
    }
    if ($SearchType == "Topics" || $SearchType == "Comments") {
-      $Foot->AddLink("search.php".$p->GetQueryString(), $Context->GetDefinition("RSS2Feed"), "", 20);
-      $Head->AddString("<link rel=\"alternate\" type=\"application/rss+xml\" href=\"search.php".$p->GetQueryString()."\" title=\"".$Context->GetDefinition("RSS2Feed")."\" />");
+      $FeedUrl = GetUrl($Configuration, "search.php", "", "", "", "", $p->GetQueryString());
+      $Foot->AddLink($FeedUrl, $Context->GetDefinition("RSS2Feed"), "", 20);
+      $Head->AddString("<link rel=\"alternate\" type=\"application/rss+xml\" href=\"".$FeedUrl."\" title=\"".$Context->GetDefinition("RSS2Feed")."\" />");
    }
    
    // Handle searches
@@ -139,11 +141,11 @@ if ($Context->SelfUrl == "index.php") {
                while ($DataSet = $SearchForm->Context->Database->GetRow($SearchForm->Data)) {
                   if ($Counter < $SearchForm->Context->Configuration["SEARCH_RESULTS_PER_PAGE"]) {
                      $Properties["Title"] = FormatHtmlStringInline(ForceString($DataSet["Name"], ""));
-                     $Properties["Link"] = PrependString("http://", AppendFolder($SearchForm->Context->Configuration["DOMAIN"], "comments.php?DiscussionID=".ForceInt($DataSet["DiscussionID"], 0)));
+                     $Properties["Link"] = GetUrl($SearchForm->Context->Configuration, "comments.php", "", "DiscussionID", ForceInt($DataSet["DiscussionID"], 0));
                      $Properties["Published"] = FixDateForRSS2(@$DataSet["DateCreated"]);
                      $Properties["Updated"] = FixDateForRSS2(@$DataSet["DateLastActive"]);
                      $Properties["AuthorName"] = FormatHtmlStringInline(ForceString($DataSet["AuthUsername"], ""));
-                     $Properties["AuthorUrl"] = PrependString("http://", AppendFolder($SearchForm->Context->Configuration["DOMAIN"], "account.php?u=".ForceInt($DataSet["AuthUserID"], 0)));
+                     $Properties["AuthorUrl"] = GetUrl($SearchForm->Context->Configuration, "account.php", "", "u", ForceInt($DataSet["AuthUserID"], 0));
                      
                      // Format the comment according to the defined formatter for that comment
                      $FormatType = ForceString(@$DataSet["FormatType"], $SearchForm->Context->Configuration["DEFAULT_FORMAT_TYPE"]);
@@ -187,7 +189,6 @@ if ($Context->SelfUrl == "index.php") {
                $Feed = "";
                $Properties = array();
                $Comment = $SearchForm->Context->ObjectFactory->NewContextObject($SearchForm->Context, "Comment");
-               $Domain = PrependString("http://", $SearchForm->Context->Configuration["DOMAIN"]);
                while ($Row = $SearchForm->Context->Database->GetRow($SearchForm->Data)) {
                   $Comment->Clear();
                   $Comment->GetPropertiesFromDataSet($Row, $SearchForm->Context->Session->UserID);
@@ -195,11 +196,11 @@ if ($Context->SelfUrl == "index.php") {
                      
                   if ($Counter < $SearchForm->Context->Configuration["SEARCH_RESULTS_PER_PAGE"]) {
                      $Properties["Title"] = $Comment->Discussion;
-                     $Properties["Link"] = AppendFolder($Domain, "comments.php?DiscussionID=".$Comment->DiscussionID."&amp;Focus=".$Comment->CommentID."#Comment_".$Comment->CommentID);
+                     $Properties["Link"] = GetUrl($SearchForm->Context->Configuration, "comments.php", "", "DiscussionID", $Comment->DiscussionID, "", "Focus=".$Comment->CommentID."#Comment_".$Comment->CommentID);
                      $Properties["Published"] = FixDateForRSS2(@$Row["DateCreated"]);
                      $Properties["Updated"] = FixDateForRSS2(@$Row["DateEdited"]);
                      $Properties["AuthorName"] = $Comment->AuthUsername;
-                     $Properties["AuthorUrl"] = AppendFolder($Domain, "account.php?u=".$Comment->AuthUserID);
+                     $Properties["AuthorUrl"] = GetUrl($SearchForm->Context->Configuration, "account.php", "", "u", $Comment->AuthUserID);
                      
                      // Format the comment according to the defined formatter for that comment
                      $Properties["Content"] = $Comment->Body;
@@ -233,8 +234,9 @@ if ($Context->SelfUrl == "index.php") {
       }
    }
 } elseif ($Context->SelfUrl == "comments.php") {
-   $Foot->AddLink("comments.php".$p->GetQueryString(), $Context->GetDefinition("RSS2Feed"), "", 20);
-   $Head->AddString("<link rel=\"alternate\" type=\"application/rss+xml\" href=\"comments.php".$p->GetQueryString()."\" title=\"".$Context->GetDefinition("RSS2Feed")."\" />");
+   $FeedUrl = GetUrl($Configuration, "comments.php", "", "", "", "", $p->GetQueryString());
+   $Foot->AddLink($FeedUrl, $Context->GetDefinition("RSS2Feed"), "", 20);
+   $Head->AddString("<link rel=\"alternate\" type=\"application/rss+xml\" href=\"".$FeedUrl."\" title=\"".$Context->GetDefinition("RSS2Feed")."\" />");
    
    // Handle searches
    if ($FeedType == "RSS2") {      
@@ -251,18 +253,17 @@ if ($Context->SelfUrl == "index.php") {
             $Feed = "";
             $Properties = array();
             $Comment = $CommentGrid->Context->ObjectFactory->NewContextObject($CommentGrid->Context, "Comment");
-            $Domain = PrependString("http://", $CommentGrid->Context->Configuration["DOMAIN"]);
             while ($Row = $CommentGrid->Context->Database->GetRow($CommentGrid->CommentData)) {
                $Comment->Clear();
                $Comment->GetPropertiesFromDataSet($Row, $CommentGrid->Context->Session->UserID);
                $Comment->FormatPropertiesForDisplay();
                   
                $Properties["Title"] = $CommentGrid->Discussion->Name;
-               $Properties["Link"] = AppendFolder($Domain, "comments.php?DiscussionID=".$Comment->DiscussionID."&amp;Focus=".$Comment->CommentID."#Comment_".$Comment->CommentID);
+               $Properties["Link"] = GetUrl($CommentGrid->Context->Configuration, "comments.php", "", "DiscussionID", $Comment->DiscussionID, "", "Focus=".$Comment->CommentID."#Comment_".$Comment->CommentID);
                $Properties["Published"] = FixDateForRSS2(@$Row["DateCreated"]);
                $Properties["Updated"] = FixDateForRSS2(@$Row["DateEdited"]);
                $Properties["AuthorName"] = $Comment->AuthUsername;
-               $Properties["AuthorUrl"] = AppendFolder($Domain, "account.php?u=".$Comment->AuthUserID);
+               $Properties["AuthorUrl"] = GetUrl($CommentGrid->Context->Configuration, "account.php", "", "u", $Comment->AuthUserID);
                
                // Format the comment according to the defined formatter for that comment
                $Properties["Content"] = $Comment->Body;

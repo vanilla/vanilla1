@@ -38,7 +38,7 @@ for ($i = 0; $i < $RequiredPermissionsCount; $i++) {
 		break;
 	}
 }
-if (!$Allowed) header("location: account.php");
+if (!$Allowed) header("location:".GetUrl($Configuration, "index.php"));
 
 // 1. DEFINE VARIABLES AND PROPERTIES SPECIFIC TO THIS PAGE
 
@@ -52,13 +52,13 @@ if (!$Allowed) header("location: account.php");
    // Build the control panel
 	$AdminOptions = $Context->GetDefinition("AdministrativeOptions");
    $Panel->AddList($AdminOptions, 10);
-	if ($Context->Session->User->Permission("PERMISSION_CHANGE_APPLICATION_SETTINGS")) $Panel->AddListItem($AdminOptions, $Context->GetDefinition("ApplicationSettings"), "settings.php?PostBackAction=Globals", "", "", 10);
-	if ($Context->Session->User->Permission("PERMISSION_CHECK_FOR_UPDATES")) $Panel->AddListItem($AdminOptions, $Context->GetDefinition("UpdateCheck"), "settings.php?PostBackAction=UpdateCheck", "", "", 20);
-	if ($Context->Session->User->Permission("PERMISSION_MANAGE_EXTENSIONS")) $Panel->AddListItem($AdminOptions, $Context->GetDefinition("ManageExtensions"), "settings.php?PostBackAction=Extensions", "", "", 30);
-	if ($Context->Session->User->Permission("PERMISSION_MANAGE_LANGUAGE")) $Panel->AddListItem($AdminOptions, $Context->GetDefinition("LanguageManagement"), "settings.php?PostBackAction=LanguageChange", "", "", 40);
+	if ($Context->Session->User->Permission("PERMISSION_CHANGE_APPLICATION_SETTINGS")) $Panel->AddListItem($AdminOptions, $Context->GetDefinition("ApplicationSettings"), GetUrl($Configuration, "settings.php", "", "", "", "", "PostBackAction=Globals"), "", "", 10);
+	if ($Context->Session->User->Permission("PERMISSION_CHECK_FOR_UPDATES")) $Panel->AddListItem($AdminOptions, $Context->GetDefinition("UpdateCheck"), GetUrl($Configuration, "settings.php", "", "", "", "", "PostBackAction=UpdateCheck"), "", "", 20);
+	if ($Context->Session->User->Permission("PERMISSION_MANAGE_EXTENSIONS")) $Panel->AddListItem($AdminOptions, $Context->GetDefinition("ManageExtensions"), GetUrl($Configuration, "settings.php", "", "", "", "", "PostBackAction=Extensions"), "", "", 30);
+	if ($Context->Session->User->Permission("PERMISSION_MANAGE_LANGUAGE")) $Panel->AddListItem($AdminOptions, $Context->GetDefinition("LanguageManagement"), GetUrl($Configuration, "settings.php", "", "", "", "", "PostBackAction=LanguageChange"), "", "", 40);
 	if ($Context->Session->User->Permission("PERMISSION_ADD_ROLES")
 		|| $Context->Session->User->Permission("PERMISSION_EDIT_ROLES")
-		|| $Context->Session->User->Permission("PERMISSION_REMOVE_ROLES")) $Panel->AddListItem($AdminOptions, $Context->GetDefinition("RoleManagement"), "settings.php?PostBackAction=Roles", "", "", 40);
+		|| $Context->Session->User->Permission("PERMISSION_REMOVE_ROLES")) $Panel->AddListItem($AdminOptions, $Context->GetDefinition("RoleManagement"), GetUrl($Configuration, "settings.php", "", "", "", "", "PostBackAction=Roles"), "", "", 40);
 		
 	if ($Context->Configuration["USE_CATEGORIES"]
 		&& ($Context->Session->User->Permission("PERMISSION_ADD_CATEGORIES")
@@ -66,14 +66,14 @@ if (!$Allowed) header("location: account.php");
 			|| $Context->Session->User->Permission("PERMISSION_REMOVE_CATEGORIES")
 			|| $Context->Session->User->Permission("PERMISSION_SORT_CATEGORIES")
 			)
-		) $Panel->AddListItem($AdminOptions, $Context->GetDefinition("CategoryManagement"), "settings.php?PostBackAction=Categories", "", "", 50);
+		) $Panel->AddListItem($AdminOptions, $Context->GetDefinition("CategoryManagement"), GetUrl($Configuration, "settings.php", "", "", "", "", "PostBackAction=Categories"), "", "", 50);
 		
-	if ($Context->Session->User->Permission("PERMISSION_MANAGE_REGISTRATION")) $Panel->AddListItem($AdminOptions, $Context->GetDefinition("RegistrationManagement"), "settings.php?PostBackAction=RegistrationChange", "", "", 60);
+	if ($Context->Session->User->Permission("PERMISSION_MANAGE_REGISTRATION")) $Panel->AddListItem($AdminOptions, $Context->GetDefinition("RegistrationManagement"), GetUrl($Configuration, "settings.php", "", "", "", "", "PostBackAction=RegistrationChange"), "", "", 60);
 	
 	if ($Context->Session->User->Permission("PERMISSION_APPROVE_APPLICANTS")) {
 		$UserManager = $Context->ObjectFactory->NewContextObject($Context, "UserManager");
 		$ApplicantCount = $UserManager->GetApplicantCount();
-		$Panel->AddListItem($AdminOptions, $Context->GetDefinition("MembershipApplicants"), "search.php?PostBackAction=Search&Type=Users&Keywords=roles:Applicant;sort:Date;", $ApplicantCount." ".$Context->GetDefinition("New"), "", 100);
+		$Panel->AddListItem($AdminOptions, $Context->GetDefinition("MembershipApplicants"), GetUrl($Configuration, "search.php", "", "", "", "", "PostBackAction=Search&Type=Users&Keywords=roles:Applicant;sort:Date;"), $ApplicantCount." ".$Context->GetDefinition("New"), "", 100);
 	}
    
    // Create the default view

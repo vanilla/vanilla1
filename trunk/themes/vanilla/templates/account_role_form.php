@@ -27,7 +27,7 @@ if (!$this->Context->Session->User->Permission("PERMISSION_CHANGE_USER_ROLE")) {
          <div class=\"InputNote\">".$this->Context->GetDefinition("RoleChangeInfoNotes")."</div>
          <div class=\"FormButtons\">
             <input type=\"submit\" name=\"btnSave\" value=\"".$this->Context->GetDefinition("ChangeRole")."\" class=\"Button SubmitButton\" />
-            <a href=\"./account.php?u=".$this->User->UserID."\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>
+            <a href=\"".GetUrl($this->Context->Configuration, "account.php", "", "u", $this->User->UserID)."\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>
          </div>
          </form>
       </div>

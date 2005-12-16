@@ -60,12 +60,12 @@ if (in_array($Context->SelfUrl, array("index.php", "comments.php"))) {
                   $Discussion->FormatPropertiesForDisplay();
                   if ($Discussion->DiscussionID != $OptionalDiscussionID) $OtherBookmarksExist = 1;
                   if ($Discussion->DiscussionID == $OptionalDiscussionID && $Discussion->Bookmarked) $ThisDiscussionIsBookmarked = 1;
-                  $sReturn .= "<li id=\"Bookmark_".$Discussion->DiscussionID."\"".(($Discussion->DiscussionID == $OptionalDiscussionID && !$Discussion->Bookmarked)?" style=\"display: none;\"":"")."><a class=\"PanelLink\" href=\"comments.php?DiscussionID=".$Discussion->DiscussionID."\">".$Discussion->Name."</a>";
+                  $sReturn .= "<li id=\"Bookmark_".$Discussion->DiscussionID."\"".(($Discussion->DiscussionID == $OptionalDiscussionID && !$Discussion->Bookmarked)?" style=\"display: none;\"":"")."><a class=\"PanelLink\" href=\"".GetUrl($Context->Configuration, "comments.php", "", "DiscussionID", $Discussion->DiscussionID)."\">".$Discussion->Name."</a>";
                   if ($Discussion->NewComments > 0) $sReturn .= " <small><strong>".$Discussion->NewComments." ".$Context->GetDefinition("New")."</strong></small>";
                   $sReturn .= "</li>";
                }
                if ($Count >= $Context->Configuration["PANEL_BOOKMARK_COUNT"]) {
-                  $sReturn .= "<li><a class=\"PanelLink\" href=\"./?View=YourBookmarks\">".$Context->GetDefinition("ShowAll")."</a></li>";
+                  $sReturn .= "<li><a class=\"PanelLink\" href=\"".GetUrl($Context->Configuration, "index.php", "", "", "", "", "View=YourBookmarks")."\">".$Context->GetDefinition("ShowAll")."</a></li>";
                }
       
                $sReturn = "<h2 id=\"BookmarkTitle\"".(($OtherBookmarksExist || $ThisDiscussionIsBookmarked)?"":" style=\"display: none;\"").">".$Context->GetDefinition("Bookmarks")."</h2>
@@ -95,9 +95,9 @@ if (in_array($Context->SelfUrl, array("index.php", "comments.php"))) {
                $Discussion->FormatPropertiesForDisplay();
                $Suffix = "";
                if ($Discussion->NewComments > 0) $Suffix .= $Discussion->NewComments." ".$Context->GetDefinition("New");
-               $Panel->AddListItem($ListTitle, $Discussion->Name, "comments.php?DiscussionID=".$Discussion->DiscussionID, $Suffix);
+               $Panel->AddListItem($ListTitle, $Discussion->Name, GetUrl($Context->Configuration, "comments.php", "DiscussionID", $Discussion->DiscussionID), $Suffix);
             }
-            if ($ActualRecords >= $MaxRecords) $Panel->AddListItem($ListTitle, $Context->GetDefinition("ShowAll"), "./?View=".$UrlAction);
+            if ($ActualRecords >= $MaxRecords) $Panel->AddListItem($ListTitle, $Context->GetDefinition("ShowAll"), GetUrl($Context->Configuration, "index.php", "", "", "", "", "View=".$UrlAction));
          }
       }
    }

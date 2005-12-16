@@ -4,7 +4,7 @@
 echo("<div class=\"FormComplete\">
    <h1>".$this->Context->GetDefinition("SignOutSuccessful")."</h1>
    <ul>
-      <li><a href=\"".$this->Context->SelfUrl."\">".$this->Context->GetDefinition("SignInAgain")."</a></li>
+      <li><a href=\"".GetUrl($this->Context->Configuration, $this->Context->SelfUrl)."\">".$this->Context->GetDefinition("SignInAgain")."</a></li>
    </ul>
 </div>");
 ?>

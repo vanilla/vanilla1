@@ -31,7 +31,11 @@ function GetCategoryJumper(&$Context) {
       $Select->Name = "CategoryID";
       $Select->SelectedID = ForceIncomingInt("CategoryID", 0);
       $Select->CssClass = "CategoryJumper";
-      $Select->Attributes = "onchange=\"document.location='./'+(this.options[this.selectedIndex].value > 0 ? '?CategoryID='+this.options[this.selectedIndex].value : '');\"";
+      if ($Context->Configuration["URL_BUILDING_METHOD"] == "mod_rewrite") {
+         $Select->Attributes = "onchange=\"document.location='./'+(this.options[this.selectedIndex].value > 0 ? this.options[this.selectedIndex].value+'/' : 'discussions/');\"";
+      } else {
+         $Select->Attributes = "onchange=\"document.location='./'+(this.options[this.selectedIndex].value > 0 ? '?CategoryID='+this.options[this.selectedIndex].value : '');\"";
+      }
       
       $Select->AddOption(0, $Context->GetDefinition("AllUnblockedCategories"));         
       $LastBlocked = -1;

@@ -374,7 +374,7 @@ if ($Context->SelfUrl == "settings.php" && $Context->Session->User->Permission("
 				<div class=\"Form LanguageChange\">
 					<div class=\"InputNote\">".$this->Context->GetDefinition("DiscussionsPurgedSuccessfully")."</div>");
 			}
-					echo("<div class=\"FormLink\"><a href=\"./settings.php?PostBackAction=Cleanup\">".$this->Context->GetDefinition("ClickHereToContinue")."</a></div>
+					echo("<div class=\"FormLink\"><a href=\"".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=Cleanup")."\">".$this->Context->GetDefinition("ClickHereToContinue")."</a></div>
 				</div>
 			</div>");
 		}
@@ -409,7 +409,7 @@ if ($Context->SelfUrl == "settings.php" && $Context->Session->User->Permission("
 						<div class=\"Form Cleanup\">
 							<div class=\"InputNote\">
 								<h2>".$this->Context->GetDefinition("BackupDatabase")."</h2>
-								<a href=\"settings.php?PostBackAction=BackupDatabase\">".$this->Context->GetDefinition("ClickHereToBackupDatabase")."</a>
+								<a href=\"".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=BackupDatabase")."\">".$this->Context->GetDefinition("ClickHereToBackupDatabase")."</a>
 								<p>".$this->Context->GetDefinition("BackupDatabaseNotes")."</p>
 							</div>
 
@@ -419,7 +419,7 @@ if ($Context->SelfUrl == "settings.php" && $Context->Session->User->Permission("
 								<script language=\"Javascript\">
 									function RemoveUsers() {
 										if (confirm('".$this->Context->GetDefinition("RemoveUsersConfirm")."')) {
-											document.location = 'settings.php?PostBackAction=CleanupUsers&Days='+document.frmUserCleanup.Days.options[document.frmUserCleanup.Days.selectedIndex].value;
+											document.location = '".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=CleanupUsers&Days='+document.frmUserCleanup.Days.options[document.frmUserCleanup.Days.selectedIndex].value").";
 										}
 									}
 								</script>
@@ -433,17 +433,17 @@ if ($Context->SelfUrl == "settings.php" && $Context->Session->User->Permission("
 								<script language=\"Javascript\">
 									function RemoveDiscussions() {
 										if (confirm('".$this->Context->GetDefinition("RemoveDiscussionsConfirm")."')) {
-											document.location = 'settings.php?PostBackAction=CleanupDiscussions';
+											document.location = '".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=CleanupDiscussions")."';
 										}
 									}
 									function RemoveComments() {
 										if (confirm('".$this->Context->GetDefinition("RemoveCommentsConfirm")."')) {
-											document.location = 'settings.php?PostBackAction=CleanupComments';
+											document.location = '".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=CleanupComments")."';
 										}
 									}
 									function PurgeDiscussions() {
 										if (confirm('".$this->Context->GetDefinition("PurgeDiscussionsConfirm")."')) {
-											document.location = 'settings.php?PostBackAction=PurgeDiscussions';
+											document.location = '".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=PurgeDiscussions")."';
 										}
 									}
 								</script>
@@ -466,5 +466,5 @@ if ($Context->SelfUrl == "settings.php" && $Context->Session->User->Permission("
 	
 	$CleanupForm = $Context->ObjectFactory->NewContextObject($Context, "CleanupForm");
 	$Page->AddRenderControl($CleanupForm, $Configuration["CONTROL_POSITION_BODY_ITEM"] + 80);
-	$Panel->AddListItem($Context->GetDefinition("AdministrativeOptions"), $Context->GetDefinition("SystemCleanup"), "settings.php?PostBackAction=Cleanup", "", "", 80);
+	$Panel->AddListItem($Context->GetDefinition("AdministrativeOptions"), $Context->GetDefinition("SystemCleanup"), GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=Cleanup"), "", "", 80);
 }

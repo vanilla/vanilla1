@@ -8,7 +8,6 @@ echo($this->PageJump
 $Discussion = $this->Context->ObjectFactory->NewObject($this->Context, "Discussion");
 $FirstRow = 1;
 $CurrentUserJumpToLastCommentPref = $this->Context->Session->User->Preference("JumpToLastReadComment");
-$UrlBuilder = $this->Context->ObjectFactory->NewObject($this->Context, "UrlBuilder");
 $DiscussionList = "";
 while ($Row = $this->Context->Database->GetRow($this->DiscussionData)) {
    $Discussion->Clear();

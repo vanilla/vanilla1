@@ -44,7 +44,7 @@ if (
 					$s->Clear();
 					$s->GetPropertiesFromDataSet($Row);
 					$s->FormatPropertiesForDisplay();
-					$String .= "<li id=\"SavedSearch_".$s->SearchID."\"><a class=\"PanelLink\" href=\"search.php?SearchID=".$s->SearchID."\">".$s->Label."</a>";
+					$String .= "<li id=\"SavedSearch_".$s->SearchID."\"><a class=\"PanelLink\" href=\"".GetUrl($this->Context->Configuration, "search.php", "", "SearchID", $s->SearchID)."\">".$s->Label."</a>";
 					if ($AllowEdit) $String .= " (<a href=\"javascript:RemoveSearch(".$s->SearchID.");\">".$Context->GetDefinition("RemoveLower")."</a>)";
 					$String .= "</li>";
 				}
@@ -92,7 +92,7 @@ if ($Context->SelfUrl == "search.php") {
          // $SearchForm->PostBackAction = "Search";
 			
 			// Post back to the page again so that the new search is loaded in the panel
-         header("location: search.php?SearchID=".$SearchForm->Search->SearchID);
+         header("location:".GetUrl($Configuration, "search.php", "saved/", "SearchID", $SearchForm->Search->SearchID));
 			die();
       }
 	}

@@ -35,9 +35,9 @@ echo("<div class=\"Title CommentInputTitle\">".$this->Title."</div>
       $this->CallDelegate("CommentForm_PostSubmitRender");
       if ($this->PostBackAction == "SaveComment" || ($this->PostBackAction == "" && $Comment->CommentID > 0)) {
          if ($this->Comment->DiscussionID > 0) {
-            echo("<a href=\"./comments.php?DiscussionID=".$this->Comment->DiscussionID."\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>");
+            echo("<a href=\"".GetUrl($this->Context->Configuration, "comments.php", "", "DiscussionID", $this->Comment->DiscussionID)."\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>");
          } else {
-            echo("<a href=\"./\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>");
+            echo("<a href=\"".GetUrl($this->Context->Configuration, "index.php")."\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>");
          }
       }
    echo("</div>");

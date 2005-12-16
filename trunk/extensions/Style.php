@@ -277,11 +277,11 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 					$this->Style = $this->Context->ObjectFactory->NewContextObject($this->Context, "Style");
 					$this->Style->GetPropertiesFromForm($this->Context);
 					if ($this->StyleManager->SaveStyle($this->Style)) {
-						header("location: settings.php?PostBackAction=Styles");
+						header("location: ".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=Styles"));
 					}
 				} elseif ($this->PostBackAction == "ProcessStyleRemove") {
 					if ($this->StyleManager->RemoveStyle($StyleID, $ReplacementStyleID)) {
-						header("location: settings.php?PostBackAction=Styles");
+						header("location: ".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=Styles"));
 					}
 				}
 				
@@ -316,10 +316,7 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 				
 				if ($this->PostBackAction == "Style") {
 					$this->PostBackParams->Set("PostBackAction", "ProcessStyle");
-					echo("<script language=\"javascript\">
-						var sac = new AutoComplete('sac');
-						</script>
-						<div class=\"SettingsForm\">
+					echo("<div class=\"SettingsForm\">
 						<h1>".$this->Context->GetDefinition("StyleManagement")."</h1>");
 						if ($StyleID > 0) {
 							$this->StyleSelect->Attributes = "onchange=\"document.location='?PostBackAction=Style&StyleID='+this.options[this.selectedIndex].value;\"";
@@ -347,8 +344,7 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 						<dl>
 							<dt>".$this->Context->GetDefinition("StyleAuthor")."</dt>
 							<dd>
-								<input type=\"text\" name=\"AuthUsername\" value=\"".($this->Style->AuthUserID == 0?"":$this->Style->AuthUsername)."\" maxlength=\"20\" class=\"SmallInput\" id=\"txtStyleAuthor\" onKeyUp=\"return sac.LoadData(this, event, 'StyleAuthorACContainer');\" onblur=\"sac.HideAutoComplete();\" autocomplete=\"off\" />
-								<div id=\"StyleAuthorACContainer\" class=\"AutoCompleteContainer\" style=\"display: none;\"></div>
+								<input autocomplete=\"off\" id=\"AuthUsername\" name=\"AuthUsername\" type=\"text\" value=\"".FormatStringForDisplay(($this->Style->AuthUserID == 0?"":$this->Style->AuthUsername), 0)."\" class=\"WhisperBox\" maxlength=\"20\" /><div class=\"Autocomplete\" id=\"AuthUsername_Choices\"></div><script type=\"text/javascript\">new Ajax.Autocompleter('AuthUsername', 'AuthUsername_Choices', './ajax/getusers.php', {paramName: \"Search\"})</script>
 							</dd>
 						</dl>
 						<div class=\"InputNote\">".$this->Context->GetDefinition("StyleAuthorNotes")."</div>
@@ -364,13 +360,13 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 						<div class=\"InputNote\">".$this->Context->GetDefinition("PreviewImageFilenameNotes")."</div>
 						<div class=\"FormButtons\">
 							<input type=\"submit\" name=\"btnSave\" value=\"".$this->Context->GetDefinition("Save")."\" class=\"Button SubmitButton\" />
-							<a href=\"./settings.php?PostBackAction=Styles\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>
+							<a href=\"".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=Styles")."\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>
 						</div>
 					</div></div>");			
 					
 				} elseif ($this->PostBackAction == "StyleRemove") {
 					$this->PostBackParams->Set("PostBackAction", "ProcessStyleRemove");
-					$this->StyleSelect->Attributes = "onchange=\"document.location='?PostBackAction=StyleRemove&StyleID='+this.options[this.selectedIndex].value;\"";
+					$this->StyleSelect->Attributes = "onchange=\"document.location='".GetUrl($this->Context->Configuration, "index.php", "", "", "", "", "PostBackAction=StyleRemove&StyleID='+this.options[this.selectedIndex].value").";\"";
 					$this->StyleSelect->SelectedID = $StyleID;
 					echo("<div class=\"SettingsForm\">
 						<h1>".$this->Context->GetDefinition("StyleManagement")."</h1>
@@ -395,7 +391,7 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 								<div class=\"InputNote\">".$this->Context->GetDefinition("ReplacementStyleNotes")."</div>
 								<div class=\"FormButtons\">
 									<input type=\"submit\" name=\"btnSave\" value=\"".$this->Context->GetDefinition("Remove")."\" class=\"Button SubmitButton\" />
-									<a href=\"./settings.php?PostBackAction=Styles\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>
+									<a href=\"".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=Styles")."\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>
 								</div>");
 							}
 							echo("</form>
@@ -415,14 +411,14 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 										$s->GetPropertiesFromDataSet($Row);
 										$s->FormatPropertiesForDisplay();
 										echo("<li class=\"SortListItem\">
-											<a class=\"SortRemove\" href=\"./settings.php?PostBackAction=StyleRemove&StyleID=".$s->StyleID."\"><img src=\"".$this->Context->StyleUrl."images/btn.remove.gif\" height=\"15\" width=\"15\" border=\"0\" alt=\"".$this->Context->GetDefinition("Remove")."\" /></a>
-											<a class=\"SortEdit\" href=\"./settings.php?PostBackAction=Style&StyleID=".$s->StyleID."\">".$this->Context->GetDefinition("Edit")."</a>
+											<a class=\"SortRemove\" href=\"".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=StyleRemove&StyleID=".$s->StyleID)."\"><img src=\"".$this->Context->StyleUrl."images/btn.remove.gif\" height=\"15\" width=\"15\" border=\"0\" alt=\"".$this->Context->GetDefinition("Remove")."\" /></a>
+											<a class=\"SortEdit\" href=\"".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=Style&StyleID=".$s->StyleID)."\">".$this->Context->GetDefinition("Edit")."</a>
 											".$s->Name."
 										</li>");
 									}
 								}
 							echo("</ul>
-							<div class=\"FormLink\"><a href=\"settings.php?PostBackAction=Style\">".$this->Context->GetDefinition("CreateANewStyle")."</a></div>
+							<div class=\"FormLink\"><a href=\"".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=Style")."\">".$this->Context->GetDefinition("CreateANewStyle")."</a></div>
 						</div>
 					</div>");
 				}
@@ -437,7 +433,7 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 	if ($Context->Session->User->Permission("PERMISSION_MANAGE_STYLES")) {
 		$AdministrativeOptions = $Context->GetDefinition("AdministrativeOptions");
 		$Panel->AddList($AdministrativeOptions, 10);
-		$Panel->AddListItem($AdministrativeOptions, $Context->GetDefinition("StyleManagement"), "settings.php?PostBackAction=Styles", "", "", 70);
+		$Panel->AddListItem($AdministrativeOptions, $Context->GetDefinition("StyleManagement"), GetUrl($Configuration, "settings.php", "", "", "", "", "PostBackAction=Styles"), "", "", 70);
 	}
 } elseif ($Context->SelfUrl == "account.php" && $Context->Session->UserID > 0) {
 	$AccountUserID = ForceIncomingInt("u", $Context->Session->UserID);
@@ -476,7 +472,7 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 									<div class=\"PreviewTitle\">");
 									if ($Style->AuthUserID > 0) {
 										echo(str_replace(array("//1", "//2"),
-											array($Style->Name, "<a href=\"account.php?u=".$Style->AuthUserID."\">".$Style->AuthUsername."</a>"),
+											array($Style->Name, "<a href=\"".GetUrl($this->Context->Configuration, "account.php", "", "u", $Style->AuthUserID)."\">".$Style->AuthUsername."</a>"),
 											$this->Context->GetDefinition("XByY")));
 									} else {
 										echo($Style->Name);
@@ -511,7 +507,7 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 		$AccountOptions = $Context->GetDefinition("AccountOptions");
 		$Panel->AddList($AccountOptions, 10);
 		$Page->AddRenderControl($UserStyleForm, $Configuration["CONTROL_POSITION_BODY_ITEM"] + 1);
-		$Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangeYourStylesheet"), "account.php?PostBackAction=Style", "", "", 50);
+		$Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangeYourStylesheet"), GetUrl($this->Context->Configuration, "account.php", "", "", "", "", "PostBackAction=Style"), "", "", 50);
 	}
 	// Include the style definition on the user's profile & the account profile is being display
 	$PostBackAction = ForceIncomingString("PostBackAction", "");

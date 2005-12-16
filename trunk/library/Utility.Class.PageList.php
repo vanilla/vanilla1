@@ -18,16 +18,19 @@ class PageList {
 	var $TotalRecords;			// Total number of records in dataset.
 	var $PagesToDisplay;		// Maximum number of pages links to display per page.
 	var $PageParameterName; 	// Name to be used for the page parameter in the querystring.
+   var $QueryStringParams;
 	var $CssClass;				// Name of the stylesheet class to be applied to the pagelist.
 	var $NextImage;				// Source of the "next page" image.
 	var $PreviousImage;			// Source of the "previous page" image.
 	var $NextText;
 	var $PreviousText;
-   var $UrlBuilder;
 	var $RewriteRules;
 	var $PageListID;
 	var $Totalled;				// Is there going to be a total records value provided (required for numeric list)
    var $UseTextOnNumericList;	// Should the < and > also use the next and previous text?
+   var $UrlIdName;
+	var $UrlIdValue;
+	var $Context;
 
 	// PRIVATE PROPERTIES
 	var $CurrentPage;			// The page currently being displayed.
@@ -75,6 +78,7 @@ class PageList {
 		$sReturn = "<div class=\"".$this->CssClass."\"";
 		if ($this->PageListID != "") $sReturn .= " id=\"".$this->PageListID."\"";
 		$sReturn .= ">";
+		$QSParams = $this->QueryStringParams->GetQueryString();
 
 		// Define the querystring
 		$iTmpPage = 0;
@@ -82,16 +86,27 @@ class PageList {
 		if ($this->PageCount > 1) {
 			if ($this->CurrentPage > 1) {
 				$iTmpPage = $this->CurrentPage - 1;
-				$this->QueryStringParams->Set($this->PageParameterName, $iTmpPage);
-				$sReturn .= "<a href=\"".$this->UrlBuilder->Get()."\">".Iif($this->PreviousImage != "", "<img src='".$this->PreviousImage."' border=\"0\" alt=\"".$this->PreviousText."\" />", $this->PreviousText)."</a> ";
+				$sReturn .= "<a href=\"".GetUrl($this->Context->Configuration,
+					$this->Context->SelfUrl,
+					"",
+					$this->UrlIdName,
+					$this->UrlIdValue,
+					$iTmpPage,
+					$QSParams)
+					."\">".Iif($this->PreviousImage != "", "<img src='".$this->PreviousImage."' border=\"0\" alt=\"".$this->PreviousText."\" />", $this->PreviousText)."</a> ";
 			} else {
 				$sReturn .= Iif($this->PreviousImage != "", "<img src=\"".$this->PreviousImage."\" border=\"0\" alt=\"".$this->PreviousText."\" />", $this->PreviousText)." ";
 			}
 
 			if ($this->CurrentPage != $this->PageCount) {
 				$iTmpPage = $this->CurrentPage + 1;
-				$this->UrlBuilder->Set($this->PageParameterName, $iTmpPage);
-				$sReturn .= " <a href=\"".$this->UrlBuilder->Get()."\">".Iif($this->NextImage != "", "<img src=\"".$this->NextImage."\" border=\"0\" alt=\"".$this->NextText."\" />", $this->NextText)."</a> ";
+				$sReturn .= " <a href=\"".GetUrl($this->Context->Configuration,
+					$this->Context->SelfUrl,
+					"",
+					$this->UrlIdName,
+					$this->UrlIdValue,
+					$iTmpPage,
+					$QSParams)."\">".Iif($this->NextImage != "", "<img src=\"".$this->NextImage."\" border=\"0\" alt=\"".$this->NextText."\" />", $this->NextText)."</a> ";
 			} else {
 				$sReturn .= " ".Iif($this->NextImage != "", "<img src=\"".$this->NextImage."\" border=\"0\" alt=\"".$this->NextText."\" />", $this->NextText)." ";
 			}
@@ -104,6 +119,7 @@ class PageList {
 	}
 	// Builds a numeric page list (ie. "prev 1 2 3 next").
 	function GetNumericList() {
+		
 		$PreviousText = "&#60;";
 		$NextText = "&#62;";
 		if ($this->UseTextOnNumericList) {
@@ -115,7 +131,7 @@ class PageList {
 		$PageCount = $this->PageCount;
 		$CurrentPage = $this->CurrentPage;
 		$PageParameterName = $this->PageParameterName;
-		
+		$QSParams = $this->QueryStringParams->GetQueryString();
 
 		// Variables that help define which page numbers to display:
 		// Subtract the first and last page from the number of pages to display
@@ -144,20 +160,35 @@ class PageList {
 		if ($PageCount > 1) {
 			if ($CurrentPage > 1) {
 				$iTmpPage = $CurrentPage - 1;
-				$this->UrlBuilder->Set($PageParameterName, $iTmpPage);
-				$sReturn .= "\t<li><a href=\"".$this->UrlBuilder->Get()."\">".Iif($this->PreviousImage != "", "<img src='".$this->PreviousImage."' border=\"0\" alt=\"".$this->PreviousText."\" />", $PreviousText)."</a></li>\r\n";
+				$sReturn .= "\t<li><a href=\"".GetUrl($this->Context->Configuration,
+					$this->Context->SelfUrl,
+					"",
+					$this->UrlIdName,
+					$this->UrlIdValue,
+					$iTmpPage,
+					$QSParams)."\">".Iif($this->PreviousImage != "", "<img src='".$this->PreviousImage."' border=\"0\" alt=\"".$this->PreviousText."\" />", $PreviousText)."</a></li>\r\n";
 			} else {
 				$sReturn .= "\t<li>".Iif($this->PreviousImage != "", "<img src=\"".$this->PreviousImage."\" border=\"0\" alt=\"".$this->PreviousText."\" />", $PreviousText)."</li>\r\n";
-			}
+			}					
 
 			// Display first page & elipsis if we have moved past the second page
 			if ($FirstPage > 2) {
-				$this->UrlBuilder->Set($PageParameterName, "1");
-				$sReturn .= "\t<li><a href=\"".$this->UrlBuilder->Get()."\">1</a></li>\r\n"
+				$sReturn .= "\t<li><a href=\"".GetUrl($this->Context->Configuration,
+					$this->Context->SelfUrl,
+					"",
+					$this->UrlIdName,
+					$this->UrlIdValue,
+					1,
+					$QSParams)."\">1</a></li>\r\n"
 					."\t<li>...</li>\r\n";
 			} elseif ($FirstPage == 2) {
-				$this->UrlBuilder->Set($PageParameterName, "1");
-				$sReturn .= "\t<li><a href=\"".$this->UrlBuilder->Get()."\">1</a></li>\r\n";
+				$sReturn .= "\t<li><a href=\"".GetUrl($this->Context->Configuration,
+					$this->Context->SelfUrl,
+					"",
+					$this->UrlIdName,
+					$this->UrlIdValue,
+					1,
+					$QSParams)."\">1</a></li>\r\n";
 			}
 			
          $Loop = 0;
@@ -167,26 +198,46 @@ class PageList {
 					if ($Loop == $CurrentPage) {
 						$sReturn .= "\t<li class=\"CurrentPage\">".$Loop."</li>\r\n";
 					} else {
-						$this->UrlBuilder->Set($PageParameterName, $Loop);
-						$sReturn .= "\t<li><a href=\"".$this->UrlBuilder->Get()."\">".$Loop."</a></li>\r\n";
+						$sReturn .= "\t<li><a href=\"".GetUrl($this->Context->Configuration,
+							$this->Context->SelfUrl,
+							"",
+							$this->UrlIdName,
+							$this->UrlIdValue,
+							$Loop,
+							$QSParams)."\">".$Loop."</a></li>\r\n";
 					}
 				}
 			}
 
 			// Display last page & elipsis if we are not yet at the second last page
 			if ($CurrentPage < ($PageCount - $MidPoint) && $PageCount > $this->PagesToDisplay + 1) {
-				$this->UrlBuilder->Set($PageParameterName, $PageCount);
 				$sReturn .= "\t<li>...</li>\r\n"
-					."\t<li><a href=\"".$this->UrlBuilder->Get()."\">".$PageCount."</a></li>\r\n";
+					."\t<li><a href=\"".GetUrl($this->Context->Configuration,
+						$this->Context->SelfUrl,
+						"",
+						$this->UrlIdName,
+						$this->UrlIdValue,
+						$PageCount,
+						$QSParams)."\">".$PageCount."</a></li>\r\n";
 			} else if ($CurrentPage == ($PageCount - $MidPoint) && ($PageCount > $this->PagesToDisplay)) {
-				$this->UrlBuilder->Set($PageParameterName, $PageCount);
-				$sReturn .= "\t<li><a href=\"".$this->UrlBuilder->Get()."\">".$PageCount."</a></li>\r\n";
+				$sReturn .= "\t<li><a href=\"".GetUrl($this->Context->Configuration,
+					$this->Context->SelfUrl,
+					"",
+					$this->UrlIdName,
+					$this->UrlIdValue,
+					$PageCount,
+					$QSParams)."\">".$PageCount."</a></li>\r\n";
 			}
 
 			if ($CurrentPage != $PageCount) {
 				$iTmpPage = $CurrentPage + 1;
-				$this->UrlBuilder->Set($PageParameterName, $iTmpPage);
-				$sReturn .= "\t<li><a href=\"".$this->UrlBuilder->Get()."\">".Iif($this->NextImage != "", "<img src=\"".$this->NextImage."\" border=\"0\" alt=\"".$this->NextText."\" />", $NextText)."</a></li>\r\n";
+				$sReturn .= "\t<li><a href=\"".GetUrl($this->Context->Configuration,
+					$this->Context->SelfUrl,
+					"",
+					$this->UrlIdName,
+					$this->UrlIdValue,
+					$iTmpPage,
+					$QSParams)."\">".Iif($this->NextImage != "", "<img src=\"".$this->NextImage."\" border=\"0\" alt=\"".$this->NextText."\" />", $NextText)."</a></li>\r\n";
 			} else {
 				$sReturn .= "\t<li>".Iif($this->NextImage != "", "<img src=\"".$this->NextImage."\" border=\"0\" alt=\"".$this->NextText."\" />", $NextText)."</li>\r\n";
 			}
@@ -216,16 +267,21 @@ class PageList {
 		return $sReturn;
 	}
 	
-	function PageList(&$Context) {
+	function PageList(&$Context, $urlIdName = "", $urlIdValue = "") {
+		$this->UrlIdName = $urlIdName;
+		$this->UrlIdValue = $urlIdValue;
 		$this->CurrentPage = 0;
 		$this->isPropertiesDefined = 0;
 		$this->QueryStringParams = $Context->ObjectFactory->NewObject($Context, "Parameters");
 		$this->QueryStringParams->DefineCollection($_GET);
+		$this->QueryStringParams->Remove($this->UrlIdName);
+		$this->QueryStringParams->Remove("page");
 		$this->PageListID = "";
 		$this->Totalled = 1;
 		$this->NextText = $Context->Configuration["PAGELIST_NEXT_TEXT"];
 		$this->PreviousText = $Context->Configuration["PAGELIST_PREVIOUS_TEXT"];
 		$this->UseTextOnNumericList = $Context->Configuration["PAGELIST_NUMERIC_TEXT"];
+		$this->Context = &$Context;
 	}
 }
 ?>

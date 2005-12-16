@@ -54,7 +54,7 @@ if ($Context->SelfUrl == "account.php") {
                      echo("<blockquote>
                         <h2>".$UserHistory->Role."</strong></h2> <small>(".TimeDiff($this->Context, $UserHistory->Date, mktime()).")</small>
                         ".str_replace(array("//1", "//2"),
-                           array(($UserHistory->AdminUserID == 0?$this->Context->GetDefinition("Applicant"):"<a href=\"account.php?u=".$UserHistory->AdminUserID."\">".$UserHistory->AdminUsername."</a>"), $UserHistory->Notes),
+                           array(($UserHistory->AdminUserID == 0?$this->Context->GetDefinition("Applicant"):"<a href=\"".GetUrl($this->Context->Configuration, "account.php", "", "u", $UserHistory->AdminUserID)."\">".$UserHistory->AdminUsername."</a>"), $UserHistory->Notes),
                            $this->Context->GetDefinition("RoleAssignedByX"))
                      ."</blockquote>");
                   }

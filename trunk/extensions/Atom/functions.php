@@ -70,19 +70,17 @@ function FormatStringForAtomSummary($String) {
 }
 
 function ReturnWrappedFeedForAtom(&$Context, $FeedItems) {
-	$Domain = PrependString("http://", $Context->Configuration["DOMAIN"]);
 	$p = $Context->ObjectFactory->NewObject($Context, "Parameters");
 	$p->DefineCollection($_GET);
-   $SelfUrl = AppendFolder($Domain, $Context->SelfUrl);
-	$SelfLink = $SelfUrl.$p->GetQueryString();
+	$SelfLink = GetUrl($Context->Configuration, $Context->SelfUrl, "", "", "", "", $p->GetQueryString());
 	$p->Remove("Feed");
-	$AlternateLink = $SelfUrl.$p->GetQueryString();
+	$AlternateLink = GetUrl($Context->Configuration, $Context->SelfUrl, "", "", "", "", $p->GetQueryString());
 			
 	return "<?xml version=\"1.0\" encoding=\"utf-8\"?>
 		<feed xmlns=\"http://www.w3.org/2005/Atom\">
 		  <title type=\"text\">".htmlspecialchars($Context->Configuration["APPLICATION_TITLE"]." - ".$Context->PageTitle)."</title>
 		  <updated>".FixDateForAtom()."</updated>
-		  <id>".$Domain."</id>
+		  <id>".$Context->Configuration["BASE_URL"]."</id>
 		  <link rel=\"alternate\" type=\"text/html\" hreflang=\"en\" href=\"".$AlternateLink."\"/>
 		  <link rel=\"self\" type=\"application/atom+xml\" href=\"".$SelfLink."\"/>
 		  <generator uri=\"http://getvanilla.com/\" version=\"".VANILLA_VERSION."\">

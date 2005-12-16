@@ -39,9 +39,6 @@ $Configuration["SUPPORT_EMAIL"] = "support@yourdomain.com";
 // Framework Settings
 $Configuration["DOMAIN"] = "http://www.yourdomain.com/vanilla/"; 
 
-// Url Rewriting Definitions (not yet functional)
-$Configuration["REWRITE_BASE_URL"] = "http://your.base.url/to/vanilla/";
-
 // Extension Configuration Parameters
 $Configuration["PERMISSION_DATABASE_CLEANUP"] = "0";
 ?>

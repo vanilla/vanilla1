@@ -31,7 +31,7 @@ class CategoryForm extends PostBackControl {
 			if ($this->PostBackAction == "ProcessCategories") {
 				if ($this->Context->Session->User->Permission("PERMISSION_SORT_CATEGORIES")) {
 					$this->CategoryManager->SaveCategoryOrder();
-					header("location: ".$this->Context->SelfUrl);
+					header("location: ".GetUrl($this->Context->Configuration, $this->Context->SelfUrl));
 				} else {
 					$this->IsPostBack = 0;
 				}
@@ -41,7 +41,7 @@ class CategoryForm extends PostBackControl {
 				if (($this->Category->CategoryID > 0 && $this->Context->Session->User->Permission("PERMISSION_EDIT_CATEGORIES"))
 					|| ($this->Category->CategoryID == 0 && $this->Context->Session->User->Permission("PERMISSION_ADD_CATEGORIES"))) {
 					if ($this->CategoryManager->SaveCategory($this->Category)) {
-						header("location: ".$this->Context->SelfUrl."?PostBackAction=Categories");
+						header("location: ".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=Categories"));
 					}
 				} else {
 					$this->IsPostBack = 0;
@@ -49,7 +49,7 @@ class CategoryForm extends PostBackControl {
 			} elseif ($this->PostBackAction == "ProcessCategoryRemove") {
 				if ($this->Context->Session->User->Permission("PERMISSION_REMOVE_CATEGORIES")) {
 					if ($this->CategoryManager->RemoveCategory($CategoryID, $ReplacementCategoryID)) {
-						header("location: ".$this->Context->SelfUrl."?PostBackAction=Categories");
+						header("location: ".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=Categories"));
 					}
 				} else {
 					$this->IsPostBack = 0;

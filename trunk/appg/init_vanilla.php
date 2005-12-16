@@ -72,7 +72,8 @@ $Head->AddStyleSheet($Context->StyleUrl."css/vanilla.handheld.css", "handheld");
 // Add the start button to the panel
 if ($Context->Session->UserID > 0) {
    $CategoryID = ForceIncomingInt("CategoryID", 0);
-	$Panel->AddString("<a class=\"PanelButton StartDiscussionButton\" href=\"post.php".($CategoryID > 0?"?CategoryID=".$CategoryID:"")."\">".$Context->GetDefinition("StartANewDiscussion")."</a>", 1, 1);
+	if ($CategoryID == 0) $CategoryID = "";
+	$Panel->AddString("<a class=\"PanelButton StartDiscussionButton\" href=\"".GetUrl($Configuration, "post.php", "category/", "CategoryID", $CategoryID)."\">".$Context->GetDefinition("StartANewDiscussion")."</a>", 1, 1);
 }
 
 // BUILD THE MAIN MENU

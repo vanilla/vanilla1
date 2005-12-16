@@ -36,7 +36,7 @@ class DiscussionGrid extends Control {
 			$cm = $this->Context->ObjectFactory->NewContextObject($this->Context, "CategoryManager");
 			$Category = $cm->GetCategoryById($CategoryID);
 		}
-		$this->PageJump = "<a class=\"PageJump AllDiscussions\" href=\"./\">".$this->Context->GetDefinition("ShowAll")."</a>";
+		$this->PageJump = "<a class=\"PageJump AllDiscussions\" href=\"".GetUrl($this->Context->Configuration, "index.php")."\">".$this->Context->GetDefinition("ShowAll")."</a>";
 
 		$this->DelegateParameters["DiscussionManager"] = &$DiscussionManager;
 		$this->CallDelegate("PreDataLoad");
@@ -63,8 +63,9 @@ class DiscussionGrid extends Control {
 	function Render() {
 		$this->CallDelegate("PreRender");
 		// Set up the pagelist
-		$pl = $this->Context->ObjectFactory->NewContextObject($this->Context, "PageList");
-		$pl->UrlBuilder = $this->Context->ObjectFactory->NewObject($this->Context, "UrlBuilder", "", $this->Context->Configuration["URL_BUILDING_METHOD"], $this->Context->Configuration["REWRITE_DISCUSSIONS"]);
+      $CategoryID = ForceIncomingInt("CategoryID", 0);
+		if ($CategoryID == 0) $CategoryID = "";
+		$pl = $this->Context->ObjectFactory->NewContextObject($this->Context, "PageList", "CategoryID", $CategoryID);
 		$pl->NextText = $this->Context->GetDefinition("Next");
 		$pl->PreviousText = $this->Context->GetDefinition("Previous");
 		$pl->CssClass = "PageList";

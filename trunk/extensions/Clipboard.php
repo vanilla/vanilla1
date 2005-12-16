@@ -54,7 +54,7 @@ if ($Context->SelfUrl == "account.php") {
    if ($AccountUserID == $Context->Session->UserID) {
       include_once($Configuration["EXTENSIONS_PATH"]."Clipboard/Clipboard.Control.ClipboardForm.php");
       
-      $Panel->AddListItem($Context->GetDefinition("AccountOptions"), $Context->GetDefinition("ManageYourClipboard"), $Context->SelfUrl."?PostBackAction=Clipboard", "", "", 40);
+      $Panel->AddListItem($Context->GetDefinition("AccountOptions"), $Context->GetDefinition("ManageYourClipboard"), GetUrl($Configuration, $Context->SelfUrl, "", "", "", "", "PostBackAction=Clipboard"), "", "", 40);
      	$Page->AddRenderControl($Context->ObjectFactory->NewContextObject($Context, "ClipboardForm"), $Configuration["CONTROL_POSITION_BODY_ITEM"]);
    }
 }
