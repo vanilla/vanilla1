@@ -497,4 +497,5 @@ $Context->Dictionary["PERMISSION_RECEIVE_APPLICATION_NOTIFICATION"] = "Notify by
 $Context->Dictionary["PERMISSION_ALLOW_DEBUG_INFO"] = "Can view debug info";
 $Context->Dictionary["NoEnabledExtensions"] = "There are currently no enabled extensions.";
 $Context->Dictionary["NoDisabledExtensions"] = "There are currently no disabled extensions.";
+$Context->Dictionary["CommentPostedFrom"] = "Comment posted from";
 ?>

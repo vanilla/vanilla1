@@ -124,7 +124,6 @@ $Context->Dictionary["To"] = "to";
 $Context->Dictionary["You"] = "you";
 $Context->Dictionary["Yourself"] = "yourself";
 $Context->Dictionary["Edited"] = "edited";
-$Context->Dictionary["CommentPostedFrom"] = "Comment posted from";
 $Context->Dictionary["edit"] = "edit";
 $Context->Dictionary["Edit"] = "Edit";
 $Context->Dictionary["Show"] = "show";
