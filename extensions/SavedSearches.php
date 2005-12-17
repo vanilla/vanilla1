@@ -38,13 +38,13 @@ if (
 		if ($AllowEdit) $String .= "<input type=\"hidden\" id=\"SavedSearchCount\" value=\"".$SearchCount."\" />";
 
 		if ($SearchCount > 0) {
-			$String .= "<ul class=\"LinkedList \">";
+			$String .= "<ul class=\"LinkedList\">";
 				$s = $Context->ObjectFactory->NewObject($Context, "Search");
 				while ($Row = $Context->Database->GetRow($Data)) {
 					$s->Clear();
 					$s->GetPropertiesFromDataSet($Row);
 					$s->FormatPropertiesForDisplay();
-					$String .= "<li id=\"SavedSearch_".$s->SearchID."\"><a class=\"PanelLink\" href=\"".GetUrl($this->Context->Configuration, "search.php", "", "SearchID", $s->SearchID)."\">".$s->Label."</a>";
+					$String .= "<li id=\"SavedSearch_".$s->SearchID."\"><a class=\"PanelLink\" href=\"".GetUrl($Configuration, "search.php", "saved/", "SearchID", $s->SearchID)."\">".$s->Label."</a>";
 					if ($AllowEdit) $String .= " (<a href=\"javascript:RemoveSearch(".$s->SearchID.");\">".$Context->GetDefinition("RemoveLower")."</a>)";
 					$String .= "</li>";
 				}
