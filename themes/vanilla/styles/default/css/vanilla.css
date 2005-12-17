@@ -45,20 +45,19 @@
 	.ErrorContainer {
 		background: url(../images/alert.gif) no-repeat top left #FFEDEF;
 		border: 1px solid #FFC2CA;
-		background: #FFEDEF;
-		padding: 8px;
+		padding: 10px;
+		padding-left: 27px;
+		color: #c00;
+		margin: 10px;
+		margin-bottom: 0px;
 	}
 	.ErrorTitle {
-		font-size: 16px;
 		font-weight: bold;
-		color: #CC0000;
-		border-bottom: 2px dotted #FFC2CA;
-		margin-bottom: 4px;
+		color: #c00;
 	}
 	.Error {
-		font-size: 12px;
-		color: #CC0000; 
-	}
+		color: #c00;
+	}	
 	
 	/* Autocomplete results style */
 		div.Autocomplete {
