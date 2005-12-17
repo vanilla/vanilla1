@@ -43,6 +43,7 @@
 		display: inline;
 	}
 	.ErrorContainer {
+		background: url(../images/alert.gif) no-repeat top left #FFEDEF;
 		border: 1px solid #FFC2CA;
 		background: #FFEDEF;
 		padding: 8px;

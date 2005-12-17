@@ -3,7 +3,7 @@
 
 echo("<div class=\"About\">
    ".$this->Context->GetDefinition("AboutMembership")."
-         <p><a href=\"".".GetUrl($this->Context->Configuration, $this->Context->SelfUrl)."\">".$this->Context->GetDefinition("BackToSignInForm")."</a></p>
+         <p><a href=\"".GetUrl($this->Context->Configuration, $this->Context->SelfUrl)."\">".$this->Context->GetDefinition("BackToSignInForm")."</a></p>
       </div>
       <div class=\"Form\">
          <h1>".$this->Context->GetDefinition("MembershipApplicationForm")."</h1>
