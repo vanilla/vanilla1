@@ -131,6 +131,7 @@ $Configuration["REWRITE_search.php"] = "search/";
 $Configuration["REWRITE_account.php"] = "account/";
 $Configuration["REWRITE_settings.php"] = "settings/";
 $Configuration["REWRITE_post.php"] = "post/";
+$Configuration["REWRITE_people.php"] = "people/";
 
 // Default values for role permissions
 $Configuration["PERMISSION_CHECK_FOR_UPDATES"] = "0";
