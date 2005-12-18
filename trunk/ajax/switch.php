@@ -11,9 +11,9 @@
 * Description: File used by Dynamic Data Management object to handle any type of boolean switch
 */
 
-include_once("../appg/settings.php");
-include_once("../conf/settings.php");
-include_once("../appg/init_ajax.php");
+include("../appg/settings.php");
+include("../conf/settings.php");
+include("../appg/init_ajax.php");
 
 $Type = ForceIncomingString("Type", "");
 $Switch = ForceIncomingBool("Switch", 0);

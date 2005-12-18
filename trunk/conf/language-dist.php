@@ -7,6 +7,6 @@
  This file is managed by Vanilla. It is completely erased and rebuilt when
  extensions are added to or removed from the system.
 */
-include_once($Configuration["LANGUAGES_PATH"]."English.php");
-include_once($Configuration["APPLICATION_PATH"]."conf/English.php");
+include($Configuration["LANGUAGES_PATH"]."English.php");
+include($Configuration["APPLICATION_PATH"]."conf/English.php");
 ?>

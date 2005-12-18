@@ -23,9 +23,9 @@ if(!strcasecmp($PreviewSelf, $_SERVER['PHP_SELF']) && !defined('EXTENSION_IN_PRE
 	
 	if($Text != '' && $Type != '')
 	{
-		include_once('../appg/settings.php');
-		include_once('../conf/settings.php');
-		include_once('../appg/init_ajax.php');
+		include('../appg/settings.php');
+		include('../conf/settings.php');
+		include('../appg/init_ajax.php');
 		
 		class EmulatedUserInfoClass
 		{

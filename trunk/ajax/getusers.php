@@ -11,9 +11,9 @@
 * Description: File used by Dynamic Data Management object to fill autocomplete data on user input field
 */
 
-include_once("../appg/settings.php");
-include_once("../conf/settings.php");
-include_once("../appg/init_ajax.php");
+include("../appg/settings.php");
+include("../conf/settings.php");
+include("../appg/init_ajax.php");
 
 $Search = ForceIncomingString("Search", "");
 $Search = urldecode($Search);

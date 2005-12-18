@@ -10,32 +10,32 @@
 *
 * Description: Uses cookies to turn debugging information on and off
 */
-include_once("appg/settings.php");
-include_once($Configuration["DATABASE_PATH"]);
-include_once($Configuration["APPLICATION_PATH"]."appg/headers.php");
-include_once($Configuration["LIBRARY_PATH"]."Utility.Functions.php");
-include_once($Configuration["LIBRARY_PATH"]."Utility.Class.Database.php");
-include_once($Configuration["LIBRARY_PATH"]."Utility.Class.SqlBuilder.php");
-include_once($Configuration["LIBRARY_PATH"]."Utility.Class.MessageCollector.php");
-include_once($Configuration["LIBRARY_PATH"]."Utility.Class.ErrorManager.php");
-include_once($Configuration["LIBRARY_PATH"]."Utility.Class.ObjectFactory.php");
-include_once($Configuration["LIBRARY_PATH"]."Utility.Class.StringManipulator.php");
-include_once($Configuration["LIBRARY_PATH"]."Utility.Class.Context.php");
-include_once($Configuration["LIBRARY_PATH"]."Utility.Class.Page.php");
-include_once($Configuration["LIBRARY_PATH"]."Utility.Class.Writer.php");
-include_once($Configuration["LIBRARY_PATH"]."Utility.Class.Delegation.php");
-include_once($Configuration["LIBRARY_PATH"]."Utility.Class.Control.php");
-include_once($Configuration["LIBRARY_PATH"]."Vanilla.Functions.php");
-include_once($Configuration["LIBRARY_PATH"].$Configuration["AUTHENTICATION_MODULE"]);
-include_once($Configuration["LIBRARY_PATH"]."People.Class.Session.php");
-include_once($Configuration["LIBRARY_PATH"]."People.Class.User.php");
+include("appg/settings.php");
+include($Configuration["DATABASE_PATH"]);
+include($Configuration["APPLICATION_PATH"]."appg/headers.php");
+include($Configuration["LIBRARY_PATH"]."Utility.Functions.php");
+include($Configuration["LIBRARY_PATH"]."Utility.Class.Database.php");
+include($Configuration["LIBRARY_PATH"]."Utility.Class.SqlBuilder.php");
+include($Configuration["LIBRARY_PATH"]."Utility.Class.MessageCollector.php");
+include($Configuration["LIBRARY_PATH"]."Utility.Class.ErrorManager.php");
+include($Configuration["LIBRARY_PATH"]."Utility.Class.ObjectFactory.php");
+include($Configuration["LIBRARY_PATH"]."Utility.Class.StringManipulator.php");
+include($Configuration["LIBRARY_PATH"]."Utility.Class.Context.php");
+include($Configuration["LIBRARY_PATH"]."Utility.Class.Page.php");
+include($Configuration["LIBRARY_PATH"]."Utility.Class.Writer.php");
+include($Configuration["LIBRARY_PATH"]."Utility.Class.Delegation.php");
+include($Configuration["LIBRARY_PATH"]."Utility.Class.Control.php");
+include($Configuration["LIBRARY_PATH"]."Vanilla.Functions.php");
+include($Configuration["LIBRARY_PATH"].$Configuration["AUTHENTICATION_MODULE"]);
+include($Configuration["LIBRARY_PATH"]."People.Class.Session.php");
+include($Configuration["LIBRARY_PATH"]."People.Class.User.php");
 
 $Context = new Context($Configuration);
 
 // Start the session management
 $Context->StartSession();
 
-include_once($Configuration["APPLICATION_PATH"]."conf/language.php");
+include($Configuration["APPLICATION_PATH"]."conf/language.php");
 
 $Mode = ForceIncomingCookieString("Mode", MODE_RELEASE);
 

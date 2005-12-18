@@ -1,9 +1,9 @@
 <?php
 // Ajax method that removes a search and returns the id of the search that was removed upon success
 
-include_once("../../appg/settings.php");
-include_once("../../conf/settings.php");
-include_once("../../appg/init_ajax.php");
+include("../../appg/settings.php");
+include("../../conf/settings.php");
+include("../../appg/init_ajax.php");
 
 $SearchID = ForceIncomingInt("SearchID", 0);
 if ($SearchID > 0) {
