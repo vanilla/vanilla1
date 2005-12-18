@@ -75,8 +75,12 @@ class SqlBuilder {
 			}
 		} else {
 			if ($Field != "") {
-				$GroupByThisField = ForceBool($GroupByThisField, 0);
-				if ($GroupByThisField) $this->AddGroupBy($Field, $TableAlias);
+				// $GroupByThisField = ForceBool($GroupByThisField, 0);
+				if ($GroupByThisField) {
+					if ($this->GroupBys != "") $this->GroupBys .= ", ";
+					$this->GroupBys .= ($TableAlias != "" ? $TableAlias.".".$Field : $Field);
+					// $this->AddGroupBy($Field, $TableAlias);
+				}
 				if ($TableAlias != "") $Field = $TableAlias.".".$Field;
 				if ($Function != "" && $FunctionParameters == "") $Field = $Function."(".$Field.")";
 				if ($Function != "" && $FunctionParameters != "") $Field = $Function."(".$Field.", ".$FunctionParameters.")";

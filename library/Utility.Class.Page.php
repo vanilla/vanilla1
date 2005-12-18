@@ -49,10 +49,6 @@ class Page {
 		}
 	}
 	
-	function Import($FileName) {
-		if (!@include($FileName)) $this->Context->ErrorManager->AddError($this->Context, "Page", "Import", "Failed to import file \"".$FileName."\".");
-	}
-	
 	function InsertControlAt(&$Collection, $Control, $Position) {
 		if (array_key_exists($Position, $Collection)) {
 			$this->InsertControlAt($Collection, $Collection[$Position], $Position+1);

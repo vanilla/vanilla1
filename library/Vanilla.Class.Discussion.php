@@ -85,38 +85,38 @@ class Discussion {
 	
 	// Retrieve properties from current DataRowSet
 	function GetPropertiesFromDataSet($DataSet, $Configuration) {
-		$this->DiscussionID = ForceInt(@$DataSet["DiscussionID"], 0);
-		$this->FirstCommentID = ForceInt(@$DataSet["FirstCommentID"], 0);
-		$this->CategoryID = ForceInt(@$DataSet["CategoryID"], 0);
-		$this->Category = ForceString(@$DataSet["Category"], "");
-		$this->AuthUserID = ForceInt(@$DataSet["AuthUserID"], 0);
-		$this->AuthUsername = ForceString(@$DataSet["AuthUsername"], "");
-		$this->LastUserID = ForceInt(@$DataSet["LastUserID"], 0);
-		$this->LastUsername = ForceString(@$DataSet["LastUsername"], "");
-		$this->Active = ForceBool(@$DataSet["Active"], 0);
-		$this->Closed = ForceBool(@$DataSet["Closed"], 0);
-		$this->Sticky = ForceBool(@$DataSet["Sticky"], 0);
-		$this->Bookmarked = ForceBool(@$DataSet["Bookmarked"], 0);
-		$this->Name = ForceString(@$DataSet["Name"], "");
+		$this->DiscussionID = @$DataSet["DiscussionID"];
+		$this->FirstCommentID = @$DataSet["FirstCommentID"];
+		$this->CategoryID = @$DataSet["CategoryID"];
+		$this->Category = @$DataSet["Category"];
+		$this->AuthUserID = @$DataSet["AuthUserID"];
+		$this->AuthUsername = @$DataSet["AuthUsername"];
+		$this->LastUserID = @$DataSet["LastUserID"];
+		$this->LastUsername = @$DataSet["LastUsername"];
+		$this->Active = @$DataSet["Active"];
+		$this->Closed = @$DataSet["Closed"];
+		$this->Sticky = @$DataSet["Sticky"];
+		$this->Bookmarked = @$DataSet["Bookmarked"];
+		$this->Name = @$DataSet["Name"];
 		$this->DateCreated = UnixTimestamp(@$DataSet["DateCreated"]);
 		$this->DateLastActive = UnixTimestamp(@$DataSet["DateLastActive"]);
-		$this->CountComments = ForceInt(@$DataSet["CountComments"], 0);
+		$this->CountComments = @$DataSet["CountComments"];
 		
 		if ($Configuration["ENABLE_WHISPERS"]) {		
-         $this->WhisperUserID = ForceInt(@$DataSet["WhisperUserID"], 0);
-         $this->WhisperUsername = ForceString(@$DataSet["WhisperUsername"], "");
+         $this->WhisperUserID = @$DataSet["WhisperUserID"];
+         $this->WhisperUsername = @$DataSet["WhisperUsername"];
          
          $WhisperFromDateLastActive = UnixTimestamp(@$DataSet["WhisperFromDateLastActive"]);
-         $WhisperFromLastUserID = ForceInt(@$DataSet["WhisperFromLastUserID"], 0);
-         $WhisperFromLastFullName = ForceString(@$DataSet["WhisperFromLastFullName"], "");
-         $WhisperFromLastUsername = ForceString(@$DataSet["WhisperFromLastUsername"], "");
-         $this->CountWhispersFrom = ForceInt(@$DataSet["CountWhispersFrom"], 0);
+         $WhisperFromLastUserID = @$DataSet["WhisperFromLastUserID"];
+         $WhisperFromLastFullName = @$DataSet["WhisperFromLastFullName"];
+         $WhisperFromLastUsername = @$DataSet["WhisperFromLastUsername"];
+         $this->CountWhispersFrom = @$DataSet["CountWhispersFrom"];
          
          $WhisperToDateLastActive = UnixTimestamp(@$DataSet["WhisperToDateLastActive"]);
-         $WhisperToLastUserID = ForceInt(@$DataSet["WhisperToLastUserID"], 0);
-         $WhisperToLastFullName = ForceString(@$DataSet["WhisperToLastFullName"], "");
-         $WhisperToLastUsername = ForceString(@$DataSet["WhisperToLastUsername"], "");
-         $this->CountWhispersTo = ForceInt(@$DataSet["CountWhispersTo"], 0);
+         $WhisperToLastUserID = @$DataSet["WhisperToLastUserID"];
+         $WhisperToLastFullName = @$DataSet["WhisperToLastFullName"];
+         $WhisperToLastUsername = @$DataSet["WhisperToLastUsername"];
+         $this->CountWhispersTo = @$DataSet["CountWhispersTo"];
          
          $this->CountComments += $this->CountWhispersFrom;
          $this->CountComments += $this->CountWhispersTo;
@@ -144,7 +144,7 @@ class Discussion {
 		$this->CountReplies = $this->CountComments - 1;
 		if ($this->CountReplies < 0) $this->CountReplies = 0;
 		$this->LastViewed = UnixTimestamp(@$DataSet["LastViewed"]);
-		$this->LastViewCountComments = ForceInt(@$DataSet["LastViewCountComments"], 0);
+		$this->LastViewCountComments = @$DataSet["LastViewCountComments"];
 		if ($this->LastViewed != "") {
 			$this->NewComments = $this->CountComments - $this->LastViewCountComments;
 			if ($this->NewComments < 0) $this->NewComments = 0;
@@ -154,7 +154,17 @@ class Discussion {
 		$this->Status = $this->GetStatus();
 		
 		// Define the last page
-		$this->LastPage = CalculateNumberOfPages($this->CountComments, $Configuration["COMMENTS_PER_PAGE"]);
+      $TmpCount = ($this->CountComments / $Configuration["COMMENTS_PER_PAGE"]);
+		$RoundedCount = intval($TmpCount);
+		if ($TmpCount > 1) {
+			if ($TmpCount > $RoundedCount) {
+				$this->LastPage = $RoundedCount + 1;
+			} else {
+				$this->LastPage = $RoundedCount;
+			}
+		} else {
+			$this->LastPage = 1;
+		}
 	}	
 
 	// Retrieve a properties from incoming form variables

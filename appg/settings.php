@@ -200,5 +200,5 @@ define("FORMAT_STRING_FOR_DATABASE", "DATABASE");
 define("MAGIC_QUOTES_ON", get_magic_quotes_gpc());
 
 // Include custom settings
-include(dirname(__FILE__) . "/../conf/settings.php");
+include_once(dirname(__FILE__) . "/../conf/settings.php");
 ?>

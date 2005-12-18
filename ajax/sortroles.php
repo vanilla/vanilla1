@@ -11,9 +11,9 @@
 * Description: File used by Dynamic Data Management object to change the order of roles
 */
 
-include("../appg/settings.php");
-include("../conf/settings.php");
-include("../appg/init_ajax.php");
+include_once("../appg/settings.php");
+include_once("../conf/settings.php");
+include_once("../appg/init_ajax.php");
 
 $Sql = "update ".$Configuration["DATABASE_TABLE_PREFIX"]."Role set `Priority` = '//1' where `RoleID` = '//2';";
 $SortOrder = ForceIncomingArray("RoleID", array());

@@ -11,8 +11,8 @@
 * Description: File used by Dynamic Data Management object to retrieve a clipboard item
 */
 
-include("../../appg/settings.php");
-include("../../appg/init_ajax.php");
+include_once("../../appg/settings.php");
+include_once("../../appg/init_ajax.php");
 
 $ClippingID = ForceIncomingInt("c", 0);
 if ($ClippingID > 0 && $Context->Session->UserID > 0) {

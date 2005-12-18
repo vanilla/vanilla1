@@ -11,8 +11,8 @@
 * Description: Web form that handles user sign-ins
 */
 
-include("appg/settings.php");
-include("appg/init_people.php");
+include_once("appg/settings.php");
+include_once("appg/init_people.php");
 
 // Define properties of the page controls that are specific to this page
 $SignInForm = $Context->ObjectFactory->CreateControl($Context, "SignInForm", "frmSignIn");

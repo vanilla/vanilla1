@@ -10,8 +10,8 @@
 *
 * Description: Terms of use for the vanilla forum - should be customized by Vanilla user
 */
-include("./appg/settings.php");
-include("conf/settings.php");
+include_once("./appg/settings.php");
+include_once("conf/settings.php");
 // Create a faux-context (don't need all that extra overhead for this simple page - just the dictionary)
 
 class FauxContext {
@@ -33,7 +33,7 @@ class FauxContext {
 $Context = new FauxContext();
 
 // DEFINE THE LANGUAGE DICTIONARY
-include($Configuration["APPLICATION_PATH"]."conf/language.php");
+include_once($Configuration["APPLICATION_PATH"]."conf/language.php");
 ?>
 <html>
 <head>
