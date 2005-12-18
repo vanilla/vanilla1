@@ -42,8 +42,8 @@ $Context->Dictionary["ErrClippingContents"] = "You must supply a value for the \
 
 // Let it skip over these classes if it doesn't need them
 if (in_array($Context->SelfUrl, array("account.php", "comments.php", "post.php", "getclipping.php"))) {
-   include_once($Configuration["EXTENSIONS_PATH"]."Clipboard/Clipboard.Class.Clipping.php");
-   include_once($Configuration["EXTENSIONS_PATH"]."Clipboard/Clipboard.Class.ClippingManager.php");
+   include($Configuration["EXTENSIONS_PATH"]."Clipboard/Clipboard.Class.Clipping.php");
+   include($Configuration["EXTENSIONS_PATH"]."Clipboard/Clipboard.Class.ClippingManager.php");
 }
 
 // If looking at the account page, include and instantiate the clipboard form control
@@ -52,7 +52,7 @@ if ($Context->SelfUrl == "account.php") {
    
    $AccountUserID = ForceIncomingInt("u", $Context->Session->UserID);
    if ($AccountUserID == $Context->Session->UserID) {
-      include_once($Configuration["EXTENSIONS_PATH"]."Clipboard/Clipboard.Control.ClipboardForm.php");
+      include($Configuration["EXTENSIONS_PATH"]."Clipboard/Clipboard.Control.ClipboardForm.php");
       
       $Panel->AddListItem($Context->GetDefinition("AccountOptions"), $Context->GetDefinition("ManageYourClipboard"), GetUrl($Configuration, $Context->SelfUrl, "", "", "", "", "PostBackAction=Clipboard"), "", "", 40);
      	$Page->AddRenderControl($Context->ObjectFactory->NewContextObject($Context, "ClipboardForm"), $Configuration["CONTROL_POSITION_BODY_ITEM"]);

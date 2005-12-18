@@ -11,8 +11,8 @@
 * Description: Web forms that handle manipulating user & application settings
 */
 
-include_once("appg/settings.php");
-include_once("appg/init_vanilla.php");
+include("appg/settings.php");
+include("appg/init_vanilla.php");
 
 // Ensure the user is allowed to view this page (they must have at least one of the following permissions)
 $RequiredPermissions = array("PERMISSION_CHECK_FOR_UPDATES",

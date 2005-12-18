@@ -28,7 +28,7 @@ $FeedType = ForceIncomingString("Feed", "");
 $AuthenticateUser = 0;
 if ($FeedType == "RSS2") {
    // Include the RSS2 extension functions
-   include_once($Configuration["EXTENSIONS_PATH"]."/RSS2/functions.php");
+   include($Configuration["EXTENSIONS_PATH"]."/RSS2/functions.php");
    // Make sure that page is not redirected if the user is not signed in and this is not a public forum
    if ($Context->Session->UserID == 0 && !$Configuration["PUBLIC_BROWSING"]) {
       // Temporarily make the PUBLIC_BROWSING enabled, but make sure to tell RSS2 to validate this user
