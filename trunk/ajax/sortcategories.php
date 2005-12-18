@@ -11,9 +11,9 @@
 * Description: File used by Dynamic Data Management object to change the order of categories
 */
 
-include("../appg/settings.php");
-include("../conf/settings.php");
-include("../appg/init_ajax.php");
+include_once("../appg/settings.php");
+include_once("../conf/settings.php");
+include_once("../appg/init_ajax.php");
 
 $Sql = "update ".$Configuration["DATABASE_TABLE_PREFIX"]."Category set `Order` = '//1' where `CategoryID` = '//2';";
 $SortOrder = ForceIncomingArray("CategoryID", array());

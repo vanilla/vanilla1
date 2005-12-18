@@ -29,7 +29,7 @@ class ObjectFactory {
 			for ($i = 0; $i < $PrefixArrayCount; $i++) {
             $File = $Context->Configuration["LIBRARY_PATH"].$PrefixArray[$i].".Class.".$ClassName.".php";
 				if (file_exists($File)) {
-					include($File);
+					include_once($File);
 					break;
 				}
 			}
@@ -58,7 +58,7 @@ class ObjectFactory {
 			for ($i = 0; $i < $PrefixArrayCount; $i++) {
             $File = $Context->Configuration["LIBRARY_PATH"].$PrefixArray[$i].".Control.".$ClassName.".php";
 				if (file_exists($File)) {
-					include($File);
+					include_once($File);
 					break;
 				}
 			}

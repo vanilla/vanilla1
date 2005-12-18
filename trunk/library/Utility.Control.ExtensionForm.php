@@ -28,7 +28,7 @@ class ExtensionForm extends PostBackControl {
 		} else {
 			foreach ($CurrentExtensions as $ExLine) {
 				if (substr($ExLine, 0, 7) == 'include') {
-					$CurrExtensions[] = substr(trim($ExLine), 43, -3);
+					$CurrExtensions[] = substr(trim($ExLine), 48, -3);
 				}
 			}
 		}
@@ -142,14 +142,14 @@ class ExtensionForm extends PostBackControl {
                   $ExtensionCount = count($CurrentExtensions);
 						for ($j = 0; $j < $ExtensionCount; $j++) {
 							if ($ExtensionInUse) {
-								if (trim($CurrentExtensions[$j]) == "include(\$Configuration[\"EXTENSIONS_PATH\"].\"".$Extension->FileName."\");") {
+								if (trim($CurrentExtensions[$j]) == "include_once(\$Configuration[\"EXTENSIONS_PATH\"].\"".$Extension->FileName."\");") {
 									// If the extension is currently in use, remove it
 									array_splice($CurrentExtensions, $j, 1);
 									$j = count($CurrentExtensions);
 								}
 							} elseif (trim($CurrentExtensions[$j]) == "?>") {
 								// If the extension is NOT currently in use, add it
-								$CurrentExtensions[$j] = "include(\$Configuration[\"EXTENSIONS_PATH\"].\"".$Extension->FileName."\");\r\n";
+								$CurrentExtensions[$j] = "include_once(\$Configuration[\"EXTENSIONS_PATH\"].\"".$Extension->FileName."\");\r\n";
 								$CurrentExtensions[] = "?>";
 								$j = count($CurrentExtensions);
 							}

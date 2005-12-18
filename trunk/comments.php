@@ -11,8 +11,8 @@
 * Description: Display, add, and manipulate discussion comments
 */
 
-include("appg/settings.php");
-include("appg/init_vanilla.php");
+include_once("appg/settings.php");
+include_once("appg/init_vanilla.php");
 
 // 1. DEFINE VARIABLES AND PROPERTIES SPECIFIC TO THIS PAGE
 

@@ -27,7 +27,7 @@ $FeedType = ForceIncomingString("Feed", "");
 $AuthenticateUser = 0;
 if ($FeedType == "Atom") {
    // Include the atom extension functions
-   include($Configuration["EXTENSIONS_PATH"]."/Atom/functions.php");
+   include_once($Configuration["EXTENSIONS_PATH"]."/Atom/functions.php");
    // Make sure that page is not redirected if the user is not signed in and this is not a public forum
    if ($Context->Session->UserID == 0 && !$Configuration["PUBLIC_BROWSING"]) {
       // Temporarily make the PUBLIC_BROWSING enabled, but make sure to tell atom to validate this user

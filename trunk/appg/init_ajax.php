@@ -10,21 +10,21 @@
 *
 * Description: Constants and objects specific to forum pages.
 */
-include($Configuration["DATABASE_PATH"]);
-include($Configuration["APPLICATION_PATH"]."appg/headers.php");
-include($Configuration["LIBRARY_PATH"]."Utility.Functions.php");
-include($Configuration["LIBRARY_PATH"]."Utility.Class.Database.php");
-include($Configuration["LIBRARY_PATH"]."Utility.Class.SqlBuilder.php");
-include($Configuration["LIBRARY_PATH"]."Utility.Class.MessageCollector.php");
-include($Configuration["LIBRARY_PATH"]."Utility.Class.ErrorManager.php");
-include($Configuration["LIBRARY_PATH"]."Utility.Class.ObjectFactory.php");
-include($Configuration["LIBRARY_PATH"]."Utility.Class.StringManipulator.php");
-include($Configuration["LIBRARY_PATH"]."Utility.Class.Context.php");
-include($Configuration["LIBRARY_PATH"]."Utility.Class.Delegation.php");
-include($Configuration["LIBRARY_PATH"]."Utility.Class.Control.php");
-include($Configuration["LIBRARY_PATH"].$Configuration["AUTHENTICATION_MODULE"]);
-include($Configuration["LIBRARY_PATH"]."People.Class.Session.php");
-include($Configuration["LIBRARY_PATH"]."People.Class.User.php");
+include_once($Configuration["DATABASE_PATH"]);
+include_once($Configuration["APPLICATION_PATH"]."appg/headers.php");
+include_once($Configuration["LIBRARY_PATH"]."Utility.Functions.php");
+include_once($Configuration["LIBRARY_PATH"]."Utility.Class.Database.php");
+include_once($Configuration["LIBRARY_PATH"]."Utility.Class.SqlBuilder.php");
+include_once($Configuration["LIBRARY_PATH"]."Utility.Class.MessageCollector.php");
+include_once($Configuration["LIBRARY_PATH"]."Utility.Class.ErrorManager.php");
+include_once($Configuration["LIBRARY_PATH"]."Utility.Class.ObjectFactory.php");
+include_once($Configuration["LIBRARY_PATH"]."Utility.Class.StringManipulator.php");
+include_once($Configuration["LIBRARY_PATH"]."Utility.Class.Context.php");
+include_once($Configuration["LIBRARY_PATH"]."Utility.Class.Delegation.php");
+include_once($Configuration["LIBRARY_PATH"]."Utility.Class.Control.php");
+include_once($Configuration["LIBRARY_PATH"].$Configuration["AUTHENTICATION_MODULE"]);
+include_once($Configuration["LIBRARY_PATH"]."People.Class.Session.php");
+include_once($Configuration["LIBRARY_PATH"]."People.Class.User.php");
 
 $Context = new Context($Configuration);
 
@@ -34,7 +34,7 @@ $Context->StartSession();
 $Context->Session->Check($Configuration);
 
 // DEFINE THE LANGUAGE DICTIONARY
-include($Configuration["APPLICATION_PATH"]."conf/language.php");
+include_once($Configuration["APPLICATION_PATH"]."conf/language.php");
 
 // INSTANTIATE THE PAGE OBJECT
 $Page = $Context->ObjectFactory->NewContextObject($Context, "Page", $Configuration["PAGE_EVENTS"]);
@@ -43,5 +43,5 @@ $Page = $Context->ObjectFactory->NewContextObject($Context, "Page", $Configurati
 $Page->FireEvent("Page_Init");
 
 // INCLUDE EXTENSIONS
-include($Configuration["APPLICATION_PATH"]."conf/extensions.php");
+include_once($Configuration["APPLICATION_PATH"]."conf/extensions.php");
 ?>
