@@ -15,7 +15,7 @@ while (list($Key, $PanelElement) = each($this->PanelElements)) {
          echo("<h2>".$Key."</h2>
          <ul class=\"LinkedList\">");
          while (list($LinkKey, $Link) = each($Links)) {
-            echo("<li><a class=\"PanelLink\" href=\"".$Link["Link"]."\" ".$Link["LinkAttributes"].">".$Link["Item"]."</a>");
+            echo("<li><a class=\"PanelLink\" ".($Link["Link"] != "" ? "href=\"".$Link["Link"]."\"" : "")." ".$Link["LinkAttributes"].">".$Link["Item"]."</a>");
             if ($Link["Suffix"] != "") echo("<small><strong>".$this->Context->GetDefinition($Link["Suffix"])."</strong></small>");
             echo("</li>");
          }

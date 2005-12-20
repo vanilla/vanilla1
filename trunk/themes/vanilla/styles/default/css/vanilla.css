@@ -29,10 +29,12 @@
 	a, a:link, a:visited {
 		color: #3354AA;
 		text-decoration: underline;
+		cursor: pointer;
 	}
 	a:hover {
 		color: #4B6DB7;
 		text-decoration: none;
+		cursor: pointer;
 	}
 	ul {
 		margin-bottom: 0px;
@@ -1208,11 +1210,13 @@
 			color: #333;
 			width: 300px;
 		}
+		.SearchTypes {
+			margin-top: 4px;
+		}
 		.SearchTypeLabel {
-			position: absolute;
 			margin-left: 12px;
 		}
-			
+		.SearchTypeLabel,
 		.SearchType {
 			margin-right: 16px;
 			display: inline;

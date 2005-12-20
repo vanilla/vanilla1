@@ -319,7 +319,7 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 					echo("<div class=\"SettingsForm\">
 						<h1>".$this->Context->GetDefinition("StyleManagement")."</h1>");
 						if ($StyleID > 0) {
-							$this->StyleSelect->Attributes = "onchange=\"document.location='?PostBackAction=Style&StyleID='+this.options[this.selectedIndex].value;\"";
+							$this->StyleSelect->Attributes = "onchange=\"document.location='?PostBackAction=Style&amp;StyleID='+this.options[this.selectedIndex].value;\"";
 							$this->StyleSelect->SelectedID = $StyleID;
 							echo("<div class=\"Form\" id=\"Styles\">
 								".$this->Get_Warnings()."
@@ -344,7 +344,7 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 						<dl>
 							<dt>".$this->Context->GetDefinition("StyleAuthor")."</dt>
 							<dd>
-								<input autocomplete=\"off\" id=\"AuthUsername\" name=\"AuthUsername\" type=\"text\" value=\"".FormatStringForDisplay(($this->Style->AuthUserID == 0?"":$this->Style->AuthUsername), 0)."\" class=\"WhisperBox\" maxlength=\"20\" /><div class=\"Autocomplete\" id=\"AuthUsername_Choices\"></div><script type=\"text/javascript\">new Ajax.Autocompleter('AuthUsername', 'AuthUsername_Choices', './ajax/getusers.php', {paramName: \"Search\"})</script>
+								<input id=\"AuthUsername\" name=\"AuthUsername\" type=\"text\" value=\"".FormatStringForDisplay(($this->Style->AuthUserID == 0?"":$this->Style->AuthUsername), 0)."\" class=\"WhisperBox\" maxlength=\"20\" /><div class=\"Autocomplete\" id=\"AuthUsername_Choices\"></div><script type=\"text/javascript\">new Ajax.Autocompleter('AuthUsername', 'AuthUsername_Choices', './ajax/getusers.php', {paramName: \"Search\"})</script>
 							</dd>
 						</dl>
 						<div class=\"InputNote\">".$this->Context->GetDefinition("StyleAuthorNotes")."</div>
@@ -362,11 +362,13 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 							<input type=\"submit\" name=\"btnSave\" value=\"".$this->Context->GetDefinition("Save")."\" class=\"Button SubmitButton\" />
 							<a href=\"".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=Styles")."\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>
 						</div>
-					</div></div>");			
+						</form>
+					</div>
+				</div>");			
 					
 				} elseif ($this->PostBackAction == "StyleRemove") {
 					$this->PostBackParams->Set("PostBackAction", "ProcessStyleRemove");
-					$this->StyleSelect->Attributes = "onchange=\"document.location='".GetUrl($this->Context->Configuration, "index.php", "", "", "", "", "PostBackAction=StyleRemove&StyleID='+this.options[this.selectedIndex].value").";\"";
+					$this->StyleSelect->Attributes = "onchange=\"document.location='".GetUrl($this->Context->Configuration, "index.php", "", "", "", "", "PostBackAction=StyleRemove&amp;StyleID='+this.options[this.selectedIndex].value").";\"";
 					$this->StyleSelect->SelectedID = $StyleID;
 					echo("<div class=\"SettingsForm\">
 						<h1>".$this->Context->GetDefinition("StyleManagement")."</h1>
@@ -411,8 +413,8 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 										$s->GetPropertiesFromDataSet($Row);
 										$s->FormatPropertiesForDisplay();
 										echo("<li class=\"SortListItem\">
-											<a class=\"SortRemove\" href=\"".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=StyleRemove&StyleID=".$s->StyleID)."\"><img src=\"".$this->Context->StyleUrl."images/btn.remove.gif\" height=\"15\" width=\"15\" border=\"0\" alt=\"".$this->Context->GetDefinition("Remove")."\" /></a>
-											<a class=\"SortEdit\" href=\"".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=Style&StyleID=".$s->StyleID)."\">".$this->Context->GetDefinition("Edit")."</a>
+											<a class=\"SortRemove\" href=\"".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=StyleRemove&amp;StyleID=".$s->StyleID)."\"><img src=\"".$this->Context->StyleUrl."images/btn.remove.gif\" height=\"15\" width=\"15\" border=\"0\" alt=\"".$this->Context->GetDefinition("Remove")."\" /></a>
+											<a class=\"SortEdit\" href=\"".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=Style&amp;StyleID=".$s->StyleID)."\">".$this->Context->GetDefinition("Edit")."</a>
 											".$s->Name."
 										</li>");
 									}
@@ -479,21 +481,21 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 									}
 									echo("</div>");
 									if ($Style->PreviewImage != "") {
-										echo("<a class=\"PreviewImage\" href=\"javascript:SetStyle('".$Style->StyleID."', '');\"><img src=\"".AppendFolder($Style->Url, "images/").$Style->PreviewImage."\" border=\"0\" height=\"200\" width=\"370\" /></a>");
+										echo("<a class=\"PreviewImage\" onclick=\"SetStyle('".$Style->StyleID."', '');\"><img src=\"".AppendFolder($Style->Url, "images/").$Style->PreviewImage."\" border=\"0\" height=\"200\" width=\"370\" alt=\"\" /></a>");
 									} else {
-										echo("<a class=\"PreviewEmpty\" href=\"javascript:SetStyle('".$Style->StyleID."', '');\">".$this->Context->GetDefinition("NoPreview")."</a>");
+										echo("<a class=\"PreviewEmpty\" onclick=\"SetStyle('".$Style->StyleID."', '');\">".$this->Context->GetDefinition("NoPreview")."</a>");
 									}
 								echo("</div>");
 							}					
 							echo("<h2>".$this->Context->GetDefinition("CustomStyle")."</h2>
-							<form name=\"frmCustomStyle\">
+							<form name=\"frmCustomStyle\" method=\"post\" action=\"\">
 							<dl>
 								<dt>".$this->Context->GetDefinition("CustomStyleUrl")."</dt>
 								<dd><input type=\"text\" name=\"CustomStyle\" value=\"".$this->Context->Session->User->CustomStyle."\" maxlength=\"200\" class=\"SmallInput\" id=\"txtCustomStyle\" /></dd>
 							</dl>
 							<div class=\"InputNote\">
 								".$this->Context->GetDefinition("CustomStyleNotes")."
-								<div class=\"FormLink\"><a href=\"javascript:SetStyle('0', document.frmCustomStyle.CustomStyle.value);\">".$this->Context->GetDefinition("UseCustomStyle")."</a></div>
+								<div class=\"FormLink\"><a onclick=\"SetStyle('0', document.frmCustomStyle.CustomStyle.value);\">".$this->Context->GetDefinition("UseCustomStyle")."</a></div>
 							</div>
 							</form>
 							
@@ -516,7 +518,7 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 			echo("<dt>".$AccountControl->Context->GetDefinition("Style")."</dt>
 			<dd>");
 			if ($AccountControl->Context->Session->UserID > 0 && $AccountControl->Context->Session->User->StyleID != $AccountControl->User->StyleID && $AccountControl->Context->Session->UserID != $AccountControl->User->UserID) {
-				echo("<a href=\"javascript:SetStyle('".$AccountControl->User->StyleID."', '".($AccountControl->User->StyleID == 0?urlencode($AccountControl->User->CustomStyle):"")."');\">".$AccountControl->User->Style."</a>");
+				echo("<a onclick=\"SetStyle('".$AccountControl->User->StyleID."', '".($AccountControl->User->StyleID == 0?urlencode($AccountControl->User->CustomStyle):"")."');\">".$AccountControl->User->Style."</a>");
 			} else {
 				echo($AccountControl->User->Style);
 			}

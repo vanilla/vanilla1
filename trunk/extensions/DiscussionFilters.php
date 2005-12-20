@@ -35,7 +35,7 @@ if (in_array($Context->SelfUrl, array("categories.php", "comments.php", "index.p
    if (!$Context->Session->User->Preference("ShowRecentDiscussions")) $Panel->AddListItem($DiscussionFilters, $Context->GetDefinition("YourDiscussions"), GetUrl($Configuration, "index.php", "", "", "", "", "View=YourDiscussions"), "", "", 20);
    if ($Configuration["ENABLE_WHISPERS"] && !$Context->Session->User->Preference("ShowPrivateDiscussions")) {
       $Panel->AddListItem($DiscussionFilters, $Context->GetDefinition("PrivateDiscussions"), GetUrl($Configuration, "index.php", "", "", "", "", "View=Private"), "", "", 30);
-      $Panel->AddListItem($DiscussionFilters, $Context->GetDefinition("PrivateComments"), GetUrl($Configuration, "search.php", "", "", "", "", "PostBackAction=Search&Keywords=whisper;&Type=Comments"), "", "", 40);
+      $Panel->AddListItem($DiscussionFilters, $Context->GetDefinition("PrivateComments"), GetUrl($Configuration, "search.php", "", "", "", "", "PostBackAction=Search&amp;Keywords=whisper;&amp;Type=Comments"), "", "", 40);
    }
 }
 

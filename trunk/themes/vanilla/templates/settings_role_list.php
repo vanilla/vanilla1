@@ -15,8 +15,8 @@ echo("<div class=\"SettingsForm\">
                $r->GetPropertiesFromDataSet($Row);
                $r->FormatPropertiesForDisplay();
                echo("<li class=\"SortListItem MovableSortListItem\" id=\"item_".$r->RoleID."\">
-                  <a class=\"SortRemove\" href=\"".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=RoleRemove&RoleID=".$r->RoleID)."\"><img src=\"".$this->Context->StyleUrl."images/btn.remove.gif\" height=\"15\" width=\"15\" border=\"0\" alt=\"".$this->Context->GetDefinition("Remove")."\" /></a>
-                  <a class=\"SortEdit\" href=\"".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=Role&RoleID=".$r->RoleID)."\">".$this->Context->GetDefinition("Edit")."</a>
+                  <a class=\"SortRemove\" href=\"".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=RoleRemove&amp;RoleID=".$r->RoleID)."\"><img src=\"".$this->Context->StyleUrl."images/btn.remove.gif\" height=\"15\" width=\"15\" border=\"0\" alt=\"".$this->Context->GetDefinition("Remove")."\" /></a>
+                  <a class=\"SortEdit\" href=\"".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=Role&amp;RoleID=".$r->RoleID)."\">".$this->Context->GetDefinition("Edit")."</a>
                   ".$r->RoleName."
                </li>");
             }

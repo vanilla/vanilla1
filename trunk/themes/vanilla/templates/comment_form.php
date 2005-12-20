@@ -9,7 +9,7 @@ echo("<div class=\"Title CommentInputTitle\">".$this->Title."</div>
       if ($this->Context->Configuration["ENABLE_WHISPERS"]) {   
          echo("<dt class=\"WhisperInputLabel\">".$this->Context->GetDefinition("WhisperYourCommentsTo")."</dt>
          <dd class=\"WhisperInput\">
-            <input autocomplete=\"off\" id=\"WhisperUsername\" name=\"WhisperUsername\" type=\"text\" value=\"".FormatStringForDisplay($Comment->WhisperUsername, 0)."\" class=\"WhisperBox\" maxlength=\"20\" /><div class=\"Autocomplete\" id=\"WhisperUsername_Choices\"></div><script type=\"text/javascript\">new Ajax.Autocompleter('WhisperUsername', 'WhisperUsername_Choices', './ajax/getusers.php', {paramName: \"Search\"})</script>
+            <input id=\"WhisperUsername\" name=\"WhisperUsername\" type=\"text\" value=\"".FormatStringForDisplay($Comment->WhisperUsername, 0)."\" class=\"WhisperBox\" maxlength=\"20\" /><div class=\"Autocomplete\" id=\"WhisperUsername_Choices\"></div><script type=\"text/javascript\">new Ajax.Autocompleter('WhisperUsername', 'WhisperUsername_Choices', './ajax/getusers.php', {paramName: \"Search\"})</script>
          </dd>");
       }
    
@@ -17,7 +17,7 @@ echo("<div class=\"Title CommentInputTitle\">".$this->Title."</div>
       
       echo("<dt class=\"CommentInputLabel\">
          ".$this->Context->GetDefinition("EnterYourComments")."
-         <a id=\"CommentBoxController\" href=\"Javascript:ToggleCommentBox('".$this->Context->GetDefinition("SmallInput")."', '".$this->Context->GetDefinition("BigInput")."');\">".($this->Context->Session->User->Preference("ShowLargeCommentBox")?$this->Context->GetDefinition("SmallInput"):$this->Context->GetDefinition("BigInput"))."</a>
+         <a id=\"CommentBoxController\" onclick=\"ToggleCommentBox('".$this->Context->GetDefinition("SmallInput")."', '".$this->Context->GetDefinition("BigInput")."');\">".($this->Context->Session->User->Preference("ShowLargeCommentBox")?$this->Context->GetDefinition("SmallInput"):$this->Context->GetDefinition("BigInput"))."</a>
       </dt>
       <dd class=\"CommentInput\">
          <textarea name=\"Body\" class=\"".($this->Context->Session->User->Preference("ShowLargeCommentBox")?"LargeCommentBox":"SmallCommentBox")."\" id=\"CommentBox\">".$Comment->Body."</textarea>"

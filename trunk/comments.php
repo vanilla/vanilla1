@@ -46,33 +46,33 @@ $Context->PageTitle = $CommentGrid->Discussion->Name;
 		$BookmarkText = $Context->GetDefinition($CommentGrid->Discussion->Bookmarked ? "UnbookmarkThisDiscussion" : "BookmarkThisDiscussion");
 		$Panel->AddListItem($Options,
 			$BookmarkText,
-			"javascript:SetBookmark(".$CommentGrid->Discussion->Bookmarked.", '".$CommentGrid->Discussion->DiscussionID."', '".$Context->GetDefinition("BookmarkText")."', '".$Context->GetDefinition("UnbookmarkThisDiscussion")."');",
 			"",
-			"id=\"SetBookmark\"");
+			"",
+			"id=\"SetBookmark\" onclick=\"SetBookmark(".$CommentGrid->Discussion->Bookmarked.", '".$CommentGrid->Discussion->DiscussionID."', '".$Context->GetDefinition("BookmarkText")."', '".$Context->GetDefinition("UnbookmarkThisDiscussion")."');\"");
 
 		if ($Context->Session->User->Permission("PERMISSION_HIDE_DISCUSSIONS")) {
 			$HideText = $Context->GetDefinition(($CommentGrid->Discussion->Active?"Hide":"Unhide")."ThisDiscussion");
 			$Panel->AddListItem($Options,
 				$HideText,
-				"javascript:DiscussionSwitch('Active', '".$CommentGrid->Discussion->DiscussionID."', '".FlipBool($CommentGrid->Discussion->Active)."');",
 				"",
-				"onclick=\"return confirm('".$Context->GetDefinition($CommentGrid->Discussion->Active?"ConfirmHideDiscussion":"ConfirmUnhideDiscussion")."');\"");
+				"",
+				"onclick=\"if (confirm('".$Context->GetDefinition($CommentGrid->Discussion->Active?"ConfirmHideDiscussion":"ConfirmUnhideDiscussion")."')) DiscussionSwitch('Active', '".$CommentGrid->Discussion->DiscussionID."', '".FlipBool($CommentGrid->Discussion->Active)."');\"");
 		}
 		if ($Context->Session->User->Permission("PERMISSION_CLOSE_DISCUSSIONS")) {		
 			$CloseText = $Context->GetDefinition(($CommentGrid->Discussion->Closed?"ReOpen":"Close")."ThisDiscussion");
 			$Panel->AddListItem($Options,
 				$CloseText,
-				"javascript:DiscussionSwitch('Closed', '".$CommentGrid->Discussion->DiscussionID."', '".FlipBool($CommentGrid->Discussion->Closed)."');",
 				"",
-				"onclick=\"return confirm('".$Context->GetDefinition($CommentGrid->Discussion->Closed?"ConfirmReopenDiscussion":"ConfirmCloseDiscussion")."');\"");
+				"",
+				"onclick=\"if (confirm('".$Context->GetDefinition($CommentGrid->Discussion->Closed?"ConfirmReopenDiscussion":"ConfirmCloseDiscussion")."')) DiscussionSwitch('Closed', '".$CommentGrid->Discussion->DiscussionID."', '".FlipBool($CommentGrid->Discussion->Closed)."');\"");
 		}
 		if ($Context->Session->User->Permission("PERMISSION_STICK_DISCUSSIONS")) {
 			$StickyText = $Context->GetDefinition("MakeThisDiscussion".($CommentGrid->Discussion->Sticky?"Unsticky":"Sticky"));
 			$Panel->AddListItem($Options,
 				$StickyText,
-				"javascript:DiscussionSwitch('Sticky', '".$CommentGrid->Discussion->DiscussionID."', '".FlipBool($CommentGrid->Discussion->Sticky)."');",
 				"",
-				"onclick=\"return confirm('".$Context->GetDefinition($CommentGrid->Discussion->Sticky?"ConfirmUnsticky":"ConfirmSticky")."');\"");
+				"",
+				"onclick=\"if (confirm('".$Context->GetDefinition($CommentGrid->Discussion->Sticky?"ConfirmUnsticky":"ConfirmSticky")."')) DiscussionSwitch('Sticky', '".$CommentGrid->Discussion->DiscussionID."', '".FlipBool($CommentGrid->Discussion->Sticky)."');\"");
 		}
 	}
 	

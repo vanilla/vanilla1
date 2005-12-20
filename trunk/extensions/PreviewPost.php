@@ -44,7 +44,7 @@ if(!strcasecmp($PreviewSelf, $_SERVER['PHP_SELF']) && !defined('EXTENSION_IN_PRE
 		//TODO: either emulate or use the Comment class instead of passing 0
 		if(get_magic_quotes_gpc()) $Text = stripslashes($Text);
 		$Text = $Context->StringManipulator->Parse($Text, $EmulatedUserInfo, $Type, FORMAT_STRING_FOR_DISPLAY);
-		if($Type == 'Text') $Text = str_replace(array("\r\n", "\r", "\n"), '<br>', $Text);
+		if($Type == 'Text') $Text = str_replace(array("\r\n", "\r", "\n"), '<br />', $Text);
 		
 		echo($Text);
 	}

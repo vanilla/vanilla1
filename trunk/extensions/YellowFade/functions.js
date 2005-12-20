@@ -103,16 +103,19 @@ function Highlight(target) {
 // This is the recursive function call that actually performs the fade
 function DoFade(colorId, targetId) {
     if (colorId >= 1) {
-		document.getElementById(targetId).style.backgroundColor = "#ffff" + FadeSteps[colorId];
+		var target = document.getElementById(targetId);
+		if (target) {
+			target.style.backgroundColor = "#ffff" + FadeSteps[colorId];
 		
-        // If it's the last color, set it to transparent
-        if (colorId==1) {
-            document.getElementById(targetId).style.backgroundColor = "transparent";
+			// If it's the last color, set it to transparent
+			if (colorId==1) {
+				 document.getElementById(targetId).style.backgroundColor = "transparent";
+		 }
+			colorId--;
+		 
+			// Wait a little bit and fade another shade
+			setTimeout("DoFade("+colorId+",'"+targetId+"')", FadeInterval);
 		}
-        colorId--;
-		
-        // Wait a little bit and fade another shade
-        setTimeout("DoFade("+colorId+",'"+targetId+"')", FadeInterval);
 	}
 }
 

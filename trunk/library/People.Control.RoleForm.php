@@ -118,7 +118,7 @@ class RoleForm extends PostBackControl {
 				
 			} elseif ($this->PostBackAction == "RoleRemove") {
 				$this->PostBackParams->Set("PostBackAction", "ProcessRoleRemove");
-				$this->RoleSelect->Attributes = "onchange=\"document.location='?PostBackAction=RoleRemove&RoleID='+this.options[this.selectedIndex].value;\"";
+				$this->RoleSelect->Attributes = "onchange=\"document.location='?PostBackAction=RoleRemove&amp;RoleID='+this.options[this.selectedIndex].value;\"";
 				$this->RoleSelect->SelectedID = $RoleID;
             $this->CallDelegate("PreRemoveRender");
             include($this->Context->Configuration["THEME_PATH"]."templates/settings_role_remove.php");

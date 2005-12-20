@@ -4,7 +4,7 @@
 echo("<div class=\"SettingsForm\">
    <h1>".$this->Context->GetDefinition("RoleManagement")."</h1>");
    if ($RoleID > 0) {
-      $this->RoleSelect->Attributes = "onchange=\"document.location='?PostBackAction=Role&RoleID='+this.options[this.selectedIndex].value;\"";
+      $this->RoleSelect->Attributes = "onchange=\"document.location='?PostBackAction=Role&amp;RoleID='+this.options[this.selectedIndex].value;\"";
       $this->RoleSelect->SelectedID = $RoleID;
       echo("<div class=\"Form\" id=\"Roles\">
          ".$this->Get_Warnings()."

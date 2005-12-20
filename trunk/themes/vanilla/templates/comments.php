@@ -14,7 +14,7 @@ if ($this->Context->WarningCollector->Count() > 0) {
    // Format the discussion information
    $this->Discussion->ForceNameSpaces($this->Context->Configuration);
 
-   $CommentList .= "<a class=\"PageJump Bottom\" href=\"".$_SERVER["REQUEST_URI"]."#pgbottom\">".$this->Context->GetDefinition("BottomOfPage")."</a>"
+   $CommentList .= "<a class=\"PageJump Bottom\" href=\"".FormatStringForDisplay($_SERVER["REQUEST_URI"])."#pgbottom\">".$this->Context->GetDefinition("BottomOfPage")."</a>"
       ."<div class=\"Title\">";
       if ($this->Context->Configuration["USE_CATEGORIES"]) $CommentList .= "<a href=\"".GetUrl($this->Context->Configuration, "index.php", "", "CategoryID", $this->Discussion->CategoryID)."\">".$this->Discussion->Category."</a>: ";
       $CommentList .= DiscussionPrefix($this->Context->Configuration, $this->Discussion)." ";
@@ -55,7 +55,7 @@ if ($this->Context->WarningCollector->Count() > 0) {
          $ShowIcon = 0;
          if ($Comment->AuthIcon != "") $ShowIcon = 1;
          $CommentList .= "<div class=\"CommentAuthor".($ShowIcon?" CommentAuthorWithIcon":"")."\">";
-         if ($ShowIcon)  $CommentList .= "<span class=\"CommentIcon\" style=\"background-image:url('".$Comment->AuthIcon."')\"></span>";
+         if ($ShowIcon)  $CommentList .= "<span class=\"CommentIcon\" style=\"background-image:url('".$Comment->AuthIcon."')\">&nbsp;</span>";
          $CommentList .= "<a href=\"".GetUrl($this->Context->Configuration, "account.php", "", "u", $Comment->AuthUserID)."\">".$Comment->AuthUsername."</a></div>";
          if ($Comment->WhisperUserID > 0) {
             $CommentList .= "<div class=\"CommentWhisper\">";
@@ -79,14 +79,14 @@ if ($this->Context->WarningCollector->Count() > 0) {
             if ($Comment->AuthUserID == $this->Context->Session->UserID || $PERMISSION_EDIT_COMMENTS) {
                if ((!$this->Discussion->Closed && $this->Discussion->Active) || $PERMISSION_EDIT_COMMENTS) $CommentList .= "<div class=\"CommentEdit\"><a href=\"".GetUrl($this->Context->Configuration, "post.php", "", "CommentID", $Comment->CommentID)."\">".$this->Context->GetDefinition("edit")."</a></div>";
             }
-            if ($PERMISSION_HIDE_COMMENTS) $CommentList .= "<div class=\"CommentHide\"><a href=\"javascript:ManageComment('".($Comment->Deleted?"0":"1")."', '".$this->Discussion->DiscussionID."', '".$Comment->CommentID."', '".$this->Context->GetDefinition("ShowConfirm")."', '".$this->Context->GetDefinition("HideConfirm")."');\">".$this->Context->GetDefinition($Comment->Deleted?"Show":"Hide")."</a></div>";
+            if ($PERMISSION_HIDE_COMMENTS) $CommentList .= "<div class=\"CommentHide\"><a onclick=\"ManageComment('".($Comment->Deleted?"0":"1")."', '".$this->Discussion->DiscussionID."', '".$Comment->CommentID."', '".$this->Context->GetDefinition("ShowConfirm")."', '".$this->Context->GetDefinition("HideConfirm")."');\">".$this->Context->GetDefinition($Comment->Deleted?"Show":"Hide")."</a></div>";
          }
          $this->DelegateParameters["CommentList"] = &$CommentList;
          $this->CallDelegate("PostCommentOptionsRender");
          $CommentList .= "</div>";
          if ($Comment->AuthRoleDesc != "") $CommentList .= "<div class=\"CommentNotice\">".$Comment->AuthRoleDesc."</div>";
          $CommentList .= "<div class=\"CommentBody\" id=\"CommentContents_".$Comment->CommentID."\">".$Comment->Body."</div>";
-         if ($Comment->WhisperUserID > 0 && $Comment->WhisperUserID == $this->Context->Session->UserID) $CommentList .= "<div class=\"WhisperBack\"><a href=\"Javascript:WhisperBack('".$Comment->DiscussionID."', '".str_replace("'", "\'", $Comment->AuthUsername)."');\">".$this->Context->GetDefinition("WhisperBack")."</a></div>";
+         if ($Comment->WhisperUserID > 0 && $Comment->WhisperUserID == $this->Context->Session->UserID) $CommentList .= "<div class=\"WhisperBack\"><a onclick=\"WhisperBack('".$Comment->DiscussionID."', '".str_replace("'", "\'", $Comment->AuthUsername)."');\">".$this->Context->GetDefinition("WhisperBack")."</a></div>";
       $CommentList .= "</div>";
    }
    if (@$PageList && @$PageDetails) {

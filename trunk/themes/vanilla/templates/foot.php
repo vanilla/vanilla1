@@ -1,7 +1,8 @@
 <?php
 // Note: This file is included from the library/Vanilla.Control.Foot.php class.
 
-echo("</div>
+   echo("</div>
+   </div>
 </div>");
 
 $AllowDebugInfo = 0;

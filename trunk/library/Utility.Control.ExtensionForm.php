@@ -62,22 +62,22 @@ class ExtensionForm extends PostBackControl {
 						@list($key, $val) = @explode(': ', trim($CurrentLine), 2);
 						switch ($key) {
 							case 'Extension Name':
-								$Extension->Name = $val;
+								$Extension->Name = FormatStringForDisplay($val);
 								break;
 							case 'Extension Url':
-								$Extension->Url = $val;
+								$Extension->Url = FormatStringForDisplay($val);
 								break;
 							case 'Description':
-								$Extension->Description = $val;
+								$Extension->Description = FormatStringForDisplay($val);
 								break;
 							case 'Version':
-								$Extension->Version = $val;
+								$Extension->Version = FormatStringForDisplay($val);
 								break;
 							case 'Author':
-								$Extension->Author = $val;
+								$Extension->Author = FormatStringForDisplay($val);
 								break;
 							case 'Author Url':
-								$Extension->AuthorUrl = $val;
+								$Extension->AuthorUrl = FormatStringForDisplay($val);
 								break;
 							default:
 								// nothing
