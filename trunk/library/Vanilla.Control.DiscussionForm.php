@@ -97,8 +97,8 @@ class DiscussionForm extends PostBackControl {
 			$ResultDiscussion = $dm->SaveDiscussion($this->Discussion);
 			if ($ResultDiscussion) {
 				// Saved successfully, so send back to the discussion
-            $Suffix = CleanupString($ResultDiscussion->Name)."/";
-				header("location:".GetUrl($this->Context->Configuration, "comments.php", "", "DiscussionID", $ResultDiscussion->DiscussionID));
+            $Suffix = CleanupString($this->Discussion->Name)."/";
+				header("location:".GetUrl($this->Context->Configuration, "comments.php", "", "DiscussionID", $ResultDiscussion->DiscussionID, "", "", $Suffix));
 				die();
 			}
 		// If saving a comment
