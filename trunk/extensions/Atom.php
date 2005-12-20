@@ -246,7 +246,7 @@ if ($Context->SelfUrl == "index.php") {
    $FeedText = $Context->GetDefinition("Feeds");
    $Panel->AddList($FeedText, 100);
    $Panel->AddListItem($FeedText,
-      $Context->GetDefinition("RSS2Feed"),
+      $Context->GetDefinition("AtomFeed"),
       $FeedUrl);
 
    $Head->AddString("<link rel=\"alternate\" type=\"application/atom+xml\" href=\"".$FeedUrl."\" title=\"".$Context->GetDefinition("AtomFeed")."\" />");
