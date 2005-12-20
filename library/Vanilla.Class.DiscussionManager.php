@@ -277,11 +277,11 @@ class DiscussionManager extends Delegation {
 		$this->GetDiscussionWhisperFilter($s);
 
 		$s->AddOrderBy("Sticky", "t");
-		if ($this->Context->Configuration["ENABLE_WHISPERS"]) {
-			$s->AddOrderBy("greatest(t.DateLastWhisper, t.DateLastActive)", "", "desc");
-		} else {
+		//if ($this->Context->Configuration["ENABLE_WHISPERS"]) {
+		//	$s->AddOrderBy("greatest(t.DateLastWhisper, t.DateLastActive)", "", "desc");
+		//} else {
 			$s->AddOrderBy("t.DateLastActive", "", "desc");
-		}
+		//}
 		if ($RowsPerPage > 0) $s->AddLimit($FirstRecord, $RowsPerPage);
 		return $this->Context->Database->Select($s, $this->Name, "GetDiscussionList", "An error occurred while retrieving discussions.");
 	}
