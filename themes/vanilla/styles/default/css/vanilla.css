@@ -12,7 +12,7 @@
 
 /* BEGIN GLOBAL DEFINITIONS (common to all pages) */
 	body { 
-		background: #ffffff;
+		background: url(../images/panelfade.gif) repeat-y top left #ffffff;
 		margin: 0px;
 		padding: 0px;
 	}
@@ -209,7 +209,6 @@
 		  page content). */
 		.Body {
 			border-top: 1px solid #ACBEDF;
-			background: url(../images/panelfade.gif) repeat-y top left #ffffff;
 			padding-top: 20px;
 			padding-bottom: 40px;
 		}
@@ -845,10 +844,6 @@
 		
 
 	/* Account Page Layout */
-		.AccountPanel {
-			border-right: 1px solid #ccc;
-			display: inline;
-		}
 		.Account {
 			position: absolute;
 			padding-right: 19px;
@@ -1579,11 +1574,10 @@
 
 /* BEGIN DEBUG OPTIONS */
 	.DebugBar {
-		display: block;
 		padding: 4px;
-		background: #ffffff;
 		text-align: left;
-		margin-bottom: 20px;
+		margin: 20px;
+		margin-left: 240px;
 	}
 	.Sql {
 		border-top: 2px dashed #efefef;
