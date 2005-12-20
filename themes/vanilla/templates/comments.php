@@ -34,8 +34,10 @@ if ($this->Context->WarningCollector->Count() > 0) {
    // (small optimization so they don't have to be checked every loop):
    $PERMISSION_EDIT_COMMENTS = $this->Context->Session->User->Permission("PERMISSION_EDIT_COMMENTS");
    $PERMISSION_HIDE_COMMENTS = $this->Context->Session->User->Permission("PERMISSION_HIDE_COMMENTS");
+   $PERMISSION_EDIT_DISCUSSIONS = $this->Context->Session->User->Permission("PERMISSION_EDIT_DISCUSSIONS");
    
    while ($Row = $this->Context->Database->GetRow($this->CommentData)) {
+      if ($RowNumber > 0) $PERMISSION_EDIT_DISCUSSIONS = 0;
       $RowNumber++;			
       $Comment->Clear();
       $Comment->GetPropertiesFromDataSet($Row, $this->Context->Session->UserID);
@@ -76,8 +78,8 @@ if ($this->Context->WarningCollector->Count() > 0) {
          $this->DelegateParameters["CommentList"] = &$CommentList;
          $CommentList .= $this->CallDelegate("PreCommentOptionsRender");
          if ($this->Context->Session->UserID > 0) {
-            if ($Comment->AuthUserID == $this->Context->Session->UserID || $PERMISSION_EDIT_COMMENTS) {
-               if ((!$this->Discussion->Closed && $this->Discussion->Active) || $PERMISSION_EDIT_COMMENTS) $CommentList .= "<div class=\"CommentEdit\"><a href=\"".GetUrl($this->Context->Configuration, "post.php", "", "CommentID", $Comment->CommentID)."\">".$this->Context->GetDefinition("edit")."</a></div>";
+            if ($Comment->AuthUserID == $this->Context->Session->UserID || $PERMISSION_EDIT_COMMENTS || $PERMISSION_EDIT_DISCUSSIONS) {
+               if ((!$this->Discussion->Closed && $this->Discussion->Active) || $PERMISSION_EDIT_COMMENTS || $PERMISSION_EDIT_DISCUSSIONS) $CommentList .= "<div class=\"CommentEdit\"><a href=\"".GetUrl($this->Context->Configuration, "post.php", "", "CommentID", $Comment->CommentID)."\">".$this->Context->GetDefinition("edit")."</a></div>";
             }
             if ($PERMISSION_HIDE_COMMENTS) $CommentList .= "<div class=\"CommentHide\"><a onclick=\"ManageComment('".($Comment->Deleted?"0":"1")."', '".$this->Discussion->DiscussionID."', '".$Comment->CommentID."', '".$this->Context->GetDefinition("ShowConfirm")."', '".$this->Context->GetDefinition("HideConfirm")."');\">".$this->Context->GetDefinition($Comment->Deleted?"Show":"Hide")."</a></div>";
          }

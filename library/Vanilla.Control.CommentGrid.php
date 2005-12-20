@@ -65,8 +65,8 @@ class CommentGrid extends Control {
 		if ($this->Context->Session->UserID > 0
 			&& ($this->pl->PageCount == 1 || $this->pl->PageCount == $this->CurrentPage)
 			&& ((!$this->Discussion->Closed && $this->Discussion->Active) || $this->Context->Session->User->Permission("PERMISSION_ADD_COMMENTS_TO_CLOSED_DISCUSSION"))
-			&& $this->CommentData) $this->ShowForm = 1;
-			
+			&& $this->CommentData
+			&& $this->Context->Session->User->Permission("PERMISSION_ADD_COMMENTS")) $this->ShowForm = 1;			
 		$this->CallDelegate("Constructor");
 	}
 	

@@ -14,20 +14,22 @@ echo("<div class=\"SettingsForm\">
                $r->Clear();
                $r->GetPropertiesFromDataSet($Row);
                $r->FormatPropertiesForDisplay();
-               echo("<li class=\"SortListItem MovableSortListItem\" id=\"item_".$r->RoleID."\">
-                  <a class=\"SortRemove\" href=\"".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=RoleRemove&amp;RoleID=".$r->RoleID)."\"><img src=\"".$this->Context->StyleUrl."images/btn.remove.gif\" height=\"15\" width=\"15\" border=\"0\" alt=\"".$this->Context->GetDefinition("Remove")."\" /></a>
-                  <a class=\"SortEdit\" href=\"".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=Role&amp;RoleID=".$r->RoleID)."\">".$this->Context->GetDefinition("Edit")."</a>
-                  ".$r->RoleName."
+               echo("<li class=\"SortListItem".($this->Context->Session->User->Permission("PERMISSION_SORT_ROLES") ? " MovableSortListItem" : "")."\" id=\"item_".$r->RoleID."\">");
+                  if ($this->Context->Session->User->Permission("PERMISSION_REMOVE_ROLES")) echo("<a class=\"SortRemove\" href=\"".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=RoleRemove&amp;RoleID=".$r->RoleID)."\"><img src=\"".$this->Context->StyleUrl."images/btn.remove.gif\" height=\"15\" width=\"15\" border=\"0\" alt=\"".$this->Context->GetDefinition("Remove")."\" /></a>");
+                  if ($this->Context->Session->User->Permission("PERMISSION_EDIT_ROLES")) echo("<a class=\"SortEdit\" href=\"".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=Role&amp;RoleID=".$r->RoleID)."\">".$this->Context->GetDefinition("Edit")."</a>");
+                  echo($r->RoleName."
                </li>");
             }
          }
-      echo("</ul>
-      <script type=\"text/javascript\" language=\"javascript\">
-      // <![CDATA[
-         Sortable.create('SortRoles', {dropOnEmpty:true, tag:'li', constraint: 'vertical', ghosting: false, onUpdate: function() {new Ajax.Updater('LoadStatus', './ajax/sortroles.php', {onComplete: function(request) { new Effect.Highlight('SortRoles',{startcolor:'#ffff99'});}, parameters:Sortable.serialize('SortRoles', {tag:'li', name:'RoleID'}), evalScripts:true, asynchronous:true})}});
-      // ]]>
-      </script>
-      <div class=\"FormLink\"><a href=\"".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=Role")."\">".$this->Context->GetDefinition("CreateANewRole")."</a></div>
-   </div>
+      echo("</ul>");
+      if ($this->Context->Session->User->Permission("PERMISSION_SORT_ROLES")) {
+         echo("<script type=\"text/javascript\" language=\"javascript\">
+         // <![CDATA[
+            Sortable.create('SortRoles', {dropOnEmpty:true, tag:'li', constraint: 'vertical', ghosting: false, onUpdate: function() {new Ajax.Updater('LoadStatus', './ajax/sortroles.php', {onComplete: function(request) { new Effect.Highlight('SortRoles',{startcolor:'#ffff99'});}, parameters:Sortable.serialize('SortRoles', {tag:'li', name:'RoleID'}), evalScripts:true, asynchronous:true})}});
+         // ]]>
+         </script>");
+      }
+      if ($this->Context->Session->User->Permission("PERMISSION_ADD_ROLES")) echo("<div class=\"FormLink\"><a href=\"".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=Role")."\">".$this->Context->GetDefinition("CreateANewRole")."</a></div>");
+   echo("</div>
 </div>");
 ?>

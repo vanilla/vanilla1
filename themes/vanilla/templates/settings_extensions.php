@@ -19,7 +19,7 @@ echo("<div class=\"SettingsForm\">
                   while (list($ExtensionKey, $Extension) = each($this->DisabledExtensions)) {
                      $ExtensionList .= "<dt class=\"DisabledExtension".($ExtensionKey == $SelectedExtensionKey ? " SelectedExtension" : "").($FirstExtension?" FirstExtension":"")."\">"
                         ."<a name=\"".$ExtensionKey."\"></a>"
-                        .GetDynamicCheckBox("chk".$ExtensionKey, 1, 0, "document.location='".$this->Context->SelfUrl."?PostBackAction=ProcessExtension&amp;ExtensionKey=".$ExtensionKey."';", "<strong>".$Extension->Name."</strong> ".$Extension->Version)
+                        .GetDynamicCheckBox("chk".$ExtensionKey, 1, 0, "document.location='".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=ProcessExtension&amp;ExtensionKey=".$ExtensionKey)."';", "<strong>".$Extension->Name."</strong> ".$Extension->Version)
                         ."</dt>
                         <dd class=\"DisabledExtension".($ExtensionKey == $SelectedExtensionKey ? " SelectedExtension" : "").($FirstExtension?" FirstExtension":"")."\">";
                         if ($ExtensionKey == $SelectedExtensionKey) {
@@ -46,7 +46,7 @@ echo("<div class=\"SettingsForm\">
                   while (list($ExtensionKey, $Extension) = each($this->EnabledExtensions)) {
                      $ExtensionList .= "<dt class=\"EnabledExtension".($ExtensionKey == $SelectedExtensionKey ? " SelectedExtension" : "").($FirstExtension?" FirstExtension":"")."\">"
                         ."<a name=\"".$ExtensionKey."\"></a>"
-                        .GetDynamicCheckBox("chk".$ExtensionKey, 1, 1, "document.location='".$this->Context->SelfUrl."?PostBackAction=ProcessExtension&amp;ExtensionKey=".$ExtensionKey."';", "<strong>".$Extension->Name."</strong> ".$Extension->Version)
+                        .GetDynamicCheckBox("chk".$ExtensionKey, 1, 1, "document.location='".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=ProcessExtension&amp;ExtensionKey=".$ExtensionKey)."';", "<strong>".$Extension->Name."</strong> ".$Extension->Version)
                         ."</dt>
                         <dd class=\"EnabledExtension".($ExtensionKey == $SelectedExtensionKey ? " SelectedExtension" : "").($FirstExtension?" FirstExtension":"")."\">";
                         if ($ExtensionKey == $SelectedExtensionKey) {

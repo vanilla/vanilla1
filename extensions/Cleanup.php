@@ -255,7 +255,7 @@ if ($Context->SelfUrl == "settings.php" && $Context->Session->User->Permission("
 					$this->PostBackValidated = 1;
 					
 				} elseif ($this->PostBackAction == "BackupDatabase") {
-					$FileName = date("Y-m-d-H-i",mktime())."-".dbNAME.".sql";
+					$FileName = date("Y-m-d-H-i",mktime())."-".$this->Context->Configuration["DATABASE_NAME"].".sql";
 					$Return = 1;
 					$StringArray = array();
 					// In order to enable the "system" function in windows, you've got to give
