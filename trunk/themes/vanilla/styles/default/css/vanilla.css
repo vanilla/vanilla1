@@ -210,7 +210,7 @@
 		  page content). */
 		.Body {
 			border-top: 1px solid #ACBEDF;
-			background: #fff;
+			background: url(../images/panelfade.gif) repeat-y top left #ffffff;
 			padding-top: 20px;
 			padding-bottom: 20px;
 		}
@@ -223,7 +223,6 @@
 		position: absolute;
 		left:18px;
 		padding-right:18px;
-		border-right: 1px solid #ccc;
 	}
 	/* PanelTitle: Only used for the "welcome, guest" text when
 	  unauthenticated users are allowed to browse the forum. */
@@ -416,7 +415,6 @@
 /* BEGIN PAGEBODY (All content within the body that is not in the panel) */
 
 	.PageBody {
-		border-left: 1px solid #ccc;
 		margin-left: 216px;
 		padding-right: 18px;
 		padding-left: 18px;
