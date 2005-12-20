@@ -5,7 +5,7 @@ $ShowIcon = ($u->DisplayIcon != "" && $this->Context->Session->User->Preference(
 $UserList .= "<dl class=\"User".($Switch == 1?"":"Alternate").($FirstRow?" FirstUser":"")."\">
    <dt class=\"DataItemLabel SearchUserLabel\">".$this->Context->GetDefinition("User")."</dt>
    <dd class=\"DataItem SearchUser".($ShowIcon?" SearchUserWithIcon":"")."\">";
-      if ($ShowIcon) $UserList .= "<span class=\"SearchIcon\" style=\"background-image:url('".$u->DisplayIcon."');\"></span>";
+      if ($ShowIcon) $UserList .= "<span class=\"SearchIcon\" style=\"background-image:url('".$u->DisplayIcon."');\">&nbsp;</span>";
       $UserList .= "<a href=\"".GetUrl($this->Context->Configuration, "account.php", "", "u", $u->UserID)."\">".$u->Name."</a> (".$u->Role.")
    </dd>
    <dt class=\"MetaItemLabel SearchUserInformationLabel SearchUserAccountCreatedLabel\">".$this->Context->GetDefinition("AccountCreated")."</dt>

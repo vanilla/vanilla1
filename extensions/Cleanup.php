@@ -416,21 +416,24 @@ if ($Context->SelfUrl == "settings.php" && $Context->Session->User->Permission("
 
 							<div class=\"InputNote\">
 								<h2>".$this->Context->GetDefinition("CleanupUsers")."</h2>
-								<script language=\"Javascript\">
+									<script language=\"javascript\" type=\"text/javascript\">
+									//<![CDATA[	
 									function RemoveUsers() {
 										if (confirm('".$this->Context->GetDefinition("RemoveUsersConfirm")."')) {
 											document.location = '".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=CleanupUsers&Days='+document.frmUserCleanup.Days.options[document.frmUserCleanup.Days.selectedIndex].value").";
 										}
 									}
-								</script>
-								<form name=\"frmUserCleanup\">"
+									//]]>
+									</script>
+								<form name=\"frmUserCleanup\" method=\"post\" action=\"\">"
 									.str_replace(array("//1","//2"), array($this->InactiveUsers, $DaySelect->Get()), $this->Context->GetDefinition("RemoveUsersMessage"))
 									."<a href=\"javascript:RemoveUsers();\">".$this->Context->GetDefinition("Go")."</a>
 								</form>
 							</div>
 							<div class=\"InputNote\">
 								<h2>".$this->Context->GetDefinition("CleanupDiscussions")."</h2>
-								<script language=\"Javascript\">
+									<script language=\"javascript\" type=\"text/javascript\">
+									//<![CDATA[	
 									function RemoveDiscussions() {
 										if (confirm('".$this->Context->GetDefinition("RemoveDiscussionsConfirm")."')) {
 											document.location = '".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=CleanupDiscussions")."';
@@ -446,7 +449,8 @@ if ($Context->SelfUrl == "settings.php" && $Context->Session->User->Permission("
 											document.location = '".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=PurgeDiscussions")."';
 										}
 									}
-								</script>
+									//]]>
+									</script>
 								<p>"								
 									.str_replace("//1", $this->HiddenDiscussions, $this->Context->GetDefinition("XHiddenDiscussions"))
 									."<a href=\"javascript:RemoveDiscussions();\">".$this->Context->GetDefinition("ClickHereToRemoveAllHiddenDiscussions")."</a>

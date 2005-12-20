@@ -49,8 +49,14 @@ class Checkbox {
 		$sReturn = "";
 		$OptionCount = count($this->aOptions);
 		for ($i = 0; $i < $OptionCount ; $i++) {
-         $Checked = $this->aOptions[$i]["Checked"];
-  			$sReturn .= GetDynamicCheckBox($this->Name, $this->aOptions[$i]["IdValue"], $Checked, "", $this->aOptions[$i]["DisplayValue"], $this->aOptions[$i]["Attributes"]);
+		   $sReturn .= "<label>"
+				.GetBasicCheckBox($this->Name,
+					$this->aOptions[$i]["IdValue"],
+					$this->aOptions[$i]["Checked"],
+					$this->aOptions[$i]["Attributes"])
+				." "
+				.$this->aOptions[$i]["DisplayValue"]
+				."</label>";
 		}
 		return $sReturn;
 	}

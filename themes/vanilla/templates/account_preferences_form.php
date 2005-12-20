@@ -4,7 +4,7 @@
 echo("<div class=\"AccountForm FunctionalityForm\">
    <h1>".$this->Context->GetDefinition("ForumFunctionality")."</h1>
    <div class=\"Form\">
-      <form name=\"frmFunctionality\">
+      <form name=\"frmFunctionality\" method=\"post\" action=\"\">
       <div class=\"InputNote\">".$this->Context->GetDefinition("ForumFunctionalityNotes")."</div>");
       $FirstSection = "";
       while (list($SectionLanguageCode, $SectionPreferences) = each($this->Preferences)) {

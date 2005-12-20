@@ -1,4 +1,6 @@
 function SetStyle(StyleID, CustomStyle) {
+	alert("test");
+	
 	ChangeLoaderText("Processing...");
 	SwitchLoader(1);
    var Url = "./extensions/Style/setstyle.php";

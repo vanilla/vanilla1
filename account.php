@@ -71,7 +71,7 @@ include("appg/init_vanilla.php");
 			}
 		}
 		if ($AccountUser->UserID == $Context->Session->UserID) {
-			$Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangeForumFunctionality"), GetUrl($Context->Configuration, $Context->SelfUrl, "", "", "", "", "PostBackAction=Functionality"), "", 30);
+			$Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangeForumFunctionality"), GetUrl($Context->Configuration, $Context->SelfUrl, "", "", "", "", "PostBackAction=Functionality"), "", "", 30);
 		}		
 	}
 	

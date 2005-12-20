@@ -4,7 +4,7 @@
 echo("<div class=\"SettingsForm\">
    <h1>".$this->Context->GetDefinition("CategoryManagement")."</h1>");
    if ($CategoryID > 0) {
-      $this->CategorySelect->Attributes = "onchange=\"document.location='?PostBackAction=Category&CategoryID='+this.options[this.selectedIndex].value;\"";
+      $this->CategorySelect->Attributes = "onchange=\"document.location='?PostBackAction=Category&amp;CategoryID='+this.options[this.selectedIndex].value;\"";
       $this->CategorySelect->SelectedID = $CategoryID;
       echo("<div class=\"Form\" id=\"Categories\">
          ".$this->Get_Warnings()."

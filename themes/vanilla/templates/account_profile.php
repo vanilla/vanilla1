@@ -6,7 +6,7 @@ echo("<div class=\"Account\">");
    $this->CallDelegate("PreUsernameRender");
    
    if ($this->User->DisplayIcon != "") {
-      echo("<h1 class=\"AccountWithIcon\"><span class=\"AccountIcon\" style=\"background-image:url('".$this->User->DisplayIcon."')\"></span>");
+      echo("<h1 class=\"AccountWithIcon\"><span class=\"AccountIcon\" style=\"background-image:url('".$this->User->DisplayIcon."')\">&nbsp;</span>");
    } else {
       echo("<h1>");
    }

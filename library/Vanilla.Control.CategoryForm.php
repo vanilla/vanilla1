@@ -107,7 +107,7 @@ class CategoryForm extends PostBackControl {
 				
 			} elseif ($this->PostBackAction == "CategoryRemove") {
 				$this->PostBackParams->Set("PostBackAction", "ProcessCategoryRemove");
-				$this->CategorySelect->Attributes = "onchange=\"document.location='?PostBackAction=CategoryRemove&CategoryID='+this.options[this.selectedIndex].value;\"";
+				$this->CategorySelect->Attributes = "onchange=\"document.location='?PostBackAction=CategoryRemove&amp;CategoryID='+this.options[this.selectedIndex].value;\"";
 				$this->CategorySelect->SelectedID = $CategoryID;
             $this->CallDelegate("PreRemoveRender");
             include($this->Context->Configuration["THEME_PATH"]."templates/settings_category_remove.php");            

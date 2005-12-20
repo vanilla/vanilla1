@@ -55,7 +55,7 @@ class Select {
 		$OptionCount = count($this->aOptions);
 		$i = 0;
 		for ($i = 0 ; $i < $OptionCount; $i++) {
-			$sReturn .= "<option value=\"".$this->aOptions[$i]["IdValue"]."\" ";
+			$sReturn .= "<option value=\"".FormatStringForDisplay($this->aOptions[$i]["IdValue"])."\" ";
 		
 			if (is_array($this->SelectedID)) {
 				$numrows = count($this->SelectedID);
@@ -69,7 +69,7 @@ class Select {
 				if ($this->aOptions[$i]["IdValue"] == $this->SelectedID) $sReturn .= " selected=\"selected\"";
 			}
 			if ($this->aOptions[$i]["Attributes"] != "") $sReturn .= $this->aOptions[$i]["Attributes"];
-			$sReturn .= ">".$this->aOptions[$i]["DisplayValue"]."</option>\r\n";
+			$sReturn .= ">".FormatStringForDisplay($this->aOptions[$i]["DisplayValue"])."</option>\r\n";
 		}
 		$sReturn .= "</select>\r\n";
 		return $sReturn;

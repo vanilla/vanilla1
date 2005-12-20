@@ -72,7 +72,7 @@ if (in_array($Context->SelfUrl, array("comments.php", "post.php"))) {
          $ClipboardSelect->Name = "ClippingID";
          $ClipboardSelect->CssClass = "ClipboardSelect";
          $ClipboardSelect->Attributes = " onchange=\"GetClipping(this);\"";
-         $ClipboardSelect->AddOption("", "");
+         $ClipboardSelect->AddOption("0", "...");
          $ClipboardSelect->AddOptionsFromDataSet($CommentForm->Context->Database, $Clippings, "ClippingID", "Label");
          echo("<dt class=\"ClipboardInputLabel\">".$CommentForm->Context->GetDefinition("CopyFromYourClipboard")."</dt>
          <dd class=\"ClipboardInput\">".$ClipboardSelect->Get()."</dd>");

@@ -60,7 +60,7 @@ class ClipboardForm extends PostBackControl {
             echo("<div class=\"SettingsForm\">
                <h1>".$this->Context->GetDefinition("ClipboardManagement")."</h1>");
                if ($ClippingID > 0) {
-                  $this->ClippingSelect->Attributes = "onchange=\"document.location='?PostBackAction=Clipping&ClippingID='+this.options[this.selectedIndex].value;\"";
+                  $this->ClippingSelect->Attributes = "onchange=\"document.location='?PostBackAction=Clipping&amp;ClippingID='+this.options[this.selectedIndex].value;\"";
                   $this->ClippingSelect->SelectedID = $ClippingID;
                   echo("<div class=\"Form\" id=\"Clippings\">
                      ".$this->Get_Warnings()."
@@ -109,8 +109,8 @@ class ClipboardForm extends PostBackControl {
                            $Clipping->GetPropertiesFromDataSet($Row);
                            $Clipping->FormatPropertiesForDisplay();
                            echo("<li class=\"SortListItem\">
-                              <a class=\"SortRemove\" href=\"".GetUrl($this->Context->Configuration, "account.php", "", "", "", "", "PostBackAction=ClippingRemove&ClippingID=".$Clipping->ClippingID)."\" onclick=\"return confirm('".$this->Context->GetDefinition("RemoveClipboardItemConfirm")."');\"><img src=\"".$this->Context->StyleUrl."images/btn.remove.gif\" height=\"15\" width=\"15\" border=\"0\" alt=\"".$this->Context->GetDefinition("Remove")."\" /></a>
-                              <a class=\"SortEdit\" href=\"".GetUrl($this->Context->Configuration, "account.php", "", "", "", "", "PostBackAction=Clipping&ClippingID=".$Clipping->ClippingID)."\">".$this->Context->GetDefinition("Edit")."</a>
+                              <a class=\"SortRemove\" href=\"".GetUrl($this->Context->Configuration, "account.php", "", "", "", "", "PostBackAction=ClippingRemove&amp;ClippingID=".$Clipping->ClippingID)."\" onclick=\"return confirm('".$this->Context->GetDefinition("RemoveClipboardItemConfirm")."');\"><img src=\"".$this->Context->StyleUrl."images/btn.remove.gif\" height=\"15\" width=\"15\" border=\"0\" alt=\"".$this->Context->GetDefinition("Remove")."\" /></a>
+                              <a class=\"SortEdit\" href=\"".GetUrl($this->Context->Configuration, "account.php", "", "", "", "", "PostBackAction=Clipping&amp;ClippingID=".$Clipping->ClippingID)."\">".$this->Context->GetDefinition("Edit")."</a>
                               ".$Clipping->Label."
                            </li>");
                         }
