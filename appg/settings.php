@@ -134,26 +134,19 @@ $Configuration["REWRITE_post.php"] = "post/";
 $Configuration["REWRITE_people.php"] = "people/";
 
 // Default values for role permissions
-$Configuration["PERMISSION_CHECK_FOR_UPDATES"] = "0";
+// Standard Permissions
 $Configuration["PERMISSION_SIGN_IN"] = "0";
 $Configuration["PERMISSION_ADD_COMMENTS"] = "0";
-$Configuration["PERMISSION_ADD_COMMENTS_TO_CLOSED_DISCUSSION"] = "0";
 $Configuration["PERMISSION_START_DISCUSSION"] = "0";
 $Configuration["PERMISSION_HTML_ALLOWED"] = "0";
-$Configuration["PERMISSION_IP_ADDRESSES_VISIBLE"] = "0";
-$Configuration["PERMISSION_APPROVE_APPLICANTS"] = "0";
-$Configuration["PERMISSION_MANAGE_REGISTRATION"] = "0";
-$Configuration["PERMISSION_EDIT_USERS"] = "0";
-$Configuration["PERMISSION_CHANGE_USER_ROLE"] = "0";
-$Configuration["PERMISSION_ADD_ROLES"] = "0";
-$Configuration["PERMISSION_EDIT_ROLES"] = "0";
-$Configuration["PERMISSION_REMOVE_ROLES"] = "0";
+// Discussion Moderator Permissions
 $Configuration["PERMISSION_STICK_DISCUSSIONS"] = "0";
 $Configuration["PERMISSION_HIDE_DISCUSSIONS"] = "0";
 $Configuration["PERMISSION_CLOSE_DISCUSSIONS"] = "0";
 $Configuration["PERMISSION_EDIT_DISCUSSIONS"] = "0";
 $Configuration["PERMISSION_HIDE_COMMENTS"] = "0";
 $Configuration["PERMISSION_EDIT_COMMENTS"] = "0";
+$Configuration["PERMISSION_ADD_COMMENTS_TO_CLOSED_DISCUSSION"] = "0";
 $Configuration["PERMISSION_ADD_CATEGORIES"] = "0";
 $Configuration["PERMISSION_EDIT_CATEGORIES"] = "0";
 $Configuration["PERMISSION_REMOVE_CATEGORIES"] = "0";
@@ -161,11 +154,22 @@ $Configuration["PERMISSION_SORT_CATEGORIES"] = "0";
 $Configuration["PERMISSION_VIEW_HIDDEN_DISCUSSIONS"] = "0";
 $Configuration["PERMISSION_VIEW_HIDDEN_COMMENTS"] = "0";
 $Configuration["PERMISSION_VIEW_ALL_WHISPERS"] = "0";
+// User Moderator Permissions
+$Configuration["PERMISSION_APPROVE_APPLICANTS"] = "0";
+$Configuration["PERMISSION_RECEIVE_APPLICATION_NOTIFICATION"] = "0";
+$Configuration["PERMISSION_CHANGE_USER_ROLE"] = "0";
+$Configuration["PERMISSION_EDIT_USERS"] = "0";
+$Configuration["PERMISSION_IP_ADDRESSES_VISIBLE"] = "0";
+$Configuration["PERMISSION_MANAGE_REGISTRATION"] = "0";
+$Configuration["PERMISSION_ADD_ROLES"] = "0";
+$Configuration["PERMISSION_EDIT_ROLES"] = "0";
+$Configuration["PERMISSION_REMOVE_ROLES"] = "0";
+// Administrative Permissions
+$Configuration["PERMISSION_CHECK_FOR_UPDATES"] = "0";
 $Configuration["PERMISSION_CHANGE_APPLICATION_SETTINGS"] = "0";
 $Configuration["PERMISSION_MANAGE_EXTENSIONS"] = "0";
 $Configuration["PERMISSION_MANAGE_LANGUAGE"] = "0";
 $Configuration["PERMISSION_MANAGE_STYLES"] = "0";
-$Configuration["PERMISSION_RECEIVE_APPLICATION_NOTIFICATION"] = "0";
 $Configuration["PERMISSION_ALLOW_DEBUG_INFO"] = "0";
 
 // Default values for User Preferences
