@@ -3,6 +3,6 @@
 
 echo($this->PageList
 	.$this->PageDetails
-	."<a class=\"PageJump Top\" href=\"#pgtop\">".$this->Context->GetDefinition("TopOfPage")."</a>");
+	."<a class=\"PageJump Top\" href=\"".$_SERVER["REQUEST_URI"]."#pgtop\">".$this->Context->GetDefinition("TopOfPage")."</a>");
    
 ?>

@@ -12,10 +12,10 @@
 
 /* BEGIN GLOBAL DEFINITIONS (common to all pages) */
 	body { 
-		background: #F5F9FF;
-		margin-top: 16px;
-		margin-left: 20px;
-		margin-right: 20px;
+		background: #ffffff;
+		margin: 0px;
+		padding: 0px;
+		margin-bottom: 20px;
 	}
 	body, div, table, td {
 		font-family: Trebuchet MS, Verdana, Tahoma, Arial;
@@ -86,35 +86,7 @@
 			color: #800; 
 			margin: 0;
 			padding: 0;
-		}
-
-	  /*
-	  
-		.AutoCompleteContainer {
-			border: 1px solid #000;
-		}
-		ListOptionOn/ListOptionOff: Used on the autocomplete feature to highlight
-		  when navigating through the faux-autocomplete results.
-		.ListOptionOn, .ListOptionOn:link, .ListOptionOn:visited, .ListOptionOn:hover {
-			font-family: arial, sans-serif, verdana;
-			font-size: 12px;
-			background: #0A246A;
-			color: #fff;
-			text-decoration: none;
-			display: block;
-			width: 100%;
-		}
-		.ListOptionOff, .ListOptionOff:link, .ListOptionOff:visited, .ListOptionOff:hover {
-			font-family: arial, sans-serif, verdana;
-			font-size: 12px;
-			background: #fff;
-			color: #000;
-			text-decoration: none;
-			display: block;
-			width: 100%;
-		}
-	  */
-	  	
+		}	  	
 	
 	/* NAMED ELEMENTS COMMON TO EVERY PAGE */
 		/* LoadStatus: A tiny window that becomes visible when an AJAX action is performed */
@@ -146,7 +118,7 @@
 			position: absolute;
 			font-size: 11px;
 			color: #5D709F;
-			right: 36px;
+			right: 16px;
 			top: 22px;
 		}
 		.Session a, .Session a:link, .Session a:visited {
@@ -158,20 +130,10 @@
 			text-decoration: none;
 		}
 		
-		/* SiteContainer: A div that encloses the entire application - allowing for borders and special padding. */
-		.SiteContainer {
-			margin-top: 16px;
-			padding-bottom: 20px;
-		}
-		
 		/* Head: The banner/menu container. */
 		.Head {
 			background: url("../images/waves.blue.gif") repeat-x left top #E5EAF6;
-			border-top: 1px solid #ACBEDF;
-			border-left: 1px solid #ACBEDF;
-			border-right: 1px solid #ACBEDF;
-			margin-left: 8px;
-			margin-right: 8px;
+			margin: 0px;
 		}
 		
 		/* Logo: A container for the logo above the menu. */
@@ -247,10 +209,8 @@
 		/* Body: The element containing everything below the Head (panel and
 		  page content). */
 		.Body {
-			border: 1px solid #ACBEDF;
+			border-top: 1px solid #ACBEDF;
 			background: #fff;
-			float: left;
-			width: 100%;
 			padding-top: 20px;
 			padding-bottom: 20px;
 		}
@@ -260,10 +220,9 @@
 
 /* BEGIN PANEL */
 	.Panel {
-		margin-left: 18px;
+		position: absolute;
+		left:18px;
 		padding-right:18px;
-		float: left;
-		display: inline;
 		border-right: 1px solid #ccc;
 	}
 	/* PanelTitle: Only used for the "welcome, guest" text when
@@ -430,6 +389,27 @@
 			font-size: 11px;
 			border-bottom: 1px solid #ccc;
 		}
+		
+		.AboutVanilla {
+			background: #f9f9f9;
+			text-align: center;
+			margin-top: 20px;
+			border-top: 1px solid #dddddd;
+			padding-top: 6px;
+			padding-bottom: 6px;
+			color: #dddddd;
+			width: 180px;
+			line-height: 120%;
+			font-size: 11px;
+		}
+		.AboutVanilla a, .AboutVanilla a:link, .AboutVanilla a:visited, .AboutVanilla a:active {
+			color: #d0d0d0;
+			text-decoration: none;
+		}
+		.AboutVanilla a:hover {
+			color: #aaaaaa;
+			text-decoration: underline;
+		}
 
 /* END PANEL */
   
@@ -540,6 +520,7 @@
 	/* Comment: Container for a comment on the comment page. */
 	.Comment {
 		padding: 8px;
+		padding-top: 12px;
 		padding-bottom: 2px;
 		border-bottom: 1px solid #DEDEDF;
 	}
@@ -557,7 +538,7 @@
 		.CommentWhisper,
 		.CommentTime {
 			color: #aaa;
-			float: left;
+			display: inline;
 		}
 		.CommentTime em {
 			font-style: normal;
@@ -597,7 +578,12 @@
 		.Highlight {
 			background: #ff9;
 		}
-		.CommentOptions,
+		.CommentOptions {
+			position: absolute;
+			right: 22px;
+			margin-top: -20px;
+			font-size: 10px;
+		}
 		.WhisperBack {
 			margin-top: 0px;
 			text-align: right;
@@ -645,7 +631,7 @@
 		.CommentIcon {
 		  position: absolute;
 		  top: 50%;
-		  margin: -16px 0 0 -40px;
+		  margin: -16px 0 0 0px;
 		  display: block;
 		  height: 32px;
 		  width: 32px;
@@ -694,9 +680,6 @@
 			font-weight: bold;
 			color: #d0d0d0;
 		}
-		.PageDetailsBottom {
-			clear: left;
-		}
 		.PageNav {
 			display: block;
 			width: 160px;
@@ -712,10 +695,10 @@
 		}
 		.PageJump,
 		.PageList {
+			position: absolute;
+			right: 18px;
 			background: none;
 			color: #999;
-			float: right;
-			z-index: 10;
 		}
 		.PageNav .PageNav:link, .PageNav:visited,
 		.PageJump, .PageJump:link, .PageJump:visited {
@@ -870,8 +853,8 @@
 			display: inline;
 		}
 		.Account {
+			position: absolute;
 			padding-right: 19px;
-			float: left;
 			border-right: 1px solid #ccc;
 		}
 		.Account h1 {
@@ -903,7 +886,6 @@
 		}
 		.AccountBody {
 			margin-top: 8px;
-			clear: left;
 			width: 281px;
 			overflow: hidden;
 		}
@@ -1234,11 +1216,14 @@
 			color: #333;
 			width: 300px;
 		}
-		.SearchTypeLabel { margin-left: 12px; }
-		.SearchTypeLabel,
+		.SearchTypeLabel {
+			position: absolute;
+			margin-left: 12px;
+		}
+			
 		.SearchType {
 			margin-right: 16px;
-			float: left;
+			display: inline;
 		}
 		.SearchType {
 			margin-bottom: 10px;
@@ -1514,24 +1499,31 @@
 		}
 
 	/* Footer */
+		.Foot {
+			margin-top: 6px;
+			border-top: 1px solid #ccc;
+			margin-left: 235px;
+			margin-right: 16px;
+		}
 		.Links {
-			float: right;
+			position: absolute;
+			right: 18px;
 		}
 		.Copyright {
-			clear: left;
+			padding-left: 2px;
 		}
 		.Copyright,
 		.Links {
-			color: #ACBEDF;
+			color: #cccccc;
 			line-height: 200%;
 			margin-bottom: 20px;
 		}
 		.Foot a, .Foot a:link, .Foot a:visited {
-			color: #ACBEDF;
+			color: #cccccc;
 			text-decoration: none;
 		}
 		.Foot a:hover {
-			color: #062971;
+			color: #555555;
 			text-decoration: none;
 		}
 
@@ -1581,7 +1573,7 @@
 		.Timer {
 			position: absolute;
 			top: 22px;
-			left: 36px;
+			left: 16px;
 			color: #ACBEDF;
 		}
 		
@@ -1590,11 +1582,9 @@
 
 /* BEGIN DEBUG OPTIONS */
 	.DebugBar {
-		clear: both;
 		display: block;
 		padding: 4px;
 		background: #ffffff;
-		border: 1px solid #ACBEDF;
 		text-align: left;
 		margin-bottom: 20px;
 	}

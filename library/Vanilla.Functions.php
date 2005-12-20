@@ -39,6 +39,8 @@ function GetLastCommentQuerystring(&$Discussion, &$Configuration) {
 }
 
 function GetUnreadQuerystring(&$Discussion, &$Configuration, $CurrentUserJumpToLastCommentPref = "0") {
+	$Suffix = "";
+	if ($Configuration["URL_BUILDING_METHOD"] == "mod_rewrite") $Suffix = CleanupString($Discussion->Name)."/";
 	if ($CurrentUserJumpToLastCommentPref) {
 		$UnreadCommentCount = $Discussion->CountComments - $Discussion->NewComments + 1;
 		$ReadCommentCount = $Discussion->CountComments - $Discussion->NewComments;
@@ -46,9 +48,9 @@ function GetUnreadQuerystring(&$Discussion, &$Configuration, $CurrentUserJumpToL
 		$JumpToItem = $ReadCommentCount - (($PageNumber-1) * $Configuration["COMMENTS_PER_PAGE"]);
 		if ($JumpToItem < 0) $JumpToItem = 0;
 		if ($PageNumber == 0) $PageNumber = "";
-		return GetUrl($Configuration, "comments.php", "", "DiscussionID", $Discussion->DiscussionID, $PageNumber, "#Item_".$JumpToItem);
+		return GetUrl($Configuration, "comments.php", "", "DiscussionID", $Discussion->DiscussionID, $PageNumber, "#Item_".$JumpToItem, $Suffix);
 	} else {
-		return GetUrl($Configuration, "comments.php", "", "DiscussionID", $Discussion->DiscussionID);
+		return GetUrl($Configuration, "comments.php", "", "DiscussionID", $Discussion->DiscussionID, "", "", $Suffix);
 	}
 }
 

@@ -31,10 +31,10 @@ if (in_array($Context->SelfUrl, array("categories.php", "comments.php", "index.p
    
    $DiscussionFilters = $Context->GetDefinition("DiscussionFilters");
    $Panel->AddList($DiscussionFilters, 10);
-   if (!$Context->Session->User->Preference("ShowBookmarks")) $Panel->AddListItem($DiscussionFilters, $Context->GetDefinition("BookmarkedDiscussions"), GetUrl($Configuration, $Context->SelfUrl, "", "", "", "", "View=Bookmarks"), "", "", 10);
-   if (!$Context->Session->User->Preference("ShowRecentDiscussions")) $Panel->AddListItem($DiscussionFilters, $Context->GetDefinition("YourDiscussions"), GetUrl($Configuration, $Context->SelfUrl, "", "", "", "", "View=YourDiscussions"), "", "", 20);
+   if (!$Context->Session->User->Preference("ShowBookmarks")) $Panel->AddListItem($DiscussionFilters, $Context->GetDefinition("BookmarkedDiscussions"), GetUrl($Configuration, "index.php", "", "", "", "", "View=Bookmarks"), "", "", 10);
+   if (!$Context->Session->User->Preference("ShowRecentDiscussions")) $Panel->AddListItem($DiscussionFilters, $Context->GetDefinition("YourDiscussions"), GetUrl($Configuration, "index.php", "", "", "", "", "View=YourDiscussions"), "", "", 20);
    if ($Configuration["ENABLE_WHISPERS"] && !$Context->Session->User->Preference("ShowPrivateDiscussions")) {
-      $Panel->AddListItem($DiscussionFilters, $Context->GetDefinition("PrivateDiscussions"), GetUrl($Configuration, $Context->SelfUrl, "", "", "", "", "View=Private"), "", "", 30);
+      $Panel->AddListItem($DiscussionFilters, $Context->GetDefinition("PrivateDiscussions"), GetUrl($Configuration, "index.php", "", "", "", "", "View=Private"), "", "", 30);
       $Panel->AddListItem($DiscussionFilters, $Context->GetDefinition("PrivateComments"), GetUrl($Configuration, "search.php", "", "", "", "", "PostBackAction=Search&Keywords=whisper;&Type=Comments"), "", "", 40);
    }
 }

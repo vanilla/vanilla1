@@ -28,7 +28,7 @@ echo($DiscussionList);
 if ($this->DiscussionDataCount > 0) {
    echo($PageList
 	."<div class=\"PageDetails\">".$pl->GetPageDetails($this->Context)."</div>"
-	."<a class=\"PageJump Top\" href=\"#pgtop\">".$this->Context->GetDefinition("TopOfPage")."</a>");
+	."<a class=\"PageJump Top\" href=\"".$_SERVER["REQUEST_URI"]."#pgtop\">".$this->Context->GetDefinition("TopOfPage")."</a>");
 }
 
 ?>
