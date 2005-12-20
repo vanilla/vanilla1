@@ -537,7 +537,7 @@
 		.CommentWhisper,
 		.CommentTime {
 			color: #aaa;
-			display: inline;
+			float: left;
 		}
 		.CommentTime em {
 			font-style: normal;
@@ -577,12 +577,7 @@
 		.Highlight {
 			background: #ff9;
 		}
-		.CommentOptions {
-			position: absolute;
-			right: 22px;
-			margin-top: -20px;
-			font-size: 10px;
-		}
+		.CommentOptions,
 		.WhisperBack {
 			margin-top: 0px;
 			text-align: right;
@@ -630,7 +625,7 @@
 		.CommentIcon {
 		  position: absolute;
 		  top: 50%;
-		  margin: -16px 0 0 0px;
+		  margin: -16px 0 0 -40px;
 		  display: block;
 		  height: 32px;
 		  width: 32px;
