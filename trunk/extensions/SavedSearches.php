@@ -58,6 +58,7 @@ if (
 if ($Context->SelfUrl == "search.php") {
 	// Add the savedsearch js to the page
    $Head->AddScript("./extensions/SavedSearches/functions.js");
+	$Head->AddStyleSheet("./extensions/SavedSearches/style.css");
 	
 	// Write the "save your search" form to the screen
 	function SearchForm_WriteSaveSearchForm(&$SearchForm) {
