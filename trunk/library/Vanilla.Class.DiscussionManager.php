@@ -208,7 +208,10 @@ class DiscussionManager extends Delegation {
 		if ($DiscussionStarterUserID > 0) $s->AddWhere("t.AuthUserID", $DiscussionStarterUserID, "=");
 		
 		// If the current user is not admin only show active Discussions
-		if (!$this->Context->Session->User->Permission("PERMISSION_HIDE_DISCUSSIONS") || !$this->Context->Session->User->Preference("ShowDeletedDiscussions")) $s->AddWhere("t.Active", "1", "=");
+		if (!$this->Context->Session->User->Permission("PERMISSION_VIEW_HIDDEN_DISCUSSIONS")
+			|| !$this->Context->Session->User->Preference("ShowDeletedDiscussions")) {
+			$s->AddWhere("t.Active", "1", "=");
+		}
 		if ($CategoryID > 0) {
 			$s->AddWhere("t.CategoryID", $CategoryID, "=");
 		} elseif ($this->Context->Session->UserID > 0) {
@@ -262,7 +265,10 @@ class DiscussionManager extends Delegation {
 		// $s->AddGroupBy("DiscussionID", "t");
 		
 		// If the current user is not admin only show active Discussions
-		if (!$this->Context->Session->User->Permission("PERMISSION_HIDE_DISCUSSIONS") || !$this->Context->Session->User->Preference("ShowDeletedDiscussions")) $s->AddWhere("t.Active", "1", "=");
+		if (!$this->Context->Session->User->Permission("PERMISSION_VIEW_HIDDEN_DISCUSSIONS")
+			|| !$this->Context->Session->User->Preference("ShowDeletedDiscussions")) {
+			$s->AddWhere("t.Active", "1", "=");
+		}
 		if ($CategoryID > 0) {
 			$s->AddWhere("t.CategoryID", $CategoryID, "=");
 		} elseif ($this->Context->Session->UserID > 0) {

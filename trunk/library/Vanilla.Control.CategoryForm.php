@@ -21,21 +21,14 @@ class CategoryForm extends PostBackControl {
 
 	function CategoryForm(&$Context) {
       $this->Name = "CategoryForm";
-		$this->ValidActions = array("Categories", "ProcessCategories", "Category", "ProcessCategory", "CategoryRemove", "ProcessCategoryRemove");
+		$this->ValidActions = array("Categories", "Category", "ProcessCategory", "CategoryRemove", "ProcessCategoryRemove");
 		$this->Constructor($Context);
 		if ($this->IsPostBack) {
 			$CategoryID = ForceIncomingInt("CategoryID", 0);
 			$ReplacementCategoryID = ForceIncomingInt("ReplacementCategoryID", 0);
 			$this->CategoryManager = $this->Context->ObjectFactory->NewContextObject($this->Context, "CategoryManager");
 			
-			if ($this->PostBackAction == "ProcessCategories") {
-				if ($this->Context->Session->User->Permission("PERMISSION_SORT_CATEGORIES")) {
-					$this->CategoryManager->SaveCategoryOrder();
-					header("location: ".GetUrl($this->Context->Configuration, $this->Context->SelfUrl));
-				} else {
-					$this->IsPostBack = 0;
-				}
-			} elseif ($this->PostBackAction == "ProcessCategory") {
+			if ($this->PostBackAction == "ProcessCategory") {
 				$this->Category = $this->Context->ObjectFactory->NewObject($this->Context, "Category");
 				$this->Category->GetPropertiesFromForm($this->Context);
 				if (($this->Category->CategoryID > 0 && $this->Context->Session->User->Permission("PERMISSION_EDIT_CATEGORIES"))

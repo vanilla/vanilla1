@@ -471,6 +471,7 @@ $Context->Dictionary["PERMISSION_APPROVE_APPLICANTS"] = "Approve applicants";
 $Context->Dictionary["PERMISSION_MANAGE_REGISTRATION"] = "Registration configuration";
 $Context->Dictionary["PERMISSION_EDIT_USERS"] = "Edit any user";
 $Context->Dictionary["PERMISSION_CHANGE_USER_ROLE"] = "Change user roles";
+$Context->Dictionary["PERMISSION_SORT_ROLES"] = "Sort roles";
 $Context->Dictionary["PERMISSION_ADD_ROLES"] = "Add new roles";
 $Context->Dictionary["PERMISSION_EDIT_ROLES"] = "Edit existing roles";
 $Context->Dictionary["PERMISSION_REMOVE_ROLES"] = "Remove existing roles";

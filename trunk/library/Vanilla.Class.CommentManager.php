@@ -92,7 +92,8 @@ class CommentManager {
 		$s->SetMainTable("Comment", "m");
 		$s->AddSelect("CommentID", "m", "Count", "count");
 		$s->AddJoin("Discussion", "t", "DiscussionID", "m", "DiscussionID", "inner join");
-		if (!$this->Context->Session->User->Permission("PERMISSION_HIDE_COMMENTS") || !$this->Context->Session->User->Preference("ShowDeletedComments")) {
+		if (!$this->Context->Session->User->Permission("PERMISSION_VIEW_HIDDEN_COMMENTS")
+			|| !$this->Context->Session->User->Preference("ShowDeletedComments")) {
 			$s->AddWhere("m.Deleted", 0, "=", "and", "", 1, 1);
 			$s->AddWhere("m.Deleted", 0, "=", "or", "" ,0);
 			$s->EndWhereGroup();
@@ -135,7 +136,8 @@ class CommentManager {
 		}
 		
 		$s = $this->GetCommentBuilder();
-		if (!$this->Context->Session->User->Permission("PERMISSION_HIDE_COMMENTS")) {
+		if (!$this->Context->Session->User->Permission("PERMISSION_VIEW_HIDDEN_COMMENTS")
+			|| !$this->Context->Session->User->Preference("ShowDeletedComments")) {
 			$s->AddWhere("m.Deleted", 0, "=", "and", "", 1, 1);
 			$s->AddWhere("m.Deleted", 0, "=", "or", "" ,0);
 			$s->EndWhereGroup();
@@ -258,190 +260,187 @@ class CommentManager {
 	}
 	
 	function SaveComment(&$Comment, $SkipValidation = 0) {
-		if (!$this->Context->Session->User->Permission("PERMISSION_ADD_COMMENTS")) {
-			$this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrPermissionAddComments"));
+		// Set the user's default comment format to the most recently selected one         
+		if ($Comment->AuthUserID > 0 && $Comment->AuthUserID != $this->Context->Session->UserID) {
+			// Unless the user is editing another user's comments, then do nothing
 		} else {
-			// Set the user's default comment format to the most recently selected one         
-         if ($Comment->AuthUserID > 0 && $Comment->AuthUserID != $this->Context->Session->UserID) {
-				// Unless the user is editing another user's comments, then do nothing
-			} else {
-				$FormatTypeUserID = $Comment->AuthUserID;
-				if ($FormatTypeUserID == 0) $FormatTypeUserID = $this->Context->Session->UserID;
-				$um = $this->Context->ObjectFactory->NewContextObject($this->Context, "UserManager");
-				$um->SetDefaultFormatType($FormatTypeUserID, $Comment->FormatType);
+			$FormatTypeUserID = $Comment->AuthUserID;
+			if ($FormatTypeUserID == 0) $FormatTypeUserID = $this->Context->Session->UserID;
+			$um = $this->Context->ObjectFactory->NewContextObject($this->Context, "UserManager");
+			$um->SetDefaultFormatType($FormatTypeUserID, $Comment->FormatType);
+		}
+		
+		// If not editing, and the posted comment count is less than the
+		// user's current comment count, silently skip the posting and
+		// redirect as if everything is normal.
+		if (!$SkipValidation && $Comment->CommentID == 0 && $Comment->UserCommentCount < $this->Context->Session->User->CountComments) {
+			// Silently fail to post the data
+			// Need to get the user's last posted commentID in this discussion and direct them to it
+			$s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
+			$s->SetMainTable("Comment", "c");
+			$s->AddSelect("CommentID", "c");
+			$s->AddWhere("AuthUserID", $this->Context->Session->UserID, "=");
+			$s->AddWhere("DiscussionID", $Comment->DiscussionID, "=");
+			$s->AddOrderBy("DateCreated", "c", "desc");
+			$s->AddLimit(0,1);
+			$LastCommentData = $this->Context->Database->Select($s, $this->Name, "SaveComment", "An error occurred while retrieving your last comment in this discussion.");
+			while ($Row = $this->Context->Database->GetRow($LastCommentData)) {
+				$Comment->CommentID = ForceInt($Row["CommentID"], 0);
 			}
-			
-			// If not editing, and the posted comment count is less than the
-			// user's current comment count, silently skip the posting and
-			// redirect as if everything is normal.
-			if (!$SkipValidation && $Comment->CommentID == 0 && $Comment->UserCommentCount < $this->Context->Session->User->CountComments) {
-				// Silently fail to post the data
-				// Need to get the user's last posted commentID in this discussion and direct them to it
+			// Make sure we got it
+			if ($Comment->CommentID == 0) $this->Context->ErrorManager->AddError($this->Context, $this->Name, "SaveComment", "Your last comment in this discussion could not be found.");
+		} else {
+			// Validate the properties
+			$SaveComment = $Comment;
+			if (!$SkipValidation) {
+				if (!$this->Context->Session->User->Permission("PERMISSION_ADD_COMMENTS")) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrPermissionAddComments"));
+				$this->ValidateComment($SaveComment);
+				$this->ValidateWhisperUsername($SaveComment);
+			}
+			if ($this->Context->WarningCollector->Iif()) {
 				$s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
-				$s->SetMainTable("Comment", "c");
-				$s->AddSelect("CommentID", "c");
-				$s->AddWhere("AuthUserID", $this->Context->Session->UserID, "=");
-				$s->AddWhere("DiscussionID", $Comment->DiscussionID, "=");
-				$s->AddOrderBy("DateCreated", "c", "desc");
-				$s->AddLimit(0,1);
-				$LastCommentData = $this->Context->Database->Select($s, $this->Name, "SaveComment", "An error occurred while retrieving your last comment in this discussion.");
-				while ($Row = $this->Context->Database->GetRow($LastCommentData)) {
-					$Comment->CommentID = ForceInt($Row["CommentID"], 0);
-				}
-				// Make sure we got it
-				if ($Comment->CommentID == 0) $this->Context->ErrorManager->AddError($this->Context, $this->Name, "SaveComment", "Your last comment in this discussion could not be found.");
-			} else {
-				// Validate the properties
-				$SaveComment = $Comment;
-				if (!$SkipValidation) {
-					$this->ValidateComment($SaveComment);
-               $this->ValidateWhisperUsername($SaveComment);
-				}
-				if ($this->Context->WarningCollector->Iif()) {
-					$s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
-					
-					// If creating a new object
-					if ($SaveComment->CommentID == 0) {	
-						// Update the user info & check for spam
-						if (!$SkipValidation) {
-							$UserManager = $this->Context->ObjectFactory->NewContextObject($this->Context, "UserManager");
-							$UserManager->UpdateUserCommentCount($this->Context->Session->UserID);
-						}
-						
-						// Format the values for db input
-						$SaveComment->FormatPropertiesForDatabaseInput();
 				
-						// Proceed with the save if there are no warnings
-						if ($this->Context->WarningCollector->Count() == 0) {
-							$Comment = $SaveComment;
-							$s->SetMainTable("Comment", "m");
-							$s->AddFieldNameValue("Body", $Comment->Body);
-							$s->AddFieldNameValue("FormatType", $Comment->FormatType);
-							$s->AddFieldNameValue("RemoteIp", GetRemoteIp(1));
-							$s->AddFieldNameValue("DiscussionID", $Comment->DiscussionID);
-							$s->AddFieldNameValue("AuthUserID", $this->Context->Session->UserID);
-							$s->AddFieldNameValue("DateCreated", MysqlDateTime());
-                     $s->AddFieldNameValue("WhisperUserID", $Comment->WhisperUserID);
-							
-							$Comment->CommentID = $this->Context->Database->Insert($s, $this->Name, "SaveComment", "An error occurred while creating a new discussion comment.");
+				// If creating a new object
+				if ($SaveComment->CommentID == 0) {	
+					// Update the user info & check for spam
+					if (!$SkipValidation) {
+						$UserManager = $this->Context->ObjectFactory->NewContextObject($this->Context, "UserManager");
+						$UserManager->UpdateUserCommentCount($this->Context->Session->UserID);
+					}
+					
+					// Format the values for db input
+					$SaveComment->FormatPropertiesForDatabaseInput();
+			
+					// Proceed with the save if there are no warnings
+					if ($this->Context->WarningCollector->Count() == 0) {
+						$Comment = $SaveComment;
+						$s->SetMainTable("Comment", "m");
+						$s->AddFieldNameValue("Body", $Comment->Body);
+						$s->AddFieldNameValue("FormatType", $Comment->FormatType);
+						$s->AddFieldNameValue("RemoteIp", GetRemoteIp(1));
+						$s->AddFieldNameValue("DiscussionID", $Comment->DiscussionID);
+						$s->AddFieldNameValue("AuthUserID", $this->Context->Session->UserID);
+						$s->AddFieldNameValue("DateCreated", MysqlDateTime());
+						$s->AddFieldNameValue("WhisperUserID", $Comment->WhisperUserID);
 						
-							// If there were no errors, update the discussion count & time
-							if ($Comment->WhisperUserID) {
-								// Whisper-to table
-								if ($Comment->WhisperUserID != $this->Context->Session->UserID) {
-									// Only record the whisper to if the user is not whispering to him/herself - this is to make sure that the counts come out correctly when counting replies for a discussion
-									$s->Clear();
-									$s->SetMainTable("DiscussionUserWhisperTo", "tuwt");
-									$s->AddFieldNameValue("CountWhispers", "CountWhispers+1", "0");
-									$s->AddFieldNameValue("DateLastActive", MysqlDateTime());
-									$s->AddFieldNameValue("LastUserID", $this->Context->Session->UserID);
-									$s->AddWhere("DiscussionID", $Comment->DiscussionID, "=");
-									$s->AddWhere("WhisperToUserID", $Comment->WhisperUserID, "=");
-									if ($this->Context->Database->Update($s, $this->Name, "SaveComment", "An error occurred while updating the discussion's comment summary.") <= 0) {
-										// If no records were updated, then insert a new row to the table for this discussion/user whisper
-										$s->Clear();
-										$s->SetMainTable("DiscussionUserWhisperTo", "tuwt");
-										$s->AddFieldNameValue("CountWhispers", "1");
-										$s->AddFieldNameValue("DateLastActive", MysqlDateTime());
-										$s->AddFieldNameValue("DiscussionID", $Comment->DiscussionID);
-										$s->AddFieldNameValue("WhisperToUserID", $Comment->WhisperUserID);
-										$s->AddFieldNameValue("LastUserID", $this->Context->Session->UserID);
-										$this->Context->Database->Insert($s, $this->Name, "SaveComment", "An error occurred while updating the discussion's comment summary.");
-									}
-								}
-								// Whisper-from table
+						$Comment->CommentID = $this->Context->Database->Insert($s, $this->Name, "SaveComment", "An error occurred while creating a new discussion comment.");
+					
+						// If there were no errors, update the discussion count & time
+						if ($Comment->WhisperUserID) {
+							// Whisper-to table
+							if ($Comment->WhisperUserID != $this->Context->Session->UserID) {
+								// Only record the whisper to if the user is not whispering to him/herself - this is to make sure that the counts come out correctly when counting replies for a discussion
 								$s->Clear();
-								$s->SetMainTable("DiscussionUserWhisperFrom", "tuwf");
+								$s->SetMainTable("DiscussionUserWhisperTo", "tuwt");
 								$s->AddFieldNameValue("CountWhispers", "CountWhispers+1", "0");
 								$s->AddFieldNameValue("DateLastActive", MysqlDateTime());
 								$s->AddFieldNameValue("LastUserID", $this->Context->Session->UserID);
 								$s->AddWhere("DiscussionID", $Comment->DiscussionID, "=");
-								$s->AddWhere("WhisperFromUserID", $this->Context->Session->UserID, "=");
+								$s->AddWhere("WhisperToUserID", $Comment->WhisperUserID, "=");
 								if ($this->Context->Database->Update($s, $this->Name, "SaveComment", "An error occurred while updating the discussion's comment summary.") <= 0) {
 									// If no records were updated, then insert a new row to the table for this discussion/user whisper
 									$s->Clear();
-									$s->SetMainTable("DiscussionUserWhisperFrom", "tuwf");
+									$s->SetMainTable("DiscussionUserWhisperTo", "tuwt");
 									$s->AddFieldNameValue("CountWhispers", "1");
 									$s->AddFieldNameValue("DateLastActive", MysqlDateTime());
 									$s->AddFieldNameValue("DiscussionID", $Comment->DiscussionID);
-									$s->AddFieldNameValue("WhisperFromUserID", $this->Context->Session->UserID);
+									$s->AddFieldNameValue("WhisperToUserID", $Comment->WhisperUserID);
 									$s->AddFieldNameValue("LastUserID", $this->Context->Session->UserID);
 									$this->Context->Database->Insert($s, $this->Name, "SaveComment", "An error occurred while updating the discussion's comment summary.");
 								}
-								// Update the discussion table
-								$s->Clear();
-								$s->SetMainTable("Discussion", "t");
-								$s->AddFieldNameValue("DateLastWhisper", MysqlDateTime());
-								$s->AddFieldNameValue("WhisperToLastUserID", $Comment->WhisperUserID);
-								$s->AddFieldNameValue("WhisperFromLastUserID", $this->Context->Session->UserID);
-								$s->AddFieldNameValue("TotalWhisperCount", "TotalWhisperCount+1", 0);
-								$s->AddWhere("DiscussionID", $Comment->DiscussionID, "=");
-								$this->Context->Database->Update($s, $this->Name, "SaveComment", "An error occurred while updating the discussion's whisper summary.");
-							} else {
-								$s->Clear();
-								$s->SetMainTable("Discussion", "t");
-								$s->AddFieldNameValue("CountComments", "CountComments+1", "0");
-								$s->AddFieldNameValue("DateLastActive", MysqlDateTime());
-								$s->AddFieldNameValue("LastUserID", $this->Context->Session->UserID);
-								$s->AddWhere("DiscussionID", $Comment->DiscussionID, "=");
-								$this->Context->Database->Update($s, $this->Name, "SaveComment", "An error occurred while updating the discussion's comment summary.");
 							}
-						}
-					} else {
-						$Comment = $SaveComment;
-						
-						// Format the values for db input
-						$Comment->FormatPropertiesForDatabaseInput();
-						
-						// Get information about the comment being edited
-						$s->SetMainTable("Comment", "m");
-						$s->AddSelect(array("AuthUserID", "WhisperUserID"), "m");
-						$s->AddWhere("CommentID", $Comment->CommentID, "=");
-						$CommentData = $this->Context->Database->Select($s, $this->Name, "SaveComment", "An error occurred while retrieving information about the comment.");
-						$WhisperToUserID = 0;
-						$WhisperFromUserID = 0;
-						while ($Row = $this->Context->Database->GetRow($CommentData)) {
-							$WhisperToUserID = ForceInt($Row["WhisperUserID"], 0);
-							$WhisperFromUserID = ForceInt($Row["AuthUserID"], 0);
-						}
-						if ($WhisperToUserID > 0 && $Comment->WhisperUserID == 0) {
-							// If the original comment was whispered and the new one isn't
-							// 1. Update the whisper count for this discussion
-							$this->UpdateWhisperCount($Comment->DiscussionID, $WhisperFromUserID, $WhisperToUserID, "-");
-							// 2. Update the comment count for this discussion
-							$this->UpdateCommentCount($Comment->DiscussionID, "+");
-							
-						} elseif ($WhisperToUserID == 0 && $Comment->WhisperUserID > 0){                  
-							// If the original comment was not whispered and the new one is
-							// 1. Update the comment count for this discussion
-							$this->UpdateCommentCount($Comment->DiscussionID, "-");					
-							// 2. Update the whisper count for this discussion
-							$this->UpdateWhisperCount($Comment->DiscussionID, $WhisperFromUserID, $Comment->WhisperUserID, "+");
-							
-						} elseif ($WhisperToUserID > 0 && $Comment->WhisperUserID > 0 && $WhisperToUserID != $Comment->WhisperUserID) {
-							// If the original comment was whispered to a different person
-                     // 1. Remove traces of the old whisper
-							$this->UpdateWhisperCount($Comment->DiscussionID, $WhisperFromUserID, $WhisperToUserID, "-");
-                     
-							// 2. Update the whisper count for this new whisper
-							$this->UpdateWhisperCount($Comment->DiscussionID, $WhisperFromUserID, $Comment->WhisperUserID, "+");
-							
+							// Whisper-from table
+							$s->Clear();
+							$s->SetMainTable("DiscussionUserWhisperFrom", "tuwf");
+							$s->AddFieldNameValue("CountWhispers", "CountWhispers+1", "0");
+							$s->AddFieldNameValue("DateLastActive", MysqlDateTime());
+							$s->AddFieldNameValue("LastUserID", $this->Context->Session->UserID);
+							$s->AddWhere("DiscussionID", $Comment->DiscussionID, "=");
+							$s->AddWhere("WhisperFromUserID", $this->Context->Session->UserID, "=");
+							if ($this->Context->Database->Update($s, $this->Name, "SaveComment", "An error occurred while updating the discussion's comment summary.") <= 0) {
+								// If no records were updated, then insert a new row to the table for this discussion/user whisper
+								$s->Clear();
+								$s->SetMainTable("DiscussionUserWhisperFrom", "tuwf");
+								$s->AddFieldNameValue("CountWhispers", "1");
+								$s->AddFieldNameValue("DateLastActive", MysqlDateTime());
+								$s->AddFieldNameValue("DiscussionID", $Comment->DiscussionID);
+								$s->AddFieldNameValue("WhisperFromUserID", $this->Context->Session->UserID);
+								$s->AddFieldNameValue("LastUserID", $this->Context->Session->UserID);
+								$this->Context->Database->Insert($s, $this->Name, "SaveComment", "An error occurred while updating the discussion's comment summary.");
+							}
+							// Update the discussion table
+							$s->Clear();
+							$s->SetMainTable("Discussion", "t");
+							$s->AddFieldNameValue("DateLastWhisper", MysqlDateTime());
+							$s->AddFieldNameValue("WhisperToLastUserID", $Comment->WhisperUserID);
+							$s->AddFieldNameValue("WhisperFromLastUserID", $this->Context->Session->UserID);
+							$s->AddFieldNameValue("TotalWhisperCount", "TotalWhisperCount+1", 0);
+							$s->AddWhere("DiscussionID", $Comment->DiscussionID, "=");
+							$this->Context->Database->Update($s, $this->Name, "SaveComment", "An error occurred while updating the discussion's whisper summary.");
 						} else {
-							// Otherwise, the counts do not need to be manipulated
+							$s->Clear();
+							$s->SetMainTable("Discussion", "t");
+							$s->AddFieldNameValue("CountComments", "CountComments+1", "0");
+							$s->AddFieldNameValue("DateLastActive", MysqlDateTime());
+							$s->AddFieldNameValue("LastUserID", $this->Context->Session->UserID);
+							$s->AddWhere("DiscussionID", $Comment->DiscussionID, "=");
+							$this->Context->Database->Update($s, $this->Name, "SaveComment", "An error occurred while updating the discussion's comment summary.");
 						}
-				
-						// Finally, update the comment
-						$s->Clear();
-						$s->SetMainTable("Comment", "m");
-						$s->AddFieldNameValue("WhisperUserID", $Comment->WhisperUserID);
-						$s->AddFieldNameValue("Body", $Comment->Body);
-						$s->AddFieldNameValue("FormatType", $Comment->FormatType);
-						$s->AddFieldNameValue("RemoteIp", GetRemoteIp(1));
-						$s->AddFieldNameValue("EditUserID", $this->Context->Session->UserID);
-						$s->AddFieldNameValue("DateEdited", MysqlDateTime());
-						$s->AddWhere("CommentID", $Comment->CommentID, "=");
-						$this->Context->Database->Update($s, $this->Name, "SaveComment", "An error occurred while attempting to update the discussion comment.");
 					}
+				} else {
+					$Comment = $SaveComment;
+					
+					// Format the values for db input
+					$Comment->FormatPropertiesForDatabaseInput();
+					
+					// Get information about the comment being edited
+					$s->SetMainTable("Comment", "m");
+					$s->AddSelect(array("AuthUserID", "WhisperUserID"), "m");
+					$s->AddWhere("CommentID", $Comment->CommentID, "=");
+					$CommentData = $this->Context->Database->Select($s, $this->Name, "SaveComment", "An error occurred while retrieving information about the comment.");
+					$WhisperToUserID = 0;
+					$WhisperFromUserID = 0;
+					while ($Row = $this->Context->Database->GetRow($CommentData)) {
+						$WhisperToUserID = ForceInt($Row["WhisperUserID"], 0);
+						$WhisperFromUserID = ForceInt($Row["AuthUserID"], 0);
+					}
+					if ($WhisperToUserID > 0 && $Comment->WhisperUserID == 0) {
+						// If the original comment was whispered and the new one isn't
+						// 1. Update the whisper count for this discussion
+						$this->UpdateWhisperCount($Comment->DiscussionID, $WhisperFromUserID, $WhisperToUserID, "-");
+						// 2. Update the comment count for this discussion
+						$this->UpdateCommentCount($Comment->DiscussionID, "+");
+						
+					} elseif ($WhisperToUserID == 0 && $Comment->WhisperUserID > 0){                  
+						// If the original comment was not whispered and the new one is
+						// 1. Update the comment count for this discussion
+						$this->UpdateCommentCount($Comment->DiscussionID, "-");					
+						// 2. Update the whisper count for this discussion
+						$this->UpdateWhisperCount($Comment->DiscussionID, $WhisperFromUserID, $Comment->WhisperUserID, "+");
+						
+					} elseif ($WhisperToUserID > 0 && $Comment->WhisperUserID > 0 && $WhisperToUserID != $Comment->WhisperUserID) {
+						// If the original comment was whispered to a different person
+						// 1. Remove traces of the old whisper
+						$this->UpdateWhisperCount($Comment->DiscussionID, $WhisperFromUserID, $WhisperToUserID, "-");
+						
+						// 2. Update the whisper count for this new whisper
+						$this->UpdateWhisperCount($Comment->DiscussionID, $WhisperFromUserID, $Comment->WhisperUserID, "+");
+						
+					} else {
+						// Otherwise, the counts do not need to be manipulated
+					}
+			
+					// Finally, update the comment
+					$s->Clear();
+					$s->SetMainTable("Comment", "m");
+					$s->AddFieldNameValue("WhisperUserID", $Comment->WhisperUserID);
+					$s->AddFieldNameValue("Body", $Comment->Body);
+					$s->AddFieldNameValue("FormatType", $Comment->FormatType);
+					$s->AddFieldNameValue("RemoteIp", GetRemoteIp(1));
+					$s->AddFieldNameValue("EditUserID", $this->Context->Session->UserID);
+					$s->AddFieldNameValue("DateEdited", MysqlDateTime());
+					$s->AddWhere("CommentID", $Comment->CommentID, "=");
+					$this->Context->Database->Update($s, $this->Name, "SaveComment", "An error occurred while attempting to update the discussion comment.");
 				}
 			}
 		}

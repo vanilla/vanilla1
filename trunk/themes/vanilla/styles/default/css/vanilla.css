@@ -371,7 +371,7 @@
 			font-size: 11px;
 		}
 		.PanelLink:hover {
-			background: #ffc;
+			background: #ffffcc;
 			font-size: 11px;
 		}
 		.SavedSearchContainer .PanelLink {
@@ -820,6 +820,7 @@
 	/* Account Page Layout */
 		.Account {
 			position: absolute;
+			left: 234px;
 			padding-right: 19px;
 			border-right: 1px solid #ccc;
 		}
@@ -1093,9 +1094,6 @@
 		border: 1px solid #FFEDAE;
 		padding: 8px;
 		padding-bottom: 0px;
-	}
-	.ExtensionsForm table {
-		width: 100%;
 	}
 	.ExtensionsForm table td {
 		width: 50%;
@@ -1488,7 +1486,7 @@
 		.SortList {
 			list-style: none;
 			margin: 0px;
-			color: #000;
+			color: #000000;
 			background: rgb(254,254,204);
 			border: 1px solid #ddd;
 			border-top: 0px;
@@ -1498,13 +1496,16 @@
 			cursor: move;
 		}
 		.SortListItem {
-			border-top: 1px solid #ddd;
-			padding: 6px;
-
+			border-top: 1px solid #dddddd;
+			padding-top: 6px;
+			padding-bottom: 6px;
+			padding-left: 6px;
 		}
 		.SortEdit {
-			float: right;
-			margin-right: 30px;
+			position: absolute;
+			margin-left: 340px;
+			xfloat: right;
+			xmargin-right: 30px;
 		}
 		.SortEdit, .SortEdit:link, .SortEdit:active, .SortEdit:visited {
 			color: #1EB136;
@@ -1515,8 +1516,10 @@
 			text-decoration: underline;
 		}
 		.SortRemove {
-			margin-right: 16px;
-			float: right;
+			position: absolute;
+			margin-left: 370px;
+			xmargin-right: 16px;
+			xfloat: right;
 		}
 		.SortListItem img {
 			position: absolute;

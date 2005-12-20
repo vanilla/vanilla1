@@ -32,8 +32,8 @@ class PreferencesForm extends PostBackControl {
 			if ($this->Context->Session->User->Permission("PERMISSION_RECEIVE_APPLICATION_NOTIFICATION")) {
 	         $this->AddPreference("NewUsers", "NewApplicantNotifications", "SendNewApplicantNotifications");
 			}
-			if ($this->Context->Session->User->Permission("PERMISSION_HIDE_DISCUSSIONS")) $this->AddPreference("HiddenInformation", "DisplayHiddenDiscussions", "ShowDeletedDiscussions", 0);
-			if ($this->Context->Session->User->Permission("PERMISSION_HIDE_COMMENTS")) $this->AddPreference("HiddenInformation", "DisplayHiddenComments", "ShowDeletedComments", 0);
+			if ($this->Context->Session->User->Permission("PERMISSION_VIEW_HIDDEN_DISCUSSIONS")) $this->AddPreference("HiddenInformation", "DisplayHiddenDiscussions", "ShowDeletedDiscussions", 0);
+			if ($this->Context->Session->User->Permission("PERMISSION_VIEW_HIDDEN_COMMENTS")) $this->AddPreference("HiddenInformation", "DisplayHiddenComments", "ShowDeletedComments", 0);
 		}
 		$this->CallDelegate("Constructor");
 	}

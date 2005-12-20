@@ -76,7 +76,9 @@ class DiscussionForm extends PostBackControl {
 			if ($this->Comment
 				&& $this->Discussion
 				&& !$this->Context->Session->User->Permission("PERMISSION_EDIT_COMMENTS")
-				&& $this->Context->Session->UserID != $this->Comment->AuthUserID) {
+				&& $this->Context->Session->UserID != $this->Comment->AuthUserID
+				&& !($this->Discussion->FirstCommentID == $this->CommentID && $this->Context->Session->User->Permission("PERMISSION_EDIT_DISCUSSIONS"))) {
+					
 				$this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrPermissionCommentEdit"));
 				$this->FatalError = 1;
 			}

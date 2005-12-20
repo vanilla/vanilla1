@@ -70,7 +70,7 @@ $Head->AddStyleSheet($Context->StyleUrl."css/vanilla.css", "screen");
 $Head->AddStyleSheet($Context->StyleUrl."css/vanilla.handheld.css", "handheld");
 
 // Add the start button to the panel
-if ($Context->Session->UserID > 0) {
+if ($Context->Session->UserID > 0 && $Context->Session->User->Permission("PERMISSION_START_DISCUSSION")) {
    $CategoryID = ForceIncomingInt("CategoryID", 0);
 	if ($CategoryID == 0) $CategoryID = "";
 	$Panel->AddString("<a class=\"PanelButton StartDiscussionButton\" href=\"".GetUrl($Configuration, "post.php", "category/", "CategoryID", $CategoryID)."\">".$Context->GetDefinition("StartANewDiscussion")."</a>", 1, 1);

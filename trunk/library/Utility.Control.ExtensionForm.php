@@ -168,7 +168,7 @@ class ExtensionForm extends PostBackControl {
 						
 						// If everything was successful, redirect back to this page
 						if ($this->Context->WarningCollector->Iif()) {
-							header("Location: ".$this->Context->SelfUrl."?PostBackAction=Extensions&Detail=".$ExtensionKey."#".$ExtensionKey);
+							header("Location:".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=Extensions&Detail=".$ExtensionKey."#".$ExtensionKey));
 							die();
 						} else {
 							$this->PostBackAction = "Extensions";

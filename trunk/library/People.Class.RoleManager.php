@@ -34,7 +34,6 @@ class RoleManager {
 		while ($rows = $this->Context->Database->GetRow($result)) {
 			$Role->GetPropertiesFromDataSet($rows);
 		}
-		
 		return $this->Context->WarningCollector->Iif($Role, false);
 	}
 	
