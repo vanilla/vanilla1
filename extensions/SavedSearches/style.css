@@ -1,0 +1,16 @@
+/* SearchLabelForm: The tiny form above search results that allows
+  you to save the search. */
+.SearchLabelForm {
+   position: absolute;
+   right: 20px;
+   margin-top: 44px;
+   z-index: 10;
+}
+.SearchLabelInput,
+.SearchLabelButton {
+   font-size: 10px;
+}
+.SearchLabelInput {
+   width: 100px;
+   text-indent: 2px;
+}
