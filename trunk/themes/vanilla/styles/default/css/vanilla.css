@@ -210,6 +210,7 @@
 		/* Body: The element containing everything below the Head (panel and
 		  page content). */
 		.Body {
+			background: url(../images/panelfadetop.gif) no-repeat top left;
 			border-top: 1px solid #ACBEDF;
 			padding-top: 20px;
 			padding-bottom: 40px;
@@ -1554,23 +1555,12 @@
 			text-decoration: underline;
 		}
 		.SortRemove {
-			/* prefixed with X before, now simply commented out - lech
-			xpadding-left: 4px;
-			*/
 			margin-right: 16px;
 			float: right;
 		}
 		.SortListItem img {
 			position: absolute;
 			margin-top: 1px;
-		}
-
-	/* Timer Extension */
-		.Timer {
-			position: absolute;
-			top: 22px;
-			left: 16px;
-			color: #ACBEDF;
 		}
 		
 /* END PAGE BODY */
