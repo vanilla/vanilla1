@@ -15,7 +15,6 @@
 		background: #ffffff;
 		margin: 0px;
 		padding: 0px;
-		margin-bottom: 20px;
 	}
 	body, div, table, td {
 		font-family: Trebuchet MS, Verdana, Tahoma, Arial;
@@ -212,7 +211,7 @@
 			border-top: 1px solid #ACBEDF;
 			background: url(../images/panelfade.gif) repeat-y top left #ffffff;
 			padding-top: 20px;
-			padding-bottom: 20px;
+			padding-bottom: 40px;
 		}
 /* END GLOBAL DEFINITIONS */
   
