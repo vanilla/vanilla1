@@ -54,6 +54,16 @@ function CalculateNumberOfPages($ItemCount, $ItemsPerPage) {
 	return $PageCount;
 }
 
+function CleanupString($InString) {
+	$Code = explode(",", "À,Á,Â,Ã,Ä,&Auml;,Å,Ā,Ą,Ă,Æ,Ç,Ć,Č,Ĉ,Ċ,Ď,Đ,Ð,È,É,Ê,Ë,Ē,Ę,Ě,Ĕ,Ė,Ĝ,Ğ,Ġ,Ģ,Ĥ,Ħ,Ì,Í,Î,Ï,Ī,Ĩ,Ĭ,Į,İ,Ĳ,Ĵ,Ķ,Ł,Ľ,Ĺ,Ļ,Ŀ,Ñ,Ń,Ň,Ņ,Ŋ,Ò,Ó,Ô,Õ,Ö,&Ouml;,Ø,Ō,Ő,Ŏ,Œ,Ŕ,Ř,Ŗ,Ś,Š,Ş,Ŝ,Ș,Ť,Ţ,Ŧ,Ț,Ù,Ú,Û,Ü,Ū,&Uuml;,Ů,Ű,Ŭ,Ũ,Ų,Ŵ,Ý,Ŷ,Ÿ,Ź,Ž,Ż,Þ,Þ,à,á,â,ã,ä,&auml;,å,ā,ą,ă,æ,ç,ć,č,ĉ,ċ,ď,đ,ð,è,é,ê,ë,ē,ę,ě,ĕ,ė,ƒ,ĝ,ğ,ġ,ģ,ĥ,ħ,ì,í,î,ï,ī,ĩ,ĭ,į,ı,ĳ,ĵ,ķ,ĸ,ł,ľ,ĺ,ļ,ŀ,ñ,ń,ň,ņ,ŉ,ŋ,ò,ó,ô,õ,ö,&ouml;,ø,ō,ő,ŏ,œ,ŕ,ř,ŗ,š,ù,ú,û,ü,ū,&uuml;,ů,ű,ŭ,ũ,ų,ŵ,ý,ÿ,ŷ,ž,ż,ź,þ,ß,ſ");
+	$Translation = explode(",", "A,A,A,A,Ae,A,A,A,A,A,Ae,C,C,C,C,C,D,D,D,E,E,E,E,E,E,E,E,E,G,G,G,G,H,H,I,I,I,I,I,I,I,I,I,IJ,J,K,K,K,K,K,K,N,N,N,N,N,O,O,O,O,Oe,Oe,O,O,O,O,OE,R,R,R,S,S,S,S,S,T,T,T,T,U,U,U,Ue,U,Ue,U,U,U,U,U,W,Y,Y,Y,Z,Z,Z,T,T,a,a,a,a,ae,ae,a,a,a,a,ae,c,c,c,c,c,d,d,d,e,e,e,e,e,e,e,e,e,f,g,g,g,g,h,h,i,i,i,i,i,i,i,i,i,ij,j,k,k,l,l,l,l,l,n,n,n,n,n,n,o,o,o,o,oe,oe,o,o,o,o,oe,r,r,r,s,u,u,u,ue,u,ue,u,u,u,u,u,w,y,y,y,z,z,z,t,ss,ss");
+	$sReturn = $InString;
+	$sReturn = str_replace($Code, $Translation, $sReturn);
+	$sReturn = preg_replace("/[^A-Za-z0-9 ]/", "", $sReturn);
+	$sReturn = str_replace(" ", "-", $sReturn);
+	return strtolower(str_replace("--", "-", $sReturn)); 
+}
+
 // performs the opposite of htmlentities
 function DecodeHtmlEntities($String) {
 	/*
@@ -358,7 +368,7 @@ function GetRemoteIp($FormatIpForDatabaseInput = "0") {
 	return $sReturn;	
 }
 
-function GetUrl(&$Configuration, $PageName, $Divider = "", $Key = "", $Value = "", $PageNumber="", $Querystring="") {
+function GetUrl(&$Configuration, $PageName, $Divider = "", $Key = "", $Value = "", $PageNumber="", $Querystring="", $Suffix = "") {
 	if ($Configuration["URL_BUILDING_METHOD"] == "mod_rewrite") {
 		if ($PageName == "./") $PageName = "index.php";
 		return $Configuration["BASE_URL"]
@@ -366,6 +376,7 @@ function GetUrl(&$Configuration, $PageName, $Divider = "", $Key = "", $Value = "
 			.(strlen($Value) != 0 ? $Divider : "")
 			.(strlen($Value) != 0 ? $Value."/" : "")
 			.($PageNumber != "" && ForceInt($PageNumber, 0) > 1? $PageNumber."/" : "")
+			.($Suffix != "" ? $Suffix : "")
 			.($Querystring != "" && substr($Querystring, 0, 1) != "#" ? "?" : "")
 			.($Querystring != "" ? $Querystring : "");
 	} else {

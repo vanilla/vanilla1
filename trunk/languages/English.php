@@ -193,7 +193,6 @@ $Context->Dictionary["YouAreSignedIn"] = "You are signed in";
 $Context->Dictionary["BottomOfPage"] = "Bottom of Page";
 $Context->Dictionary["NotSignedIn"] = "Not signed in";
 $Context->Dictionary["SignIn"] = "Sign In";
-$Context->Dictionary["Copyright"] = "Copyright &copy; 2001-2005";
 $Context->Dictionary["Discussions"] = "Discussions";
 $Context->Dictionary["Settings"] = "Settings";
 $Context->Dictionary["Account"] = "Account";
@@ -423,7 +422,6 @@ $Context->Dictionary["ForumOptions"] = "Forum Options";
 $Context->Dictionary["GlobalApplicationChangesSaved"] = "Your changes have been saved";
 $Context->Dictionary["ApprovedMemberRole"] = "Membership approval role";
 $Context->Dictionary["ApprovedMemberRoleNotes"] = "When a user is approved for membership by an administrator (if membership approval is required), this is the role to which applicants will be assigned.";
-$Context->Dictionary["Documentation"] = "Documentation";
 $Context->Dictionary["NewMemberWelcomeAboard"] = "You have been granted membership access. Welcome aboard!";
 $Context->Dictionary["RoleCategoryNotes"] = "Select the categories this role should have access to.";
 $Context->Dictionary["DebugTitle"] = "Vanilla Debugging";
@@ -497,4 +495,8 @@ $Context->Dictionary["PERMISSION_RECEIVE_APPLICATION_NOTIFICATION"] = "Notify by
 $Context->Dictionary["PERMISSION_ALLOW_DEBUG_INFO"] = "Can view debug info";
 $Context->Dictionary["NoEnabledExtensions"] = "There are currently no enabled extensions.";
 $Context->Dictionary["NoDisabledExtensions"] = "There are currently no disabled extensions.";
+
+/* Please do not remove or alter this definition */
+$Context->Dictionary["PanelFooter"] = "<div class=\"AboutVanilla\"><a href=\"http://getvanilla.com\">Vanilla (".VANILLA_VERSION.")</a> is a product of <a href=\"http://lussumo.com\">Lussumo</a>. More Information: <a href=\"http://lussumo.com/docs\">Documentation</a>, <a href=\"http://lussumo.com/community\">Community Support</a>.</div>";
+
 ?>

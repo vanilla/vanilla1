@@ -95,7 +95,7 @@ if (in_array($Context->SelfUrl, array("index.php", "comments.php"))) {
                $Discussion->FormatPropertiesForDisplay();
                $Suffix = "";
                if ($Discussion->NewComments > 0) $Suffix .= $Discussion->NewComments." ".$Context->GetDefinition("New");
-               $Panel->AddListItem($ListTitle, $Discussion->Name, GetUrl($Context->Configuration, "comments.php", "DiscussionID", $Discussion->DiscussionID), $Suffix);
+               $Panel->AddListItem($ListTitle, $Discussion->Name, GetUrl($Context->Configuration, "comments.php", "", "DiscussionID", $Discussion->DiscussionID), $Suffix);
             }
             if ($ActualRecords >= $MaxRecords) $Panel->AddListItem($ListTitle, $Context->GetDefinition("ShowAll"), GetUrl($Context->Configuration, "index.php", "", "", "", "", "View=".$UrlAction));
          }

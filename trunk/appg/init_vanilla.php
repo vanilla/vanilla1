@@ -57,7 +57,7 @@ $Page->FireEvent("Page_Init");
 $Head = $Context->ObjectFactory->CreateControl($Context, "Head");
 $Menu = $Context->ObjectFactory->CreateControl($Context, "Menu");
 $Panel = $Context->ObjectFactory->CreateControl($Context, "Panel");
-$Foot = $Context->ObjectFactory->CreateControl($Context, "Foot");
+$Foot = $Context->ObjectFactory->CreateControl($Context, "Filler", "foot.php");
 $PageEnd = $Context->ObjectFactory->CreateControl($Context, "PageEnd");
 
 // BUILD THE PAGE HEAD
@@ -112,6 +112,8 @@ if ($Context->Session->UserID > 0) {
 
 // INCLUDE EXTENSIONS
 include($Configuration["APPLICATION_PATH"]."conf/extensions.php");
+
+$Panel->AddString($Context->GetDefinition("PanelFooter"), 500);
 
 // Make sure to get all delegates from the extensions into objects which were
 // constructed before the extensions were loaded.

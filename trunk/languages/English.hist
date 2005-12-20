@@ -1036,6 +1036,11 @@ $Context->Dictionary["CanViewIpAddresses"] = "Can see IP addresses";
 DUPLICATE: $Context->Dictionary["Wait"] = "Wait";
 
 
+2005-12-19 Added:
+PanelFooter
+
+REMOVED:$Context->Dictionary["Documentation"] = "Documentation";
+REMOVED: $Context->Dictionary["Copyright"] = "Copyright &copy; 2001-2005";
 
 */
 ?>
