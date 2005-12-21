@@ -41,7 +41,7 @@ $Configuration["LANGUAGES_PATH"] = "/path/to/your/languages/";
 $Configuration["THEME_PATH"] = "/path/to/vanilla/themes/vanilla/";
 
 // People Settings
-$Configuration["AUTHENTICATION_MODULE"] = "People.Class.Authenticator.php";
+$Configuration["AUTHENTICATION_MODULE"] = "People/People.Class.Authenticator.php";
 $Configuration["COOKIE_USER_KEY"] = "lussumocookieone";
 $Configuration["COOKIE_VERIFICATION_KEY"] = "lussumocookietwo";
 $Configuration["SESSION_USER_IDENTIFIER"] = "LussumoUserID";
@@ -64,7 +64,7 @@ $Configuration["PAGE_EVENTS"] = array("Page_Init", "Page_Render", "Page_Unload")
 $Configuration["PAGELIST_NEXT_TEXT"] = "Prev";
 $Configuration["PAGELIST_PREVIOUS_TEXT"] = "Next";
 $Configuration["PAGELIST_NUMERIC_TEXT"] = "0";
-$Configuration["LIBRARY_NAMESPACE_ARRAY"] = array("Utility", "People", "Vanilla", "Swell");
+$Configuration["LIBRARY_NAMESPACE_ARRAY"] = array("Framework", "People", "Vanilla");
 $Configuration["DEFAULT_FORMAT_TYPE"] = "Text";
 $Configuration["FORMAT_TYPES"] = array("Text");
 $Configuration["APPLICATION_TITLE"] = "Vanilla"; 
