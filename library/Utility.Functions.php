@@ -300,19 +300,7 @@ function FormatStringForDisplay($inValue, $bStripHtml = true, $AllowEncodedQuote
 	}
 	if (!$AllowEncodedQuotes) $sReturn = preg_replace("/(\"|\')/", "", $sReturn);
 	global $Configuration;
-	$sReturn = htmlspecialchars($sReturn, ENT_QUOTES, $Configuration["CHARSET"]);
-	/*
-	$sReturn = preg_replace('#(&\#*\w+)[\x00-\x20]+;#U',"$1;", $sReturn);
-	$sReturn = preg_replace('#(&\#x*)([0-9A-F]+);*#iu',"$1$2;", $sReturn);
-	$sReturn = preg_replace('#(<[^>]+[\s\r\n\"\'])(on|xmlns)[^>]*>#iU',"$1>", $sReturn);
-	$sReturn = preg_replace('#([a-z]*)[\x00-\x20]*=[\x00-\x20]*([\`\'\"]*)[\\x00-\x20]*j[\x00-\x20]*a[\x00-\x20]*v[\x00-\x20]*a[\x00-\x20]*s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:#iU','$1=$2nojavascript...', $sReturn);
-	$sReturn = preg_replace('#([a-z]*)[\x00-\x20]*=([\'\"]*)[\x00-\x20]*v[\x00-\x20]*b[\x00-\x20]*s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:#iU','$1=$2novbscript...', $sReturn);
-	$sReturn = preg_replace('#([a-z]*)[\x00-\x20]*=[\x00-\x20]*([\`\'\"]*)[\\x00-\x20]*j[\x00-\x20]*a[\x00-\x20]*v[\x00-\x20]*a[\x00-\x20]*s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:#iU','$1=$2nojavascript...', $sReturn);
-	$sReturn = preg_replace('#([a-z]*)[\x00-\x20]*=([\'\"]*)[\x00-\x20]*v[\x00-\x20]*b[\x00-\x20]*s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:#iU','$1=$2novbscript...', $sReturn);
-	$sReturn = preg_replace('#</*\w+:\w[^>]*>#i',"", $sReturn);
-										*/
-	return $sReturn;
-
+	return htmlspecialchars($sReturn, ENT_QUOTES, $Configuration["CHARSET"]);
 }
 
 function GetBasicCheckBox($Name, $Value = 1, $Checked, $Attributes = "") {
