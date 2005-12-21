@@ -18,8 +18,9 @@ class Panel extends Control {
 	var $Lists;				// A collection of list items to be placed in the panel
 	var $Strings;			// A collection of customized strings to be placed in the panel
 	var $PanelElements;	// A collection of elements to be placed in the panel (strings, lists, etc)
+   var $Template;			// Allows a custom template to be used in the panel on different pages
 	
-	function Panel(&$Context) {
+	function Panel(&$Context, $Template = "") {
 		$this->Name = "Panel";
 		$this->Control($Context);
 		$this->Lists = array();
@@ -27,6 +28,7 @@ class Panel extends Control {
 		$this->PanelElements = array();
 		$this->NewDiscussionText = "";
 		$this->NewDiscussionAttributes = "";
+		$this->Template = $Template != "" ? $Template : "panel.php";
 	}
 	
 	function AddList($ListName, $Position = "0", $ForcePosition = "0") {
@@ -65,7 +67,7 @@ class Panel extends Control {
 		if (is_array($this->PanelElements)) ksort($this->PanelElements);
 		if ($this->CssClass != "") $this->CssClass = " ".$this->CssClass;
 		$this->CallDelegate("PreRender");
-		include($this->Context->Configuration["THEME_PATH"]."templates/panel.php");
+		include($this->Context->Configuration["THEME_PATH"]."templates/".$this->Template);
 		$this->CallDelegate("PostRender");
    }
 }
