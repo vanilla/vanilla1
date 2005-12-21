@@ -368,6 +368,10 @@ function GetRemoteIp($FormatIpForDatabaseInput = "0") {
 	return $sReturn;	
 }
 
+function GetRequestUri() {
+	return FormatStringForDisplay($_SERVER["REQUEST_URI"]);
+}
+
 function GetUrl(&$Configuration, $PageName, $Divider = "", $Key = "", $Value = "", $PageNumber="", $Querystring="", $Suffix = "") {
 	if ($Configuration["URL_BUILDING_METHOD"] == "mod_rewrite") {
 		if ($PageName == "./") $PageName = "index.php";
