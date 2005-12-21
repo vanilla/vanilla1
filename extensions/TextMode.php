@@ -59,8 +59,10 @@ if (
 		$CurrentMode = $Context->GetDefinition("TextOnlyModeIsOn");
 		$CurrentModeCSS = "ON";
 		$OppositeMode = $Context->GetDefinition("TurnOff");
-	}		
-	$Panel->AddString("<div class=\"PanelInformation TextMode".$CurrentModeCSS."\">".$CurrentMode." (<a class=\"PanelLink\" href=\"".GetRequestUri()."?".$Params->GetQueryString()."\">".$OppositeMode."</a>)</div>",
+	}
+	$Url = explode("?",GetRequestUri());
+	$Url = $Url[0]."?".$Params->GetQueryString();
+	$Panel->AddString("<div class=\"PanelInformation TextMode".$CurrentModeCSS."\">".$CurrentMode." (<a class=\"PanelLink\" href=\"".$Url."\">".$OppositeMode."</a>)</div>",
 		200);
 }
 
