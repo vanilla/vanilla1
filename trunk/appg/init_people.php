@@ -14,19 +14,19 @@
 // GLOBAL INCLUDES
 include($Configuration["DATABASE_PATH"]);
 include($Configuration["APPLICATION_PATH"]."appg/headers.php");
-include($Configuration["LIBRARY_PATH"]."Utility.Functions.php");
-include($Configuration["LIBRARY_PATH"]."Utility.Class.Database.php");
-include($Configuration["LIBRARY_PATH"]."Utility.Class.SqlBuilder.php");
-include($Configuration["LIBRARY_PATH"]."Utility.Class.MessageCollector.php");
-include($Configuration["LIBRARY_PATH"]."Utility.Class.ErrorManager.php");
-include($Configuration["LIBRARY_PATH"]."Utility.Class.ObjectFactory.php");
-include($Configuration["LIBRARY_PATH"]."Utility.Class.StringManipulator.php");
-include($Configuration["LIBRARY_PATH"]."Utility.Class.Context.php");
-include($Configuration["LIBRARY_PATH"]."Utility.Class.Delegation.php");
-include($Configuration["LIBRARY_PATH"]."Utility.Class.Control.php");
+include($Configuration["LIBRARY_PATH"]."Framework/Framework.Functions.php");
+include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.Database.php");
+include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.SqlBuilder.php");
+include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.MessageCollector.php");
+include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.ErrorManager.php");
+include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.ObjectFactory.php");
+include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.StringManipulator.php");
+include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.Context.php");
+include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.Delegation.php");
+include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.Control.php");
 include($Configuration["LIBRARY_PATH"].$Configuration["AUTHENTICATION_MODULE"]);
-include($Configuration["LIBRARY_PATH"]."People.Class.Session.php");
-include($Configuration["LIBRARY_PATH"]."People.Class.User.php");
+include($Configuration["LIBRARY_PATH"]."People/People.Class.Session.php");
+include($Configuration["LIBRARY_PATH"]."People/People.Class.User.php");
 
 // INSTANTIATE THE CONTEXT OBJECT
 // The context object handles the following:
