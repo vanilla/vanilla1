@@ -67,16 +67,16 @@ include("appg/init_vanilla.php");
 					$Panel->AddListItem($ApplicantOptions, $Context->GetDefinition("ApproveForMembership"), GetUrl($Context->Configuration, $Context->SelfUrl, "", "u", $AccountUser->UserID, "", "PostBackAction=ApproveUser"), "", "", 10);
 					$Panel->AddListItem($ApplicantOptions, $Context->GetDefinition("DeclineForMembership"), GetUrl($Context->Configuration, $Context->SelfUrl, "", "u", $AccountUser->UserID, "", "PostBackAction=DeclineUser"), "", "", 20);
 				}
-				$Panel->AddListItem($ApplicantOptions, $Context->GetDefinition("NewApplicantSearch"), GetUrl($Context->Configuration, "search.php", "", "", "", "", "PostBackAction=Search&amp;Keywords=roles:Applicant;sort:Date;&amp;Type=Users"), "", "", 10);
+				$Panel->AddListItem($ApplicantOptions, $Context->GetDefinition("NewApplicantSearch"), GetUrl($Context->Configuration, "search.php", "", "", "", "", "PostBackAction=Search&amp;Keywords=roles:Applicant;sort:Date;&amp;Type=Users"), "", "", 30);
 			}
 			if ($Context->Session->User->Permission("PERMISSION_CHANGE_USER_ROLE")) {
 				if ($AccountUser->RoleID > 0) {
-					$Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangeRole"), GetUrl($Context->Configuration, $Context->SelfUrl, "", "u", $AccountUser->UserID, "", "PostBackAction=Role"), "", "", 30);
+					$Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangeRole"), GetUrl($Context->Configuration, $Context->SelfUrl, "", "u", $AccountUser->UserID, "", "PostBackAction=Role"), "", "", 40);
 				}
 			}
 		}
 		if ($AccountUser->UserID == $Context->Session->UserID) {
-			$Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangeForumFunctionality"), GetUrl($Context->Configuration, $Context->SelfUrl, "", "", "", "", "PostBackAction=Functionality"), "", "", 30);
+			$Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangeForumFunctionality"), GetUrl($Context->Configuration, $Context->SelfUrl, "", "", "", "", "PostBackAction=Functionality"), "", "", 40);
 		}		
 	}
 	
