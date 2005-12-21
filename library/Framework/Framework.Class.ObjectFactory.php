@@ -27,7 +27,7 @@ class ObjectFactory {
 			$PrefixArrayCount = count($PrefixArray);
 			$i = 0;
 			for ($i = 0; $i < $PrefixArrayCount; $i++) {
-            $File = $Context->Configuration["LIBRARY_PATH"].$PrefixArray[$i].".Class.".$ClassName.".php";
+            $File = $Context->Configuration["LIBRARY_PATH"].$PrefixArray[$i]."/".$PrefixArray[$i].".Class.".$ClassName.".php";
 				if (file_exists($File)) {
 					include($File);
 					break;
@@ -56,7 +56,7 @@ class ObjectFactory {
 			$PrefixArrayCount = count($PrefixArray);
 			$i = 0;
 			for ($i = 0; $i < $PrefixArrayCount; $i++) {
-            $File = $Context->Configuration["LIBRARY_PATH"].$PrefixArray[$i].".Control.".$ClassName.".php";
+            $File = $Context->Configuration["LIBRARY_PATH"].$PrefixArray[$i]."/".$PrefixArray[$i].".Control.".$ClassName.".php";
 				if (file_exists($File)) {
 					include($File);
 					break;
