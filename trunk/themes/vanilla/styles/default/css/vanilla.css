@@ -530,6 +530,7 @@
 			padding: 8px;
 			padding-left: 16px;
 			display: block;
+			white-space: pre;
 		}
 		.WhisperTo { background: #FEEBFA; }
 		.WhisperFrom { background: #FEFCEB; }
