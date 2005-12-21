@@ -44,11 +44,12 @@ if (in_array($Context->SelfUrl, array("index.php", "search.php", "comments.php")
    $p = $Context->ObjectFactory->NewObject($Context, "Parameters");
    $p->DefineCollection($_GET);
    $p->Set("Feed", "RSS2");
+   include($Configuration["EXTENSIONS_PATH"]."/RSS2/global_functions.php");
 }
 
 if ($Context->SelfUrl == "index.php") {
    // Add the RSS2 link to the foot
-   $FeedUrl = GetUrl($Configuration, "index.php", "", "", "", "", $p->GetQueryString());
+   $FeedUrl = GetFeedUriForRSS2($p);
    $FeedText = $Context->GetDefinition("Feeds");
    $Panel->AddList($FeedText, 100);
    $Panel->AddListItem($FeedText,
@@ -118,7 +119,7 @@ if ($Context->SelfUrl == "index.php") {
       if ($Search) $SearchType = $Search->Type;
    }
    if ($SearchType == "Topics" || $SearchType == "Comments") {
-      $FeedUrl = GetUrl($Configuration, "search.php", "", "", "", "", $p->GetQueryString());
+      $FeedUrl = GetFeedUriForRSS2($p);
       $FeedText = $Context->GetDefinition("Feeds");
       $Panel->AddList($FeedText, 100);
       $Panel->AddListItem($FeedText,
@@ -242,7 +243,8 @@ if ($Context->SelfUrl == "index.php") {
       }
    }
 } elseif ($Context->SelfUrl == "comments.php") {
-   $FeedUrl = GetUrl($Configuration, "comments.php", "", "", "", "", $p->GetQueryString());
+   $FeedUrl = GetFeedUriForRSS2($p);
+   //GetUrl($Configuration, "comments.php", "", "DiscussionID", ForceIncomingInt("DiscussionID", ""), "", $p->GetQueryString());
    $FeedText = $Context->GetDefinition("Feeds");
    $Panel->AddList($FeedText, 100);
    $Panel->AddListItem($FeedText,
