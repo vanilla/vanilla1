@@ -14,7 +14,7 @@ if ($this->Context->WarningCollector->Count() > 0) {
    // Format the discussion information
    $this->Discussion->ForceNameSpaces($this->Context->Configuration);
 
-   $CommentList .= "<a class=\"PageJump Bottom\" href=\"".FormatStringForDisplay($_SERVER["REQUEST_URI"])."#pgbottom\">".$this->Context->GetDefinition("BottomOfPage")."</a>"
+   $CommentList .= "<a class=\"PageJump Bottom\" href=\"".GetRequestUri()."#pgbottom\">".$this->Context->GetDefinition("BottomOfPage")."</a>"
       ."<div class=\"Title\">";
       if ($this->Context->Configuration["USE_CATEGORIES"]) $CommentList .= "<a href=\"".GetUrl($this->Context->Configuration, "index.php", "", "CategoryID", $this->Discussion->CategoryID)."\">".$this->Discussion->Category."</a>: ";
       $CommentList .= DiscussionPrefix($this->Context->Configuration, $this->Discussion)." ";

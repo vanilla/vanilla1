@@ -60,7 +60,7 @@ if (
 		$CurrentModeCSS = "ON";
 		$OppositeMode = $Context->GetDefinition("TurnOff");
 	}		
-	$Panel->AddString("<div class=\"PanelInformation TextMode".$CurrentModeCSS."\">".$CurrentMode." (<a class=\"PanelLink\" href=\"".GetUrl($Context->Configuration, $Context->SelfUrl, "", "", "", "", $Params->GetQueryString())."\">".$OppositeMode."</a>)</div>",
+	$Panel->AddString("<div class=\"PanelInformation TextMode".$CurrentModeCSS."\">".$CurrentMode." (<a class=\"PanelLink\" href=\"".GetRequestUri()."?".$Params->GetQueryString()."\">".$OppositeMode."</a>)</div>",
 		200);
 }
 
