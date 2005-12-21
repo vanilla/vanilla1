@@ -68,6 +68,7 @@ $Head->AddScript("./js/prototype.js");
 $Head->AddScript("./js/scriptaculous.js");
 $Head->AddStyleSheet($Context->StyleUrl."css/vanilla.css", "screen");
 $Head->AddStyleSheet($Context->StyleUrl."css/vanilla.handheld.css", "handheld");
+$Head->AddStyleSheet($Context->StyleUrl."css/vanilla.print.css", "print");
 
 // Add the start button to the panel
 if ($Context->Session->UserID > 0 && $Context->Session->User->Permission("PERMISSION_START_DISCUSSION")) {
