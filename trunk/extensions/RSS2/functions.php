@@ -42,7 +42,7 @@ function DiscussionManager_GetFirstCommentForRSS2($DiscussionManager) {
 	$SqlBuilder->AddJoin("Comment", "fc", "CommentID", "t", "FirstCommentID", "left join");
 	$SqlBuilder->AddSelect(array("FormatType", "Body"), "fc");
 }
-		
+   
 function FixDateForRSS2($Date = "") {
    // Dates need to be in RFC 2822 format
    $DateFormat = "r";
