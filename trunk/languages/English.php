@@ -72,6 +72,7 @@ $Context->Dictionary["CommentsForm"] = "Comments form";
 $Context->Dictionary["ShowFormatTypeSelector"] = "Show the comment format type selector when adding comments";
 $Context->Dictionary["NewUsers"] = "New Users";
 $Context->Dictionary["NewApplicantNotifications"] = "Receive email notifications when new users apply for membership";
+$Context->Dictionary["AssignToRole"] = "Choose a New Role";
 $Context->Dictionary["AssignToRoleNotes"] = "The role change will take place immediately. If the user is switched to a role that does not have sign-in access, they will be signed out upon their next page-load.";
 $Context->Dictionary["RoleChangeInfo"] = "Role change notes";
 $Context->Dictionary["RoleChangeInfoNotes"] = "Please provide some notes regarding this role change. These notes will be visible to all users in the role-history for this user.";
