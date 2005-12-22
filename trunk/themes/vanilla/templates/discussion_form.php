@@ -37,7 +37,7 @@ echo("<div class=\"Title\">".$this->Title."</div>
    $this->CallDelegate("DiscussionForm_PreButtonsRender");
    
    echo("<div class=\"FormButtons DiscussionButtons\">
-      <input type=\"button\" name=\"btnSave\" value=\"".$this->Context->GetDefinition(($Discussion->DiscussionID > 0) ? "SaveYourChanges" : "StartYourDiscussion")."\" class=\"Button SubmitButton\" onclick=\"SubmitForm('frmPostDiscussion', this, '".$this->Context->GetDefinition("Wait")."');\" />");
+      <input type=\"submit\" name=\"btnSave\" value=\"".$this->Context->GetDefinition(($Discussion->DiscussionID > 0) ? "SaveYourChanges" : "StartYourDiscussion")."\" class=\"Button SubmitButton\" onclick=\"Wait(this, '".$this->Context->GetDefinition("Wait")."');\" />");
       $this->CallDelegate("DiscussionForm_PostSubmitRender");
       echo("<a href=\"".(!$this->IsPostBack?"javascript:history.back();":"./")."\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>
    </div>");
