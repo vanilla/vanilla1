@@ -30,7 +30,9 @@ class Leave extends PostBackControl {
 			// until it crashes (attempting to remove the cookies over and
 			// over again), I just fail out and treat the user as if s/he
 			// has been signed out successfully.
-			if ($this->PostBackAction == "SignOutNow") $this->Context->Session->End($this->Context->Authenticator);
+			if ($this->PostBackAction == "SignOutNow") {
+				$this->Context->Session->End($this->Context->Authenticator);
+			}
 			$this->PostBackValidated = 1;
 		}
 	}

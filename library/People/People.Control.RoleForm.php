@@ -70,7 +70,9 @@ class RoleForm extends PostBackControl {
 			}
 			
 			if (in_array($this->PostBackAction, array("RoleRemove", "Roles", "Role", "ProcessRole", "ProcessRoleRemove"))) {
-				$this->RoleData = $this->RoleManager->GetRoles();
+				$GetUnauthenticatedRole = 1;
+				if (in_array($this->PostBackAction, array("RoleRemove", "ProcessRoleRemove"))) $GetUnauthenticatedRole = 0;
+				$this->RoleData = $this->RoleManager->GetRoles("", $GetUnauthenticatedRole);
 			}
 			if (in_array($this->PostBackAction, array("RoleRemove", "Role", "ProcessRoleRemove"))) {
 				$this->RoleSelect = $this->Context->ObjectFactory->NewObject($this->Context, "Select");

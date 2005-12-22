@@ -29,6 +29,7 @@ class SignInForm extends PostBackControl {
 		if ($this->IsPostBack) {
 			$this->FormName = $FormName;
 			$this->ReturnUrl = urldecode(ForceIncomingString("ReturnUrl", ""));
+			if ($this->ReturnUrl != "") $this->PostBackParams->Add("ReturnUrl", $this->ReturnUrl);
 			$this->Username = ForceIncomingString("Username", "");
 			$this->Password = ForceIncomingString("Password", "");
 			$this->RememberMe = ForceIncomingBool("RememberMe", 0);
@@ -40,6 +41,7 @@ class SignInForm extends PostBackControl {
 			$this->Context->PageTitle = $this->Context->GetDefinition("SignIn");			
 
 			if ($this->PostBackAction == "SignIn") {
+
 				$UserManager = $this->Context->ObjectFactory->NewContextObject($this->Context, "UserManager");
 				
 				// Check for an already active session
@@ -55,10 +57,10 @@ class SignInForm extends PostBackControl {
 							$this->ApplicantCount = $UserManager->GetApplicantCount();
 							if ($this->ApplicantCount > 0) $AutoRedirect = 0;
 						}
-                  if ($AutoRedirect && $this->Context->Configuration["FORWARD_VALIDATED_USER_URL"] != "") {
-							echo("Redirecting to ".$this->Context->Configuration["FORWARD_VALIDATED_USER_URL"]);
-							// header("location: ".$this->Context->Configuration["FORWARD_VALIDATED_USER_URL"]);
-							// die();
+						if ($this->ReturnUrl == "") $this->ReturnUrl = GetUrl($this->Context->Configuration, $this->Context->Configuration["FORWARD_VALIDATED_USER_URL"]);
+                  if ($AutoRedirect && $this->ReturnUrl != "") {
+							header("location: ".$this->ReturnUrl);
+							die();
 						}
 					}
 				}				

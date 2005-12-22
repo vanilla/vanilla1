@@ -38,7 +38,7 @@ echo("<div class=\"SettingsForm\">
    </div>
    <div class=\"FormButtons\">
       <input type=\"submit\" name=\"btnSave\" value=\"".$this->Context->GetDefinition("Save")."\" class=\"Button SubmitButton\" />
-      <a href=\"".GetUrl($this->Context->Configuration, "index.php")."".$this->Context->SelfUrl."?PostBackAction=Categories\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>
+      <a href=\"".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=Categories")."\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>
    </div>
    </form>
    </div>

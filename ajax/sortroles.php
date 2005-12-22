@@ -22,4 +22,5 @@ for ($i = 0; $i < $ItemCount; $i++) {
    $ExecSql = str_replace(array("//1", "//2"), array($i, $SortOrder[$i]), $Sql);
    $Context->Database->Execute($ExecSql, "AJAX", "ReorderRoles", "Failed to reorder roles", 0);
 }
+echo($SortOrder);
 ?>

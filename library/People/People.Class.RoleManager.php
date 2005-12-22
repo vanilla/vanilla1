@@ -16,16 +16,17 @@ class RoleManager {
    var $Context;				// The context object that contains all global objects (database, error manager, warning collector, session, etc)
 	
 	// Returns a SqlBuilder object with all of the user properties already defined in the select
-	function GetRoleBuilder() {
+	function GetRoleBuilder($GetUnauthenticated = "0") {
 		$s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
 		$s->SetMainTable("Role", "r");
-		$s->AddSelect(array("RoleID", "Name", "Icon", "Description", "PERMISSION_SIGN_IN", "PERMISSION_RECEIVE_APPLICATION_NOTIFICATION", "PERMISSION_HTML_ALLOWED", "Permissions"), "r");
+		$s->AddSelect(array("RoleID", "Name", "Icon", "Description", "PERMISSION_SIGN_IN", "PERMISSION_RECEIVE_APPLICATION_NOTIFICATION", "PERMISSION_HTML_ALLOWED", "Permissions", "Unauthenticated"), "r");
 		$s->AddWhere("Active", "1", "=");
+		if (!$GetUnauthenticated) $s->AddWhere("Unauthenticated", "0", "=");
 		return $s;
 	}
 	
 	function GetRoleById($RoleID) {
-		$s = $this->GetRoleBuilder();
+		$s = $this->GetRoleBuilder(1);
 		$s->AddWhere("r.RoleID", $RoleID, "=");
 
 		$Role = $this->Context->ObjectFactory->NewContextObject($this->Context, "Role");
@@ -37,9 +38,9 @@ class RoleManager {
 		return $this->Context->WarningCollector->Iif($Role, false);
 	}
 	
-	function GetRoles($RoleToExclude = "0") {
+	function GetRoles($RoleToExclude = "0", $GetUnauthenticated = "0") {
 		$RoleToExclude = ForceInt($RoleToExclude, 0);
-		$s = $this->GetRoleBuilder();
+		$s = $this->GetRoleBuilder($GetUnauthenticated);
 		$s->AddOrderBy("Priority", "r", "asc");
 		$s->AddWhere("RoleID", $RoleToExclude, "<>");
 		return $this->Context->Database->Select($s, $this->Name, "GetRoles", "An error occurred while attempting to retrieve roles.");
@@ -50,6 +51,7 @@ class RoleManager {
 		$s->SetMainTable("User", "u");
 		$s->AddSelect("UserID", "u");
 		$s->AddWhere("RoleID", $RemoveRoleID, "=");
+		$s->AddWhere("Unauthenticated", "0", "=");
 		$OldRoleUsers = $this->Context->Database->Select($s, $this->Name, "RemoveRole", "An error occurred while attempting to remove the role.");
 		
 		if ($this->Context->Database->RowCount($OldRoleUsers) > 0) {
