@@ -60,9 +60,8 @@ function HideElement(ElementID, ClearElement) {
 }
 
 function SubmitForm(FormName, Sender, WaitText) {
-	Sender.disabled = true;
-	Sender.value = WaitText;
-	document[FormName].submit();
+    Wait(Sender, WaitText);
+    document[FormName].submit();
 }
 
 function SwitchElementClass(ElementToChangeID, SenderID, StyleA, StyleB, CommentA, CommentB) {
@@ -77,6 +76,11 @@ function SwitchElementClass(ElementToChangeID, SenderID, StyleA, StyleB, Comment
 			Sender.innerHTML = CommentB;
 		}			
 	}
+}
+
+function Wait(Sender, WaitText) {
+	Sender.disabled = true;
+	Sender.value = WaitText;
 }
 
 function WriteEmail(d, n, v) {
