@@ -31,7 +31,7 @@ echo("<div class=\"Title CommentInputTitle\">".$this->Title."</div>
    $this->CallDelegate("CommentForm_PreButtonsRender");
    
    echo("<div class=\"FormButtons CommentButtons\">"
-      ."<input type=\"button\" name=\"btnSave\" value=\"".($Comment->CommentID > 0?$this->Context->GetDefinition("SaveYourChanges"):$this->Context->GetDefinition("AddYourComments"))."\" class=\"Button SubmitButton\" onclick=\"SubmitForm('frmPostComment', this, '".$this->Context->GetDefinition("Wait")."');\" />");
+      ."<input type=\"submit\" name=\"btnSave\" value=\"".($Comment->CommentID > 0?$this->Context->GetDefinition("SaveYourChanges"):$this->Context->GetDefinition("AddYourComments"))."\" class=\"Button SubmitButton\" onclick=\"Wait(this, '".$this->Context->GetDefinition("Wait")."');\" />");
       $this->CallDelegate("CommentForm_PostSubmitRender");
       if ($this->PostBackAction == "SaveComment" || ($this->PostBackAction == "" && $Comment->CommentID > 0)) {
          if ($this->Comment->DiscussionID > 0) {
