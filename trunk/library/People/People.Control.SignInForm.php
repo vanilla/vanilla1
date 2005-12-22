@@ -56,8 +56,9 @@ class SignInForm extends PostBackControl {
 							if ($this->ApplicantCount > 0) $AutoRedirect = 0;
 						}
                   if ($AutoRedirect && $this->Context->Configuration["FORWARD_VALIDATED_USER_URL"] != "") {
-							header("location: ".$this->Context->Configuration["FORWARD_VALIDATED_USER_URL"]);
-							die();
+							echo("Redirecting to ".$this->Context->Configuration["FORWARD_VALIDATED_USER_URL"]);
+							// header("location: ".$this->Context->Configuration["FORWARD_VALIDATED_USER_URL"]);
+							// die();
 						}
 					}
 				}				

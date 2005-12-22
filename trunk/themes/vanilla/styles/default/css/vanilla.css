@@ -1505,8 +1505,6 @@
 		.SortEdit {
 			position: absolute;
 			margin-left: 340px;
-			xfloat: right;
-			xmargin-right: 30px;
 		}
 		.SortEdit, .SortEdit:link, .SortEdit:active, .SortEdit:visited {
 			color: #1EB136;
@@ -1519,8 +1517,6 @@
 		.SortRemove {
 			position: absolute;
 			margin-left: 370px;
-			xmargin-right: 16px;
-			xfloat: right;
 		}
 		.SortListItem img {
 			position: absolute;
