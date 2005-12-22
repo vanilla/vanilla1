@@ -20,6 +20,7 @@ class Role extends Delegation {
 	var $PERMISSION_HTML_ALLOWED;
 	var $PERMISSION_RECEIVE_APPLICATION_NOTIFICATION;
 	var $Permissions;
+	var $Unauthenticated;
 	
 	function Clear() {
 		$this->RoleID = 0;
@@ -30,6 +31,7 @@ class Role extends Delegation {
 		$this->PERMISSION_HTML_ALLOWED = 0;
 		$this->PERMISSION_RECEIVE_APPLICATION_NOTIFICATION = 0;
 		$this->Permissions = array();
+		$this->Unauthenticated = 0;
 
 		// Loop through the configuration array looking for permission declarations
 		while (list($ConfigurationKey, $ConfigurationValue) = each($this->Context->Configuration)) {
@@ -69,6 +71,7 @@ class Role extends Delegation {
 		$this->PERMISSION_SIGN_IN = ForceBool(@$DataSet["PERMISSION_SIGN_IN"], 0);
 		$this->PERMISSION_HTML_ALLOWED = ForceBool(@$DataSet["PERMISSION_HTML_ALLOWED"], 0);
 		$this->PERMISSION_RECEIVE_APPLICATION_NOTIFICATION = ForceBool(@$DataSet["PERMISSION_RECEIVE_APPLICATION_NOTIFICATION"], 0);
+		$this->Unauthenticated = ForceBool(@$DataSet["Unauthenticated"], 0);
 		$TempPermissions = "";
 		$TempPermissions = ForceString(@$DataSet["Permissions"], "");
 		$TempPermissions = UnserializeAssociativeArray($TempPermissions);

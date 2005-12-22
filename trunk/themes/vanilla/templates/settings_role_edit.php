@@ -25,33 +25,35 @@ echo("<div class=\"SettingsForm\">
       <dt>".$this->Context->GetDefinition("RoleName")."</dt>
       <dd><input type=\"text\" name=\"RoleName\" value=\"".$this->Role->RoleName."\" maxlength=\"80\" class=\"SmallInput\" id=\"txtRoleName\" /> ".$this->Context->GetDefinition("Required")."</dd>
    </dl>
-   <div class=\"InputNote\">".$this->Context->GetDefinition("RoleNameNotes")."</div>
-   <dl>
-      <dt>".$this->Context->GetDefinition("RoleIcon")."</dt>
-      <dd><input type=\"text\" name=\"Icon\" value=\"".$this->Role->Icon."\" maxlength=\"130\" class=\"SmallInput\" id=\"txtRoleIcon\" /></dd>
-   </dl>
-   <div class=\"InputNote\">
-      ".$this->Context->GetDefinition("RoleIconNotes")."
-   </div>
-   <dl>
-      <dt>".$this->Context->GetDefinition("RoleTagline")."</dt>
-      <dd><input type=\"text\" name=\"Description\" value=\"".$this->Role->Description."\" maxlength=\"180\" class=\"SmallInput\" id=\"txtRoleDescription\" /></dd>
-   </dl>
-   <div class=\"InputNote\">".$this->Context->GetDefinition("RoleTaglineNotes")."</div>
-   <div class=\"InputBlock\" id=\"RoleAbilities\">
-      <div class=\"InputLabel\">".$this->Context->GetDefinition("RoleAbilities")."</div>
-      <div class=\"InputNote\">".$this->Context->GetDefinition("RoleAbilitiesNotes")."</div>");
-      while (list($PermissionKey, $PermissionValue) = each($this->Role->Permissions)) {
-         echo("<div class=\"CheckBox\">".GetDynamicCheckBox($PermissionKey, 1, $PermissionValue, "", $this->Context->GetDefinition($PermissionKey))."</div>");
-      }
-      
-      // Add the option of specifying which categories this role can see if creating a new role
-      if ($this->Role->RoleID == 0 && $this->CategoryBoxes != "") {
-         echo("<div class=\"InputNote\">".$this->Context->GetDefinition("RoleCategoryNotes")."</div>"
-         .$this->CategoryBoxes);
-      }
-   echo("</div>						
-      <div class=\"FormButtons\">
+   <div class=\"InputNote\">".$this->Context->GetDefinition("RoleNameNotes")."</div>");
+   if (!$this->Role->Unauthenticated) {
+      echo("<dl>
+         <dt>".$this->Context->GetDefinition("RoleIcon")."</dt>
+         <dd><input type=\"text\" name=\"Icon\" value=\"".$this->Role->Icon."\" maxlength=\"130\" class=\"SmallInput\" id=\"txtRoleIcon\" /></dd>
+      </dl>
+      <div class=\"InputNote\">
+         ".$this->Context->GetDefinition("RoleIconNotes")."
+      </div>
+      <dl>
+         <dt>".$this->Context->GetDefinition("RoleTagline")."</dt>
+         <dd><input type=\"text\" name=\"Description\" value=\"".$this->Role->Description."\" maxlength=\"180\" class=\"SmallInput\" id=\"txtRoleDescription\" /></dd>
+      </dl>
+      <div class=\"InputNote\">".$this->Context->GetDefinition("RoleTaglineNotes")."</div>
+      <div class=\"InputBlock\" id=\"RoleAbilities\">
+         <div class=\"InputLabel\">".$this->Context->GetDefinition("RoleAbilities")."</div>
+         <div class=\"InputNote\">".$this->Context->GetDefinition("RoleAbilitiesNotes")."</div>");
+         while (list($PermissionKey, $PermissionValue) = each($this->Role->Permissions)) {
+            echo("<div class=\"CheckBox\">".GetDynamicCheckBox($PermissionKey, 1, $PermissionValue, "", $this->Context->GetDefinition($PermissionKey))."</div>");
+         }
+         
+         // Add the option of specifying which categories this role can see if creating a new role
+         if ($this->Role->RoleID == 0 && $this->CategoryBoxes != "") {
+            echo("<div class=\"InputNote\">".$this->Context->GetDefinition("RoleCategoryNotes")."</div>"
+            .$this->CategoryBoxes);
+         }
+      echo("</div>");
+   }
+   echo("<div class=\"FormButtons\">
          <input type=\"submit\" name=\"btnSave\" value=\"".$this->Context->GetDefinition("Save")."\" class=\"Button SubmitButton\" />
          <a href=\"".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=Roles")."\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>
       </div>

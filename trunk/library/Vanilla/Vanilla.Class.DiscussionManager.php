@@ -186,7 +186,6 @@ class DiscussionManager extends Delegation {
 		} else {
 			$s->AddJoin("CategoryRoleBlock", "crb", "CategoryID and crb.RoleID = 1", "t", "CategoryID", "left join");
 		}
-		// $s->AddWhere("coalesce(crb.Blocked, 0)", "0", "=", "and", "", 0, 0);
       $s->AddWhere("crb.Blocked", "0", "=", "and", "", 1, 1);
       $s->AddWhere("crb.Blocked", "0", "=", "or", "", 0, 0);
 		$s->AddWhere("crb.Blocked", "null", "is", "or", "", 0, 0);

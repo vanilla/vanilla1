@@ -20,11 +20,11 @@ class PeopleSession {
 	function Check($Configuration) {
 		if (($this->UserID == 0 && !$Configuration["PUBLIC_BROWSING"]) || ($this->UserID > 0 && !$this->User->PERMISSION_SIGN_IN)) {
 			// Fully define the current url
-			$CurrentPage = ForceString(@$_SERVER['PHP_SELF'], "index.php");
-			$QueryString = ForceString(@$_SERVER['QUERY_STRING'], "");
-			if ($QueryString != "") $QueryString = "?".$QueryString;
-			$ReturnUrl = urlencode($CurrentPage.$QueryString);
-			header("location: ".$Configuration["SAFE_REDIRECT"]."&ReturnUrl=".$ReturnUrl);
+			// $CurrentPage = ForceString(@$_SERVER['PHP_SELF'], "index.php");
+			// $QueryString = ForceString(@$_SERVER['QUERY_STRING'], "");
+			// if ($QueryString != "") $QueryString = "?".$QueryString;
+			// $ReturnUrl = urlencode($CurrentPage.$QueryString);
+			header("location: ".$Configuration["SAFE_REDIRECT"]."&ReturnUrl=".GetRequestUri());
 		}
 	}
 	

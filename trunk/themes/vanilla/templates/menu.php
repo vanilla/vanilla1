@@ -11,7 +11,7 @@ echo("<div class=\"SiteContainer\">");
          $this->Context->Session->User->Name,
          $this->Context->GetDefinition("SignedInAsX"))." (<a href=\"".$this->Context->Configuration["SIGNOUT_URL"]."\">".$this->Context->GetDefinition("SignOut")."</a>)");
    } else {
-      echo($this->Context->GetDefinition("NotSignedIn")." (<a href=\"".$this->Context->Configuration["SIGNIN_URL"]."\">".$this->Context->GetDefinition("SignIn")."</a>)");
+      echo($this->Context->GetDefinition("NotSignedIn")." (<a href=\"".$this->Context->Configuration["SIGNIN_URL"]."?ReturnUrl=".GetRequestUri()."\">".$this->Context->GetDefinition("SignIn")."</a>)");
    }
    echo("</div>");
 	$this->CallDelegate("PreHeadRender");	
