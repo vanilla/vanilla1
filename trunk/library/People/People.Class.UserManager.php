@@ -300,7 +300,7 @@ class UserManager extends Delegation {
 		$s->AddSelect(array("UserID", "Name", "FirstName", "LastName", "Email", "UtilizeEmail", "Icon", "Picture", "Attributes", "CountVisit", "CountDiscussions", "CountComments", "RemoteIp", "DateFirstVisit", "DateLastActive", "RoleID", "StyleID", "CustomStyle", "ShowName", "UserBlocksCategories", "DefaultFormatType", "Discovery", "SendNewApplicantNotifications"), "u");
 		$s->AddSelect(array("PERMISSION_SIGN_IN", "PERMISSION_RECEIVE_APPLICATION_NOTIFICATION", "PERMISSION_HTML_ALLOWED", "Permissions"), "r");
 		$s->AddSelect("Name", "r", "Role");
-		$s->AddSelect("FirstName", "u", "FullName", "concat", "' ',u.LastName");
+		$s->AddSelect("FirstName+' '+u.LastName", "u", "FullName");
 		$s->AddSelect("Description", "r", "RoleDescription");
 		$s->AddSelect("Icon", "r", "RoleIcon");
 		$s->AddSelect("Url", "s", "StyleUrl");
@@ -354,9 +354,8 @@ class UserManager extends Delegation {
 		$s->AddJoin("User", "u", "UserID", "h", "UserID", "inner join");
 		$s->AddJoin("User", "a", "UserID", "h", "AdminUserID", "left join");
 		$s->AddSelect("Name", "u", "Username");
-		$s->AddSelect("FirstName", "u", "FullName", "concat", "' ',u.LastName");
+		$s->AddSelect("FirstName+' '+u.LastName", "u", "FullName");
 		$s->AddSelect("Name", "a", "AdminUsername");
-		$s->AddSelect("FirstName", "a", "AdminFullName", "concat", "' ',a.LastName");
 		$s->AddSelect("Name", "r", "Role");
 		$s->AddSelect("Description", "r", "RoleDescription");
 		$s->AddSelect("Icon", "r", "RoleIcon");
@@ -784,7 +783,7 @@ class UserManager extends Delegation {
 			// Select the LastCommentPost, and CommentSpamCheck values from the user's profile
 			$s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
 			$s->SetMainTable("User", "u");
-			$s->AddSelect("(unix_timestamp('".MysqlDateTime()."')- unix_timestamp(LastCommentPost))", "", "DateDiff");
+			$s->AddSelect("LastCommentPost");
 			$s->AddSelect("CommentSpamCheck");
 			$s->AddWhere("UserID", $UserID, "=");
 	
@@ -792,8 +791,8 @@ class UserManager extends Delegation {
 			$CommentSpamCheck = 0;
 			$result = $this->Context->Database->Select($s, $this->Name, "UpdateUserCommentCount", "An error occurred while retrieving user activity data.");
 			while ($rows = $this->Context->Database->GetRow($result)) {
-				$DateDiff = ForceString($rows["DateDiff"], "");
-				// echo($s->GetSelect()."<br />");
+				$LastCommentPost = UnixTimestamp($rows["LastCommentPost"]);
+				$DateDiff = mktime() - $LastCommentPost;
 				$CommentSpamCheck = ForceInt($rows["CommentSpamCheck"], 0);
 			}
 			
@@ -850,14 +849,16 @@ class UserManager extends Delegation {
 			// Select the LastDiscussionPost, and DiscussionSpamCheck values from the user's profile
 			$s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
 			$s->SetMainTable("User", "u");
-			$s->AddSelect("(unix_timestamp('".MysqlDateTime()."')- unix_timestamp(LastDiscussionPost))", "", "DateDiff");
+			$s->AddSelect("LastDiscussionPost");
+			// $s->AddSelect("(unix_timestamp('".MysqlDateTime()."')- unix_timestamp(LastDiscussionPost))", "", "DateDiff");
 			$s->AddSelect("DiscussionSpamCheck");
 			$s->AddWhere("UserID", $UserID, "=");
 			$DateDiff = "";
 			$DiscussionSpamCheck = 0;
 			$result = $this->Context->Database->Select($s, $this->Name, "UpdateUserDiscussionCount", "An error occurred while retrieving user activity data.");
 			while ($rows = $this->Context->Database->GetRow($result)) {
-				$DateDiff = ForceString($rows['DateDiff'], "");
+				$LastDiscussionPost = UnixTimestamp($rows["LastDiscussionPost"]);
+				$DateDiff = mktime() - $LastDiscussionPost;
 				$DiscussionSpamCheck = ForceInt($rows['DiscussionSpamCheck'], 0);
 			}
 			$SecondsSinceLastPost = ForceInt($DateDiff, 0);

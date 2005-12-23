@@ -27,7 +27,7 @@ class Database {
 	
    function Database(&$Context) {
 		$this->Name = "Database";
-		$Context->AddError($Context, $this->Name, "Constructor", "You can not generate a database object with the database interface. You must use an implementation of the interface like the MySQL implementation.");
+		$Context->ErrorManager->AddError($Context, $this->Name, "Constructor", "You can not generate a database object with the database interface. You must use an implementation of the interface like the MySQL implementation.");
 	}
    
    // Returns the affected rows if successful (kills page execution if there is an error)

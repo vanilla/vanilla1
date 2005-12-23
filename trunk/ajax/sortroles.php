@@ -15,7 +15,7 @@ include("../appg/settings.php");
 include("../conf/settings.php");
 include("../appg/init_ajax.php");
 
-$Sql = "update ".$Configuration["DATABASE_TABLE_PREFIX"]."Role set `Priority` = '//1' where `RoleID` = '//2';";
+$Sql = "update ".$Configuration["DATABASE_TABLE_PREFIX"]."Role set Priority = '//1' where RoleID = '//2';";
 $SortOrder = ForceIncomingArray("RoleID", array());
 $ItemCount = count($SortOrder);
 for ($i = 0; $i < $ItemCount; $i++) {
