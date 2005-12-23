@@ -90,10 +90,9 @@ if ($Context->SelfUrl == "search.php") {
       if ($SearchForm->PostBackAction == "SaveSearch") {
 			$SearchManager = $SearchForm->Context->ObjectFactory->NewContextObject($SearchForm->Context, "SearchManager");
          $SearchManager->SaveSearch($SearchForm->Search);
-         // $SearchForm->PostBackAction = "Search";
 			
 			// Post back to the page again so that the new search is loaded in the panel
-         header("location:".GetUrl($Configuration, "search.php", "saved/", "SearchID", $SearchForm->Search->SearchID));
+         header("location:".GetUrl($SearchForm->Context->Configuration, "search.php", "saved/", "SearchID", $SearchForm->Search->SearchID));
 			die();
       }
 	}

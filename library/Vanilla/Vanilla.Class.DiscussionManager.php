@@ -316,7 +316,8 @@ class DiscussionManager extends Delegation {
 		}		
 		if ($RowsPerPage > 0) $s->AddLimit($FirstRecord, $RowsPerPage+1);
       if ($this->Context->Configuration["ENABLE_WHISPERS"] && $this->Context->Session->User->Permission("PERMISSION_VIEW_ALL_WHISPERS")) {
-         $s->AddOrderBy("greatest(t.DateLastWhisper, t.DateLastActive)", "", "desc");
+         $s->AddOrderBy("max(t.DateLastWhisper, t.DateLastActive)", "", "desc");
+         // $s->AddOrderBy("greatest(t.DateLastWhisper, t.DateLastActive)", "", "desc");
       } else {
 			$this->GetDiscussionWhisperFilter($s);
 			if ($this->Context->Configuration["ENABLE_WHISPERS"]) $s->AddOrderBy("greatest(tuwt.DateLastActive, tuwf.DateLastActive, t.DateLastActive)", "", "desc");

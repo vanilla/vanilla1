@@ -51,8 +51,8 @@ class Context {
 	}
    
    // Constructor
-   function Context($Configuration) {
-		$this->Configuration = $Configuration;
+   function Context(&$Configuration) {
+		$this->Configuration = &$Configuration;
 		$this->BodyAttributes = "";
 		$this->StyleUrl = "";
 		$this->PageTitle = "";		
@@ -80,9 +80,9 @@ class Context {
       
       // Instantiate an Error manager (for fatal errors)
       $this->ErrorManager = new ErrorManager();
-      
+		
       // Instantiate a Database object (for performing database actions)
-      $this->Database = new MySQL($this);
+      $this->Database = new $Configuration["DATABASE_SERVER"]($this);
       
 		// Instantiate the string manipulation object
       $this->StringManipulator = new StringManipulator($this->Configuration);

@@ -216,6 +216,7 @@ class SqlBuilder {
 		if ($this->Context->Session->User) {
 			if ($this->Context->Session->User->Permission("PERMISSION_ALLOW_DEBUG_INFO") && $this->Context->Mode == MODE_DEBUG) $this->Context->SqlCollector->Add($String);
 		}
+$this->Context->SqlCollector->Add($String);
 	}
 }
 ?>

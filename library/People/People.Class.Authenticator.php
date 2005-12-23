@@ -33,14 +33,18 @@ class Authenticator {
 			where u.Name = '".$Username."'
 				and (u.Password = md5('".$Password."') or u.Password = '".$Password."')";
 
-		$UserResult = @mysql_query($Query, $this->Context->Database->GetConnection());
+		$UserResult = $this->Context->Database->Execute($Query,
+			"Authenticator",
+			"Authenticate",
+			"An error occurred while attempting to validate your credentials");
+			
 		if (!$UserResult) {
 			$UserID = -2;
-		} elseif (mysql_num_rows($UserResult) > 0) {
+		} elseif ($this->Context->Database->RowCount($UserResult) > 0) {
 			$CanSignIn = 0;
 			$EncryptedUserID = "";
 			$VerificationKey = "";
-			while ($rows = mysql_fetch_array($UserResult)) {
+			while ($rows = $this->Context->Database->GetRow($UserResult)) {
 				$EncryptedUserID = $rows["EncryptedUserID"];
 				$VerificationKey = DefineVerificationKey();
 				$UserID = ForceInt($rows['UserID'], 0);
@@ -103,9 +107,13 @@ class Authenticator {
                where md5(UserID) = '".FormatStringForDatabaseInput($EncryptedUserID)."'
                and VerificationKey = '".FormatStringForDatabaseInput($VerificationKey)."'";
                
-            $Result = @mysql_query($Query, $this->Context->Database->GetConnection());
+				$Result = $this->Context->Database->Execute($Query,
+					"Authenticator",
+					"GetIdentity",
+					"An error occurred while attempting to validate your remember me credentials");
+
             if ($Result) {
-					while ($rows = mysql_fetch_array($Result)) {
+					while ($rows = $this->Context->Database->GetRow($Result)) {
 						$UserID = ForceInt($rows["UserID"], 0);
                   $EncryptedUserID = $rows["EncryptedUserID"];
 					}
@@ -144,8 +152,12 @@ class Authenticator {
 			$Query = "insert into LUM_IpHistory
 				(UserID, RemoteIp, DateLogged)
 				values ('".$UserID."', '".GetRemoteIp(1)."', '".MysqlDateTime()."')";
-			// Again, fail silently
-			mysql_query($Query, $this->Context->Database->GetFarmConnection());
+				
+			$this->Context->Database->Execute($Query,
+				"Authenticator",
+				"LogIp",
+				"An error occurred while logging your IP address.",
+				false); // fail silently
 		}
 	}
 	
@@ -169,8 +181,12 @@ class Authenticator {
 				VerificationKey = '".$VerificationKey."',
 				CountVisit = CountVisit + 1
 			where UserID = ".$UserID;
-		// Fail silently
-		mysql_query($Query, $this->Context->Database->GetFarmConnection());
+			
+		$this->Context->Database->Execute($Query,
+				"Authenticator",
+				"UpdateLastVisit",
+				"An error occurred while updating your profile.",
+				false); // fail silently
 	}
 }
 ?>

@@ -27,8 +27,7 @@ class CategoryManager {
 			// Order by the user's preference (unblocked categories first)
 			$s->AddOrderBy("Blocked", "b", "asc");
 		}
-		// Order by the category name
-		$s->AddOrderBy("Order", "c", "asc");
+		$s->AddOrderBy("Priority", "c", "asc");
 		return $this->Context->Database->Select($s, $this->Name, "GetCategories", "An error occurred while retrieving categories.");
 	}
 	
