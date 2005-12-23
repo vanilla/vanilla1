@@ -40,7 +40,7 @@ class SQLite extends Database {
 			$Connection = $this->GetFarmConnection();
 		}
       $KillOnFail = ForceBool($KillOnFail, 0);
-		$DataSet = sqlite_query($Sql, $Connection);
+		$DataSet = sqlite_query($this->FixSQL($Sql), $Connection);
 		if (!$DataSet) {
 			$this->Context->ErrorManager->AddError($this->Context, $SenderObject, $SenderMethod, $ErrorMessage, sqlite_error_string(sqlite_last_error($this->Connection)), $KillOnFail);
 			return false;
@@ -94,11 +94,6 @@ class SQLite extends Database {
 			return ForceInt(sqlite_last_insert_rowid($Connection), 0);
 		}
    }
-	
-   function SQLite(&$Context) {			
-      $this->Name = "SQLite";
-		$this->Context = &$Context;
-   }
 
 	function RewindDataSet(&$DataSet, $Position = "0") {
 		$Position = ForceInt($Position, 0);
@@ -113,7 +108,7 @@ class SQLite extends Database {
    function Select($SqlBuilder, $SenderObject, $SenderMethod, $ErrorMessage, $KillOnFail = "1") {
       $KillOnFail = ForceBool($KillOnFail, 0);
 		$Connection = $this->GetConnection();
-		$DataSet = sqlite_query($SqlBuilder->GetSelect(), $Connection);
+		$DataSet = sqlite_query($this->FixSQL($SqlBuilder->GetSelect()), $Connection);
 		if (!$DataSet) {
 			$this->Context->ErrorManager->AddError($SqlBuilder->Context, $SenderObject, $SenderMethod, $ErrorMessage, sqlite_error_string(sqlite_last_error($this->Connection)), $KillOnFail);
 			return false;
@@ -121,6 +116,11 @@ class SQLite extends Database {
 			return $DataSet;
 		}
 	 }
+	
+   function SQLite(&$Context) {			
+      $this->Name = "SQLite";
+		$this->Context = &$Context;
+   }
 
    // Returns the affected rows if successful (kills page execution if there is an error)
    function Update($SqlBuilder, $SenderObject, $SenderMethod, $ErrorMessage, $KillOnFail = "1") {
@@ -133,5 +133,9 @@ class SQLite extends Database {
 			return sqlite_changes($Connection);
 		}
    }
+	
+	function FixSQL($Sql) {
+		return str_replace("greatest(", "max(", $Sql);
+	}
 }
 ?>
