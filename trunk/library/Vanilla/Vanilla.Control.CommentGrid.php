@@ -48,8 +48,7 @@ class CommentGrid extends Control {
 		}
 		
 		// Set up the pagelist
-		$this->pl = $this->Context->ObjectFactory->NewContextObject($this->Context, "PageList", "DiscussionID", $this->Discussion->DiscussionID);
-		// $this->pl->Parameters = $this->Context->ObjectFactory->NewObject($this->Context, "UrlBuilder", "", $this->Context->Configuration["URL_BUILDING_METHOD"], $this->Context->Configuration["REWRITE_DISCUSSIONS"]);
+		$this->pl = $this->Context->ObjectFactory->NewContextObject($this->Context, "PageList", "DiscussionID", $this->Discussion->DiscussionID, CleanupString($this->Discussion->Name)."/");
 		$this->pl->NextText = $this->Context->GetDefinition("Next");
 		$this->pl->PreviousText = $this->Context->GetDefinition("Previous");
 		$this->pl->CssClass = "PageList";

@@ -367,7 +367,7 @@ function GetUrl(&$Configuration, $PageName, $Divider = "", $Key = "", $Value = "
 			.($PageName == "index.php" && $Value != "" ? "" : $Configuration["REWRITE_".$PageName])
 			.(strlen($Value) != 0 ? $Divider : "")
 			.(strlen($Value) != 0 ? $Value."/" : "")
-			.($PageNumber != "" && ForceInt($PageNumber, 0) > 1? $PageNumber."/" : "")
+			.(($PageNumber != "" && $PageNumber != "0" && $PageNumber != "1") ? $PageNumber."/" : "")
 			.($Suffix != "" ? $Suffix : "")
 			.($Querystring != "" && substr($Querystring, 0, 1) != "#" ? "?" : "")
 			.($Querystring != "" ? $Querystring : "");

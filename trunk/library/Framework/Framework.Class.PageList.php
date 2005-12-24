@@ -30,6 +30,7 @@ class PageList {
    var $UseTextOnNumericList;	// Should the < and > also use the next and previous text?
    var $UrlIdName;
 	var $UrlIdValue;
+	var $UrlSuffix;
 	var $Context;
 
 	// PRIVATE PROPERTIES
@@ -156,39 +157,36 @@ class PageList {
 		$sReturn .= ">\r\n";
 		$Loop = 0;
 		$iTmpPage = 0;
+		
+		$Url = GetUrl($this->Context->Configuration,
+			$this->Context->SelfUrl,
+			"",
+			$this->UrlIdName,
+			$this->UrlIdValue,
+			"$$1",
+			$QSParams,
+			$this->UrlSuffix);
 
 		if ($PageCount > 1) {
 			if ($CurrentPage > 1) {
 				$iTmpPage = $CurrentPage - 1;
-				$sReturn .= "\t<li><a href=\"".GetUrl($this->Context->Configuration,
-					$this->Context->SelfUrl,
-					"",
-					$this->UrlIdName,
-					$this->UrlIdValue,
+				$sReturn .= "\t<li><a href=\"".str_replace("$$1",
 					$iTmpPage,
-					$QSParams)."\">".Iif($this->PreviousImage != "", "<img src='".$this->PreviousImage."' border=\"0\" alt=\"".$this->PreviousText."\" />", $PreviousText)."</a></li>\r\n";
+					$Url)."\">".Iif($this->PreviousImage != "", "<img src='".$this->PreviousImage."' border=\"0\" alt=\"".$this->PreviousText."\" />", $PreviousText)."</a></li>\r\n";
 			} else {
 				$sReturn .= "\t<li>".Iif($this->PreviousImage != "", "<img src=\"".$this->PreviousImage."\" border=\"0\" alt=\"".$this->PreviousText."\" />", $PreviousText)."</li>\r\n";
 			}					
 
 			// Display first page & elipsis if we have moved past the second page
 			if ($FirstPage > 2) {
-				$sReturn .= "\t<li><a href=\"".GetUrl($this->Context->Configuration,
-					$this->Context->SelfUrl,
-					"",
-					$this->UrlIdName,
-					$this->UrlIdValue,
+				$sReturn .= "\t<li><a href=\"".str_replace("$$1",
 					1,
-					$QSParams)."\">1</a></li>\r\n"
+					$Url)."\">1</a></li>\r\n"
 					."\t<li>...</li>\r\n";
 			} elseif ($FirstPage == 2) {
-				$sReturn .= "\t<li><a href=\"".GetUrl($this->Context->Configuration,
-					$this->Context->SelfUrl,
-					"",
-					$this->UrlIdName,
-					$this->UrlIdValue,
+				$sReturn .= "\t<li><a href=\"".str_replace("$$1",
 					1,
-					$QSParams)."\">1</a></li>\r\n";
+					$Url)."\">1</a></li>\r\n";
 			}
 			
          $Loop = 0;
@@ -198,13 +196,9 @@ class PageList {
 					if ($Loop == $CurrentPage) {
 						$sReturn .= "\t<li class=\"CurrentPage\">".$Loop."</li>\r\n";
 					} else {
-						$sReturn .= "\t<li><a href=\"".GetUrl($this->Context->Configuration,
-							$this->Context->SelfUrl,
-							"",
-							$this->UrlIdName,
-							$this->UrlIdValue,
+						$sReturn .= "\t<li><a href=\"".str_replace("$$1",
 							$Loop,
-							$QSParams)."\">".$Loop."</a></li>\r\n";
+							$Url)."\">".$Loop."</a></li>\r\n";
 					}
 				}
 			}
@@ -212,32 +206,20 @@ class PageList {
 			// Display last page & elipsis if we are not yet at the second last page
 			if ($CurrentPage < ($PageCount - $MidPoint) && $PageCount > $this->PagesToDisplay + 1) {
 				$sReturn .= "\t<li>...</li>\r\n"
-					."\t<li><a href=\"".GetUrl($this->Context->Configuration,
-						$this->Context->SelfUrl,
-						"",
-						$this->UrlIdName,
-						$this->UrlIdValue,
-						$PageCount,
-						$QSParams)."\">".$PageCount."</a></li>\r\n";
-			} else if ($CurrentPage == ($PageCount - $MidPoint) && ($PageCount > $this->PagesToDisplay)) {
-				$sReturn .= "\t<li><a href=\"".GetUrl($this->Context->Configuration,
-					$this->Context->SelfUrl,
-					"",
-					$this->UrlIdName,
-					$this->UrlIdValue,
+					."\t<li><a href=\"".str_replace("$$1",
 					$PageCount,
-					$QSParams)."\">".$PageCount."</a></li>\r\n";
+					$Url)."\">".$PageCount."</a></li>\r\n";
+			} else if ($CurrentPage == ($PageCount - $MidPoint) && ($PageCount > $this->PagesToDisplay)) {
+				$sReturn .= "\t<li><a href=\"".str_replace("$$1",
+					$PageCount,
+					$Url)."\">".$PageCount."</a></li>\r\n";
 			}
 
 			if ($CurrentPage != $PageCount) {
 				$iTmpPage = $CurrentPage + 1;
-				$sReturn .= "\t<li><a href=\"".GetUrl($this->Context->Configuration,
-					$this->Context->SelfUrl,
-					"",
-					$this->UrlIdName,
-					$this->UrlIdValue,
+				$sReturn .= "\t<li><a href=\"".str_replace("$$1",
 					$iTmpPage,
-					$QSParams)."\">".Iif($this->NextImage != "", "<img src=\"".$this->NextImage."\" border=\"0\" alt=\"".$this->NextText."\" />", $NextText)."</a></li>\r\n";
+					$Url)."\">".Iif($this->NextImage != "", "<img src=\"".$this->NextImage."\" border=\"0\" alt=\"".$this->NextText."\" />", $NextText)."</a></li>\r\n";
 			} else {
 				$sReturn .= "\t<li>".Iif($this->NextImage != "", "<img src=\"".$this->NextImage."\" border=\"0\" alt=\"".$this->NextText."\" />", $NextText)."</li>\r\n";
 			}
@@ -267,9 +249,10 @@ class PageList {
 		return $sReturn;
 	}
 	
-	function PageList(&$Context, $urlIdName = "", $urlIdValue = "") {
+	function PageList(&$Context, $urlIdName = "", $urlIdValue = "", $urlSuffix = "") {
 		$this->UrlIdName = $urlIdName;
 		$this->UrlIdValue = $urlIdValue;
+		$this->UrlSuffix = $urlSuffix;
 		$this->CurrentPage = 0;
 		$this->isPropertiesDefined = 0;
 		$this->QueryStringParams = $Context->ObjectFactory->NewObject($Context, "Parameters");
