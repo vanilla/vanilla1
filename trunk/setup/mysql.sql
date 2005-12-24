@@ -87,7 +87,7 @@ CREATE TABLE `LUM_Category` (
   `CategoryID` int(2) NOT NULL auto_increment,
   `Name` varchar(100) NOT NULL default '',
   `Description` text NOT NULL,
-  `Order` int(11) NOT NULL default '0',
+  `Priority` int(11) NOT NULL default '0',
   PRIMARY KEY  (`CategoryID`)
 );
 
