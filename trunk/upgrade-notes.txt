@@ -6,55 +6,13 @@ So you want to try out Vanilla 0.9.3?
 
 I'm sorry to tell you that there is a bit of work ahead of you. The good news
 is that you've made it this far already. So you've gotten SVN installed and
-working on your machine, and you SVN Checkout'ed these files. The first step
-you need to take now is to get the library files included in your project.
-
-As you may or may not know, Vanilla is built on top of a framework, and in the
-relatively near future some more applications will be released on the same
-framework. In an effort to better accomodate these separate projects, I've
-separated the libraries for the framework and the user integration into their
-own projects so they can all be maintained simultaneously and there won't be any
-versioning problems. In order to get the Framework and People files included
-in your vanilla library, you need to go to the directory _below_ your vanilla
-repository. For example, on my local system I keep my working copy of Vanilla
-in the following folder:
-
-   C:\applications\subversion\vanilla
-
-So, I am going to open up a command prompt and enter this:
-
-   cd C:\applications\subversion
-
-Now I am sitting at a command prompt like this:
-
-   C:\applications\subversion>
-   
-First I'll include the Framework libraries with the following command:
-
-   svn propset svn:externals "library/Framework http://lussumo.com/svn/framework/trunk" vanilla
-   
-Now, I'll include the People libraries with the following command:
-
-   svn propset svn:externals "library/People http://lussumo.com/svn/people/trunk" vanilla
-   
-Up next we need to update our repository so it actually pulls in the latest
-version of the libraries:
-
-   cd vanilla
-   svn update
-   
-At this point it will begin including all of the required libraries and placing
-them in the following folders:
-
-   C:\applications\subversion\vanilla\library\Framework\
-   and
-   C:\applications\subversion\vanilla\library\People\
+working on your machine, and you SVN Checkout'ed these files. 
 
 ===========
 LOCAL SETUP
 ===========
 
-Awesome, you now have all of the files required to run Vanilla. So, let's get
+You now have all of the files required to run Vanilla. So, let's get
 Vanilla set up on your machine properly. If you navigate to your repository's
 conf folder, you'll see a bunch of files like English-dist.php and
 settings-dist.php. The "-dist" means that they are included with the Vanilla
