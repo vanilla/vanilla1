@@ -4,7 +4,7 @@ REPOSITORY SETUP
 
 So you want to try out Vanilla 0.9.3?
 
-I'm sorry to tell you that there is a bit of work ahead of your. The good news
+I'm sorry to tell you that there is a bit of work ahead of you. The good news
 is that you've made it this far already. So you've gotten SVN installed and
 working on your machine, and you SVN Checkout'ed these files. The first step
 you need to take now is to get the library files included in your project.
