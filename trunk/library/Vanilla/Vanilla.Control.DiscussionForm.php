@@ -97,6 +97,10 @@ class DiscussionForm extends PostBackControl {
 			$this->Discussion->DiscussionID = $this->EditDiscussionID;
 			
 			$ResultDiscussion = $dm->SaveDiscussion($this->Discussion);
+			
+			$this->DelegateParameters["ResultDiscussion"] = &$ResultDiscussion;
+			$this->CallDelegate("PostSaveDiscussion");
+			
 			if ($ResultDiscussion) {
 				// Saved successfully, so send back to the discussion
             $Suffix = CleanupString($this->Discussion->Name)."/";
@@ -110,6 +114,10 @@ class DiscussionForm extends PostBackControl {
 			$this->Comment->DiscussionID = $this->DiscussionID;
 			$this->Discussion = $dm->GetDiscussionById($this->Comment->DiscussionID);
 			$ResultComment = $cm->SaveComment($this->Comment);
+			
+			$this->DelegateParameters["ResultComment"] = &$ResultComment;
+			$this->CallDelegate("PostSaveComment");
+			
 			if ($ResultComment) {
 				// Saved successfully, so send back to the discussion
             // print_r($this->Discussion);
