@@ -6,7 +6,45 @@ So you want to try out Vanilla 0.9.3?
 
 I'm sorry to tell you that there is a bit of work ahead of you. The good news
 is that you've made it this far already. So you've gotten SVN installed and
-working on your machine, and you SVN Checkout'ed these files. 
+working on your machine, and you SVN Checkout'ed these files.
+
+The next step is to get all of the required libraries included in the project.
+
+Vanilla depends on the Lussumo Framework and Lussumo's user management project,
+People. Both of these sets of libraries will need to be included in Vanilla in
+order for Vanilla to work properly. Navigate to the folder below your Vanilla
+repository and type the following at your command prompt:
+
+   svn propedit svn:externals vanilla
+   
+You may receive an error like:
+
+   svn: None of the environment variables SVN_EDITOR, VISUAL or EDITOR is set,
+   and no 'editor-cmd' run-time configuration option was found
+   
+If you do, it means that you have not yet configured an editor for svn. On
+Windows you can set up svn to use notepad as your editor with the following
+command:
+
+   set SVN_EDITOR=notepad
+   
+Okay, so now if you run the following command:
+
+   svn propedit svn:externals vanilla
+   
+Notepad (or whatever editor you're system uses) should come up on screen. Here
+you can specify which projects to include externally in your Vanilla repository.
+Enter the following two lines into the editor and save it:
+
+   library/Framework http://lussumo.com/svn/framework/trunk
+   library/People http://lussumo.com/svn/people/trunk
+
+This adds the Framework and People libraries to your Vanilla repository's
+library folder. Now you can run svn update and it will pull in those
+libraries to your repository of Vanilla.
+
+   svn update
+
 
 ===========
 LOCAL SETUP
