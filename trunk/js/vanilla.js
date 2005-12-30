@@ -48,14 +48,6 @@ function AddLabelValuePair() {
 	}
 }
 
-// A status indicator to keep the user informed
-function ChangeLoaderText(NewText) {
-	ChangeElementText("LoadStatus", NewText)
-}
-function CloseLoader() {
-	setTimeout("SwitchLoader(0)",600);	
-}
-
 function DiscussionSwitch(SwitchType, DiscussionID, SwitchValue) {
 	ChangeLoaderText("Processing...");
 	SwitchLoader(1);
@@ -65,11 +57,6 @@ function DiscussionSwitch(SwitchType, DiscussionID, SwitchValue) {
       Url,
       { method: 'get', parameters: Parameters, onComplete: HandleDiscussionSwitch }
    );	
-}
-
-function HandleSwitch(Request) {
-	ChangeLoaderText("Complete");
-	CloseLoader();
 }
 
 function HandleDiscussionSwitch(Request) {
@@ -92,27 +79,6 @@ function ManageComment(Switch, DiscussionID, CommentID, ShowText, HideText) {
 	}
 }
 
-function PanelSwitch(PanelItem, RefreshPageWhenComplete) {
-	var chkBox = document.getElementById(PanelItem+"ID");
-	if (chkBox) {
-		ChangeLoaderText("Processing...");
-		SwitchLoader(1);
-		var Url = "./ajax/switch.php";
-		var Parameters = "Type="+PanelItem+"&Switch="+chkBox.checked;
-		if (RefreshPageWhenComplete == 1) {
-			var DataManager = new Ajax.Request(
-				Url,
-				{ method: 'get', parameters: Parameters, onComplete: RefreshPage }
-			);
-		} else {
-			var DataManager = new Ajax.Request(
-				Url,
-				{ method: 'get', parameters: Parameters, onComplete: HandleSwitch }
-			);
-		}
-	}
-}
-
 function PopTermsOfService() {
 	if (document.ApplicationForm && document.ApplicationForm.ReadTerms) document.ApplicationForm.ReadTerms.value = 1;
 	window.open("./termsofservice.php", "TermsOfService", "toolbar=no,status=yes,location=no,menubar=no,resizable=yes,height=600,width=400,scrollbars=yes");
@@ -121,10 +87,6 @@ function PopTermsOfService() {
 function ProcessComment(Request) {
 	ChangeLoaderText("Refreshing...");
 	setTimeout("document.location.reload();",600);
-}
-
-function RefreshPage() {
-	document.location.reload();
 }
 
 function DoNothing() {
@@ -186,11 +148,6 @@ function ShowAdvancedSearch() {
 		SimpleSearch.style.display = "none";
 		AdvancedSearch.style.display = "block";
 	}
-}
-
-function SwitchLoader(ShowLoader) {
-	var Loader = document.getElementById("LoadStatus");
-	if (Loader) Loader.style.display = (ShowLoader == 1)?"block":"none";
 }
 
 function ToggleCategoryBlock(CategoryID, Block) {

@@ -31,6 +31,11 @@ function ChangeElementText(ElementID, NewText) {
 	if (Element) Element.innerHTML = NewText;
 }
 
+// A status indicator to keep the user informed
+function ChangeLoaderText(NewText) {
+	ChangeElementText("LoadStatus", NewText)
+}
+
 function CheckBox(BoxID) {
 	var Box = document.getElementById(BoxID);
 	if (Box) Box.checked = !Box.checked;
@@ -38,6 +43,10 @@ function CheckBox(BoxID) {
 
 function ClearContents(Container) {
 	if (Container) Container.innerHTML = "";
+}
+
+function CloseLoader() {
+	setTimeout("SwitchLoader(0)",600);	
 }
 
 function GetElements(ElementName, ElementIDPrefix) {
@@ -51,12 +60,42 @@ function GetElements(ElementName, ElementIDPrefix) {
 	return objects;
 }
 
+function HandleSwitch(Request) {
+	ChangeLoaderText("Complete");
+	CloseLoader();
+}
+
 function HideElement(ElementID, ClearElement) {
 	var Element = document.getElementById(ElementID);
 	if (Element) {
 		Element.style.display = "none";
 		if (ClearElement == 1) ClearContents(Element);
 	}
+}
+
+function PanelSwitch(PanelItem, RefreshPageWhenComplete) {
+	var chkBox = document.getElementById(PanelItem+"ID");
+	if (chkBox) {
+		ChangeLoaderText("Processing...");
+		SwitchLoader(1);
+		var Url = "./ajax/switch.php";
+		var Parameters = "Type="+PanelItem+"&Switch="+chkBox.checked;
+		if (RefreshPageWhenComplete == 1) {
+			var DataManager = new Ajax.Request(
+				Url,
+				{ method: 'get', parameters: Parameters, onComplete: RefreshPage }
+			);
+		} else {
+			var DataManager = new Ajax.Request(
+				Url,
+				{ method: 'get', parameters: Parameters, onComplete: HandleSwitch }
+			);
+		}
+	}
+}
+
+function RefreshPage() {
+	document.location.reload();
 }
 
 function SubmitForm(FormName, Sender, WaitText) {
@@ -78,9 +117,23 @@ function SwitchElementClass(ElementToChangeID, SenderID, StyleA, StyleB, Comment
 	}
 }
 
+function SwitchLoader(ShowLoader) {
+	var Loader = document.getElementById("LoadStatus");
+	if (Loader) Loader.style.display = (ShowLoader == 1)?"block":"none";
+}
+
 function Wait(Sender, WaitText) {
-	Sender.disabled = true;
-	Sender.value = WaitText;
+	 Sender.disabled = true;
+	 Sender.value = WaitText;
+	 
+	 el = Sender.parentNode;
+	 while(el != null) {
+		  if (el.tagName == "FORM") {
+				el.submit();
+				break;
+		  }
+		  el = el.parentNode;
+	 }
 }
 
 function WriteEmail(d, n, v) {
