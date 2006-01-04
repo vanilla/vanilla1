@@ -22,7 +22,7 @@ echo("<div class=\"Account\">");
             <dd>".(($this->User->ShowName || $this->Context->Session->User->Permission("PERMISSION_EDIT_USERS")) ? ReturnNonEmpty($this->User->FullName) : "n/a")."</dd>");
          }
          echo("<dt>".$this->Context->GetDefinition("Email")."</dt>
-         <dd>".(($this->Context->Session->UserID > 0 && ($this->User->UtilizeEmail || $this->Context->Session->User->Permission("PERMISSION_EDIT_USERS"))) ? GetEmail($this->User->Email) : "n/a")."</dd>
+         <dd>".(($this->Context->Session->UserID > 0 && $this->User->UtilizeEmail) ? GetEmail($this->User->Email) : "n/a")."</dd>
          <dt>".$this->Context->GetDefinition("AccountCreated")."</dt>
          <dd>".TimeDiff($this->Context, $this->User->DateFirstVisit, mktime())."</dd>
          <dt>".$this->Context->GetDefinition("LastActive")."</dt>
