@@ -48,7 +48,7 @@ if (in_array($Context->SelfUrl, array("index.php", "search.php", "comments.php")
 
 if ($Context->SelfUrl == "index.php") {
    // Add the atom link to the foot
-   $FeedUrl = GetFeedUriForAtom($p);
+   $FeedUrl = GetFeedUriForAtom($Configuration, $p);
    $FeedText = $Context->GetDefinition("Feeds");
    $Panel->AddList($FeedText, 100);
    $Panel->AddListItem($FeedText,
@@ -118,7 +118,7 @@ if ($Context->SelfUrl == "index.php") {
       if ($Search) $SearchType = $Search->Type;
    }
    if ($SearchType == "Topics" || $SearchType == "Comments") {
-      $FeedUrl = GetFeedUriForAtom($p);
+      $FeedUrl = GetFeedUriForAtom($Configuration, $p);
       $FeedText = $Context->GetDefinition("Feeds");
       $Panel->AddList($FeedText, 100);
       $Panel->AddListItem($FeedText,
@@ -243,7 +243,7 @@ if ($Context->SelfUrl == "index.php") {
       }
    }
 } elseif ($Context->SelfUrl == "comments.php") {
-   $FeedUrl = GetFeedUriForAtom($p);
+   $FeedUrl = GetFeedUriForAtom($Configuration, $p);
    $FeedText = $Context->GetDefinition("Feeds");
    $Panel->AddList($FeedText, 100);
    $Panel->AddListItem($FeedText,
