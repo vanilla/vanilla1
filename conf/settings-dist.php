@@ -13,15 +13,8 @@
 
  Description: Create a copy of this file and name it settings.php. Use that file
  to specify your own custom information. DO NOT ADD your settings.php file to
- the repository or others will see your db password (and other sensitive
- information).
+ the repository or others will see your information.
 */
-
-// Database Settings
-$Configuration["DATABASE_HOST"] = "your_database_host"; 
-$Configuration["DATABASE_NAME"] = "your_database_name"; 
-$Configuration["DATABASE_USER"] = "your_database_user"; 
-$Configuration["DATABASE_PASSWORD"] = "your_database_password"; 
 
 // Path Settings
 $Configuration["APPLICATION_PATH"] = "/path/to/vanilla/"; 
