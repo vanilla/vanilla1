@@ -6,6 +6,8 @@ echo("<div class=\"Title CommentInputTitle\">".$this->Title."</div>
    .$this->Get_Warnings()
    ."<dl>");
    
+      $this->CallDelegate("CommentForm_PreWhisperInputRender");
+   
       if ($this->Context->Configuration["ENABLE_WHISPERS"]) {   
          echo("<dt class=\"WhisperInputLabel\">".$this->Context->GetDefinition("WhisperYourCommentsTo")."</dt>
          <dd class=\"WhisperInput\">
@@ -20,7 +22,7 @@ echo("<div class=\"Title CommentInputTitle\">".$this->Title."</div>
          <a id=\"CommentBoxController\" onclick=\"ToggleCommentBox('".$this->Context->GetDefinition("SmallInput")."', '".$this->Context->GetDefinition("BigInput")."');\">".($this->Context->Session->User->Preference("ShowLargeCommentBox")?$this->Context->GetDefinition("SmallInput"):$this->Context->GetDefinition("BigInput"))."</a>
       </dt>
       <dd class=\"CommentInput\">
-         <textarea name=\"Body\" class=\"".($this->Context->Session->User->Preference("ShowLargeCommentBox")?"LargeCommentBox":"SmallCommentBox")."\" id=\"CommentBox\">".$Comment->Body."</textarea>"
+         <textarea name=\"Body\" class=\"".($this->Context->Session->User->Preference("ShowLargeCommentBox")?"LargeCommentBox":"SmallCommentBox")."\" id=\"CommentBox\">".$this->Comment->Body."</textarea>"
          .$this->GetPostFormatting($Comment->FormatType)
       ."</dd>");
       
