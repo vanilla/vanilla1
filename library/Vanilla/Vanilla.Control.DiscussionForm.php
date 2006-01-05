@@ -47,7 +47,6 @@ class DiscussionForm extends PostBackControl {
 		$dm = $this->Context->ObjectFactory->NewContextObject($this->Context, "DiscussionManager");
 		$this->DelegateParameters["CommentManager"] = &$cm;
 		$this->DelegateParameters["DiscussionManager"] = &$dm;
-
 		// If editing a comment, define it and validate the user's permissions
 		if ($this->CommentID > 0) {
 			$this->Comment = $cm->GetCommentById($this->CommentID, $this->Context->Session->UserID);
@@ -82,10 +81,8 @@ class DiscussionForm extends PostBackControl {
 				$this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrPermissionCommentEdit"));
 				$this->FatalError = 1;
 			}
-		} elseif ($this->DiscussionID > 0 && $this->PostBackAction == "Reply") {
-			$this->Comment->GetPropertiesFromForm();
 		}
-		
+
 		$this->CallDelegate("PostLoadData");
 		
 		// If saving a discussion
