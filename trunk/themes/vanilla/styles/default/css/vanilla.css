@@ -694,6 +694,7 @@
 			right: 18px;
 			background: none;
 			color: #999;
+			z-index: 10;
 		}
 		.PageNav .PageNav:link, .PageNav:visited,
 		.PageJump, .PageJump:link, .PageJump:visited {
