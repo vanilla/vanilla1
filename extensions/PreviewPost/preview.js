@@ -54,16 +54,20 @@ function ShowPreview(F, file)
 	FormName = F;
 	
 	text = escape(document[FormName].Body.value);
-	for(i = f = 0; i < document[FormName].FormatType.length; i++)
+	if(!document[FormName].FormatType.length) type = document[FormName].FormatType.value;
+	else
 	{
-		if(document[FormName].FormatType[i].checked)
+		for(i = f = 0; i < document[FormName].FormatType.length; i++)
 		{
-			f = 1;
-			break;
+			if(document[FormName].FormatType[i].checked)
+			{
+				f = 1;
+				break;
+			}
 		}
+		if(!f) i = 0;
+		type = escape(document[FormName].FormatType[i].value);
 	}
-	if(!f) i = 0;
-	type = escape(document[FormName].FormatType[i].value);
 	
 	if(!CreateRequestPOST(file, 'Data='+text+'&Type='+type, ShowPreviewInternal))
 		document.getElementById('PreviewPost').innerHTML = '[An error occured when attempting to connect to the server]';
