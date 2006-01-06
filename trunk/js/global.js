@@ -94,6 +94,11 @@ function PanelSwitch(PanelItem, RefreshPageWhenComplete) {
 	}
 }
 
+function PopTermsOfService() {
+	// if (document.ApplicationForm && document.ApplicationForm.ReadTerms) document.ApplicationForm.ReadTerms.value = 1;
+	window.open("./termsofservice.php", "TermsOfService", "toolbar=no,status=yes,location=no,menubar=no,resizable=yes,height=600,width=400,scrollbars=yes");
+}
+
 function RefreshPage() {
 	document.location.reload();
 }
