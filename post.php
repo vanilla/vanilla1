@@ -17,7 +17,7 @@ include("appg/init_vanilla.php");
 // 1. DEFINE VARIABLES AND PROPERTIES SPECIFIC TO THIS PAGE
 
 	// Ensure the user is allowed to view this page
-	$Context->Session->Check($Configuration);
+	$Context->Session->Check($Context);
 	
 	// Create the comment form
 	$CommentForm = $Context->ObjectFactory->CreateControl($Context, "DiscussionForm");
