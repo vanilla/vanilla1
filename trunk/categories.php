@@ -17,7 +17,7 @@ include("appg/init_vanilla.php");
 // 1. DEFINE VARIABLES AND PROPERTIES SPECIFIC TO THIS PAGE
 
 	// Ensure the user is allowed to view this page
-	$Context->Session->Check($Configuration);
+	$Context->Session->Check($Context);
 	if (!$Configuration["USE_CATEGORIES"]) header("location:".GetUrl($Configuration, "index.php"));
 	
 	// Define properties of the page controls that are specific to this page

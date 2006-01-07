@@ -32,7 +32,7 @@ $Context = new Context($Configuration);
 // Start the session management
 $Context->StartSession();
 
-$Context->Session->Check($Configuration);
+$Context->Session->Check($Context);
 
 // DEFINE THE LANGUAGE DICTIONARY
 include($Configuration["APPLICATION_PATH"]."conf/language.php");
