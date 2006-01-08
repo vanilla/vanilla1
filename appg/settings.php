@@ -17,6 +17,8 @@
 * here).
 */
 
+ob_start();
+
 $Configuration = array();
 
 // Database Settings
