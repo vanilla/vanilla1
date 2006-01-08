@@ -74,9 +74,9 @@ if (in_array($Context->SelfUrl, array("index.php", "comments.php"))) {
                ."</ul>";
       
             }
-            $sReturn .= "<form name=\"frmBookmark\" action=\"\"><input type=\"hidden\" name=\"OtherBookmarksExist\" value=\"".$OtherBookmarksExist."\" /></form>";
+            $sReturn .= "<form id=\"frmBookmark\" action=\"\"><div class=\"Hidden\"><input type=\"hidden\" name=\"OtherBookmarksExist\" value=\"".$OtherBookmarksExist."\" /></div></form>";
          } else {
-            $sReturn = "<form name=\"frmBookmark\" action=\"\"><input type=\"hidden\" name=\"OtherBookmarksExist\" value=\"1\" /></form>";
+            $sReturn = "<form id=\"frmBookmark\" action=\"\"><div class=\"Hidden\"><input type=\"hidden\" name=\"OtherBookmarksExist\" value=\"1\" /></div></form>";
          }
       }
       $Panel->AddString($sReturn, 20);

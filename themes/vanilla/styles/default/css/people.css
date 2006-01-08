@@ -255,6 +255,10 @@ input {
 	padding-top: 0px;
 	padding-left: 100px;
 }
+.MembershipOptionLinks {
+	margin: 0px;
+	padding: 0px;
+}
 .ApplyForMembershipLink, .ApplyForMembershipLink:link, .ApplyForMembershipLink:visited, .ApplyForMembershipLink:hover {
 	margin-bottom: 6px;
 	font-size: 11px;
@@ -273,7 +277,6 @@ input {
 	text-align: center;
 }
 .ForgotPasswordLink, .ForgotPasswordLink:link, .ForgotPasswordLink:visited, .ForgotPasswordLink:hover {
-	margin-top: 2px;
 	font-size: 11px;
 	padding-top: 4px;
 	padding-bottom: 4px;

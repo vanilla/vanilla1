@@ -17,8 +17,10 @@ function GetClipping(ClippingSelect) {
 function InsertClipping(Request) {
 	ChangeLoaderText("Complete");
 	var CommentBox;
-	if (document.frmPostComment) CommentBox = document.frmPostComment.Body;
-	if (document.frmPostDiscussion) CommentBox = document.frmPostDiscussion.Body;
+	var frmPostComment = document.getElementById("frmPostComment");
+	var frmPostDiscussion = document.getElementById("frmPostDiscussion");
+	if (frmPostComment) CommentBox = frmPostComment.Body;
+	if (frmPostDiscussion) CommentBox = frmPostDiscussion.Body;
 	if (CommentBox) CommentBox.value += Request.responseText;
 	CloseLoader();
 }

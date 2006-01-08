@@ -52,7 +52,7 @@ if ($Context->SelfUrl == "account.php") {
                      $UserHistory->FormatPropertiesForDisplay($this->Context);
                      
                      echo("<blockquote>
-                        <h2>".$UserHistory->Role."</h2> <small>(".TimeDiff($this->Context, $UserHistory->Date, mktime()).")</small>
+                        <h2>".$UserHistory->Role."</h2> <div class=\"Small\">(".TimeDiff($this->Context, $UserHistory->Date, mktime()).")</div>
                         ".str_replace(array("//1", "//2"),
                            array(($UserHistory->AdminUserID == 0?$this->Context->GetDefinition("Applicant"):"<a href=\"".GetUrl($this->Context->Configuration, "account.php", "", "u", $UserHistory->AdminUserID)."\">".$UserHistory->AdminUsername."</a>"), $UserHistory->Notes),
                            $this->Context->GetDefinition("RoleAssignedByX"))

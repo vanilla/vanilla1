@@ -12,8 +12,8 @@
   
 // Add a new custom name/value pair input to the account form
 function AddLabelValuePair() {
-	var frm = document.frmAccountPersonal;
-	var Counter = document.frmAccountPersonal.LabelValuePairCount;
+	var frm = document.getElementById("frmAccountPersonal");
+	var Counter = frm.LabelValuePairCount;
 	var Container = document.getElementById("LabelValuePairContainer");
 	if (frm && Counter && Container) {
 		Counter.value++;
@@ -94,7 +94,8 @@ function SetBookmark(CurrentSwitchVal, Identifier, BookmarkText, UnbookmarkText)
 	var BookmarkTitle = document.getElementById("BookmarkTitle");
 	var BookmarkList = document.getElementById("BookmarkList");
 	var Bookmark = document.getElementById("Bookmark_"+Identifier);
-	var OtherBookmarksExist = document.frmBookmark.OtherBookmarksExist;
+	var BookmarkForm = document.getElementById("frmBookmark");
+	var OtherBookmarksExist = BookmarkForm.OtherBookmarksExist;
 	if (Sender && BookmarkList) {
 		if (Sender.name == 0) {
 			// removed bookmark
@@ -174,7 +175,7 @@ function ToggleCommentBox(SmallText, BigText) {
 }
 
 function WhisperBack(DiscussionID, WhisperTo) {
-	var frm = document.frmPostComment;
+	var frm = document.getElementById("frmPostComment");
 	if (!frm) {
 		document.location = "post.php?PageAction=Reply&DiscussionID="+DiscussionID+"&WhisperUsername="+WhisperTo;
 	} else {

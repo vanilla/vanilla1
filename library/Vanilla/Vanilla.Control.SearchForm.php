@@ -48,7 +48,6 @@ class SearchForm extends PostBackControl {
       $this->CategorySelect = $this->Context->ObjectFactory->NewObject($this->Context, "Select");
       $this->CategorySelect->Name = "Categories";
       $this->CategorySelect->CssClass = "SearchSelect";
-      $this->CategorySelect->Attributes = " id=\"CategoryFilter\"";
       $this->CategorySelect->AddOption("", $this->Context->GetDefinition("AllCategories"));
       $this->CategorySelect->AddOptionsFromDataSet($this->Context->Database, $CategorySet, "Name", "Name");
       $this->CategorySelect->SelectedID = $this->Search->Categories;
@@ -66,7 +65,6 @@ class SearchForm extends PostBackControl {
       $this->TypeRadio = $this->Context->ObjectFactory->NewObject($this->Context, "Radio");
       $this->TypeRadio->Name = "Type";
       $this->TypeRadio->CssClass = "SearchType";
-      $this->TypeRadio->Attributes = " align=\"middle\"";
       $this->TypeRadio->AddOption("Topics", $this->Context->GetDefinition("Topics"));
       $this->TypeRadio->AddOption("Comments", $this->Context->GetDefinition("Comments"));
       $this->TypeRadio->AddOption("Users", $this->Context->GetDefinition("Users"));
