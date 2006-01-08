@@ -61,7 +61,7 @@ if ($Context->SelfUrl == "people.php" && in_array(ForceIncomingString("PostBackA
 	function ApplyForm_DiscoveryQuestion(&$FormControl) {
 		echo("<div class=\"InputBlock DiscoveryInput\">
          <div class=\"InputLabel\">".$FormControl->Context->GetDefinition("HowDidYouFindUs")."</div>
-         <textarea name=\"Discovery\" class=\"ApplicationTextbox\">".$FormControl->Applicant->Discovery."</textarea>
+         <textarea name=\"Discovery\" class=\"ApplicationTextbox\" rows=\"2\" cols=\"40\">".$FormControl->Applicant->Discovery."</textarea>
       </div>");
 	}
 	

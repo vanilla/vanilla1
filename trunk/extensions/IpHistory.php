@@ -27,8 +27,8 @@ of course):
 
 $Context->Dictionary["CommentPostedFromX"] = "Comment posted from //1";
 $Context->Dictionary["IpHistory"] = "IP history";
-$Context->Dictionary["Time"] = "//1 time";
-$Context->Dictionary["Times"] = "//1 times";
+$Context->Dictionary["XTime"] = "//1 time";
+$Context->Dictionary["XTimes"] = "//1 times";
 $Context->Dictionary["IpAlsoUsedBy"] = "This IP address has also been used by the following users:";
 $Context->Dictionary["IpNotShared"] = "This IP address has not been shared by any other users.";
 $Context->Dictionary["NoIps"] = "This user does not appear to have logged any IP addresses.";
@@ -52,7 +52,7 @@ if ($Context->SelfUrl == "account.php") {
       
       function Render() {
          if ($this->History && $this->PostBackAction == "") {
-            include($this->Context->Configuration["THEME_PATH"]."templates/account_ip_history.php");
+            include($this->Context->Configuration["EXTENSIONS_PATH"]."IpHistory/account_ip_history.php");
          }
       }
    }

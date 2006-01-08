@@ -39,12 +39,20 @@
 	img {
 		border: 0px;
 	}
+	fieldset {
+		border: 0px;
+		padding: 0px;
+		margin: 0px;
+	}
 	ul {
 		margin-bottom: 0px;
 		margin-top: 0px;
 	}
 	form {
 		display: inline;
+	}
+	.Hidden {
+		display: none;
 	}
 	.ErrorContainer {
 		background: url(../images/alert.gif) no-repeat top left #FFEDEF;
@@ -962,9 +970,8 @@
 				font-weight: bold;
 				display: inline;
 			}
-			.Discovery small,
-			.RoleHistory small,
-			.IpHistory small {
+			.Small {
+				display: inline;
 				font-size: 11px;
 				color: #999;
 			}

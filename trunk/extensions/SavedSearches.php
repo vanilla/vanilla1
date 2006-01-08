@@ -35,7 +35,7 @@ if (
 	$String = "<h2>".$Context->GetDefinition("Searches")."</h2>";
 	if ($Data) $SearchCount = $Context->Database->RowCount($Data);
 	if ($SearchCount > 0) {
-		if ($AllowEdit) $String .= "<input type=\"hidden\" id=\"SavedSearchCount\" value=\"".$SearchCount."\" />";
+		if ($AllowEdit) $String .= "<div class=\"Hidden\"><input type=\"hidden\" id=\"SavedSearchCount\" value=\"".$SearchCount."\" /></div>";
 
 		if ($SearchCount > 0) {
 			$String .= "<ul class=\"LinkedList\">";
@@ -72,8 +72,10 @@ if ($Context->SelfUrl == "search.php") {
 
 		if ($SearchForm->Context->Session->UserID > 0) {
 			$SearchForm->Render_PostBackForm("frmLabelSearch", "post");
-			echo("<input type=\"text\" name=\"Label\" class=\"SearchLabelInput\" value=\"".$SearchForm->Search->Label."\" maxlength=\"30\" />
+			echo("<fieldset>
+				<input type=\"text\" name=\"Label\" class=\"SearchLabelInput\" value=\"".$SearchForm->Search->Label."\" maxlength=\"30\" />
 				<input type=\"submit\" name=\"btnLabel\" value=\"".$SearchForm->Context->GetDefinition("SaveSearch")."\" class=\"SearchLabelButton\" />
+				</fieldset>
 				</form>");
 		} else {
 			echo("&nbsp;");

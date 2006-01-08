@@ -22,7 +22,7 @@ echo("<div class=\"Title CommentInputTitle\">".$this->Title."</div>
          <a id=\"CommentBoxController\" onclick=\"ToggleCommentBox('".$this->Context->GetDefinition("SmallInput")."', '".$this->Context->GetDefinition("BigInput")."');\">".($this->Context->Session->User->Preference("ShowLargeCommentBox")?$this->Context->GetDefinition("SmallInput"):$this->Context->GetDefinition("BigInput"))."</a>
       </dt>
       <dd class=\"CommentInput\">
-         <textarea name=\"Body\" class=\"".($this->Context->Session->User->Preference("ShowLargeCommentBox")?"LargeCommentBox":"SmallCommentBox")."\" id=\"CommentBox\">".$this->Comment->Body."</textarea>"
+         <textarea name=\"Body\" class=\"".($this->Context->Session->User->Preference("ShowLargeCommentBox")?"LargeCommentBox":"SmallCommentBox")."\" id=\"CommentBox\" rows=\"10\" cols=\"85\">".$this->Comment->Body."</textarea>"
          .$this->GetPostFormatting($Comment->FormatType)
       ."</dd>");
       
