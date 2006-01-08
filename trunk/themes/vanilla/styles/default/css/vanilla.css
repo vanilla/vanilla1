@@ -36,6 +36,9 @@
 		text-decoration: none;
 		cursor: pointer;
 	}
+	img {
+		border: 0px;
+	}
 	ul {
 		margin-bottom: 0px;
 		margin-top: 0px;
