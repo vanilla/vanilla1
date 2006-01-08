@@ -17,7 +17,7 @@
 * here).
 */
 
-// ob_start();
+ob_start();
 
 $Configuration = array();
 
