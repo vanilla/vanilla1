@@ -50,40 +50,40 @@ class Comment extends Delegation {
 	function Clear() {
 		$this->CommentID = 0;
 		$this->DiscussionID = 0;
-		$this->Discussion = "";
+		$this->Discussion = '';
 		$this->CategoryID = 0;
-		$this->Category = "";
+		$this->Category = '';
 		$this->AuthUserID = 0;
-		$this->AuthUsername = "";
-		$this->AuthIcon = "";
+		$this->AuthUsername = '';
+		$this->AuthIcon = '';
 		$this->AuthRoleID = 0;
-		$this->AuthRole = "";
-		$this->AuthRoleIcon = "";
-		$this->AuthRoleDesc = "";
+		$this->AuthRole = '';
+		$this->AuthRoleIcon = '';
+		$this->AuthRoleDesc = '';
 		$this->AuthCanPostHtml = 0;
 		$this->AuthBlocked = 0;
 		$this->CommentBlocked = 0;
 		$this->EditUserID = 0;
-		$this->EditUsername = "";
-		$this->DateCreated = "";
-		$this->DateEdited = "";
-		$this->Body = "";
-		$this->FormatType = "Text";
+		$this->EditUsername = '';
+		$this->DateCreated = '';
+		$this->DateEdited = '';
+		$this->Body = '';
+		$this->FormatType = 'Text';
 		$this->Deleted = 0;
-		$this->DateDeleted = "";
+		$this->DateDeleted = '';
 		$this->DeleteUserID = 0;
-		$this->DeleteUsername = "";
-		$this->RemoteIp = "";
-		$this->Status = "";
+		$this->DeleteUsername = '';
+		$this->RemoteIp = '';
+		$this->Status = '';
 		$this->UserCommentCount = 0;
 		$this->ShowHtml = 1;
 		$this->WhisperUserID = 0;
-		$this->WhisperUsername = "";
+		$this->WhisperUsername = '';
       $this->DiscussionWhisperUserID = 0;
 	}
 	
 	function Comment(&$Context) {
-		$this->Name = "Comment";
+		$this->Name = 'Comment';
 		$this->Delegation($Context);
 		$this->Clear();
 	}
@@ -95,8 +95,8 @@ class Comment extends Delegation {
       $this->WhisperUsername = FormatStringForDatabaseInput($this->WhisperUsername);
 	}
 	
-	function FormatPropertiesForDisplay($ForFormDisplay = "0") {
-		$this->CallDelegate("PreFormatPropertiesForDisplay");
+	function FormatPropertiesForDisplay($ForFormDisplay = '0') {
+		$this->CallDelegate('PreFormatPropertiesForDisplay');
 		
 		if ($this->Deleted) $this->ShowHtml = 0;
 		if (!$this->AuthCanPostHtml) $this->ShowHtml = 0;
@@ -113,7 +113,7 @@ class Comment extends Delegation {
 			$this->Body = htmlspecialchars($this->Body);
 		} else {
 			// Force the comment into plain text mode if html is turned off
-			if (!$this->ShowHtml) $this->FormatType = $this->Context->Configuration["DEFAULT_FORMAT_TYPE"];
+			if (!$this->ShowHtml) $this->FormatType = $this->Context->Configuration['DEFAULT_FORMAT_TYPE'];
 			$this->Body = $this->Context->FormatString($this->Body, $this, $this->FormatType, FORMAT_STRING_FOR_DISPLAY);
 		}
 		$this->AuthIcon = FormatStringForDisplay($this->AuthIcon, 1, 0);
@@ -137,75 +137,75 @@ class Comment extends Delegation {
 	// Retrieve a properties from current DataRowSet
 	// Returns void
 	function GetPropertiesFromDataSet($DataSet, $UserID) {
-		$this->CommentID = ForceInt(@$DataSet["CommentID"], 0);
-		$this->DiscussionID = ForceInt(@$DataSet["DiscussionID"], 0);
-		$this->Discussion = ForceString(@$DataSet["Discussion"], "");
-		$this->CategoryID = ForceInt(@$DataSet["CategoryID"], 0);
-		$this->Category = ForceString(@$DataSet["Category"], "");
-		$this->AuthUserID = ForceInt(@$DataSet["AuthUserID"], 0);
-		$this->AuthUsername = ForceString(@$DataSet["AuthUsername"], "");
-		$this->AuthIcon = ForceString(@$DataSet["AuthIcon"], "");
-		$this->AuthRoleID = ForceInt(@$DataSet["AuthRoleID"], 0);
-		$this->AuthRole = ForceString(@$DataSet["AuthRole"], "");
-		$this->AuthRoleIcon = ForceString(@$DataSet["AuthRoleIcon"], "");
-		$this->AuthRoleDesc = ForceString(@$DataSet["AuthRoleDesc"], "");
-		$this->AuthCanPostHtml = ForceBool(@$DataSet["AuthCanPostHtml"], 0);
-		$this->AuthBlocked = ForceBool(@$DataSet["AuthBlocked"], 0);
-		$this->CommentBlocked = ForceBool(@$DataSet["CommentBlocked"], 0);
-		$this->EditUserID = ForceInt(@$DataSet["EditUserID"], 0);
-		$this->EditUsername = ForceString(@$DataSet["EditUsername"], "");
-		$this->DateCreated = UnixTimestamp(@$DataSet["DateCreated"]);
-		$this->DateEdited = UnixTimestamp(@$DataSet["DateEdited"]);
-		$this->Body = ForceString(@$DataSet["Body"], "");
-		$this->FormatType = ForceString(@$DataSet["FormatType"], $this->Context->Configuration["DEFAULT_FORMAT_TYPE"]);
-		if (!in_array($this->FormatType, $this->Context->Configuration["FORMAT_TYPES"])) $this->FormatType = $this->Context->Configuration["DEFAULT_FORMAT_TYPE"];
-		$this->Deleted = ForceBool(@$DataSet["Deleted"], 0);
-		$this->DateDeleted = UnixTimestamp(@$DataSet["DateDeleted"]);
-		$this->DeleteUserID = ForceInt(@$DataSet["DeleteUserID"], 0);
-		$this->DeleteUsername = ForceString(@$DataSet["DeleteUsername"], "");
-		$this->RemoteIp = ForceString(@$DataSet["RemoteIp"], "");
+		$this->CommentID = ForceInt(@$DataSet['CommentID'], 0);
+		$this->DiscussionID = ForceInt(@$DataSet['DiscussionID'], 0);
+		$this->Discussion = ForceString(@$DataSet['Discussion'], '');
+		$this->CategoryID = ForceInt(@$DataSet['CategoryID'], 0);
+		$this->Category = ForceString(@$DataSet['Category'], '');
+		$this->AuthUserID = ForceInt(@$DataSet['AuthUserID'], 0);
+		$this->AuthUsername = ForceString(@$DataSet['AuthUsername'], '');
+		$this->AuthIcon = ForceString(@$DataSet['AuthIcon'], '');
+		$this->AuthRoleID = ForceInt(@$DataSet['AuthRoleID'], 0);
+		$this->AuthRole = ForceString(@$DataSet['AuthRole'], '');
+		$this->AuthRoleIcon = ForceString(@$DataSet['AuthRoleIcon'], '');
+		$this->AuthRoleDesc = ForceString(@$DataSet['AuthRoleDesc'], '');
+		$this->AuthCanPostHtml = ForceBool(@$DataSet['AuthCanPostHtml'], 0);
+		$this->AuthBlocked = ForceBool(@$DataSet['AuthBlocked'], 0);
+		$this->CommentBlocked = ForceBool(@$DataSet['CommentBlocked'], 0);
+		$this->EditUserID = ForceInt(@$DataSet['EditUserID'], 0);
+		$this->EditUsername = ForceString(@$DataSet['EditUsername'], '');
+		$this->DateCreated = UnixTimestamp(@$DataSet['DateCreated']);
+		$this->DateEdited = UnixTimestamp(@$DataSet['DateEdited']);
+		$this->Body = ForceString(@$DataSet['Body'], '');
+		$this->FormatType = ForceString(@$DataSet['FormatType'], $this->Context->Configuration['DEFAULT_FORMAT_TYPE']);
+		if (!in_array($this->FormatType, $this->Context->Configuration['FORMAT_TYPES'])) $this->FormatType = $this->Context->Configuration['DEFAULT_FORMAT_TYPE'];
+		$this->Deleted = ForceBool(@$DataSet['Deleted'], 0);
+		$this->DateDeleted = UnixTimestamp(@$DataSet['DateDeleted']);
+		$this->DeleteUserID = ForceInt(@$DataSet['DeleteUserID'], 0);
+		$this->DeleteUsername = ForceString(@$DataSet['DeleteUsername'], '');
+		$this->RemoteIp = ForceString(@$DataSet['RemoteIp'], '');
 		
-		$this->WhisperUserID = ForceInt(@$DataSet["WhisperUserID"], 0);
-		$this->WhisperUsername = ForceString(@$DataSet["WhisperUsername"], "");
-		$this->DiscussionWhisperUserID = ForceInt(@$DataSet["DiscussionWhisperUserID"], 0);
+		$this->WhisperUserID = ForceInt(@$DataSet['WhisperUserID'], 0);
+		$this->WhisperUsername = ForceString(@$DataSet['WhisperUsername'], '');
+		$this->DiscussionWhisperUserID = ForceInt(@$DataSet['DiscussionWhisperUserID'], 0);
 		
 		$this->Status = $this->GetStatus($UserID);
-		if ($this->AuthRoleIcon != "") $this->AuthIcon = $this->AuthRoleIcon;
+		if ($this->AuthRoleIcon != '') $this->AuthIcon = $this->AuthRoleIcon;
 	}
 
 	// Retrieve properties from incoming form variables
 	// Returns void	
 	function GetPropertiesFromForm() {
-		$this->CommentID = ForceIncomingInt("CommentID", 0);
-		$this->DiscussionID = ForceIncomingInt("DiscussionID", 0);
-		$this->FormatType = ForceIncomingString("FormatType", $this->Context->Configuration["DEFAULT_FORMAT_TYPE"]);
-		if (!in_array($this->FormatType, $this->Context->Configuration["FORMAT_TYPES"])) $this->FormatType = $this->Context->Configuration["DEFAULT_FORMAT_TYPE"];
-		$this->Body = ForceIncomingString("Body", "");
-		$this->UserCommentCount = ForceIncomingInt("UserCommentCount", 0);
-		$this->AuthUserID = ForceIncomingInt("AuthUserID", 0);
-      $this->WhisperUsername = ForceIncomingString("WhisperUsername", "");
+		$this->CommentID = ForceIncomingInt('CommentID', 0);
+		$this->DiscussionID = ForceIncomingInt('DiscussionID', 0);
+		$this->FormatType = ForceIncomingString('FormatType', $this->Context->Configuration['DEFAULT_FORMAT_TYPE']);
+		if (!in_array($this->FormatType, $this->Context->Configuration['FORMAT_TYPES'])) $this->FormatType = $this->Context->Configuration['DEFAULT_FORMAT_TYPE'];
+		$this->Body = ForceIncomingString('Body', '');
+		$this->UserCommentCount = ForceIncomingInt('UserCommentCount', 0);
+		$this->AuthUserID = ForceIncomingInt('AuthUserID', 0);
+      $this->WhisperUsername = ForceIncomingString('WhisperUsername', '');
 	}
 	
 	
 	function GetStatus($UserID) {
-		$sReturn = "";
+		$sReturn = '';
 		if ($this->WhisperUserID > 0) {
 			if ($this->AuthUserID == $UserID) {
-				$sReturn = "WhisperFrom";
+				$sReturn = 'WhisperFrom';
 			} else {
-				$sReturn = "WhisperTo";
+				$sReturn = 'WhisperTo';
 			}
 		} elseif ($this->DiscussionWhisperUserID > 0) {
 			if ($this->AuthUserID == $this->DiscussionWhisperUserID) {
-				$sReturn = "WhisperFrom";
+				$sReturn = 'WhisperFrom';
 			} else {
-				$sReturn = "WhisperTo";
+				$sReturn = 'WhisperTo';
 			}
 			if ($this->DiscussionWhisperUserID != $UserID) {
-				if ($sReturn == "WhisperFrom") {
-					$sReturn = "WhisperTo";
+				if ($sReturn == 'WhisperFrom') {
+					$sReturn = 'WhisperTo';
 				} else {
-					$sReturn = "WhisperFrom";
+					$sReturn = 'WhisperFrom';
 				}
 			}
 		}

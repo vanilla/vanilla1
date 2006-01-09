@@ -24,168 +24,168 @@ class SearchForm extends PostBackControl {
 	var $TypeRadio;
 	var $RoleSelect;   
 	
-	function SearchForm(&$Context, $FormName = "") {
-		$this->Name = "SearchForm";
-		$this->ValidActions = array("Search", "SaveSearch");
+	function SearchForm(&$Context, $FormName = '') {
+		$this->Name = 'SearchForm';
+		$this->ValidActions = array('Search', 'SaveSearch');
 		$this->FormName = $FormName;
-      $this->SearchID = ForceIncomingInt("SearchID", 0);
+      $this->SearchID = ForceIncomingInt('SearchID', 0);
       $this->DataCount = 0;
 		$this->Constructor($Context);
-		if ($this->PostBackAction == "") $this->IsPostBack = 1;
+		if ($this->PostBackAction == '') $this->IsPostBack = 1;
 		
-		$CurrentPage = ForceIncomingInt("page", 1);
+		$CurrentPage = ForceIncomingInt('page', 1);
 		
       // Load a search object
-      $this->Search = $this->Context->ObjectFactory->NewObject($this->Context, "Search");
+      $this->Search = $this->Context->ObjectFactory->NewObject($this->Context, 'Search');
       $this->Search->GetPropertiesFromForm();
 		
-		$this->CallDelegate("PostDefineSearchFromForm");
+		$this->CallDelegate('PostDefineSearchFromForm');
 
       // Load selectors
       // Category Filter
-      $cm = $this->Context->ObjectFactory->NewContextObject($this->Context, "CategoryManager");
+      $cm = $this->Context->ObjectFactory->NewContextObject($this->Context, 'CategoryManager');
       $CategorySet = $cm->GetCategories();
-      $this->CategorySelect = $this->Context->ObjectFactory->NewObject($this->Context, "Select");
-      $this->CategorySelect->Name = "Categories";
-      $this->CategorySelect->CssClass = "SearchSelect";
-      $this->CategorySelect->AddOption("", $this->Context->GetDefinition("AllCategories"));
-      $this->CategorySelect->AddOptionsFromDataSet($this->Context->Database, $CategorySet, "Name", "Name");
+      $this->CategorySelect = $this->Context->ObjectFactory->NewObject($this->Context, 'Select');
+      $this->CategorySelect->Name = 'Categories';
+      $this->CategorySelect->CssClass = 'SearchSelect';
+      $this->CategorySelect->AddOption('', $this->Context->GetDefinition('AllCategories'));
+      $this->CategorySelect->AddOptionsFromDataSet($this->Context->Database, $CategorySet, 'Name', 'Name');
       $this->CategorySelect->SelectedID = $this->Search->Categories;
 
       // UserOrder
-      $this->OrderSelect = $this->Context->ObjectFactory->NewObject($this->Context, "Select");
-      $this->OrderSelect->Name = "UserOrder";
-      $this->OrderSelect->CssClass = "SearchSelect";
+      $this->OrderSelect = $this->Context->ObjectFactory->NewObject($this->Context, 'Select');
+      $this->OrderSelect->Name = 'UserOrder';
+      $this->OrderSelect->CssClass = 'SearchSelect';
       $this->OrderSelect->Attributes = " id=\"UserOrder\"";
-      $this->OrderSelect->AddOption("", $this->Context->GetDefinition("Username"));
-      $this->OrderSelect->AddOption("Date", $this->Context->GetDefinition("DateLastActive"));
+      $this->OrderSelect->AddOption('', $this->Context->GetDefinition('Username'));
+      $this->OrderSelect->AddOption('Date', $this->Context->GetDefinition('DateLastActive'));
       $this->OrderSelect->SelectedID = $this->Search->UserOrder;
 
       // Type
-      $this->TypeRadio = $this->Context->ObjectFactory->NewObject($this->Context, "Radio");
-      $this->TypeRadio->Name = "Type";
-      $this->TypeRadio->CssClass = "SearchType";
-      $this->TypeRadio->AddOption("Topics", $this->Context->GetDefinition("Topics"));
-      $this->TypeRadio->AddOption("Comments", $this->Context->GetDefinition("Comments"));
-      $this->TypeRadio->AddOption("Users", $this->Context->GetDefinition("Users"));
+      $this->TypeRadio = $this->Context->ObjectFactory->NewObject($this->Context, 'Radio');
+      $this->TypeRadio->Name = 'Type';
+      $this->TypeRadio->CssClass = 'SearchType';
+      $this->TypeRadio->AddOption('Topics', $this->Context->GetDefinition('Topics'));
+      $this->TypeRadio->AddOption('Comments', $this->Context->GetDefinition('Comments'));
+      $this->TypeRadio->AddOption('Users', $this->Context->GetDefinition('Users'));
       $this->TypeRadio->SelectedID = $this->Search->Type;
       
-      $rm = $this->Context->ObjectFactory->NewContextObject($this->Context, "RoleManager");
+      $rm = $this->Context->ObjectFactory->NewContextObject($this->Context, 'RoleManager');
       $RoleSet = $rm->GetRoles();
-      $this->RoleSelect = $this->Context->ObjectFactory->NewObject($this->Context, "Select");
-      $this->RoleSelect->Name = "Roles";
-      $this->RoleSelect->CssClass = "SearchSelect";
+      $this->RoleSelect = $this->Context->ObjectFactory->NewObject($this->Context, 'Select');
+      $this->RoleSelect->Name = 'Roles';
+      $this->RoleSelect->CssClass = 'SearchSelect';
       $this->RoleSelect->Attributes = " id=\"RoleFilter\"";
-      $this->RoleSelect->AddOption("", $this->Context->GetDefinition("AllRoles"));
-		if ($this->Context->Session->User->Permission("PERMISSION_APPROVE_APPLICANTS")) $this->RoleSelect->AddOption("Applicant", $this->Context->GetDefinition("Applicant"));
-      $this->RoleSelect->AddOptionsFromDataSet($this->Context->Database, $RoleSet, "Name", "Name");
+      $this->RoleSelect->AddOption('', $this->Context->GetDefinition('AllRoles'));
+		if ($this->Context->Session->User->Permission('PERMISSION_APPROVE_APPLICANTS')) $this->RoleSelect->AddOption('Applicant', $this->Context->GetDefinition('Applicant'));
+      $this->RoleSelect->AddOptionsFromDataSet($this->Context->Database, $RoleSet, 'Name', 'Name');
       $this->RoleSelect->SelectedID = $this->Search->Roles;
 		
-		$this->CallDelegate("PreSearchQuery");
+		$this->CallDelegate('PreSearchQuery');
 
       // Handle Searching
-      if ($this->PostBackAction == "Search") {
+      if ($this->PostBackAction == 'Search') {
          $this->Data = false;
          // Handle searches
-         if ($this->Search->Type == "Users") {
-            $um = $this->Context->ObjectFactory->NewContextObject($this->Context, "UserManager");
-            $this->Data = $um->GetUserSearch($this->Search, $this->Context->Configuration["SEARCH_RESULTS_PER_PAGE"], $CurrentPage);
+         if ($this->Search->Type == 'Users') {
+            $um = $this->Context->ObjectFactory->NewContextObject($this->Context, 'UserManager');
+            $this->Data = $um->GetUserSearch($this->Search, $this->Context->Configuration['SEARCH_RESULTS_PER_PAGE'], $CurrentPage);
             $this->Search->FormatPropertiesForDisplay();      
             
-         } else if ($this->Search->Type == "Topics") {
-            $tm = $this->Context->ObjectFactory->NewContextObject($this->Context, "DiscussionManager");
-            $this->Data = $tm->GetDiscussionSearch($this->Context->Configuration["SEARCH_RESULTS_PER_PAGE"], $CurrentPage, $this->Search);
+         } else if ($this->Search->Type == 'Topics') {
+            $tm = $this->Context->ObjectFactory->NewContextObject($this->Context, 'DiscussionManager');
+            $this->Data = $tm->GetDiscussionSearch($this->Context->Configuration['SEARCH_RESULTS_PER_PAGE'], $CurrentPage, $this->Search);
             $this->Search->FormatPropertiesForDisplay();
             
-         } else if ($this->Search->Type == "Comments") {
-            $mm = $this->Context->ObjectFactory->NewContextObject($this->Context, "CommentManager");
-            $this->Data = $mm->GetCommentSearch($this->Context->Configuration["SEARCH_RESULTS_PER_PAGE"], $CurrentPage, $this->Search);
+         } else if ($this->Search->Type == 'Comments') {
+            $mm = $this->Context->ObjectFactory->NewContextObject($this->Context, 'CommentManager');
+            $this->Data = $mm->GetCommentSearch($this->Context->Configuration['SEARCH_RESULTS_PER_PAGE'], $CurrentPage, $this->Search);
             $this->Search->FormatPropertiesForDisplay();
          }
          
          if ($this->Data) $this->DataCount = $this->Context->Database->RowCount($this->Data);
 			
-			$pl = $this->Context->ObjectFactory->NewContextObject($this->Context, "PageList");
-			$pl->NextText = $this->Context->GetDefinition("Next");
-			$pl->PreviousText = $this->Context->GetDefinition("Previous");
+			$pl = $this->Context->ObjectFactory->NewContextObject($this->Context, 'PageList');
+			$pl->NextText = $this->Context->GetDefinition('Next');
+			$pl->PreviousText = $this->Context->GetDefinition('Previous');
 			$pl->Totalled = 0;
-			$pl->CssClass = "PageList";
+			$pl->CssClass = 'PageList';
 			$pl->TotalRecords = $this->DataCount;
-			$pl->PageParameterName = "page";
+			$pl->PageParameterName = 'page';
 			$pl->CurrentPage = $CurrentPage;
-			$pl->RecordsPerPage = $this->Context->Configuration["SEARCH_RESULTS_PER_PAGE"];
+			$pl->RecordsPerPage = $this->Context->Configuration['SEARCH_RESULTS_PER_PAGE'];
 			$pl->PagesToDisplay = 10;
 			$this->PageList = $pl->GetLiteralList();
-			if ($this->Search->Query != "") {
+			if ($this->Search->Query != '') {
 				$Query = $this->Search->Query;
 			} else {
-				$Query = $this->Context->GetDefinition("nothing");
+				$Query = $this->Context->GetDefinition('nothing');
 			}
 			if ($this->DataCount == 0) {
-				$this->PageDetails = $this->Context->GetDefinition("NoSearchResultsMessage");
+				$this->PageDetails = $this->Context->GetDefinition('NoSearchResultsMessage');
 			} else {
-				$this->PageDetails = str_replace(array("//1", "//2", "//3"), array($pl->FirstRecord, $pl->LastRecord, "<strong>".$Query."</strong>"), $this->Context->GetDefinition("SearchResultsMessage"));
+				$this->PageDetails = str_replace(array('//1', '//2', '//3'), array($pl->FirstRecord, $pl->LastRecord, '<strong>'.$Query.'</strong>'), $this->Context->GetDefinition('SearchResultsMessage'));
 			}
       }
-		$this->CallDelegate("PostLoadData");
+		$this->CallDelegate('PostLoadData');
 	}
 	
 	function Render_NoPostBack() {
-		$this->CallDelegate("PreSearchFormRender");
-		include($this->Context->Configuration["THEME_PATH"]."templates/search_form.php");
+		$this->CallDelegate('PreSearchFormRender');
+		include($this->Context->Configuration['THEME_PATH'].'templates/search_form.php');
 		
-		if ($this->PostBackAction == "Search") {
+		if ($this->PostBackAction == 'Search') {
 			
-			$this->CallDelegate("PreSearchResultsRender");
+			$this->CallDelegate('PreSearchResultsRender');
 			
-			include($this->Context->Configuration["THEME_PATH"]."templates/search_results_top.php");
+			include($this->Context->Configuration['THEME_PATH'].'templates/search_results_top.php');
 			
 			if ($this->DataCount > 0) {
 				$Switch = 0;
 				$FirstRow = 1;
 				$Counter = 0;
-				if ($this->Search->Type == "Topics") {
-					$Discussion = $this->Context->ObjectFactory->NewObject($this->Context, "Discussion");
-					$CurrentUserJumpToLastCommentPref = $this->Context->Session->User->Preference("JumpToLastReadComment");
-					$DiscussionList = "";
+				if ($this->Search->Type == 'Topics') {
+					$Discussion = $this->Context->ObjectFactory->NewObject($this->Context, 'Discussion');
+					$CurrentUserJumpToLastCommentPref = $this->Context->Session->User->Preference('JumpToLastReadComment');
+					$DiscussionList = '';
 					while ($Row = $this->Context->Database->GetRow($this->Data)) {
 						$Discussion->Clear();
 						$Discussion->GetPropertiesFromDataSet($Row, $this->Context->Configuration);
 						$Discussion->FormatPropertiesForDisplay();
 						$Discussion->ForceNameSpaces($this->Context->Configuration);
-						if ($Counter < $this->Context->Configuration["SEARCH_RESULTS_PER_PAGE"]) {
-							include($this->Context->Configuration["THEME_PATH"]."templates/discussion.php");
+						if ($Counter < $this->Context->Configuration['SEARCH_RESULTS_PER_PAGE']) {
+							include($this->Context->Configuration['THEME_PATH'].'templates/discussion.php');
 						}
 						$FirstRow = 0;
 						$Counter++;
 					}
 					echo($DiscussionList);
-				} elseif ($this->Search->Type == "Comments") {
-					$Comment = $this->Context->ObjectFactory->NewContextObject($this->Context, "Comment");
+				} elseif ($this->Search->Type == 'Comments') {
+					$Comment = $this->Context->ObjectFactory->NewContextObject($this->Context, 'Comment');
 					$HighlightWords = ParseQueryForHighlighting($this->Context, $this->Search->Query);
-					$CommentList = "";
+					$CommentList = '';
 					while ($Row = $this->Context->Database->GetRow($this->Data)) {
 						$Comment->Clear();
 						$Comment->GetPropertiesFromDataSet($Row, $this->Context->Session->UserID);
 						$Comment->FormatPropertiesForSafeDisplay();
-						if ($Counter < $this->Context->Configuration["SEARCH_RESULTS_PER_PAGE"]) {
-							include($this->Context->Configuration["THEME_PATH"]."templates/search_results_comments.php");
+						if ($Counter < $this->Context->Configuration['SEARCH_RESULTS_PER_PAGE']) {
+							include($this->Context->Configuration['THEME_PATH'].'templates/search_results_comments.php');
 						}
 						$FirstRow = 0;
 						$Counter++;
 					}
 					echo($CommentList);
 				} else {
-					$u = $this->Context->ObjectFactory->NewContextObject($this->Context, "User");
-					$UserList = "";
+					$u = $this->Context->ObjectFactory->NewContextObject($this->Context, 'User');
+					$UserList = '';
 					while ($Row = $this->Context->Database->GetRow($this->Data)) {
 						$Switch = ($Switch == 1?0:1);
 						$u->Clear();
 						$u->GetPropertiesFromDataSet($Row);
 						$u->FormatPropertiesForDisplay();
 						
-						if ($Counter < $this->Context->Configuration["SEARCH_RESULTS_PER_PAGE"]) {
-							include($this->Context->Configuration["THEME_PATH"]."templates/search_results_users.php");
+						if ($Counter < $this->Context->Configuration['SEARCH_RESULTS_PER_PAGE']) {
+							include($this->Context->Configuration['THEME_PATH'].'templates/search_results_users.php');
 						}
 						$FirstRow = 0;
 						$Counter++;
@@ -194,7 +194,7 @@ class SearchForm extends PostBackControl {
 				}
 			}
 			if ($this->DataCount > 0) {
-				include($this->Context->Configuration["THEME_PATH"]."templates/search_results_bottom.php");
+				include($this->Context->Configuration['THEME_PATH'].'templates/search_results_bottom.php');
 			}
 		}
 	}

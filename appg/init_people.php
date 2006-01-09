@@ -12,22 +12,22 @@
 */
 
 // GLOBAL INCLUDES
-include($Configuration["DATABASE_PATH"]);
-include($Configuration["APPLICATION_PATH"]."appg/headers.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Functions.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.Database.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.".$Configuration["DATABASE_SERVER"].".php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.SqlBuilder.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.MessageCollector.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.ErrorManager.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.ObjectFactory.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.StringManipulator.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.Context.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.Delegation.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.Control.php");
-include($Configuration["LIBRARY_PATH"].$Configuration["AUTHENTICATION_MODULE"]);
-include($Configuration["LIBRARY_PATH"]."People/People.Class.Session.php");
-include($Configuration["LIBRARY_PATH"]."People/People.Class.User.php");
+include($Configuration['DATABASE_PATH']);
+include($Configuration['APPLICATION_PATH'].'appg/headers.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Functions.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Database.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.'.$Configuration['DATABASE_SERVER'].'.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.SqlBuilder.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.MessageCollector.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.ErrorManager.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.ObjectFactory.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.StringManipulator.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Context.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Delegation.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Control.php');
+include($Configuration['LIBRARY_PATH'].$Configuration['AUTHENTICATION_MODULE']);
+include($Configuration['LIBRARY_PATH'].'People/People.Class.Session.php');
+include($Configuration['LIBRARY_PATH'].'People/People.Class.User.php');
 
 // INSTANTIATE THE CONTEXT OBJECT
 // The context object handles the following:
@@ -42,28 +42,28 @@ $Context = new Context($Configuration);
 $Context->StartSession();
 
 // DEFINE THE LANGUAGE DICTIONARY
-include($Configuration["APPLICATION_PATH"]."conf/language.php");
+include($Configuration['APPLICATION_PATH'].'conf/language.php');
 
 // INSTANTIATE THE PAGE OBJECT
 // The page object handles collecting all page controls
 // and writing them when it's events are fired.
-$Page = $Context->ObjectFactory->NewContextObject($Context, "Page", $Configuration["PAGE_EVENTS"]);
+$Page = $Context->ObjectFactory->NewContextObject($Context, 'Page', $Configuration['PAGE_EVENTS']);
 
 // FIRE INITIALIZATION EVENT
-$Page->FireEvent("Page_Init");
+$Page->FireEvent('Page_Init');
 
 // DEFINE THE MASTER PAGE CONTROLS
-$Head = $Context->ObjectFactory->CreateControl($Context, "Head");
-$Banner = $Context->ObjectFactory->CreateControl($Context, "Filler", "people_banner.php");
-$Foot = $Context->ObjectFactory->CreateControl($Context, "PeopleFoot");
-$PageEnd = $Context->ObjectFactory->CreateControl($Context, "PageEnd");
+$Head = $Context->ObjectFactory->CreateControl($Context, 'Head');
+$Banner = $Context->ObjectFactory->CreateControl($Context, 'Filler', 'people_banner.php');
+$Foot = $Context->ObjectFactory->CreateControl($Context, 'PeopleFoot');
+$PageEnd = $Context->ObjectFactory->CreateControl($Context, 'PageEnd');
 
 // INCLUDE EXTENSIONS
-include($Configuration["APPLICATION_PATH"]."conf/extensions.php");
+include($Configuration['APPLICATION_PATH'].'conf/extensions.php');
 
 // BUILD THE PAGE HEAD
 // Every page will require some basic definitions for the header.
-$Head->AddScript("./js/global.js");
-$Head->AddStyleSheet($Context->StyleUrl."css/people.css", "screen");
-$Head->AddStyleSheet($Context->StyleUrl."css/people.handheld.css", "handheld");
+$Head->AddScript('./js/global.js');
+$Head->AddStyleSheet($Context->StyleUrl.'css/people.css', 'screen');
+$Head->AddStyleSheet($Context->StyleUrl.'css/people.handheld.css', 'handheld');
 ?>

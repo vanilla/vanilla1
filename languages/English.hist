@@ -1046,7 +1046,9 @@ REMOVED: $Context->Dictionary["Copyright"] = "Copyright &copy; 2001-2005";
 $Context->Dictionary["PERMISSION_SORT_ROLES"] = "Sort roles";
 $Context->Dictionary["AssignToRole"] = "Choose a New Role";
 
-
+2006-01-08 - Added:
+$Context->Dictionary["NA"] = "n/a";
+$Context->Dictionary["Loading"] = "Loading...";
 
 */
 ?>

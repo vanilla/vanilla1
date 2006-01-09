@@ -12,23 +12,23 @@
 */
 
 // GLOBAL INCLUDES
-include($Configuration["DATABASE_PATH"]);
-include($Configuration["APPLICATION_PATH"]."appg/headers.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Functions.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.Database.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.".$Configuration["DATABASE_SERVER"].".php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.SqlBuilder.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.MessageCollector.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.ErrorManager.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.ObjectFactory.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.StringManipulator.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.Context.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.Delegation.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.Control.php");
-include($Configuration["LIBRARY_PATH"]."Vanilla/Vanilla.Functions.php");
-include($Configuration["LIBRARY_PATH"].$Configuration["AUTHENTICATION_MODULE"]);
-include($Configuration["LIBRARY_PATH"]."People/People.Class.Session.php");
-include($Configuration["LIBRARY_PATH"]."People/People.Class.User.php");
+include($Configuration['DATABASE_PATH']);
+include($Configuration['APPLICATION_PATH'].'appg/headers.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Functions.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Database.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.'.$Configuration['DATABASE_SERVER'].'.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.SqlBuilder.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.MessageCollector.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.ErrorManager.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.ObjectFactory.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.StringManipulator.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Context.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Delegation.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Control.php');
+include($Configuration['LIBRARY_PATH'].'Vanilla/Vanilla.Functions.php');
+include($Configuration['LIBRARY_PATH'].$Configuration['AUTHENTICATION_MODULE']);
+include($Configuration['LIBRARY_PATH'].'People/People.Class.Session.php');
+include($Configuration['LIBRARY_PATH'].'People/People.Class.User.php');
 
 // INSTANTIATE THE CONTEXT OBJECT
 // The context object handles the following:
@@ -44,78 +44,78 @@ $Context = new Context($Configuration);
 $Context->StartSession();
 
 // DEFINE THE LANGUAGE DICTIONARY
-include($Configuration["APPLICATION_PATH"]."conf/language.php");
+include($Configuration['APPLICATION_PATH'].'conf/language.php');
 
 // INSTANTIATE THE PAGE OBJECT
 // The page object handles collecting all page controls
 // and writing them when it's events are fired.
-$Page = $Context->ObjectFactory->NewContextObject($Context, "Page", $Configuration["PAGE_EVENTS"]);
+$Page = $Context->ObjectFactory->NewContextObject($Context, 'Page', $Configuration['PAGE_EVENTS']);
 
 // FIRE INITIALIZATION EVENT
-$Page->FireEvent("Page_Init");
+$Page->FireEvent('Page_Init');
 
 // DEFINE THE MASTER PAGE CONTROLS
-$Head = $Context->ObjectFactory->CreateControl($Context, "Head");
-$Menu = $Context->ObjectFactory->CreateControl($Context, "Menu");
-$Panel = $Context->ObjectFactory->CreateControl($Context, "Panel");
-$Foot = $Context->ObjectFactory->CreateControl($Context, "Filler", "foot.php");
-$PageEnd = $Context->ObjectFactory->CreateControl($Context, "PageEnd");
+$Head = $Context->ObjectFactory->CreateControl($Context, 'Head');
+$Menu = $Context->ObjectFactory->CreateControl($Context, 'Menu');
+$Panel = $Context->ObjectFactory->CreateControl($Context, 'Panel');
+$Foot = $Context->ObjectFactory->CreateControl($Context, 'Filler', 'foot.php');
+$PageEnd = $Context->ObjectFactory->CreateControl($Context, 'PageEnd');
 
 // BUILD THE PAGE HEAD
 // Every page will require some basic definitions for the header.
-$Head->AddScript("./js/global.js");
-$Head->AddScript("./js/vanilla.js");
-$Head->AddScript("./js/prototype.js");
-$Head->AddScript("./js/scriptaculous.js");
-$Head->AddStyleSheet($Context->StyleUrl."css/vanilla.css", "screen");
-$Head->AddStyleSheet($Context->StyleUrl."css/vanilla.handheld.css", "handheld");
-$Head->AddStyleSheet($Context->StyleUrl."css/vanilla.print.css", "print");
+$Head->AddScript('./js/global.js');
+$Head->AddScript('./js/vanilla.js');
+$Head->AddScript('./js/prototype.js');
+$Head->AddScript('./js/scriptaculous.js');
+$Head->AddStyleSheet($Context->StyleUrl.'css/vanilla.css', 'screen');
+$Head->AddStyleSheet($Context->StyleUrl.'css/vanilla.handheld.css', 'handheld');
+$Head->AddStyleSheet($Context->StyleUrl.'css/vanilla.print.css', 'print');
 
 // Add the start button to the panel
-if ($Context->Session->UserID > 0 && $Context->Session->User->Permission("PERMISSION_START_DISCUSSION")) {
-   $CategoryID = ForceIncomingInt("CategoryID", 0);
-	if ($CategoryID == 0) $CategoryID = "";
-	$Panel->AddString("<a class=\"PanelButton StartDiscussionButton\" href=\"".GetUrl($Configuration, "post.php", "category/", "CategoryID", $CategoryID)."\">".$Context->GetDefinition("StartANewDiscussion")."</a>", 1, 1);
+if ($Context->Session->UserID > 0 && $Context->Session->User->Permission('PERMISSION_START_DISCUSSION')) {
+   $CategoryID = ForceIncomingInt('CategoryID', 0);
+	if ($CategoryID == 0) $CategoryID = '';
+	$Panel->AddString('<a class=\'PanelButton StartDiscussionButton\' href=\''.GetUrl($Configuration, 'post.php', 'category/', 'CategoryID', $CategoryID).'\'>'.$Context->GetDefinition('StartANewDiscussion').'</a>', 1, 1);
 }
 
 // BUILD THE MAIN MENU
-$Menu->AddTab($Context->GetDefinition("Discussions"), "discussions", "./", "DiscussionsTab", "", $Configuration["TAB_POSITION_DISCUSSIONS"]);
-if ($Configuration["USE_CATEGORIES"]) $Menu->AddTab($Context->GetDefinition("Categories"), "categories", "categories.php", "CategoriesTab", "", $Configuration["TAB_POSITION_CATEGORIES"]);
-$Menu->AddTab($Context->GetDefinition("Search"), "search", "search.php", "SearchTab", "", $Configuration["TAB_POSITION_SEARCH"]);
+$Menu->AddTab($Context->GetDefinition('Discussions'), 'discussions', './', 'DiscussionsTab', '', $Configuration['TAB_POSITION_DISCUSSIONS']);
+if ($Configuration['USE_CATEGORIES']) $Menu->AddTab($Context->GetDefinition('Categories'), 'categories', 'categories.php', 'CategoriesTab', '', $Configuration['TAB_POSITION_CATEGORIES']);
+$Menu->AddTab($Context->GetDefinition('Search'), 'search', 'search.php', 'SearchTab', '', $Configuration['TAB_POSITION_SEARCH']);
 if ($Context->Session->UserID > 0) {
 	// Make sure they should be seeing the settings tab
-	$RequiredPermissions = array("PERMISSION_CHECK_FOR_UPDATES",
-		"PERMISSION_APPROVE_APPLICANTS",
-		"PERMISSION_MANAGE_REGISTRATION",
-		"PERMISSION_ADD_ROLES",
-		"PERMISSION_EDIT_ROLES",
-		"PERMISSION_REMOVE_ROLES",
-		"PERMISSION_ADD_CATEGORIES",
-		"PERMISSION_EDIT_CATEGORIES",
-		"PERMISSION_REMOVE_CATEGORIES",
-		"PERMISSION_SORT_CATEGORIES",
-		"PERMISSION_CHANGE_APPLICATION_SETTINGS",
-		"PERMISSION_MANAGE_EXTENSIONS",
-		"PERMISSION_MANAGE_LANGUAGE",
-		"PERMISSION_MANAGE_STYLES");
+	$RequiredPermissions = array('PERMISSION_CHECK_FOR_UPDATES',
+		'PERMISSION_APPROVE_APPLICANTS',
+		'PERMISSION_MANAGE_REGISTRATION',
+		'PERMISSION_ADD_ROLES',
+		'PERMISSION_EDIT_ROLES',
+		'PERMISSION_REMOVE_ROLES',
+		'PERMISSION_ADD_CATEGORIES',
+		'PERMISSION_EDIT_CATEGORIES',
+		'PERMISSION_REMOVE_CATEGORIES',
+		'PERMISSION_SORT_CATEGORIES',
+		'PERMISSION_CHANGE_APPLICATION_SETTINGS',
+		'PERMISSION_MANAGE_EXTENSIONS',
+		'PERMISSION_MANAGE_LANGUAGE',
+		'PERMISSION_MANAGE_STYLES');
 		
 	$RequiredPermissionsCount = count($RequiredPermissions);
 	$i = 0;
 	for ($i = 0; $i < $RequiredPermissionsCount; $i++) {
 		if ($Context->Session->User->Permission($RequiredPermissions[$i])) {
-			$Menu->AddTab($Context->GetDefinition("Settings"), "settings", "settings.php", "SettingsTab", "", $Configuration["TAB_POSITION_SETTINGS"]);
+			$Menu->AddTab($Context->GetDefinition('Settings'), 'settings', 'settings.php', 'SettingsTab', '', $Configuration['TAB_POSITION_SETTINGS']);
 			break;
 		}
 	}
 
 	// Add the account tab   
-	$Menu->AddTab($Context->GetDefinition("Account"), "account", "account.php", "AccountTab", "", $Configuration["TAB_POSITION_ACCOUNT"]);
+	$Menu->AddTab($Context->GetDefinition('Account'), 'account', 'account.php', 'AccountTab', '', $Configuration['TAB_POSITION_ACCOUNT']);
 }
 
 // INCLUDE EXTENSIONS
-include($Configuration["APPLICATION_PATH"]."conf/extensions.php");
+include($Configuration['APPLICATION_PATH'].'conf/extensions.php');
 
-$Panel->AddString($Context->GetDefinition("PanelFooter"), 500);
+$Panel->AddString($Context->GetDefinition('PanelFooter'), 500);
 
 // Make sure to get all delegates from the extensions into objects which were
 // constructed before the extensions were loaded.

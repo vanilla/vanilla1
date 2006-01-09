@@ -17,37 +17,37 @@ class IdentityForm extends PostBackControl {
 	var $User;
 	
 	function IdentityForm (&$Context, &$UserManager, &$User) {
-		$this->Name = "IdentityForm";
-		$this->ValidActions = array("ProcessIdentity", "Identity");
+		$this->Name = 'IdentityForm';
+		$this->ValidActions = array('ProcessIdentity', 'Identity');
 		$this->Constructor($Context);
 		if ($this->IsPostBack) {
 			$this->UserManager = &$UserManager;
 			$this->User = &$User;
-			if ($this->PostBackAction == "ProcessIdentity") {
+			if ($this->PostBackAction == 'ProcessIdentity') {
 				$this->User->Clear();
 				$this->User->GetPropertiesFromForm();
-				$this->CallDelegate("PreSaveIdentity");
-				if ($this->UserManager->SaveIdentity($this->User)) header("location: ".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "u", ($this->Context->Session->UserID == 0 ? "" : $this->User->UserID)));
+				$this->CallDelegate('PreSaveIdentity');
+				if ($this->UserManager->SaveIdentity($this->User)) header('location: '.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', 'u', ($this->Context->Session->UserID == 0 ? '' : $this->User->UserID)));
 			}
 		}
-		$this->CallDelegate("Constructor");
+		$this->CallDelegate('Constructor');
 	}
 	
 	function Render() {
 		if ($this->IsPostBack) {
-			if ($this->Context->Session->UserID != $this->User->UserID && !$this->Context->Session->User->Permission("PERMISSION_EDIT_USERS")) {
-				$this->Context->WarningCollector->Add($this->Context->GetDefinition("PermissionError"));
-				echo("<div class=\"AccountForm\">
-					".$this->Get_Warnings()."
-				</div>");				
+			if ($this->Context->Session->UserID != $this->User->UserID && !$this->Context->Session->User->Permission('PERMISSION_EDIT_USERS')) {
+				$this->Context->WarningCollector->Add($this->Context->GetDefinition('PermissionError'));
+				echo('<div class="AccountForm">
+					'.$this->Get_Warnings().'
+				</div>');				
 			} else {				
-				$this->PostBackParams->Set("PostBackAction", "ProcessIdentity");
-				$this->PostBackParams->Set("u", $this->User->UserID);
-				$this->PostBackParams->Set("LabelValuePairCount", (count($this->User->Attributes) > 0? count($this->User->Attributes):1));
-				$Required = $this->Context->GetDefinition("Required");
-				$this->CallDelegate("PreRender");
-				include($this->Context->Configuration["THEME_PATH"]."templates/account_identity_form.php");
-				$this->CallDelegate("PostRender");
+				$this->PostBackParams->Set('PostBackAction', 'ProcessIdentity');
+				$this->PostBackParams->Set('u', $this->User->UserID);
+				$this->PostBackParams->Set('LabelValuePairCount', (count($this->User->Attributes) > 0? count($this->User->Attributes):1));
+				$Required = $this->Context->GetDefinition('Required');
+				$this->CallDelegate('PreRender');
+				include($this->Context->Configuration['THEME_PATH'].'templates/account_identity_form.php');
+				$this->CallDelegate('PostRender');
 			}
 		}
 	}

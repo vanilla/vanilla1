@@ -17,8 +17,8 @@ class PreferencesForm extends PostBackControl {
 	var $Preferences;		// An array of preference options
 	
 	function PreferencesForm(&$Context, &$UserManager, $User) {
-		$this->Name = "PreferencesForm";
-		$this->ValidActions = array("Functionality");
+		$this->Name = 'PreferencesForm';
+		$this->ValidActions = array('Functionality');
 		$this->Constructor($Context);
 		if ($this->IsPostBack) {
 			$this->Preferences = array();
@@ -26,39 +26,39 @@ class PreferencesForm extends PostBackControl {
 			$this->User = $User;
 			
 			// Add the default preferences
-         $this->AddPreference("DiscussionIndex", "JumpToLastReadComment", "JumpToLastReadComment");
-         $this->AddPreference("CommentsForm", "ShowFormatTypeSelector", "ShowFormatSelector");
+         $this->AddPreference('DiscussionIndex', 'JumpToLastReadComment', 'JumpToLastReadComment');
+         $this->AddPreference('CommentsForm', 'ShowFormatTypeSelector', 'ShowFormatSelector');
 
-			if ($this->Context->Session->User->Permission("PERMISSION_RECEIVE_APPLICATION_NOTIFICATION")) {
-	         $this->AddPreference("NewUsers", "NewApplicantNotifications", "SendNewApplicantNotifications");
+			if ($this->Context->Session->User->Permission('PERMISSION_RECEIVE_APPLICATION_NOTIFICATION')) {
+	         $this->AddPreference('NewUsers', 'NewApplicantNotifications', 'SendNewApplicantNotifications');
 			}
-			if ($this->Context->Session->User->Permission("PERMISSION_VIEW_HIDDEN_DISCUSSIONS")) $this->AddPreference("HiddenInformation", "DisplayHiddenDiscussions", "ShowDeletedDiscussions", 0);
-			if ($this->Context->Session->User->Permission("PERMISSION_VIEW_HIDDEN_COMMENTS")) $this->AddPreference("HiddenInformation", "DisplayHiddenComments", "ShowDeletedComments", 0);
+			if ($this->Context->Session->User->Permission('PERMISSION_VIEW_HIDDEN_DISCUSSIONS')) $this->AddPreference('HiddenInformation', 'DisplayHiddenDiscussions', 'ShowDeletedDiscussions', 0);
+			if ($this->Context->Session->User->Permission('PERMISSION_VIEW_HIDDEN_COMMENTS')) $this->AddPreference('HiddenInformation', 'DisplayHiddenComments', 'ShowDeletedComments', 0);
 		}
-		$this->CallDelegate("Constructor");
+		$this->CallDelegate('Constructor');
 	}
 	
-	function AddPreference($SectionLanguageCode, $PreferenceLanguageCode, $PreferenceName, $RefreshPageAfterSetting = "0") {
+	function AddPreference($SectionLanguageCode, $PreferenceLanguageCode, $PreferenceName, $RefreshPageAfterSetting = '0') {
 		if (!array_key_exists($SectionLanguageCode, $this->Preferences)) $this->Preferences[$SectionLanguageCode] = array();
 		$Preference = array();
-		$Preference["LanguageCode"] = $PreferenceLanguageCode;
-		$Preference["Name"] = $PreferenceName;
-		$Preference["RefreshPageAfterSetting"] = $RefreshPageAfterSetting;
+		$Preference['LanguageCode'] = $PreferenceLanguageCode;
+		$Preference['Name'] = $PreferenceName;
+		$Preference['RefreshPageAfterSetting'] = $RefreshPageAfterSetting;
 		$this->Preferences[$SectionLanguageCode][] = $Preference;		
 	}
 	
 	function Render() {
 		if ($this->IsPostBack) {
-			$this->CallDelegate("PreRender");
-			if ($this->Context->Session->UserID != $this->User->UserID && !$this->Context->Session->User->Permission("PERMISSION_EDIT_USERS")) {
-				$this->Context->WarningCollector->Add($this->Context->GetDefinition("PermissionError"));
-				echo("<div class=\"AccountForm\">
-					".$this->Get_Warnings()."
-				</div>");				
+			$this->CallDelegate('PreRender');
+			if ($this->Context->Session->UserID != $this->User->UserID && !$this->Context->Session->User->Permission('PERMISSION_EDIT_USERS')) {
+				$this->Context->WarningCollector->Add($this->Context->GetDefinition('PermissionError'));
+				echo('<div class="AccountForm">
+					'.$this->Get_Warnings().'"
+				</div>');				
 			} else {
-				include($this->Context->Configuration["THEME_PATH"]."templates/account_preferences_form.php");
+				include($this->Context->Configuration['THEME_PATH'].'templates/account_preferences_form.php');
 			}
-			$this->CallDelegate("PostRender");
+			$this->CallDelegate('PostRender');
 		}
 	}
 }

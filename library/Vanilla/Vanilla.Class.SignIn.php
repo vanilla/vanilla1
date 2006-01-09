@@ -23,12 +23,12 @@ class SignInManager {
 	
 	function FormatPropertiesForDisplay() {
 		$this->Username = FormatStringForDisplay($this->Username, 1);
-		$this->Password = "";
+		$this->Password = '';
 	}
 
-	function GetPropertiesFromForm($FormElementPrefix = "") {
-		$this->Username = ForceIncomingString($FormElementPrefix."Username", "");
-		$this->Password = ForceIncomingString($FormElementPrefix."Password", "");
+	function GetPropertiesFromForm($FormElementPrefix = '') {
+		$this->Username = ForceIncomingString($FormElementPrefix.'Username', '');
+		$this->Password = ForceIncomingString($FormElementPrefix.'Password', '');
 	}
 	
 	function SignInManager(&$Context) {
@@ -43,7 +43,7 @@ class SignInManager {
 			$this->FormatPropertiesForDatabaseInput();
 			
 			// Attempt to create a new session for the user
-			$UserManager = $this->Context->ObjectFactory->NewContextObject($this->Context, "UserManager");
+			$UserManager = $this->Context->ObjectFactory->NewContextObject($this->Context, 'UserManager');
 			return $UserManager->ValidateUserCredentials($this->Username, $this->Password);
 		}
 	}

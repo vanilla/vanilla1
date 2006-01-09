@@ -11,23 +11,23 @@
 * Description: File used by Dynamic Data Management object to block/unblock user comments
 */
 
-include("../../appg/settings.php");
-include("../../conf/settings.php");
-include("../../appg/init_ajax.php");
+include('../../appg/settings.php');
+include('../../conf/settings.php');
+include('../../appg/init_ajax.php');
 
-$Block = ForceIncomingBool("Block", 0);
-$BlockUserID = ForceIncomingInt("BlockUserID", 0);
-$BlockCommentID = ForceIncomingInt("BlockCommentID", 0);
+$Block = ForceIncomingBool('Block', 0);
+$BlockUserID = ForceIncomingInt('BlockUserID', 0);
+$BlockCommentID = ForceIncomingInt('BlockCommentID', 0);
 
 if ($BlockUserID > 0) {
-	$um = $Context->ObjectFactory->NewContextObject($Context, "UserManager");
+	$um = $Context->ObjectFactory->NewContextObject($Context, 'UserManager');
 	if ($Block) {
       $um->AddUserBlock($BlockUserID);
    } else {
       $um->RemoveUserBlock($BlockUserID);
    }
 } elseif ($BlockCommentID > 0) {
-	$um = $Context->ObjectFactory->NewContextObject($Context, "UserManager");
+	$um = $Context->ObjectFactory->NewContextObject($Context, 'UserManager');
 	if ($Block) {
       $um->AddCommentBlock($BlockCommentID);
    } else {
@@ -36,5 +36,5 @@ if ($BlockUserID > 0) {
 }
 
 // report success
-echo("Complete");
+echo('Complete');
 ?>

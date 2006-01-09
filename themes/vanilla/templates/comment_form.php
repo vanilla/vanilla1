@@ -1,51 +1,59 @@
 <?php
 // Note: This file is included from the library/Vanilla.Control.DiscussionForm.php class.
-echo("<div class=\"Title CommentInputTitle\">".$this->Title."</div>
-<div class=\"CommentForm\">"
-   .$this->Get_PostBackForm("frmPostComment", "post", "post.php")
+echo('<div class="Title CommentInputTitle">'.$this->Title.'</div>
+<div class="CommentForm">'
+   .$this->Get_PostBackForm('frmPostComment', 'post', 'post.php')
    .$this->Get_Warnings()
-   ."<dl>");
+   .'<dl>');
    
-      $this->CallDelegate("CommentForm_PreWhisperInputRender");
+      $this->CallDelegate('CommentForm_PreWhisperInputRender');
    
-      if ($this->Context->Configuration["ENABLE_WHISPERS"]) {   
-         echo("<dt class=\"WhisperInputLabel\">".$this->Context->GetDefinition("WhisperYourCommentsTo")."</dt>
-         <dd class=\"WhisperInput\">
-            <input id=\"WhisperUsername\" name=\"WhisperUsername\" type=\"text\" value=\"".FormatStringForDisplay($Comment->WhisperUsername, 0)."\" class=\"WhisperBox\" maxlength=\"20\" /><div class=\"Autocomplete\" id=\"WhisperUsername_Choices\"></div><script type=\"text/javascript\">new Ajax.Autocompleter('WhisperUsername', 'WhisperUsername_Choices', './ajax/getusers.php', {paramName: \"Search\"})</script>
-         </dd>");
+      if ($this->Context->Configuration['ENABLE_WHISPERS']) {   
+         echo('<dt class="WhisperInputLabel">'.$this->Context->GetDefinition('WhisperYourCommentsTo').'</dt>
+         <dd class="WhisperInput">
+            <input id="WhisperUsername" name="WhisperUsername" type="text" value="'.FormatStringForDisplay($Comment->WhisperUsername, 0).'" class="WhisperBox" maxlength="20" /><div class="Autocomplete" id="WhisperUsername_Choices"></div><script type="text/javascript">'."new Ajax.Autocompleter('WhisperUsername', 'WhisperUsername_Choices', './ajax/getusers.php', {paramName: \"Search\"})".'</script>
+         </dd>');
       }
    
-      $this->CallDelegate("CommentForm_PreCommentsInputRender");
+      $this->CallDelegate('CommentForm_PreCommentsInputRender');
       
-      echo("<dt class=\"CommentInputLabel\">
-         ".$this->Context->GetDefinition("EnterYourComments")."
-         <a id=\"CommentBoxController\" onclick=\"ToggleCommentBox('".$this->Context->GetDefinition("SmallInput")."', '".$this->Context->GetDefinition("BigInput")."');\">".($this->Context->Session->User->Preference("ShowLargeCommentBox")?$this->Context->GetDefinition("SmallInput"):$this->Context->GetDefinition("BigInput"))."</a>
+      echo('<dt class="CommentInputLabel">
+         '.$this->Context->GetDefinition('EnterYourComments').'
+         <a id="CommentBoxController" onclick="'
+         ."ToggleCommentBox('".$this->Context->GetDefinition('SmallInput')."', '".$this->Context->GetDefinition('BigInput')."');".'">'.$this->Context->GetDefinition($this->Context->Session->User->Preference('ShowLargeCommentBox')?'SmallInput':'BigInput').'</a>
       </dt>
-      <dd class=\"CommentInput\">
-         <textarea name=\"Body\" class=\"".($this->Context->Session->User->Preference("ShowLargeCommentBox")?"LargeCommentBox":"SmallCommentBox")."\" id=\"CommentBox\" rows=\"10\" cols=\"85\">".$this->Comment->Body."</textarea>"
+      <dd class="CommentInput">
+         <textarea name="Body" class="'
+         .($this->Context->Session->User->Preference('ShowLargeCommentBox') ? 'LargeCommentBox' : 'SmallCommentBox')
+         .'" id="CommentBox" rows="10" cols="85">'
+         .$this->Comment->Body
+         .'</textarea>'
          .$this->GetPostFormatting($Comment->FormatType)
-      ."</dd>");
+      .'</dd>');
       
-      $this->CallDelegate("CommentForm_PostCommentsInputRender");
+      $this->CallDelegate('CommentForm_PostCommentsInputRender');
       
-   echo("</dl>");
+   echo('</dl>');
    
-   $this->CallDelegate("CommentForm_PreButtonsRender");
+   $this->CallDelegate('CommentForm_PreButtonsRender');
    
-   echo("<div class=\"FormButtons CommentButtons\">"
-      ."<input type=\"submit\" name=\"btnSave\" value=\"".($Comment->CommentID > 0?$this->Context->GetDefinition("SaveYourChanges"):$this->Context->GetDefinition("AddYourComments"))."\" class=\"Button SubmitButton\" onclick=\"Wait(this, '".$this->Context->GetDefinition("Wait")."');\" />");
-      $this->CallDelegate("CommentForm_PostSubmitRender");
-      if ($this->PostBackAction == "SaveComment" || ($this->PostBackAction == "" && $Comment->CommentID > 0)) {
+   echo('<div class="FormButtons CommentButtons">'
+      .'<input type="submit" name="btnSave" value="'.($Comment->CommentID > 0 ? $this->Context->GetDefinition('SaveYourChanges') : $this->Context->GetDefinition('AddYourComments'))
+      .'" class="Button SubmitButton" onclick="'
+      ."Wait(this, '".$this->Context->GetDefinition('Wait')."');"
+      .'" />');
+      $this->CallDelegate('CommentForm_PostSubmitRender');
+      if ($this->PostBackAction == 'SaveComment' || ($this->PostBackAction == '' && $Comment->CommentID > 0)) {
          if ($this->Comment->DiscussionID > 0) {
-            echo("<a href=\"".GetUrl($this->Context->Configuration, "comments.php", "", "DiscussionID", $this->Comment->DiscussionID)."\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>");
+            echo('<a href="'.GetUrl($this->Context->Configuration, 'comments.php', '', 'DiscussionID', $this->Comment->DiscussionID).'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>');
          } else {
-            echo("<a href=\"".GetUrl($this->Context->Configuration, "index.php")."\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>");
+            echo('<a href="'.GetUrl($this->Context->Configuration, 'index.php').'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>');
          }
       }
-   echo("</div>");
+   echo('</div>');
    
-   $this->CallDelegate("CommentForm_PostButtonsRender");
+   $this->CallDelegate('CommentForm_PostButtonsRender');
    
-   echo("</form>			
-</div>");
+   echo('</form>			
+</div>');
 ?>

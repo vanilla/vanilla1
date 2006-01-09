@@ -26,8 +26,8 @@ class Category {
 	// Clears all properties
 	function Clear() {
 		$this->CategoryID = 0;
-		$this->Name = "";
-		$this->Description = "";
+		$this->Name = '';
+		$this->Description = '';
 		$this->DiscussionCount = 0;
 		$this->Blocked = 0;
 		$this->AllowedRoles = array();
@@ -44,18 +44,18 @@ class Category {
 	}
 	
 	function GetPropertiesFromDataSet($DataSet) {
-		$this->CategoryID = ForceInt(@$DataSet["CategoryID"], 0);
-		$this->Name = ForceString(@$DataSet["Name"], "");
-		$this->Description = ForceString(@$DataSet["Description"], "");
-		$this->DiscussionCount = ForceInt(@$DataSet["DiscussionCount"], 0);
-		$this->Blocked = ForceBool(@$DataSet["Blocked"], 0);
+		$this->CategoryID = ForceInt(@$DataSet['CategoryID'], 0);
+		$this->Name = ForceString(@$DataSet['Name'], '');
+		$this->Description = ForceString(@$DataSet['Description'], '');
+		$this->DiscussionCount = ForceInt(@$DataSet['DiscussionCount'], 0);
+		$this->Blocked = ForceBool(@$DataSet['Blocked'], 0);
 	}	
 
 	function GetPropertiesFromForm(&$Context) {
-		$this->CategoryID = ForceIncomingInt("CategoryID", 0);
-		$this->Name = ForceIncomingString("Name", "");
-		$this->Description = ForceIncomingString("Description", "");
-		$this->AllowedRoles = ForceIncomingArray("CategoryRoleBlock", array());
+		$this->CategoryID = ForceIncomingInt('CategoryID', 0);
+		$this->Name = ForceIncomingString('Name', '');
+		$this->Description = ForceIncomingString('Description', '');
+		$this->AllowedRoles = ForceIncomingArray('CategoryRoleBlock', array());
 	}
 }
 ?>

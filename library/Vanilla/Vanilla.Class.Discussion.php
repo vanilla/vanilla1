@@ -48,29 +48,29 @@ class Discussion {
 		$this->DiscussionID = 0;
 		$this->FirstCommentID = 0;
 		$this->CategoryID = 0;
-		$this->Category = "";
+		$this->Category = '';
 		$this->AuthUserID = 0;
-		$this->AuthUsername = "";
+		$this->AuthUsername = '';
 		$this->LastUserID = 0;
-		$this->LastUsername = "";
+		$this->LastUsername = '';
 		$this->Active = 0;
 		$this->Closed = 0;
 		$this->Sticky = 0;
 		$this->Bookmarked = 0;
-		$this->Name = "";
-		$this->DateCreated = "";
-		$this->DateLastActive = "";
+		$this->Name = '';
+		$this->DateCreated = '';
+		$this->DateLastActive = '';
 		$this->CountComments = 0;
 		$this->CountReplies = 0;
 		$this->Comment = 0;
-		$this->LastViewed = "";
+		$this->LastViewed = '';
 		$this->LastViewCountComments = 0;
 		$this->NewComments = 0;
-		$this->Status = "Unread";
+		$this->Status = 'Unread';
 		$this->LastPage = 1;
 		$this->UserDiscussionCount = 0;
 		$this->WhisperUserID = 0;
-		$this->WhisperUsername = "";
+		$this->WhisperUsername = '';
 		$this->CountWhispersTo = 0;
 		$this->CountWhispersFrom = 0;
 	}
@@ -80,50 +80,50 @@ class Discussion {
 	}
 
 	function ForceNameSpaces($Configuration) {
-		$this->Name = $this->SplitString($this->Name, $Configuration["MAX_TOPIC_WORD_LENGTH"]);
+		$this->Name = $this->SplitString($this->Name, $Configuration['MAX_TOPIC_WORD_LENGTH']);
 	}
 	
 	// Retrieve properties from current DataRowSet
 	function GetPropertiesFromDataSet($DataSet, $Configuration) {
-		$this->DiscussionID = @$DataSet["DiscussionID"];
-		$this->FirstCommentID = @$DataSet["FirstCommentID"];
-		$this->CategoryID = @$DataSet["CategoryID"];
-		$this->Category = @$DataSet["Category"];
-		$this->AuthUserID = @$DataSet["AuthUserID"];
-		$this->AuthUsername = @$DataSet["AuthUsername"];
-		$this->LastUserID = @$DataSet["LastUserID"];
-		$this->LastUsername = @$DataSet["LastUsername"];
-		$this->Active = @$DataSet["Active"];
-		$this->Closed = @$DataSet["Closed"];
-		$this->Sticky = @$DataSet["Sticky"];
-		$this->Bookmarked = @$DataSet["Bookmarked"];
-		$this->Name = @$DataSet["Name"];
-		$this->DateCreated = UnixTimestamp(@$DataSet["DateCreated"]);
-		$this->DateLastActive = UnixTimestamp(@$DataSet["DateLastActive"]);
-		$this->CountComments = @$DataSet["CountComments"];
+		$this->DiscussionID = @$DataSet['DiscussionID'];
+		$this->FirstCommentID = @$DataSet['FirstCommentID'];
+		$this->CategoryID = @$DataSet['CategoryID'];
+		$this->Category = @$DataSet['Category'];
+		$this->AuthUserID = @$DataSet['AuthUserID'];
+		$this->AuthUsername = @$DataSet['AuthUsername'];
+		$this->LastUserID = @$DataSet['LastUserID'];
+		$this->LastUsername = @$DataSet['LastUsername'];
+		$this->Active = @$DataSet['Active'];
+		$this->Closed = @$DataSet['Closed'];
+		$this->Sticky = @$DataSet['Sticky'];
+		$this->Bookmarked = @$DataSet['Bookmarked'];
+		$this->Name = @$DataSet['Name'];
+		$this->DateCreated = UnixTimestamp(@$DataSet['DateCreated']);
+		$this->DateLastActive = UnixTimestamp(@$DataSet['DateLastActive']);
+		$this->CountComments = @$DataSet['CountComments'];
 		
-		if ($Configuration["ENABLE_WHISPERS"]) {		
-         $this->WhisperUserID = @$DataSet["WhisperUserID"];
-         $this->WhisperUsername = @$DataSet["WhisperUsername"];
+		if ($Configuration['ENABLE_WHISPERS']) {		
+         $this->WhisperUserID = @$DataSet['WhisperUserID'];
+         $this->WhisperUsername = @$DataSet['WhisperUsername'];
          
-         $WhisperFromDateLastActive = UnixTimestamp(@$DataSet["WhisperFromDateLastActive"]);
-         $WhisperFromLastUserID = @$DataSet["WhisperFromLastUserID"];
-         $WhisperFromLastFullName = @$DataSet["WhisperFromLastFullName"];
-         $WhisperFromLastUsername = @$DataSet["WhisperFromLastUsername"];
-         $this->CountWhispersFrom = @$DataSet["CountWhispersFrom"];
+         $WhisperFromDateLastActive = UnixTimestamp(@$DataSet['WhisperFromDateLastActive']);
+         $WhisperFromLastUserID = @$DataSet['WhisperFromLastUserID'];
+         $WhisperFromLastFullName = @$DataSet['WhisperFromLastFullName'];
+         $WhisperFromLastUsername = @$DataSet['WhisperFromLastUsername'];
+         $this->CountWhispersFrom = @$DataSet['CountWhispersFrom'];
          
-         $WhisperToDateLastActive = UnixTimestamp(@$DataSet["WhisperToDateLastActive"]);
-         $WhisperToLastUserID = @$DataSet["WhisperToLastUserID"];
-         $WhisperToLastFullName = @$DataSet["WhisperToLastFullName"];
-         $WhisperToLastUsername = @$DataSet["WhisperToLastUsername"];
-         $this->CountWhispersTo = @$DataSet["CountWhispersTo"];
+         $WhisperToDateLastActive = UnixTimestamp(@$DataSet['WhisperToDateLastActive']);
+         $WhisperToLastUserID = @$DataSet['WhisperToLastUserID'];
+         $WhisperToLastFullName = @$DataSet['WhisperToLastFullName'];
+         $WhisperToLastUsername = @$DataSet['WhisperToLastUsername'];
+         $this->CountWhispersTo = @$DataSet['CountWhispersTo'];
          
          $this->CountComments += $this->CountWhispersFrom;
          $this->CountComments += $this->CountWhispersTo;
          $this->CountReplies = $this->CountComments - 1;
          if ($this->CountReplies < 0) $this->CountReplies = 0;
          
-         if ($WhisperFromDateLastActive != "") {
+         if ($WhisperFromDateLastActive != '') {
             if ($this->DateLastActive < $WhisperFromDateLastActive) {
                $this->DateLastActive = $WhisperFromDateLastActive;
                $this->LastUserID = $WhisperFromLastUserID;
@@ -131,7 +131,7 @@ class Discussion {
                $this->LastUsername = $WhisperFromLastUsername;
             }
          }
-         if ($WhisperToDateLastActive != "") {
+         if ($WhisperToDateLastActive != '') {
             if ($this->DateLastActive < $WhisperToDateLastActive) {
                $this->DateLastActive = $WhisperToDateLastActive;
                $this->LastUserID = $WhisperToLastUserID;
@@ -143,9 +143,9 @@ class Discussion {
 
 		$this->CountReplies = $this->CountComments - 1;
 		if ($this->CountReplies < 0) $this->CountReplies = 0;
-		$this->LastViewed = UnixTimestamp(@$DataSet["LastViewed"]);
-		$this->LastViewCountComments = @$DataSet["LastViewCountComments"];
-		if ($this->LastViewed != "") {
+		$this->LastViewed = UnixTimestamp(@$DataSet['LastViewed']);
+		$this->LastViewCountComments = @$DataSet['LastViewCountComments'];
+		if ($this->LastViewed != '') {
 			$this->NewComments = $this->CountComments - $this->LastViewCountComments;
 			if ($this->NewComments < 0) $this->NewComments = 0;
 		} else {
@@ -154,7 +154,7 @@ class Discussion {
 		$this->Status = $this->GetStatus();
 		
 		// Define the last page
-      $TmpCount = ($this->CountComments / $Configuration["COMMENTS_PER_PAGE"]);
+      $TmpCount = ($this->CountComments / $Configuration['COMMENTS_PER_PAGE']);
 		$RoundedCount = intval($TmpCount);
 		if ($TmpCount > 1) {
 			if ($TmpCount > $RoundedCount) {
@@ -169,35 +169,35 @@ class Discussion {
 
 	// Retrieve a properties from incoming form variables
 	function GetPropertiesFromForm(&$Context) {
-		$this->DiscussionID = ForceIncomingInt("DiscussionID", 0);
-		$this->CategoryID = ForceIncomingInt("CategoryID", 0);
-		$this->Name = ForceIncomingString("Name", "");
-		$this->UserDiscussionCount = ForceIncomingInt("UserDiscussionCount", 0);
+		$this->DiscussionID = ForceIncomingInt('DiscussionID', 0);
+		$this->CategoryID = ForceIncomingInt('CategoryID', 0);
+		$this->Name = ForceIncomingString('Name', '');
+		$this->UserDiscussionCount = ForceIncomingInt('UserDiscussionCount', 0);
 		
-		$this->WhisperUsername = ForceIncomingString("WhisperUsername", "");
+		$this->WhisperUsername = ForceIncomingString('WhisperUsername', '');
 		$this->WhisperUsername = Strip_Slashes($this->WhisperUsername);
 
 		// Load the comment
-      $this->Comment = $Context->ObjectFactory->NewContextObject($Context, "Comment");
+      $this->Comment = $Context->ObjectFactory->NewContextObject($Context, 'Comment');
 		$this->Comment->GetPropertiesFromForm();
 	}
 	
 	function GetStatus() {
-		$sReturn = "";
-		if (!$this->Active) $sReturn = " Hidden";
-      if ($this->WhisperUserID > 0) $sReturn .= " Whispered";
-		if ($this->Closed) $sReturn .= " Closed";
-		if ($this->Sticky) $sReturn .= " Sticky";
-		if ($this->Bookmarked) $sReturn .= " Bookmarked";
-		if ($this->LastViewed != "") {
-			$sReturn .= " Read";
+		$sReturn = '';
+		if (!$this->Active) $sReturn = ' Hidden';
+      if ($this->WhisperUserID > 0) $sReturn .= ' Whispered';
+		if ($this->Closed) $sReturn .= ' Closed';
+		if ($this->Sticky) $sReturn .= ' Sticky';
+		if ($this->Bookmarked) $sReturn .= ' Bookmarked';
+		if ($this->LastViewed != '') {
+			$sReturn .= ' Read';
 		} else {
-			$sReturn .= " Unread";
+			$sReturn .= ' Unread';
 		}
 		if ($this->NewComments > 0) {
-			$sReturn .= " NewComments";
+			$sReturn .= ' NewComments';
 		} else {
-			$sReturn .= " NoNewComments";
+			$sReturn .= ' NoNewComments';
 		}
 		return $sReturn;
 	}
@@ -212,15 +212,15 @@ class Discussion {
 
 	function SplitString($String, $MaxLength) {
 		if (strlen($String) > $MaxLength) {
-			$Words = explode(" ", $String);
+			$Words = explode(' ', $String);
 			$WordCount = count($Words);
 			$i = 0;
 			for ($i = 0; $i < $WordCount; $i++) {
 				if (strlen($Words[$i]) >= $MaxLength) {
-					$Words[$i] = substr($Words[$i], 0, $MaxLength)." ".$this->SplitString(substr($Words[$i], $MaxLength), $MaxLength);
+					$Words[$i] = substr($Words[$i], 0, $MaxLength).' '.$this->SplitString(substr($Words[$i], $MaxLength), $MaxLength);
 				}
 			}
-			$String = implode(" ",$Words);
+			$String = implode(' ',$Words);
 		}
 		return $String;
 	}

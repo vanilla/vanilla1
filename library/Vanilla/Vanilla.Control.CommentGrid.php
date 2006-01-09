@@ -21,9 +21,9 @@ class CommentGrid extends Control {
 	var $ShowForm;
 	
 	function CommentGrid(&$Context, $DiscussionManager, $DiscussionID) {
-		$this->Name = "CommentGrid";
+		$this->Name = 'CommentGrid';
 		$this->Control($Context);
-		$this->CurrentPage = ForceIncomingInt("page", 1);
+		$this->CurrentPage = ForceIncomingInt('page', 1);
 		
 		// Load information about this discussion
 		$RecordDiscussionView = 1;
@@ -31,9 +31,9 @@ class CommentGrid extends Control {
       $this->Discussion = $DiscussionManager->GetDiscussionById($DiscussionID, $RecordDiscussionView);
 		if ($this->Discussion) {
 			$this->Discussion->FormatPropertiesForDisplay();
-			if (!$this->Discussion->Active && !$this->Context->Session->User->Permission("PERMISSION_HIDE_DISCUSSIONS")) {
+			if (!$this->Discussion->Active && !$this->Context->Session->User->Permission('PERMISSION_HIDE_DISCUSSIONS')) {
 				$this->Discussion = false;
-				$this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrDiscussionNotFound"));
+				$this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrDiscussionNotFound'));
 			}
 		}
 		
@@ -42,37 +42,37 @@ class CommentGrid extends Control {
 			$this->CommentDataCount = 0;
 		} else {
 			// Load the data
-			$CommentManager = $Context->ObjectFactory->NewContextObject($Context, "CommentManager");
-			$this->CommentData = $CommentManager->GetCommentList($this->Context->Configuration["COMMENTS_PER_PAGE"], $this->CurrentPage, $DiscussionID);
+			$CommentManager = $Context->ObjectFactory->NewContextObject($Context, 'CommentManager');
+			$this->CommentData = $CommentManager->GetCommentList($this->Context->Configuration['COMMENTS_PER_PAGE'], $this->CurrentPage, $DiscussionID);
 			$this->CommentDataCount = $CommentManager->GetCommentCount($DiscussionID);
 		}
 		
 		// Set up the pagelist
-		$this->pl = $this->Context->ObjectFactory->NewContextObject($this->Context, "PageList", "DiscussionID", $this->Discussion->DiscussionID, CleanupString($this->Discussion->Name)."/");
-		$this->pl->NextText = $this->Context->GetDefinition("Next");
-		$this->pl->PreviousText = $this->Context->GetDefinition("Previous");
-		$this->pl->CssClass = "PageList";
+		$this->pl = $this->Context->ObjectFactory->NewContextObject($this->Context, 'PageList', 'DiscussionID', $this->Discussion->DiscussionID, CleanupString($this->Discussion->Name).'/');
+		$this->pl->NextText = $this->Context->GetDefinition('Next');
+		$this->pl->PreviousText = $this->Context->GetDefinition('Previous');
+		$this->pl->CssClass = 'PageList';
 		$this->pl->TotalRecords = $this->CommentDataCount;
 		$this->pl->CurrentPage = $this->CurrentPage;
-		$this->pl->RecordsPerPage = $this->Context->Configuration["COMMENTS_PER_PAGE"];
+		$this->pl->RecordsPerPage = $this->Context->Configuration['COMMENTS_PER_PAGE'];
 		$this->pl->PagesToDisplay = 10;
-		$this->pl->PageParameterName = "page";
+		$this->pl->PageParameterName = 'page';
 		$this->pl->DefineProperties();
 
 
 		$this->ShowForm = 0;
 		if ($this->Context->Session->UserID > 0
 			&& ($this->pl->PageCount == 1 || $this->pl->PageCount == $this->CurrentPage)
-			&& ((!$this->Discussion->Closed && $this->Discussion->Active) || $this->Context->Session->User->Permission("PERMISSION_ADD_COMMENTS_TO_CLOSED_DISCUSSION"))
+			&& ((!$this->Discussion->Closed && $this->Discussion->Active) || $this->Context->Session->User->Permission('PERMISSION_ADD_COMMENTS_TO_CLOSED_DISCUSSION'))
 			&& $this->CommentData
-			&& $this->Context->Session->User->Permission("PERMISSION_ADD_COMMENTS")) $this->ShowForm = 1;			
-		$this->CallDelegate("Constructor");
+			&& $this->Context->Session->User->Permission('PERMISSION_ADD_COMMENTS')) $this->ShowForm = 1;			
+		$this->CallDelegate('Constructor');
 	}
 	
    function Render() {
-		$this->CallDelegate("PreRender");
-		include($this->Context->Configuration["THEME_PATH"]."templates/comments.php");		
-		$this->CallDelegate("PostRender");
+		$this->CallDelegate('PreRender');
+		include($this->Context->Configuration['THEME_PATH'].'templates/comments.php');		
+		$this->CallDelegate('PostRender');
    }	
 }
 

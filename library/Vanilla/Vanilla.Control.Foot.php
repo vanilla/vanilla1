@@ -16,36 +16,36 @@ class Foot extends Control {
 	var $CssClass;
 	var $Links;
 	
-	function AddLink($Url, $Text, $Target, $Position, $ForcePosition = "0") {
+	function AddLink($Url, $Text, $Target, $Position, $ForcePosition = '0') {
 		$this->AddItemToCollection($this->Links,
-			array("Url" => $Url, "Text" => $Text, "Target" => $Target),
+			array('Url' => $Url, 'Text' => $Text, 'Target' => $Target),
 			$Position,
 			$ForcePosition);		
 	}
 	
-	function Foot(&$Context, $CssClass = "") {
-		$this->Name = "Foot";
+	function Foot(&$Context, $CssClass = '') {
+		$this->Name = 'Foot';
 		$this->Control($Context);
-		if ($CssClass != "") $this->CssClass = " ".$CssClass;
+		if ($CssClass != '') $this->CssClass = ' '.$CssClass;
 		$this->Links = array();
 		// Add the default links
-      $this->AddLink("javascript:PopTermsOfService();",
-			$this->Context->GetDefinition("TermsOfService"),
-			"",
+      $this->AddLink('javascript:PopTermsOfService();',
+			$this->Context->GetDefinition('TermsOfService'),
+			'',
 			100);
 			
-      $this->AddLink("http://lussumo.com/docs/",
-			$this->Context->GetDefinition("Documentation"),
-			"_blank",
+      $this->AddLink('http://lussumo.com/docs/',
+			$this->Context->GetDefinition('Documentation'),
+			'_blank',
 			200);
 			
-		$this->CallDelegate("PostConstructor");
+		$this->CallDelegate('PostConstructor');
 	}
 	
 	function Render() {
-		$this->CallDelegate("PreRender");
-		include($this->Context->Configuration["THEME_PATH"]."templates/foot.php");
-		$this->CallDelegate("PostRender");
+		$this->CallDelegate('PreRender');
+		include($this->Context->Configuration['THEME_PATH'].'templates/foot.php');
+		$this->CallDelegate('PostRender');
 	}
 }
 ?>

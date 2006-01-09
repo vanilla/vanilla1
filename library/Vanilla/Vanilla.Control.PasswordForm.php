@@ -16,35 +16,35 @@ class PasswordForm extends PostBackControl {
 	var $User;
 	
 	function PasswordForm (&$Context, &$UserManager, $UserID) {
-		$this->Name = "PasswordForm";
-		if ($Context->Configuration["ALLOW_PASSWORD_CHANGE"]) $this->ValidActions = array("ProcessPassword", "Password");
+		$this->Name = 'PasswordForm';
+		if ($Context->Configuration['ALLOW_PASSWORD_CHANGE']) $this->ValidActions = array('ProcessPassword', 'Password');
 		$this->Constructor($Context);
 		if ($this->IsPostBack) {
 			$this->UserManager = &$UserManager;
-			$this->User = $this->Context->ObjectFactory->NewContextObject($Context, "User");
+			$this->User = $this->Context->ObjectFactory->NewContextObject($Context, 'User');
 			$this->User->GetPropertiesFromForm();
 			$this->User->UserID = $UserID;
-			if ($this->PostBackAction == "ProcessPassword") {
-				if ($this->UserManager->ChangePassword($this->User)) header("location: ".GetUrl($this->Context->Configuration, $this->Context->SelfUrl));
+			if ($this->PostBackAction == 'ProcessPassword') {
+				if ($this->UserManager->ChangePassword($this->User)) header('location: '.GetUrl($this->Context->Configuration, $this->Context->SelfUrl));
 			}
 		}
-		$this->CallDelegate("Constructor");
+		$this->CallDelegate('Constructor');
 	}
 	
 	function Render() {
 		if ($this->IsPostBack) {
-			if ($this->Context->Session->UserID != $this->User->UserID && !$this->Context->Session->User->Permission("PERMISSION_EDIT_USERS")) {
-				$this->Context->WarningCollector->Add($this->Context->GetDefinition("PermissionError"));
-				echo("<div class=\"AccountForm\">
-						".$this->Get_Warnings()."
-				</div>");				
+			if ($this->Context->Session->UserID != $this->User->UserID && !$this->Context->Session->User->Permission('PERMISSION_EDIT_USERS')) {
+				$this->Context->WarningCollector->Add($this->Context->GetDefinition('PermissionError'));
+				echo('<div class="AccountForm">
+					'.$this->Get_Warnings().'
+				</div>');				
 			} else {				
-				$this->PostBackParams->Set("PostBackAction", "ProcessPassword");
-				$this->PostBackParams->Set("u", $this->User->UserID);
-				$Required = $this->Context->GetDefinition("Required");
-				$this->CallDelegate("PreRender");
-				include($this->Context->Configuration["THEME_PATH"]."templates/account_password_form.php");
-				$this->CallDelegate("PostRender");
+				$this->PostBackParams->Set('PostBackAction', 'ProcessPassword');
+				$this->PostBackParams->Set('u', $this->User->UserID);
+				$Required = $this->Context->GetDefinition('Required');
+				$this->CallDelegate('PreRender');
+				include($this->Context->Configuration['THEME_PATH'].'templates/account_password_form.php');
+				$this->CallDelegate('PostRender');
 			}
 		}
 	}

@@ -12,49 +12,49 @@
 */
 
 function DiscussionPrefix($Configuration, $Discussion) {
-	$Prefix = "";
-	if (!$Discussion->Active && $Configuration["TEXT_HIDDEN"] != "") $Prefix = $Configuration["TEXT_HIDDEN"];
+	$Prefix = '';
+	if (!$Discussion->Active && $Configuration['TEXT_HIDDEN'] != '') $Prefix = $Configuration['TEXT_HIDDEN'];
 
-	if ($Discussion->Sticky && $Configuration["TEXT_STICKY"] != "" && $Prefix != "") $Prefix .= ", ";
-	if ($Discussion->Sticky && $Configuration["TEXT_STICKY"] != "") $Prefix .= $Configuration["TEXT_STICKY"];
+	if ($Discussion->Sticky && $Configuration['TEXT_STICKY'] != '' && $Prefix != '') $Prefix .= ', ';
+	if ($Discussion->Sticky && $Configuration['TEXT_STICKY'] != '') $Prefix .= $Configuration['TEXT_STICKY'];
 	
-	if ($Discussion->Closed && $Configuration["TEXT_CLOSED"] != "" && $Prefix != "") $Prefix .= ", ";
-	if ($Discussion->Closed && $Configuration["TEXT_CLOSED"] != "") $Prefix .= $Configuration["TEXT_CLOSED"];
+	if ($Discussion->Closed && $Configuration['TEXT_CLOSED'] != '' && $Prefix != '') $Prefix .= ', ';
+	if ($Discussion->Closed && $Configuration['TEXT_CLOSED'] != '') $Prefix .= $Configuration['TEXT_CLOSED'];
 
-	if ($Discussion->Bookmarked && $Configuration["TEXT_BOOKMARKED"] != "" && $Prefix != "") $Prefix .= ", ";
-	if ($Discussion->Bookmarked && $Configuration["TEXT_BOOKMARKED"] != "") $Prefix .= $Configuration["TEXT_BOOKMARKED"];
+	if ($Discussion->Bookmarked && $Configuration['TEXT_BOOKMARKED'] != '' && $Prefix != '') $Prefix .= ', ';
+	if ($Discussion->Bookmarked && $Configuration['TEXT_BOOKMARKED'] != '') $Prefix .= $Configuration['TEXT_BOOKMARKED'];
 
-	if ($Discussion->WhisperUserID > 0 && $Configuration["TEXT_WHISPERED"] != "" && $Prefix != "") $Prefix .= ", ";
-	if ($Discussion->WhisperUserID > 0 && $Configuration["TEXT_WHISPERED"] != "") $Prefix .= $Configuration["TEXT_WHISPERED"];
+	if ($Discussion->WhisperUserID > 0 && $Configuration['TEXT_WHISPERED'] != '' && $Prefix != '') $Prefix .= ', ';
+	if ($Discussion->WhisperUserID > 0 && $Configuration['TEXT_WHISPERED'] != '') $Prefix .= $Configuration['TEXT_WHISPERED'];
 
-	if ($Prefix != "") return $Configuration["TEXT_PREFIX"].$Prefix.$Configuration["TEXT_SUFFIX"]." ";
+	if ($Prefix != '') return $Configuration['TEXT_PREFIX'].$Prefix.$Configuration['TEXT_SUFFIX'].' ';
 }
 
 function GetLastCommentQuerystring(&$Discussion, &$Configuration) {
-   $JumpToItem = $Discussion->CountComments - (($Discussion->LastPage - 1) * $Configuration["COMMENTS_PER_PAGE"]);
+   $JumpToItem = $Discussion->CountComments - (($Discussion->LastPage - 1) * $Configuration['COMMENTS_PER_PAGE']);
 	if ($JumpToItem < 0) $JumpToItem = 0;
 	$LastPage = $Discussion->LastPage;
-	if ($LastPage == 0) $LastPage = "";
-	return GetUrl($Configuration, "comments.php", "", "DiscussionID", $Discussion->DiscussionID, $LastPage, "#Item_".$JumpToItem);
+	if ($LastPage == 0) $LastPage = '';
+	return GetUrl($Configuration, 'comments.php', '', 'DiscussionID', $Discussion->DiscussionID, $LastPage, '#Item_'.$JumpToItem);
 }
 
-function GetUnreadQuerystring(&$Discussion, &$Configuration, $CurrentUserJumpToLastCommentPref = "0") {
-	$Suffix = "";
-	if ($Configuration["URL_BUILDING_METHOD"] == "mod_rewrite") $Suffix = CleanupString($Discussion->Name)."/";
+function GetUnreadQuerystring(&$Discussion, &$Configuration, $CurrentUserJumpToLastCommentPref = '0') {
+	$Suffix = '';
+	if ($Configuration['URL_BUILDING_METHOD'] == 'mod_rewrite') $Suffix = CleanupString($Discussion->Name).'/';
 	if ($CurrentUserJumpToLastCommentPref) {
 		$UnreadCommentCount = $Discussion->CountComments - $Discussion->NewComments + 1;
 		$ReadCommentCount = $Discussion->CountComments - $Discussion->NewComments;
-		$PageNumber = CalculateNumberOfPages($ReadCommentCount, $Configuration["COMMENTS_PER_PAGE"]);
-		$JumpToItem = $ReadCommentCount - (($PageNumber-1) * $Configuration["COMMENTS_PER_PAGE"]);
+		$PageNumber = CalculateNumberOfPages($ReadCommentCount, $Configuration['COMMENTS_PER_PAGE']);
+		$JumpToItem = $ReadCommentCount - (($PageNumber-1) * $Configuration['COMMENTS_PER_PAGE']);
 		if ($JumpToItem < 0) $JumpToItem = 0;
-		if ($PageNumber == 0) $PageNumber = "";
-		return GetUrl($Configuration, "comments.php", "", "DiscussionID", $Discussion->DiscussionID, $PageNumber, "#Item_".$JumpToItem, $Suffix);
+		if ($PageNumber == 0) $PageNumber = '';
+		return GetUrl($Configuration, 'comments.php', '', 'DiscussionID', $Discussion->DiscussionID, $PageNumber, '#Item_'.$JumpToItem, $Suffix);
 	} else {
-		return GetUrl($Configuration, "comments.php", "", "DiscussionID", $Discussion->DiscussionID, "", "", $Suffix);
+		return GetUrl($Configuration, 'comments.php', '', 'DiscussionID', $Discussion->DiscussionID, '', '', $Suffix);
 	}
 }
 
-function HighlightTrimmedString($Haystack, $Needles, $TrimLength = "") {	
+function HighlightTrimmedString($Haystack, $Needles, $TrimLength = '') {	
 	$TrimLength = ForceInt($TrimLength, 0);
 	if ($TrimLength > 0) {
 		$Haystack = SliceString($Haystack, $TrimLength);
@@ -63,19 +63,19 @@ function HighlightTrimmedString($Haystack, $Needles, $TrimLength = "") {
 	if ($WordsToHighlight > 0) {
 		$i = 0;
 		for ($i = 0; $i < $WordsToHighlight; $i++) {
-			$CurrentWord = quotemeta(ForceString($Needles[$i], ""));
-			if ($CurrentWord != "") $Haystack = eregi_replace($CurrentWord, "<span class=\"Highlight\">".$Needles[$i]."</span>", $Haystack);
+			$CurrentWord = quotemeta(ForceString($Needles[$i], ''));
+			if ($CurrentWord != '') $Haystack = eregi_replace($CurrentWord, '<span class="Highlight">'.$Needles[$i].'</span>', $Haystack);
 		}
 	}
 	return $Haystack;
 }
 
 function ParseQueryForHighlighting(&$Context, $Query) {
-	if ($Query != "") {
-		$Query = eregi_replace("\"", "", $Query);
-		$Query = eregi_replace(" ".$Context->GetDefinition("And")." ", " ", $Query);
-		$Query = eregi_replace(" ".$Context->GetDefinition("Or")." ", " ", $Query);
-		return explode(" ", $Query);
+	if ($Query != '') {
+		$Query = eregi_replace('"', '', $Query);
+		$Query = eregi_replace(' '.$Context->GetDefinition('And').' ', ' ', $Query);
+		$Query = eregi_replace(' '.$Context->GetDefinition('Or').' ', ' ', $Query);
+		return explode(' ', $Query);
 	} else {
 		return array();
 	}	

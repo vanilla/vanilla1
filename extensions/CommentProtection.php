@@ -20,18 +20,18 @@ conf/your_language.php file (replace "your_language" with your chosen language,
 of course):
 */
 
-$Context->Dictionary["AllowHtml"] = "Allow HTML in this comment";
-$Context->Dictionary["BlockHtml"] = "Block HTML in this comment";
-$Context->Dictionary["BlockComment"] = "block comment";
-$Context->Dictionary["BlockCommentTitle"] = "Block HTML in this comment";
-$Context->Dictionary["UnblockComment"] = "unblock comment";
-$Context->Dictionary["UnblockCommentTitle"] = "Allow HTML in this comment";
-$Context->Dictionary["BlockUserHtml"] = "Block HTML in all comments by this user on the forum";
-$Context->Dictionary["AllowUserHtml"] = "Allow HTML in all comments by this user on the forum";
-$Context->Dictionary["BlockUser"] = "block user";
-$Context->Dictionary["BlockUserTitle"] = "Block HTML in all comments by this user on the forum";
-$Context->Dictionary["UnblockUser"] = "unblock user";
-$Context->Dictionary["UnblockUserTitle"] = "Allow HTML in all comments by this user on the forum";
+$Context->Dictionary['AllowHtml'] = 'Allow HTML in this comment';
+$Context->Dictionary['BlockHtml'] = 'Block HTML in this comment';
+$Context->Dictionary['BlockComment'] = 'block comment';
+$Context->Dictionary['BlockCommentTitle'] = 'Block HTML in this comment';
+$Context->Dictionary['UnblockComment'] = 'unblock comment';
+$Context->Dictionary['UnblockCommentTitle'] = 'Allow HTML in this comment';
+$Context->Dictionary['BlockUserHtml'] = 'Block HTML in all comments by this user on the forum';
+$Context->Dictionary['AllowUserHtml'] = 'Allow HTML in all comments by this user on the forum';
+$Context->Dictionary['BlockUser'] = 'block user';
+$Context->Dictionary['BlockUserTitle'] = 'Block HTML in all comments by this user on the forum';
+$Context->Dictionary['UnblockUser'] = 'unblock user';
+$Context->Dictionary['UnblockUserTitle'] = 'Allow HTML in all comments by this user on the forum';
 
 
 

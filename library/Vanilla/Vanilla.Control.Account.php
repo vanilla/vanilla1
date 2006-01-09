@@ -16,25 +16,25 @@ class Account extends Control {
 	var $User;	// The user object to be displayed
    
 	function Account(&$Context, &$User) {
-		$this->Name = "Account";
-		$this->PostBackAction = ForceIncomingString("PostBackAction", "");
+		$this->Name = 'Account';
+		$this->PostBackAction = ForceIncomingString('PostBackAction', '');
 		$this->Control($Context);
 		$this->User = &$User;
-		$this->CallDelegate("Constructor");
+		$this->CallDelegate('Constructor');
 	}
 	
 	function Render() {
-		$this->CallDelegate("PreRender");
+		$this->CallDelegate('PreRender');
 		// Don't render anything but warnings if there are any warnings or if there is a postback
-      if ($this->PostBackAction == "") {
+      if ($this->PostBackAction == '') {
 			if ($this->Context->WarningCollector->Count() > 0) {
 				echo($this->Get_Warnings());
 			} else {
 				$this->User->FormatPropertiesForDisplay();
-				include($this->Context->Configuration["THEME_PATH"]."templates/account_profile.php");
+				include($this->Context->Configuration['THEME_PATH'].'templates/account_profile.php');
 			}
 		}
-		$this->CallDelegate("PostRender");
+		$this->CallDelegate('PostRender');
 	}
 }
 ?>
