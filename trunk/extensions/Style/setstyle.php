@@ -11,17 +11,17 @@
 * Description: File used by Dynamic Data Management object to assign a stylesheet to a user
 */
 
-include("../../appg/settings.php");
-include("../../conf/settings.php");
-include("../../appg/init_ajax.php");
+include('../../appg/settings.php');
+include('../../conf/settings.php');
+include('../../appg/init_ajax.php');
 
-$UserManager = $Context->ObjectFactory->NewContextObject($Context, "UserManager");
+$UserManager = $Context->ObjectFactory->NewContextObject($Context, 'UserManager');
 
-$User = $Context->ObjectFactory->NewContextObject($Context, "User");
+$User = $Context->ObjectFactory->NewContextObject($Context, 'User');
 $User->UserID = $Context->Session->UserID;
-$User->CustomStyle = ForceIncomingString("Style", "");
-$User->StyleID = ForceIncomingInt("StyleID", 0);
+$User->CustomStyle = ForceIncomingString('Style', '');
+$User->StyleID = ForceIncomingInt('StyleID', 0);
 $UserManager->SaveStyle($User);
 
-echo("Complete");
+echo('Complete');
 ?>

@@ -16,29 +16,29 @@ class SearchManager {
    var $Context;			// The context object that contains all global objects (database, error manager, warning collector, session, etc)
 	
 	function DeleteSearch($SearchID) {
-		$s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
-		$s->SetMainTable("UserSearch", "us");
-		$s->AddWhere("SearchID", $SearchID, "=");
-		$s->AddWhere("UserID", $this->Context->Session->UserID, "=");
-		$this->Context->Database->Delete($s, $this->Name, "DeleteSearch", "An error occurred while deleting your search.");
+		$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
+		$s->SetMainTable('UserSearch', 'us');
+		$s->AddWhere('SearchID', $SearchID, '=');
+		$s->AddWhere('UserID', $this->Context->Session->UserID, '=');
+		$this->Context->Database->Delete($s, $this->Name, 'DeleteSearch', 'An error occurred while deleting your search.');
 		return true;
 	}
 	
    // Returns a SqlBuilder object with all of the topic properties already defined in the select
    function GetSearchBuilder() {
-      $s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
-	   $s->AddSelect(array("SearchID", "Label", "UserID", "Type", "Keywords"), "us");
-      $s->SetMainTable("UserSearch", "us");
+      $s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
+	   $s->AddSelect(array('SearchID', 'Label', 'UserID', 'Type', 'Keywords'), 'us');
+      $s->SetMainTable('UserSearch', 'us');
       return $s;
    }	
 	
    function GetSearchById($SearchID) {
-      $Search = $this->Context->ObjectFactory->NewObject($this->Context, "Search");
+      $Search = $this->Context->ObjectFactory->NewObject($this->Context, 'Search');
       $s = $this->GetSearchBuilder();
-      $s->AddWhere("us.SearchID", $SearchID, "=");
-      $s->AddWhere("UserID", $this->Context->Session->UserID, "=");
-      $result = $this->Context->Database->Select($s, $this->Name, "GetSearchById", "An error occurred while attempting to retrieve the requested search.");
-		if ($this->Context->Database->RowCount($result) == 0) $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrSearchNotFound"));
+      $s->AddWhere('us.SearchID', $SearchID, '=');
+      $s->AddWhere('UserID', $this->Context->Session->UserID, '=');
+      $result = $this->Context->Database->Select($s, $this->Name, 'GetSearchById', 'An error occurred while attempting to retrieve the requested search.');
+		if ($this->Context->Database->RowCount($result) == 0) $this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrSearchNotFound'));
 		while ($rows = $this->Context->Database->GetRow($result)) {
 			$Search->GetPropertiesFromDataSet($rows, 1);
 		}
@@ -49,50 +49,50 @@ class SearchManager {
       $UserID = ForceInt($UserID, 0);
       $TotalNumberOfRecords = 0;
       
-      $s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
-      $s->AddSelect("SearchID", "us", "Count", "count");
-      $s->SetMainTable("VanillaUserSearch", "us");
-      $s->AddWhere("UserID", $UserID, "=");
+      $s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
+      $s->AddSelect('SearchID', 'us', 'Count', 'count');
+      $s->SetMainTable('VanillaUserSearch', 'us');
+      $s->AddWhere('UserID', $UserID, '=');
          
-      $result = $this->Context->Database->Select($s, $this->Name, "GetSearchCount", "An error occurred while retrieving search summary data.");
+      $result = $this->Context->Database->Select($s, $this->Name, 'GetSearchCount', 'An error occurred while retrieving search summary data.');
 		while ($rows = $this->Context->Database->GetRow($result)) {
 			$TotalNumberOfRecords = $rows['Count'];
 		}
       return $TotalNumberOfRecords;
    }
 	
-   function GetSearchList($RecordsToRetrieve = "0", $UserID) {
+   function GetSearchList($RecordsToRetrieve = '0', $UserID) {
       $RecordsToRetrieve = ForceInt($RecordsToRetrieve, 0);
       
-      $s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
+      $s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
       $s = $this->GetSearchBuilder();
-		$s->AddWhere("UserID", $UserID, "=");
+		$s->AddWhere('UserID', $UserID, '=');
       if ($RecordsToRetrieve > 0) $s->AddLimit(0, $RecordsToRetrieve);
    
-      return $this->Context->Database->Select($s, $this->Name, "GetSearchList", "An error occurred while retrieving saved searches.");
+      return $this->Context->Database->Select($s, $this->Name, 'GetSearchList', 'An error occurred while retrieving saved searches.');
    }
 
 	function SaveSearch(&$Search) {
       // Validate the topic properties
-      if ($Search->Label == "") $this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrSearchLabel"));
+      if ($Search->Label == '') $this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrSearchLabel'));
       // If validation was successful, then reset the properties to db safe values for saving
       if ($this->Context->WarningCollector->Count() == 0) {
 			$SearchToSave = $Search;
          $SearchToSave->FormatPropertiesForDatabaseInput();
-         $s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
+         $s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
          
          // Proceed with the save if there are no warnings
          if ($this->Context->WarningCollector->Count() == 0) {
-				$s->SetMainTable("UserSearch");
-				$s->AddFieldNameValue("Label", $SearchToSave->Label);
-				$s->AddFieldNameValue("UserID", $this->Context->Session->UserID);
-				$s->AddFieldNameValue("Type", $SearchToSave->Type);
-				$s->AddFieldNameValue("Keywords", $SearchToSave->Keywords);
+				$s->SetMainTable('UserSearch');
+				$s->AddFieldNameValue('Label', $SearchToSave->Label);
+				$s->AddFieldNameValue('UserID', $this->Context->Session->UserID);
+				$s->AddFieldNameValue('Type', $SearchToSave->Type);
+				$s->AddFieldNameValue('Keywords', $SearchToSave->Keywords);
 				if ($SearchToSave->SearchID > 0) {
-					$s->AddWhere("SearchID", $SearchToSave->SearchID, "=");
-					$this->Context->Database->Update($s, $this->Name, "SaveSearch", "An error occurred while saving your search.");
+					$s->AddWhere('SearchID', $SearchToSave->SearchID, '=');
+					$this->Context->Database->Update($s, $this->Name, 'SaveSearch', 'An error occurred while saving your search.');
 				} else {
-					$Search->SearchID = $this->Context->Database->Insert($s, $this->Name, "SaveSearch", "An error occurred while creating your search.");
+					$Search->SearchID = $this->Context->Database->Insert($s, $this->Name, 'SaveSearch', 'An error occurred while creating your search.');
 				}
          }
          
@@ -101,7 +101,7 @@ class SearchManager {
    }
 	
    function SearchManager(&$Context) {
-      $this->Name = "SearchManager";
+      $this->Name = 'SearchManager';
 		$this->Context = &$Context;
    }	
 }

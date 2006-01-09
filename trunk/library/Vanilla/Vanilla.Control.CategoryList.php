@@ -15,16 +15,16 @@ class CategoryList extends Control {
 	var $Data;
 	
 	function CategoryList(&$Context) {
-		$this->Name = "CategoryList";
+		$this->Name = 'CategoryList';
 		$this->Control($Context);
-		$CategoryManager = $this->Context->ObjectFactory->NewContextObject($this->Context, "CategoryManager");
+		$CategoryManager = $this->Context->ObjectFactory->NewContextObject($this->Context, 'CategoryManager');
 		$this->Data = $CategoryManager->GetCategories(1);
 	}
 	
 	function Render() {
-		$this->CallDelegate("PreRender");
-		include($this->Context->Configuration["THEME_PATH"]."templates/categories.php");
-		$this->CallDelegate("PostRender");
+		$this->CallDelegate('PreRender');
+		include($this->Context->Configuration['THEME_PATH'].'templates/categories.php');
+		$this->CallDelegate('PostRender');
 	}	
 }
 ?>

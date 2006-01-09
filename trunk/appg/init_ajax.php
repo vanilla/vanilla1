@@ -10,22 +10,22 @@
 *
 * Description: Constants and objects specific to forum pages.
 */
-include($Configuration["DATABASE_PATH"]);
-include($Configuration["APPLICATION_PATH"]."appg/headers.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Functions.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.Database.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.".$Configuration["DATABASE_SERVER"].".php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.SqlBuilder.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.MessageCollector.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.ErrorManager.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.ObjectFactory.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.StringManipulator.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.Context.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.Delegation.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.Control.php");
-include($Configuration["LIBRARY_PATH"].$Configuration["AUTHENTICATION_MODULE"]);
-include($Configuration["LIBRARY_PATH"]."People/People.Class.Session.php");
-include($Configuration["LIBRARY_PATH"]."People/People.Class.User.php");
+include($Configuration['DATABASE_PATH']);
+include($Configuration['APPLICATION_PATH'].'appg/headers.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Functions.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Database.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.'.$Configuration['DATABASE_SERVER'].'.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.SqlBuilder.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.MessageCollector.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.ErrorManager.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.ObjectFactory.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.StringManipulator.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Context.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Delegation.php');
+include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Control.php');
+include($Configuration['LIBRARY_PATH'].$Configuration['AUTHENTICATION_MODULE']);
+include($Configuration['LIBRARY_PATH'].'People/People.Class.Session.php');
+include($Configuration['LIBRARY_PATH'].'People/People.Class.User.php');
 
 $Context = new Context($Configuration);
 
@@ -35,14 +35,14 @@ $Context->StartSession();
 $Context->Session->Check($Context);
 
 // DEFINE THE LANGUAGE DICTIONARY
-include($Configuration["APPLICATION_PATH"]."conf/language.php");
+include($Configuration['APPLICATION_PATH'].'conf/language.php');
 
 // INSTANTIATE THE PAGE OBJECT
-$Page = $Context->ObjectFactory->NewContextObject($Context, "Page", $Configuration["PAGE_EVENTS"]);
+$Page = $Context->ObjectFactory->NewContextObject($Context, 'Page', $Configuration['PAGE_EVENTS']);
 
 // FIRE INITIALIZATION EVENT
-$Page->FireEvent("Page_Init");
+$Page->FireEvent('Page_Init');
 
 // INCLUDE EXTENSIONS
-include($Configuration["APPLICATION_PATH"]."conf/extensions.php");
+include($Configuration['APPLICATION_PATH'].'conf/extensions.php');
 ?>

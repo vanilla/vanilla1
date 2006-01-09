@@ -28,37 +28,37 @@ conf/your_language.php file (replace "your_language" with your chosen language,
 of course):
 */
  
-$Context->Dictionary["PERMISSION_DATABASE_CLEANUP"] = "Database Cleanup Permission";
-$Context->Dictionary["XHiddenDiscussions"] = "There are currently //1 hidden discussions.";
-$Context->Dictionary["XHiddenComments"] = "There are currently //1 hidden comments.";
-$Context->Dictionary["SystemCleanup"] = "System Cleanup";
-$Context->Dictionary["BackupDatabase"] = "Backup Database";
-$Context->Dictionary["BackupDatabaseNotes"] = "If you find that this feature creates a blank file, you will need to fully define the path to mysqldump on your server. You can define this value on line 21 of the extensions/Cleanup.php file. Also be sure that the user you have specified to connect to the database has access to execute mysqldump.";
-$Context->Dictionary["ClickHereToBackupDatabase"] = "Click here to create a database backup";
-$Context->Dictionary["RemoveUsersConfirm"] = "Are you sure you wish to remove these users?\\nThis action cannot be undone!";
-$Context->Dictionary["CleanupUsers"] = "Cleanup Users";
-$Context->Dictionary["RemoveUsersMessage"] = "There are currently //1 members who have never posted a comment. Remove non-participating members that have been on the forum for more than //2 days: ";
-$Context->Dictionary["Go"] = "Go";
-$Context->Dictionary["CleanupDiscussions"] = "Cleanup Discussions";
-$Context->Dictionary["CleanupComments"] = "Cleanup Comments";
-$Context->Dictionary["CommentsRemovedSuccessfully"] = "All hidden comments were successfully deleted.";
-$Context->Dictionary["DiscussionsRemovedSuccessfully"] = "All hidden discussions were successfully deleted.";
-$Context->Dictionary["PurgeDiscussions"] = "Purge Discussions";
-$Context->Dictionary["DiscussionsPurgedSuccessfully"] = "All discussions have been removed from the database.";
-$Context->Dictionary["XHiddenDiscussions"] = "There are currently //1 hidden discussions: ";
-$Context->Dictionary["XHiddenComments"] = "There are currently //1 hidden comments: ";
-$Context->Dictionary["ClickHereToRemoveAllHiddenDiscussions"] = "Remove";
-$Context->Dictionary["RemoveDiscussionsConfirm"] = "Are you sure you wish to delete all hidden discussions from the database?\\nThis action cannot be undone!";
-$Context->Dictionary["ClickHereToRemoveAllHiddenComments"] = "Remove";
-$Context->Dictionary["RemoveCommentsConfirm"] = "Are you sure you wish to delete all hidden comments from the database?\\nThis action cannot be undone!";
-$Context->Dictionary["ClickHereToPurgeAllDiscussions"] = "Click here to completely purge all discussions and comments from the database";
-$Context->Dictionary["PurgeDiscussionsConfirm"] = "Are you sure you wish to completely DELETE ALL DISCUSSIONS from the database?\\nThis action cannot be undone!!";
-$Context->Dictionary["UsersRemovedSuccessfully"] = "//1 members were removed.";
-$Context->Dictionary["MasterAdministrator"] = "Administrative privileges for all other features";
+$Context->Dictionary['PERMISSION_DATABASE_CLEANUP'] = 'Database Cleanup Permission';
+$Context->Dictionary['XHiddenDiscussions'] = 'There are currently //1 hidden discussions.';
+$Context->Dictionary['XHiddenComments'] = 'There are currently //1 hidden comments.';
+$Context->Dictionary['SystemCleanup'] = 'System Cleanup';
+$Context->Dictionary['BackupDatabase'] = 'Backup Database';
+$Context->Dictionary['BackupDatabaseNotes'] = 'If you find that this feature creates a blank file, you will need to fully define the path to mysqldump on your server. You can define this value on line 21 of the extensions/Cleanup.php file. Also be sure that the user you have specified to connect to the database has access to execute mysqldump.';
+$Context->Dictionary['ClickHereToBackupDatabase'] = 'Click here to create a database backup';
+$Context->Dictionary['RemoveUsersConfirm'] = 'Are you sure you wish to remove these users?\nThis action cannot be undone!';
+$Context->Dictionary['CleanupUsers'] = 'Cleanup Users';
+$Context->Dictionary['RemoveUsersMessage'] = 'There are currently //1 members who have never posted a comment. Remove non-participating members that have been on the forum for more than //2 days: ';
+$Context->Dictionary['Go'] = 'Go';
+$Context->Dictionary['CleanupDiscussions'] = 'Cleanup Discussions';
+$Context->Dictionary['CleanupComments'] = 'Cleanup Comments';
+$Context->Dictionary['CommentsRemovedSuccessfully'] = 'All hidden comments were successfully deleted.';
+$Context->Dictionary['DiscussionsRemovedSuccessfully'] = 'All hidden discussions were successfully deleted.';
+$Context->Dictionary['PurgeDiscussions'] = 'Purge Discussions';
+$Context->Dictionary['DiscussionsPurgedSuccessfully'] = 'All discussions have been removed from the database.';
+$Context->Dictionary['XHiddenDiscussions'] = 'There are currently //1 hidden discussions: ';
+$Context->Dictionary['XHiddenComments'] = 'There are currently //1 hidden comments: ';
+$Context->Dictionary['ClickHereToRemoveAllHiddenDiscussions'] = 'Remove';
+$Context->Dictionary['RemoveDiscussionsConfirm'] = 'Are you sure you wish to delete all hidden discussions from the database?\nThis action cannot be undone!';
+$Context->Dictionary['ClickHereToRemoveAllHiddenComments'] = 'Remove';
+$Context->Dictionary['RemoveCommentsConfirm'] = 'Are you sure you wish to delete all hidden comments from the database?\nThis action cannot be undone!';
+$Context->Dictionary['ClickHereToPurgeAllDiscussions'] = 'Click here to completely purge all discussions and comments from the database';
+$Context->Dictionary['PurgeDiscussionsConfirm'] = 'Are you sure you wish to completely DELETE ALL DISCUSSIONS from the database?\nThis action cannot be undone!!';
+$Context->Dictionary['UsersRemovedSuccessfully'] = '//1 members were removed.';
+$Context->Dictionary['MasterAdministrator'] = 'Administrative privileges for all other features';
  
 
 // If looking at the settings page, use this form
-if ($Context->SelfUrl == "settings.php" && $Context->Session->User->Permission("PERMISSION_DATABASE_CLEANUP")) {
+if ($Context->SelfUrl == 'settings.php' && $Context->Session->User->Permission('PERMISSION_DATABASE_CLEANUP')) {
 	class CleanupForm extends PostBackControl {
       var $Name;                 // The name of this form
       var $HiddenDiscussions;    // The number of hidden discussions in the database
@@ -67,234 +67,234 @@ if ($Context->SelfUrl == "settings.php" && $Context->Session->User->Permission("
       var $NumberOfUsersRemoved; // The number of users that were removed by the user cleanup process
 		
 		function CleanupForm(&$Context) {
-			$this->ValidActions = array("Cleanup", "CleanupUsers", "CleanupComments", "CleanupDiscussions", "PurgeDiscussions", "BackupDatabase");
+			$this->ValidActions = array('Cleanup', 'CleanupUsers', 'CleanupComments', 'CleanupDiscussions', 'PurgeDiscussions', 'BackupDatabase');
 			$this->Constructor($Context);
-         $this->Name = "CleanupForm";
+         $this->Name = 'CleanupForm';
 			if ($this->IsPostBack) {
-				if ($this->PostBackAction == "CleanupUsers") {
-					$Days = ForceIncomingInt("Days", 30);
+				if ($this->PostBackAction == 'CleanupUsers') {
+					$Days = ForceIncomingInt('Days', 30);
 					$InactiveUsers = $this->GetInactiveUsers($Days);
 					if (count($InactiveUsers) > 0) {
 						// Wipe out category blocks
-						$s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
-						$s->SetMainTable("CategoryBlock", "cb");
-						$s->AddWhere("UserID", "(".implode(",",$InactiveUsers).")", "in", "and", "", 0);
-						$this->Context->Database->Delete($s, $this->Name, "Constructor", "An error occurred while attempting to remove user category blocks.");
+						$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
+						$s->SetMainTable('CategoryBlock', 'cb');
+						$s->AddWhere('UserID', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
+						$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove user category blocks.');
 						
 						// Wipe out clippings
                   $s->Clear();
-						$s->SetMainTable("Clipping", "c");
-						$s->AddWhere("UserID", "(".implode(",",$InactiveUsers).")", "in", "and", "", 0);
-						$this->Context->Database->Delete($s, $this->Name, "Constructor", "An error occurred while attempting to remove user clippings.");
+						$s->SetMainTable('Clipping', 'c');
+						$s->AddWhere('UserID', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
+						$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove user clippings.');
 						
 						// Wipe out comment blocks
                   $s->Clear();
-						$s->SetMainTable("CommentBlock", "c");
-						$s->AddWhere("BlockingUserID", "(".implode(",",$InactiveUsers).")", "in", "and", "", 0);
-						$this->Context->Database->Delete($s, $this->Name, "Constructor", "An error occurred while attempting to remove user comment blocks.");
+						$s->SetMainTable('CommentBlock', 'c');
+						$s->AddWhere('BlockingUserID', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
+						$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove user comment blocks.');
 						
 						// Wipe out the ip history
                   $s->Clear();
-						$s->SetMainTable("IpHistory", "I");
-						$s->AddWhere("UserID", "(".implode(",",$InactiveUsers).")", "in", "and", "", 0);
-						$this->Context->Database->Delete($s, $this->Name, "Constructor", "An error occurred while attempting to remove user IP history.");
+						$s->SetMainTable('IpHistory', 'I');
+						$s->AddWhere('UserID', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
+						$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove user IP history.');
 						
 						// Update any styles associated with this user to be system styles
                   $s->Clear();
-						$s->SetMainTable("Style", "s");
-						$s->AddFieldNameValue("AuthUserID", "0");
-						$s->AddWhere("AuthUserID", "(".implode(",",$InactiveUsers).")", "in", "and", "", 0);
-						$this->Context->Database->Update($s, $this->Name, "Constructor", "An error occurred while attempting to remove user style relations.");
+						$s->SetMainTable('Style', 's');
+						$s->AddFieldNameValue('AuthUserID', '0');
+						$s->AddWhere('AuthUserID', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
+						$this->Context->Database->Update($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove user style relations.');
 						
 						// Wipe out any user blocks
                   $s->Clear();
-						$s->SetMainTable("UserBlock", "ub");
-						$s->AddWhere("BlockingUserID", "(".implode(",",$InactiveUsers).")", "in", "or", "", 0);
-						$s->AddWhere("BlockedUserID", "(".implode(",",$InactiveUsers).")", "in", "or", "", 0);
-						$this->Context->Database->Delete($s, $this->Name, "Constructor", "An error occurred while attempting to remove user blocks.");
+						$s->SetMainTable('UserBlock', 'ub');
+						$s->AddWhere('BlockingUserID', '('.implode(',',$InactiveUsers).')', 'in', 'or', '', 0);
+						$s->AddWhere('BlockedUserID', '('.implode(',',$InactiveUsers).')', 'in', 'or', '', 0);
+						$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove user blocks.');
 						
 						// Wipe out bookmarks
                   $s->Clear();
-						$s->SetMainTable("UserBookmark", "ub");
-						$s->AddWhere("UserID", "(".implode(",",$InactiveUsers).")", "in", "and", "", 0);
-						$this->Context->Database->Delete($s, $this->Name, "Constructor", "An error occurred while attempting to remove user bookmarks.");
+						$s->SetMainTable('UserBookmark', 'ub');
+						$s->AddWhere('UserID', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
+						$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove user bookmarks.');
 						
 						// Wipe out user discussion watch
                   $s->Clear();
-						$s->SetMainTable("UserDiscussionWatch", "udw");
-						$s->AddWhere("UserID", "(".implode(",",$InactiveUsers).")", "in", "and", "", 0);
-						$this->Context->Database->Delete($s, $this->Name, "Constructor", "An error occurred while attempting to remove user discussion tracking data.");
+						$s->SetMainTable('UserDiscussionWatch', 'udw');
+						$s->AddWhere('UserID', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
+						$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove user discussion tracking data.');
 						
 						// Wipe out role history
                   $s->Clear();
-						$s->SetMainTable("UserRoleHistory", "urh");
-						$s->AddWhere("UserID", "(".implode(",",$InactiveUsers).")", "in", "and", "", 0);
-						$this->Context->Database->Delete($s, $this->Name, "Constructor", "An error occurred while attempting to remove user role history.");
+						$s->SetMainTable('UserRoleHistory', 'urh');
+						$s->AddWhere('UserID', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
+						$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove user role history.');
 						
 						// Wipe out saved searches
                   $s->Clear();
-						$s->SetMainTable("UserSearch", "us");
-						$s->AddWhere("UserID", "(".implode(",",$InactiveUsers).")", "in", "and", "", 0);
-						$this->Context->Database->Delete($s, $this->Name, "Constructor", "An error occurred while attempting to remove user searches.");
+						$s->SetMainTable('UserSearch', 'us');
+						$s->AddWhere('UserID', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
+						$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove user searches.');
 						
 						// Delete the users
                   $s->Clear();
-						$s->SetMainTable("User", "u");
-						$s->AddWhere("UserID", "(".implode(",",$InactiveUsers).")", "in", "and", "", 0);
-						$this->Context->Database->Delete($s, $this->Name, "Constructor", "An error occurred while attempting to remove the users.");
+						$s->SetMainTable('User', 'u');
+						$s->AddWhere('UserID', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
+						$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove the users.');
 					}
 					$this->NumberOfUsersRemoved = count($InactiveUsers);
 					$this->PostBackValidated = 1;
 					
-				} elseif ($this->PostBackAction == "CleanupComments") {
+				} elseif ($this->PostBackAction == 'CleanupComments') {
 					// First get all of the hidden comment ids
-					$s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
-					$s->SetMainTable("Comment", "c");
-					$s->AddWhere("Deleted", "1", "=", "and", "", 0);
-					$s->AddWhere("Deleted", "1", "=", "or");
-					$s->AddSelect("CommentID", "c");
-					$Result = $this->Context->Database->Select($s, $this->Name, "Constructor", "An error occurred while attempting to retrieve hidden comments.");
+					$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
+					$s->SetMainTable('Comment', 'c');
+					$s->AddWhere('Deleted', '1', '=', 'and', '', 0);
+					$s->AddWhere('Deleted', '1', '=', 'or');
+					$s->AddSelect('CommentID', 'c');
+					$Result = $this->Context->Database->Select($s, $this->Name, 'Constructor', 'An error occurred while attempting to retrieve hidden comments.');
 					$HiddenCommentIDs = array();
 					while ($Row = $this->Context->Database->GetRow($Result)) {
-						$HiddenCommentIDs[] = ForceInt($Row["CommentID"], 0);
+						$HiddenCommentIDs[] = ForceInt($Row['CommentID'], 0);
 					}
 					$HiddenCommentIDs[] = 0;
 					
 					// Now remove comment blocks
 					$s->Clear();
-					$s->SetMainTable("CommentBlock", "cb");
-					$s->AddWhere("BlockedCommentID", "(".implode(",",$HiddenCommentIDs).")", "in", "and", "", 0);
-					$this->Context->Database->Delete($s, $this->Name, "Constructor", "An error occurred while attempting to remove hidden comment blocks.");
+					$s->SetMainTable('CommentBlock', 'cb');
+					$s->AddWhere('BlockedCommentID', '('.implode(',',$HiddenCommentIDs).')', 'in', 'and', '', 0);
+					$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove hidden comment blocks.');
 					
 					// Now remove the comments
 					$s->Clear();
-					$s->SetMainTable("Comment", "c");
-					$s->AddWhere("Deleted", "1", "=", "and", "", 0);
-					$s->AddWhere("Deleted", "1", "=", "or");
-					$this->Context->Database->Delete($s, $this->Name, "Constructor", "An error occurred while attempting to remove hidden comments.");
+					$s->SetMainTable('Comment', 'c');
+					$s->AddWhere('Deleted', '1', '=', 'and', '', 0);
+					$s->AddWhere('Deleted', '1', '=', 'or');
+					$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove hidden comments.');
 					$this->PostBackValidated = 1;
 					
-				} elseif ($this->PostBackAction == "CleanupDiscussions") {
+				} elseif ($this->PostBackAction == 'CleanupDiscussions') {
 					// First get all of the hidden discussion ids
-					$s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
-					$s->SetMainTable("Discussion", "d");
-					$s->AddSelect("DiscussionID", "d");
-					$s->AddWhere("Active", "0", "=", "and", "", 0);
-					$s->AddWhere("Active", "0", "=", "or");
-					$Result = $this->Context->Database->Select($s, $this->Name, "Constructor", "An error occurred while attempting to retrieve hidden discussions.");
+					$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
+					$s->SetMainTable('Discussion', 'd');
+					$s->AddSelect('DiscussionID', 'd');
+					$s->AddWhere('Active', '0', '=', 'and', '', 0);
+					$s->AddWhere('Active', '0', '=', 'or');
+					$Result = $this->Context->Database->Select($s, $this->Name, 'Constructor', 'An error occurred while attempting to retrieve hidden discussions.');
 					$HiddenDiscussionIDs = array();
 					while ($Row = $this->Context->Database->GetRow($Result)) {
-						$HiddenDiscussionIDs[] = ForceInt($Row["DiscussionID"], 0);
+						$HiddenDiscussionIDs[] = ForceInt($Row['DiscussionID'], 0);
 					}
 					$HiddenDiscussionIDs[] = 0;
 					
 					// Now remove comments associated with those discussions
                $s->Clear();
-					$s->SetMainTable("Comment", "c");
-					$s->AddWhere("DiscussionID", "(".implode(",",$HiddenDiscussionIDs).")", "in", "and", "", 0);
-					$this->Context->Database->Delete($s, $this->Name, "Constructor", "An error occurred while attempting to remove hidden discussion comments.");
+					$s->SetMainTable('Comment', 'c');
+					$s->AddWhere('DiscussionID', '('.implode(',',$HiddenDiscussionIDs).')', 'in', 'and', '', 0);
+					$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove hidden discussion comments.');
 					
 					// Clean up the whisper tables
                $s->Clear();
-					$s->SetMainTable("DiscussionUserWhisperFrom", "wf");
-					$s->AddWhere("DiscussionID", "(".implode(",",$HiddenDiscussionIDs).")", "in", "and", "", 0);
-					$this->Context->Database->Delete($s, $this->Name, "Constructor", "An error occurred while attempting to remove hidden discussion whisper data.");
+					$s->SetMainTable('DiscussionUserWhisperFrom', 'wf');
+					$s->AddWhere('DiscussionID', '('.implode(',',$HiddenDiscussionIDs).')', 'in', 'and', '', 0);
+					$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove hidden discussion whisper data.');
                
                $s->Clear();
-					$s->SetMainTable("DiscussionUserWhisperTo", "wt");
-					$s->AddWhere("DiscussionID", "(".implode(",",$HiddenDiscussionIDs).")", "in", "and", "", 0);
-					$this->Context->Database->Delete($s, $this->Name, "Constructor", "An error occurred while attempting to remove hidden discussion whisper data.");
+					$s->SetMainTable('DiscussionUserWhisperTo', 'wt');
+					$s->AddWhere('DiscussionID', '('.implode(',',$HiddenDiscussionIDs).')', 'in', 'and', '', 0);
+					$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove hidden discussion whisper data.');
 					
 					// Remove bookmarks
                $s->Clear();
-					$s->SetMainTable("UserBookmark", "ub");
-					$s->AddWhere("DiscussionID", "(".implode(",",$HiddenDiscussionIDs).")", "in", "and", "", 0);
-					$this->Context->Database->Delete($s, $this->Name, "Constructor", "An error occurred while attempting to remove hidden discussion bookmark data.");
+					$s->SetMainTable('UserBookmark', 'ub');
+					$s->AddWhere('DiscussionID', '('.implode(',',$HiddenDiscussionIDs).')', 'in', 'and', '', 0);
+					$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove hidden discussion bookmark data.');
 					
 					// Discussion Watch data
                $s->Clear();
-					$s->SetMainTable("UserDiscussionWatch", "uw");
-					$s->AddWhere("DiscussionID", "(".implode(",",$HiddenDiscussionIDs).")", "in", "and", "", 0);
-					$this->Context->Database->Delete($s, $this->Name, "Constructor", "An error occurred while attempting to remove hidden discussion watch data.");
+					$s->SetMainTable('UserDiscussionWatch', 'uw');
+					$s->AddWhere('DiscussionID', '('.implode(',',$HiddenDiscussionIDs).')', 'in', 'and', '', 0);
+					$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove hidden discussion watch data.');
 					
 					// Now remove the discussions themselves
                $s->Clear();
-					$s->SetMainTable("Discussion", "d");
-					$s->AddWhere("Active", "0", "=", "and", "", 0);
-					$s->AddWhere("Active", "0", "=", "or");
-					$this->Context->Database->Delete($s, $this->Name, "Constructor", "An error occurred while attempting to remove hidden discussions.");
+					$s->SetMainTable('Discussion', 'd');
+					$s->AddWhere('Active', '0', '=', 'and', '', 0);
+					$s->AddWhere('Active', '0', '=', 'or');
+					$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove hidden discussions.');
 					$this->PostBackValidated = 1;
 					
-				} elseif ($this->PostBackAction == "PurgeDiscussions") {
+				} elseif ($this->PostBackAction == 'PurgeDiscussions') {
 					// Purge Whisper tables
-               $Sql = "truncate table LUM_DiscussionUserWhisperFrom";
-					$this->Context->Database->Execute($Sql, $this->Name, "Constructor", "An error occurred while attempting to truncate whisper relationships.");
-               $Sql = "truncate table LUM_DiscussionUserWhisperTo";
-					$this->Context->Database->Execute($Sql, $this->Name, "Constructor", "An error occurred while attempting to truncate whisper relationships.");
+               $Sql = 'truncate table LUM_DiscussionUserWhisperFrom';
+					$this->Context->Database->Execute($Sql, $this->Name, 'Constructor', 'An error occurred while attempting to truncate whisper relationships.');
+               $Sql = 'truncate table LUM_DiscussionUserWhisperTo';
+					$this->Context->Database->Execute($Sql, $this->Name, 'Constructor', 'An error occurred while attempting to truncate whisper relationships.');
 					
 					// Comment Blocks
-               $Sql = "truncate table LUM_CommentBlock";
-					$this->Context->Database->Execute($Sql, $this->Name, "Constructor", "An error occurred while attempting to truncate comment blocks.");
+               $Sql = 'truncate table LUM_CommentBlock';
+					$this->Context->Database->Execute($Sql, $this->Name, 'Constructor', 'An error occurred while attempting to truncate comment blocks.');
                
 					// Comments
-               $Sql = "truncate table LUM_Comment";
-					$this->Context->Database->Execute($Sql, $this->Name, "Constructor", "An error occurred while attempting to truncate comments.");
+               $Sql = 'truncate table LUM_Comment';
+					$this->Context->Database->Execute($Sql, $this->Name, 'Constructor', 'An error occurred while attempting to truncate comments.');
                
 					// Discussions
-               $Sql = "truncate table LUM_Discussion";
-					$this->Context->Database->Execute($Sql, $this->Name, "Constructor", "An error occurred while attempting to truncate discussions.");
+               $Sql = 'truncate table LUM_Discussion';
+					$this->Context->Database->Execute($Sql, $this->Name, 'Constructor', 'An error occurred while attempting to truncate discussions.');
                
 					// Bookmarks
-               $Sql = "truncate table LUM_UserBookmark";
-					$this->Context->Database->Execute($Sql, $this->Name, "Constructor", "An error occurred while attempting to truncate bookmarks.");
+               $Sql = 'truncate table LUM_UserBookmark';
+					$this->Context->Database->Execute($Sql, $this->Name, 'Constructor', 'An error occurred while attempting to truncate bookmarks.');
                
                // User discussion watch
-               $Sql = "truncate table LUM_UserDiscussionWatch";
-					$this->Context->Database->Execute($Sql, $this->Name, "Constructor", "An error occurred while attempting to truncate user discussion tracking data.");
+               $Sql = 'truncate table LUM_UserDiscussionWatch';
+					$this->Context->Database->Execute($Sql, $this->Name, 'Constructor', 'An error occurred while attempting to truncate user discussion tracking data.');
 					
 					$this->PostBackValidated = 1;
 					
-				} elseif ($this->PostBackAction == "BackupDatabase") {
-					$FileName = date("Y-m-d-H-i",mktime())."-".$this->Context->Configuration["DATABASE_NAME"].".sql";
+				} elseif ($this->PostBackAction == 'BackupDatabase') {
+					$FileName = date('Y-m-d-H-i',mktime()).'-'.$this->Context->Configuration['DATABASE_NAME'].'.sql';
 					$Return = 1;
 					$StringArray = array();
 					// In order to enable the "system" function in windows, you've got to give
 					// "read & execute" and "read" access to the internet guest account:
 					// (machinename\iuser_machinename).
-					@system($this->Context->Configuration["MYSQL_DUMP_PATH"]
-						."mysqldump --opt -u ".$this->Context->Configuration["DATABASE_USER"]
-						." --password=".$this->Context->Configuration["DATABASE_PASSWORD"]
-						." ".$this->Context->Configuration["DATABASE_NAME"]
-						." > ".$this->Context->Configuration["APPLICATION_PATH"]
-						."images/".$FileName);
-					SaveAsDialogue($this->Context->Configuration["APPLICATION_PATH"]
-						."images/",$FileName,1);
+					@system($this->Context->Configuration['MYSQL_DUMP_PATH']
+						.'mysqldump --opt -u '.$this->Context->Configuration['DATABASE_USER']
+						.' --password='.$this->Context->Configuration['DATABASE_PASSWORD']
+						.' '.$this->Context->Configuration['DATABASE_NAME']
+						.' > '.$this->Context->Configuration['APPLICATION_PATH']
+						.'images/'.$FileName);
+					SaveAsDialogue($this->Context->Configuration['APPLICATION_PATH']
+						.'images/',$FileName,1);
 					
-            } elseif ($this->PostBackAction == "Cleanup") {
+            } elseif ($this->PostBackAction == 'Cleanup') {
 					// Load some stats
 					
 					// 1. The number of hidden discussions
-					$s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
-					$s->SetMainTable("Discussion", "d");
-					$s->AddSelect("DiscussionID", "d", "HiddenDiscussionCount", "count");
-					$s->AddWhere("Active", "0", "=", "and", "", 0);
-					$s->AddWhere("Active", "0", "=", "or");
-					$Result = $this->Context->Database->Select($s, $this->Name, "Constructor", "An error occurred while attempting to retrieve hidden discussion statistics.");
+					$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
+					$s->SetMainTable('Discussion', 'd');
+					$s->AddSelect('DiscussionID', 'd', 'HiddenDiscussionCount', 'count');
+					$s->AddWhere('Active', '0', '=', 'and', '', 0);
+					$s->AddWhere('Active', '0', '=', 'or');
+					$Result = $this->Context->Database->Select($s, $this->Name, 'Constructor', 'An error occurred while attempting to retrieve hidden discussion statistics.');
 					$this->HiddenDiscussions = 0;
 					while ($Row = $this->Context->Database->GetRow($Result)) {
-						$this->HiddenDiscussions = ForceInt($Row["HiddenDiscussionCount"], 0);
+						$this->HiddenDiscussions = ForceInt($Row['HiddenDiscussionCount'], 0);
 					}
 					
 					// 2. The number of hidden comments
 					$s->Clear();
-					$s->SetMainTable("Comment", "d");
-					$s->AddSelect("CommentID", "d", "HiddenCommentCount", "count");
-					$s->AddWhere("Deleted", "1", "=", "and", "", 0);
-					$s->AddWhere("Deleted", "1", "=", "or");
-					$Result = $this->Context->Database->Select($s, $this->Name, "Constructor", "An error occurred while attempting to retrieve hidden comment statistics.");
+					$s->SetMainTable('Comment', 'd');
+					$s->AddSelect('CommentID', 'd', 'HiddenCommentCount', 'count');
+					$s->AddWhere('Deleted', '1', '=', 'and', '', 0);
+					$s->AddWhere('Deleted', '1', '=', 'or');
+					$Result = $this->Context->Database->Select($s, $this->Name, 'Constructor', 'An error occurred while attempting to retrieve hidden comment statistics.');
 					$this->HiddenComments = 0;
 					while ($Row = $this->Context->Database->GetRow($Result)) {
-						$this->HiddenComments = ForceInt($Row["HiddenCommentCount"], 0);
+						$this->HiddenComments = ForceInt($Row['HiddenCommentCount'], 0);
 					}
 					
 					// 3. The number of non-posting users
@@ -303,35 +303,35 @@ if ($Context->SelfUrl == "settings.php" && $Context->Session->User->Permission("
 			}
 		}
 		
-		function GetInactiveUsers($DaysOfMembership = "0") {
+		function GetInactiveUsers($DaysOfMembership = '0') {
 			$MembershipDate = SubtractDaysFromTimeStamp(mktime(), $DaysOfMembership);
-			$s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
-			$s->SetMainTable("User", "u");
-			$s->AddSelect("UserID", "u");
-			$s->AddWhere("CountComments", "0", "=", "and", "", 0, 1);
-			$s->AddWhere("CountComments", "0", "=", "or");
+			$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
+			$s->SetMainTable('User', 'u');
+			$s->AddSelect('UserID', 'u');
+			$s->AddWhere('CountComments', '0', '=', 'and', '', 0, 1);
+			$s->AddWhere('CountComments', '0', '=', 'or');
 			$s->EndWhereGroup();
-			$s->AddWhere("CountDiscussions", "0", "=", "and", "", 0, 1);
-			$s->AddWhere("CountDiscussions", "0", "=", "or");
+			$s->AddWhere('CountDiscussions', '0', '=', 'and', '', 0, 1);
+			$s->AddWhere('CountDiscussions', '0', '=', 'or');
 			$s->EndWhereGroup();
-			if ($DaysOfMembership > 0) $s->AddWhere("DateFirstVisit", MysqlDateTime($MembershipDate), "<");
-			$Result = $this->Context->Database->Select($s, $this->Name, "Constructor", "An error occurred while attempting to retrieve inactive user statistics.");
+			if ($DaysOfMembership > 0) $s->AddWhere('DateFirstVisit', MysqlDateTime($MembershipDate), '<');
+			$Result = $this->Context->Database->Select($s, $this->Name, 'Constructor', 'An error occurred while attempting to retrieve inactive user statistics.');
 			$this->InactiveUsers = 0;
 			$aInactiveUsers = array();
 			while ($Row = $this->Context->Database->GetRow($Result)) {
-				$aInactiveUsers[] = ForceInt($Row["UserID"], 0);
+				$aInactiveUsers[] = ForceInt($Row['UserID'], 0);
 			}
 			
 			if (count($aInactiveUsers) > 0) {
 				// Now (of these users), remove ones that have whispered
 				$s->Clear();
-				$s->SetMainTable("DiscussionUserWhisperFrom", "wf");
-				$s->AddSelect("WhisperFromUserID", "wf");
-				$s->AddWhere("WhisperFromUserID", "(".implode(",",$aInactiveUsers).")", "in", "and", "", 0);
-				$Result = $this->Context->Database->Select($s, $this->Name, "Constructor", "An error occurred while attempting to retrieve inactive user statistics.");
+				$s->SetMainTable('DiscussionUserWhisperFrom', 'wf');
+				$s->AddSelect('WhisperFromUserID', 'wf');
+				$s->AddWhere('WhisperFromUserID', '('.implode(',',$aInactiveUsers).')', 'in', 'and', '', 0);
+				$Result = $this->Context->Database->Select($s, $this->Name, 'Constructor', 'An error occurred while attempting to retrieve inactive user statistics.');
 				$CurrentWhisperUserID = 0;
 				while ($Row = $this->Context->Database->GetRow($Result)) {
-					$CurrentWhisperUserID = ForceInt($Row["WhisperFromUserID"], 0);
+					$CurrentWhisperUserID = ForceInt($Row['WhisperFromUserID'], 0);
 					$Key = array_search($CurrentWhisperUserID, $aInactiveUsers);
 					if ($Key !== false) array_splice($aInactiveUsers, $Key, 1);
 				}
@@ -340,13 +340,13 @@ if ($Context->SelfUrl == "settings.php" && $Context->Session->User->Permission("
 			if (count($aInactiveUsers) > 0) {
 				// Now (of these users), remove ones that have received whispers
 				$s->Clear();
-				$s->SetMainTable("DiscussionUserWhisperTo", "wt");
-				$s->AddSelect("WhisperToUserID", "wt");
-				$s->AddWhere("WhisperToUserID", "(".implode(",",$aInactiveUsers).")", "in", "and", "", 0);
-				$Result = $this->Context->Database->Select($s, $this->Name, "Constructor", "An error occurred while attempting to retrieve inactive user statistics.");
+				$s->SetMainTable('DiscussionUserWhisperTo', 'wt');
+				$s->AddSelect('WhisperToUserID', 'wt');
+				$s->AddWhere('WhisperToUserID', '('.implode(',',$aInactiveUsers).')', 'in', 'and', '', 0);
+				$Result = $this->Context->Database->Select($s, $this->Name, 'Constructor', 'An error occurred while attempting to retrieve inactive user statistics.');
 				$CurrentWhisperUserID = 0;
 				while ($Row = $this->Context->Database->GetRow($Result)) {
-					$CurrentWhisperUserID = ForceInt($Row["WhisperToUserID"], 0);
+					$CurrentWhisperUserID = ForceInt($Row['WhisperToUserID'], 0);
 					$Key = array_search($CurrentWhisperUserID, $aInactiveUsers);
 					if ($Key !== false) array_splice($aInactiveUsers, $Key, 1);
 				}
@@ -356,35 +356,35 @@ if ($Context->SelfUrl == "settings.php" && $Context->Session->User->Permission("
 		}
 		
 		function Render_ValidPostBack() {
-			echo("<div class=\"SettingsForm\">");
-			if ($this->PostBackAction == "CleanupUsers") {
-				echo("<h1>".$this->Context->GetDefinition("CleanupUsers")."</h1>
-				<div class=\"Form LanguageChange\">
-					<div class=\"InputNote\">".$this->NumberOfUsersRemoved.$this->Context->GetDefinition("UsersRemovedSuccessfully")."</div>");
-			} elseif ($this->PostBackAction == "CleanupComments") {
-				echo("<h1>".$this->Context->GetDefinition("CleanupComments")."</h1>
-				<div class=\"Form LanguageChange\">
-					<div class=\"InputNote\">".$this->Context->GetDefinition("CommentsRemovedSuccessfully")."</div>");
-			} elseif ($this->PostBackAction == "CleanupDiscussions") {
-				echo("<h1>".$this->Context->GetDefinition("CleanupDiscussions")."</h1>
-				<div class=\"Form LanguageChange\">
-					<div class=\"InputNote\">".$this->Context->GetDefinition("DiscussionsRemovedSuccessfully")."</div>");
-			} elseif ($this->PostBackAction == "PurgeDiscussions") {
-				echo("<h1>".$this->Context->GetDefinition("PurgeDiscussions")."</h1>
-				<div class=\"Form LanguageChange\">
-					<div class=\"InputNote\">".$this->Context->GetDefinition("DiscussionsPurgedSuccessfully")."</div>");
+			echo('<div class="SettingsForm">');
+			if ($this->PostBackAction == 'CleanupUsers') {
+				echo('<h1>'.$this->Context->GetDefinition('CleanupUsers').'</h1>
+				<div class="Form LanguageChange">
+					<div class="InputNote">'.$this->NumberOfUsersRemoved.$this->Context->GetDefinition('UsersRemovedSuccessfully').'</div>');
+			} elseif ($this->PostBackAction == 'CleanupComments') {
+				echo('<h1>'.$this->Context->GetDefinition('CleanupComments').'</h1>
+				<div class="Form LanguageChange">
+					<div class="InputNote">'.$this->Context->GetDefinition('CommentsRemovedSuccessfully').'</div>');
+			} elseif ($this->PostBackAction == 'CleanupDiscussions') {
+				echo('<h1>'.$this->Context->GetDefinition('CleanupDiscussions').'</h1>
+				<div class="Form LanguageChange">
+					<div class="InputNote">'.$this->Context->GetDefinition('DiscussionsRemovedSuccessfully').'</div>');
+			} elseif ($this->PostBackAction == 'PurgeDiscussions') {
+				echo('<h1>'.$this->Context->GetDefinition('PurgeDiscussions').'</h1>
+				<div class="Form LanguageChange">
+					<div class="InputNote">'.$this->Context->GetDefinition('DiscussionsPurgedSuccessfully').'</div>');
 			}
-					echo("<div class=\"FormLink\"><a href=\"".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=Cleanup")."\">".$this->Context->GetDefinition("ClickHereToContinue")."</a></div>
+					echo('<div class="FormLink"><a href="'.GetUrl($this->Context->Configuration, 'settings.php', '', '', '', '', 'PostBackAction=Cleanup').'">'.$this->Context->GetDefinition('ClickHereToContinue').'</a></div>
 				</div>
-			</div>");
+			</div>');
 		}
 		
 		function Render_NoPostBack() {
 			if ($this->IsPostBack) {
-				if ($this->PostBackAction == "Cleanup") {
-					$DaySelect = $this->Context->ObjectFactory->NewObject($this->Context, "Select");
-					$DaySelect->Name = "Days";
-					$DaySelect->CssClass = "InlineSelect";
+				if ($this->PostBackAction == 'Cleanup') {
+					$DaySelect = $this->Context->ObjectFactory->NewObject($this->Context, 'Select');
+					$DaySelect->Name = 'Days';
+					$DaySelect->CssClass = 'InlineSelect';
 					for ($i = 0; $i < 11; $i++) {
 						$DaySelect->AddOption($i, $i);
 					}

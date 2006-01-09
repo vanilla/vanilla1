@@ -23,30 +23,30 @@ class DiscussionForm extends PostBackControl {
 	var $Title;				// The title of the form
 	
 	function DiscussionForm(&$Context) {
-		$this->Name = "DiscussionForm";
+		$this->Name = 'DiscussionForm';
 		$this->Constructor($Context);
 		$this->FatalError = 0;
 		$this->EditDiscussionID = 0;
-		$this->CommentID = ForceIncomingInt("CommentID", 0);
-		$this->DiscussionID = ForceIncomingInt("DiscussionID", 0);
+		$this->CommentID = ForceIncomingInt('CommentID', 0);
+		$this->DiscussionID = ForceIncomingInt('DiscussionID', 0);
 		$this->DiscussionFormattedForDisplay = 0;
 
-		$this->CallDelegate("PreLoadData");
+		$this->CallDelegate('PreLoadData');
 		
 		// Check permissions and make sure that the user can add comments/discussions
       // Make sure user can post
 		if ($this->DiscussionID == 0 && $this->Context->Session->UserID == 0) {
-			$this->Context->WarningCollector->Add($this->Context->GetDefinition("NoDiscussionsNotSignedIn"));
+			$this->Context->WarningCollector->Add($this->Context->GetDefinition('NoDiscussionsNotSignedIn'));
 			$this->FatalError = 1;
 		}
 
-		$this->Comment = $this->Context->ObjectFactory->NewContextObject($this->Context, "Comment");
-		$this->Discussion = $this->Context->ObjectFactory->NewObject($this->Context, "Discussion");
+		$this->Comment = $this->Context->ObjectFactory->NewContextObject($this->Context, 'Comment');
+		$this->Discussion = $this->Context->ObjectFactory->NewObject($this->Context, 'Discussion');
 		
-		$cm = $this->Context->ObjectFactory->NewContextObject($this->Context, "CommentManager");
-		$dm = $this->Context->ObjectFactory->NewContextObject($this->Context, "DiscussionManager");
-		$this->DelegateParameters["CommentManager"] = &$cm;
-		$this->DelegateParameters["DiscussionManager"] = &$dm;
+		$cm = $this->Context->ObjectFactory->NewContextObject($this->Context, 'CommentManager');
+		$dm = $this->Context->ObjectFactory->NewContextObject($this->Context, 'DiscussionManager');
+		$this->DelegateParameters['CommentManager'] = &$cm;
+		$this->DelegateParameters['DiscussionManager'] = &$dm;
 		// If editing a comment, define it and validate the user's permissions
 		if ($this->CommentID > 0) {
 			$this->Comment = $cm->GetCommentById($this->CommentID, $this->Context->Session->UserID);
@@ -61,7 +61,7 @@ class DiscussionForm extends PostBackControl {
 					// if ($this->Discussion->WhisperUserID > 0) $this->IsPrivateDiscussion = 1;
 				
 					// if editing a discussion
-					if (($this->Context->Session->UserID == $this->Discussion->AuthUserID || $this->Context->Session->User->Permission("PERMISSION_EDIT_DISCUSSIONS")) && $this->Discussion->FirstCommentID == $this->CommentID) {
+					if (($this->Context->Session->UserID == $this->Discussion->AuthUserID || $this->Context->Session->User->Permission('PERMISSION_EDIT_DISCUSSIONS')) && $this->Discussion->FirstCommentID == $this->CommentID) {
 						$this->EditDiscussionID = $this->Discussion->DiscussionID;
 						$this->Discussion->Comment = $this->Comment;
 					}
@@ -74,19 +74,19 @@ class DiscussionForm extends PostBackControl {
 			// Ensure that this user has sufficient priviledges to edit the comment
 			if ($this->Comment
 				&& $this->Discussion
-				&& !$this->Context->Session->User->Permission("PERMISSION_EDIT_COMMENTS")
+				&& !$this->Context->Session->User->Permission('PERMISSION_EDIT_COMMENTS')
 				&& $this->Context->Session->UserID != $this->Comment->AuthUserID
-				&& !($this->Discussion->FirstCommentID == $this->CommentID && $this->Context->Session->User->Permission("PERMISSION_EDIT_DISCUSSIONS"))) {
+				&& !($this->Discussion->FirstCommentID == $this->CommentID && $this->Context->Session->User->Permission('PERMISSION_EDIT_DISCUSSIONS'))) {
 					
-				$this->Context->WarningCollector->Add($this->Context->GetDefinition("ErrPermissionCommentEdit"));
+				$this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrPermissionCommentEdit'));
 				$this->FatalError = 1;
 			}
 		}
 
-		$this->CallDelegate("PostLoadData");
+		$this->CallDelegate('PostLoadData');
 		
 		// If saving a discussion
-		if ($this->PostBackAction == "SaveDiscussion") {
+		if ($this->PostBackAction == 'SaveDiscussion') {
 			$this->Discussion->Clear();
 			$this->Discussion->GetPropertiesFromForm($this->Context);
 			// If we are editing a discussion, the following line
@@ -95,87 +95,87 @@ class DiscussionForm extends PostBackControl {
 			
 			$ResultDiscussion = $dm->SaveDiscussion($this->Discussion);
 			
-			$this->DelegateParameters["ResultDiscussion"] = &$ResultDiscussion;
-			$this->CallDelegate("PostSaveDiscussion");
+			$this->DelegateParameters['ResultDiscussion'] = &$ResultDiscussion;
+			$this->CallDelegate('PostSaveDiscussion');
 			
 			if ($ResultDiscussion) {
 				// Saved successfully, so send back to the discussion
-            $Suffix = CleanupString($this->Discussion->Name)."/";
-				header("location:".GetUrl($this->Context->Configuration, "comments.php", "", "DiscussionID", $ResultDiscussion->DiscussionID, "", "", $Suffix));
+            $Suffix = CleanupString($this->Discussion->Name).'/';
+				header('location:'.GetUrl($this->Context->Configuration, 'comments.php', '', 'DiscussionID', $ResultDiscussion->DiscussionID, '', '', $Suffix));
 				die();
 			}
 		// If saving a comment
-		} elseif ($this->PostBackAction == "SaveComment") {
+		} elseif ($this->PostBackAction == 'SaveComment') {
 			$this->Comment->Clear();
 			$this->Comment->GetPropertiesFromForm();
 			$this->Comment->DiscussionID = $this->DiscussionID;
 			$this->Discussion = $dm->GetDiscussionById($this->Comment->DiscussionID);
 			$ResultComment = $cm->SaveComment($this->Comment);
 			
-			$this->DelegateParameters["ResultComment"] = &$ResultComment;
-			$this->CallDelegate("PostSaveComment");
+			$this->DelegateParameters['ResultComment'] = &$ResultComment;
+			$this->CallDelegate('PostSaveComment');
 			
 			if ($ResultComment) {
 				// Saved successfully, so send back to the discussion
             // print_r($this->Discussion);
-            $Suffix = CleanupString($this->Discussion->Name)."/";
-				header("location:".GetUrl($this->Context->Configuration, "comments.php", "", "DiscussionID", $ResultComment->DiscussionID, $this->Discussion->LastPage, ($ResultComment->CommentID > 0 ? "#Comment_".$ResultComment->CommentID:"#pgbottom"), $Suffix));
+            $Suffix = CleanupString($this->Discussion->Name).'/';
+				header('location:'.GetUrl($this->Context->Configuration, 'comments.php', '', 'DiscussionID', $ResultComment->DiscussionID, $this->Discussion->LastPage, ($ResultComment->CommentID > 0 ? '#Comment_'.$ResultComment->CommentID:'#pgbottom'), $Suffix));
 				die();
 			}
 		}
 		if (!$this->IsPostBack && $this->Comment->DiscussionID == 0 && $this->Comment->CommentID == 0) {
-			if (!$this->Discussion->Comment) $this->Discussion->Comment = $this->Context->ObjectFactory->NewContextObject($this->Context, "Comment");
+			if (!$this->Discussion->Comment) $this->Discussion->Comment = $this->Context->ObjectFactory->NewContextObject($this->Context, 'Comment');
 			
 			$this->Discussion->Comment->FormatType = $this->Context->Session->User->DefaultFormatType;
 			$this->Comment->FormatType = $this->Context->Session->User->DefaultFormatType;
 		}
 			
-		$this->PostBackParams->Set("CommentID", $this->Comment->CommentID);
-		$this->PostBackParams->Set("DiscussionID", $this->DiscussionID);
-		$this->Title = $this->Context->GetDefinition("StartANewDiscussion");
+		$this->PostBackParams->Set('CommentID', $this->Comment->CommentID);
+		$this->PostBackParams->Set('DiscussionID', $this->DiscussionID);
+		$this->Title = $this->Context->GetDefinition('StartANewDiscussion');
 		if ($this->EditDiscussionID > 0 || ($this->CommentID == 0 && $this->DiscussionID == 0)) {
-			$this->Form = "DiscussionForm";
+			$this->Form = 'DiscussionForm';
 		} else {
-			$this->Form = "CommentForm";
+			$this->Form = 'CommentForm';
 			if ($this->Comment->CommentID > 0) {
-				$this->Title = $this->Context->GetDefinition("EditYourComments");
+				$this->Title = $this->Context->GetDefinition('EditYourComments');
 			} else {
-				$this->Title = $this->Context->GetDefinition("AddYourComments");
+				$this->Title = $this->Context->GetDefinition('AddYourComments');
 			}
 		}
 		$this->Context->PageTitle = $this->Title;
-		$this->CallDelegate("PostSaveData");
+		$this->CallDelegate('PostSaveData');
 	}
 	
 	function GetCommentForm($Comment) {
-		$this->CallDelegate("CommentForm_PreRender");
+		$this->CallDelegate('CommentForm_PreRender');
 		
 		// Encode everything properly
       $Comment->FormatPropertiesForDisplay(1);
 		
-		$this->PostBackParams->Set("PostBackAction", "SaveComment");
-		$this->PostBackParams->Set("UserCommentCount", $this->Context->Session->User->CountComments);
-		$this->PostBackParams->Set("AuthUserID", $Comment->AuthUserID);
+		$this->PostBackParams->Set('PostBackAction', 'SaveComment');
+		$this->PostBackParams->Set('UserCommentCount', $this->Context->Session->User->CountComments);
+		$this->PostBackParams->Set('AuthUserID', $Comment->AuthUserID);
 
-		include($this->Context->Configuration["THEME_PATH"]."templates/comment_form.php");
+		include($this->Context->Configuration['THEME_PATH'].'templates/comment_form.php');
 		
-		$this->CallDelegate("CommentForm_PostRender");
+		$this->CallDelegate('CommentForm_PostRender');
 	}
 	
 	function GetDiscussionForm($Discussion) {
-		$this->CallDelegate("DiscussionForm_PreRender");
+		$this->CallDelegate('DiscussionForm_PreRender');
 		
 		if (!$this->DiscussionFormattedForDisplay) $Discussion->FormatPropertiesForDisplay();
 		$Discussion->Comment->FormatPropertiesForDisplay(1);
 		
 		// Load the category selector
-		$cm = $this->Context->ObjectFactory->NewContextObject($this->Context, "CategoryManager");
+		$cm = $this->Context->ObjectFactory->NewContextObject($this->Context, 'CategoryManager');
 		$CategoryData = $cm->GetCategories(0, 1);
-		$cs = $this->Context->ObjectFactory->NewObject($this->Context, "Select");
-		$cs->Name = "CategoryID";
-		$cs->CssClass = "CategorySelect";
-		$cs->SelectedID = ForceIncomingInt("CategoryID", $Discussion->CategoryID);
-		$cat = $this->Context->ObjectFactory->NewObject($this->Context, "Category");
+		$cs = $this->Context->ObjectFactory->NewObject($this->Context, 'Select');
+		$cs->Name = 'CategoryID';
+		$cs->CssClass = 'CategorySelect';
+		$cs->SelectedID = ForceIncomingInt('CategoryID', $Discussion->CategoryID);
+		$cat = $this->Context->ObjectFactory->NewObject($this->Context, 'Category');
 		$LastBlocked = -1;
 		while ($Row = $this->Context->Database->GetRow($CategoryData)) {
 			$cat->Clear();
@@ -188,20 +188,20 @@ class DiscussionForm extends PostBackControl {
 			$LastBlocked = $cat->Blocked;
 		}
 		
-		$this->PostBackParams->Set("CommentID", $Discussion->FirstCommentID);
-		$this->PostBackParams->Set("AuthUserID", $Discussion->AuthUserID);
-		$this->PostBackParams->Set("UserDiscussionCount", $this->Context->Session->User->CountDiscussions);
-		$this->PostBackParams->Set("PostBackAction", "SaveDiscussion");
+		$this->PostBackParams->Set('CommentID', $Discussion->FirstCommentID);
+		$this->PostBackParams->Set('AuthUserID', $Discussion->AuthUserID);
+		$this->PostBackParams->Set('UserDiscussionCount', $this->Context->Session->User->CountDiscussions);
+		$this->PostBackParams->Set('PostBackAction', 'SaveDiscussion');
 		
-		include($this->Context->Configuration["THEME_PATH"]."templates/discussion_form.php");
+		include($this->Context->Configuration['THEME_PATH'].'templates/discussion_form.php');
 		
-		$this->CallDelegate("DiscussionForm_PostRender");
+		$this->CallDelegate('DiscussionForm_PostRender');
 	}
 	
 	function GetPostFormatting($SelectedFormatType) {
 		$FormatCount = count($this->Context->StringManipulator->Formatters);
-		$sReturn = "";
-		include($this->Context->Configuration["THEME_PATH"]."templates/post_formatter.php");
+		$sReturn = '';
+		include($this->Context->Configuration['THEME_PATH'].'templates/post_formatter.php');
 		return $sReturn;
 	}
 	
@@ -209,9 +209,9 @@ class DiscussionForm extends PostBackControl {
 		if ($this->FatalError) {
 			$this->Render_Warnings();
 		} else {
-			if ($this->Form == "DiscussionForm") {
+			if ($this->Form == 'DiscussionForm') {
 				$this->GetDiscussionForm($this->Discussion);
-			} elseif ($this->Form == "CommentForm") {
+			} elseif ($this->Form == 'CommentForm') {
 				$this->GetCommentForm($this->Comment);
 			}
 		}

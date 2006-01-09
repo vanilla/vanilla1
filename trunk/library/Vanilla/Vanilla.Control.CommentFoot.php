@@ -15,15 +15,15 @@
 class CommentFoot extends Control {
 	
 	function CommentFoot(&$Context) {
-		$this->Name = "CommentFoot";
+		$this->Name = 'CommentFoot';
 		$this->Control($Context);
-		$this->CallDelegate("Constructor");
+		$this->CallDelegate('Constructor');
 	}
 	
 	function Render() {
-		$this->CallDelegate("PreRender");
-		include($this->Context->Configuration["THEME_PATH"]."templates/comments_foot.php");
-		$this->CallDelegate("PostRender");
+		$this->CallDelegate('PreRender');
+		include($this->Context->Configuration['THEME_PATH'].'templates/comments_foot.php');
+		$this->CallDelegate('PostRender');
 	}
 }
 ?>

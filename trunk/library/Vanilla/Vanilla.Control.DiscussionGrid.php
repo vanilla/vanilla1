@@ -36,51 +36,51 @@ class DiscussionGrid extends Control {
 			$cm = $this->Context->ObjectFactory->NewContextObject($this->Context, "CategoryManager");
 			$Category = $cm->GetCategoryById($CategoryID);
 		}
-		$this->PageJump = "<a class=\"PageJump AllDiscussions\" href=\"".GetUrl($this->Context->Configuration, "index.php")."\">".$this->Context->GetDefinition("ShowAll")."</a>";
+		$this->PageJump = '<a class="PageJump AllDiscussions" href="'.GetUrl($this->Context->Configuration, 'index.php').'">'.$this->Context->GetDefinition('ShowAll').'</a>';
 
-		$this->DelegateParameters["DiscussionManager"] = &$DiscussionManager;
-		$this->CallDelegate("PreDataLoad");
+		$this->DelegateParameters['DiscussionManager'] = &$DiscussionManager;
+		$this->CallDelegate('PreDataLoad');
 		
 		if (!$this->DiscussionData) {
-			$this->DiscussionData = $DiscussionManager->GetDiscussionList($this->Context->Configuration["DISCUSSIONS_PER_PAGE"], $this->CurrentPage, $CategoryID);
+			$this->DiscussionData = $DiscussionManager->GetDiscussionList($this->Context->Configuration['DISCUSSIONS_PER_PAGE'], $this->CurrentPage, $CategoryID);
 			$this->DiscussionDataCount = $DiscussionManager->GetDiscussionCount($CategoryID);		
 		
 			if ($Category) {
 				$this->Context->PageTitle = $Category->Name;
 			} else {
 				if ($this->Context->Session->User->BlocksCategories) {
-					$this->Context->PageTitle = $this->Context->GetDefinition("WatchedDiscussions");
+					$this->Context->PageTitle = $this->Context->GetDefinition('WatchedDiscussions');
 				} else {
-					$this->Context->PageTitle = $this->Context->GetDefinition("AllDiscussions");
+					$this->Context->PageTitle = $this->Context->GetDefinition('AllDiscussions');
 				}
-				$this->PageJump = "";
+				$this->PageJump = '';
 			}
 		}
 		
-		$this->CallDelegate("Constructor");
+		$this->CallDelegate('Constructor');
 	}
 	
 	function Render() {
-		$this->CallDelegate("PreRender");
+		$this->CallDelegate('PreRender');
 		// Set up the pagelist
-      $CategoryID = ForceIncomingInt("CategoryID", 0);
-		if ($CategoryID == 0) $CategoryID = "";
-		$pl = $this->Context->ObjectFactory->NewContextObject($this->Context, "PageList", "CategoryID", $CategoryID);
-		$pl->NextText = $this->Context->GetDefinition("Next");
-		$pl->PreviousText = $this->Context->GetDefinition("Previous");
-		$pl->CssClass = "PageList";
+      $CategoryID = ForceIncomingInt('CategoryID', 0);
+		if ($CategoryID == 0) $CategoryID = '';
+		$pl = $this->Context->ObjectFactory->NewContextObject($this->Context, 'PageList', 'CategoryID', $CategoryID);
+		$pl->NextText = $this->Context->GetDefinition('Next');
+		$pl->PreviousText = $this->Context->GetDefinition('Previous');
+		$pl->CssClass = 'PageList';
 		$pl->TotalRecords = $this->DiscussionDataCount;
 		$pl->CurrentPage = $this->CurrentPage;
-		$pl->RecordsPerPage = $this->Context->Configuration["DISCUSSIONS_PER_PAGE"];
+		$pl->RecordsPerPage = $this->Context->Configuration['DISCUSSIONS_PER_PAGE'];
 		$pl->PagesToDisplay = 10;
-		$pl->PageParameterName = "page";
+		$pl->PageParameterName = 'page';
 		$pl->DefineProperties();
 		$PageDetails = $pl->GetPageDetails($this->Context);
 		$PageList = $pl->GetNumericList();
 		
 		
-		include($this->Context->Configuration["THEME_PATH"]."templates/discussions.php");
-		$this->CallDelegate("PostRender");
+		include($this->Context->Configuration['THEME_PATH'].'templates/discussions.php');
+		$this->CallDelegate('PostRender');
 	}	
 }
 ?>

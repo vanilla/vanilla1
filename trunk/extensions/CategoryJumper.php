@@ -19,43 +19,43 @@ Contact Mark O'Sullivan at mark [at] lussumo [dot] com
 You should cut & paste these language definitions into your conf/your_language.php file
 (replace "your_language" with your chosen language, of course):
 */
-$Context->Dictionary["AllUnblockedCategories"] = "All unblocked categories";
+$Context->Dictionary['AllUnblockedCategories'] = 'All unblocked categories';
 
 function GetCategoryJumper(&$Context) {
-   $CategoryManager = $Context->ObjectFactory->NewContextObject($Context, "CategoryManager");
+   $CategoryManager = $Context->ObjectFactory->NewContextObject($Context, 'CategoryManager');
    $CategoryData = $CategoryManager->GetCategories(0, 1);
    if (!$CategoryData) {
-      return "";      
+      return '';      
    } else {
-      $Select = $Context->ObjectFactory->NewObject($Context, "Select");
-      $Select->Name = "CategoryID";
-      $Select->SelectedID = ForceIncomingInt("CategoryID", 0);
-      $Select->CssClass = "CategoryJumper";
-      if ($Context->Configuration["URL_BUILDING_METHOD"] == "mod_rewrite") {
+      $Select = $Context->ObjectFactory->NewObject($Context, 'Select');
+      $Select->Name = 'CategoryID';
+      $Select->SelectedID = ForceIncomingInt('CategoryID', 0);
+      $Select->CssClass = 'CategoryJumper';
+      if ($Context->Configuration['URL_BUILDING_METHOD'] == 'mod_rewrite') {
          $Select->Attributes = "onchange=\"document.location='./'+(this.options[this.selectedIndex].value > 0 ? this.options[this.selectedIndex].value+'/' : 'discussions/');\"";
       } else {
          $Select->Attributes = "onchange=\"document.location='./'+(this.options[this.selectedIndex].value > 0 ? '?CategoryID='+this.options[this.selectedIndex].value : '');\"";
       }
       
-      $Select->AddOption(0, $Context->GetDefinition("AllUnblockedCategories"));         
+      $Select->AddOption(0, $Context->GetDefinition('AllUnblockedCategories'));         
       $LastBlocked = -1;
-      $cat = $Context->ObjectFactory->NewObject($Context, "Category");
+      $cat = $Context->ObjectFactory->NewObject($Context, 'Category');
       while ($Row = $Context->Database->GetRow($CategoryData)) {
          $cat->Clear();
          $cat->GetPropertiesFromDataSet($Row);
          $cat->FormatPropertiesForDisplay();
          if ($cat->Blocked != $LastBlocked && $LastBlocked != -1) {
-            $Select->AddOption("-1", "---", " disabled=\"true\"");
+            $Select->AddOption('-1', '---', " disabled=\"true\"");
          }
          $Select->AddOption($cat->CategoryID, $cat->Name);
          $LastBlocked = $cat->Blocked;
       }         
-      return "<h2>".$Context->GetDefinition("Categories")."</h2>"
-         ."<div class=\"CategoryJumper\">".$Select->Get()."</div>";
+      return '<h2>'.$Context->GetDefinition('Categories').'</h2>'
+         .'<div class="CategoryJumper">'.$Select->Get().'</div>';
    }
 }
 
-if ($Context->SelfUrl == "index.php" && $Configuration["USE_CATEGORIES"]) {
+if ($Context->SelfUrl == 'index.php' && $Configuration['USE_CATEGORIES']) {
    $Panel->AddString(GetCategoryJumper($Context), 5);
 }
 ?>

@@ -20,100 +20,100 @@ class CategoryForm extends PostBackControl {
 	var $Category;
 
 	function CategoryForm(&$Context) {
-      $this->Name = "CategoryForm";
-		$this->ValidActions = array("Categories", "Category", "ProcessCategory", "CategoryRemove", "ProcessCategoryRemove");
+      $this->Name = 'CategoryForm';
+		$this->ValidActions = array('Categories', 'Category', 'ProcessCategory', 'CategoryRemove', 'ProcessCategoryRemove');
 		$this->Constructor($Context);
 		if ($this->IsPostBack) {
-			$CategoryID = ForceIncomingInt("CategoryID", 0);
-			$ReplacementCategoryID = ForceIncomingInt("ReplacementCategoryID", 0);
-			$this->CategoryManager = $this->Context->ObjectFactory->NewContextObject($this->Context, "CategoryManager");
+			$CategoryID = ForceIncomingInt('CategoryID', 0);
+			$ReplacementCategoryID = ForceIncomingInt('ReplacementCategoryID', 0);
+			$this->CategoryManager = $this->Context->ObjectFactory->NewContextObject($this->Context, 'CategoryManager');
 			
-			if ($this->PostBackAction == "ProcessCategory") {
-				$this->Category = $this->Context->ObjectFactory->NewObject($this->Context, "Category");
+			if ($this->PostBackAction == 'ProcessCategory') {
+				$this->Category = $this->Context->ObjectFactory->NewObject($this->Context, 'Category');
 				$this->Category->GetPropertiesFromForm($this->Context);
-				if (($this->Category->CategoryID > 0 && $this->Context->Session->User->Permission("PERMISSION_EDIT_CATEGORIES"))
-					|| ($this->Category->CategoryID == 0 && $this->Context->Session->User->Permission("PERMISSION_ADD_CATEGORIES"))) {
+				if (($this->Category->CategoryID > 0 && $this->Context->Session->User->Permission('PERMISSION_EDIT_CATEGORIES'))
+					|| ($this->Category->CategoryID == 0 && $this->Context->Session->User->Permission('PERMISSION_ADD_CATEGORIES'))) {
 					if ($this->CategoryManager->SaveCategory($this->Category)) {
-						header("location: ".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=Categories"));
+						header('location: '.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=Categories'));
 					}
 				} else {
 					$this->IsPostBack = 0;
 				}
-			} elseif ($this->PostBackAction == "ProcessCategoryRemove") {
-				if ($this->Context->Session->User->Permission("PERMISSION_REMOVE_CATEGORIES")) {
+			} elseif ($this->PostBackAction == 'ProcessCategoryRemove') {
+				if ($this->Context->Session->User->Permission('PERMISSION_REMOVE_CATEGORIES')) {
 					if ($this->CategoryManager->RemoveCategory($CategoryID, $ReplacementCategoryID)) {
-						header("location: ".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=Categories"));
+						header('location: '.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=Categories'));
 					}
 				} else {
 					$this->IsPostBack = 0;
 				}
 			}
 			
-			if (in_array($this->PostBackAction, array("CategoryRemove", "Categories", "Category", "ProcessCategory", "ProcessCategoryRemove"))) {
+			if (in_array($this->PostBackAction, array('CategoryRemove', 'Categories', 'Category', 'ProcessCategory', 'ProcessCategoryRemove'))) {
 				$this->CategoryData = $this->CategoryManager->GetCategories(1);
 			}
-			if (in_array($this->PostBackAction, array("CategoryRemove", "Category", "ProcessCategoryRemove"))) {
-				$this->CategorySelect = $this->Context->ObjectFactory->NewObject($this->Context, "Select");
-				$this->CategorySelect->Name = "CategoryID";
-				$this->CategorySelect->CssClass = "SmallInput";
-				$this->CategorySelect->AddOption("", $this->Context->GetDefinition("Choose"));
-				$this->CategorySelect->AddOptionsFromDataSet($this->Context->Database, $this->CategoryData, "CategoryID", "Name");
+			if (in_array($this->PostBackAction, array('CategoryRemove', 'Category', 'ProcessCategoryRemove'))) {
+				$this->CategorySelect = $this->Context->ObjectFactory->NewObject($this->Context, 'Select');
+				$this->CategorySelect->Name = 'CategoryID';
+				$this->CategorySelect->CssClass = 'SmallInput';
+				$this->CategorySelect->AddOption('', $this->Context->GetDefinition('Choose'));
+				$this->CategorySelect->AddOptionsFromDataSet($this->Context->Database, $this->CategoryData, 'CategoryID', 'Name');
 			}
-			if (in_array($this->PostBackAction, array("Category", "ProcessCategory"))) {
-				$this->CategoryRoles = $this->Context->ObjectFactory->NewObject($this->Context, "Checkbox");
-				$this->CategoryRoles->Name = "CategoryRoleBlock[]";
+			if (in_array($this->PostBackAction, array('Category', 'ProcessCategory'))) {
+				$this->CategoryRoles = $this->Context->ObjectFactory->NewObject($this->Context, 'Checkbox');
+				$this->CategoryRoles->Name = 'CategoryRoleBlock[]';
 				$CategoryRoleData = $this->CategoryManager->GetCategoryRoleBlocks($CategoryID);
 				$this->CategoryRoles->AddOptionsFromDataSet($this->Context->Database,
 					$CategoryRoleData,
-					"RoleID",
-					"Name",
-					"Blocked",
+					'RoleID',
+					'Name',
+					'Blocked',
 					1);
-				$this->CategoryRoles->CssClass = "CheckBox";
+				$this->CategoryRoles->CssClass = 'CheckBox';
 			}
-			if ($this->PostBackAction == "Category") {
+			if ($this->PostBackAction == 'Category') {
 				if ($CategoryID > 0) {
 					$this->Category = $this->CategoryManager->GetCategoryById($CategoryID);
 				} else {
-					$this->Category = $this->Context->ObjectFactory->NewObject($this->Context, "Category");
+					$this->Category = $this->Context->ObjectFactory->NewObject($this->Context, 'Category');
 				}
 			}
-			if (in_array($this->PostBackAction, array("ProcessCategory", "ProcessCategoryRemove"))) {
+			if (in_array($this->PostBackAction, array('ProcessCategory', 'ProcessCategoryRemove'))) {
 				// Show the form again with errors
-				$this->PostBackAction = str_replace("Process", "", $this->PostBackAction);
+				$this->PostBackAction = str_replace('Process', '', $this->PostBackAction);
 			}
 		}
-      $this->CallDelegate("Constructor");
+      $this->CallDelegate('Constructor');
 	}
 	
 	function Render() {
 		if ($this->IsPostBack) {
-         $this->CallDelegate("PreRender");
+         $this->CallDelegate('PreRender');
 			$this->PostBackParams->Clear();
-			$CategoryID = ForceIncomingInt("CategoryID", 0);
+			$CategoryID = ForceIncomingInt('CategoryID', 0);
 			
-			if ($this->PostBackAction == "Category") {
-				$this->PostBackParams->Set("PostBackAction", "ProcessCategory");
-            $this->CallDelegate("PreEditRender");
-            include($this->Context->Configuration["THEME_PATH"]."templates/settings_category_edit.php");
-            $this->CallDelegate("PostEditRender");
+			if ($this->PostBackAction == 'Category') {
+				$this->PostBackParams->Set('PostBackAction', 'ProcessCategory');
+            $this->CallDelegate('PreEditRender');
+            include($this->Context->Configuration['THEME_PATH'].'templates/settings_category_edit.php');
+            $this->CallDelegate('PostEditRender');
 				
-			} elseif ($this->PostBackAction == "CategoryRemove") {
-				$this->PostBackParams->Set("PostBackAction", "ProcessCategoryRemove");
+			} elseif ($this->PostBackAction == 'CategoryRemove') {
+				$this->PostBackParams->Set('PostBackAction', 'ProcessCategoryRemove');
 				$this->CategorySelect->Attributes = "onchange=\"document.location='?PostBackAction=CategoryRemove&amp;CategoryID='+this.options[this.selectedIndex].value;\"";
 				$this->CategorySelect->SelectedID = $CategoryID;
-            $this->CallDelegate("PreRemoveRender");
-            include($this->Context->Configuration["THEME_PATH"]."templates/settings_category_remove.php");            
-            $this->CallDelegate("PostRemoveRender");
+            $this->CallDelegate('PreRemoveRender');
+            include($this->Context->Configuration['THEME_PATH'].'templates/settings_category_remove.php');            
+            $this->CallDelegate('PostRemoveRender');
             
 			} else {
-				$this->PostBackParams->Set("PostBackAction", "ProcessCategories");
-            $this->CallDelegate("PreListRender");
-            include($this->Context->Configuration["THEME_PATH"]."templates/settings_category_list.php");            
-            $this->CallDelegate("PostListRender");
+				$this->PostBackParams->Set('PostBackAction', 'ProcessCategories');
+            $this->CallDelegate('PreListRender');
+            include($this->Context->Configuration['THEME_PATH'].'templates/settings_category_list.php');            
+            $this->CallDelegate('PostListRender');
             
 			}
-         $this->CallDelegate("PostRender");
+         $this->CallDelegate('PostRender');
 		}
 	}
 }

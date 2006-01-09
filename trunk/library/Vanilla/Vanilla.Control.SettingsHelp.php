@@ -15,15 +15,15 @@
 class SettingsHelp extends Control {
 	
 	function AdminOptions(&$Context) {
-      $this->Name = "SettingsHelp";
+      $this->Name = 'SettingsHelp';
       $this->Control($Context);
 	}
 	
 	function Render() {
-		if ($this->PostBackAction == "") {
-         $this->CallDelegate("PreRender");
-         include($this->Context->Configuration["THEME_PATH"]."templates/settings_help.php");
-         $this->CallDelegate("PostRender");
+		if ($this->PostBackAction == '') {
+         $this->CallDelegate('PreRender');
+         include($this->Context->Configuration['THEME_PATH'].'templates/settings_help.php');
+         $this->CallDelegate('PostRender');
 		}
 	}
 }

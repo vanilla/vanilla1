@@ -27,58 +27,58 @@ class Search {
    // Clears all properties
    function Clear() {
       $this->SearchID = 0;
-      $this->Label = "";
-      $this->Type = "Topics";
-      $this->Keywords = "";
-		$this->Query = "";
+      $this->Label = '';
+      $this->Type = 'Topics';
+      $this->Keywords = '';
+		$this->Query = '';
       $this->Categories = 0;
-      $this->AuthUsername = "";
+      $this->AuthUsername = '';
 		$this->WhisperFilter = 0;
 		$this->Roles = 0;
-		$this->UserOrder = "";
+		$this->UserOrder = '';
 		$this->HighlightWords = array();
    }
 	
 	function DefineType($InValue) {
-      if ($InValue != "Users" && $InValue != "Comments") $InValue = "Topics";
+      if ($InValue != 'Users' && $InValue != 'Comments') $InValue = 'Topics';
 		return $InValue;
 	}
 
-   function GetPropertiesFromDataSet($DataSet, $ParseKeywords = "0") {
+   function GetPropertiesFromDataSet($DataSet, $ParseKeywords = '0') {
 		$ParseKeywords = ForceBool($ParseKeywords, 0);
 		
-      $this->SearchID = ForceInt(@$DataSet["SearchID"], 0);
-      $this->Label = ForceString(@$DataSet["Label"], "");
-      $this->Type = $this->DefineType(ForceString(@$DataSet["Type"], ""));
-      $this->Keywords = urldecode(ForceString(@$DataSet["Keywords"], ""));
+      $this->SearchID = ForceInt(@$DataSet['SearchID'], 0);
+      $this->Label = ForceString(@$DataSet['Label'], '');
+      $this->Type = $this->DefineType(ForceString(@$DataSet['Type'], ''));
+      $this->Keywords = urldecode(ForceString(@$DataSet['Keywords'], ''));
 		if ($ParseKeywords) $this->ParseKeywords($this->Type, $this->Keywords);
    }
     
    function GetPropertiesFromForm() {
-      $this->SearchID = ForceIncomingInt("SearchID", 0);
-      $this->Label = ForceIncomingString("Label", "");
-		$this->Type = $this->DefineType(ForceIncomingString("Type", ""));
-		$this->Keywords = urldecode(ForceIncomingString("Keywords", ""));
+      $this->SearchID = ForceIncomingInt('SearchID', 0);
+      $this->Label = ForceIncomingString('Label', '');
+		$this->Type = $this->DefineType(ForceIncomingString('Type', ''));
+		$this->Keywords = urldecode(ForceIncomingString('Keywords', ''));
 		
 		// Parse out the keywords differently based on the type of search
-		$Advanced = ForceIncomingBool("Advanced", 0);
+		$Advanced = ForceIncomingBool('Advanced', 0);
 		if ($Advanced) {
 			// Load all of the search variables from the form
-	      $this->Categories = ForceIncomingString("Categories", "");
-			$this->AuthUsername = ForceIncomingString("AuthUsername", "");
-			$this->Roles = ForceIncomingString("Roles", "");
-			$this->UserOrder = ForceIncomingString("UserOrder", "");
+	      $this->Categories = ForceIncomingString('Categories', '');
+			$this->AuthUsername = ForceIncomingString('AuthUsername', '');
+			$this->Roles = ForceIncomingString('Roles', '');
+			$this->UserOrder = ForceIncomingString('UserOrder', '');
 			$this->Query = $this->Keywords;
          
 			// Build the keyword definition
-         $KeyDef = "";
-         if ($this->Type == "Users") {
-				if ($this->Roles != "") $KeyDef = "roles:".$this->Roles.";";
-				if ($this->UserOrder != "") $KeyDef .= "sort:".$this->UserOrder.";";
+         $KeyDef = '';
+         if ($this->Type == 'Users') {
+				if ($this->Roles != '') $KeyDef = 'roles:'.$this->Roles.';';
+				if ($this->UserOrder != '') $KeyDef .= 'sort:'.$this->UserOrder.';';
 				$this->Keywords = $KeyDef.$this->Keywords;
 			} else {
-				if ($this->Categories != "") $KeyDef = "cats:".$this->Categories.";";
-				if ($this->AuthUsername != "") $KeyDef .= $this->AuthUsername.":";
+				if ($this->Categories != '') $KeyDef = 'cats:'.$this->Categories.';';
+				if ($this->AuthUsername != '') $KeyDef .= $this->AuthUsername.':';
 				$this->Keywords = $KeyDef.$this->Keywords;
 			}			
 		} else {
@@ -88,30 +88,30 @@ class Search {
    }
 	
 	function ParseKeywords($Type, $Keywords) {
-		if ($Type == "Users") {
+		if ($Type == 'Users') {
 			// Parse twice to hit both of the potential keyword assignment operators (roles or sort)
 			$this->Query = $this->ParseUserKeywords($Keywords);
 			$this->Query = $this->ParseUserKeywords($this->Query);
 		} else {
 			// Check for category assignments
 			$this->Query = $Keywords;
-			$CatPos = strpos($this->Query, "cats:");
+			$CatPos = strpos($this->Query, 'cats:');
 			if ($CatPos !== false && $CatPos == 0) {
-				$this->Query = $this->ParsePropertyAssignment("Categories", 5, $this->Query);
+				$this->Query = $this->ParsePropertyAssignment('Categories', 5, $this->Query);
 			}
 			
 			// Check for whisper filtering
-			$WhisperPos = strpos($this->Query, "whisper;");
+			$WhisperPos = strpos($this->Query, 'whisper;');
 			if ($WhisperPos !== false && $WhisperPos == 0) {
 				$this->WhisperFilter = 1;
 				$this->Query = substr($this->Query, 8);
 			}
 			
 			// Check for username assignment
-         $ColonPos = strpos($this->Query, ":");
+         $ColonPos = strpos($this->Query, ':');
 			if ($ColonPos !== false && $ColonPos != 0) {
 				// If a colon was found, check to see that it didn't occur before any quotes
-            $QuotePos = strpos($this->Query, "\"");
+            $QuotePos = strpos($this->Query, '\'');
 				if ($QuotePos === false || $QuotePos > $ColonPos) {
 					$this->AuthUsername = substr($this->Query, 0, $ColonPos);
 					$this->Query = substr($this->Query, $ColonPos+1);
@@ -119,11 +119,11 @@ class Search {
 			}
 		}
 		$Highlight = $this->Query;
-		if ($Highlight != "") {
-			$Highlight = eregi_replace("\"", "", $Highlight);
-			$Highlight = eregi_replace(" and ", "", $Highlight);
-			$Highlight = eregi_replace(" or ", "", $Highlight);
-			$this->HighlightWords = explode(" ", $Highlight);
+		if ($Highlight != '') {
+			$Highlight = eregi_replace('\'', '', $Highlight);
+			$Highlight = eregi_replace(' and ', '', $Highlight);
+			$Highlight = eregi_replace(' or ', '', $Highlight);
+			$this->HighlightWords = explode(' ', $Highlight);
 		}
 	}
 	
@@ -131,7 +131,7 @@ class Search {
 		$sReturn = $Keywords;
 		$DelimiterPos = false;
 		$sReturn = substr($sReturn, $PropertyLength);
-		$DelimiterPos = strpos($sReturn, ";");
+		$DelimiterPos = strpos($sReturn, ';');
 		if ($DelimiterPos !== false) {
 			$this->$Property = substr($sReturn, 0, $DelimiterPos);
 		} else {
@@ -143,12 +143,12 @@ class Search {
 	function ParseUserKeywords($Keywords) {
 		$sReturn = $Keywords;
 		// Check for roles or sort definition
-		$RolePos = strpos($sReturn, "roles:");
-		$SortPos = strpos($sReturn, "sort:");
+		$RolePos = strpos($sReturn, 'roles:');
+		$SortPos = strpos($sReturn, 'sort:');
 		if ($RolePos !== false && $RolePos == 0) {
-			$sReturn = $this->ParsePropertyAssignment("Roles", 6, $sReturn);
+			$sReturn = $this->ParsePropertyAssignment('Roles', 6, $sReturn);
 		} elseif ($SortPos !== false && $SortPos == 0) {
-			$sReturn = $this->ParsePropertyAssignment("UserOrder", 5, $sReturn);			
+			$sReturn = $this->ParsePropertyAssignment('UserOrder', 5, $sReturn);			
 		}
 		return $sReturn;
 	}

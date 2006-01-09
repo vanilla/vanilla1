@@ -17,21 +17,21 @@
 */
 
 // Path Settings
-$Configuration["APPLICATION_PATH"] = "/path/to/vanilla/"; 
-$Configuration["DATABASE_PATH"] = $Configuration["APPLICATION_PATH"] . "conf/database.php"; 
-$Configuration["LIBRARY_PATH"] = $Configuration["APPLICATION_PATH"] . "library/"; 
-$Configuration["EXTENSIONS_PATH"] = $Configuration["APPLICATION_PATH"] . "extensions/"; 
-$Configuration["LANGUAGES_PATH"] = $Configuration["APPLICATION_PATH"] . "languages/";
-$Configuration["THEME_PATH"] = $Configuration["APPLICATION_PATH"] . "themes/vanilla/";
+$Configuration['APPLICATION_PATH'] = '/path/to/vanilla/'; 
+$Configuration['DATABASE_PATH'] = $Configuration['APPLICATION_PATH'] . 'conf/database.php'; 
+$Configuration['LIBRARY_PATH'] = $Configuration['APPLICATION_PATH'] . 'library/'; 
+$Configuration['EXTENSIONS_PATH'] = $Configuration['APPLICATION_PATH'] . 'extensions/'; 
+$Configuration['LANGUAGES_PATH'] = $Configuration['APPLICATION_PATH'] . 'languages/';
+$Configuration['THEME_PATH'] = $Configuration['APPLICATION_PATH'] . 'themes/vanilla/';
 
 // People Settings
-$Configuration["COOKIE_DOMAIN"] = ".yourdomain.com"; 
-$Configuration["COOKIE_PATH"] = "/"; 
-$Configuration["SUPPORT_EMAIL"] = "support@yourdomain.com"; 
+$Configuration['COOKIE_DOMAIN'] = '.yourdomain.com'; 
+$Configuration['COOKIE_PATH'] = '/'; 
+$Configuration['SUPPORT_EMAIL'] = 'support@yourdomain.com'; 
 
 // Framework Settings
-$Configuration["DOMAIN"] = "http://www.yourdomain.com/vanilla/"; 
+$Configuration['DOMAIN'] = 'http://www.yourdomain.com/vanilla/'; 
 
 // Extension Configuration Parameters
-$Configuration["PERMISSION_DATABASE_CLEANUP"] = "0";
+$Configuration['PERMISSION_DATABASE_CLEANUP'] = '0';
 ?>

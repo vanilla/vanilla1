@@ -16,59 +16,59 @@ class AccountRoleForm extends PostBackControl {
 	var $RoleSelect;
 	
 	function AccountRoleForm (&$Context, &$UserManager, $User) {
-		$this->Name = "AccountRoleForm";
-		$this->ValidActions = array("ApproveUser", "DeclineUser", "Role", "ProcessRole");
+		$this->Name = 'AccountRoleForm';
+		$this->ValidActions = array('ApproveUser', 'DeclineUser', 'Role', 'ProcessRole');
 		$this->Constructor($Context);
 		if ($this->IsPostBack) {
 			$this->User = &$User;
 			$Redirect = 0;
-			if ($this->PostBackAction == "ProcessRole" && $this->Context->Session->UserID != $User->UserID && $this->Context->Session->User->Permission("PERMISSION_CHANGE_USER_ROLE")) {
-				$urh = $this->Context->ObjectFactory->NewObject($this->Context, "UserRoleHistory");
+			if ($this->PostBackAction == 'ProcessRole' && $this->Context->Session->UserID != $User->UserID && $this->Context->Session->User->Permission('PERMISSION_CHANGE_USER_ROLE')) {
+				$urh = $this->Context->ObjectFactory->NewObject($this->Context, 'UserRoleHistory');
 				$urh->GetPropertiesFromForm();
 				if ($UserManager->AssignRole($urh)) $Redirect = 1;
 			}
-			if (($this->PostBackAction == "ApproveUser" || $this->PostBackAction == "DeclineUser")
-				&& $this->Context->Session->User->Permission("PERMISSION_APPROVE_APPLICANTS")) {
-				if ($this->PostBackAction == "ApproveUser") {
-					$UserManager = $this->Context->ObjectFactory->NewContextObject($this->Context, "UserManager");
+			if (($this->PostBackAction == 'ApproveUser' || $this->PostBackAction == 'DeclineUser')
+				&& $this->Context->Session->User->Permission('PERMISSION_APPROVE_APPLICANTS')) {
+				if ($this->PostBackAction == 'ApproveUser') {
+					$UserManager = $this->Context->ObjectFactory->NewContextObject($this->Context, 'UserManager');
 					if ($UserManager->ApproveApplicant($User->UserID)) $Redirect = 1;
-				} elseif ($this->PostBackAction == "DeclineUser") {
-					$UserManager = $this->Context->ObjectFactory->NewContextObject($this->Context, "UserManager");
+				} elseif ($this->PostBackAction == 'DeclineUser') {
+					$UserManager = $this->Context->ObjectFactory->NewContextObject($this->Context, 'UserManager');
 					if ($UserManager->RemoveApplicant($User->UserID)) $Redirect = 1;
 				}
 			}
 			
 			if ($Redirect) {
-				if ($this->PostBackAction == "DeclineUser") {
+				if ($this->PostBackAction == 'DeclineUser') {
 					// Send back to the applicants
-					header("location: ".GetUrl($this->Context->Configuration, "search.php", "", "", "", "", "PostBackAction=Search&Keywords=roles:Applicant;sort:Date;&Type=Users"));
+					header('location: '.GetUrl($this->Context->Configuration, 'search.php', '', '', '', '', 'PostBackAction=Search&Keywords=roles:Applicant;sort:Date;&Type=Users'));
 				} else {
-					header("location: ".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "u", $User->UserID));
+					header('location: '.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', 'u', $User->UserID));
 				}
 				die();
 			} else {
-				$this->PostBackAction = str_replace("Process", "", $this->PostBackAction);
+				$this->PostBackAction = str_replace('Process', '', $this->PostBackAction);
 			}
 			
-			if ($this->PostBackAction == "Role") {
-				$RoleManager = $this->Context->ObjectFactory->NewContextObject($this->Context, "RoleManager");
+			if ($this->PostBackAction == 'Role') {
+				$RoleManager = $this->Context->ObjectFactory->NewContextObject($this->Context, 'RoleManager');
 				$RoleData = $RoleManager->GetRoles();
 
-				$this->RoleSelect = $this->Context->ObjectFactory->NewObject($this->Context, "Select");
-				$this->RoleSelect->Name = "RoleID";
-				$this->RoleSelect->CssClass = "PanelInput";
-				$this->RoleSelect->AddOptionsFromDataSet($this->Context->Database, $RoleData, "RoleID", "Name");
+				$this->RoleSelect = $this->Context->ObjectFactory->NewObject($this->Context, 'Select');
+				$this->RoleSelect->Name = 'RoleID';
+				$this->RoleSelect->CssClass = 'PanelInput';
+				$this->RoleSelect->AddOptionsFromDataSet($this->Context->Database, $RoleData, 'RoleID', 'Name');
 				$this->RoleSelect->SelectedID = $this->User->RoleID;	
 			}
 		}
-		$this->CallDelegate("Constructor");
+		$this->CallDelegate('Constructor');
 	}
 	
 	function Render() {
-		if ($this->PostBackAction == "Role") {
-			$this->CallDelegate("PreRender");
-			include($this->Context->Configuration["THEME_PATH"]."templates/account_role_form.php");
-			$this->CallDelegate("PostRender");
+		if ($this->PostBackAction == 'Role') {
+			$this->CallDelegate('PreRender');
+			include($this->Context->Configuration['THEME_PATH'].'templates/account_role_form.php');
+			$this->CallDelegate('PostRender');
 		}
 	}
 }

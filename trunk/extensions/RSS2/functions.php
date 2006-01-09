@@ -2,23 +2,23 @@
 // Utility functions used by the Atom extension
 function AuthenticateUserForRSS2(&$Context) {
    // Perform some http authentication if public browsing is not enabled.
-   if ($Context->Configuration["AUTHENTICATE_USER_FOR_RSS2"]) {
+   if ($Context->Configuration['AUTHENTICATE_USER_FOR_RSS2']) {
       $UserIsAuthenticated = false; // Assume user is not authenticated
-      $PHP_AUTH_USER = ForceString(@$_SERVER["PHP_AUTH_USER"], "");
-      $PHP_AUTH_PW = ForceString(@$_SERVER["PHP_AUTH_PW"], "");
+      $PHP_AUTH_USER = ForceString(@$_SERVER['PHP_AUTH_USER'], '');
+      $PHP_AUTH_PW = ForceString(@$_SERVER['PHP_AUTH_PW'], '');
       
-      if ($PHP_AUTH_USER != "" && $PHP_AUTH_PW != "") {
+      if ($PHP_AUTH_USER != '' && $PHP_AUTH_PW != '') {
          // Validate the inputs
-         $s = $Context->ObjectFactory->NewContextObject($Context, "SqlBuilder");
-         $s->SetMainTable("User", "u");
-         $s->AddSelect("UserID", "u");
-         $s->AddWhere("Name", FormatStringForDatabaseInput($PHP_AUTH_USER), "=");
+         $s = $Context->ObjectFactory->NewContextObject($Context, 'SqlBuilder');
+         $s->SetMainTable('User', 'u');
+         $s->AddSelect('UserID', 'u');
+         $s->AddWhere('Name', FormatStringForDatabaseInput($PHP_AUTH_USER), '=');
          $s->StartWhereGroup();
-         $s->AddWhere("Password", FormatStringForDatabaseInput($PHP_AUTH_PW), "=", "and", "md5");
-         $s->AddWhere("Password", FormatStringForDatabaseInput($PHP_AUTH_PW), "=", "or");
+         $s->AddWhere('Password', FormatStringForDatabaseInput($PHP_AUTH_PW), '=', 'and', 'md5');
+         $s->AddWhere('Password', FormatStringForDatabaseInput($PHP_AUTH_PW), '=', 'or');
          $s->EndWhereGroup();
          
-         $ValidationData = $Context->Database->Select($s, "Feed", "ValidateCredentials", "An error occurred while validating user credentials.");
+         $ValidationData = $Context->Database->Select($s, 'Feed', 'ValidateCredentials', 'An error occurred while validating user credentials.');
          if ($Context->Database->RowCount($ValidationData) > 0) $UserIsAuthenticated = true;
       }         
       
@@ -26,8 +26,8 @@ function AuthenticateUserForRSS2(&$Context) {
          header('WWW-Authenticate: Basic realm="Private"');
          header('HTTP/1.0 401 Unauthorized');
 
-        	echo("<h1>".$Context->GetDefinition("FailedFeedAuthenticationTitle")."</h1>
-			<h2>".$Context->GetDefinition("FailedFeedAuthenticationText")."</h2>");
+        	echo('<h1>'.$Context->GetDefinition('FailedFeedAuthenticationTitle').'</h1>
+			<h2>'.$Context->GetDefinition('FailedFeedAuthenticationText').'</h2>');
 			$Context->Unload();
 			die();
       }
@@ -38,15 +38,15 @@ function AuthenticateUserForRSS2(&$Context) {
 // first comment is returned as well.
 function DiscussionManager_GetFirstCommentForRSS2($DiscussionManager) {
 	// SqlBuilder is passed by reference.
-	$SqlBuilder = &$DiscussionManager->DelegateParameters["SqlBuilder"];
-	$SqlBuilder->AddJoin("Comment", "fc", "CommentID", "t", "FirstCommentID", "left join");
-	$SqlBuilder->AddSelect(array("FormatType", "Body"), "fc");
+	$SqlBuilder = &$DiscussionManager->DelegateParameters['SqlBuilder'];
+	$SqlBuilder->AddJoin('Comment', 'fc', 'CommentID', 't', 'FirstCommentID', 'left join');
+	$SqlBuilder->AddSelect(array('FormatType', 'Body'), 'fc');
 }
    
-function FixDateForRSS2($Date = "") {
+function FixDateForRSS2($Date = '') {
    // Dates need to be in RFC 2822 format
-   $DateFormat = "r";
-   if ($Date == "") {
+   $DateFormat = 'r';
+   if ($Date == '') {
       return date($DateFormat, mktime());
    } else {
       return date($DateFormat, UnixTimestamp($Date));
@@ -57,35 +57,35 @@ function FormatStringForRSS2Summary($String) {
    $sReturn = strip_tags($String);
    $sReturn = htmlspecialchars($sReturn);
    $sReturn = SliceString($sReturn, 200);
-   return str_replace("\r\n", " ", $sReturn);
+   return str_replace('\r\n', ' ', $sReturn);
 }
 
 function ReturnWrappedFeedForRSS2(&$Context, $FeedItems) {
-	return "<?xml version=\"1.0\" encoding=\"utf-8\"?>
-	<rss version=\"2.0\">
+	return '<?xml version="1.0" encoding="utf-8"?>
+	<rss version="2.0">
 		<channel>
-			<title>".htmlspecialchars($Context->Configuration["APPLICATION_TITLE"]." - ".$Context->PageTitle)."</title>
-			<lastBuildDate>".FixDateForRSS2()."</lastBuildDate>
-			<link>".$Context->Configuration["BASE_URL"]."</link>
+			<title>'.htmlspecialchars($Context->Configuration['APPLICATION_TITLE'].' - '.$Context->PageTitle).'</title>
+			<lastBuildDate>'.FixDateForRSS2().'</lastBuildDate>
+			<link>'.$Context->Configuration['BASE_URL'].'</link>
 			<description></description>
-			<generator>Lussumo Vanilla ".VANILLA_VERSION."</generator>
-			".$FeedItems."
+			<generator>Lussumo Vanilla '.VANILLA_VERSION.'</generator>
+			'.$FeedItems.'
 		</channel>
-	</rss>";
+	</rss>';
 }
 
 function ReturnFeedItemForRSS2($Properties) {
-	return "<item>
-		<title>".$Properties["Title"]."</title>
-		<link>".$Properties["Link"]."</link>
-		<guid isPermaLink=\"false\">".$Properties["Link"]."</guid>
-		<pubDate>".$Properties["Published"]."</pubDate>
-		<author>".$Properties["AuthorName"]."</author>
+	return '<item>
+		<title>'.$Properties['Title'].'</title>
+		<link>'.$Properties['Link'].'</link>
+		<guid isPermaLink="false">'.$Properties['Link'].'</guid>
+		<pubDate>'.$Properties['Published'].'</pubDate>
+		<author>'.$Properties['AuthorName'].'</author>
 		<description>
-			<![CDATA[".$Properties["Content"]."]]>
+			<![CDATA['.$Properties['Content'].']]>
 		</description>
 	</item>
-	";
+	';
 }
 
 ?>

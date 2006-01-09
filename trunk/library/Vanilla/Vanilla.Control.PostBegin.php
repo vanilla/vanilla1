@@ -15,14 +15,14 @@ class PostBegin extends Control {
 	var $Title;
 	
 	function Post(&$Context) {
-		$this->Name = "Post";
+		$this->Name = 'Post';
 		$this->Constructor($Context);
 	}
 	
 	function Render() {
-		$this->CallDelegate("PreRender");
-		include($this->Context->Configuration["THEME_PATH"]."templates/post_begin.php");
-		$this->CallDelegate("PostRender");
+		$this->CallDelegate('PreRender');
+		include($this->Context->Configuration['THEME_PATH'].'templates/post_begin.php');
+		$this->CallDelegate('PostRender');
 	}
 }
 ?>

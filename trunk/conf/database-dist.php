@@ -16,16 +16,16 @@
 */
 
 // Database Settings
-$Configuration["DATABASE_HOST"] = "your_database_host"; 
-$Configuration["DATABASE_NAME"] = "your_database_name"; 
-$Configuration["DATABASE_USER"] = "your_database_user"; 
-$Configuration["DATABASE_PASSWORD"] = "your_database_password";
+$Configuration['DATABASE_HOST'] = 'your_database_host'; 
+$Configuration['DATABASE_NAME'] = 'your_database_name'; 
+$Configuration['DATABASE_USER'] = 'your_database_user'; 
+$Configuration['DATABASE_PASSWORD'] = 'your_database_password';
 
 // Database Farm Settings
 // (used for writing/updating to a different database when working with a web farm)
-// $Configuration["FARM_DATABASE_HOST"] = "your_farm_database_host"; 
-// $Configuration["FARM_DATABASE_NAME"] = "your_farm_database_name"; 
-// $Configuration["FARM_DATABASE_USER"] = "your_farm_database_user"; 
-// $Configuration["FARM_DATABASE_PASSWORD"] = "your_farm_database_password";
+// $Configuration['FARM_DATABASE_HOST'] = 'your_farm_database_host'; 
+// $Configuration['FARM_DATABASE_NAME'] = 'your_farm_database_name'; 
+// $Configuration['FARM_DATABASE_USER'] = 'your_farm_database_user'; 
+// $Configuration['FARM_DATABASE_PASSWORD'] = 'your_farm_database_password';
 
 ?>

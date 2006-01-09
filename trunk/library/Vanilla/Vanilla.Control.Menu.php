@@ -16,8 +16,8 @@ class Menu extends Control {
 	var $Tabs;				// Tab collection
    var $CurrentTab;		// The current tab
 	
-	function AddTab($Text, $Value, $Url, $CssClass, $Attributes = "", $Position = "0", $ForcePosition = "0") {
-		$this->AddItemToCollection($this->Tabs, array("Text" => $Text, "Value" => $Value, "Url" => $Url, "CssClass" => $CssClass, "Attributes" => $Attributes), $Position, $ForcePosition);
+	function AddTab($Text, $Value, $Url, $CssClass, $Attributes = '', $Position = '0', $ForcePosition = '0') {
+		$this->AddItemToCollection($this->Tabs, array('Text' => $Text, 'Value' => $Value, 'Url' => $Url, 'CssClass' => $CssClass, 'Attributes' => $Attributes), $Position, $ForcePosition);
 	}
 	
 	function ClearTabs() {
@@ -25,7 +25,7 @@ class Menu extends Control {
 	}
 	
 	function Menu(&$Context) {
-		$this->Name = "Menu";
+		$this->Name = 'Menu';
 		$this->Control($Context);
 		$this->ClearTabs();
 	}
@@ -33,7 +33,7 @@ class Menu extends Control {
 	function RemoveTab($TabUrl) {
 		$TabKey = 0;
       while (list($Key, $Tab) = each($this->Tabs)) {
-			if ($Tab["Url"] == $TabUrl) $TabKey = $Key;
+			if ($Tab['Url'] == $TabUrl) $TabKey = $Key;
       }
 		
 		if ($TabKey !== false) array_splice($this->Tabs, $TabKey, 1);
@@ -43,13 +43,13 @@ class Menu extends Control {
 		// First sort the tabs by key
       ksort($this->Tabs);
 		// Now write the Menu
-      $this->CallDelegate("PreRender");
-		include($this->Context->Configuration["THEME_PATH"]."templates/menu.php");
-		$this->CallDelegate("PostRender");
+      $this->CallDelegate('PreRender');
+		include($this->Context->Configuration['THEME_PATH'].'templates/menu.php');
+		$this->CallDelegate('PostRender');
    }
 	
 	function TabClass($CurrentTab, $ComparisonTab) {
-		return ($CurrentTab == $ComparisonTab) ? "TabOn" : "TabOff";
+		return ($CurrentTab == $ComparisonTab) ? 'TabOn' : 'TabOff';
 	}	
 }
 ?>
