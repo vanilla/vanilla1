@@ -85,7 +85,7 @@ if ($this->Context->WarningCollector->Count() > 0) {
             }
             if ($PERMISSION_HIDE_COMMENTS) $CommentList .= '<div class="CommentHide"><a onclick="'
             ."ManageComment('".($Comment->Deleted?"0":"1")."', '".$this->Discussion->DiscussionID."', '".$Comment->CommentID."', '".$this->Context->GetDefinition("ShowConfirm")."', '".$this->Context->GetDefinition("HideConfirm")."');"
-            .'>'.$this->Context->GetDefinition($Comment->Deleted?'Show':'Hide').'</a></div>';
+            .'">'.$this->Context->GetDefinition($Comment->Deleted?'Show':'Hide').'</a></div>';
          }
          $this->DelegateParameters['CommentList'] = &$CommentList;
          $this->CallDelegate('PostCommentOptionsRender');
