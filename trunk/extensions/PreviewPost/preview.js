@@ -51,22 +51,22 @@ function ShowPreviewInternal()
 function ShowPreview(F, file)
 {
 	var text, type, i, f;
-	FormName = F;
+	var frm = document.getElementById(F);
 	
-	text = escape(document[FormName].Body.value);
-	if(!document[FormName].FormatType.length) type = document[FormName].FormatType.value;
+	text = escape(frm.Body.value);
+	if(!frm.FormatType.length) type = frm.FormatType.value;
 	else
 	{
-		for(i = f = 0; i < document[FormName].FormatType.length; i++)
+		for(i = f = 0; i < frm.FormatType.length; i++)
 		{
-			if(document[FormName].FormatType[i].checked)
+			if(frm.FormatType[i].checked)
 			{
 				f = 1;
 				break;
 			}
 		}
 		if(!f) i = 0;
-		type = escape(document[FormName].FormatType[i].value);
+		type = escape(frm.FormatType[i].value);
 	}
 	
 	if(!CreateRequestPOST(file, 'Data='+text+'&Type='+type, ShowPreviewInternal))
