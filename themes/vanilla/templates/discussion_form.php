@@ -28,8 +28,8 @@ echo('<div class="Title">'.$this->Title.'</div>
    $this->CallDelegate('DiscussionForm_PreCommentRender');
    
    echo('<dt class="CommentInputLabel">'.$this->Context->GetDefinition(($Discussion->DiscussionID == 0?'EnterYourComments':'EditYourComments')).'
-         <a id="CommentBoxController" href="'
-         ."Javascript:ToggleCommentBox('".$this->Context->GetDefinition('SmallInput')."', '".$this->Context->GetDefinition('BigInput')."');\" onmouseover=\"window.status='';return true;\">"
+         <a id="CommentBoxController" onclick="'
+         ."ToggleCommentBox('".$this->Context->GetDefinition('SmallInput')."', '".$this->Context->GetDefinition('BigInput')."');\" onmouseover=\"window.status='';return true;\">"
          .$this->Context->GetDefinition($this->Context->Session->User->Preference('ShowLargeCommentBox')?'SmallInput':'BigInput').'</a>
       </dt>
       <dd class="CommentInput">

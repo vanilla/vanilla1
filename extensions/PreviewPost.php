@@ -13,7 +13,9 @@ of course):
 */
 $Context->Dictionary['PostPreview'] = 'Preview';
 $Context->Dictionary['PreviewPost'] = 'Preview Post';
-
+/*
+// Moved to ajax file in PreviewPost folder by mosullivan on Jan 12, 2006
+ 
 $PreviewSelf = substr(str_replace("\\", '/', __FILE__), strlen(__FILE__)-strlen($_SERVER['PHP_SELF']));
 if(!strcasecmp($PreviewSelf, $_SERVER['PHP_SELF']) && !defined('EXTENSION_IN_PREVIEW')) //a preview?
 {
@@ -49,7 +51,9 @@ if(!strcasecmp($PreviewSelf, $_SERVER['PHP_SELF']) && !defined('EXTENSION_IN_PRE
 		echo($Text);
 	}
 }
-else if(in_array($Context->SelfUrl, array('post.php', 'comments.php')))
+else
+*/
+if(in_array($Context->SelfUrl, array('post.php', 'comments.php')))
 {
 	//print_r($Context);
 	$Head->AddScript('./extensions/PreviewPost/preview.js');
@@ -63,16 +67,14 @@ else if(in_array($Context->SelfUrl, array('post.php', 'comments.php')))
 	function DiscussionForm_PreviewPostButton(&$DiscussionForm)
 	{
 		echo(
-			'<input name="btnPreview" value="'.$DiscussionForm->Context->GetDefinition("PreviewPost").'" class="Button SubmitButton" type="button" onclick="ShowPreview(\'frmPost'.
-			'Discussion\', \'./extensions/'.basename(__FILE__).'\')" />'
+			'<input name="btnPreview" value="'.$DiscussionForm->Context->GetDefinition("PreviewPost").'" class="Button SubmitButton" type="button" onclick="ShowPreview(\'./extensions/PreviewPost/ajax.php\')" />'
 		);
 	}
 	
 	function CommentForm_PreviewPostButton(&$CommentForm)
 	{
 		echo(
-			'<input name="btnPreview" value="'.$CommentForm->Context->GetDefinition("PreviewPost").'" class="Button SubmitButton" type="button" onclick="ShowPreview(\'frmPost'.
-			'Comment\', \'./extensions/'.basename(__FILE__).'\')" />'
+			'<input name="btnPreview" value="'.$CommentForm->Context->GetDefinition("PreviewPost").'" class="Button SubmitButton" type="button" onclick="ShowPreview(\'./extensions/PreviewPost/ajax.php\')" />'
 		);
 	}
 	

@@ -1,4 +1,4 @@
-var Request, FormName;
+var Request;
 
 function CreateRequestPOST(url, params, func)
 {
@@ -43,34 +43,42 @@ function ShowPreviewInternal()
 		if(Request.status == 200)
 		{
 			document.getElementById('PreviewPost').innerHTML = Request.responseText;
-			document[FormName].btnPreview.value = 'Refresh Preview';
+			var frm = GetPostForm();
+			if (frm) frm.btnPreview.value = 'Refresh Preview';
 		}
 	}
 }
 
-function ShowPreview(F, file)
+function GetPostForm() {
+	var frm = document.getElementById('frmPostDiscussion');
+	if (!frm) frm = document.getElementById('frmPostComment');
+	return frm;
+}
+
+function ShowPreview(file)
 {
 	var text, type, i, f;
-	var frm = document.getElementById(F);
-	
-	text = escape(frm.Body.value);
-	if(!frm.FormatType.length) type = frm.FormatType.value;
-	else
-	{
-		for(i = f = 0; i < frm.FormatType.length; i++)
+	var frm = GetPostForm();
+	if (frm) {	
+		text = escape(frm.Body.value);
+		if(!frm.FormatType.length) type = frm.FormatType.value;
+		else
 		{
-			if(frm.FormatType[i].checked)
+			for(i = f = 0; i < frm.FormatType.length; i++)
 			{
-				f = 1;
-				break;
+				if(frm.FormatType[i].checked)
+				{
+					f = 1;
+					break;
+				}
 			}
+			if(!f) i = 0;
+			type = escape(frm.FormatType[i].value);
 		}
-		if(!f) i = 0;
-		type = escape(frm.FormatType[i].value);
+		
+		if(!CreateRequestPOST(file, 'Data='+text+'&Type='+type, ShowPreviewInternal))
+			document.getElementById('PreviewPost').innerHTML = '[An error occured when attempting to connect to the server]';
+		
+		document.getElementById('PrePreviewPost').style.display = 'block';
 	}
-	
-	if(!CreateRequestPOST(file, 'Data='+text+'&Type='+type, ShowPreviewInternal))
-		document.getElementById('PreviewPost').innerHTML = '[An error occured when attempting to connect to the server]';
-	
-	document.getElementById('PrePreviewPost').style.display = 'block';
 }
