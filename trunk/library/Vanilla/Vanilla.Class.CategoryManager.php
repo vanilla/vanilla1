@@ -81,7 +81,7 @@ class CategoryManager {
 	function GetCategoryRoleBlocks($CategoryID = '0') {
 		$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
 		$s->SetMainTable('Role', 'r');
-		$s->AddJoin('CategoryRoleBlock', 'crb', 'RoleID and crb.CategoryID = $CategoryID', 'r', 'RoleID', 'left join');
+		$s->AddJoin('CategoryRoleBlock', 'crb', 'RoleID and crb.CategoryID = '.$CategoryID, 'r', 'RoleID', 'left join');
 		$s->AddSelect(array('RoleID', 'Name'), 'r');
 		$s->AddSelect('Blocked', 'crb', 'Blocked', 'coalesce', '0');
 		$s->AddWhere('r.Active', '1', '=');
