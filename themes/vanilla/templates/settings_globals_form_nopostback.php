@@ -131,15 +131,16 @@ echo('<div class="SettingsForm">
          echo(str_replace(array('//1', '//2', '//3'),
             array($Selector->Get(), $SecondsSelector->Get(), $SecondsSelector2->Get()),
             $this->Context->GetDefinition('XDiscussionsYSecondsZFreeze'))
-         .'<dd><input type="text" name="SUPPORT_NAME" value="'.$this->ConfigurationManager->GetSetting('SUPPORT_NAME').'" maxlength="255" class="SmallInput" /></dd>
+      .'</div>
+      <dl>
+         <dt>'.$this->Context->GetDefinition('SupportName').'</dt>
+         <dd><input type="text" name="SUPPORT_NAME" value="'.$this->ConfigurationManager->GetSetting('SUPPORT_NAME').'" maxlength="255" class="SmallInput" /></dd>
       </dl>
       <dl>
          <dt>'.$this->Context->GetDefinition('SupportEmail').'</dt>
          <dd><input type="text" name="SUPPORT_EMAIL" value="'.$this->ConfigurationManager->GetSetting('SUPPORT_EMAIL').'" maxlength="255" class="SmallInput" /></dd>
       </dl>
       <div class="InputNote">'.$this->Context->GetDefinition('SupportContactNotes').'</div>
-      
-      
       
       <h2>'.$this->Context->GetDefinition('DiscussionLabelsTitle').'</h2>
       <dl>
