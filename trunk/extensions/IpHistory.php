@@ -16,13 +16,10 @@ The latest source code for Vanilla is available at www.lussumo.com
 Contact Mark O'Sullivan at mark [at] lussumo [dot] com
 
 Installation Notes:
-You will need to copy the template file for this extension from the
-extensions/IpHistory/ folder to your current theme's template folder like this:
-/themes/your_theme_name/templates/account_ip_history.php
+In order to have IP Addresses recorded, you will need to set the LOG_ALL_IPS
+configuration option to 1 in your conf/settings.php file, like so:
 
-You should also cut & paste these language definitions into your
-conf/your_language.php file (replace "your_language" with your chosen language,
-of course):
+$Configuration['LOG_ALL_IPS'] = '1';
 */
 
 $Context->Dictionary["CommentPostedFromX"] = "Comment posted from //1";
@@ -32,7 +29,6 @@ $Context->Dictionary["XTimes"] = "//1 times";
 $Context->Dictionary["IpAlsoUsedBy"] = "This IP address has also been used by the following users:";
 $Context->Dictionary["IpNotShared"] = "This IP address has not been shared by any other users.";
 $Context->Dictionary["NoIps"] = "This user does not appear to have logged any IP addresses.";
-
 
 if ($Context->SelfUrl == "account.php") {
    
