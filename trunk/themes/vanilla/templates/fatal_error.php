@@ -7,6 +7,7 @@ echo('<?xml version="1.0" encoding="utf-8"?>
    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-ca">
    <head>
    <title>The page could not be displayed</title>
+   <base href="'.$Context->Configuration['BASE_URL'].'" />
    ');
    if ($this->StyleSheet == '') {
       echo('<link rel="stylesheet" type="text/css" href="'.$Context->StyleUrl.'css/utility.css" />');
