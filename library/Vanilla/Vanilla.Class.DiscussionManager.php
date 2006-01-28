@@ -168,11 +168,8 @@ class DiscussionManager extends Delegation {
 		return $this->Context->WarningCollector->Iif($Discussion, false);
 	}
 	
-	function GetDiscussionCount($CategoryID, $BookmarkedDiscussionsOnly = '0', $PrivateDiscussionsOnly = '0', $DiscussionStarterUserID = '0') {
+	function GetDiscussionCount($CategoryID) {
 		$CategoryID = ForceInt($CategoryID, 0);
-		$BookmarkedDiscussionsOnly = ForceBool($BookmarkedDiscussionsOnly, 0);
-		$PrivateDiscussionsOnly = ForceBool($PrivateDiscussionsOnly, 0);
-		$DiscussionStarterUserID = ForceInt($DiscussionStarterUserID, 0);
 		$TotalNumberOfRecords = 0;
 		
 		$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
@@ -190,22 +187,10 @@ class DiscussionManager extends Delegation {
       $s->AddWhere('crb.Blocked', '0', '=', 'or', '', 0, 0);
 		$s->AddWhere('crb.Blocked', 'null', 'is', 'or', '', 0, 0);
 		$s->EndWhereGroup();
+		
+		$this->DelegateParameters['SqlBuilder'] = &$s;
+		$this->CallDelegate('PreGetDiscussionCount');
 
-		if ($BookmarkedDiscussionsOnly) {
-			$s->AddWhere('b.DiscussionID', 't.DiscussionID', '=', 'and', '', 0, 1);
-			$s->AddWhere('b.UserID', $this->Context->Session->UserID, '=');
-			$s->EndWhereGroup();
-		}
-		if ($PrivateDiscussionsOnly) {
-			$s->AddWhere('t.WhisperUserID', $this->Context->Session->UserID, '=', 'and', '', 0, 1);
-			$s->AddWhere('t.AuthUserID', $this->Context->Session->UserID, '=', 'or', '', 0, 1);
-			$s->AddWhere('t.WhisperUserID', 0, '>', 'and');
-			$s->EndWhereGroup();
-			$s->EndWhereGroup();
-		}
-		
-		if ($DiscussionStarterUserID > 0) $s->AddWhere('t.AuthUserID', $DiscussionStarterUserID, '=');
-		
 		// If the current user is not admin only show active Discussions
 		if (!$this->Context->Session->User->Permission('PERMISSION_VIEW_HIDDEN_DISCUSSIONS')
 			|| !$this->Context->Session->User->Preference('ShowDeletedDiscussions')) {
@@ -231,11 +216,8 @@ class DiscussionManager extends Delegation {
 		return $TotalNumberOfRecords;
 	}
 	
-	function GetDiscussionList($RowsPerPage, $CurrentPage, $CategoryID, $BookmarkedDiscussionsOnly = '0', $PrivateDiscussionsOnly = '0', $DiscussionStarterUserID = '0') {
+	function GetDiscussionList($RowsPerPage, $CurrentPage, $CategoryID) {
 		$CategoryID = ForceInt($CategoryID, 0);
-		$BookmarkedDiscussionsOnly = ForceBool($BookmarkedDiscussionsOnly, 0);
-		$PrivateDiscussionsOnly = ForceBool($PrivateDiscussionsOnly, 0);
-		$DiscussionStarterUserID = ForceInt($DiscussionStarterUserID, 0);
 		$TotalNumberOfRecords = 0;
 		
 		if ($RowsPerPage > 0) {
@@ -246,22 +228,8 @@ class DiscussionManager extends Delegation {
 		}
 		
 		$s = $this->GetDiscussionBuilder();
-		if ($BookmarkedDiscussionsOnly) {
-			$s->AddWhere('b.DiscussionID', 't.DiscussionID', '=', 'and', '', 0, 1);
-			$s->AddWhere('b.UserID', $this->Context->Session->UserID, '=');
-			$s->EndWhereGroup();
-		}
-		if ($PrivateDiscussionsOnly) {
-			$s->AddWhere('t.WhisperUserID', $this->Context->Session->UserID, '=', 'and', '', 0, 1);
-			$s->AddWhere('t.AuthUserID', $this->Context->Session->UserID, '=', 'or', '', 0, 1);
-			$s->AddWhere('t.WhisperUserID', 0, '>', 'and');
-			$s->EndWhereGroup();
-			$s->EndWhereGroup();
-		}
-		
-		if ($DiscussionStarterUserID > 0) $s->AddWhere('t.AuthUserID', $DiscussionStarterUserID, '=');
-		// This group-by doesn't appear to be required and is only slowing things down.
-		// $s->AddGroupBy('DiscussionID', 't');
+		$this->DelegateParameters["SqlBuilder"] = &$s;
+		$this->CallDelegate('PreGetDiscussionList');
 		
 		// If the current user is not admin only show active Discussions
 		if (!$this->Context->Session->User->Permission('PERMISSION_VIEW_HIDDEN_DISCUSSIONS')

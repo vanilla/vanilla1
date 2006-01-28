@@ -65,7 +65,7 @@ if (in_array($Context->SelfUrl, array("index.php", "comments.php"))) {
                   $sReturn .= "</li>";
                }
                if ($Count >= $Context->Configuration["PANEL_BOOKMARK_COUNT"]) {
-                  $sReturn .= "<li><a class=\"PanelLink\" href=\"".GetUrl($Context->Configuration, "index.php", "", "", "", "", "View=YourBookmarks")."\">".$Context->GetDefinition("ShowAll")."</a></li>";
+                  $sReturn .= "<li><a class=\"PanelLink\" href=\"".GetUrl($Context->Configuration, "index.php", "", "", "", "", "View=Bookmarks")."\">".$Context->GetDefinition("ShowAll")."</a></li>";
                }
       
                $sReturn = "<h2 id=\"BookmarkTitle\"".(($OtherBookmarksExist || $ThisDiscussionIsBookmarked)?"":" style=\"display: none;\"").">".$Context->GetDefinition("Bookmarks")."</h2>
