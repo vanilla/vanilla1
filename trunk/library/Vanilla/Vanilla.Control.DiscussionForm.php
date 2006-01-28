@@ -183,7 +183,6 @@ class DiscussionForm extends PostBackControl {
 		while ($Row = $this->Context->Database->GetRow($CategoryData)) {
 			$cat->Clear();
 			$cat->GetPropertiesFromDataSet($Row);
-			$cat->FormatPropertiesForDisplay();
 			if ($cat->Blocked != $LastBlocked && $LastBlocked != -1) {
 				$cs->AddOption("-1", "---", " disabled=\"true\"");
 			}

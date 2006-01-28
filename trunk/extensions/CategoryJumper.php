@@ -43,7 +43,6 @@ function GetCategoryJumper(&$Context) {
       while ($Row = $Context->Database->GetRow($CategoryData)) {
          $cat->Clear();
          $cat->GetPropertiesFromDataSet($Row);
-         $cat->FormatPropertiesForDisplay();
          if ($cat->Blocked != $LastBlocked && $LastBlocked != -1) {
             $Select->AddOption('-1', '---', " disabled=\"true\"");
          }
