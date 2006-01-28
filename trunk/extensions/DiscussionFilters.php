@@ -21,10 +21,10 @@ of course):
 */
 
 $Context->Dictionary["DiscussionFilters"] = "Discussion filters";
-$Context->Dictionary["BookmarkedDiscussions"] = "Bookmarked discussions";
-$Context->Dictionary["YourDiscussions"] = "Your discussions";
-$Context->Dictionary["PrivateDiscussions"] = "Whispered discussions";
-$Context->Dictionary["PrivateComments"] = "Whispered comments";
+$Context->Dictionary["BookmarkedDiscussions"] = "Bookmarked Discussions";
+$Context->Dictionary["YourDiscussions"] = "Your Discussions";
+$Context->Dictionary["PrivateDiscussions"] = "Whispered Discussions";
+$Context->Dictionary["PrivateComments"] = "Whispered Comments";
 
 
 if (in_array($Context->SelfUrl, array("categories.php", "comments.php", "index.php", "post.php")) && $Context->Session->UserID > 0) {
@@ -45,39 +45,50 @@ if ($Context->SelfUrl == "index.php") {
    switch ($View) {
       case "Bookmarks":
          $Context->PageTitle = $Context->GetDefinition("BookmarkedDiscussions");
-         function DiscussionGrid_FilterGridToBookmarks(&$DiscussionGrid) {
-            $CategoryID = ForceIncomingInt("CategoryID", 0);
-            $DiscussionGrid->DiscussionData = $DiscussionGrid->DelegateParameters["DiscussionManager"]->GetDiscussionList($DiscussionGrid->Context->Configuration["DISCUSSIONS_PER_PAGE"], $DiscussionGrid->CurrentPage, $CategoryID, 1);
-            $DiscussionGrid->DiscussionDataCount = $DiscussionGrid->DelegateParameters["DiscussionManager"]->GetDiscussionCount($CategoryID, 1);
+         function DiscussionManager_FilterDataToBookmarks(&$DiscussionManager) {
+            $s = &$DiscussionManager->DelegateParameters['SqlBuilder'];
+            $s->AddWhere('b.DiscussionID', 't.DiscussionID', '=', 'and', '', 0, 1);
+            $s->AddWhere('b.UserID', $DiscussionManager->Context->Session->UserID, '=');
+            $s->EndWhereGroup();
          }
-         $Context->AddToDelegate("DiscussionGrid",
-            "PreDataLoad",
-            "DiscussionGrid_FilterGridToBookmarks");
+         $Context->AddToDelegate("DiscussionManager",
+            "PreGetDiscussionList",
+            "DiscussionManager_FilterDataToBookmarks");
+         $Context->AddToDelegate("DiscussionManager",
+            "PreGetDiscussionCount",
+            "DiscussionManager_FilterDataToBookmarks");
          break;
       
       case "YourDiscussions":
          $Context->PageTitle = $Context->GetDefinition("YourDiscussions");
-         function DiscussionGrid_FilterGridToOwnDiscussions(&$DiscussionGrid) {
-            $CategoryID = ForceIncomingInt("CategoryID", 0);
-            $DiscussionStarterUserID = $DiscussionGrid->Context->Session->UserID;
-            $DiscussionGrid->DiscussionData = $DiscussionGrid->DelegateParameters["DiscussionManager"]->GetDiscussionList($DiscussionGrid->Context->Configuration["DISCUSSIONS_PER_PAGE"], $DiscussionGrid->CurrentPage, $CategoryID, 0, 0, $DiscussionStarterUserID);
-            $DiscussionGrid->DiscussionDataCount = $DiscussionGrid->DelegateParameters["DiscussionManager"]->GetDiscussionCount($CategoryID, 0, 0, $DiscussionStarterUserID);
+         function DiscussionManager_FilterDataToOwnDiscussions(&$DiscussionManager) {
+            $s = &$DiscussionManager->DelegateParameters['SqlBuilder'];
+      		$s->AddWhere('t.AuthUserID', $DiscussionManager->Context->Session->UserID, '=');            
          }
-         $Context->AddToDelegate("DiscussionGrid",
-            "PreDataLoad",
-            "DiscussionGrid_FilterGridToOwnDiscussions");
+         $Context->AddToDelegate("DiscussionManager",
+            "PreGetDiscussionList",
+            "DiscussionManager_FilterDataToOwnDiscussions");
+         $Context->AddToDelegate("DiscussionManager",
+            "PreGetDiscussionCount",
+            "DiscussionManager_FilterDataToOwnDiscussions");
          break;
       
       case "Private":
          $Context->PageTitle = $Context->GetDefinition("PrivateDiscussions");
-         function DiscussionGrid_FilterGridToPrivateDiscussions(&$DiscussionGrid) {
-            $CategoryID = ForceIncomingInt("CategoryID", 0);
-            $DiscussionGrid->DiscussionData = $DiscussionGrid->DelegateParameters["DiscussionManager"]->GetDiscussionList($DiscussionGrid->Context->Configuration["DISCUSSIONS_PER_PAGE"], $DiscussionGrid->CurrentPage, $CategoryID, 0, 1);
-            $DiscussionGrid->DiscussionDataCount = $DiscussionGrid->DelegateParameters["DiscussionManager"]->GetDiscussionCount($CategoryID, 0, 1);
+         function DiscussionManager_FilterDataToPrivateDiscussions(&$DiscussionManager) {
+            $s = &$DiscussionManager->DelegateParameters['SqlBuilder'];
+            $s->AddWhere('t.WhisperUserID', $DiscussionManager->Context->Session->UserID, '=', 'and', '', 0, 1);
+            $s->AddWhere('t.AuthUserID', $DiscussionManager->Context->Session->UserID, '=', 'or', '', 0, 1);
+            $s->AddWhere('t.WhisperUserID', 0, '>', 'and');
+            $s->EndWhereGroup();
+            $s->EndWhereGroup();
          }
-         $Context->AddToDelegate("DiscussionGrid",
-            "PreDataLoad",
-            "DiscussionGrid_FilterGridToPrivateDiscussions");
+         $Context->AddToDelegate("DiscussionManager",
+            "PreGetDiscussionList",
+            "DiscussionManager_FilterDataToPrivateDiscussions");
+         $Context->AddToDelegate("DiscussionManager",
+            "PreGetDiscussionCount",
+            "DiscussionManager_FilterDataToPrivateDiscussions");
          break;
    }   
 }

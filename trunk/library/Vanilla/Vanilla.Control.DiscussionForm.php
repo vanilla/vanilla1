@@ -119,7 +119,10 @@ class DiscussionForm extends PostBackControl {
 				// Saved successfully, so send back to the discussion
             // print_r($this->Discussion);
             $Suffix = CleanupString($this->Discussion->Name).'/';
-				header('location:'.GetUrl($this->Context->Configuration, 'comments.php', '', 'DiscussionID', $ResultComment->DiscussionID, $this->Discussion->LastPage, ($ResultComment->CommentID > 0 ? '#Comment_'.$ResultComment->CommentID:'#pgbottom'), $Suffix));
+				$Url = GetUrl($this->Context->Configuration, 'comments.php', '', 'DiscussionID', $ResultComment->DiscussionID, $this->Discussion->LastPage, ($ResultComment->CommentID > 0 ? '#Comment_'.$ResultComment->CommentID:'#pgbottom'), $Suffix);
+				$UrlParts = explode("?", $Url);
+				$Url = $UrlParts[0]."?".str_replace("&amp;", "&", $UrlParts[1]);
+				header('location:'.$Url);
 				die();
 			}
 		}
