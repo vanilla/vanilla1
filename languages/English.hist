@@ -1050,5 +1050,10 @@ $Context->Dictionary["AssignToRole"] = "Choose a New Role";
 $Context->Dictionary["NA"] = "n/a";
 $Context->Dictionary["Loading"] = "Loading...";
 
+2006-01-29 - Added:
+$Context->Dictionary['AboutExtensionPage'] = 'The Extension Page';
+$Context->Dictionary['AboutExtensionPageNotes'] = 'This page can be used by extension authors to program custom pages in Vanilla. You are looking at the default view and probably reached this page by accident or because of a bug in an extension.';
+
+
 */
 ?>
