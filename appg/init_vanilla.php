@@ -44,6 +44,7 @@ $Context = new Context($Configuration);
 $Context->StartSession();
 
 // DEFINE THE LANGUAGE DICTIONARY
+include($Configuration['LANGUAGES_PATH'].$Configuration['LANGUAGE'].'/definitions.php');
 include($Configuration['APPLICATION_PATH'].'conf/language.php');
 
 // INSTANTIATE THE PAGE OBJECT

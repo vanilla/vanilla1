@@ -11,9 +11,6 @@
 * Description: English language dictionary
 */
 
-// Define the name of this language (Should be the same as the file name minus ".php")
-$Context->Dictionary['ThisLanguageName'] = 'English';
-
 // Define all dictionary codes in English
 $Context->Dictionary['NoDiscussionsNotSignedIn'] = 'You cannot take part in the discussions because you are not signed in.';
 $Context->Dictionary['SelectDiscussionCategory'] = 'Select the category for this discussion';
