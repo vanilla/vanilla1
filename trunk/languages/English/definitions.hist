@@ -1054,6 +1054,13 @@ $Context->Dictionary["Loading"] = "Loading...";
 $Context->Dictionary['AboutExtensionPage'] = 'The Extension Page';
 $Context->Dictionary['AboutExtensionPageNotes'] = 'This page can be used by extension authors to program custom pages in Vanilla. You are looking at the default view and probably reached this page by accident or because of a bug in an extension.';
 
+2006-02-01 - Changed:
+$Context->Dictionary['ErrEmailBody'] = 'You must provide the email body.';
 
+2006-02-01 - Removed:
+$Context->Dictionary['ApplicationMessage'] = "This is an automated notification that a new application has been completed by //1.\r\n\r\nThe applicant supplied the following information:\r\n\r\n//2\r\n\r\nYou can sign in and review this application at //3";
+$Context->Dictionary['RoleChangeMessage'] = 'This message is to inform you that your account at //1 has been changed. You have been assigned //2 status.';
+$Context->Dictionary['SignInMessage'] = "\r\n\r\nYou can sign in to //1 at //2 and review your role change in your account section.";
+$Context->Dictionary['PasswordRequestMessage'] = "A request has been made to reset your password for //1. If you did not make this request, please disregard this email.\r\n\r\nHowever, if you did make this request, you can reset your password by copying and pasting the following URL into the location bar of your browser:\r\n\r\n//2";
 */
 ?>
