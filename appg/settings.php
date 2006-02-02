@@ -58,6 +58,9 @@ $Configuration['APPROVAL_ROLE'] = '4';
 $Configuration['SAFE_REDIRECT'] = 'people.php?PageAction=SignOutNow'; 
 
 // Framework Settings
+$Configuration['SMTP_HOST'] = '';
+$Configuration['SMTP_USER'] = '';
+$Configuration['SMTP_PASSWORD'] = '';
 $Configuration['LANGUAGE'] = "English";
 $Configuration['URL_BUILDING_METHOD'] = 'Standard';  // Standard or mod_rewrite
 $Configuration['BASE_URL'] = 'http://your.base.url/to/vanilla/';
