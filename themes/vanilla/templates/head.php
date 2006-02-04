@@ -9,11 +9,9 @@ $HeadString = '<'.chr(63).'xml version="1.0" encoding="utf-8"'.chr(63).'>
       <base href="'.$this->Context->Configuration['BASE_URL'].'" />
       <link rel="shortcut icon" href="/favicon.ico" />';
       if (is_array($this->StyleSheets)) {
-         $StyleSheetCount = count($this->StyleSheets);
-         $i = 0;
-         for ($i = 0; $i < $StyleSheetCount; $i++) {
+         while (list($Key, $StyleSheet) = each($this->StyleSheets)) {
             $HeadString .= '
-            <link rel="stylesheet" type="text/css" href="'.$this->StyleSheets[$i]['Sheet'].'"'.($this->StyleSheets[$i]['Media'] == ''?'':' media="'.$this->StyleSheets[$i]['Media'].'"').' />';
+            <link rel="stylesheet" type="text/css" href="'.$StyleSheet['Sheet'].'"'.($StyleSheet['Media'] == ''?'':' media="'.$StyleSheet['Media'].'"').' />';
          }
       }
       if (is_array($this->Scripts)) {
