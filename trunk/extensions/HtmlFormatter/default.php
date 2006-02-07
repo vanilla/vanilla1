@@ -3,16 +3,10 @@
 Extension Name: Html Formatter
 Extension Url: http://lussumo.com/docs/
 Description: Allows html to be used in strings, but breaks out all "script" related activities.
-Version: 1.0
+Version: 1.2
 Author: SirNot
 Author Url: N/A
-
-You should cut & paste this language definition into your
-conf/your_language.php file (replace "your_language" with your chosen language,
-of course):
 */
-$Context->Dictionary["Html"] = "Html";
-
 
 class HtmlFormatter extends StringFormatter
 {
@@ -40,18 +34,23 @@ class HtmlFormatter extends StringFormatter
 		);
 		$Replacements = array(
 			'', 
-			'"<".$this->RemoveEvilAttribs(str_replace(chr(0), \' \', $this->DecodeEntities(stripslashes(\'\\1\')))).">"', 
+			'"<".$this->RemoveEvilAttribs(str_replace(chr(0), \' \', $this->DecodeEntities($this->RemoveQuoteSlashes(\'\\1\')))).">"', 
 			"&#115;\\1", 
 			"&#83;\\1", 
 			"&amp;{\\1}" 
 		);
 		
 		$String = str_replace(chr(0), ' ', $String);
-		return str_replace(
+		return '<xmp>'.str_replace(
 			array("\r\n", "\r", "\n"), 
-			array("\n", "\n", '<br />'), 
+			array("\n", "\n", '<br>'), 
 			preg_replace($Patterns, $Replacements, $String)
-		);
+		).'</xmp>';
+	}
+	
+	function RemoveQuoteSlashes($String)
+	{
+		return str_replace("\\\"", '"', $String);
 	}
 	
 	function DecodeEntities($String)
@@ -68,7 +67,7 @@ class HtmlFormatter extends StringFormatter
 	{
 		$String = preg_replace(
 			array("/<code>(.+?)<\/code>/sei", "/<(?![a-z\/])/i"), //yet again, order is important
-			array('"<code>".htmlspecialchars(stripslashes(\'\\1\'))."</code>"', '&lt;'), 
+			array('"<code>".htmlspecialchars($this->RemoveQuoteSlashes(\'\\1\'))."</code>"', '&lt;'), 
 			$String);
 		$Len = strlen($String);
 		$Out = '';
@@ -124,7 +123,7 @@ class HtmlFormatter extends StringFormatter
 			"/(\s+?)on([\w]+)\s*=(.+?)/i"
 		);
 		$R = array(
-			'stripslashes(\'\\1\\2=\\3\').(in_array(strtolower(\'\\4\'), $this->AllowedProtocols) ? \'\\4:\' : $this->DefaultProtocol).stripslashes(\'\\5\')', 
+			'$this->RemoveQuoteSlashes(\'\\1\\2=\\3\').(in_array(strtolower(\'\\4\'), $this->AllowedProtocols) ? \'\\4:\' : $this->DefaultProtocol).$this->RemoveQuoteSlashes(\'\\5\')', 
 			'\\1&#79;n\\2=\\3'
 		);
 		$sReturn = preg_replace($P, $R, $String);
@@ -134,7 +133,7 @@ class HtmlFormatter extends StringFormatter
 		do
 		{
 			$String = $sReturn;
-			$sReturn = preg_replace("/style\s*=(\W*)(.+)\\1/ei", '"style=".stripslashes(\'\\1\').$this->ParseCSS(stripslashes(\'\\2\')).stripslashes(\'\\1\')', $String);
+			$sReturn = preg_replace("/style\s*=(\W*)(.+)\\1/ei", '"style=".$this->RemoveQuoteSlashes(\'\\1\').$this->ParseCSS($this->RemoveQuoteSlashes(\'\\2\')).$this->RemoveQuoteSlashes(\'\\1\')', $String);
 		}
 		while($sReturn != $String);
 		
@@ -145,7 +144,7 @@ class HtmlFormatter extends StringFormatter
 	{
 		return preg_replace(
 			array("/\/\*(.*|(?R))\*\//i", "/expression\((.+)\)/i", "/url\s*\((\W*)(.+?):([^\\1)]+?)/ei"), //first remove comments, then the expression() functionality 
-			array('', '\\1', 'stripslashes(\'url(\\1\'.(in_array(\'\\2\', $this->AllowedProtocols) ? \'\\2\' : $this->DefaultProtocol).\':\\3\')'), //admittedly, there's still probably ways around this, but this was the best I could do short of 
+			array('', '\\1', '$this->RemoveQuoteSlashes(\'url(\\1\'.(in_array(\'\\2\', $this->AllowedProtocols) ? \'\\2\' : $this->DefaultProtocol).\':\\3\')'), //admittedly, there's still probably ways around this, but this was the best I could do short of 
 			$String //looping through the entire string
 		);
 	}
