@@ -11,7 +11,7 @@ Author Url: N/A
 class HtmlFormatter extends StringFormatter
 {
 	var $Table;
-	var $AllowedProtocols = array('http', 'ftp', 'https', 'irc', 'gopher', 'mailto');
+	var $AllowedProtocols = array('http', 'https', 'ftp', 'news', 'nntp', 'feed', 'gopher', 'mailto');
 	var $DefaultProtocol = 'http://';
 	
 	function HtmlFormatter()
