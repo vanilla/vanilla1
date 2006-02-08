@@ -30,7 +30,7 @@ if (in_array($Context->SelfUrl, array("comments.php", "post.php"))) {
       }
       function AutoLink($String) {
          // autolink example from www.zend.com (Code Gallery ) by http://www.zend.com/search_code_author.php?author=goten
-         return preg_replace("/(?<!<a href=\")(?<!\")(?<!\">)((http|https|ftp):\/\/[\w?=&.\/-;#~%-\+]+)/","<a href=\"\\1\" target=\"_blank\">\\1</a>",$String);
+         return preg_replace("/(?<!<a href=\")(?<!\")(?<!\">)((http|https|ftp):\/\/[\w?=&.\/-;#~%-\+\-]+)/","<a href=\"\\1\" target=\"_blank\">\\1</a>",$String);
       }
    
       function GetAccountLink($Object) {
