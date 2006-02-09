@@ -74,6 +74,14 @@ $Context->PageTitle = $CommentGrid->Discussion->Name;
 				"",
 				"onclick=\"if (confirm('".$Context->GetDefinition($CommentGrid->Discussion->Sticky?"ConfirmUnsticky":"ConfirmSticky")."')) DiscussionSwitch('Sticky', '".$CommentGrid->Discussion->DiscussionID."', '".FlipBool($CommentGrid->Discussion->Sticky)."');\"");
 		}
+		if ($Context->Session->User->Permission("PERMISSION_SINK_DISCUSSIONS")) {
+			$SinkText = $Context->GetDefinition("MakeThisDiscussion".($CommentGrid->Discussion->Sink?"UnSink":"Sink"));
+			$Panel->AddListItem($Options,
+				$SinkText,
+				"",
+				"",
+				"onclick=\"if (confirm('".$Context->GetDefinition($CommentGrid->Discussion->Sink?"ConfirmUnSink":"ConfirmSink")."')) DiscussionSwitch('Sink', '".$CommentGrid->Discussion->DiscussionID."', '".FlipBool($CommentGrid->Discussion->Sink)."');\"");
+		}
 	}
 	
 	// Create the comment footer

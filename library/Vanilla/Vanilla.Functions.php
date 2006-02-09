@@ -11,7 +11,7 @@
 * Description: Utility functions specific to Vanilla
 */
 
-function DiscussionPrefix($Configuration, $Discussion) {
+function DiscussionPrefix(&$Configuration, &$Discussion) {
 	$Prefix = '';
 	if (!$Discussion->Active && $Configuration['TEXT_HIDDEN'] != '') $Prefix = $Configuration['TEXT_HIDDEN'];
 
@@ -23,6 +23,9 @@ function DiscussionPrefix($Configuration, $Discussion) {
 
 	if ($Discussion->Bookmarked && $Configuration['TEXT_BOOKMARKED'] != '' && $Prefix != '') $Prefix .= ', ';
 	if ($Discussion->Bookmarked && $Configuration['TEXT_BOOKMARKED'] != '') $Prefix .= $Configuration['TEXT_BOOKMARKED'];
+
+	if ($Discussion->Sink && $Configuration['TEXT_SINK'] != '' && $Prefix != '') $Prefix .= ', ';
+	if ($Discussion->Sink && $Configuration['TEXT_SINK'] != '') $Prefix .= $Configuration['TEXT_SINK'];
 
 	if ($Discussion->WhisperUserID > 0 && $Configuration['TEXT_WHISPERED'] != '' && $Prefix != '') $Prefix .= ', ';
 	if ($Discussion->WhisperUserID > 0 && $Configuration['TEXT_WHISPERED'] != '') $Prefix .= $Configuration['TEXT_WHISPERED'];

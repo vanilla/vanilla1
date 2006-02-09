@@ -40,7 +40,7 @@ class DiscussionManager extends Delegation {
 	function GetDiscussionBuilder($s = 0) {
 		if (!$s) $s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
 		$s->SetMainTable('Discussion', 't');
-		$s->AddSelect(array('DiscussionID', 'FirstCommentID', 'AuthUserID', 'WhisperUserID', 'Active', 'Closed', 'Sticky', 'Name', 'DateCreated', 'LastUserID', 'DateLastActive', 'CountComments', 'CategoryID'), 't');
+		$s->AddSelect(array('DiscussionID', 'FirstCommentID', 'AuthUserID', 'WhisperUserID', 'Active', 'Closed', 'Sticky', 'Sink', 'Name', 'DateCreated', 'LastUserID', 'DateLastActive', 'CountComments', 'CategoryID'), 't');
 
 		// Get author data
 		$s->AddJoin('User', 'u', 'UserID', 't', 'AuthUserID', 'left join');
@@ -443,7 +443,7 @@ class DiscussionManager extends Delegation {
 						if ($NewDiscussion) {				
 							$s->AddFieldNameValue('AuthUserID', $this->Context->Session->UserID);
 							$s->AddFieldNameValue('DateCreated', MysqlDateTime());
-							$s->AddFieldNameValue('DateLastactive', MysqlDateTime());
+							$s->AddFieldNameValue('DateLastActive', MysqlDateTime());
 							$s->AddFieldNameValue('CountComments', 0);
                      $s->AddFieldNameValue('WhisperUserID', $Discussion->WhisperUserID);
 							$Discussion->DiscussionID = $this->Context->Database->Insert($s, $this->Name, 'NewDiscussion', 'An error occurred while creating a new discussion.');
@@ -491,6 +491,9 @@ class DiscussionManager extends Delegation {
 					break;
 				case 'Sticky':
 					if (!$this->Context->Session->User->Permission('PERMISSION_STICK_DISCUSSIONS')) $this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrPermissionStickDiscussions'));
+					break;
+				case 'Sink':
+					if (!$this->Context->Session->User->Permission('PERMISSION_SINK_DISCUSSIONS')) $this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrPermissionSinkDiscussions'));
 					break;
 			}	
 			if ($this->Context->Database->Update($s, $this->Name, 'SwitchDiscussionProperty', 'An error occurred while manipulating the '.$PropertyName.' property of the discussion.', 0) <= 0) $this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrPermissionDiscussionEdit'));

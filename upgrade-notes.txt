@@ -145,6 +145,10 @@ Now run the following SQL commands:
    update LUM_User set RoleID = 6 where UserID = 1;
    -- Rename the "Order" column in the category table to "Priority" so that it is more query-friendly.
    alter table LUM_Category change `Order` Priority int not null default '0';
+   
+   
+   -- Added 2006-02-09
+   alter table LUM_Discussion add `Sink` enum('1','0') not null default '0';
 
 
 That's it. You should have a working version of Vanilla 0.9.3.

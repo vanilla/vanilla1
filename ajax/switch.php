@@ -11,26 +11,26 @@
 * Description: File used by Dynamic Data Management object to handle any type of boolean switch
 */
 
-include("../appg/settings.php");
-include("../conf/settings.php");
-include("../appg/init_ajax.php");
+include('../appg/settings.php');
+include('../conf/settings.php');
+include('../appg/init_ajax.php');
 
-$Type = ForceIncomingString("Type", "");
-$Switch = ForceIncomingBool("Switch", 0);
-$DiscussionID = ForceIncomingInt("DiscussionID", 0);
-$CommentID = ForceIncomingInt("CommentID", 0);
+$Type = ForceIncomingString('Type', '');
+$Switch = ForceIncomingBool('Switch', 0);
+$DiscussionID = ForceIncomingInt('DiscussionID', 0);
+$CommentID = ForceIncomingInt('CommentID', 0);
 
 // Don't create unnecessary objects
-if (in_array($Type, array("Active", "Closed", "Sticky"))) {
-	$dm = $Context->ObjectFactory->NewContextObject($Context, "DiscussionManager");
-} elseif ($Type == "Comment") {
-	$cm = $Context->ObjectFactory->NewContextObject($Context, "CommentManager");
+if (in_array($Type, array('Active', 'Closed', 'Sticky', 'Sink'))) {
+	$dm = $Context->ObjectFactory->NewContextObject($Context, 'DiscussionManager');
+} elseif ($Type == 'Comment') {
+	$cm = $Context->ObjectFactory->NewContextObject($Context, 'CommentManager');
 } else {
 	// This will allow the switch class to be used to add new custom user settings
-	$um = $Context->ObjectFactory->NewContextObject($Context, "UserManager");
+	$um = $Context->ObjectFactory->NewContextObject($Context, 'UserManager');
 }
 // Handle the switches
-if ($Type == "Bookmark" && $DiscussionID > 0) {
+if ($Type == 'Bookmark' && $DiscussionID > 0) {
 	if ($Context->Session->UserID == 0) die();	
 	if ($Switch) {
 		$um->AddBookmark($Context->Session->UserID, $DiscussionID);
@@ -38,18 +38,19 @@ if ($Type == "Bookmark" && $DiscussionID > 0) {
 		$um->RemoveBookmark($Context->Session->UserID, $DiscussionID);
 	}
 } elseif ($DiscussionID > 0 && (
-	($Type == "Active" && $Context->Session->User->Permission("PERMISSION_HIDE_DISCUSSIONS"))
-	|| ($Type == "Closed" && $Context->Session->User->Permission("PERMISSION_CLOSE_DISCUSSIONS"))
-	|| ($Type == "Sticky" && $Context->Session->User->Permission("PERMISSION_STICK_DISCUSSIONS"))
+	($Type == 'Active' && $Context->Session->User->Permission('PERMISSION_HIDE_DISCUSSIONS'))
+	|| ($Type == 'Closed' && $Context->Session->User->Permission('PERMISSION_CLOSE_DISCUSSIONS'))
+	|| ($Type == 'Sticky' && $Context->Session->User->Permission('PERMISSION_STICK_DISCUSSIONS'))
+	|| ($Type == 'Sink' && $Context->Session->User->Permission('PERMISSION_SINK_DISCUSSIONS'))
 	)) {
 	$dm->SwitchDiscussionProperty($DiscussionID, $Type, $Switch);
-} elseif ($Type == "Comment" && $CommentID > 0 && $DiscussionID > 0 && $Context->Session->User->Permission("PERMISSION_HIDE_COMMENTS")) {
+} elseif ($Type == 'Comment' && $CommentID > 0 && $DiscussionID > 0 && $Context->Session->User->Permission('PERMISSION_HIDE_COMMENTS')) {
 	$cm->SwitchCommentProperty($CommentID, $DiscussionID, $Switch);
-} elseif ($Type == "SendNewApplicantNotifications") {
+} elseif ($Type == 'SendNewApplicantNotifications') {
 	$um->SwitchUserProperty($Context->Session->UserID, $Type, $Switch);
-} elseif ($Type != "") {
+} elseif ($Type != '') {
 	$um->SwitchUserPreference($Type, $Switch);
 }
 
-echo("Complete");
+echo('Complete');
 ?>

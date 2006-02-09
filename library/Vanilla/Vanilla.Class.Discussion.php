@@ -24,6 +24,7 @@ class Discussion {
 	var $Closed;			// Boolean value indicating if the Discussion will allow any further Comments to be added
 	var $Sticky;			// Boolean value indicating if the Discussion should appear at the top of the list
 	var $Bookmarked;		// Boolean value indicating if the Discussion has been bookmared by the current user
+   var $Sink;				// Boolean value indicating if the discussion should sink (ie. allow comments to be added, but not stay at the top of the list).
 	var $Name;
 	var $DateCreated;
 	var $DateLastActive;
@@ -57,6 +58,7 @@ class Discussion {
 		$this->Closed = 0;
 		$this->Sticky = 0;
 		$this->Bookmarked = 0;
+		$this->Sink = 0;
 		$this->Name = '';
 		$this->DateCreated = '';
 		$this->DateLastActive = '';
@@ -97,6 +99,7 @@ class Discussion {
 		$this->Closed = @$DataSet['Closed'];
 		$this->Sticky = @$DataSet['Sticky'];
 		$this->Bookmarked = @$DataSet['Bookmarked'];
+		$this->Sink = @$DataSet['Sink'];
 		$this->Name = @$DataSet['Name'];
 		$this->DateCreated = UnixTimestamp(@$DataSet['DateCreated']);
 		$this->DateLastActive = UnixTimestamp(@$DataSet['DateLastActive']);
@@ -189,6 +192,7 @@ class Discussion {
 		if ($this->Closed) $sReturn .= ' Closed';
 		if ($this->Sticky) $sReturn .= ' Sticky';
 		if ($this->Bookmarked) $sReturn .= ' Bookmarked';
+		if ($this->Sink) $sReturn .= ' Sink';
 		if ($this->LastViewed != '') {
 			$sReturn .= ' Read';
 		} else {
