@@ -495,6 +495,12 @@ $Context->Dictionary['Loading'] = 'Loading...';
 $Context->Dictionary['AboutExtensionPage'] = 'The Extension Page';
 $Context->Dictionary['AboutExtensionPageNotes'] = 'This page can be used by extension authors to program custom pages in Vanilla. You are looking at the default view and probably reached this page by accident or because of a bug in an extension.';
 $Context->Dictionary['NewApplicant'] = 'New Forum Applicant';
+$Context->Dictionary['PERMISSION_SINK_DISCUSSIONS'] = 'Sink discussions';
+$Context->Dictionary['MakeThisDiscussionSink'] = 'Sink this discussion';
+$Context->Dictionary['MakeThisDiscussionUnSink'] = 'Unsink this discussion';
+$Context->Dictionary['ConfirmUnSink'] = 'Are you sure you want to unsink this discussion?';
+$Context->Dictionary['ConfirmSink'] = 'Are you sure you want to sink this discussion?';
+$Context->Dictionary['ErrPermissionSinkDiscussions'] = 'You do not have permission to sink discussions';
 
 /* Please do not remove or alter this definition */
 $Context->Dictionary['PanelFooter'] = '<div class="AboutVanilla"><a href="http://getvanilla.com">Vanilla ('.VANILLA_VERSION.')</a> is a product of <a href="http://lussumo.com">Lussumo</a>. More Information: <a href="http://lussumo.com/docs">Documentation</a>, <a href="http://lussumo.com/community">Community Support</a>.</div>';

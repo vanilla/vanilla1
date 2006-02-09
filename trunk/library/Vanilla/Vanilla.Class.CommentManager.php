@@ -378,13 +378,21 @@ class CommentManager {
 							$s->AddWhere('DiscussionID', $Comment->DiscussionID, '=');
 							$this->Context->Database->Update($s, $this->Name, 'SaveComment', "An error occurred while updating the discussion's whisper summary.");
 						} else {
+							// First update the counts & last user
 							$s->Clear();
 							$s->SetMainTable('Discussion', 't');
 							$s->AddFieldNameValue('CountComments', 'CountComments+1', '0');
-							$s->AddFieldNameValue('DateLastActive', MysqlDateTime());
 							$s->AddFieldNameValue('LastUserID', $this->Context->Session->UserID);
 							$s->AddWhere('DiscussionID', $Comment->DiscussionID, '=');
 							$this->Context->Database->Update($s, $this->Name, 'SaveComment', "An error occurred while updating the discussion's comment summary.");
+							
+							// Now only update the DateLastActive if the discussion isn't set to Sink
+							$s->Clear();
+							$s->SetMainTable('Discussion', 't');
+							$s->AddFieldNameValue('DateLastActive', MysqlDateTime());
+							$s->AddWhere('DiscussionID', $Comment->DiscussionID, '=');
+							$s->AddWhere('Sink', '1', '<>', 'and');
+							$this->Context->Database->Update($s, $this->Name, 'SaveComment', "An error occurred while updating the discussion's last active date.");
 						}
 					}
 				} else {

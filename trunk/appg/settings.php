@@ -106,7 +106,8 @@ $Configuration['COMMENT_THRESHOLD_PUNISHMENT'] = '120';
 $Configuration['TEXT_WHISPERED'] = 'Private'; 
 $Configuration['TEXT_STICKY'] = 'Sticky'; 
 $Configuration['TEXT_CLOSED'] = 'Closed'; 
-$Configuration['TEXT_HIDDEN'] = 'Hidden'; 
+$Configuration['TEXT_HIDDEN'] = 'Hidden';
+$Configuration['TEXT_SINK'] = 'Sink';
 $Configuration['TEXT_BOOKMARKED'] = ''; 
 $Configuration['TEXT_PREFIX'] = '['; 
 $Configuration['TEXT_SUFFIX'] = ']';
@@ -145,6 +146,7 @@ $Configuration['PERMISSION_ADD_COMMENTS'] = '0';
 $Configuration['PERMISSION_START_DISCUSSION'] = '0';
 $Configuration['PERMISSION_HTML_ALLOWED'] = '0';
 // Discussion Moderator Permissions
+$Configuration['PERMISSION_SINK_DISCUSSIONS'] = '0';
 $Configuration['PERMISSION_STICK_DISCUSSIONS'] = '0';
 $Configuration['PERMISSION_HIDE_DISCUSSIONS'] = '0';
 $Configuration['PERMISSION_CLOSE_DISCUSSIONS'] = '0';
