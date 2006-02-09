@@ -3,7 +3,7 @@
 Extension Name: BB Code
 Extension Url: http://lussumo.com/docs/
 Description: A BBCode-to-HTML conversion tool for discussion comments
-Version: 1.0
+Version: 1.1
 Author: Mark O'Sullivan
 Author Url: http://markosullivan.ca/
 */
@@ -19,6 +19,9 @@ Author Url: http://markosullivan.ca/
 */
 
 class BBCodeFormatter extends StringFormatter {
+	var $AllowedProtocols = array('http', 'https', 'ftp', 'news', 'nntp', 'feed', 'gopher', 'mailto');
+	var $DefaultProtocol = 'http://';
+	
 	function Parse($String, $Object, $FormatPurpose) {
 		if ($FormatPurpose == FORMAT_STRING_FOR_DISPLAY) {
 			$String = $this->ProtectString($String);
@@ -33,15 +36,37 @@ class BBCodeFormatter extends StringFormatter {
 		return $String;
 	}
    
-   function BBEncode($String) {
-      //[img] tags
-      $String = preg_replace("/\[img\](.+?)\[\/img\]/","<img src=\"$1\" />",$String);
-      //[url] tags
-      $String = preg_replace("/\[url\=(.+?)\](.+?)\[\/url\]/","<a href=\"$1\" target=\"_blank\">$2</a>",$String);
-      //[b] and [i] tags
-      $String = preg_replace("/\[b\](.+?)\[\/b\]/","<strong>$1</strong>",$String);
-      $String = preg_replace("/\[i\](.+?)\[\/i\]/","<em>$1</em>",$String);
-      return $String;
+   function Url($String)
+   {
+   	   	$String = str_replace("\\\"", '&quot;', $String);
+		$SplitUrl = explode('://', $String);
+		
+		if(count($SplitUrl) < 2) return $this->DefaultProtocol.$String;
+		else if(!in_array($SplitUrl[0], $this->AllowedProtocols)) return $this->DefaultProtocol.$String;
+		else return $String;
+   }
+   
+   function BBEncode($String)
+   {
+   	   $Patterns = array(
+	      "/\[img\](.+?)\[\/img\]/ei", 
+	      "/\[url\=(.+?)\](.+?)\[\/url\]/ei", 
+	      "/\[url\](.+?)\[\/url\]/ei", 
+	      "/\[b\](.+?)\[\/b\]/is", 
+	      "/\[i\](.+?)\[\/i\]/is", 
+	      "/\[u\](.+?)\[\/u\]/is"
+	  );
+      
+      $Replacements = array(
+	      '\'<img src="\'.$this->Url(\'$1\').\'" />\'', 
+	      '\'<a href="\'.$this->Url(\'$1\').\'" target="_blank">$2</a>\'', 
+	      '\'<a href="\'.$this->Url(\'$1\').\'">$1</a>\'', 
+	      '<strong>$1</strong>', 
+	      '<em>$1</em>', 
+	      '<u>$1</u>'
+	  );
+      
+      return preg_replace($Patterns, $Replacements, $String);
    }
 }
 // Instantiate the bbcode object and add it to the string manipulation methods
