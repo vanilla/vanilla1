@@ -44,7 +44,7 @@ class Foot extends Control {
 	
 	function Render() {
 		$this->CallDelegate('PreRender');
-		include($this->Context->Configuration['THEME_PATH'].'templates/foot.php');
+		include(ThemeFilePath($this->Context->Configuration, 'foot.php'));
 		$this->CallDelegate('PostRender');
 	}
 }

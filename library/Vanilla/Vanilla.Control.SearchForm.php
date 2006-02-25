@@ -132,13 +132,13 @@ class SearchForm extends PostBackControl {
 	
 	function Render_NoPostBack() {
 		$this->CallDelegate('PreSearchFormRender');
-		include($this->Context->Configuration['THEME_PATH'].'templates/search_form.php');
+		include(ThemeFilePath($this->Context->Configuration, 'search_form.php'));
 		
 		if ($this->PostBackAction == 'Search') {
 			
 			$this->CallDelegate('PreSearchResultsRender');
 			
-			include($this->Context->Configuration['THEME_PATH'].'templates/search_results_top.php');
+			include(ThemeFilePath($this->Context->Configuration, 'search_results_top.php'));
 			
 			if ($this->DataCount > 0) {
 				$Switch = 0;
@@ -148,13 +148,14 @@ class SearchForm extends PostBackControl {
 					$Discussion = $this->Context->ObjectFactory->NewObject($this->Context, 'Discussion');
 					$CurrentUserJumpToLastCommentPref = $this->Context->Session->User->Preference('JumpToLastReadComment');
 					$DiscussionList = '';
+					$ThemeFilePath = ThemeFilePath($this->Context->Configuration, 'discussion.php');
 					while ($Row = $this->Context->Database->GetRow($this->Data)) {
 						$Discussion->Clear();
 						$Discussion->GetPropertiesFromDataSet($Row, $this->Context->Configuration);
 						$Discussion->FormatPropertiesForDisplay();
 						$Discussion->ForceNameSpaces($this->Context->Configuration);
 						if ($Counter < $this->Context->Configuration['SEARCH_RESULTS_PER_PAGE']) {
-							include($this->Context->Configuration['THEME_PATH'].'templates/discussion.php');
+							include($ThemeFilePath);
 						}
 						$FirstRow = 0;
 						$Counter++;
@@ -164,12 +165,13 @@ class SearchForm extends PostBackControl {
 					$Comment = $this->Context->ObjectFactory->NewContextObject($this->Context, 'Comment');
 					$HighlightWords = ParseQueryForHighlighting($this->Context, $this->Search->Query);
 					$CommentList = '';
+					$ThemeFilePath = ThemeFilePath($this->Context->Configuration, 'search_results_comments.php');
 					while ($Row = $this->Context->Database->GetRow($this->Data)) {
 						$Comment->Clear();
 						$Comment->GetPropertiesFromDataSet($Row, $this->Context->Session->UserID);
 						$Comment->FormatPropertiesForSafeDisplay();
 						if ($Counter < $this->Context->Configuration['SEARCH_RESULTS_PER_PAGE']) {
-							include($this->Context->Configuration['THEME_PATH'].'templates/search_results_comments.php');
+							include($ThemeFilePath);
 						}
 						$FirstRow = 0;
 						$Counter++;
@@ -178,6 +180,7 @@ class SearchForm extends PostBackControl {
 				} else {
 					$u = $this->Context->ObjectFactory->NewContextObject($this->Context, 'User');
 					$UserList = '';
+					$ThemeFilePath = ThemeFilePath($this->Context->Configuration, 'search_results_users.php');
 					while ($Row = $this->Context->Database->GetRow($this->Data)) {
 						$Switch = ($Switch == 1?0:1);
 						$u->Clear();
@@ -185,7 +188,7 @@ class SearchForm extends PostBackControl {
 						$u->FormatPropertiesForDisplay();
 						
 						if ($Counter < $this->Context->Configuration['SEARCH_RESULTS_PER_PAGE']) {
-							include($this->Context->Configuration['THEME_PATH'].'templates/search_results_users.php');
+							include($ThemeFilePath);
 						}
 						$FirstRow = 0;
 						$Counter++;
@@ -194,7 +197,7 @@ class SearchForm extends PostBackControl {
 				}
 			}
 			if ($this->DataCount > 0) {
-				include($this->Context->Configuration['THEME_PATH'].'templates/search_results_bottom.php');
+				include(ThemeFilePath($this->Context->Configuration, 'search_results_bottom.php'));
 			}
 		}
 	}

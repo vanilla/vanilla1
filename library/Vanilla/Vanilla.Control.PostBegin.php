@@ -21,7 +21,7 @@ class PostBegin extends Control {
 	
 	function Render() {
 		$this->CallDelegate('PreRender');
-		include($this->Context->Configuration['THEME_PATH'].'templates/post_begin.php');
+		include(ThemeFilePath($this->Context->Configuration, 'post_begin.php'));
 		$this->CallDelegate('PostRender');
 	}
 }

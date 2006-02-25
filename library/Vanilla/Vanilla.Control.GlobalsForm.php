@@ -46,7 +46,7 @@ class GlobalsForm extends PostBackControl {
 	
 	function Render_ValidPostBack() {
       $this->CallDelegate('PreValidPostBackRender');
-      include($this->Context->Configuration['THEME_PATH'].'templates/settings_globals_form_validpostback.php');
+      include(ThemeFilePath($this->Context->Configuration, 'settings_globals_form_validpostback.php'));
       $this->CallDelegate('PostValidPostBackRender');
 	}
 	
@@ -55,7 +55,7 @@ class GlobalsForm extends PostBackControl {
          $this->CallDelegate('PreNoPostBackRender');
 			$this->PostBackParams->Clear();
 			$this->PostBackParams->Set('PostBackAction', 'ProcessGlobals');
-         include($this->Context->Configuration['THEME_PATH'].'templates/settings_globals_form_nopostback.php');
+         include(ThemeFilePath($this->Context->Configuration, 'settings_globals_form_nopostback.php'));
          $this->CallDelegate('PostNoPostBackRender');
 		}
 	}

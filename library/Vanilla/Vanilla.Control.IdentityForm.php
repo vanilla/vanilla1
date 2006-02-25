@@ -35,20 +35,9 @@ class IdentityForm extends PostBackControl {
 	
 	function Render() {
 		if ($this->IsPostBack) {
-			if ($this->Context->Session->UserID != $this->User->UserID && !$this->Context->Session->User->Permission('PERMISSION_EDIT_USERS')) {
-				$this->Context->WarningCollector->Add($this->Context->GetDefinition('PermissionError'));
-				echo('<div class="AccountForm">
-					'.$this->Get_Warnings().'
-				</div>');				
-			} else {				
-				$this->PostBackParams->Set('PostBackAction', 'ProcessIdentity');
-				$this->PostBackParams->Set('u', $this->User->UserID);
-				$this->PostBackParams->Set('LabelValuePairCount', (count($this->User->Attributes) > 0? count($this->User->Attributes):1));
-				$Required = $this->Context->GetDefinition('Required');
-				$this->CallDelegate('PreRender');
-				include($this->Context->Configuration['THEME_PATH'].'templates/account_identity_form.php');
-				$this->CallDelegate('PostRender');
-			}
+			$this->CallDelegate('PreRender');
+			include(ThemeFilePath($this->Context->Configuration, 'account_identity_form.php'));
+			$this->CallDelegate('PostRender');
 		}
 	}
 }

@@ -22,7 +22,7 @@ class CommentFoot extends Control {
 	
 	function Render() {
 		$this->CallDelegate('PreRender');
-		include($this->Context->Configuration['THEME_PATH'].'templates/comments_foot.php');
+		include(ThemeFilePath($this->Context->Configuration, 'comments_foot.php'));
 		$this->CallDelegate('PostRender');
 	}
 }

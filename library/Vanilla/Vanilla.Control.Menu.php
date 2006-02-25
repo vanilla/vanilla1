@@ -44,7 +44,7 @@ class Menu extends Control {
       ksort($this->Tabs);
 		// Now write the Menu
       $this->CallDelegate('PreRender');
-		include($this->Context->Configuration['THEME_PATH'].'templates/menu.php');
+		include(ThemeFilePath($this->Context->Configuration, 'menu.php'));
 		$this->CallDelegate('PostRender');
    }
 	

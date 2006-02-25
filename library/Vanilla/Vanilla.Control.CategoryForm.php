@@ -95,7 +95,7 @@ class CategoryForm extends PostBackControl {
 			if ($this->PostBackAction == 'Category') {
 				$this->PostBackParams->Set('PostBackAction', 'ProcessCategory');
             $this->CallDelegate('PreEditRender');
-            include($this->Context->Configuration['THEME_PATH'].'templates/settings_category_edit.php');
+            include(ThemeFilePath($this->Context->Configuration, 'settings_category_edit.php'));
             $this->CallDelegate('PostEditRender');
 				
 			} elseif ($this->PostBackAction == 'CategoryRemove') {
@@ -103,13 +103,13 @@ class CategoryForm extends PostBackControl {
 				$this->CategorySelect->Attributes = "onchange=\"document.location='?PostBackAction=CategoryRemove&amp;CategoryID='+this.options[this.selectedIndex].value;\"";
 				$this->CategorySelect->SelectedID = $CategoryID;
             $this->CallDelegate('PreRemoveRender');
-            include($this->Context->Configuration['THEME_PATH'].'templates/settings_category_remove.php');            
+            include(ThemeFilePath($this->Context->Configuration, 'settings_category_remove.php'));            
             $this->CallDelegate('PostRemoveRender');
             
 			} else {
 				$this->PostBackParams->Set('PostBackAction', 'ProcessCategories');
             $this->CallDelegate('PreListRender');
-            include($this->Context->Configuration['THEME_PATH'].'templates/settings_category_list.php');            
+            include(ThemeFilePath($this->Context->Configuration, 'settings_category_list.php'));            
             $this->CallDelegate('PostListRender');
             
 			}

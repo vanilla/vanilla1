@@ -71,7 +71,7 @@ class CommentGrid extends Control {
 	
    function Render() {
 		$this->CallDelegate('PreRender');
-		include($this->Context->Configuration['THEME_PATH'].'templates/comments.php');		
+		include(ThemeFilePath($this->Context->Configuration, 'comments.php'));		
 		$this->CallDelegate('PostRender');
    }	
 }
