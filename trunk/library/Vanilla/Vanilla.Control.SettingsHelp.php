@@ -22,7 +22,7 @@ class SettingsHelp extends Control {
 	function Render() {
 		if ($this->PostBackAction == '') {
          $this->CallDelegate('PreRender');
-         include($this->Context->Configuration['THEME_PATH'].'templates/settings_help.php');
+         include(ThemeFilePath($this->Context->Configuration, 'settings_help.php'));
          $this->CallDelegate('PostRender');
 		}
 	}

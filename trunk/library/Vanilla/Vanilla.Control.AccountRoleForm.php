@@ -67,7 +67,7 @@ class AccountRoleForm extends PostBackControl {
 	function Render() {
 		if ($this->PostBackAction == 'Role') {
 			$this->CallDelegate('PreRender');
-			include($this->Context->Configuration['THEME_PATH'].'templates/account_role_form.php');
+			include(ThemeFilePath($this->Context->Configuration, 'account_role_form.php'));
 			$this->CallDelegate('PostRender');
 		}
 	}

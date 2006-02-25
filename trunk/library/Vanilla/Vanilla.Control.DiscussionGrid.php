@@ -78,7 +78,7 @@ class DiscussionGrid extends Control {
 		$PageList = $pl->GetNumericList();
 		
 		
-		include($this->Context->Configuration['THEME_PATH'].'templates/discussions.php');
+		include(ThemeFilePath($this->Context->Configuration, 'discussions.php'));
 		$this->CallDelegate('PostRender');
 	}	
 }

@@ -31,7 +31,7 @@ class Account extends Control {
 				echo($this->Get_Warnings());
 			} else {
 				$this->User->FormatPropertiesForDisplay();
-				include($this->Context->Configuration['THEME_PATH'].'templates/account_profile.php');
+				include(ThemeFilePath($this->Context->Configuration, 'account_profile.php'));
 			}
 		}
 		$this->CallDelegate('PostRender');

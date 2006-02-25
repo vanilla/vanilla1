@@ -45,40 +45,37 @@ if (in_array($Context->SelfUrl, array("index.php", "comments.php"))) {
    function AddBookmarksToPanel(&$Context, &$Panel, &$DiscussionManager, $OptionalDiscussionID = "0") {
       
       $sReturn = "";
-      // Check for a template file first (allows people to customize this if need be)
-      if (!@include($Context->Configuration["THEME_PATH"]."templates/panel_lists_bookmarks.php")) {
-         if ($Context->Session->User->Preference("ShowBookmarks")) {
-            $UserBookmarks = $DiscussionManager->GetBookmarkedDiscussionsByUserID($Context->Session->UserID, $Context->Configuration["PANEL_BOOKMARK_COUNT"], $OptionalDiscussionID);
-            $Count = $Context->Database->RowCount($UserBookmarks);
-            $OtherBookmarksExist = 0;
-            $ThisDiscussionIsBookmarked = 0;
-            if ($Count > 0) {
-               $Discussion = $Context->ObjectFactory->NewObject($Context, "Discussion");
-               while ($Row = $Context->Database->GetRow($UserBookmarks)) {
-                  $Discussion->Clear();
-                  $Discussion->GetPropertiesFromDataSet($Row, $Context->Configuration);
-                  $Discussion->FormatPropertiesForDisplay();
-                  if ($Discussion->DiscussionID != $OptionalDiscussionID) $OtherBookmarksExist = 1;
-                  if ($Discussion->DiscussionID == $OptionalDiscussionID && $Discussion->Bookmarked) $ThisDiscussionIsBookmarked = 1;
-                  $sReturn .= "<li id=\"Bookmark_".$Discussion->DiscussionID."\"".(($Discussion->DiscussionID == $OptionalDiscussionID && !$Discussion->Bookmarked)?" style=\"display: none;\"":"")."><a class=\"PanelLink\" href=\"".GetUrl($Context->Configuration, "comments.php", "", "DiscussionID", $Discussion->DiscussionID)."\">".$Discussion->Name."</a>";
-                  if ($Discussion->NewComments > 0) $sReturn .= " <small><strong>".$Discussion->NewComments." ".$Context->GetDefinition("New")."</strong></small>";
-                  $sReturn .= "</li>";
-               }
-               if ($Count >= $Context->Configuration["PANEL_BOOKMARK_COUNT"]) {
-                  $sReturn .= "<li><a class=\"PanelLink\" href=\"".GetUrl($Context->Configuration, "index.php", "", "", "", "", "View=Bookmarks")."\">".$Context->GetDefinition("ShowAll")."</a></li>";
-               }
-      
-               $sReturn = "<h2 id=\"BookmarkTitle\"".(($OtherBookmarksExist || $ThisDiscussionIsBookmarked)?"":" style=\"display: none;\"").">".$Context->GetDefinition("Bookmarks")."</h2>
-               <ul class=\"LinkedList\" id=\"BookmarkList\"".(($OtherBookmarksExist || $ThisDiscussionIsBookmarked)?"":" style=\"display: none;\"").">"
-               .$sReturn
-               ."</ul>";
-      
-            }
-            $sReturn .= "<form id=\"frmBookmark\" action=\"\"><div class=\"Hidden\"><input type=\"hidden\" name=\"OtherBookmarksExist\" value=\"".$OtherBookmarksExist."\" /></div></form>";
-         } else {
-            $sReturn = "<form id=\"frmBookmark\" action=\"\"><div class=\"Hidden\"><input type=\"hidden\" name=\"OtherBookmarksExist\" value=\"1\" /></div></form>";
-         }
-      }
+		if ($Context->Session->User->Preference("ShowBookmarks")) {
+			$UserBookmarks = $DiscussionManager->GetBookmarkedDiscussionsByUserID($Context->Session->UserID, $Context->Configuration["PANEL_BOOKMARK_COUNT"], $OptionalDiscussionID);
+			$Count = $Context->Database->RowCount($UserBookmarks);
+			$OtherBookmarksExist = 0;
+			$ThisDiscussionIsBookmarked = 0;
+			if ($Count > 0) {
+				$Discussion = $Context->ObjectFactory->NewObject($Context, "Discussion");
+				while ($Row = $Context->Database->GetRow($UserBookmarks)) {
+					$Discussion->Clear();
+					$Discussion->GetPropertiesFromDataSet($Row, $Context->Configuration);
+					$Discussion->FormatPropertiesForDisplay();
+					if ($Discussion->DiscussionID != $OptionalDiscussionID) $OtherBookmarksExist = 1;
+					if ($Discussion->DiscussionID == $OptionalDiscussionID && $Discussion->Bookmarked) $ThisDiscussionIsBookmarked = 1;
+					$sReturn .= "<li id=\"Bookmark_".$Discussion->DiscussionID."\"".(($Discussion->DiscussionID == $OptionalDiscussionID && !$Discussion->Bookmarked)?" style=\"display: none;\"":"")."><a class=\"PanelLink\" href=\"".GetUrl($Context->Configuration, "comments.php", "", "DiscussionID", $Discussion->DiscussionID)."\">".$Discussion->Name."</a>";
+					if ($Discussion->NewComments > 0) $sReturn .= " <small><strong>".$Discussion->NewComments." ".$Context->GetDefinition("New")."</strong></small>";
+					$sReturn .= "</li>";
+				}
+				if ($Count >= $Context->Configuration["PANEL_BOOKMARK_COUNT"]) {
+					$sReturn .= "<li><a class=\"PanelLink\" href=\"".GetUrl($Context->Configuration, "index.php", "", "", "", "", "View=Bookmarks")."\">".$Context->GetDefinition("ShowAll")."</a></li>";
+				}
+	
+				$sReturn = "<h2 id=\"BookmarkTitle\"".(($OtherBookmarksExist || $ThisDiscussionIsBookmarked)?"":" style=\"display: none;\"").">".$Context->GetDefinition("Bookmarks")."</h2>
+				<ul class=\"LinkedList\" id=\"BookmarkList\"".(($OtherBookmarksExist || $ThisDiscussionIsBookmarked)?"":" style=\"display: none;\"").">"
+				.$sReturn
+				."</ul>";
+	
+			}
+			$sReturn .= "<form id=\"frmBookmark\" action=\"\"><div class=\"Hidden\"><input type=\"hidden\" name=\"OtherBookmarksExist\" value=\"".$OtherBookmarksExist."\" /></div></form>";
+		} else {
+			$sReturn = "<form id=\"frmBookmark\" action=\"\"><div class=\"Hidden\"><input type=\"hidden\" name=\"OtherBookmarksExist\" value=\"1\" /></div></form>";
+		}
       $Panel->AddString($sReturn, 20);
    }
    

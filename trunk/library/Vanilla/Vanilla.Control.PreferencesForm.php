@@ -50,14 +50,7 @@ class PreferencesForm extends PostBackControl {
 	function Render() {
 		if ($this->IsPostBack) {
 			$this->CallDelegate('PreRender');
-			if ($this->Context->Session->UserID != $this->User->UserID && !$this->Context->Session->User->Permission('PERMISSION_EDIT_USERS')) {
-				$this->Context->WarningCollector->Add($this->Context->GetDefinition('PermissionError'));
-				echo('<div class="AccountForm">
-					'.$this->Get_Warnings().'"
-				</div>');				
-			} else {
-				include($this->Context->Configuration['THEME_PATH'].'templates/account_preferences_form.php');
-			}
+			include(ThemeFilePath($this->Context->Configuration, 'account_preferences_form.php'));
 			$this->CallDelegate('PostRender');
 		}
 	}

@@ -33,19 +33,9 @@ class PasswordForm extends PostBackControl {
 	
 	function Render() {
 		if ($this->IsPostBack) {
-			if ($this->Context->Session->UserID != $this->User->UserID && !$this->Context->Session->User->Permission('PERMISSION_EDIT_USERS')) {
-				$this->Context->WarningCollector->Add($this->Context->GetDefinition('PermissionError'));
-				echo('<div class="AccountForm">
-					'.$this->Get_Warnings().'
-				</div>');				
-			} else {				
-				$this->PostBackParams->Set('PostBackAction', 'ProcessPassword');
-				$this->PostBackParams->Set('u', $this->User->UserID);
-				$Required = $this->Context->GetDefinition('Required');
-				$this->CallDelegate('PreRender');
-				include($this->Context->Configuration['THEME_PATH'].'templates/account_password_form.php');
-				$this->CallDelegate('PostRender');
-			}
+			$this->CallDelegate('PreRender');
+			include(ThemeFilePath($this->Context->Configuration, 'account_password_form.php'));
+			$this->CallDelegate('PostRender');
 		}
 	}
 }

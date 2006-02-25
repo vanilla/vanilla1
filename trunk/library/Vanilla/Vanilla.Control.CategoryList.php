@@ -23,7 +23,7 @@ class CategoryList extends Control {
 	
 	function Render() {
 		$this->CallDelegate('PreRender');
-		include($this->Context->Configuration['THEME_PATH'].'templates/categories.php');
+		include(ThemeFilePath($this->Context->Configuration, 'categories.php'));
 		$this->CallDelegate('PostRender');
 	}	
 }

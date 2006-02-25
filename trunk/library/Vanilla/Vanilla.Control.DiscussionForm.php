@@ -163,7 +163,7 @@ class DiscussionForm extends PostBackControl {
 		$this->PostBackParams->Set('UserCommentCount', $this->Context->Session->User->CountComments);
 		$this->PostBackParams->Set('AuthUserID', $Comment->AuthUserID);
 
-		include($this->Context->Configuration['THEME_PATH'].'templates/comment_form.php');
+		include(ThemeFilePath($this->Context->Configuration, 'comment_form.php'));
 		
 		$this->CallDelegate('CommentForm_PostRender');
 	}
@@ -198,7 +198,7 @@ class DiscussionForm extends PostBackControl {
 		$this->PostBackParams->Set('UserDiscussionCount', $this->Context->Session->User->CountDiscussions);
 		$this->PostBackParams->Set('PostBackAction', 'SaveDiscussion');
 		
-		include($this->Context->Configuration['THEME_PATH'].'templates/discussion_form.php');
+		include(ThemeFilePath($this->Context->Configuration, 'discussion_form.php'));
 		
 		$this->CallDelegate('DiscussionForm_PostRender');
 	}
@@ -206,7 +206,7 @@ class DiscussionForm extends PostBackControl {
 	function GetPostFormatting($SelectedFormatType) {
 		$FormatCount = count($this->Context->StringManipulator->Formatters);
 		$sReturn = '';
-		include($this->Context->Configuration['THEME_PATH'].'templates/post_formatter.php');
+		include(ThemeFilePath($this->Context->Configuration, 'post_formatter.php'));
 		return $sReturn;
 	}
 	
