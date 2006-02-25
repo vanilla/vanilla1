@@ -10,7 +10,7 @@ echo('<?xml version="1.0" encoding="utf-8"?>
    <base href="'.$Context->Configuration['BASE_URL'].'" />
    ');
    if ($this->StyleSheet == '') {
-      echo('<link rel="stylesheet" type="text/css" href="'.$Context->StyleUrl.'css/utility.css" />');
+      echo('<link rel="stylesheet" type="text/css" href="'.$Context->StyleUrl.'utility.css" />');
    } else {
       echo('<link rel="stylesheet" href="'.$this->StyleSheet.'" />
       ');
