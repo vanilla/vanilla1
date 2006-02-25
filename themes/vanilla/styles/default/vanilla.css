@@ -12,7 +12,7 @@
 
 /* BEGIN GLOBAL DEFINITIONS (common to all pages) */
 	body { 
-		background: url(../images/panelfade.gif) repeat-y top left #ffffff;
+		background: url(panelfade.gif) repeat-y top left #ffffff;
 		margin: 0px;
 		padding: 0px;
 	}
@@ -55,7 +55,7 @@
 		display: none;
 	}
 	.ErrorContainer {
-		background: url(../images/alert.gif) no-repeat top left #FFEDEF;
+		background: url(alert.gif) no-repeat top left #FFEDEF;
 		border: 1px solid #FFC2CA;
 		padding: 10px;
 		padding-left: 27px;
@@ -144,7 +144,7 @@
 		
 		/* Head: The banner/menu container. */
 		.Head {
-			background: url("../images/waves.blue.gif") repeat-x left top #E5EAF6;
+			background: url(waves.blue.gif) repeat-x left top #E5EAF6;
 			margin: 0px;
 		}
 		
@@ -221,7 +221,7 @@
 		/* Body: The element containing everything below the Head (panel and
 		  page content). */
 		.Body {
-			background: url(../images/panelfadetop.gif) no-repeat top left;
+			background: url(panelfadetop.gif) no-repeat top left;
 			border-top: 1px solid #ACBEDF;
 			padding-top: 20px;
 			padding-bottom: 40px;
@@ -507,7 +507,7 @@
 		padding-right: 8px;
 	}
 	.Bookmarked .DataItem {
-		background: url('../images/ico.bookmark.gif') top right no-repeat;
+		background: url(ico.bookmark.gif) top right no-repeat;
 	}
 	.NewComments { background: #FEFECC; }
 	.NoNewComments { background: #FFFEEC; }
