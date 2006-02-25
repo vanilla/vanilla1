@@ -9,6 +9,7 @@ $Discussion = $this->Context->ObjectFactory->NewObject($this->Context, 'Discussi
 $FirstRow = 1;
 $CurrentUserJumpToLastCommentPref = $this->Context->Session->User->Preference('JumpToLastReadComment');
 $DiscussionList = '';
+$ThemeFilePath = ThemeFilePath($this->Context->Configuration, 'discussion.php');
 while ($Row = $this->Context->Database->GetRow($this->DiscussionData)) {
    $Discussion->Clear();
    $Discussion->GetPropertiesFromDataSet($Row, $this->Context->Configuration);
@@ -20,7 +21,7 @@ while ($Row = $this->Context->Database->GetRow($this->DiscussionData)) {
 	}
 
 	// Discussion search results are identical to regular discussion listings, so include the discussion search results template here.
-	include($this->Context->Configuration['THEME_PATH'].'templates/discussion.php');
+	include($ThemeFilePath);
 	
    $FirstRow = 0;
 }
