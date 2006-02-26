@@ -16,8 +16,8 @@ class Menu extends Control {
 	var $Tabs;				// Tab collection
    var $CurrentTab;		// The current tab
 	
-	function AddTab($Text, $Value, $Url, $CssClass, $Attributes = '', $Position = '0', $ForcePosition = '0') {
-		$this->AddItemToCollection($this->Tabs, array('Text' => $Text, 'Value' => $Value, 'Url' => $Url, 'CssClass' => $CssClass, 'Attributes' => $Attributes), $Position, $ForcePosition);
+	function AddTab($Text, $Value, $Url, $Attributes = '', $Position = '0', $ForcePosition = '0') {
+		$this->AddItemToCollection($this->Tabs, array('Text' => $Text, 'Value' => $Value, 'Url' => $Url, 'Attributes' => $Attributes), $Position, $ForcePosition);
 	}
 	
 	function ClearTabs() {
@@ -49,7 +49,7 @@ class Menu extends Control {
    }
 	
 	function TabClass($CurrentTab, $ComparisonTab) {
-		return ($CurrentTab == $ComparisonTab) ? 'TabOn' : 'TabOff';
+		return ($CurrentTab == $ComparisonTab) ? ' class="TabOn"' : '';
 	}	
 }
 ?>

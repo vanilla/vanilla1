@@ -38,6 +38,7 @@ include("appg/init_vanilla.php");
 	}
 	
 	// Define properties of the page controls that are specific to this page
+   $Head->BodyId = 'AccountPage';
 	$Menu->CurrentTab = "account";
 	$Panel->CssClass = "AccountPanel";
 	$Panel->BodyCssClass = "AccountPageBody";

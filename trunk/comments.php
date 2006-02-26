@@ -32,6 +32,7 @@ if ($CommentGrid->ShowForm) {
 }
 
 // Define properties of the page controls that are specific to this page
+$Head->BodyId = 'CommentsPage';
 $Menu->CurrentTab = "discussions";
 $Panel->CssClass = "CommentPanel";
 $Panel->BodyCssClass = "Comments";
@@ -94,7 +95,6 @@ $Context->PageTitle = $CommentGrid->Discussion->Name;
 	$Page->AddRenderControl($Panel, $Configuration["CONTROL_POSITION_PANEL"]);
 	$Page->AddRenderControl($CommentGrid, $Configuration["CONTROL_POSITION_BODY_ITEM"]);
 	if ($CommentGrid->ShowForm) $Page->AddRenderControl($CommentForm, $Configuration["CONTROL_POSITION_BODY_ITEM"] + 10);
-	if ($Context->WarningCollector->Count() == 0) $Page->AddRenderControl($CommentFoot, $Configuration["CONTROL_POSITION_BODY_ITEM"] + 20);
 	$Page->AddRenderControl($Foot, $Configuration["CONTROL_POSITION_FOOT"]);
 	$Page->AddRenderControl($PageEnd, $Configuration["CONTROL_POSITION_PAGE_END"]);
 

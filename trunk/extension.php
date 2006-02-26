@@ -18,6 +18,8 @@ include('appg/init_vanilla.php');
 
 	// Ensure the user is allowed to view this page
 	$Context->Session->Check($Context);
+   
+   $Head->BodyId = 'ExtensionPage';
 	
 // 2. BUILD PAGE CONTROLS
 	$ExtensionPage = $Context->ObjectFactory->CreateControl($Context, 'Filler', 'extension_page.php');

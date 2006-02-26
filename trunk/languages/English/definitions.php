@@ -282,7 +282,7 @@ $Context->Dictionary['BigInput'] = 'big input';
 $Context->Dictionary['SmallInput'] = 'small input';
 $Context->Dictionary['EditYourDiscussionTopic'] = 'Edit the discussion topic';
 $Context->Dictionary['EditYourComments'] = 'Edit your comments';
-$Context->Dictionary['FormatCommentsAs'] = 'Format comments as';
+$Context->Dictionary['FormatCommentsAs'] = 'Format comments as ';
 $Context->Dictionary['SaveYourChanges'] = 'Save Changes';
 $Context->Dictionary['Text'] = 'Text';
 $Context->Dictionary['EnterYourDiscussionTopic'] = 'Enter your discussion topic';
@@ -503,6 +503,6 @@ $Context->Dictionary['ConfirmSink'] = 'Are you sure you want to sink this discus
 $Context->Dictionary['ErrPermissionSinkDiscussions'] = 'You do not have permission to sink discussions';
 
 /* Please do not remove or alter this definition */
-$Context->Dictionary['PanelFooter'] = '<div class="AboutVanilla"><a href="http://getvanilla.com">Vanilla ('.VANILLA_VERSION.')</a> is a product of <a href="http://lussumo.com">Lussumo</a>. More Information: <a href="http://lussumo.com/docs">Documentation</a>, <a href="http://lussumo.com/community">Community Support</a>.</div>';
+$Context->Dictionary['PanelFooter'] = '<p id="AboutVanilla"><a href="http://getvanilla.com">Vanilla ('.VANILLA_VERSION.')</a> is a product of <a href="http://lussumo.com">Lussumo</a>. More Information: <a href="http://lussumo.com/docs">Documentation</a>, <a href="http://lussumo.com/community">Community Support</a>.</p>';
 
 ?>

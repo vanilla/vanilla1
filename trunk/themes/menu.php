@@ -19,7 +19,7 @@ echo('<div class="SiteContainer">');
       <div class="Logo">'.$this->Context->Configuration['BANNER_TITLE'].'</div>
       <ul id="MenuForum">');
       while (list($Key, $Tab) = each($this->Tabs)) {
-   		echo('<li><a class="'.$this->TabClass($this->CurrentTab, $Tab['Value']).' '.$Tab['CssClass'].'" href="'.$Tab['Url'].'" '.$Tab['Attributes'].'>'.$Tab['Text'].'</a></li>');
+   		echo('<li><a class="'.$this->TabClass($this->CurrentTab, $Tab['Value']).'" href="'.$Tab['Url'].'" '.$Tab['Attributes'].'>'.$Tab['Text'].'</a></li>');
       }
       echo('</ul>
    </div>');

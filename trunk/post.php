@@ -29,6 +29,7 @@ include("appg/init_vanilla.php");
 	}
 	
 	// Define properties of the page controls that are specific to this page
+   $Head->BodyId = 'PostPage';
 	$Menu->CurrentTab = "discussions";
 	$Panel->CssClass = "PostPanel";
 	$Panel->BodyCssClass = "StartDiscussion";

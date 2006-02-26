@@ -34,9 +34,9 @@ if (in_array($Context->SelfUrl, array("account.php", "categories.php", "comments
       if ($Context->Session->User->Preference("UseQuickKeys")) {
          // Clear out existing tabs and put in the new quickkey tabs
          $Menu->ClearTabs();
-         $Menu->AddTab($Context->GetDefinition("Discussions_QuickKey"), "discussions", GetUrl($Configuration, "index.php"), "DiscussionsTab", "accesskey=\"d\"");
-         if ($Context->Configuration["USE_CATEGORIES"]) $Menu->AddTab($Context->GetDefinition("Categories_QuickKey"), "categories", GetUrl($Configuration, "categories.php"), "CategoriesTab", "accesskey=\"c\"");
-         $Menu->AddTab($Context->GetDefinition("Search_QuickKey"), "search", GetUrl($Configuration, "search.php"), "SearchTab", "accesskey=\"s\"");
+         $Menu->AddTab($Context->GetDefinition("Discussions_QuickKey"), "discussions", GetUrl($Configuration, "index.php"), "accesskey=\"d\"");
+         if ($Context->Configuration["USE_CATEGORIES"]) $Menu->AddTab($Context->GetDefinition("Categories_QuickKey"), GetUrl($Configuration, "categories.php"), "CategoriesTab", "accesskey=\"c\"");
+         $Menu->AddTab($Context->GetDefinition("Search_QuickKey"), "search", GetUrl($Configuration, "search.php"), "accesskey=\"s\"");
 
 			// Make sure they should be seeing the settings tab
 			$RequiredPermissions = array("PERMISSION_CHECK_FOR_UPDATES",
@@ -57,12 +57,12 @@ if (in_array($Context->SelfUrl, array("account.php", "categories.php", "comments
 			$RequiredPermissionsCount = count($RequiredPermissions);
 			for ($i = 0; $i < $RequiredPermissionsCount; $i++) {
 				if ($Context->Session->User->Permission($RequiredPermissions[$i])) {
-					$Menu->AddTab($Context->GetDefinition("Settings_QuickKey"), "settings", GetUrl($Configuration, "settings.php"), "SettingsTab", "accesskey=\"e\"");
+					$Menu->AddTab($Context->GetDefinition("Settings_QuickKey"), "settings", GetUrl($Configuration, "settings.php"), "accesskey=\"e\"");
 					break;
 				}
 			}
 
-         $Menu->AddTab($Context->GetDefinition("Account_QuickKey"), "account", GetUrl($Configuration, "account.php"), "AccountTab", "accesskey=\"a\"");
+         $Menu->AddTab($Context->GetDefinition("Account_QuickKey"), "account", GetUrl($Configuration, "account.php"), "accesskey=\"a\"");
          
          // Set up the "Start a new discussion" button
 			$CategoryID = ForceIncomingInt("CategoryID", 0);

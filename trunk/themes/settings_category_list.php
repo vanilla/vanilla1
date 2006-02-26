@@ -14,7 +14,7 @@ echo('<div class="SettingsForm">
                $c->GetPropertiesFromDataSet($Row);
                $c->FormatPropertiesForDisplay();
                echo('<li class="SortListItem'.($this->Context->Session->User->Permission('PERMISSION_SORT_CATEGORIES') ? ' MovableSortListItem':'').'" id="item_'.$c->CategoryID.'">');
-                  if ($this->Context->Session->User->Permission('PERMISSION_REMOVE_CATEGORIES')) echo('<a class="SortRemove" href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=CategoryRemove&amp;CategoryID='.$c->CategoryID).'"><img src="'.$this->Context->StyleUrl.'images/btn.remove.gif" height="15" width="15" border="0" alt="'.$this->Context->GetDefinition('Remove').'" /></a>');
+                  if ($this->Context->Session->User->Permission('PERMISSION_REMOVE_CATEGORIES')) echo('<a class="SortRemove" href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=CategoryRemove&amp;CategoryID='.$c->CategoryID).'"><img src="'.$this->Context->StyleUrl.'btn.remove.gif" height="15" width="15" border="0" alt="'.$this->Context->GetDefinition('Remove').'" /></a>');
                   if ($this->Context->Session->User->Permission('PERMISSION_EDIT_CATEGORIES')) echo('<a class="SortEdit" href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=Category&amp;CategoryID='.$c->CategoryID).'">'.$this->Context->GetDefinition('Edit').'</a>');
                   echo($c->Name.'
                </li>');

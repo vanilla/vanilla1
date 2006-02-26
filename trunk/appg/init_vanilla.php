@@ -76,13 +76,15 @@ $Head->AddStyleSheet($Context->StyleUrl.'vanilla.print.css', 'print');
 if ($Context->Session->UserID > 0 && $Context->Session->User->Permission('PERMISSION_START_DISCUSSION')) {
    $CategoryID = ForceIncomingInt('CategoryID', 0);
 	if ($CategoryID == 0) $CategoryID = '';
-	$Panel->AddString('<a class=\'PanelButton StartDiscussionButton\' href=\''.GetUrl($Configuration, 'post.php', 'category/', 'CategoryID', $CategoryID).'\'>'.$Context->GetDefinition('StartANewDiscussion').'</a>', 1, 1);
+	$Panel->AddString('<h1>
+		<a href="'.GetUrl($Configuration, 'post.php', 'category/', 'CategoryID', $CategoryID).'">'.$Context->GetDefinition('StartANewDiscussion').'</a>
+	</h1>', 1, 1);
 }
 
 // BUILD THE MAIN MENU
-$Menu->AddTab($Context->GetDefinition('Discussions'), 'discussions', GetUrl($Configuration, './'), 'DiscussionsTab', '', $Configuration['TAB_POSITION_DISCUSSIONS']);
-if ($Configuration['USE_CATEGORIES']) $Menu->AddTab($Context->GetDefinition('Categories'), 'categories', GetUrl($Configuration, 'categories.php'), 'CategoriesTab', '', $Configuration['TAB_POSITION_CATEGORIES']);
-$Menu->AddTab($Context->GetDefinition('Search'), 'search', GetUrl($Configuration, 'search.php'), 'SearchTab', '', $Configuration['TAB_POSITION_SEARCH']);
+$Menu->AddTab($Context->GetDefinition('Discussions'), 'discussions', GetUrl($Configuration, './'), '', $Configuration['TAB_POSITION_DISCUSSIONS']);
+if ($Configuration['USE_CATEGORIES']) $Menu->AddTab($Context->GetDefinition('Categories'), 'categories', GetUrl($Configuration, 'categories.php'), '', $Configuration['TAB_POSITION_CATEGORIES']);
+$Menu->AddTab($Context->GetDefinition('Search'), 'search', GetUrl($Configuration, 'search.php'), '', $Configuration['TAB_POSITION_SEARCH']);
 if ($Context->Session->UserID > 0) {
 	// Make sure they should be seeing the settings tab
 	$RequiredPermissions = array('PERMISSION_CHECK_FOR_UPDATES',
@@ -104,13 +106,13 @@ if ($Context->Session->UserID > 0) {
 	$i = 0;
 	for ($i = 0; $i < $RequiredPermissionsCount; $i++) {
 		if ($Context->Session->User->Permission($RequiredPermissions[$i])) {
-			$Menu->AddTab($Context->GetDefinition('Settings'), 'settings', GetUrl($Configuration, 'settings.php'), 'SettingsTab', '', $Configuration['TAB_POSITION_SETTINGS']);
+			$Menu->AddTab($Context->GetDefinition('Settings'), 'settings', GetUrl($Configuration, 'settings.php'), '', $Configuration['TAB_POSITION_SETTINGS']);
 			break;
 		}
 	}
 
 	// Add the account tab   
-	$Menu->AddTab($Context->GetDefinition('Account'), 'account', GetUrl($Configuration, 'account.php'), 'AccountTab', '', $Configuration['TAB_POSITION_ACCOUNT']);
+	$Menu->AddTab($Context->GetDefinition('Account'), 'account', GetUrl($Configuration, 'account.php'), '', $Configuration['TAB_POSITION_ACCOUNT']);
 }
 
 // INCLUDE EXTENSIONS

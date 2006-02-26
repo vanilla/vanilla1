@@ -109,7 +109,7 @@ class ClipboardForm extends PostBackControl {
                            $Clipping->GetPropertiesFromDataSet($Row);
                            $Clipping->FormatPropertiesForDisplay();
                            echo("<li class=\"SortListItem\">
-                              <a class=\"SortRemove\" href=\"".GetUrl($this->Context->Configuration, "account.php", "", "", "", "", "PostBackAction=ClippingRemove&amp;ClippingID=".$Clipping->ClippingID)."\" onclick=\"return confirm('".$this->Context->GetDefinition("RemoveClipboardItemConfirm")."');\"><img src=\"".$this->Context->StyleUrl."images/btn.remove.gif\" height=\"15\" width=\"15\" border=\"0\" alt=\"".$this->Context->GetDefinition("Remove")."\" /></a>
+                              <a class=\"SortRemove\" href=\"".GetUrl($this->Context->Configuration, "account.php", "", "", "", "", "PostBackAction=ClippingRemove&amp;ClippingID=".$Clipping->ClippingID)."\" onclick=\"return confirm('".$this->Context->GetDefinition("RemoveClipboardItemConfirm")."');\"><img src=\"".$this->Context->StyleUrl."btn.remove.gif\" height=\"15\" width=\"15\" border=\"0\" alt=\"".$this->Context->GetDefinition("Remove")."\" /></a>
                               <a class=\"SortEdit\" href=\"".GetUrl($this->Context->Configuration, "account.php", "", "", "", "", "PostBackAction=Clipping&amp;ClippingID=".$Clipping->ClippingID)."\">".$this->Context->GetDefinition("Edit")."</a>
                               ".$Clipping->Label."
                            </li>");
