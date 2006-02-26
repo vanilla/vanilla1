@@ -24,7 +24,7 @@ $DiscussionList .= '
          ';
       }
       $DiscussionList .= '<li class="ThreadStarted">
-         <span><a href="'.GetUrl($this->Context->Configuration, 'comments.php', '', 'DiscussionID', $Discussion->DiscussionID, '', '#Item_1').'">'.$this->Context->GetDefinition('StartedBy').'</a> </span><a href="'.GetUrl($this->Context->Configuration, 'account.php', '', 'u', $Discussion->AuthUserID).'">'.$Discussion->AuthUsername.'</a>
+         <span><a href="'.GetUrl($this->Context->Configuration, 'comments.php', '', 'DiscussionID', $Discussion->DiscussionID, '', '#Item_1', CleanupString($Discussion->Name).'/').'">'.$this->Context->GetDefinition('StartedBy').'</a> </span><a href="'.GetUrl($this->Context->Configuration, 'account.php', '', 'u', $Discussion->AuthUserID).'">'.$Discussion->AuthUsername.'</a>
       </li>
       <li class="ThreadComments">
          <span>'.$this->Context->GetDefinition('Comments').' </span>'.$Discussion->CountComments.'
@@ -37,7 +37,7 @@ $DiscussionList .= '
       </li>';
       if ($this->Context->Session->UserID > 0) {
          $DiscussionList .= '
-      <li class="ThreadNew"><!-- all anchored to make for larger hit area -->
+      <li class="ThreadNew">
          <a href="'.$UnreadUrl.'"><span>New: </span>'.$Discussion->NewComments.'</a>
       </li>
       ';

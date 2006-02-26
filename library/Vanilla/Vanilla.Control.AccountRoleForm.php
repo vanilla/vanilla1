@@ -58,7 +58,8 @@ class AccountRoleForm extends PostBackControl {
 				$this->RoleSelect->Name = 'RoleID';
 				$this->RoleSelect->CssClass = 'PanelInput';
 				$this->RoleSelect->AddOptionsFromDataSet($this->Context->Database, $RoleData, 'RoleID', 'Name');
-				$this->RoleSelect->SelectedID = $this->User->RoleID;	
+				$this->RoleSelect->SelectedID = $this->User->RoleID;
+				$this->RoleSelect->Attributes = ' id="ddRoleID"';
 			}
 		}
 		$this->CallDelegate('Constructor');

@@ -60,7 +60,7 @@ $Context->Dictionary['Cancel'] = 'Cancel and go back';
 $Context->Dictionary['YourOldPasswordNotes'] = 'The password you currently use to sign in to this discussion forum.';
 $Context->Dictionary['YourNewPasswordNotes'] = 'Do not use birth-dates, bank-card pin numbers, telephone numbers, or anything that can be easily guessed. <strong>And PLEASE do not use the same password here as you do on other web-sites.</strong>';
 $Context->Dictionary['Required'] = '(required)';
-$Context->Dictionary['YourNewPasswordAgain'] = 'Your new password again';
+$Context->Dictionary['YourNewPasswordAgain'] = 'New password again';
 $Context->Dictionary['YourNewPasswordAgainNotes'] = 'Re-enter your new password to be sure that you have not made any mistakes.';
 $Context->Dictionary['ForumFunctionality'] = 'Forum Preferences';
 $Context->Dictionary['ForumFunctionalityNotes'] = 'Changes made on this form take place immediately. You do not need to click a submit button.';
@@ -142,11 +142,11 @@ $Context->Dictionary['MembershipApplicants'] = 'Membership Applicants';
 $Context->Dictionary['GlobalApplicationSettings'] = 'Global Application Settings';
 $Context->Dictionary['GlobalApplicationSettingsNotes'] = 'BE CAREFUL with the changes you make on this page. Erroneous information entered here could cause your forum to crash and may require you manually altering settings files to repair the problem.';
 $Context->Dictionary['AboutSettings'] = 'About settings';
-$Context->Dictionary['AboutSettingsNotes'] = "<h1>What are settings?</h1>
+$Context->Dictionary['AboutSettingsNotes'] = "<h2>What are settings?</h2>
 	<p>Using the settings section, administrators can manipulate the way this site appears and functions.</p>
-	<h1>What's the difference between settings and account?</h1>
+	<h2>What's the difference between settings and account?</h2>
 	<p>The settings section is only seen and manipulated by users with administrative capabilities.</p>
-	<h1>Can all administrators see the settings section?</h1>
+	<h2>Can all administrators see the settings section?</h2>
 	<p>Yes. However, the administrators will only be able to manipulate settings for parts of the site for which they have administrative access.</p>";
 $Context->Dictionary['HiddenInformation'] = 'Hidden information';
 $Context->Dictionary['DisplayHiddenDiscussions'] = 'Display hidden discussions';
@@ -237,7 +237,7 @@ We log all internet protocol addresses accessing this web site.</p>
 $Context->Dictionary['EmailAddress'] = 'Email address';
 $Context->Dictionary['PasswordAgain'] = 'Password again';
 $Context->Dictionary['SignedInAsX'] = 'Signed in as //1';
-$Context->Dictionary['AccountOptions'] = 'Account options';
+$Context->Dictionary['AccountOptions'] = 'Account Options';
 $Context->Dictionary['ChangeYourPersonalInformation'] = 'Personal Information';
 $Context->Dictionary['ChangeYourPassword'] = 'Change Password';
 $Context->Dictionary['ChangeForumFunctionality'] = 'Forum Preferences';
@@ -273,11 +273,11 @@ $Context->Dictionary['ConfirmReopenDiscussion'] = 'Are you sure you want to re-o
 $Context->Dictionary['ConfirmSticky'] = 'Are you sure you want to make this discussion sticky?';
 $Context->Dictionary['ConfirmUnsticky'] = 'Are you sure you want to make this discussion unsticky?';
 $Context->Dictionary['ChangePersonalInformation'] = 'Change personal information';
-$Context->Dictionary['ApplicantOptions'] = 'Applicant options';
-$Context->Dictionary['ApproveForMembership'] = 'Approve for membership';
-$Context->Dictionary['DeclineForMembership'] = 'Decline for membership';
-$Context->Dictionary['ChangeRole'] = 'Change role';
-$Context->Dictionary['NewApplicantSearch'] = 'New applicant search';
+$Context->Dictionary['ApplicantOptions'] = 'Applicant Options';
+$Context->Dictionary['ApproveForMembership'] = 'Approve for Membership';
+$Context->Dictionary['DeclineForMembership'] = 'Decline for Membership';
+$Context->Dictionary['ChangeRole'] = 'Change Role';
+$Context->Dictionary['NewApplicantSearch'] = 'New Applicant Search';
 $Context->Dictionary['BigInput'] = 'big input';
 $Context->Dictionary['SmallInput'] = 'small input';
 $Context->Dictionary['EditYourDiscussionTopic'] = 'Edit the discussion topic';
