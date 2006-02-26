@@ -21,6 +21,7 @@ include("appg/init_vanilla.php");
 	if (!$Configuration["USE_CATEGORIES"]) header("location:".GetUrl($Configuration, "index.php"));
 	
 	// Define properties of the page controls that are specific to this page
+   $Head->BodyId = 'CategoryPage';
 	$Menu->CurrentTab = "categories";
 	$Panel->CssClass = "CategoryPanel";
 	$Panel->BodyCssClass = "Categories";

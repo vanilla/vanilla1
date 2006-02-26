@@ -20,21 +20,22 @@ include("appg/init_vanilla.php");
 	$Context->Session->Check($Context);
 	
 	// Define properties of the page controls that are specific to this page
-	$Menu->CurrentTab = "discussions";
-	$Panel->CssClass = "DiscussionPanel";
-   $Panel->BodyCssClass = "Discussions";
+   $Head->BodyId = 'DiscussionsPage';
+	$Menu->CurrentTab = 'discussions';
+	$Panel->CssClass = 'DiscussionPanel';
+   $Panel->BodyCssClass = 'Discussions';
 
 // 2. BUILD PAGE CONTROLS
-	$DiscussionGrid = $Context->ObjectFactory->CreateControl($Context, "DiscussionGrid");
+	$DiscussionGrid = $Context->ObjectFactory->CreateControl($Context, 'DiscussionGrid');
 
 // 3. ADD CONTROLS TO THE PAGE
 
-	$Page->AddRenderControl($Head, $Configuration["CONTROL_POSITION_HEAD"]);
-	$Page->AddRenderControl($Menu, $Configuration["CONTROL_POSITION_MENU"]);
-	$Page->AddRenderControl($Panel, $Configuration["CONTROL_POSITION_PANEL"]);
-	$Page->AddRenderControl($DiscussionGrid, $Configuration["CONTROL_POSITION_BODY_ITEM"]);
-	$Page->AddRenderControl($Foot, $Configuration["CONTROL_POSITION_FOOT"]);
-	$Page->AddRenderControl($PageEnd, $Configuration["CONTROL_POSITION_PAGE_END"]);
+	$Page->AddRenderControl($Head, $Configuration['CONTROL_POSITION_HEAD']);
+	$Page->AddRenderControl($Menu, $Configuration['CONTROL_POSITION_MENU']);
+	$Page->AddRenderControl($Panel, $Configuration['CONTROL_POSITION_PANEL']);
+	$Page->AddRenderControl($DiscussionGrid, $Configuration['CONTROL_POSITION_BODY_ITEM']);
+	$Page->AddRenderControl($Foot, $Configuration['CONTROL_POSITION_FOOT']);
+	$Page->AddRenderControl($PageEnd, $Configuration['CONTROL_POSITION_PAGE_END']);
 
 // 4. FIRE PAGE EVENTS
 

@@ -15,7 +15,7 @@ echo('<div class="SettingsForm">
                $r->GetPropertiesFromDataSet($Row);
                $r->FormatPropertiesForDisplay();
                echo('<li class="SortListItem'.($this->Context->Session->User->Permission('PERMISSION_SORT_ROLES') ? ' MovableSortListItem' : '').'" id="item_'.$r->RoleID.'">');
-                  if ($this->Context->Session->User->Permission('PERMISSION_REMOVE_ROLES') && !$r->Unauthenticated) echo('<a class="SortRemove" href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=RoleRemove&amp;RoleID='.$r->RoleID).'"><img src="'.$this->Context->StyleUrl.'images/btn.remove.gif" height="15" width="15" alt="'.$this->Context->GetDefinition('Remove').'" /></a>');
+                  if ($this->Context->Session->User->Permission('PERMISSION_REMOVE_ROLES') && !$r->Unauthenticated) echo('<a class="SortRemove" href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=RoleRemove&amp;RoleID='.$r->RoleID).'"><img src="'.$this->Context->StyleUrl.'btn.remove.gif" height="15" width="15" alt="'.$this->Context->GetDefinition('Remove').'" /></a>');
                   if ($this->Context->Session->User->Permission('PERMISSION_EDIT_ROLES')) echo('<a class="SortEdit" href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=Role&amp;RoleID='.$r->RoleID).'">'.$this->Context->GetDefinition('Edit').'</a>');
                   echo($r->RoleName.'
                </li>');

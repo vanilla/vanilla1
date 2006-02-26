@@ -42,6 +42,7 @@ if (!$Allowed) header("location:".GetUrl($Configuration, "index.php"));
 
 // 1. DEFINE VARIABLES AND PROPERTIES SPECIFIC TO THIS PAGE
 
+	$Head->BodyId = 'SettingsPage';
    $Menu->CurrentTab = "settings";
    $Panel->CssClass = "SettingsPanel";
    $Panel->BodyCssClass = "SettingsPageBody";

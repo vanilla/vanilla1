@@ -32,13 +32,15 @@ if (
    $SearchManager = $Context->ObjectFactory->NewContextObject($Context, "SearchManager");
    $Data = $SearchManager->GetSearchList($Configuration["PANEL_SEARCH_COUNT"], $Context->Session->UserID);
 	$SearchCount = 0;
-	$String = "<h2>".$Context->GetDefinition("Searches")."</h2>";
+	$String = "<ul>
+		<li>
+			<h2>".$Context->GetDefinition("Searches")."</h2>";
 	if ($Data) $SearchCount = $Context->Database->RowCount($Data);
 	if ($SearchCount > 0) {
-		if ($AllowEdit) $String .= "<div class=\"Hidden\"><input type=\"hidden\" id=\"SavedSearchCount\" value=\"".$SearchCount."\" /></div>";
+		if ($AllowEdit) $String .= '<div class="Hidden"><input type="hidden" id="SavedSearchCount" value="'.$SearchCount.'" /></div>';
 
 		if ($SearchCount > 0) {
-			$String .= "<ul class=\"LinkedList\">";
+			$String .= "<ul>";
 				$s = $Context->ObjectFactory->NewObject($Context, "Search");
 				while ($Row = $Context->Database->GetRow($Data)) {
 					$s->Clear();
@@ -51,7 +53,9 @@ if (
 			$String .= "</ul>";
 		}
 	}
-	$String .= "<p id=\"SearchSavingHelp\" ".(($SearchCount > 0) ? "style=\"display: none;\"":"").">".$Context->GetDefinition("NoSavedSearches")."</p>";
+	$String .= "</li>
+	</ul>
+	<p id=\"SearchSavingHelp\" ".(($SearchCount > 0) ? "style=\"display: none;\"":"").">".$Context->GetDefinition("NoSavedSearches")."</p>";
 	$Panel->AddString($String, 20);
 }
 

@@ -21,6 +21,7 @@ include("appg/init_vanilla.php");
 	
 	// Define properties of the page controls that are specific to this page
 	$Context->PageTitle = $Context->GetDefinition("Search");
+   $Head->BodyId = 'SearchPage';
 	$Menu->CurrentTab = "search";
 	$Panel->CssClass = "SearchPanel";
 	$Panel->BodyCssClass = "Search";

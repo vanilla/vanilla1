@@ -413,7 +413,7 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 										$s->GetPropertiesFromDataSet($Row);
 										$s->FormatPropertiesForDisplay();
 										echo("<li class=\"SortListItem\">
-											<a class=\"SortRemove\" href=\"".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=StyleRemove&amp;StyleID=".$s->StyleID)."\"><img src=\"".$this->Context->StyleUrl."images/btn.remove.gif\" height=\"15\" width=\"15\" border=\"0\" alt=\"".$this->Context->GetDefinition("Remove")."\" /></a>
+											<a class=\"SortRemove\" href=\"".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=StyleRemove&amp;StyleID=".$s->StyleID)."\"><img src=\"".$this->Context->StyleUrl."btn.remove.gif\" height=\"15\" width=\"15\" border=\"0\" alt=\"".$this->Context->GetDefinition("Remove")."\" /></a>
 											<a class=\"SortEdit\" href=\"".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=Style&amp;StyleID=".$s->StyleID)."\">".$this->Context->GetDefinition("Edit")."</a>
 											".$s->Name."
 										</li>");

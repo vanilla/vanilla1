@@ -36,7 +36,7 @@ class DiscussionGrid extends Control {
 			$cm = $this->Context->ObjectFactory->NewContextObject($this->Context, "CategoryManager");
 			$Category = $cm->GetCategoryById($CategoryID);
 		}
-		$this->PageJump = '<a class="PageJump AllDiscussions" href="'.GetUrl($this->Context->Configuration, 'index.php').'">'.$this->Context->GetDefinition('ShowAll').'</a>';
+		$this->PageJump = '<a href="'.GetUrl($this->Context->Configuration, 'index.php').'">'.$this->Context->GetDefinition('ShowAll').'</a>';
 
 		$this->DelegateParameters['DiscussionManager'] = &$DiscussionManager;
 		$this->CallDelegate('PreDataLoad');

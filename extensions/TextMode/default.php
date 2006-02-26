@@ -62,7 +62,7 @@ if (
 	}
 	$Url = explode("?",GetRequestUri());
 	$Url = $Url[0]."?".$Params->GetQueryString();
-	$Panel->AddString("<div class=\"PanelInformation TextMode".$CurrentModeCSS."\">".$CurrentMode." (<a class=\"PanelLink\" href=\"".$Url."\">".$OppositeMode."</a>)</div>",
+	$Panel->AddString('<p id="Mode" class="TextMode'.$CurrentModeCSS.'">'.$CurrentMode.' (<a href="'.$Url.'">'.$OppositeMode.'</a>)</p>',
 		200);
 }
 

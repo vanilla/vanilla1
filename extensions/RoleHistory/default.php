@@ -21,7 +21,7 @@ of course):
 */
 $Context->Dictionary["RoleHistory"] = "Role history";
 $Context->Dictionary["NoRoleHistory"] = "This user does not appear to have been assigned to any roles.";
-$Context->Dictionary["RoleAssignedByX"] = "<h3>Role assigned by //1 with the following notes:</h3><p>//2</p>";
+$Context->Dictionary["RoleAssignedByX"] = "Role assigned by //1 with the following notes:";
 
 
 if ($Context->SelfUrl == "account.php") {
@@ -39,27 +39,32 @@ if ($Context->SelfUrl == "account.php") {
       function Render() {
          $this->CallDelegate("PreRender");
          if ($this->Context->WarningCollector->Count() == 0 && $this->PostBackAction == "") {
-            echo("<div class=\"RoleHistory\">
-               <h1>".$this->Context->GetDefinition("RoleHistory")."</h1>");
+            echo('<div id="AccountHistory">
+               <h2>'.$this->Context->GetDefinition("RoleHistory").'</h2>
+					<ul>');
                // Loop through the user's role history
                $UserHistory = $this->Context->ObjectFactory->NewObject($this->Context, "UserRoleHistory");
-               if ($this->Context->Database->RowCount($this->History) == 0) {
-                  echo("<blockquote>".$this->Context->GetDefinition("NoRoleHistory")."</blockquote>");
-               } else {
-                  while ($Row = $this->Context->Database->GetRow($this->History)) {
-                     $UserHistory->Clear();
-                     $UserHistory->GetPropertiesFromDataSet($Row);
-                     $UserHistory->FormatPropertiesForDisplay($this->Context);
-                     
-                     echo("<blockquote>
-                        <h2>".$UserHistory->Role."</h2> <div class=\"Small\">(".TimeDiff($this->Context, $UserHistory->Date, mktime()).")</div>
-                        ".str_replace(array("//1", "//2"),
-                           array(($UserHistory->AdminUserID == 0?$this->Context->GetDefinition("Applicant"):"<a href=\"".GetUrl($this->Context->Configuration, "account.php", "", "u", $UserHistory->AdminUserID)."\">".$UserHistory->AdminUsername."</a>"), $UserHistory->Notes),
-                           $this->Context->GetDefinition("RoleAssignedByX"))
-                     ."</blockquote>");
-                  }
-               }
-            echo("</div>");
+					while ($Row = $this->Context->Database->GetRow($this->History)) {
+						$UserHistory->Clear();
+						$UserHistory->GetPropertiesFromDataSet($Row);
+						$UserHistory->FormatPropertiesForDisplay($this->Context);
+						
+						echo('<li>
+							<h3>
+								'.$UserHistory->Role.' <small>('.TimeDiff($this->Context, $UserHistory->Date, mktime()).')</small>
+							</h3>
+							<p class="Info">
+								'.str_replace("//1",
+								($UserHistory->AdminUserID == 0?$this->Context->GetDefinition("Applicant"):"<a href=\"".GetUrl($this->Context->Configuration, "account.php", "", "u", $UserHistory->AdminUserID)."\">".$UserHistory->AdminUsername."</a>")
+								, 
+								$this->Context->GetDefinition("RoleAssignedByX")).'
+							</p>
+							<p class="Note">
+								'.$UserHistory->Notes.'
+							</p>
+						</li>');						
+					}
+            echo("</ul>");
          }
          $this->CallDelegate("PostRender");
       }
