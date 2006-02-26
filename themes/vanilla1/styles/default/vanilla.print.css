@@ -1,0 +1,69 @@
+* {font-family: Trebuchet MS, Verdana, Tahoma, Arial;}
+
+ul#MenuForum,         div.Session,     div.Panel,
+div.PageDetails,      a.PageJump,      ol.PageList,
+div.CommentOptions,   div.CommentForm, div.Links,
+div.AddCommentsTitle, a.PageNav,       div.Discussions,
+div.Categories,       div.Search,      div.Account,
+div.SettingsPageBody
+{
+   display:none;
+}
+
+div.Comment
+{
+   padding:0.125in 0 0.25in;
+   border-top:.01in solid black;
+}
+
+a:link,
+a:visited 
+{
+   color: #520;
+   font-weight: bold;
+   text-decoration: underline;
+}
+
+div.Title 
+{
+   padding-bottom: 0.125in;
+   font-size:12pt;
+   font-weight:bold;
+   text-decoration:none;
+}
+
+div.CommentAuthor a,
+div.Logo,
+div.Logo *
+{
+   font-size:12pt;
+   font-weight:bold;
+   text-decoration:none;
+}
+
+div.CommentTime,
+div.CommentTime em,
+div.Foot *
+{
+   font-size:8pt;
+   font-weight:bold;
+}
+
+div.CommentBody
+{
+   padding-top:0.125in;
+   font-size:10pt;
+}
+
+div.Copyright
+{
+   border-top:.01in solid black;
+   padding-top:0.125in
+}
+   
+div.CommentBody a:link:after,
+div.CommentBody a:visited:after 
+{
+   content: " (" attr(href) ") ";
+   font-size: 90%;
+}
