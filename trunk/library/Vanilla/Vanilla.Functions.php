@@ -34,11 +34,13 @@ function DiscussionPrefix(&$Configuration, &$Discussion) {
 }
 
 function GetLastCommentQuerystring(&$Discussion, &$Configuration) {
+	$Suffix = '';
+	if ($Configuration['URL_BUILDING_METHOD'] == 'mod_rewrite') $Suffix = CleanupString($Discussion->Name).'/';
    $JumpToItem = $Discussion->CountComments - (($Discussion->LastPage - 1) * $Configuration['COMMENTS_PER_PAGE']);
 	if ($JumpToItem < 0) $JumpToItem = 0;
 	$LastPage = $Discussion->LastPage;
 	if ($LastPage == 0) $LastPage = '';
-	return GetUrl($Configuration, 'comments.php', '', 'DiscussionID', $Discussion->DiscussionID, $LastPage, '#Item_'.$JumpToItem);
+	return GetUrl($Configuration, 'comments.php', '', 'DiscussionID', $Discussion->DiscussionID, $LastPage, '#Item_'.$JumpToItem, $Suffix);
 }
 
 function GetUnreadQuerystring(&$Discussion, &$Configuration, $CurrentUserJumpToLastCommentPref = '0') {

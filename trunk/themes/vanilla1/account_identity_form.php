@@ -2,7 +2,7 @@
 // Note: This file is included from the library/Vanilla.Control.IdentityForm.php class.
 if ($this->Context->Session->UserID != $this->User->UserID && !$this->Context->Session->User->Permission('PERMISSION_EDIT_USERS')) {
    $this->Context->WarningCollector->Add($this->Context->GetDefinition('PermissionError'));
-   echo('<div class="AccountForm">
+   echo('<div id="Form" class="Account Identity">
       '.$this->Get_Warnings().'
    </div>');				
 } else {				
