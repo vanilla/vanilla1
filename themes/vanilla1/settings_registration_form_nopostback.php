@@ -8,27 +8,28 @@ if (!$this->Context->Session->User->Permission('PERMISSION_MANAGE_REGISTRATION')
    </div>');				
 } else {				
    $this->PostBackParams->Set('PostBackAction', 'ProcessRegistrationChange');
-   echo('<div class="SettingsForm">
-      <h1>'.$this->Context->GetDefinition('RegistrationManagement').'</h1>
-      <div class="Form RegistrationForm">
+   echo('<div id="Form" class="Account Identity">
+      <fieldset>
+         <legend>'.$this->Context->GetDefinition('RegistrationManagement').'</legend>
          '.$this->Get_Warnings().'
          '.$this->Get_PostBackForm('frmRegistrationChange').'
-         <dl>
-            <dt>'.$this->Context->GetDefinition('NewMemberRole').'</dt>
-            <dd>'.$this->RoleSelect->Get().'</dd>
-         </dl>
-         <div class="InputNote">'.$this->Context->GetDefinition('NewMemberRoleNotes').'</div>
-         <dl>
-            <dt>'.$this->Context->GetDefinition('ApprovedMemberRole').'</dt>
-            <dd>'.$this->ApprovedRoleSelect->Get().'</dd>
-         </dl>
-         <div class="InputNote">'.$this->Context->GetDefinition('ApprovedMemberRoleNotes').'</div>
-         <div class="FormButtons">
-            <input type="submit" name="btnSave" value="'.$this->Context->GetDefinition('Save').'" class="Button SubmitButton" />
-            <a href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl).'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>
-         </div>
+         <ul>
+            <li>
+               <label for="ddRoleID">'.$this->Context->GetDefinition('NewMemberRole').'</label>
+               '.$this->RoleSelect->Get().'
+               <p class="Description">'.$this->Context->GetDefinition('NewMemberRoleNotes').'</p>
+            </li>
+            <li>
+               <label for="ddApprovedRoleID">'.$this->Context->GetDefinition('ApprovedMemberRole').'</label>
+               '.$this->ApprovedRoleSelect->Get().'
+               <p class="Description">'.$this->Context->GetDefinition('ApprovedMemberRoleNotes').'</p>
+            </li>   
+            <div class="Submit">
+               <input type="submit" name="btnSave" value="'.$this->Context->GetDefinition('Save').'" class="Button SubmitButton" />
+               <a href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl).'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>
+            </div>
          </form>
-      </div>
+      </fieldset>
    </div>');
 }
 ?>

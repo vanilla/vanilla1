@@ -292,6 +292,7 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 					$this->StyleSelect = $this->Context->ObjectFactory->NewObject($this->Context, "Select");
 					$this->StyleSelect->Name = "StyleID";
 					$this->StyleSelect->CssClass = "SmallInput";
+					$this->StyleSelect->Attributes = ' id="ddStyleID"';
 					if ($this->PostBackAction != "Style") $this->StyleSelect->AddOption("", "Choose...");
 					$this->StyleSelect->AddOptionsFromDataSet($this->Context->Database, $this->StyleData, "StyleID", "Name");
 				}
@@ -316,89 +317,99 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 				
 				if ($this->PostBackAction == "Style") {
 					$this->PostBackParams->Set("PostBackAction", "ProcessStyle");
-					echo("<div class=\"SettingsForm\">
-						<h1>".$this->Context->GetDefinition("StyleManagement")."</h1>");
-						if ($StyleID > 0) {
-							$this->StyleSelect->Attributes = "onchange=\"document.location='?PostBackAction=Style&amp;StyleID='+this.options[this.selectedIndex].value;\"";
-							$this->StyleSelect->SelectedID = $StyleID;
-							echo("<div class=\"Form\" id=\"Styles\">
-								".$this->Get_Warnings()."
-								".$this->Get_PostBackForm("frmStyle")."
-								<h2>".$this->Context->GetDefinition("SelectStyleToEdit")."</h2>
-								<dl>
-									<dt>".$this->Context->GetDefinition("Styles")."</dt>
-									<dd>".$this->StyleSelect->Get()." ".$this->Context->GetDefinition("Required")."</dd>
-								</dl>
-								<h2>".$this->Context->GetDefinition("ModifyStyleDefinition")."</h2>");
-						} else {
-							echo("<div class=\"Form\" id=\"Styles\">
-								".$this->Get_Warnings()."
-								".$this->Get_PostBackForm("frmStyle")."
-								<h2>".$this->Context->GetDefinition("DefineTheNewStyle")."</h2>");
-						}
-						echo("<dl>
-							<dt>".$this->Context->GetDefinition("StyleName")."</dt>
-							<dd><input type=\"text\" name=\"Name\" value=\"".$this->Style->Name."\" maxlength=\"40\" class=\"SmallInput\" id=\"txtStyleName\" /> ".$this->Context->GetDefinition("Required")."</dd>
-						</dl>
-						<div class=\"InputNote\">".$this->Context->GetDefinition("StyleNameNotes")."</div>
-						<dl>
-							<dt>".$this->Context->GetDefinition("StyleAuthor")."</dt>
-							<dd>
-								<input id=\"AuthUsername\" name=\"AuthUsername\" type=\"text\" value=\"".FormatStringForDisplay(($this->Style->AuthUserID == 0?"":$this->Style->AuthUsername), 0)."\" class=\"WhisperBox\" maxlength=\"20\" /><div class=\"Autocomplete\" id=\"AuthUsername_Choices\"></div><script type=\"text/javascript\">new Ajax.Autocompleter('AuthUsername', 'AuthUsername_Choices', './ajax/getusers.php', {paramName: \"Search\"})</script>
-							</dd>
-						</dl>
-						<div class=\"InputNote\">".$this->Context->GetDefinition("StyleAuthorNotes")."</div>
-						<dl>
-							<dt>".$this->Context->GetDefinition("StyleUrl")."</dt>
-							<dd><input type=\"text\" name=\"Url\" value=\"".$this->Style->Url."\" maxlength=\"200\" class=\"SmallInput\" id=\"txtStyleUrl\" /> ".$this->Context->GetDefinition("Required")."</dd>
-						</dl>
-						<div class=\"InputNote\">".$this->Context->GetDefinition("StyleUrlNotes")."</div>
-						<dl>
-							<dt>".$this->Context->GetDefinition("PreviewImageFilename")."</dt>
-							<dd><input type=\"text\" name=\"PreviewImage\" value=\"".$this->Style->PreviewImage."\" maxlength=\"20\" class=\"SmallInput\" id=\"txtStylePreviewImage\" /></dd>
-						</dl>
-						<div class=\"InputNote\">".$this->Context->GetDefinition("PreviewImageFilenameNotes")."</div>
-						<div class=\"FormButtons\">
-							<input type=\"submit\" name=\"btnSave\" value=\"".$this->Context->GetDefinition("Save")."\" class=\"Button SubmitButton\" />
-							<a href=\"".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=Styles")."\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>
-						</div>
-						</form>
-					</div>
-				</div>");			
+					echo('<div id="Form" class="Account Identity">
+						<fieldset>
+							<legend>'.$this->Context->GetDefinition("StyleManagement").'<legend>');
+							if ($StyleID > 0) {
+								$this->StyleSelect->Attributes = "onchange=\"document.location='?PostBackAction=Style&amp;StyleID='+this.options[this.selectedIndex].value;\"";
+								$this->StyleSelect->SelectedID = $StyleID;
+								echo $this->Get_Warnings().'
+									'.$this->Get_PostBackForm("frmStyle").'
+									<h2>'.$this->Context->GetDefinition("SelectStyleToEdit").'</h2>
+									<ul>
+										<li>
+											<label for="ddStyleID">'.$this->Context->GetDefinition("Styles").' <small>'.$this->Context->GetDefinition("Required").'</small></label>
+											'.$this->StyleSelect->Get().'
+											<p class="Description">'.$this->Context->GetDefinition("ModifyStyleDefinition").'</p>
+										</li>';
+							} else {
+								echo $this->Get_Warnings().'
+									'.$this->Get_PostBackForm('frmStyle').'
+									<h2>'.$this->Context->GetDefinition('DefineTheNewStyle').'</h2>
+									<ul>';
+							}
+								echo '<li>
+									<label for="txtStyleName">'.$this->Context->GetDefinition('StyleName').' <small>'.$this->Context->GetDefinition("Required").'</small></label>
+									<input type="text" name="Name" value="'.$this->Style->Name.'" maxlength="40" class="SmallInput" id="txtStyleName" />
+									<p class="Description">'.$this->Context->GetDefinition("StyleNameNotes").'</p>
+								</li>
+								<li>
+									<label for="txtAuthUsername">'.$this->Context->GetDefinition("StyleAuthor").'</label>
+									<input id="txtAuthUsername" name="AuthUsername" type="text" value="'.FormatStringForDisplay(($this->Style->AuthUserID == 0 ? '' : $this->Style->AuthUsername), 0).'" class="WhisperBox" maxlength="20" />
+									<script type="text/javascript">
+										var WhisperAutoComplete = AutoComplete("txtAuthUsername", false);
+										WhisperAutoComplete.KeywordSourceUrl = "../ajax/getusers.php";
+									</script>
+									<p class="Description">'.$this->Context->GetDefinition('StyleAuthorNotes').'</p>
+								</li>
+								<li>
+									<label for="txtStyleUrl">'.$this->Context->GetDefinition('StyleUrl').' <small>'.$this->Context->GetDefinition("Required").'</small></label>
+									<input id="txtUrl" type="text" name="Url" value="'.$this->Style->Url.'" maxlength="200" class="SmallInput" />
+									<p class="Description">'.$this->Context->GetDefinition('StyleUrlNotes').'</p>
+								</li>
+								<li>
+									<label for="txtStylePreviewImage">'.$this->Context->GetDefinition('PreviewImageFilename').'</label>
+									<input type="text" name="PreviewImage" value="'.$this->Style->PreviewImage.'" maxlength="20" class="SmallInput" id="txtStylePreviewImage" />
+									<p class="Description">'.$this->Context->GetDefinition('PreviewImageFilenameNotes').'</p>
+								</li>
+							</ul>
+							<div class="Submit">
+								<input type="submit" name="btnSave" value="'.$this->Context->GetDefinition('Save').'" class="Button SubmitButton" />
+								<a href="'.GetUrl($this->Context->Configuration, 'settings.php', '', '', '', '', 'PostBackAction=Styles').'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>
+							</div>
+							</form>
+						</fieldset>
+					</div>';			
 					
 				} elseif ($this->PostBackAction == "StyleRemove") {
 					$this->PostBackParams->Set("PostBackAction", "ProcessStyleRemove");
 					$this->StyleSelect->Attributes = "onchange=\"document.location='".GetUrl($this->Context->Configuration, "index.php", "", "", "", "", "PostBackAction=StyleRemove&amp;StyleID='+this.options[this.selectedIndex].value").";\"";
 					$this->StyleSelect->SelectedID = $StyleID;
-					echo("<div class=\"SettingsForm\">
-						<h1>".$this->Context->GetDefinition("StyleManagement")."</h1>
-						<div class=\"Form\" id=\"StyleRemove\">
-							".$this->Get_Warnings()."
-							".$this->Get_PostBackForm("frmStyleRemove")."
+					echo '<div id="Form" class="Account Identity">
+						<fieldset>
+							<legend>'.$this->Context->GetDefinition('StyleManagement').'</legend>
+							'.$this->Get_Warnings().'
+							'.$this->Get_PostBackForm('frmStyleRemove').'
 							<h2>".$this->Context->GetDefinition("SelectStyleToRemove")."</h2>
-							<dl>
-								<dt>".$this->Context->GetDefinition("Styles")."</dt>
-								<dd>".$this->StyleSelect->Get()." ".$this->Context->GetDefinition("Required")."</dd>
-							</dl>");
+							<ul>
+								<li>
+									<label for="ddStyleID">'.$this->Context->GetDefinition('Styles').' <small>'.$this->Context->GetDefinition('Required').'</small></label>
+									'.$this->StyleSelect->Get().'
+								</li>';
+								
 							if ($StyleID > 0) {
-								$this->StyleSelect->Attributes = "";
-								$this->StyleSelect->RemoveOption($this->StyleSelect->SelectedID);
-								$this->StyleSelect->Name = "ReplacementStyleID";
-								$this->StyleSelect->SelectedID = ForceIncomingInt("ReplacementStyleID", 0);
-								echo("<h2>".$this->Context->GetDefinition("SelectAReplacementStyle")."</h2>
-								<dl>
-									<dt>Replacement style</dt>
-									<dd>".$this->StyleSelect->Get()." ".$this->Context->GetDefinition("Required")."</dd>
-								</dl>
-								<div class=\"InputNote\">".$this->Context->GetDefinition("ReplacementStyleNotes")."</div>
-								<div class=\"FormButtons\">
-									<input type=\"submit\" name=\"btnSave\" value=\"".$this->Context->GetDefinition("Remove")."\" class=\"Button SubmitButton\" />
-									<a href=\"".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=Styles")."\" class=\"CancelButton\">".$this->Context->GetDefinition("Cancel")."</a>
-								</div>");
+									$this->StyleSelect->Attributes = "";
+									$this->StyleSelect->RemoveOption($this->StyleSelect->SelectedID);
+									$this->StyleSelect->Name = "ReplacementStyleID";
+									$this->StyleSelect->SelectedID = ForceIncomingInt("ReplacementStyleID", 0);
+									$this->StyleSelect->Attributes = ' id="ddReplacementStyleID"';
+									echo '<h2>'.$this->Context->GetDefinition('SelectAReplacementStyle').'</h2>
+									<li>
+										<label for="ddReplacementStyleID">'.$this->Context-GetDefinition('ReplacementStyle').' <small>'.$this->Context->GetDefinition('Required').'</small></label>
+										'.$this->StyleSelect->Get().'
+										<p class="Description">'.$this->Context->GetDefinition("ReplacementStyleNotes").'</p>
+									</li>
+								</ul>
+								<div class="Submit">
+									<input type="submit" name="btnSave" value="'.$this->Context->GetDefinition('Remove').'" class="Button SubmitButton" />
+									<a href="'.GetUrl($this->Context->Configuration, 'settings.php', '', '', '', '', 'PostBackAction=Styles').'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>
+								</div>';
+							} else {
+								echo '</ul>';
 							}
-							echo("</form>
-						</div>
-					</div>");				
+							echo '</form>
+						</fieldset>
+					</div>';				
 				} else {
 					echo("<div class=\"SettingsForm\">
 						".$this->Get_Warnings()."

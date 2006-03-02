@@ -8,22 +8,24 @@ if (!$this->Context->Session->User->Permission('PERMISSION_MANAGE_LANGUAGE')) {
    </div>');				
 } else {				
    $this->PostBackParams->Set('PostBackAction', 'ProcessLanguageChange');
-   echo('<div class="SettingsForm">
-      <h1>'.$this->Context->GetDefinition('LanguageManagement').'</h1>
-      <div class="Form LanguageForm">
+   echo('<div id="Form" class="Account Identity">
+      <fieldset>
+         <legend>'.$this->Context->GetDefinition('LanguageManagement').'</legend>
          '.$this->Get_Warnings().'
          '.$this->Get_PostBackForm('frmLanguageChange').'
-         <dl>
-            <dt>'.$this->Context->GetDefinition('ChangeLanguage').'</dt>
-            <dd>'.$this->LanguageSelect->Get().'</dd>
+         <ul>
+            <li>
+               <label for="ddLanguage">'.$this->Context->GetDefinition('ChangeLanguage').'</label
+               '.$this->LanguageSelect->Get().'
+               <p class="Description">'.$this->Context->GetDefinition('ChangeLanguageNotes').'</p>
+            </li>
          </dl>
-         <div class="InputNote">'.$this->Context->GetDefinition('ChangeLanguageNotes').'</div>
-         <div class="FormButtons">
+         <div class="Submit">
             <input type="submit" name="btnSave" value="'.$this->Context->GetDefinition('Save').'" class="Button SubmitButton" />
             <a href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl).'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>
          </div>
          </form>
-      </div>
+      </fieldset>
    </div>');
 }
 ?>

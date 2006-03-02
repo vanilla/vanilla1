@@ -142,12 +142,12 @@ $Context->Dictionary['MembershipApplicants'] = 'Membership Applicants';
 $Context->Dictionary['GlobalApplicationSettings'] = 'Global Application Settings';
 $Context->Dictionary['GlobalApplicationSettingsNotes'] = 'BE CAREFUL with the changes you make on this page. Erroneous information entered here could cause your forum to crash and may require you manually altering settings files to repair the problem.';
 $Context->Dictionary['AboutSettings'] = 'About settings';
-$Context->Dictionary['AboutSettingsNotes'] = "<h2>What are settings?</h2>
-	<p>Using the settings section, administrators can manipulate the way this site appears and functions.</p>
-	<h2>What's the difference between settings and account?</h2>
-	<p>The settings section is only seen and manipulated by users with administrative capabilities.</p>
-	<h2>Can all administrators see the settings section?</h2>
-	<p>Yes. However, the administrators will only be able to manipulate settings for parts of the site for which they have administrative access.</p>";
+$Context->Dictionary['AboutSettingsNotes'] = "<dl><dt>What are settings?</dt>
+	<dd>Using the settings section, administrators can manipulate the way this site appears and functions.</dd>
+	<dt>What's the difference between settings and account?</dt>
+	<dd>The settings section is only seen and manipulated by users with administrative capabilities.</dd>
+	<dt>Can all administrators see the settings section?</dt>
+	<dd>Yes. However, the administrators will only be able to manipulate settings for parts of the site for which they have administrative access.</dd></dl>";
 $Context->Dictionary['HiddenInformation'] = 'Hidden information';
 $Context->Dictionary['DisplayHiddenDiscussions'] = 'Display hidden discussions';
 $Context->Dictionary['DisplayHiddenComments'] = 'Display hidden comments';

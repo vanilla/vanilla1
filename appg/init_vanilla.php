@@ -81,7 +81,7 @@ if ($Context->Session->UserID > 0 && $Context->Session->User->Permission('PERMIS
 	if ($CategoryID == 0) $CategoryID = '';
 	$Panel->AddString('<h1>
 		<a href="'.GetUrl($Configuration, 'post.php', 'category/', 'CategoryID', $CategoryID).'">'.$Context->GetDefinition('StartANewDiscussion').'</a>
-	</h1>', 1, 1);
+	</h1>', 0, 1);
 }
 
 // BUILD THE MAIN MENU
