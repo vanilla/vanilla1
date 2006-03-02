@@ -135,8 +135,8 @@ if (in_array($Context->SelfUrl, array("settings.php", "account.php"))) {
 		function GetStyleBuilder() {
 			$s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
 			$s->SetMainTable("Style", "s");
-			$s->AddSelect(array("StyleID", "AuthUserID", "Name", "Url", "PreviewImage"), "s");
 			$s->AddJoin("User", "u", "UserID", "s", "AuthUserID", "left join");
+			$s->AddSelect(array("StyleID", "AuthUserID", "Name", "Url", "PreviewImage"), "s");
 			$s->AddSelect("Name", "u", "AuthUsername");
 			$s->AddSelect("FirstName", "u", "AuthFullName", "concat", "' ',u.LastName");
 			return $s;
@@ -144,7 +144,7 @@ if (in_array($Context->SelfUrl, array("settings.php", "account.php"))) {
 		
 		function GetStyleById($StyleID) {
 			$s = $this->GetStyleBuilder();
-			$s->AddWhere("s.StyleID", $StyleID, "=");
+			$s->AddWhere('s', 'StyleID', '', $StyleID, "=");
 	
 			$Style = $this->Context->ObjectFactory->NewContextObject($this->Context, "Style");
 			$result = $this->Context->Database->Select($s, $this->Name, "GetStyleById", "An error occurred while attempting to retrieve the requested style.");
@@ -185,8 +185,8 @@ if (in_array($Context->SelfUrl, array("settings.php", "account.php"))) {
 		function GetStylesForSelectList() {
 			$s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
 			$s->SetMainTable("Style", "s");
-			$s->AddSelect("StyleID", "s");
 			$s->AddJoin("User", "u", "UserID", "s", "AuthUserID", "left join");
+			$s->AddSelect("StyleID", "s");
 			$s->AddSelect("Name", "s", "Name", "concat", "' ".$this->Context->GetDefinition("By")." ',coalesce(u.Name,'".$this->Context->GetDefinition("System")."')");
 			$s->AddOrderBy("Name", "s", "asc");
 			return $this->Context->Database->Select($s, $this->Name, "GetStylesForSelectList", "An error occurred while attempting to retrieve styles.");
@@ -197,12 +197,12 @@ if (in_array($Context->SelfUrl, array("settings.php", "account.php"))) {
 			$s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
 			$s->SetMainTable("User", "u");
 			$s->AddFieldNameValue("StyleID", $ReplacementStyleID);
-			$s->AddWhere("StyleID", $RemoveStyleID, "=");
+			$s->AddWhere('u', 'StyleID', '', $RemoveStyleID, "=");
 			$this->Context->Database->Update($s, $this->Name, "RemoveStyle", "An error occurred while attempting to re-assign user styles.");
 			// Now remove the style itself
 			$s->Clear();
 			$s->SetMainTable("Style", "s");
-			$s->AddWhere("StyleID", $RemoveStyleID, "=");
+			$s->AddWhere('u', 'StyleID', '', $RemoveStyleID, "=");
 			$this->Context->Database->Delete($s, $this->Name, "RemoveStyle", "An error occurred while attempting to remove the style.");
 		}
 		
@@ -223,7 +223,7 @@ if (in_array($Context->SelfUrl, array("settings.php", "account.php"))) {
 					$s->AddFieldNameValue("Url", $Style->Url);
 					$s->AddFieldNameValue("PreviewImage", $Style->PreviewImage);
 					if ($Style->StyleID > 0) {
-						$s->AddWhere("StyleID", $Style->StyleID, "=");
+						$s->AddWhere('s', 'StyleID', '', $Style->StyleID, "=");
 						$this->Context->Database->Update($s, $this->Name, "SaveStyle", "An error occurred while attempting to update the style.");
 					} else {
 						$Style->StyleID = $this->Context->Database->Insert($s, $this->Name, "SaveStyle", "An error occurred while creating a new style.");

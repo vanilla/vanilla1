@@ -26,11 +26,11 @@ class DiscussionManager extends Delegation {
 		$RecordsToReturn = ForceInt($RecordsToReturn, 0);
 		
 		$s = $this->GetDiscussionBuilder();
-		if (!$this->Context->Session->User->Permission('PERMISSION_HIDE_DISCUSSIONS') || !$this->Context->Session->User->Preference('ShowDeletedDiscussions')) $s->AddWhere('t.Active', '1', '=');
-		$s->AddWhere('b.DiscussionID', 't.DiscussionID', '=', 'and', '', 0, 1);
-		$s->AddWhere('b.UserID', $UserID, '=');
+		if (!$this->Context->Session->User->Permission('PERMISSION_HIDE_DISCUSSIONS') || !$this->Context->Session->User->Preference('ShowDeletedDiscussions')) $s->AddWhere('t', 'Active', '', '1', '=');
+		$s->AddWhere('b', 'DiscussionID', 't', 'DiscussionID', '=', 'and', '', 0, 1);
+		$s->AddWhere('b', 'UserID', '', $UserID, '=');
 		$s->EndWhereGroup();
-		$s->AddWhere('t.DiscussionID', $IncludeDiscussionID, '=', 'or');
+		$s->AddWhere('t', 'DiscussionID', '', $IncludeDiscussionID, '=', 'or');
 		$s->AddOrderBy('DateLastActive', 't', 'desc');
 		if ($RecordsToReturn > 0) $s->AddLimit(0, $RecordsToReturn);
 		return $this->Context->Database->Select($s, $this->Name, 'GetBookmarkedDiscussionsByUserID', 'An error occurred while retrieving discussions.');
@@ -45,13 +45,10 @@ class DiscussionManager extends Delegation {
 		// Get author data
 		$s->AddJoin('User', 'u', 'UserID', 't', 'AuthUserID', 'left join');
 		$s->AddSelect('Name', 'u', 'AuthUsername');
-		// These fullnames are not used and are slowing things down
-		// $s->AddSelect('FirstName', 'u', 'AuthFullName', 'concat', '' ',u.LastName');
 
 		// Get last poster data
 		$s->AddJoin('User', 'lu', 'UserID', 't', 'LastUserID', 'left join');
 		$s->AddSelect('Name', 'lu', 'LastUsername');
-		// $s->AddSelect('FirstName', 'lu', 'LastFullName', 'concat', '' ',lu.LastName');
       
 		if ($this->Context->Configuration['ENABLE_WHISPERS']) {
          // Get Whisper user data
@@ -76,7 +73,7 @@ class DiscussionManager extends Delegation {
          } else {
             // Select 'whisper from' columns from the user-specific tables         
             // Get data on the last user to receive a whisper (for the current, viewing user)
-            $s->AddJoin('DiscussionUserWhisperFrom', 'tuwf', 'DiscussionID and tuwf.WhisperFromUserID = '.$this->Context->Session->UserID, 't', 'DiscussionID', 'left join');
+            $s->AddJoin('DiscussionUserWhisperFrom', 'tuwf', 'DiscussionID', 't', 'DiscussionID', 'left join', ' and tuwf.'.$this->Context->DatabaseColumns['DiscussionUserWhisperFrom']['WhisperFromUserID'].' = '.$this->Context->Session->UserID);
             $s->AddJoin('User', 'wluf', 'UserID', 'tuwf', 'LastUserID', 'left join');
             $s->AddSelect('LastUserID', 'tuwf', 'WhisperFromLastUserID');
             $s->AddSelect('DateLastActive', 'tuwf', 'WhisperFromDateLastActive');
@@ -85,7 +82,7 @@ class DiscussionManager extends Delegation {
             
             // Select 'whisper to' columns from the user specific tables
             // Get data on the last user to send a whisper (for the current, viewing user)
-            $s->AddJoin('DiscussionUserWhisperTo', 'tuwt', 'DiscussionID and tuwt.WhisperToUserID = '.$this->Context->Session->UserID, 't', 'DiscussionID', 'left join');
+            $s->AddJoin('DiscussionUserWhisperTo', 'tuwt', 'DiscussionID', 't', 'DiscussionID', 'left join', ' and tuwt.'.$this->Context->DatabaseColumns['DiscussionUserWhisperTo']['WhisperToUserID'].' = '.$this->Context->Session->UserID);
             $s->AddJoin('User', 'wlut', 'UserID', 'tuwt', 'LastUserID', 'left join');
             $s->AddSelect('LastUserID', 'tuwt', 'WhisperToLastUserID');
             $s->AddSelect('DateLastActive', 'tuwt', 'WhisperToDateLastActive');
@@ -104,23 +101,21 @@ class DiscussionManager extends Delegation {
 		
 		// Limit to roles with access to this category
       if ($this->Context->Session->UserID > 0) {
-			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID and crb.RoleID = '.$this->Context->Session->User->RoleID, 't', 'CategoryID', 'left join');
+			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID', 't', 'CategoryID', 'left join', ' and crb.'.$this->Context->DatabaseColumns['CategoryRoleBlock']['RoleID'].' = '.$this->Context->Session->User->RoleID);
 		} else {
-			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID and crb.RoleID = 1', 't', 'CategoryID', 'left join');
+			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID', 't', 'CategoryID', 'left join', ' and crb.'.$this->Context->DatabaseColumns['CategoryRoleBlock']['RoleID'].' = 1');
 		}
-		// coalesce seems to be slowing things down
-		// $s->AddWhere('coalesce(crb.Blocked, 0)', '0', '=', 'and', '', 0, 0);
-      $s->AddWhere('crb.Blocked', '0', '=', 'and', '', 1, 1);
-      $s->AddWhere('crb.Blocked', '0', '=', 'or', '', 0, 0);
-		$s->AddWhere('crb.Blocked', 'null', 'is', 'or', '', 0, 0);
+      $s->AddWhere('crb', 'Blocked', '', '0', '=', 'and', '', 1, 1);
+      $s->AddWhere('crb', 'Blocked', '', '0', '=', 'or', '', 0, 0);
+		$s->AddWhere('crb', 'Blocked', '', 'null', 'is', 'or', '', 0, 0);
 		$s->EndWhereGroup();
 		
 		// Bookmark data
-		$s->AddJoin('UserBookmark', 'b', 'DiscussionID and b.UserID = '.$this->Context->Session->UserID, 't', 'DiscussionID', 'left join');
-		$s->AddSelect('DiscussionID is not null', 'b', 'Bookmarked');
+		$s->AddJoin('UserBookmark', 'b', 'DiscussionID', 't', 'DiscussionID', 'left join', ' and b.'.$this->Context->DatabaseColumns['UserBookmark']['UserID'].' = '.$this->Context->Session->UserID);
+		$s->AddSelect('DiscussionID', 'b', 'Bookmarked', '', '', 0, ' is not null');
 		
 		// Discussion watch data for the current user
-		$s->AddJoin('UserDiscussionWatch', 'utw', 'DiscussionID and utw.UserID = '.$this->Context->Session->UserID, 't', 'DiscussionID', 'left join');
+		$s->AddJoin('UserDiscussionWatch', 'utw', 'DiscussionID', 't', 'DiscussionID', 'left join', ' and utw.'.$this->Context->DatabaseColumns['UserDiscussionWatch']['UserID'].' = '.$this->Context->Session->UserID);
 		$s->AddSelect('LastViewed', 'utw');
 		$s->AddSelect('CountComments', 'utw', 'LastViewCountComments', 'coalesce', '0');
 		// $s->AddGroupBy('DiscussionID', 't');
@@ -135,7 +130,7 @@ class DiscussionManager extends Delegation {
 		$RecordDiscussionView = ForceBool($RecordDiscussionView, 0);
 		$Discussion = $this->Context->ObjectFactory->NewObject($this->Context, 'Discussion');
 		$s = $this->GetDiscussionBuilder();
-		$s->AddWhere('t.DiscussionID', $DiscussionID, '=');
+		$s->AddWhere('t', 'DiscussionID', '', $DiscussionID, '=');
 		$this->GetDiscussionWhisperFilter($s);
 
 		$result = $this->Context->Database->Select($s, $this->Name, 'GetDiscussionById', 'An error occurred while attempting to retrieve the requested discussion.');
@@ -159,8 +154,8 @@ class DiscussionManager extends Delegation {
             $this->Context->Database->Insert($s, $this->Name, 'GetDiscussionById', 'An error occurred while recording this discussion viewing.', 0, 0);
 			} else {
 				// otherwise update
-            $s->AddWhere('UserID', $this->Context->Session->UserID, '=');
-            $s->AddWhere('DiscussionID', $Discussion->DiscussionID, '=');
+            $s->AddWhere('utw', 'UserID', '', $this->Context->Session->UserID, '=');
+            $s->AddWhere('utw', 'DiscussionID', '', $Discussion->DiscussionID, '=');
 				// fail silently
             $this->Context->Database->Update($s, $this->Name, 'GetDiscussionById', 'An error occurred while recording this discussion viewing.', 0);
 			}
@@ -173,19 +168,19 @@ class DiscussionManager extends Delegation {
 		$TotalNumberOfRecords = 0;
 		
 		$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
-		$s->AddSelect('DiscussionID', 't', 'Count', 'count');
 		$s->SetMainTable('Discussion', 't');
-		$s->AddJoin('UserBookmark', 'b', 'DiscussionID and b.UserID = '.$this->Context->Session->UserID, 't', 'DiscussionID', 'left join');
+		$s->AddJoin('UserBookmark', 'b', 'DiscussionID', 't', 'DiscussionID', 'left join', ' and b.'.$this->Context->DatabaseColumns['UserBookmark']['UserID'].' = '.$this->Context->Session->UserID);
+		$s->AddSelect('DiscussionID', 't', 'Count', 'count');
 
 		// Limit to roles with access to this category
       if ($this->Context->Session->UserID > 0) {
-			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID and crb.RoleID = '.$this->Context->Session->User->RoleID, 't', 'CategoryID', 'left join');
+			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID', 't', 'CategoryID', 'left join', ' and crb.'.$this->Context->DatabaseColumns['CategoryRoleBlock']['RoleID'].' = '.$this->Context->Session->User->RoleID);
 		} else {
-			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID and crb.RoleID = 1', 't', 'CategoryID', 'left join');
+			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID', 't', 'CategoryID', 'left join', ' and crb.'.$this->Context->DatabaseColumns['CategoryRoleBlock']['RoleID'].' = 1');
 		}
-      $s->AddWhere('crb.Blocked', '0', '=', 'and', '', 1, 1);
-      $s->AddWhere('crb.Blocked', '0', '=', 'or', '', 0, 0);
-		$s->AddWhere('crb.Blocked', 'null', 'is', 'or', '', 0, 0);
+      $s->AddWhere('crb', 'Blocked', '', '0', '=', 'and', '', 1, 1);
+      $s->AddWhere('crb', 'Blocked', '', '0', '=', 'or', '', 0, 0);
+		$s->AddWhere('crb', 'Blocked', '', 'null', 'is', 'or', '', 0, 0);
 		$s->EndWhereGroup();
 		
 		$this->DelegateParameters['SqlBuilder'] = &$s;
@@ -194,16 +189,16 @@ class DiscussionManager extends Delegation {
 		// If the current user is not admin only show active Discussions
 		if (!$this->Context->Session->User->Permission('PERMISSION_VIEW_HIDDEN_DISCUSSIONS')
 			|| !$this->Context->Session->User->Preference('ShowDeletedDiscussions')) {
-			$s->AddWhere('t.Active', '1', '=');
+			$s->AddWhere('t', 'Active', '', '1', '=');
 		}
 		if ($CategoryID > 0) {
-			$s->AddWhere('t.CategoryID', $CategoryID, '=');
+			$s->AddWhere('t', 'CategoryID', '', $CategoryID, '=');
 		} elseif ($this->Context->Session->UserID > 0) {
-			$s->AddJoin('CategoryBlock', 'cb', 'CategoryID and cb.UserID = '.$this->Context->Session->UserID, 't', 'CategoryID', 'left join');
+			$s->AddJoin('CategoryBlock', 'cb', 'CategoryID', 't', 'CategoryID', 'left join', ' and cb.'.$this->Context->DatabaseColumns['CategoryBlock']['UserID'].' = '.$this->Context->Session->UserID);
 			// $s->AddWhere('coalesce(cb.Blocked,0)', 1, '<>');
-			$s->AddWhere('cb.Blocked', '0', '=', 'and', '', 1, 1);
-			$s->AddWhere('cb.Blocked', '0', '=', 'or', '', 0, 0);
-			$s->AddWhere('cb.Blocked', 'null', 'is', 'or', '', 0, 0);
+			$s->AddWhere('cb', 'Blocked', '', '0', '=', 'and', '', 1, 1);
+			$s->AddWhere('cb', 'Blocked', '', '0', '=', 'or', '', 0, 0);
+			$s->AddWhere('cb', 'Blocked', '', 'null', 'is', 'or', '', 0, 0);
 			$s->EndWhereGroup();
 		}
 		
@@ -234,27 +229,27 @@ class DiscussionManager extends Delegation {
 		// If the current user is not admin only show active Discussions
 		if (!$this->Context->Session->User->Permission('PERMISSION_VIEW_HIDDEN_DISCUSSIONS')
 			|| !$this->Context->Session->User->Preference('ShowDeletedDiscussions')) {
-			$s->AddWhere('t.Active', '1', '=');
+			$s->AddWhere('t', 'Active', '', '1', '=');
 		}
 		if ($CategoryID > 0) {
-			$s->AddWhere('t.CategoryID', $CategoryID, '=');
+			$s->AddWhere('t', 'CategoryID', '', $CategoryID, '=');
 		} elseif ($this->Context->Session->UserID > 0) {
-			$s->AddJoin('CategoryBlock', 'cb', 'CategoryID and cb.UserID = '.$this->Context->Session->UserID, 't', 'CategoryID', 'left join');
+			$s->AddJoin('CategoryBlock', 'cb', 'CategoryID', 't', 'CategoryID', 'left join', ' and cb.'.$this->Context->DatabaseColumns['CategoryBlock']['UserID'].' = '.$this->Context->Session->UserID);
 			// This coalesce seems to be slowing things down
 			// $s->AddWhere('coalesce(cb.Blocked,0)', 1, '<>');			
-			$s->AddWhere('cb.Blocked', '0', '=', 'and', '', 1, 1);
-			$s->AddWhere('cb.Blocked', '0', '=', 'or', '', 0, 0);
-			$s->AddWhere('cb.Blocked', 'null', 'is', 'or', '', 0, 0);
+			$s->AddWhere('cb', 'Blocked', '', '0', '=', 'and', '', 1, 1);
+			$s->AddWhere('cb', 'Blocked', '', '0', '=', 'or', '', 0, 0);
+			$s->AddWhere('cb', 'Blocked', '', 'null', 'is', 'or', '', 0, 0);
 			$s->EndWhereGroup();
 		}
 		$this->GetDiscussionWhisperFilter($s);
 
 		$s->AddOrderBy('Sticky', 't');
-		//if ($this->Context->Configuration['ENABLE_WHISPERS']) {
-		//	$s->AddOrderBy('greatest(t.DateLastWhisper, t.DateLastActive)', '', 'desc');
-		//} else {
-			$s->AddOrderBy('t.DateLastActive', '', 'desc');
-		//}
+		if ($this->Context->Configuration['ENABLE_WHISPERS']) {
+			$s->AddOrderBy(array('DateLastWhisper', 'DateLastActive'), array('t', 't'), 'desc', 'greatest');
+		} else {
+			$s->AddOrderBy('DateLastActive', 't', 'desc');
+		}
 		if ($RowsPerPage > 0) $s->AddLimit($FirstRecord, $RowsPerPage);
 		return $this->Context->Database->Select($s, $this->Name, 'GetDiscussionList', 'An error occurred while retrieving discussions.');
 	}
@@ -264,8 +259,8 @@ class DiscussionManager extends Delegation {
 		$RecordsToReturn = ForceInt($RecordsToReturn, 0);
 		
 		$s = $this->GetDiscussionBuilder();
-		$s->AddWhere('t.AuthUserID', $UserID, '=');
-		if (!$this->Context->Session->User->Permission('PERMISSION_HIDE_DISCUSSIONS') || !$this->Context->Session->User->Preference('ShowDeletedDiscussions')) $s->AddWhere('t.Active', '1', '=');
+		$s->AddWhere('t', 'AuthUserID', '', $UserID, '=');
+		if (!$this->Context->Session->User->Permission('PERMISSION_HIDE_DISCUSSIONS') || !$this->Context->Session->User->Preference('ShowDeletedDiscussions')) $s->AddWhere('t', 'Active', '', '1', '=');
 		$this->GetDiscussionWhisperFilter($s);
 		$s->AddOrderBy('DateLastActive', 't', 'desc');
 		if ($RecordsToReturn > 0) $s->AddLimit(0, $RecordsToReturn);
@@ -275,7 +270,7 @@ class DiscussionManager extends Delegation {
 	
 	function GetDiscussionSearch($RowsPerPage, $CurrentPage, $Search) {
 		$s = $this->GetSearchBuilder($Search);
-		if (!$this->Context->Session->User->Permission('PERMISSION_HIDE_DISCUSSIONS') || !$this->Context->Session->User->Preference('ShowDeletedDiscussions')) $s->AddWhere('t.Active', '1', '=');
+		if (!$this->Context->Session->User->Permission('PERMISSION_HIDE_DISCUSSIONS') || !$this->Context->Session->User->Preference('ShowDeletedDiscussions')) $s->AddWhere('t', 'Active', '', '1', '=');
 		if ($RowsPerPage > 0) {
 			$CurrentPage = ForceInt($CurrentPage, 1);
 			if ($CurrentPage < 1) $CurrentPage == 1;
@@ -284,10 +279,10 @@ class DiscussionManager extends Delegation {
 		}		
 		if ($RowsPerPage > 0) $s->AddLimit($FirstRecord, $RowsPerPage+1);
       if ($this->Context->Configuration['ENABLE_WHISPERS'] && $this->Context->Session->User->Permission('PERMISSION_VIEW_ALL_WHISPERS')) {
-         $s->AddOrderBy('greatest(t.DateLastWhisper, t.DateLastActive)', '', 'desc');
+         $s->AddOrderBy(array('DateLastWhisper', 'DateLastActive'), array('t','t'), 'desc', 'greatest');
       } else {
 			$this->GetDiscussionWhisperFilter($s);
-			if ($this->Context->Configuration['ENABLE_WHISPERS']) $s->AddOrderBy('greatest(tuwt.DateLastActive, tuwf.DateLastActive, t.DateLastActive)', '', 'desc');
+			if ($this->Context->Configuration['ENABLE_WHISPERS']) $s->AddOrderBy(array('DateLastActive', 'DateLastActive', 'DateLastActive'), array('tuwt','tuwf','t'), 'desc', 'greatest');
 		}
 
 		return $this->Context->Database->Select($s, $this->Name, 'GetDiscussionSearch', 'An error occurred while retrieving search results.');
@@ -298,19 +293,19 @@ class DiscussionManager extends Delegation {
 			// If the user cannot view all whispers, make sure that:
 			// if the current topic is a whisper, make sure it is the
 			// author or the whisper recipient viewing
-			$SqlBuilder->AddWhere('t.WhisperUserID', 0, '=', 'and', '', 1, 1);
-			$SqlBuilder->AddWhere('t.WhisperUserID', 0, '=', 'or', '' ,0);
-			$SqlBuilder->AddWhere('t.WhisperUserID', 'null', 'is', 'or', '' ,0);
+			$SqlBuilder->AddWhere('t', 'WhisperUserID', '', 0, '=', 'and', '', 1, 1);
+			$SqlBuilder->AddWhere('t', 'WhisperUserID', '', 0, '=', 'or', '' ,0);
+			$SqlBuilder->AddWhere('t', 'WhisperUserID', '', 'null', 'is', 'or', '' ,0);
 			$SqlBuilder->EndWhereGroup();
 		} elseif (!$this->Context->Session->User->Permission('PERMISSION_VIEW_ALL_WHISPERS')) {
-			$SqlBuilder->AddWhere('t.WhisperUserID', $this->Context->Session->UserID, '=', 'and', '', 1, 1);
-			$SqlBuilder->AddWhere('t.WhisperUserID', $this->Context->Session->UserID, '=', 'or', '' , 0);
-			$SqlBuilder->AddWhere('t.AuthUserID', $this->Context->Session->UserID, '=', 'or', '' , 1);
-			$SqlBuilder->AddWhere('t.AuthUserID', $this->Context->Session->UserID, '=', 'or', '' , 0);
+			$SqlBuilder->AddWhere('t', 'WhisperUserID', '', $this->Context->Session->UserID, '=', 'and', '', 1, 1);
+			$SqlBuilder->AddWhere('t', 'WhisperUserID', '', $this->Context->Session->UserID, '=', 'or', '' , 0);
+			$SqlBuilder->AddWhere('t', 'AuthUserID', '', $this->Context->Session->UserID, '=', 'or', '' , 1);
+			$SqlBuilder->AddWhere('t', 'AuthUserID', '', $this->Context->Session->UserID, '=', 'or', '' , 0);
 //			$SqlBuilder->EndWhereGroup();
-			$SqlBuilder->AddWhere('t.WhisperUserID', 'null', 'is', 'or', '', 0);
-			$SqlBuilder->AddWhere('t.WhisperUserID', '0', '=', 'or', '', 0);
-			$SqlBuilder->AddWhere('t.WhisperUserID', '0', '=', 'or', '', 1);
+			$SqlBuilder->AddWhere('t', 'WhisperUserID', '', 'null', 'is', 'or', '', 0);
+			$SqlBuilder->AddWhere('t', 'WhisperUserID', '', '0', '=', 'or', '', 0);
+			$SqlBuilder->AddWhere('t', 'WhisperUserID', '', '0', '=', 'or', '', 1);
 			$SqlBuilder->EndWhereGroup();
 		}
 	}
@@ -320,10 +315,10 @@ class DiscussionManager extends Delegation {
 		$RecordsToReturn = ForceInt($RecordsToReturn, 0);
 		
 		$s = $this->GetDiscussionBuilder();
-		if (!$this->Context->Session->User->Permission('PERMISSION_REMOVE_CATEGORIES') || !$this->Context->Session->User->Preference('ShowDeletedDiscussions')) $s->AddWhere('t.Active', '1', '=');
-		$s->AddWhere('t.WhisperUserID', $UserID, '=', 'and', '', 0, 1);
-		$s->AddWhere('t.AuthUserID', $UserID, '=', 'or', '', 0, 1);
-		$s->AddWhere('t.WhisperUserID', 0, '>', 'and');
+		if (!$this->Context->Session->User->Permission('PERMISSION_REMOVE_CATEGORIES') || !$this->Context->Session->User->Preference('ShowDeletedDiscussions')) $s->AddWhere('t', 'Active', '', '1', '=');
+		$s->AddWhere('t', 'WhisperUserID', '', $UserID, '=', 'and', '', 0, 1);
+		$s->AddWhere('t', 'AuthUserID', '', $UserID, '=', 'or', '', 0, 1);
+		$s->AddWhere('t', 'WhisperUserID', '', 0, '>', 'and');
 		$s->EndWhereGroup();
 		$s->EndWhereGroup();
 		$s->AddOrderBy('DateLastActive', 't', 'desc');
@@ -341,19 +336,19 @@ class DiscussionManager extends Delegation {
 		$s->DefineSearch();
 		
 		// If the current user is not admin only show active Discussions
-		if (!$this->Context->Session->User->Permission('PERMISSION_HIDE_DISCUSSIONS')) $s->AddWhere('t.Active', '1', '=');
+		if (!$this->Context->Session->User->Permission('PERMISSION_HIDE_DISCUSSIONS')) $s->AddWhere('t', 'Active', '', '1', '=');
 		if ($Search->Categories != '') {
 			$Cats = explode(',',$Search->Categories);
 			$CatCount = count($Cats);
-			$s->AddWhere('1', '0', '=', 'and', '', 0, 1);
+			$s->AddWhere('', '1', '', '0', '=', 'and', '', 0, 1);
 			$i = 0;
 			for ($i = 0; $i < $CatCount; $i++) {
-				$s->AddWhere('c.Name', trim($Cats[$i]), '=', 'or');
+				$s->AddWhere('c', 'Name', '', trim($Cats[$i]), '=', 'or');
 			}
 			$s->EndWhereGroup();			
 		}
-		if ($Search->AuthUsername != '') $s->AddWhere('u.Name', $Search->AuthUsername, '=');
-      if ($this->Context->Configuration['ENABLE_WHISPERS'] && $Search->WhisperFilter) $s->AddWhere('t.WhisperUserID', 0, '>');
+		if ($Search->AuthUsername != '') $s->AddWhere('u', 'Name', '', $Search->AuthUsername, '=');
+      if ($this->Context->Configuration['ENABLE_WHISPERS'] && $Search->WhisperFilter) $s->AddWhere('t', 'WhisperUserID', '', 0, '>');
 		return $s;
 	}
 	
@@ -362,8 +357,8 @@ class DiscussionManager extends Delegation {
 		$RecordsToReturn = ForceInt($RecordsToReturn, 0);
 		
 		$s = $this->GetDiscussionBuilder();
-		if (!$this->Context->Session->User->Permission('PERMISSION_HIDE_DISCUSSIONS') || !$this->Context->Session->User->Preference('ShowDeletedDiscussions')) $s->AddWhere('t.Active', '1', '=');
-		$s->AddWhere('utw.UserID', $UserID, '=');
+		if (!$this->Context->Session->User->Permission('PERMISSION_HIDE_DISCUSSIONS') || !$this->Context->Session->User->Preference('ShowDeletedDiscussions')) $s->AddWhere('t', 'Active', '', '1', '=');
+		$s->AddWhere('utw', 'UserID', '', $UserID, '=');
 		$s->AddOrderBy('LastViewed', 'utw', 'desc');
 		if ($RecordsToReturn > 0) $s->AddLimit(0, $RecordsToReturn);
 
@@ -383,7 +378,7 @@ class DiscussionManager extends Delegation {
 				$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
 				$s->SetMainTable('Discussion', 'd');
 				$s->AddSelect('DiscussionID', 'd');
-				$s->AddWhere('AuthUserID', $this->Context->Session->UserID, '=');
+				$s->AddWhere('c', 'AuthUserID', '', $this->Context->Session->UserID, '=');
 				$s->AddOrderBy('DateCreated', 'd', 'desc');
 				$s->AddLimit(0,1);
 				$LastDiscussionData = $this->Context->Database->Select($s, $this->Name, 'SaveDiscussion', 'An error occurred while retrieving your last discussion.');
@@ -437,7 +432,7 @@ class DiscussionManager extends Delegation {
 					
 					// Proceed with the save if there are no warnings
 					if ($this->Context->WarningCollector->Count() == 0) {
-						$s->SetMainTable('Discussion');
+						$s->SetMainTable('Discussion', 'd');
 						$s->AddFieldNameValue('Name', $Discussion->Name);
 						$s->AddFieldNameValue('CategoryID', $Discussion->CategoryID);
 						if ($NewDiscussion) {				
@@ -449,7 +444,7 @@ class DiscussionManager extends Delegation {
 							$Discussion->DiscussionID = $this->Context->Database->Insert($s, $this->Name, 'NewDiscussion', 'An error occurred while creating a new discussion.');
 							$Discussion->Comment->DiscussionID = $Discussion->DiscussionID;
 						} else {
-							$s->AddWhere('DiscussionID', $Discussion->DiscussionID, '=');
+							$s->AddWhere('d', 'DiscussionID', '', $Discussion->DiscussionID, '=');
 							$this->Context->Database->Update($s, $this->Name, 'NewDiscussion', 'An error occurred while updating the discussion.');
 						}
 					}
@@ -463,7 +458,7 @@ class DiscussionManager extends Delegation {
 							$s->Clear();
 							$s->SetMainTable('Discussion', 'd');
 							$s->AddFieldNameValue('FirstCommentID', $Discussion->Comment->CommentID);
-							$s->AddWhere('DiscussionID', $Discussion->Comment->DiscussionID, '=');
+							$s->AddWhere('d', 'DiscussionID', '', $Discussion->Comment->DiscussionID, '=');
 							$this->Context->Database->Update($s, $this->Name, 'NewDiscussion', 'An error occurred while updating discussion properties.');
 						}
 					}
@@ -479,9 +474,9 @@ class DiscussionManager extends Delegation {
 		
 		if ($this->Context->WarningCollector->Count() == 0) {
 			$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
-			$s->SetMainTable('Discussion');
+			$s->SetMainTable('Discussion', 'd');
 			$s->AddFieldNameValue($PropertyName, $Switch);
-			$s->AddWhere('DiscussionID', $DiscussionID, '=');
+			$s->AddWhere('d', 'DiscussionID', '', $DiscussionID, '=');
 			switch($PropertyName) {
 				case 'Active':
 					if (!$this->Context->Session->User->Permission('PERMISSION_HIDE_DISCUSSIONS')) $this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrPermissionHideDiscussions'));

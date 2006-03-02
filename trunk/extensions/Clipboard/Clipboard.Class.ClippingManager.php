@@ -12,8 +12,8 @@ class ClippingManager {
       $s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
       $s->SetMainTable("Clipping", "c");
       $s->AddSelect(array("ClippingID", "UserID", "Label", "Contents"), "c");
-      $s->AddWhere("ClippingID", $ClippingID, "=");
-      $s->AddWhere("UserID", $this->Context->Session->UserID, "=");
+      $s->AddWhere('c', "ClippingID", '', $ClippingID, "=");
+      $s->AddWhere('c', "UserID", '', $this->Context->Session->UserID, "=");
       $ResultSet = $this->Context->Database->Select($s, $this->Name, "GetClippingById", "An error occurred while attempting to retrieve the requested Clipping.");
       $Clipping = false;
       while ($rows = $this->Context->Database->GetRow($ResultSet)) {
@@ -27,15 +27,15 @@ class ClippingManager {
       $s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
       $s->SetMainTable("Clipping", "c");
       $s->AddSelect(array("ClippingID", "UserID", "Label", "Contents"), "c");
-      $s->AddWhere("UserID", $UserID, "=");
+      $s->AddWhere('c', "UserID", '', $UserID, "=");
       return $this->Context->Database->Select($s, $this->Name, "GetClippingsByUserID", "An error occurred while attempting to retrieve Clipping items.");
    }
    
    function RemoveClipping($ClippingID) {
       $s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
       $s->SetMainTable("Clipping", "c");
-      $s->AddWhere("ClippingID", $ClippingID, "=");
-      $s->AddWhere("UserID", $this->Context->Session->UserID, "=");
+      $s->AddWhere('c', "ClippingID", '', $ClippingID, "=");
+      $s->AddWhere('c', "UserID", '', $this->Context->Session->UserID, "=");
       $this->Context->Database->Delete($s, $this->Name, "RemoveClipping", "An error occurred while removing the Clipping item.");
       return true;
    }
@@ -50,8 +50,8 @@ class ClippingManager {
          $s->AddFieldNameValue("Label", $Clipping->Label);
          $s->AddFieldNameValue("Contents", $Clipping->Contents);
          if ($Clipping->ClippingID > 0) {
-            $s->AddWhere("ClippingID", $Clipping->ClippingID, "=");
-            $s->AddWhere("UserID", $this->Context->Session->UserID, "=");
+            $s->AddWhere('c', "ClippingID", '', $Clipping->ClippingID, "=");
+            $s->AddWhere('c', "UserID", '', $this->Context->Session->UserID, "=");
             $this->Context->Database->Update($s, $this->Name, "SaveClipping", "An error occurred while saving your Clipping item.");
          } else {
             $s->AddFieldNameValue("UserID", $this->Context->Session->UserID);

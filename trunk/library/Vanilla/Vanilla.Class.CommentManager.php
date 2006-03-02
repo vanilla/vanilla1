@@ -24,6 +24,26 @@ class CommentManager {
 	function GetCommentBuilder($s = 0) {
 		if (!$s) $s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
 		$s->SetMainTable('Comment', 'm');
+
+		$s->AddJoin('User', 'a', 'UserID', 'm', 'AuthUserID', 'inner join');
+		$s->AddJoin('Role', 'r', 'RoleID', 'a', 'RoleID', 'left join');
+		$s->AddJoin('User', 'e', 'UserID', 'm', 'EditUserID', 'left join');
+		$s->AddJoin('User', 'd', 'UserID', 'm', 'DeleteUserID', 'left join');
+		$s->AddJoin('UserBlock', 'ab', 'BlockedUserID', 'm', 'AuthUserID', 'left join', ' and ab.'.$this->Context->DatabaseColumns['UserBlock']['BlockingUserID'].' = '.$this->Context->Session->UserID);
+		$s->AddJoin('CommentBlock', 'cb', 'BlockedCommentID', 'm', 'CommentID', 'left join', ' and cb.'.$this->Context->DatabaseColumns['CommentBlock']['BlockingUserID'].' = '.$this->Context->Session->UserID);
+		$s->AddJoin('Discussion', 't', 'DiscussionID', 'm', 'DiscussionID', 'inner join');
+      $s->AddJoin('User', 'w', 'UserID', 'm', 'WhisperUserID', 'left join');
+		
+		// $s->AddGroupBy('CommentID', 'm');
+		
+		
+		// Limit to roles with access to this category
+      if ($this->Context->Session->UserID > 0) {
+			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID', 't', 'CategoryID', 'left join', ' and crb.'.$this->Context->DatabaseColumns['CategoryRoleBlock']['RoleID'].' = '.$this->Context->Session->User->RoleID);
+		} else {
+			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID', 't', 'CategoryID', 'left join', ' and crb.'.$this->Context->DatabaseColumns['CategoryRoleBlock']['RoleID'].' = 1');
+		}
+		
 		$s->AddSelect(array('CommentID', 'DiscussionID', 'Body', 'FormatType', 'DateCreated', 'DateEdited', 'DateDeleted', 'Deleted', 'AuthUserID', 'EditUserID', 'DeleteUserID', 'WhisperUserID', 'RemoteIp'), 'm');
 		$s->AddSelect('Name', 'a', 'AuthUsername');
 		$s->AddSelect('Icon', 'a', 'AuthIcon');
@@ -38,30 +58,12 @@ class CommentManager {
 		$s->AddSelect('Blocked', 'cb', 'CommentBlocked', 'coalesce', '0');
       $s->AddSelect('WhisperUserID', 't', 'DiscussionWhisperUserID');
       $s->AddSelect('Name', 'w', 'WhisperUsername');
-
-		$s->AddJoin('User', 'a', 'UserID', 'm', 'AuthUserID', 'inner join');
-		$s->AddJoin('Role', 'r', 'RoleID', 'a', 'RoleID', 'left join');
-		$s->AddJoin('User', 'e', 'UserID', 'm', 'EditUserID', 'left join');
-		$s->AddJoin('User', 'd', 'UserID', 'm', 'DeleteUserID', 'left join');
-		$s->AddJoin('UserBlock', 'ab', 'BlockedUserID and ab.BlockingUserID = '.$this->Context->Session->UserID, 'm', 'AuthUserID', 'left join');
-		$s->AddJoin('CommentBlock', 'cb', 'BlockedCommentID and cb.BlockingUserID = '.$this->Context->Session->UserID, 'm', 'CommentID', 'left join');
-		$s->AddJoin('Discussion', 't', 'DiscussionID', 'm', 'DiscussionID', 'inner join');
-      $s->AddJoin('User', 'w', 'UserID', 'm', 'WhisperUserID', 'left join');
-		
-		// $s->AddGroupBy('CommentID', 'm');
 		
 		
-		// Limit to roles with access to this category
-      if ($this->Context->Session->UserID > 0) {
-			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID and crb.RoleID = '.$this->Context->Session->User->RoleID, 't', 'CategoryID', 'left join');
-		} else {
-			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID and crb.RoleID = 1', 't', 'CategoryID', 'left join');
-		}
-		$s->AddWhere('crb.Blocked', 0, '=', 'and', '', 1, 1);
-		$s->AddWhere('crb.Blocked', 0, '=', 'or', '', 0);
-		$s->AddWhere('crb.Blocked', 'null', 'is', 'or', '', 0);
+		$s->AddWhere('crb', 'Blocked', '', 0, '=', 'and', '', 1, 1);
+		$s->AddWhere('crb', 'Blocked', '', 0, '=', 'or', '', 0);
+		$s->AddWhere('crb', 'Blocked', '', 'null', 'is', 'or', '', 0);
 		$s->EndWhereGroup();
-		// $s->AddWhere('coalesce(crb.Blocked, 0)', '0', '=', 'and', '', 0, 0);	
 		
 		return $s;
 	}
@@ -70,9 +72,9 @@ class CommentManager {
 		$Comment = $this->Context->ObjectFactory->NewContextObject($this->Context, 'Comment');
 
 		$s = $this->GetCommentBuilder();
-		if (!$this->Context->Session->User->Permission('PERMISSION_HIDE_COMMENTS')) $s->AddWhere('m.Deleted', '0', '=');
+		if (!$this->Context->Session->User->Permission('PERMISSION_HIDE_COMMENTS')) $s->AddWhere('m', 'Deleted', '', '0', '=');
 		
-		$s->AddWhere('m.CommentID', $CommentID, '=');
+		$s->AddWhere('m', 'CommentID', '', $CommentID, '=');
 			
 		$result = $this->Context->Database->Select($s, $this->Name, 'GetCommentById', 'An error occurred while attempting to retrieve the requested comment.');
 		if ($this->Context->Database->RowCount($result) == 0) $this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrCommentNotFound'));
@@ -90,32 +92,32 @@ class CommentManager {
 		// If the current user is not admin only show active comments
 		$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
 		$s->SetMainTable('Comment', 'm');
-		$s->AddSelect('CommentID', 'm', 'Count', 'count');
 		$s->AddJoin('Discussion', 't', 'DiscussionID', 'm', 'DiscussionID', 'inner join');
 		if (!$this->Context->Session->User->Permission('PERMISSION_VIEW_HIDDEN_COMMENTS')
 			|| !$this->Context->Session->User->Preference('ShowDeletedComments')) {
-			$s->AddWhere('m.Deleted', 0, '=', 'and', '', 1, 1);
-			$s->AddWhere('m.Deleted', 0, '=', 'or', '' ,0);
+			$s->AddWhere('m', 'Deleted', '', 0, '=', 'and', '', 1, 1);
+			$s->AddWhere('m', 'Deleted', '', 0, '=', 'or', '' ,0);
 			$s->EndWhereGroup();
 		}
+		$s->AddSelect('CommentID', 'm', 'Count', 'count');
 		if ($this->Context->Configuration['ENABLE_WHISPERS']) {
          if (!$this->Context->Session->User->Permission('PERMISSION_VIEW_ALL_WHISPERS')) {
-            $s->AddWhere('m.WhisperUserID', $this->Context->Session->UserID, '=', 'and', '', 1, 1);
-            $s->AddWhere('m.WhisperUserID', 'null', 'is', 'or', '', 0);
-            $s->AddWhere('m.WhisperUserID', '0', '=', 'or', '', 0);
-            $s->AddWhere('m.WhisperUserID', '0', '=', 'or', '', 1);
-            $s->AddWhere('m.AuthUserID', $this->Context->Session->UserID, '=', 'or');
+            $s->AddWhere('m', 'WhisperUserID', '', $this->Context->Session->UserID, '=', 'and', '', 1, 1);
+            $s->AddWhere('m', 'WhisperUserID', '', 'null', 'is', 'or', '', 0);
+            $s->AddWhere('m', 'WhisperUserID', '', '0', '=', 'or', '', 0);
+            $s->AddWhere('m', 'WhisperUserID', '', '0', '=', 'or', '', 1);
+            $s->AddWhere('m', 'AuthUserID', '', $this->Context->Session->UserID, '=', 'or');
             $s->EndWhereGroup();
          }
 		} else {
 			// If whispers aren't on - we want to make sure that whispers aren't included in the count
-			$s->AddWhere('m.WhisperUserID', 0, '=', 'and', '', 1, 1);
-			$s->AddWhere('m.WhisperUserID', 0, '=', 'or', '' ,0);
-			$s->AddWhere('m.WhisperUserID', 'null', 'is', 'or', '' ,0);
+			$s->AddWhere('m', 'WhisperUserID', '', 0, '=', 'and', '', 1, 1);
+			$s->AddWhere('m', 'WhisperUserID', '', 0, '=', 'or', '' ,0);
+			$s->AddWhere('m', 'WhisperUserID', '', 'null', 'is', 'or', '' ,0);
 			$s->EndWhereGroup();
 		}
 
-		$s->AddWhere('m.DiscussionID', $DiscussionID, '=');
+		$s->AddWhere('m', 'DiscussionID', '', $DiscussionID, '=');
 		$result = $this->Context->Database->Select($s, $this->Name, 'GetCommentCount', 'An error occurred while retrieving comment information.');
 		while ($rows = $this->Context->Database->GetRow($result)) {
 			$TotalNumberOfRecords = $rows['Count'];
@@ -138,29 +140,29 @@ class CommentManager {
 		$s = $this->GetCommentBuilder();
 		if (!$this->Context->Session->User->Permission('PERMISSION_VIEW_HIDDEN_COMMENTS')
 			|| !$this->Context->Session->User->Preference('ShowDeletedComments')) {
-			$s->AddWhere('m.Deleted', 0, '=', 'and', '', 1, 1);
-			$s->AddWhere('m.Deleted', 0, '=', 'or', '' ,0);
+			$s->AddWhere('m', 'Deleted', '', 0, '=', 'and', '', 1, 1);
+			$s->AddWhere('m', 'Deleted', '', 0, '=', 'or', '' ,0);
 			$s->EndWhereGroup();
 		}
 		
 		if ($this->Context->Configuration['ENABLE_WHISPERS']) {
          if (!$this->Context->Session->User->Permission('PERMISSION_VIEW_ALL_WHISPERS')) {
-            $s->AddWhere('m.WhisperUserID', $this->Context->Session->UserID, '=', 'and', '', 1, 1);
-            $s->AddWhere('m.WhisperUserID', 'null', 'is', 'or', '', 0);
-            $s->AddWhere('m.WhisperUserID', '0', '=', 'or', '', 0);
-            $s->AddWhere('m.WhisperUserID', '0', '=', 'or', '', 1);
-            $s->AddWhere('m.AuthUserID', $this->Context->Session->UserID, '=', 'or');
+            $s->AddWhere('m', 'WhisperUserID', '', $this->Context->Session->UserID, '=', 'and', '', 1, 1);
+            $s->AddWhere('m', 'WhisperUserID', '', 'null', 'is', 'or', '', 0);
+            $s->AddWhere('m', 'WhisperUserID', '', '0', '=', 'or', '', 0);
+            $s->AddWhere('m', 'WhisperUserID', '', '0', '=', 'or', '', 1);
+            $s->AddWhere('m', 'AuthUserID', '', $this->Context->Session->UserID, '=', 'or');
             $s->EndWhereGroup();
          }
 		} else {		
 			// If whispers aren't on - we want to make sure that whispers aren't included in the count
-			$s->AddWhere('m.WhisperUserID', 0, '=', 'and', '', 1, 1);
-			$s->AddWhere('m.WhisperUserID', 0, '=', 'or', '' ,0);
-			$s->AddWhere('m.WhisperUserID', 'null', 'is', 'or', '' ,0);
+			$s->AddWhere('m', 'WhisperUserID', '', 0, '=', 'and', '', 1, 1);
+			$s->AddWhere('m', 'WhisperUserID', '', 0, '=', 'or', '' ,0);
+			$s->AddWhere('m', 'WhisperUserID', '', 'null', 'is', 'or', '' ,0);
 			$s->EndWhereGroup();
 		}
 		
-		$s->AddWhere('m.DiscussionID', $DiscussionID, '=');
+		$s->AddWhere('m', 'DiscussionID', '', $DiscussionID, '=');
 		$s->AddOrderBy('DateCreated', 'm', 'asc');
 		if ($RowsPerPage > 0) $s->AddLimit($FirstRecord, $RowsPerPage);
 
@@ -185,14 +187,11 @@ class CommentManager {
 		$Search->FormatPropertiesForDatabaseInput();
 		$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlSearch');
 		$s->SetMainTable('Comment', 'c');
-		$s->AddSelect(array('CommentID', 'DiscussionID', 'Body', 'FormatType', 'DateCreated', 'Deleted', 'AuthUserID', 'WhisperUserID'), 'c');
-		$s->AddSelect('Name', 'a', 'AuthUsername');
-      $s->AddSelect('WhisperUserID', 'd', 'DiscussionWhisperUserID');
-      $s->AddSelect('Name', 'w', 'WhisperUsername');
 
 		$s->AddJoin('User', 'a', 'UserID', 'c', 'AuthUserID', 'inner join');
 		$s->AddJoin('Discussion', 'd', 'DiscussionID', 'c', 'DiscussionID', 'inner join');
       $s->AddJoin('User', 'w', 'UserID', 'c', 'WhisperUserID', 'left join');
+		$s->AddJoin('Category', 'ca', 'CategoryID', 'd', 'CategoryID', 'left join');
 		
 		// Caused the query to be 50 times slower
 		// $s->AddGroupBy('CommentID', 'c');
@@ -200,56 +199,66 @@ class CommentManager {
 		
 		// Limit to roles with access to this category
       if ($this->Context->Session->UserID > 0) {
-			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID and crb.RoleID = '.$this->Context->Session->User->RoleID, 'd', 'CategoryID', 'left join');
+			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID', 'd', 'CategoryID', 'left join', ' and crb.'.$this->Context->DatabaseColumns['CategoryRoleBlock']['RoleID'].' = '.$this->Context->Session->User->RoleID);
 		} else {
-			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID and crb.RoleID = 1', 'd', 'CategoryID', 'left join');
+			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID', 'd', 'CategoryID', 'left join', ' and crb.'.$this->Context->DatabaseColumns['CategoryRoleBlock']['RoleID'].' = 1');
 		}
-		$s->AddWhere('crb.Blocked', 0, '=', 'and', '', 1, 1);
-		$s->AddWhere('crb.Blocked', 0, '=', 'or', '', 0);
-		$s->AddWhere('crb.Blocked', 'null', 'is', 'or', '', 0);
+
+		$s->AddSelect(array('CommentID', 'DiscussionID', 'Body', 'FormatType', 'DateCreated', 'Deleted', 'AuthUserID', 'WhisperUserID'), 'c');
+		$s->AddSelect('Name', 'a', 'AuthUsername');
+      $s->AddSelect('WhisperUserID', 'd', 'DiscussionWhisperUserID');
+      $s->AddSelect('Name', 'w', 'WhisperUsername');
+
+
+		$s->AddWhere('crb', 'Blocked', '', 0, '=', 'and', '', 1, 1);
+		$s->AddWhere('crb', 'Blocked', '', 0, '=', 'or', '', 0);
+		$s->AddWhere('crb', 'Blocked', '', 'null', 'is', 'or', '', 0);
 		$s->EndWhereGroup();
-		// $s->AddWhere('coalesce(crb.Blocked, 0)', '0', '=', 'and', '', 0, 0);	
 		
 		$s->UserQuery = $Search->Query;
 		$s->SearchFields = array('c.Body');
 		$s->DefineSearch();
 		$s->AddSelect('Name', 'd', 'Discussion');
-		$s->AddJoin('Category', 'ca', 'CategoryID', 'd', 'CategoryID', 'left join');
 		$s->AddSelect('CategoryID', 'd');
 		$s->AddSelect('Name', 'ca', 'Category');
 		
 		// If the current user is not admin only show active discussions & comments
-		if (!$this->Context->Session->User->Permission('PERMISSION_HIDE_COMMENTS') || !$this->Context->Session->User->Preference('ShowDeletedComments')) $s->AddWhere('c.Deleted', '0', '=');
-		if (!$this->Context->Session->User->Permission('PERMISSION_HIDE_DISCUSSIONS') || !$this->Context->Session->User->Preference('ShowDeletedDiscussions')) $s->AddWhere('d.Active', '1', '=');			
+		if (!$this->Context->Session->User->Permission('PERMISSION_HIDE_COMMENTS') || !$this->Context->Session->User->Preference('ShowDeletedComments')) $s->AddWhere('c', 'Deleted', '', '0', '=');
+		if (!$this->Context->Session->User->Permission('PERMISSION_HIDE_DISCUSSIONS') || !$this->Context->Session->User->Preference('ShowDeletedDiscussions')) $s->AddWhere('d', 'Active', '', '1', '=');			
 
 		if ($Search->Categories != '') {
 			$Cats = explode(',',$Search->Categories);
 			$CatCount = count($Cats);
-			$s->AddWhere('1', '0', '=', 'and', '', 0, 1);
+			$s->AddWhere('', '1', '', '0', '=', 'and', '', 0, 1);
 			$i = 0;
 			for ($i = 0; $i < $CatCount; $i++) {
-				$s->AddWhere('ca.Name', trim($Cats[$i]), '=', 'or');
+				$s->AddWhere('ca', 'Name', '', trim($Cats[$i]), '=', 'or');
 			}
 			$s->EndWhereGroup();			
 		}
-		if ($Search->AuthUsername != '') $s->AddWhere('a.Name', $Search->AuthUsername, '=');
+		if ($Search->AuthUsername != '') $s->AddWhere('a', 'Name', '', $Search->AuthUsername, '=');
 
 		if ($this->Context->Configuration['ENABLE_WHISPERS']) {		
-         if ($Search->WhisperFilter) $s->AddWhere('c.WhisperUserID', 0, '>');
-         if ($Search->AuthUsername != '') $s->AddWhere('a.Name', $Search->AuthUsername, '=');
+         if ($Search->WhisperFilter) $s->AddWhere('c', 'WhisperUserID', '', 0, '>');
+         if ($Search->AuthUsername != '') $s->AddWhere('a', 'Name', '', $Search->AuthUsername, '=');
          if (!$this->Context->Session->User->Permission('PERMISSION_VIEW_ALL_WHISPERS')) {
             // If the user cannot view all whispers, make sure that:
             // if the current topic is a whisper, make sure it is the
             // author or the whisper recipient viewing
-            $s->AddWhere('(d.AuthUserID = '.$this->Context->Session->UserID.' or d.WhisperUserID = '.$this->Context->Session->UserID.' or d.WhisperUserID', 0, '=');
-            $s->EndWhereGroup();
-            $s->AddWhere('(c.AuthUserID = '.$this->Context->Session->UserID.' or c.WhisperUserID = '.$this->Context->Session->UserID.' or c.WhisperUserID', 0, '=');
+            $s->AddWhere('d', 'AuthUserID', '', $this->Context->Session->UserID, '=', 'and', '', 1, 1);
+				$s->AddWhere('d', 'WhisperUserID', '', $this->Context->Session->UserID, '=', 'or', '', 1, 0);
+				$s->AddWhere('d', 'WhisperUserID', '', 0, '=', 'or', '', 1, 0);
+				$s->EndWhereGroup();
+				
+            $s->AddWhere('c', 'AuthUserID', '', $this->Context->Session->UserID, '=', 'and', '', 1, 1);
+				$s->AddWhere('c', 'WhisperUserID', '', $this->Context->Session->UserID, '=', 'or', '', 1, 0);
+				$s->AddWhere('c', 'WhisperUserID', '', 0, '=', 'or', '', 1, 0);
             $s->EndWhereGroup();
          }
 		} else {
-			$s->AddWhere('c.WhisperUserID', 0, '=', 'and', '', 1, 1);
-			$s->AddWhere('c.WhisperUserID', 0, '=', 'or', '', 0);
-			$s->AddWhere('c.WhisperUserID', 'null', 'is', 'or', '', 0);
+			$s->AddWhere('c', 'WhisperUserID', '', 0, '=', 'and', '', 1, 1);
+			$s->AddWhere('c', 'WhisperUserID', '', 0, '=', 'or', '', 0);
+			$s->AddWhere('c', 'WhisperUserID', '', 'null', 'is', 'or', '', 0);
 			$s->EndWhereGroup();
 			$s->AddWhere('d.WhisperUserID', 0, '=', 'and', '', 1, 1);
 			$s->AddWhere('d.WhisperUserID', 0, '=', 'or', '', 0);
@@ -279,8 +288,8 @@ class CommentManager {
 			$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
 			$s->SetMainTable('Comment', 'c');
 			$s->AddSelect('CommentID', 'c');
-			$s->AddWhere('AuthUserID', $this->Context->Session->UserID, '=');
-			$s->AddWhere('DiscussionID', $Comment->DiscussionID, '=');
+			$s->AddWhere('c', 'AuthUserID', '', $this->Context->Session->UserID, '=');
+			$s->AddWhere('c', 'DiscussionID', '', $Comment->DiscussionID, '=');
 			$s->AddOrderBy('DateCreated', 'c', 'desc');
 			$s->AddLimit(0,1);
 			$LastCommentData = $this->Context->Database->Select($s, $this->Name, 'SaveComment', 'An error occurred while retrieving your last comment in this discussion.');
@@ -335,8 +344,8 @@ class CommentManager {
 								$s->AddFieldNameValue('CountWhispers', 'CountWhispers+1', '0');
 								$s->AddFieldNameValue('DateLastActive', MysqlDateTime());
 								$s->AddFieldNameValue('LastUserID', $this->Context->Session->UserID);
-								$s->AddWhere('DiscussionID', $Comment->DiscussionID, '=');
-								$s->AddWhere('WhisperToUserID', $Comment->WhisperUserID, '=');
+								$s->AddWhere('tuwt', 'DiscussionID', '', $Comment->DiscussionID, '=');
+								$s->AddWhere('tuwt', 'WhisperToUserID', '', $Comment->WhisperUserID, '=');
 								if ($this->Context->Database->Update($s, $this->Name, 'SaveComment', "An error occurred while updating the discussion's comment summary.") <= 0) {
 									// If no records were updated, then insert a new row to the table for this discussion/user whisper
 									$s->Clear();
@@ -355,8 +364,8 @@ class CommentManager {
 							$s->AddFieldNameValue('CountWhispers', 'CountWhispers+1', '0');
 							$s->AddFieldNameValue('DateLastActive', MysqlDateTime());
 							$s->AddFieldNameValue('LastUserID', $this->Context->Session->UserID);
-							$s->AddWhere('DiscussionID', $Comment->DiscussionID, '=');
-							$s->AddWhere('WhisperFromUserID', $this->Context->Session->UserID, '=');
+							$s->AddWhere('tuwf', 'DiscussionID', '', $Comment->DiscussionID, '=');
+							$s->AddWhere('tuwf', 'WhisperFromUserID', '', $this->Context->Session->UserID, '=');
 							if ($this->Context->Database->Update($s, $this->Name, 'SaveComment', "An error occurred while updating the discussion's comment summary.") <= 0) {
 								// If no records were updated, then insert a new row to the table for this discussion/user whisper
 								$s->Clear();
@@ -375,7 +384,7 @@ class CommentManager {
 							$s->AddFieldNameValue('WhisperToLastUserID', $Comment->WhisperUserID);
 							$s->AddFieldNameValue('WhisperFromLastUserID', $this->Context->Session->UserID);
 							$s->AddFieldNameValue('TotalWhisperCount', 'TotalWhisperCount+1', 0);
-							$s->AddWhere('DiscussionID', $Comment->DiscussionID, '=');
+							$s->AddWhere('t', 'DiscussionID', '', $Comment->DiscussionID, '=');
 							$this->Context->Database->Update($s, $this->Name, 'SaveComment', "An error occurred while updating the discussion's whisper summary.");
 						} else {
 							// First update the counts & last user
@@ -383,15 +392,15 @@ class CommentManager {
 							$s->SetMainTable('Discussion', 't');
 							$s->AddFieldNameValue('CountComments', 'CountComments+1', '0');
 							$s->AddFieldNameValue('LastUserID', $this->Context->Session->UserID);
-							$s->AddWhere('DiscussionID', $Comment->DiscussionID, '=');
+							$s->AddWhere('t', 'DiscussionID', '', $Comment->DiscussionID, '=');
 							$this->Context->Database->Update($s, $this->Name, 'SaveComment', "An error occurred while updating the discussion's comment summary.");
 							
 							// Now only update the DateLastActive if the discussion isn't set to Sink
 							$s->Clear();
 							$s->SetMainTable('Discussion', 't');
 							$s->AddFieldNameValue('DateLastActive', MysqlDateTime());
-							$s->AddWhere('DiscussionID', $Comment->DiscussionID, '=');
-							$s->AddWhere('Sink', '1', '<>', 'and');
+							$s->AddWhere('t', 'DiscussionID', '', $Comment->DiscussionID, '=');
+							$s->AddWhere('t', 'Sink', '', '1', '<>', 'and');
 							$this->Context->Database->Update($s, $this->Name, 'SaveComment', "An error occurred while updating the discussion's last active date.");
 						}
 					}
@@ -404,7 +413,7 @@ class CommentManager {
 					// Get information about the comment being edited
 					$s->SetMainTable('Comment', 'm');
 					$s->AddSelect(array('AuthUserID', 'WhisperUserID'), 'm');
-					$s->AddWhere('CommentID', $Comment->CommentID, '=');
+					$s->AddWhere('m', 'CommentID', '', $Comment->CommentID, '=');
 					$CommentData = $this->Context->Database->Select($s, $this->Name, 'SaveComment', 'An error occurred while retrieving information about the comment.');
 					$WhisperToUserID = 0;
 					$WhisperFromUserID = 0;
@@ -447,7 +456,7 @@ class CommentManager {
 					$s->AddFieldNameValue('RemoteIp', GetRemoteIp(1));
 					$s->AddFieldNameValue('EditUserID', $this->Context->Session->UserID);
 					$s->AddFieldNameValue('DateEdited', MysqlDateTime());
-					$s->AddWhere('CommentID', $Comment->CommentID, '=');
+					$s->AddWhere('m', 'CommentID', '', $Comment->CommentID, '=');
 					$this->Context->Database->Update($s, $this->Name, 'SaveComment', 'An error occurred while attempting to update the discussion comment.');
 				}
 			}
@@ -467,9 +476,9 @@ class CommentManager {
 			$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
 			$s->SetMainTable('Comment', 'm');
 			$s->AddSelect(array('AuthUserID', 'WhisperUserID'), 'm');
-			$s->AddWhere('CommentID', $CommentID, '=');
+			$s->AddWhere('m', 'CommentID', '', $CommentID, '=');
 			// Don't touch comments that are already switched to the selected status
-			$s->AddWhere('Deleted', $Switch, '<>');
+			$s->AddWhere('m', 'Deleted', '', $Switch, '<>');
 			$CommentData = $this->Context->Database->Select($s, $this->Name, 'SwitchCommentProperty', 'An error occurred while retrieving information about the comment.');
 			$WhisperToUserID = 0;
 			$WhisperFromUserID = 0;
@@ -496,7 +505,7 @@ class CommentManager {
 				$s->AddFieldNameValue('DeleteUserID', $this->Context->Session->UserID);
 				$s->AddFieldNameValue('DateDeleted', MysqlDateTime());
 			}
-			$s->AddWhere('CommentID', $CommentID, '=');
+			$s->AddWhere('m', 'CommentID', '', $CommentID, '=');
 			$this->Context->Database->Update($s, $this->Name, 'SwitchCommentProperty', 'An error occurred while marking the comment as inactive.');
 		}
 		return $this->Context->WarningCollector->Iif();
@@ -510,7 +519,7 @@ class CommentManager {
 		$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
 		$s->SetMainTable('Discussion', 'd');
 		$s->AddFieldNameValue('CountComments', 'CountComments'.$Math.'1', 0);
-		$s->AddWhere('DiscussionID', $DiscussionID, '=');
+		$s->AddWhere('d', 'DiscussionID', '', $DiscussionID, '=');
 		$this->Context->Database->Update($s, $this->Name, 'UpdateCommentCount', 'An error occurred while manipulating the comment count for the discussion.');
 	}
 	
@@ -524,15 +533,15 @@ class CommentManager {
 		$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
 		$s->SetMainTable('Discussion', 't');
 		$s->AddFieldNameValue('TotalWhisperCount', 'TotalWhisperCount'.$Math.'1', 0);
-		$s->AddWhere('DiscussionID', $DiscussionID, '=');
+		$s->AddWhere('t', 'DiscussionID', '', $DiscussionID, '=');
 		$this->Context->Database->Update($s, $this->Name, 'UpdateWhisperCount', "An error occurred while manipulating the discussion's comment count.");
 		
 		// 2. Update the DiscussionUserWhisperFrom table
 		$s->Clear();
 		$s->SetMainTable('DiscussionUserWhisperFrom', 'tuwf');
 		$s->AddFieldNameValue('CountWhispers', 'CountWhispers'.$Math.'1', 0);
-		$s->AddWhere('DiscussionID', $DiscussionID, '=');
-		$s->AddWhere('WhisperFromUserID', $WhisperFromUserID, '=');
+		$s->AddWhere('tuwf', 'DiscussionID', '', $DiscussionID, '=');
+		$s->AddWhere('tuwf', 'WhisperFromUserID', '', $WhisperFromUserID, '=');
 		// If no rows were affected, make sure to insert the data
 		if ($this->Context->Database->Update($s, $this->Name, 'UpdateWhisperCount', 'An error occurred while manipulating the whisper count for the user who sent the whisper.') == 0 && $Math == '+') {
 			$s->Clear();
@@ -551,8 +560,8 @@ class CommentManager {
 			$s->Clear();
 			$s->SetMainTable('DiscussionUserWhisperTo', 'tuwt');
 			$s->AddFieldNameValue('CountWhispers', 'CountWhispers'.$Math.'1', 0);
-			$s->AddWhere('DiscussionID', $DiscussionID, '=');
-			$s->AddWhere('WhisperToUserID', $WhisperToUserID, '=');
+			$s->AddWhere('tuwt', 'DiscussionID', '', $DiscussionID, '=');
+			$s->AddWhere('tuwt', 'WhisperToUserID', '', $WhisperToUserID, '=');
 			// If no rows were affected, make sure to insert the data
 			if ($this->Context->Database->Update($s, $this->Name, 'UpdateWhisperCount', 'An error occurred while manipulating the whisper count for the user who received the whisper.') == 0 && $Math == '+') {
 				$s->Clear();
@@ -591,7 +600,7 @@ class CommentManager {
 			$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
 			$s->SetMainTable('User', 'u');
 			$s->AddSelect('UserID', 'u');
-			$s->AddWhere('Name', $Name, '=');
+			$s->AddWhere('u', 'Name', '', $Name, '=');
 			$Result = $this->Context->Database->Select($s, $this->Name, 'ValidateWhisperUsername', 'An error occurred while attempting to validate the username entered as the whisper recipient.');
 			while ($Row = $this->Context->Database->GetRow($Result)) {
 				$Comment->WhisperUserID = ForceInt($Row['UserID'], 0);
