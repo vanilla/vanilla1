@@ -319,7 +319,7 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 					$this->PostBackParams->Set("PostBackAction", "ProcessStyle");
 					echo('<div id="Form" class="Account Identity">
 						<fieldset>
-							<legend>'.$this->Context->GetDefinition("StyleManagement").'<legend>');
+							<legend>'.$this->Context->GetDefinition("StyleManagement").'</legend>');
 							if ($StyleID > 0) {
 								$this->StyleSelect->Attributes = "onchange=\"document.location='?PostBackAction=Style&amp;StyleID='+this.options[this.selectedIndex].value;\"";
 								$this->StyleSelect->SelectedID = $StyleID;
