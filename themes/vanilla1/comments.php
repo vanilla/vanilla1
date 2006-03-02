@@ -53,8 +53,22 @@ if ($this->Context->WarningCollector->Count() > 0) {
       $ShowIcon = $Comment->AuthIcon != '' ? 1 : 0;
       $this->DelegateParameters['ShowHtml'] = &$ShowHtml;
       $this->DelegateParameters['ShowIcon'] = &$ShowIcon;
+		
+		$CommentClass = '';
+		if ($Comment->WhisperUserID > 0) {
+			if (
+				($Comment->WhisperUserID == $this->Context->Session->UserID && $Comment->AuthUserID == $this->Context->Session->UserID)
+				or $Comment->WhisperUserID == $this->Context->Session->UserID
+				) {
+				$CommentClass = 'WhisperTo';
+			} else {
+				$CommentClass = 'WhisperFrom';
+			}
+		}
+		
+		if ($Comment->Deleted) $CommentClass .= ' Hidden';
 
-      $CommentList .= '<li id="Comment_'.$Comment->CommentID.'"'.($Comment->Deleted?' class="Hidden"':'').'>
+      $CommentList .= '<li id="Comment_'.$Comment->CommentID.'"'.($CommentClass == ''?'':' class="'.$CommentClass.'"').'>
          <div class="CommentHeader">
             <ul>
                <li'.($ShowIcon?' class="CommentIcon" style="'."background-image:url('".$Comment->AuthIcon."')".'"':'').'>

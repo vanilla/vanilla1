@@ -12,10 +12,10 @@ function AuthenticateUserForRSS2(&$Context) {
          $s = $Context->ObjectFactory->NewContextObject($Context, 'SqlBuilder');
          $s->SetMainTable('User', 'u');
          $s->AddSelect('UserID', 'u');
-         $s->AddWhere('Name', FormatStringForDatabaseInput($PHP_AUTH_USER), '=');
+         $s->AddWhere('u', 'Name', '', FormatStringForDatabaseInput($PHP_AUTH_USER), '=');
          $s->StartWhereGroup();
-         $s->AddWhere('Password', FormatStringForDatabaseInput($PHP_AUTH_PW), '=', 'and', 'md5');
-         $s->AddWhere('Password', FormatStringForDatabaseInput($PHP_AUTH_PW), '=', 'or');
+         $s->AddWhere('u', 'Password', '', FormatStringForDatabaseInput($PHP_AUTH_PW), '=', 'and', 'md5');
+         $s->AddWhere('u', 'Password', '', FormatStringForDatabaseInput($PHP_AUTH_PW), '=', 'or');
          $s->EndWhereGroup();
          
          $ValidationData = $Context->Database->Select($s, 'Feed', 'ValidateCredentials', 'An error occurred while validating user credentials.');

@@ -158,6 +158,7 @@ CREATE TABLE `LUM_Discussion` (
   `Active` enum('1','0') NOT NULL default '1',
   `Closed` enum('1','0') NOT NULL default '0',
   `Sticky` enum('1','0') NOT NULL default '0',
+  `Sink` enum('1','0') NOT NULL default '0',
   `Name` varchar(100) NOT NULL default '',
   `DateCreated` datetime NOT NULL default '0000-00-00 00:00:00',
   `DateLastActive` datetime NOT NULL default '0000-00-00 00:00:00',

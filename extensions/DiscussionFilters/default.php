@@ -47,8 +47,8 @@ if ($Context->SelfUrl == "index.php") {
          $Context->PageTitle = $Context->GetDefinition("BookmarkedDiscussions");
          function DiscussionManager_FilterDataToBookmarks(&$DiscussionManager) {
             $s = &$DiscussionManager->DelegateParameters['SqlBuilder'];
-            $s->AddWhere('b.DiscussionID', 't.DiscussionID', '=', 'and', '', 0, 1);
-            $s->AddWhere('b.UserID', $DiscussionManager->Context->Session->UserID, '=');
+            $s->AddWhere('b', 'DiscussionID', 't', 'DiscussionID', '=', 'and', '', 0, 1);
+            $s->AddWhere('b', 'UserID', '', $DiscussionManager->Context->Session->UserID, '=');
             $s->EndWhereGroup();
          }
          $Context->AddToDelegate("DiscussionManager",
@@ -63,7 +63,7 @@ if ($Context->SelfUrl == "index.php") {
          $Context->PageTitle = $Context->GetDefinition("YourDiscussions");
          function DiscussionManager_FilterDataToOwnDiscussions(&$DiscussionManager) {
             $s = &$DiscussionManager->DelegateParameters['SqlBuilder'];
-      		$s->AddWhere('t.AuthUserID', $DiscussionManager->Context->Session->UserID, '=');            
+      		$s->AddWhere('t', 'AuthUserID', '', $DiscussionManager->Context->Session->UserID, '=');            
          }
          $Context->AddToDelegate("DiscussionManager",
             "PreGetDiscussionList",
@@ -77,9 +77,9 @@ if ($Context->SelfUrl == "index.php") {
          $Context->PageTitle = $Context->GetDefinition("PrivateDiscussions");
          function DiscussionManager_FilterDataToPrivateDiscussions(&$DiscussionManager) {
             $s = &$DiscussionManager->DelegateParameters['SqlBuilder'];
-            $s->AddWhere('t.WhisperUserID', $DiscussionManager->Context->Session->UserID, '=', 'and', '', 0, 1);
-            $s->AddWhere('t.AuthUserID', $DiscussionManager->Context->Session->UserID, '=', 'or', '', 0, 1);
-            $s->AddWhere('t.WhisperUserID', 0, '>', 'and');
+            $s->AddWhere('t', 'WhisperUserID', '', $DiscussionManager->Context->Session->UserID, '=', 'and', '', 0, 1);
+            $s->AddWhere('t', 'AuthUserID', '', $DiscussionManager->Context->Session->UserID, '=', 'or', '', 0, 1);
+            $s->AddWhere('t', 'WhisperUserID', '', 0, '>', 'and');
             $s->EndWhereGroup();
             $s->EndWhereGroup();
          }

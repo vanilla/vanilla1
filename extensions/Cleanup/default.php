@@ -78,69 +78,69 @@ if ($Context->SelfUrl == 'settings.php' && $Context->Session->User->Permission('
 						// Wipe out category blocks
 						$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
 						$s->SetMainTable('CategoryBlock', 'cb');
-						$s->AddWhere('UserID', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
+						$s->AddWhere('cb', 'UserID', '', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
 						$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove user category blocks.');
 						
 						// Wipe out clippings
                   $s->Clear();
 						$s->SetMainTable('Clipping', 'c');
-						$s->AddWhere('UserID', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
+						$s->AddWhere('c', 'UserID', '', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
 						$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove user clippings.');
 						
 						// Wipe out comment blocks
                   $s->Clear();
 						$s->SetMainTable('CommentBlock', 'c');
-						$s->AddWhere('BlockingUserID', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
+						$s->AddWhere('c', 'BlockingUserID', '', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
 						$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove user comment blocks.');
 						
 						// Wipe out the ip history
                   $s->Clear();
 						$s->SetMainTable('IpHistory', 'I');
-						$s->AddWhere('UserID', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
+						$s->AddWhere('I', 'UserID', '', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
 						$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove user IP history.');
 						
 						// Update any styles associated with this user to be system styles
                   $s->Clear();
 						$s->SetMainTable('Style', 's');
 						$s->AddFieldNameValue('AuthUserID', '0');
-						$s->AddWhere('AuthUserID', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
+						$s->AddWhere('s', 'AuthUserID', '', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
 						$this->Context->Database->Update($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove user style relations.');
 						
 						// Wipe out any user blocks
                   $s->Clear();
 						$s->SetMainTable('UserBlock', 'ub');
-						$s->AddWhere('BlockingUserID', '('.implode(',',$InactiveUsers).')', 'in', 'or', '', 0);
-						$s->AddWhere('BlockedUserID', '('.implode(',',$InactiveUsers).')', 'in', 'or', '', 0);
+						$s->AddWhere('ub', 'BlockingUserID', '', '('.implode(',',$InactiveUsers).')', 'in', 'or', '', 0);
+						$s->AddWhere('ub', 'BlockedUserID', '', '('.implode(',',$InactiveUsers).')', 'in', 'or', '', 0);
 						$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove user blocks.');
 						
 						// Wipe out bookmarks
                   $s->Clear();
 						$s->SetMainTable('UserBookmark', 'ub');
-						$s->AddWhere('UserID', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
+						$s->AddWhere('ub', 'UserID', '', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
 						$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove user bookmarks.');
 						
 						// Wipe out user discussion watch
                   $s->Clear();
 						$s->SetMainTable('UserDiscussionWatch', 'udw');
-						$s->AddWhere('UserID', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
+						$s->AddWhere('udw', 'UserID', '', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
 						$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove user discussion tracking data.');
 						
 						// Wipe out role history
                   $s->Clear();
 						$s->SetMainTable('UserRoleHistory', 'urh');
-						$s->AddWhere('UserID', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
+						$s->AddWhere('urh', 'UserID', '', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
 						$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove user role history.');
 						
 						// Wipe out saved searches
                   $s->Clear();
 						$s->SetMainTable('UserSearch', 'us');
-						$s->AddWhere('UserID', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
+						$s->AddWhere('us', 'UserID', '', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
 						$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove user searches.');
 						
 						// Delete the users
                   $s->Clear();
 						$s->SetMainTable('User', 'u');
-						$s->AddWhere('UserID', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
+						$s->AddWhere('u', 'UserID', '', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
 						$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove the users.');
 					}
 					$this->NumberOfUsersRemoved = count($InactiveUsers);
@@ -150,8 +150,8 @@ if ($Context->SelfUrl == 'settings.php' && $Context->Session->User->Permission('
 					// First get all of the hidden comment ids
 					$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
 					$s->SetMainTable('Comment', 'c');
-					$s->AddWhere('Deleted', '1', '=', 'and', '', 0);
-					$s->AddWhere('Deleted', '1', '=', 'or');
+					$s->AddWhere('c', 'Deleted', '', '1', '=', 'and', '', 0);
+					$s->AddWhere('c', 'Deleted', '', '1', '=', 'or');
 					$s->AddSelect('CommentID', 'c');
 					$Result = $this->Context->Database->Select($s, $this->Name, 'Constructor', 'An error occurred while attempting to retrieve hidden comments.');
 					$HiddenCommentIDs = array();
@@ -163,14 +163,14 @@ if ($Context->SelfUrl == 'settings.php' && $Context->Session->User->Permission('
 					// Now remove comment blocks
 					$s->Clear();
 					$s->SetMainTable('CommentBlock', 'cb');
-					$s->AddWhere('BlockedCommentID', '('.implode(',',$HiddenCommentIDs).')', 'in', 'and', '', 0);
+					$s->AddWhere('cb', 'BlockedCommentID', '', '('.implode(',',$HiddenCommentIDs).')', 'in', 'and', '', 0);
 					$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove hidden comment blocks.');
 					
 					// Now remove the comments
 					$s->Clear();
 					$s->SetMainTable('Comment', 'c');
-					$s->AddWhere('Deleted', '1', '=', 'and', '', 0);
-					$s->AddWhere('Deleted', '1', '=', 'or');
+					$s->AddWhere('c', 'Deleted', '', '1', '=', 'and', '', 0);
+					$s->AddWhere('c', 'Deleted', '', '1', '=', 'or');
 					$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove hidden comments.');
 					$this->PostBackValidated = 1;
 					
@@ -179,8 +179,8 @@ if ($Context->SelfUrl == 'settings.php' && $Context->Session->User->Permission('
 					$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
 					$s->SetMainTable('Discussion', 'd');
 					$s->AddSelect('DiscussionID', 'd');
-					$s->AddWhere('Active', '0', '=', 'and', '', 0);
-					$s->AddWhere('Active', '0', '=', 'or');
+					$s->AddWhere('d', 'Active', '', '0', '=', 'and', '', 0);
+					$s->AddWhere('d', 'Active', '', '0', '=', 'or');
 					$Result = $this->Context->Database->Select($s, $this->Name, 'Constructor', 'An error occurred while attempting to retrieve hidden discussions.');
 					$HiddenDiscussionIDs = array();
 					while ($Row = $this->Context->Database->GetRow($Result)) {
@@ -191,37 +191,37 @@ if ($Context->SelfUrl == 'settings.php' && $Context->Session->User->Permission('
 					// Now remove comments associated with those discussions
                $s->Clear();
 					$s->SetMainTable('Comment', 'c');
-					$s->AddWhere('DiscussionID', '('.implode(',',$HiddenDiscussionIDs).')', 'in', 'and', '', 0);
+					$s->AddWhere('d', 'DiscussionID', '', '('.implode(',',$HiddenDiscussionIDs).')', 'in', 'and', '', 0);
 					$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove hidden discussion comments.');
 					
 					// Clean up the whisper tables
                $s->Clear();
 					$s->SetMainTable('DiscussionUserWhisperFrom', 'wf');
-					$s->AddWhere('DiscussionID', '('.implode(',',$HiddenDiscussionIDs).')', 'in', 'and', '', 0);
+					$s->AddWhere('wf', 'DiscussionID', '', '('.implode(',',$HiddenDiscussionIDs).')', 'in', 'and', '', 0);
 					$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove hidden discussion whisper data.');
                
                $s->Clear();
 					$s->SetMainTable('DiscussionUserWhisperTo', 'wt');
-					$s->AddWhere('DiscussionID', '('.implode(',',$HiddenDiscussionIDs).')', 'in', 'and', '', 0);
+					$s->AddWhere('wt', 'DiscussionID', '', '('.implode(',',$HiddenDiscussionIDs).')', 'in', 'and', '', 0);
 					$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove hidden discussion whisper data.');
 					
 					// Remove bookmarks
                $s->Clear();
 					$s->SetMainTable('UserBookmark', 'ub');
-					$s->AddWhere('DiscussionID', '('.implode(',',$HiddenDiscussionIDs).')', 'in', 'and', '', 0);
+					$s->AddWhere('ub', 'DiscussionID', '', '('.implode(',',$HiddenDiscussionIDs).')', 'in', 'and', '', 0);
 					$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove hidden discussion bookmark data.');
 					
 					// Discussion Watch data
                $s->Clear();
 					$s->SetMainTable('UserDiscussionWatch', 'uw');
-					$s->AddWhere('DiscussionID', '('.implode(',',$HiddenDiscussionIDs).')', 'in', 'and', '', 0);
+					$s->AddWhere('uw', 'DiscussionID', '', '('.implode(',',$HiddenDiscussionIDs).')', 'in', 'and', '', 0);
 					$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove hidden discussion watch data.');
 					
 					// Now remove the discussions themselves
                $s->Clear();
 					$s->SetMainTable('Discussion', 'd');
-					$s->AddWhere('Active', '0', '=', 'and', '', 0);
-					$s->AddWhere('Active', '0', '=', 'or');
+					$s->AddWhere('d', 'Active', '', '0', '=', 'and', '', 0);
+					$s->AddWhere('d', 'Active', '', '0', '=', 'or');
 					$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove hidden discussions.');
 					$this->PostBackValidated = 1;
 					
@@ -277,8 +277,8 @@ if ($Context->SelfUrl == 'settings.php' && $Context->Session->User->Permission('
 					$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
 					$s->SetMainTable('Discussion', 'd');
 					$s->AddSelect('DiscussionID', 'd', 'HiddenDiscussionCount', 'count');
-					$s->AddWhere('Active', '0', '=', 'and', '', 0);
-					$s->AddWhere('Active', '0', '=', 'or');
+					$s->AddWhere('d', 'Active', '', '0', '=', 'and', '', 0);
+					$s->AddWhere('d', 'Active', '', '0', '=', 'or');
 					$Result = $this->Context->Database->Select($s, $this->Name, 'Constructor', 'An error occurred while attempting to retrieve hidden discussion statistics.');
 					$this->HiddenDiscussions = 0;
 					while ($Row = $this->Context->Database->GetRow($Result)) {
@@ -289,8 +289,8 @@ if ($Context->SelfUrl == 'settings.php' && $Context->Session->User->Permission('
 					$s->Clear();
 					$s->SetMainTable('Comment', 'd');
 					$s->AddSelect('CommentID', 'd', 'HiddenCommentCount', 'count');
-					$s->AddWhere('Deleted', '1', '=', 'and', '', 0);
-					$s->AddWhere('Deleted', '1', '=', 'or');
+					$s->AddWhere('d', 'Deleted', '', '1', '=', 'and', '', 0);
+					$s->AddWhere('d', 'Deleted', '', '1', '=', 'or');
 					$Result = $this->Context->Database->Select($s, $this->Name, 'Constructor', 'An error occurred while attempting to retrieve hidden comment statistics.');
 					$this->HiddenComments = 0;
 					while ($Row = $this->Context->Database->GetRow($Result)) {
@@ -308,13 +308,13 @@ if ($Context->SelfUrl == 'settings.php' && $Context->Session->User->Permission('
 			$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
 			$s->SetMainTable('User', 'u');
 			$s->AddSelect('UserID', 'u');
-			$s->AddWhere('CountComments', '0', '=', 'and', '', 0, 1);
-			$s->AddWhere('CountComments', '0', '=', 'or');
+			$s->AddWhere('u', 'CountComments', '', '0', '=', 'and', '', 0, 1);
+			$s->AddWhere('u', 'CountComments', '', '0', '=', 'or');
 			$s->EndWhereGroup();
-			$s->AddWhere('CountDiscussions', '0', '=', 'and', '', 0, 1);
-			$s->AddWhere('CountDiscussions', '0', '=', 'or');
+			$s->AddWhere('u', 'CountDiscussions', '', '0', '=', 'and', '', 0, 1);
+			$s->AddWhere('u', 'CountDiscussions', '', '0', '=', 'or');
 			$s->EndWhereGroup();
-			if ($DaysOfMembership > 0) $s->AddWhere('DateFirstVisit', MysqlDateTime($MembershipDate), '<');
+			if ($DaysOfMembership > 0) $s->AddWhere('u', 'DateFirstVisit', '', MysqlDateTime($MembershipDate), '<');
 			$Result = $this->Context->Database->Select($s, $this->Name, 'Constructor', 'An error occurred while attempting to retrieve inactive user statistics.');
 			$this->InactiveUsers = 0;
 			$aInactiveUsers = array();
@@ -327,7 +327,7 @@ if ($Context->SelfUrl == 'settings.php' && $Context->Session->User->Permission('
 				$s->Clear();
 				$s->SetMainTable('DiscussionUserWhisperFrom', 'wf');
 				$s->AddSelect('WhisperFromUserID', 'wf');
-				$s->AddWhere('WhisperFromUserID', '('.implode(',',$aInactiveUsers).')', 'in', 'and', '', 0);
+				$s->AddWhere('wf', 'WhisperFromUserID', '', '('.implode(',',$aInactiveUsers).')', 'in', 'and', '', 0);
 				$Result = $this->Context->Database->Select($s, $this->Name, 'Constructor', 'An error occurred while attempting to retrieve inactive user statistics.');
 				$CurrentWhisperUserID = 0;
 				while ($Row = $this->Context->Database->GetRow($Result)) {
@@ -342,7 +342,7 @@ if ($Context->SelfUrl == 'settings.php' && $Context->Session->User->Permission('
 				$s->Clear();
 				$s->SetMainTable('DiscussionUserWhisperTo', 'wt');
 				$s->AddSelect('WhisperToUserID', 'wt');
-				$s->AddWhere('WhisperToUserID', '('.implode(',',$aInactiveUsers).')', 'in', 'and', '', 0);
+				$s->AddWhere('wt', 'WhisperToUserID', '', '('.implode(',',$aInactiveUsers).')', 'in', 'and', '', 0);
 				$Result = $this->Context->Database->Select($s, $this->Name, 'Constructor', 'An error occurred while attempting to retrieve inactive user statistics.');
 				$CurrentWhisperUserID = 0;
 				while ($Row = $this->Context->Database->GetRow($Result)) {
