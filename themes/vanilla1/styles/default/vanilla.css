@@ -551,6 +551,64 @@ div.CommentIp, div.CommentBlockUser, div.CommentBlockComment {
 	width:12px;
 	}
 
+/* Custom form for extensions management screen */
+
+div.Extensions {
+	width:100% !important;
+	}
+div.ExtensionsDisabled {
+	width:48%;
+	float:left;
+	}
+div.ExtensionsEnabled {
+	width:48%;
+	float:right;
+	}
+div.ExtensionsDisabled ul, div.ExtensionsEnabled ul {
+	border:1px solid #dddddd;
+	border-bottom:0px;
+	margin-bottom:20px !important;
+	}
+div.ExtensionsDisabled ul {
+	background-color:#fffeec;
+	}
+div.ExtensionsEnabled ul {
+	background-color:#fffecc;
+	}
+div.ExtensionsDisabled ul li, div.ExtensionsEnabled ul li { /* heh, these declarations are getting retardeder */
+	border-bottom:1px solid #dddddd;
+	margin:0px !important;
+	padding:10px !important;
+	}
+div.ExtensionsDisabled h3, div.ExtensionsDisabled h3 span, div.ExtensionsEnabled h3, div.ExtensionsEnabled h3 span {
+	font-size:12px !important;
+	color:#062971 !important;
+	}
+div.ExtensionsDisabled ul li.hiLite, div.ExtensionsEnabled ul li.hiLite {
+	background-color:#ffff99;
+	}
+div.ExtensionsDisabled ul li input, div.ExtensionsEnabled ul li input {
+	width:auto !important;
+	margin-right:5px !important;
+	}
+div.ExtensionsDisabled ul li span, div.ExtensionsEnabled ul li span {
+	margin-left:20px !important;
+	}
+div.ExtensionsDisabled ul li p, div.ExtensionsEnabled ul li p {
+	margin-left:21px !important;
+	color:#000000 !important;
+	font-weight:normal;
+	}
+div.ExtensionsDisabled ul li p a, div.ExtensionsEnabled ul li p a {
+	color:#000000 !important;
+	text-decoration:none;
+	}
+div.ExtensionsDisabled ul li.hiLite p, div.ExtensionsEnabled ul li.hiLite p {
+	color:#062971 !important;
+	}
+	
+/* */
+
 #CustomInfo li {
 	width:50%;
 	float:left;
