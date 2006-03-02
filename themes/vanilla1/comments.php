@@ -77,7 +77,7 @@ if ($this->Context->WarningCollector->Count() > 0) {
                   if ($Comment->DateEdited != '') $CommentList .= ' <em>'.$this->Context->GetDefinition('Edited').'</em>';
                $CommentList .= '</li>
             </ul>
-            <p>';
+            <span>';
             
                // Set up comment options            
                $this->DelegateParameters['Comment'] = &$Comment;
@@ -97,7 +97,7 @@ if ($this->Context->WarningCollector->Count() > 0) {
                $this->CallDelegate('PostCommentOptionsRender');
                $CommentList .= '
                
-            </p>
+            </span>
          </div>
          <p class="CommentBody" id="CommentBody_'.$Comment->CommentID.'">';
             if ($Comment->AuthRoleDesc != '') $CommentList .= '<div class="CommentNotice">'.$Comment->AuthRoleDesc.'</div>';

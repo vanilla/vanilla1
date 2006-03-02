@@ -21,12 +21,12 @@ of course):
 */
 $Context->Dictionary["MenuOptions"] = "Menu Options";
 $Context->Dictionary["UseQuickKeys"] = "Use quick-keys to access common forum pages";
-$Context->Dictionary["Discussions_QuickKey"] = "<u>D</u>iscussions";
-$Context->Dictionary["Categories_QuickKey"] = "<u>C</u>ategories";
-$Context->Dictionary["Search_QuickKey"] = "<u>S</u>earch";
-$Context->Dictionary["Settings_QuickKey"] = "S<u>e</u>ttings";
-$Context->Dictionary["Account_QuickKey"] = "<u>A</u>ccount";
-$Context->Dictionary["StartANewDiscussion_Quickkey"] = "Start a <u>n</u>ew discussion";
+$Context->Dictionary["Discussions_QuickKey"] = "<em>D</em>iscussions";
+$Context->Dictionary["Categories_QuickKey"] = "<em>C</em>ategories";
+$Context->Dictionary["Search_QuickKey"] = "<em>S</em>earch";
+$Context->Dictionary["Settings_QuickKey"] = "S<em>e</em>ttings";
+$Context->Dictionary["Account_QuickKey"] = "<em>A</em>ccount";
+$Context->Dictionary["StartANewDiscussion_Quickkey"] = "Start a <em>n</em>ew discussion";
 
 
 if (in_array($Context->SelfUrl, array("account.php", "categories.php", "comments.php", "index.php", "post.php", "search.php", "settings.php")) && $Context->Session->UserID > 0) {
