@@ -1,13 +1,12 @@
 <?php
 // Note: This file is included from the library/Vanilla.Control.GlobalsForm.php control.
-
-echo('<div id="Form" class="Settings GlobalsForm">
+echo('<div id="Form" class="Account GlobalsForm">
    <fieldset>
       <legend>'.$this->Context->GetDefinition('GlobalApplicationSettings').'</legend>
       '.$this->Get_Warnings().'
       '.$this->Get_PostBackForm('frmApplicationGlobals').'
       <h2>'.$this->Context->GetDefinition('Warning').'</h2>
-      <p class="Description">
+      <p>
          '.$this->Context->GetDefinition('GlobalApplicationSettingsNotes').'
       </p>
       
@@ -27,10 +26,10 @@ echo('<div id="Form" class="Settings GlobalsForm">
       <h2>'.$this->Context->GetDefinition('ForumOptions').'</h2>
       <ul>
          <li>
-            <div class="CheckBox">'.GetDynamicCheckBox('ENABLE_WHISPERS', 1, $this->ConfigurationManager->GetSetting('ENABLE_WHISPERS'), '', $this->Context->GetDefinition('EnableWhispers')).'</div>
-            <div class="CheckBox">'.GetDynamicCheckBox('ALLOW_NAME_CHANGE', 1, $this->ConfigurationManager->GetSetting('ALLOW_NAME_CHANGE'), '', $this->Context->GetDefinition('AllowNameChange')).'</div>
-            <div class="CheckBox">'.GetDynamicCheckBox('PUBLIC_BROWSING', 1, $this->ConfigurationManager->GetSetting('PUBLIC_BROWSING'), '', $this->Context->GetDefinition('AllowPublicBrowsing')).'</div>
-            <div class="CheckBox">'.GetDynamicCheckBox('USE_CATEGORIES', 1, $this->ConfigurationManager->GetSetting('USE_CATEGORIES'), '', $this->Context->GetDefinition('UseCategories')).'</div>
+            <p><span>'.GetDynamicCheckBox('ENABLE_WHISPERS', 1, $this->ConfigurationManager->GetSetting('ENABLE_WHISPERS'), '', $this->Context->GetDefinition('EnableWhispers')).'</span></p>
+            <p><span>'.GetDynamicCheckBox('ALLOW_NAME_CHANGE', 1, $this->ConfigurationManager->GetSetting('ALLOW_NAME_CHANGE'), '', $this->Context->GetDefinition('AllowNameChange')).'</span></p>
+            <p><span>'.GetDynamicCheckBox('PUBLIC_BROWSING', 1, $this->ConfigurationManager->GetSetting('PUBLIC_BROWSING'), '', $this->Context->GetDefinition('AllowPublicBrowsing')).'</span></p>
+            <p><span>'.GetDynamicCheckBox('USE_CATEGORIES', 1, $this->ConfigurationManager->GetSetting('USE_CATEGORIES'), '', $this->Context->GetDefinition('UseCategories')).'</span></p>
          </li>
       </ul>
       
@@ -157,11 +156,15 @@ echo('<div id="Form" class="Settings GlobalsForm">
                $SecondsSelector2->Name = 'COMMENT_THRESHOLD_PUNISHMENT';
                $SecondsSelector2->SelectedID = $this->ConfigurationManager->GetSetting('COMMENT_THRESHOLD_PUNISHMENT');
                
-               echo(str_replace(array('//1', '//2', '//3'),
+               echo('</p>
+               <p>'.str_replace(array('//1', '//2', '//3'),
                   array($Selector->Get(), $SecondsSelector->Get(), $SecondsSelector2->Get()),
-                  $this->Context->GetDefinition('XDiscussionsYSecondsZFreeze'))
+                  $this->Context->GetDefinition('XCommentsYSecondsZFreeze'))
             .'</p>
          </li>
+      </ul>
+      <h2>'.$this->Context->GetDefinition('SupportTitle').'</h2>
+      <ul>
          <li>
             <label for="txtSupportName">'.$this->Context->GetDefinition('SupportName').'</label>
             <input type="text" name="SUPPORT_NAME" value="'.$this->ConfigurationManager->GetSetting('SUPPORT_NAME').'" maxlength="255" class="SmallInput" id="txtSupportName" />

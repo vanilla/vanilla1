@@ -52,7 +52,7 @@ if (!$Allowed) header("location:".GetUrl($Configuration, "index.php"));
 
    // Build the control panel
 	$AdminOptions = $Context->GetDefinition("AdministrativeOptions");
-   $Panel->AddList($AdminOptions, 10);
+   $Panel->AddList($AdminOptions, 20);
 	if ($Context->Session->User->Permission("PERMISSION_CHANGE_APPLICATION_SETTINGS")) $Panel->AddListItem($AdminOptions, $Context->GetDefinition("ApplicationSettings"), GetUrl($Configuration, "settings.php", "", "", "", "", "PostBackAction=Globals"), "", "", 10);
 	if ($Context->Session->User->Permission("PERMISSION_CHECK_FOR_UPDATES")) $Panel->AddListItem($AdminOptions, $Context->GetDefinition("UpdateCheck"), GetUrl($Configuration, "settings.php", "", "", "", "", "PostBackAction=UpdateCheck"), "", "", 20);
 	if ($Context->Session->User->Permission("PERMISSION_MANAGE_EXTENSIONS")) $Panel->AddListItem($AdminOptions, $Context->GetDefinition("ManageExtensions"), GetUrl($Configuration, "settings.php", "", "", "", "", "PostBackAction=Extensions"), "", "", 30);

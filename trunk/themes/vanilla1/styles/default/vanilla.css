@@ -28,7 +28,7 @@ body, div, table, td {
 #Session {
 	width:100%;
 	position:absolute;
-	top:75px;
+	top:25px;
 	right:18px;
 	text-align:right;
 	font-size:11px;
@@ -60,7 +60,6 @@ body, div, table, td {
 	color:#000000;
 	font-size:22px;
 	margin:10px 0px;
-	padding:0px;
 	}
 #Header h1 strong {
 	color:#ffa500;
@@ -68,13 +67,10 @@ body, div, table, td {
 
 #Header ul {
 	text-align:center;
-	margin:0px;
-	padding:0px;
 	}
 #Header ul li {
 	display:inline;
 	margin:0px 1px;
-	padding:0px;
 	border-bottom:1px solid #acbedf;
 	}
 #Header ul li.TabOn {
@@ -152,6 +148,7 @@ body, div, table, td {
 	margin-top:3px;
 	}
 #Panel ul ul li {
+	width:173px;
 	margin-bottom:3px;
 	}
 #Panel ul ul li a {
@@ -300,10 +297,10 @@ body, div, table, td {
 	height:auto;
 	border:0px;
 	}
-#Discussions li.read, #Discussions li.read li {
+#Discussions li.Read, #Discussions li.Read li {
 	background-color:#fffeec !important;
 	}
-#Discussions li.read.new, #Discussions li.read.new li {
+#Discussions li.Read.NewComments, #Discussions li.Read.NewComments li {
 	background-color:#fefecc !important;
 	}
 #Discussions li ul {
@@ -328,6 +325,7 @@ body, div, table, td {
 	margin-right:5px;
 	color:#062971;
 	font-weight:bold;
+	line-height:20px;
 	}
 .ThreadType span {
 	display:none;
@@ -338,6 +336,7 @@ body, div, table, td {
 
 .ThreadTitle {
 	font-size:14px;
+	line-height:20px;
 	}
 .ThreadTitle span {
 	display:none;
@@ -357,7 +356,10 @@ body, div, table, td {
 .ThreadNew {
 	display:none;
 	}
-#Discussions li.read.new .ThreadNew {
+.ThreadNew a {
+	color:#ff0000 !important;
+	}
+#Discussions li.Read.NewComments .ThreadNew {
 	display:inline;
 	}
 
@@ -370,11 +372,13 @@ body, div, table, td {
 	}
 #Comments li {
 	margin:0px;
-	padding:0px;
+	padding:10px 0px;
+	border-bottom:1px solid #cccccc;
+	xbackground-color:#cccccc;
 	}
 #Comments .CommentHeader {
 	text-align:right;
-	margin-top:20px;
+	line-height:32px;
 	}
 #Comments .CommentHeader ul {
 	float:left;
@@ -388,6 +392,11 @@ body, div, table, td {
 	display:inline;
 	color:#aaaaaa;
 	font-size:11px;
+	border-bottom:0px;
+	}
+#Comments .CommentHeader li.CommentIcon {
+	padding:9px 0px 9px 35px;
+	background-repeat:no-repeat;
 	}
 #Comments .CommentHeader li span {
 	display:none;
@@ -402,10 +411,10 @@ body, div, table, td {
 	font-size:13px;
 	color:#3354aa;
 	}
-#Comments .CommentHeader p {
+div.CommentIp, div.CommentBlockUser, div.CommentBlockComment {
 	display:inline;
 	}
-#Comments .CommentHeader p a {
+#Comments .CommentHeader span a, div.CommentIp {
 	font-size:10px;
 	color:#aaaaaa;
 	text-decoration:none;
@@ -414,6 +423,7 @@ body, div, table, td {
 	padding-left:3px;
 	}
 #Comments .CommentBody {
+	display:block;
 	margin:10px;
 	color:#000000;
 	}
@@ -448,11 +458,12 @@ body, div, table, td {
 	color:#834300;
 	font-weight:bold;
 	}
-#Form label.Radio {
+#Form label.Radio, #Form input.Radio {
 	font-weight:normal;
+	display:inline !important;
 	}
 #Form label a {
-	margin-bottom:-5px;
+	margin-bottom:-3px;
 	margin-right:15px;
 	float:right;
 	padding:3px 6px;
@@ -462,8 +473,7 @@ body, div, table, td {
 	border:1px solid #ffedae;
 	background-color:#ffffff;
 	}
-#Form label.Radio {
-	display:inline;
+#Form label.radio {
 	}
 #Form input.whisper {
 	width:30%;
@@ -472,6 +482,10 @@ body, div, table, td {
 	width:60%;
 	height:150px;
 	}
+#Form .Button.SubmitButton {
+	margin-right:10px;
+	}
+
 
 /* Add Comment Form.. */
 
@@ -481,7 +495,7 @@ body, div, table, td {
 	color:#834300;
 	font-weight:bold;
 	}
-#Form.AddComments label.Radio {
+#Form.AddComments label.radio {
 	display:inline;
 	width:auto;
 	}
@@ -553,6 +567,9 @@ body, div, table, td {
 	width:50px !important;
 	float:left;
 	}
+.Submit input.Update {
+	width:150px !important;
+	}
 
 /* Profile Page.. */
 
@@ -587,6 +604,16 @@ body, div, table, td {
 	width:60%;
 	float:left;
 	}
+#AccountProfile .ProfileTitle * {
+	line-height:32px;
+	}
+.ProfileTitleIcon {
+	background-repeat:no-repeat;
+	}
+.ProfileTitleIcon h2 {
+	margin-left:32px !important;
+	width:48% !important;
+	}
 #AccountProfile .ProfileTitle p {
 	width:40%;
 	text-align:right;
@@ -614,6 +641,9 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE.. fuck i
 #AccountHistory ul, #AccountHistory h2 {
 	margin:0px 20px;
 	}
+#AccountHistory ul {
+	margin-bottom:20px;
+	}
 #AccountHistory h2 {
 	font-size:14px;
 	color:#000000;
@@ -640,6 +670,32 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE.. fuck i
 	padding-bottom:0px;
 	font-style:italic;
 	}
+	
+#SettingsPage #Content {
+	padding-top:20px;
+	}
+#SettingsPage #Content h1 {
+	font-size:14px;
+	color:#000000;
+	margin:0px;
+	padding:0px;
+	padding-bottom:5px;
+	border-bottom:1px solid #cccccc;
+	}
+#SettingsPage #Content dl * {
+	margin:0px;
+	padding:0px;
+	color:#999999;
+	font-size:12px;
+	}
+#SettingsPage #Content dl dt {
+	font-weight:bold;
+	font-size:14px;
+	}
+#SettingsPage #Content dl dd {
+	margin:10px;
+	}
+	
 
 .WhisperFrom {
 	background-color:#fefceb;
