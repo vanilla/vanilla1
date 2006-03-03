@@ -216,6 +216,12 @@ body, div, table, td {
 
 /* ContentInfo/Control/Whatever - Universal to Discussion Index & Comments */
 
+#SearchPage .ContentInfo.Top {
+	margin-top:-40px;
+	}
+#SearchPage .ContentInfo.Bottom {
+	margin-top:-6px;
+	}
 .ContentInfo {
 	text-align:right;
 	}
@@ -233,6 +239,10 @@ body, div, table, td {
 .ContentInfo h1 {
 	color:#000000;
 	float:left;
+	}
+.ContentInfo input {
+	font-size:10px;
+	margin-left:5px;
 	}
 #DiscussionsPage .ContentInfo h1 {
 	float:none;
@@ -257,8 +267,10 @@ body, div, table, td {
 	color:#cccccc;
 	border-top:1px solid #cccccc;
 	border-bottom:1px solid #cccccc;
-	padding:3px 1px;
+	padding:0px 1px;
 	margin:5px 0px;
+	height:21px;
+	line-height:21px;
 	}
 .PageInfo p {
 	margin:0px;
@@ -283,24 +295,23 @@ body, div, table, td {
 #Discussions {
 	margin-top:-5px !important;
 	}
-#Discussions, #Discussions ul {
+#Discussions, #Discussions * {
 	margin:0px;
 	padding:0px;
 	list-style:none;
 	}
-#Discussions li {
+#Discussions li ul {
 	background-color:#fefecc;
-	height:43px;
 	border-bottom:1px solid #cccccc;
 	}
 #Discussions li li {
 	height:auto;
 	border:0px;
 	}
-#Discussions li.Read, #Discussions li.Read li {
+#Discussions li.Read ul {
 	background-color:#fffeec !important;
 	}
-#Discussions li.Read.NewComments, #Discussions li.Read.NewComments li {
+#Discussions li.Read.NewComments ul {
 	background-color:#fefecc !important;
 	}
 #Discussions li ul {
@@ -318,11 +329,10 @@ body, div, table, td {
 	color:#777777;
 	}
 
-
 .ThreadType {
 	font-size:14px;
 	float:left;
-	margin-right:5px;
+	margin-right:5px !important;
 	color:#062971;
 	font-weight:bold;
 	line-height:20px;
@@ -334,14 +344,14 @@ body, div, table, td {
 	display:none;
 	}
 
-.ThreadTitle {
+.ThreadTitle, .User.Name {
 	font-size:14px;
 	line-height:20px;
 	}
 .ThreadTitle span {
 	display:none;
 	}
-.ThreadTitle a {
+.ThreadTitle a, .User.Name a {
 	color:#3354aa !important;
 	text-decoration:underline !important;
 	font-weight:bold;
@@ -350,7 +360,7 @@ body, div, table, td {
 .ThreadCategory, .ThreadStarted, .ThreadComments, .ThreadLastComment, .ThreadActive, .ThreadNew {
 	display:inline;
 	font-size:10px;
-	margin-right:5px;
+	margin-right:10px!important;
 	}
 
 .ThreadNew {
@@ -361,6 +371,50 @@ body, div, table, td {
 	}
 #Discussions li.Read.NewComments .ThreadNew {
 	display:inline;
+	}
+
+/* Search comments specific */
+
+li.WText ul {
+	background-color:#ffffff !important;
+	}
+.ThreadText {
+	margin:6px 0px 4px 0px !important;
+	}
+.ThreadText span {
+	display:none;
+	}
+.ThreadText a {
+	padding:5px 2px !important;
+	color:#000000 !important;
+	}
+.ThreadText a:hover {
+	background-color:#ffffcc;
+	}
+
+/* Search user specific... */
+
+li.UserAccount.Odd ul {
+	background-color:#ffffff !important;
+	}
+li.UserAccount.Even ul {
+	background-color:#f4f4f4 !important;
+	}
+li.User {
+	display:inline;
+	font-size:10px;
+	margin-right:10px !important;
+	}
+li.User.Name {
+	display:block;
+	}
+li.User.Name.WIcon {
+	background-repeat:no-repeat;
+	line-height:32px;
+	padding:0px 0px 0px 35px !important;
+	}
+li.User.Name span {
+	display:none;
 	}
 
 /* Comments.. */
@@ -374,7 +428,6 @@ body, div, table, td {
 	margin:0px;
 	padding:10px 0px;
 	border-bottom:1px solid #cccccc;
-	xbackground-color:#cccccc;
 	}
 #Comments .CommentHeader {
 	text-align:right;
@@ -458,10 +511,6 @@ div.CommentIp, div.CommentBlockUser, div.CommentBlockComment {
 	color:#834300;
 	font-weight:bold;
 	}
-#Form label.Radio, #Form input.Radio {
-	font-weight:normal;
-	display:inline !important;
-	}
 #Form label a {
 	margin-bottom:-3px;
 	margin-right:15px;
@@ -472,8 +521,6 @@ div.CommentIp, div.CommentBlockUser, div.CommentBlockComment {
 	font-weight:normal;
 	border:1px solid #ffedae;
 	background-color:#ffffff;
-	}
-#Form label.radio {
 	}
 #Form input.whisper {
 	width:30%;
@@ -486,7 +533,6 @@ div.CommentIp, div.CommentBlockUser, div.CommentBlockComment {
 	margin-right:10px;
 	}
 
-
 /* Add Comment Form.. */
 
 #Form.AddComments label {
@@ -495,9 +541,40 @@ div.CommentIp, div.CommentBlockUser, div.CommentBlockComment {
 	color:#834300;
 	font-weight:bold;
 	}
-#Form.AddComments label.radio {
-	display:inline;
-	width:auto;
+#Form.AddComments label.Radio {
+	display:inline !important;
+	width:auto !important;
+	}
+
+/* Search form.. */
+
+div.Search {
+	width:100% !important;
+	}
+
+#Form.Search input.Radio {
+	width:12px !important;
+	}
+#Form.Search label.Radio {
+	display:inline !important;
+	width:auto !important;
+	float:none;
+	margin:0px;
+	}
+
+#Form.Search #SearchSimple label {
+	width:auto !important;
+	margin-right:10px;
+	}
+#Form.Search #SearchAdvanced label {
+	width:33%;
+	}
+#Form.Search #SearchAdvanced input, #Form.Search #SearchAdvanced select {
+	width:30%;
+	margin-right:3%;
+	}
+#Form.Search #SearchAdvanced div.Submit {
+	margin:10px 0px 25px 0px !important;
 	}
 
 /* Account Section Forms.. */
@@ -521,6 +598,7 @@ div.CommentIp, div.CommentBlockUser, div.CommentBlockComment {
 	display:block;
 	width:40%;
 	line-height:18px;
+	font-weight:normal;
 	}
 #Form.Account label small {
 	font-weight:normal;
@@ -764,6 +842,11 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE.. fuck i
 
 .left {
 	float:left;
+	}
+
+.hiLite {
+	background-color:#ffff99;
+	font-style:normal;
 	}
 
 /* Thank you positioniseverything.com*/
