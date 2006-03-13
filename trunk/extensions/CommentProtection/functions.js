@@ -1,6 +1,6 @@
 function BlockComment(CommentID, CurrentStatus, PermanentBlock, ForceStatus, UnblockInnerHtml, UnblockTitle, BlockInnerHtml, BlockTitle) {
 	var Anchor = document.getElementById("BlockComment_"+CommentID);
-	var Comment = document.getElementById("CommentContents_"+CommentID);
+	var Comment = document.getElementById("CommentBody_"+CommentID);
 	if (Anchor && Comment) {
 		var HtmlStatus = 0;
 		if (ForceStatus) {
@@ -28,11 +28,11 @@ function BlockComment(CommentID, CurrentStatus, PermanentBlock, ForceStatus, Unb
 
 function BlockUser (AuthUserID, CurrentStatus, UnblockInnerHtml, UnblockTitle, BlockInnerHtml, BlockTitle, UnblockCommentInnerHtml, UnblockCommentTitle, BlockCommentInnerHtml, BlockCommentTitle) {
 	// Retrieve & Loop through all relevant elements
-	var Comments = GetElements("div", "CommentContents_");
+	var Comments = GetElements("div", "CommentBody_");
 	var CommentID = 0;
 	var HtmlStatus = -1;
 	for(i = 0; i < Comments.length; i++) {
-		CommentID = Comments[i].id.replace("CommentContents_","");
+		CommentID = Comments[i].id.replace("CommentBody_","");
 		// See if the comment belongs to this user
 		var Anchor = document.getElementById("BlockUser_"+AuthUserID+"_Comment_"+CommentID);
 		if (Anchor) {
@@ -88,10 +88,10 @@ function SaveCommentBlock(BlockCommentID, BlockComment) {
 	SwitchLoader(1);
    var Url = "./extensions/CommentProtection/block.php";
    var Parameters = "BlockCommentID="+BlockCommentID+"&Block="+BlockComment;
-   var DataManager = new Ajax.Request(
-      Url,
-      { method: 'get', parameters: Parameters, onComplete: BlockSaved }
-   );
+   var dm = new DataManager();
+	dm.RequestCompleteEvent = BlockSaved;
+	dm.RequestFailedEvent = HandleFailure;
+	dm.LoadData(Url+"?"+Parameters);
 }
 
 // Block a user's html from view
@@ -100,8 +100,8 @@ function SaveUserBlock(BlockUserID, BlockUser) {
 	SwitchLoader(1);
    var Url = "./extensions/CommentProtection/block.php";
    var Parameters = "BlockUserID="+BlockUserID+"&Block="+BlockUser;
-   var DataManager = new Ajax.Request(
-      Url,
-      { method: 'get', parameters: Parameters, onComplete: BlockSaved }
-   );
+   var dm = new DataManager();
+	dm.RequestCompleteEvent = BlockSaved;
+	dm.RequestFailedEvent = HandleFailure;
+	dm.LoadData(Url+"?"+Parameters);
 }

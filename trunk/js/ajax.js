@@ -38,6 +38,8 @@ function DataManager() {
 		return Request;
 	}
 	this.LoadData = function(DataSource) {
+		// Debug
+		// document.location = DataSource;
 		var Request = this.InitiateXmlHttpRequest();
 		if (Request != null) {
 			try {
@@ -49,4 +51,8 @@ function DataManager() {
 			}
 		}
 	}
+}
+function HandleFailure(Request) {
+	ChangeLoaderText("Failed: ("+Request.status+") "+Request.statusText);
+	CloseLoader();
 }
