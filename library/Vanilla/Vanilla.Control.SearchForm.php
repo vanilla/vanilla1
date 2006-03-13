@@ -153,7 +153,6 @@ class SearchForm extends PostBackControl {
 						$Discussion->Clear();
 						$Discussion->GetPropertiesFromDataSet($Row, $this->Context->Configuration);
 						$Discussion->FormatPropertiesForDisplay();
-						$Discussion->ForceNameSpaces($this->Context->Configuration);
 						if ($Counter < $this->Context->Configuration['SEARCH_RESULTS_PER_PAGE']) {
 							include($ThemeFilePath);
 						}

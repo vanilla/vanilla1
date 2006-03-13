@@ -69,8 +69,8 @@ $PageEnd = $Context->ObjectFactory->CreateControl($Context, 'PageEnd');
 // Every page will require some basic definitions for the header.
 $Head->AddScript('./js/global.js');
 $Head->AddScript('./js/vanilla.js');
-$Head->AddScript('./js/prototype.js');
-$Head->AddScript('./js/scriptaculous.js');
+$Head->AddScript('./js/ajax.js');
+$Head->AddScript('./js/ac.js');
 $Head->AddStyleSheet($Context->StyleUrl.'vanilla.css', 'screen');
 $Head->AddStyleSheet($Context->StyleUrl.'vanilla.handheld.css', 'handheld');
 $Head->AddStyleSheet($Context->StyleUrl.'vanilla.print.css', 'print');

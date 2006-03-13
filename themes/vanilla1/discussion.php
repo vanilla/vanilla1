@@ -38,7 +38,7 @@ $DiscussionList .= '
       if ($this->Context->Session->UserID > 0) {
          $DiscussionList .= '
       <li class="ThreadNew">
-         <a href="'.$UnreadUrl.'"><span>New: </span>'.$Discussion->NewComments.'</a>
+         <a href="'.$UnreadUrl.'"><span>'.$this->Context->GetDefinition('NewCaps').' </span>'.$Discussion->NewComments.'</a>
       </li>
       ';
       }

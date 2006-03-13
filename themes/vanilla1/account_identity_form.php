@@ -32,12 +32,12 @@ if ($this->Context->Session->UserID != $this->User->UserID && !$this->Context->S
             }
             if ($this->Context->Configuration['USE_REAL_NAMES'] == "1") {
                echo('<li>
-                  <label for="txtFirstName">'.$this->Context->GetDefinition('YourFirstName').' <small>'.$Required.'</small></label>
+                  <label for="txtFirstName">'.$this->Context->GetDefinition('YourFirstName').'</label>
                   <input type="text" name="FirstName" value="'.$this->User->FirstName.'" maxlength="50" class="SmallInput" id="txtFirstName" />
                   <p class="Description">'.$this->Context->GetDefinition('YourFirstNameNotes').'</p>
                </li>
                <li>
-                  <label for="txtLastName">'.$this->Context->GetDefinition('YourLastName').' <small>'.$Required.'</small></label>
+                  <label for="txtLastName">'.$this->Context->GetDefinition('YourLastName').'</label>
                   <input type="text" name="LastName" value="'.$this->User->LastName.'" maxlength="50" class="SmallInput" id="txtLastName" />
                   <p class="Description">
                      '.$this->Context->GetDefinition('YourLastNameNotes').'

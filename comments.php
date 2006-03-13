@@ -28,7 +28,8 @@ $CommentGrid = $Context->ObjectFactory->CreateControl($Context, "CommentGrid", $
 
 // Create the comment form
 if ($CommentGrid->ShowForm) {
-	$CommentForm = $Context->ObjectFactory->CreateControl($Context, "DiscussionForm");
+	$CommentForm = $Context->ObjectFactory->CreateControl($Context, 'DiscussionForm');
+	$CommentFoot = $Context->ObjectFactory->CreateControl($Context, 'Filler', 'comments_foot.php');
 }
 
 // Define properties of the page controls that are specific to this page
@@ -94,7 +95,10 @@ $Context->PageTitle = $CommentGrid->Discussion->Name;
 	$Page->AddRenderControl($Menu, $Configuration["CONTROL_POSITION_MENU"]);
 	$Page->AddRenderControl($Panel, $Configuration["CONTROL_POSITION_PANEL"]);
 	$Page->AddRenderControl($CommentGrid, $Configuration["CONTROL_POSITION_BODY_ITEM"]);
-	if ($CommentGrid->ShowForm) $Page->AddRenderControl($CommentForm, $Configuration["CONTROL_POSITION_BODY_ITEM"] + 10);
+	if ($CommentGrid->ShowForm) {
+		$Page->AddRenderControl($CommentForm, $Configuration["CONTROL_POSITION_BODY_ITEM"] + 10);
+		$Page->AddRenderControl($CommentFoot, $Configuration["CONTROL_POSITION_BODY_ITEM"] + 11);
+	}
 	$Page->AddRenderControl($Foot, $Configuration["CONTROL_POSITION_FOOT"]);
 	$Page->AddRenderControl($PageEnd, $Configuration["CONTROL_POSITION_PAGE_END"]);
 

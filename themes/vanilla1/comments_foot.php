@@ -1,7 +1,9 @@
 <?php
 // Note: This file is included from the library/Vanilla.Control.CommentFoot.php class.
 
-echo('<a class="PageJump Top" href="'.GetRequestUri().'#pgtop">'.$this->Context->GetDefinition('TopOfPage').'</a>'
-.'<a class="PageNav" href="'.GetUrl($this->Context->Configuration, 'index.php').'">'.$this->Context->GetDefinition('BackToDiscussions').'</a>'
-.'<a name="pgbottom"></a>');
+echo '<div class="ContentInfo Bottom">
+   <a href="'.GetUrl($this->Context->Configuration, 'index.php').'" class="left">'.$this->Context->GetDefinition('BackToDiscussions').'</a>
+   <a href="'.GetRequestUri().'#pgtop">'.$this->Context->GetDefinition('TopOfPage').'</a>
+</div>';
+
 ?>

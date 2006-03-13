@@ -43,7 +43,7 @@ class HtmlFormatter extends StringFormatter
 		$String = str_replace(chr(0), ' ', $String);
 		return str_replace(
 			array("\r\n", "\r", "\n"), 
-			array("\n", "\n", '<br>'), 
+			array("\n", "\n", '<br />'), 
 			preg_replace($Patterns, $Replacements, $String)
 		);
 	}

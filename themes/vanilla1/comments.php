@@ -11,11 +11,6 @@ if ($this->Context->WarningCollector->Count() > 0) {
    $PageDetails = $this->pl->GetPageDetails($this->Context);
    $PageList = $this->pl->GetNumericList();
    
-   // Format the discussion information
-   $this->Discussion->ForceNameSpaces($this->Context->Configuration);
-   
-   
-   
    $CommentList .= '<div class="ContentInfo Top">
       <h1>';
          if ($this->Context->Configuration['USE_CATEGORIES']) $CommentList .= '<a href="'.GetUrl($this->Context->Configuration, 'index.php', '', 'CategoryID', $this->Discussion->CategoryID).'">'.$this->Discussion->Category.'</a>: ';
@@ -71,7 +66,8 @@ if ($this->Context->WarningCollector->Count() > 0) {
       $CommentList .= '<li id="Comment_'.$Comment->CommentID.'"'.($CommentClass == ''?'':' class="'.$CommentClass.'"').'>
          <div class="CommentHeader">
             <ul>
-               <li'.($ShowIcon?' class="CommentIcon" style="'."background-image:url('".$Comment->AuthIcon."')".'"':'').'>
+               <li>
+						'.($ShowIcon?'<div class="CommentIcon" style="'."background-image:url('".$Comment->AuthIcon."')".'"></div>':'').'
                   <span>'.$this->Context->GetDefinition('CommentAuthor').'</span><a href="'.GetUrl($this->Context->Configuration, 'account.php', '', 'u', $Comment->AuthUserID).'">'.$Comment->AuthUsername.'</a>';
                   
                   // Point out who it was whispered to if necessary
@@ -128,13 +124,11 @@ if ($this->Context->WarningCollector->Count() > 0) {
    </div>';
    
    if (@$PageList && @$PageDetails) {
-      $CommentList .= '<div class="ContentInfo Bottom">
+      $CommentList .= '<div class="ContentInfo Middle">
          <div class="PageInfo">
             <p>'.$PageDetails.'</p>
             '.$PageList.'
          </div>
-         <a href="'.GetUrl($this->Context->Configuration, 'index.php').'" class="left">'.$this->Context->GetDefinition('BackToDiscussions').'</a>
-         <a href="'.GetRequestUri().'#pgtop">'.$this->Context->GetDefinition('TopOfPage').'</a>
       </div>';
    }
 }

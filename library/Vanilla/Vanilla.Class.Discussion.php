@@ -81,10 +81,6 @@ class Discussion {
 		$this->Clear();
 	}
 
-	function ForceNameSpaces($Configuration) {
-		$this->Name = $this->SplitString($this->Name, $Configuration['MAX_TOPIC_WORD_LENGTH']);
-	}
-	
 	// Retrieve properties from current DataRowSet
 	function GetPropertiesFromDataSet($DataSet, $Configuration) {
 		$this->DiscussionID = @$DataSet['DiscussionID'];
@@ -212,21 +208,6 @@ class Discussion {
 		$this->LastUsername = FormatStringForDisplay($this->LastUsername);
 		$this->Category = FormatStringForDisplay($this->Category);
 		$this->Name = FormatStringForDisplay($this->Name);
-	}
-
-	function SplitString($String, $MaxLength) {
-		if (strlen($String) > $MaxLength) {
-			$Words = explode(' ', $String);
-			$WordCount = count($Words);
-			$i = 0;
-			for ($i = 0; $i < $WordCount; $i++) {
-				if (strlen($Words[$i]) >= $MaxLength) {
-					$Words[$i] = substr($Words[$i], 0, $MaxLength).' '.$this->SplitString(substr($Words[$i], $MaxLength), $MaxLength);
-				}
-			}
-			$String = implode(' ',$Words);
-		}
-		return $String;
 	}
 }
 ?>
