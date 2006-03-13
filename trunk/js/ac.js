@@ -43,7 +43,11 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 
 	_Curr = document.getElementById(TextInputID);
 	
-	if (_Curr) addEvent(_Curr, "focus", SetupEvents);
+	if (_Curr) {
+		addEvent(_Curr, "focus", SetupEvents);
+		// turn existing autocomplete off
+		_Curr.setAttribute("autocomplete", "off"); 
+	}
 	function SetupEvents(){
 		addEvent(document,"keydown",CheckKey);
 		addEvent(_Curr,"blur",ClearEvents);
@@ -234,11 +238,11 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 		_Curr.focus();
 	}
 	function RemoveAutocomplete(){
-		if (_MouseOnList==0){
-			_Display = 0;
-			if (document.getElementById('tat_table')){ document.body.removeChild(document.getElementById('tat_table')); }
-			if (_ToId) clearTimeout(_ToId);
-		}
+		// if (_MouseOnList==0){
+		_Display = 0;
+		if (document.getElementById('tat_table')){ document.body.removeChild(document.getElementById('tat_table')); }
+		if (_ToId) clearTimeout(_ToId);
+		// }
 	}
 	function KeyPress(e){
 		if (_CaretMove) stopEvent(e);

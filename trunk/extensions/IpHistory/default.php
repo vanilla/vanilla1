@@ -67,7 +67,7 @@ if ($Context->SelfUrl == "comments.php") {
          if ($CommentGrid->Context->Session->User->Permission("PERMISSION_IP_ADDRESSES_VISIBLE")) {
 				$Comment = $CommentGrid->DelegateParameters["Comment"];
 				$CommentList = &$CommentGrid->DelegateParameters["CommentList"];
-				$CommentList .= "<div class=\"CommentIp\">".str_replace("//1", $Comment->RemoteIp, $CommentGrid->Context->GetDefinition("CommentPostedFromX"))."</div>";
+				$CommentList .= str_replace("//1", $Comment->RemoteIp, $CommentGrid->Context->GetDefinition("CommentPostedFromX"));
 			}
 		}
 	}

@@ -14,7 +14,6 @@ while ($Row = $this->Context->Database->GetRow($this->DiscussionData)) {
    $Discussion->Clear();
    $Discussion->GetPropertiesFromDataSet($Row, $this->Context->Configuration);
    $Discussion->FormatPropertiesForDisplay();
-   $Discussion->ForceNameSpaces($this->Context->Configuration);
 	// Prefix the discussion name with the whispered-to username if this is a whisper
    if ($Discussion->WhisperUserID > 0) {
 		$Discussion->Name = @$Discussion->WhisperUsername.': '.$Discussion->Name;

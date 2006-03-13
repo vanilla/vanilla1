@@ -29,13 +29,12 @@ if ($Search != "") {
    $Name = "";
    $Loop = 1;
    if ($ResultSet) {
-      echo("<ul>");
       while ($row = $Context->Database->GetRow($ResultSet)) {
+         if ($Loop > 1) echo ',';
          $Name = FormatStringForDisplay($row["Name"], 1);
-         echo("<li>".$Name."</li>");
+         echo $Name;
          $Loop++;
       }
-      echo("</ul>");
    }
 }
 ?>

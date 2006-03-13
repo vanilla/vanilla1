@@ -20,7 +20,7 @@ conf/your_language.php file (replace "your_language" with your chosen language,
 of course):
 */
 
-$Context->Dictionary["DiscussionFilters"] = "Discussion filters";
+$Context->Dictionary["DiscussionFilters"] = "Discussion Filters";
 $Context->Dictionary["BookmarkedDiscussions"] = "Bookmarked Discussions";
 $Context->Dictionary["YourDiscussions"] = "Your Discussions";
 $Context->Dictionary["PrivateDiscussions"] = "Whispered Discussions";

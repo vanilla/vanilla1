@@ -9,6 +9,9 @@ body, div, table, td {
 	font-size:12px;
 	color:#062971;
 	}
+a {
+	cursor: pointer;
+	}
 
 /* HYPE */
 
@@ -45,7 +48,7 @@ body, div, table, td {
 /* Header.. */
 
 #Header {
-	background-color:#ebecff;
+	background: url(waves.blue.gif) repeat-x left top #E5EAF6;
 	border-top:1px solid #acbedf;
 	border-bottom:1px solid #acbedf;
 	}
@@ -129,7 +132,7 @@ body, div, table, td {
 	border-bottom:1px solid #cccccc;
 	margin:10px 0px 3px 0px;
 	padding:0px 4px;
-	width:168px;
+	width:176px;
 	}
 
 #Panel ul ul, #Panel ul p, #Panel select {
@@ -177,14 +180,24 @@ body, div, table, td {
 #Mode {
 	margin:20px 0px !important;
 	padding:5px 4px !important;
+	width:176px;
+	}
+.TextModeOFF {
 	border-top:1px solid #ebc8c6;
 	border-bottom:1px solid #ebc8c6;
 	background-color:#fee8ef;
 	color:#74173d !important;
-	width:168px;
-	}
-#Mode a {
+}
+.TextModeON {
+	background: #F5F9FF;
+	border-top: 1px solid #ACBEDF;
+	border-bottom: 1px solid #ACBEDF;
+}
+.TextModeOFF a {
 	color:#74173d !important;
+	}
+.TextModeON a {
+	color: #062971 !important;
 	}
 #Mode a:hover {
 	text-decoration:none;
@@ -230,9 +243,11 @@ body, div, table, td {
 	}
 #DiscussionsPage .ContentInfo.Bottom {
 	margin-top:-6px;
+	margin-bottom: 8px;
 	}
 .ContentInfo * {
 	font-size:14px;
+	font-weight:bold;
 	margin:0px;
 	padding:0px;
 	}
@@ -269,8 +284,9 @@ body, div, table, td {
 	border-bottom:1px solid #cccccc;
 	padding:0px 1px;
 	margin:5px 0px;
-	height:21px;
-	line-height:21px;
+	height:23px;
+	line-height:23px;
+	font-weight:bold;
 	}
 .PageInfo p {
 	margin:0px;
@@ -292,6 +308,12 @@ body, div, table, td {
 	}
 
 /* Discussion Index */
+#PageJump {
+	position: absolute;
+	margin-top: -16px;
+	right: 20px;
+	display: block;
+	}
 #Discussions {
 	margin-top:-5px !important;
 	}
@@ -315,7 +337,7 @@ body, div, table, td {
 	background-color:#fefecc !important;
 	}
 #Discussions li ul {
-	padding:5px;
+	padding: 7px 6px 7px 6px;
 	color:#777777;
 	}
 #Discussions ul span, #Discussions ul span a, #Discussions ul a {
@@ -343,10 +365,10 @@ body, div, table, td {
 .ThreadType.Normal {
 	display:none;
 	}
-
 .ThreadTitle, .User.Name {
 	font-size:14px;
 	line-height:20px;
+	overflow: hidden;
 	}
 .ThreadTitle span {
 	display:none;
@@ -356,18 +378,14 @@ body, div, table, td {
 	text-decoration:underline !important;
 	font-weight:bold;
 	}
-
 .ThreadCategory, .ThreadStarted, .ThreadComments, .ThreadLastComment, .ThreadActive, .ThreadNew {
 	display:inline;
 	font-size:10px;
 	margin-right:10px!important;
 	}
 
-.ThreadNew {
-	display:none;
-	}
-.ThreadNew a {
-	color:#ff0000 !important;
+.NewComments .ThreadNew a {
+	color:#cc0000 !important;
 	}
 #Discussions li.Read.NewComments .ThreadNew {
 	display:inline;
@@ -420,7 +438,7 @@ li.User.Name span {
 /* Comments.. */
 
 #Comments {
-	margin:0px 10px;
+	margin:0px;
 	padding:0px;
 	list-style:none;
 	}
@@ -430,6 +448,8 @@ li.User.Name span {
 	border-bottom:1px solid #cccccc;
 	}
 #Comments .CommentHeader {
+	padding-left: 8px;
+	padding-right: 8px;
 	text-align:right;
 	line-height:32px;
 	}
@@ -447,9 +467,13 @@ li.User.Name span {
 	font-size:11px;
 	border-bottom:0px;
 	}
-#Comments .CommentHeader li.CommentIcon {
+#Comments .CommentHeader li div.CommentIcon {
 	padding:9px 0px 9px 35px;
+	margin-right: 6px;
 	background-repeat:no-repeat;
+	display: inline;
+	background: #fff center center no-repeat;
+	
 	}
 #Comments .CommentHeader li span {
 	display:none;
@@ -464,22 +488,46 @@ li.User.Name span {
 	font-size:13px;
 	color:#3354aa;
 	}
-div.CommentIp, div.CommentBlockUser, div.CommentBlockComment {
-	display:inline;
-	}
-#Comments .CommentHeader span a, div.CommentIp {
+#Comments .CommentHeader span {
 	font-size:10px;
+	font-weight: normal;
 	color:#aaaaaa;
-	text-decoration:none;
+}
+#Comments .CommentHeader span a {
+	font-size:10px;
+	font-weight: normal;
+	color:#aaaaaa;
 	margin-left:3px;
-	border-left:1px solid #eeeeee;
 	padding-left:3px;
+	cursor: pointer;
+	text-decoration: underline;
+	}
+#Comments .CommentHeader span a:hover {
+	text-decoration: underline;
+	color: #333;
 	}
 #Comments .CommentBody {
 	display:block;
 	margin:10px;
 	color:#000000;
 	}
+#CommentsPage .ContentInfo.Middle .PageInfo {
+	border-top: 0px;
+	margin:0px;
+	}
+#CommentsPage .ContentInfo.Bottom {
+	margin-bottom: 20px;
+	}
+#Comments code {
+	border-left: 6px solid #FFFFAA;
+	background: #FFFFEE;
+	padding: 8px;
+	padding-left: 16px;
+	display: block;
+	white-space: pre;
+	}
+	
+	
 
 /* Forms.. */
 
@@ -488,6 +536,9 @@ div.CommentIp, div.CommentBlockUser, div.CommentBlockComment {
 	padding:0px;
 	list-style:none;
 	}
+#Form {
+	margin-bottom: 10px;
+}
 #Form fieldset {
 	border:0px;
 	clear:none;
@@ -531,6 +582,7 @@ div.CommentIp, div.CommentBlockUser, div.CommentBlockComment {
 	}
 #Form .Button.SubmitButton {
 	margin-right:10px;
+	color: #000000;
 	}
 
 /* Add Comment Form.. */
@@ -544,6 +596,9 @@ div.CommentIp, div.CommentBlockUser, div.CommentBlockComment {
 #Form.AddComments label.Radio {
 	display:inline !important;
 	width:auto !important;
+	}
+#Form.AddComments {
+	margin: 4px 0px 4px 0px;
 	}
 
 /* Search form.. */
@@ -598,12 +653,13 @@ div.Search {
 	display:block;
 	width:40%;
 	line-height:18px;
-	font-weight:normal;
 	}
+#Form.Account .Description span label,
 #Form.Account label small {
 	font-weight:normal;
 	}
-#Form.Account input {
+#Form.Account input,
+#Form.Account select {
 	width:59%;
 	}
 .Description {
@@ -702,6 +758,7 @@ div.ExtensionsDisabled ul li.hiLite p, div.ExtensionsEnabled ul li.hiLite p {
 .Submit input {
 	width:50px !important;
 	float:left;
+	cursor:pointer;
 	}
 .Submit input.Update {
 	width:150px !important;
@@ -848,6 +905,30 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE.. fuck i
 	background-color:#ffff99;
 	font-style:normal;
 	}
+
+/* Autocomplete results */
+.AutoCompleteContainer {
+	margin: 0px;
+	padding: 0px;
+	border: 1px solid #000;
+	border-top: 0px;
+	width: 150px;
+}
+.AutoCompleteContainer td {
+	padding: 4 0 4 2;
+}
+.AutoCompleteRow td {
+	background: #ffffff;
+	color: #000000;
+}
+.AutoCompleteHoverRow td {
+	background: #335EA8;
+	color: #ffffff;
+}
+.AutoCompleteInput {
+	width: 150px;
+}
+  
 
 /* Thank you positioniseverything.com*/
 

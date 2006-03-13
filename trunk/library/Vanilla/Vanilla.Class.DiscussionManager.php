@@ -246,7 +246,7 @@ class DiscussionManager extends Delegation {
 
 		$s->AddOrderBy('Sticky', 't');
 		if ($this->Context->Configuration['ENABLE_WHISPERS']) {
-			$s->AddOrderBy(array('DateLastWhisper', 'DateLastActive'), array('t', 't'), 'desc', 'greatest');
+			$s->AddOrderBy(array('DateLastWhisper', 'DateLastActive'), array('t', 't'), 'desc', 'greatest', 'coalesce', ', 0');
 		} else {
 			$s->AddOrderBy('DateLastActive', 't', 'desc');
 		}
@@ -279,10 +279,10 @@ class DiscussionManager extends Delegation {
 		}		
 		if ($RowsPerPage > 0) $s->AddLimit($FirstRecord, $RowsPerPage+1);
       if ($this->Context->Configuration['ENABLE_WHISPERS'] && $this->Context->Session->User->Permission('PERMISSION_VIEW_ALL_WHISPERS')) {
-         $s->AddOrderBy(array('DateLastWhisper', 'DateLastActive'), array('t','t'), 'desc', 'greatest');
+         $s->AddOrderBy(array('DateLastWhisper', 'DateLastActive'), array('t','t'), 'desc', 'greatest', 'coalesce', ', 0');
       } else {
 			$this->GetDiscussionWhisperFilter($s);
-			if ($this->Context->Configuration['ENABLE_WHISPERS']) $s->AddOrderBy(array('DateLastActive', 'DateLastActive', 'DateLastActive'), array('tuwt','tuwf','t'), 'desc', 'greatest');
+			if ($this->Context->Configuration['ENABLE_WHISPERS']) $s->AddOrderBy(array('DateLastActive', 'DateLastActive', 'DateLastActive'), array('tuwt','tuwf','t'), 'desc', 'greatest', 'coalesce', ', 0');
 		}
 
 		return $this->Context->Database->Select($s, $this->Name, 'GetDiscussionSearch', 'An error occurred while retrieving search results.');

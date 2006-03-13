@@ -20,11 +20,7 @@ echo('<div id="LoadStatus">'.$this->Context->GetDefinition('Loading').'</div>
 			
 			<ul>');
 				while (list($Key, $Tab) = each($this->Tabs)) {
-					echo('<li'.$this->TabClass($this->CurrentTab, $Tab['Value']).'>
-						<a href="'.$Tab['Url'].'" '.$Tab['Attributes'].'>
-							'.$Tab['Text'].'
-						</a>
-					</li>');
+					echo('<li'.$this->TabClass($this->CurrentTab, $Tab['Value']).'><a href="'.$Tab['Url'].'" '.$Tab['Attributes'].'>'.$Tab['Text'].'</a></li>');
 		      }			
 			echo('</ul>			
    </div>');

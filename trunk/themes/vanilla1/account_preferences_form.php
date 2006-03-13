@@ -14,18 +14,22 @@ if ($this->Context->Session->UserID != $this->User->UserID && !$this->Context->S
          $FirstSection = "";
          while (list($SectionLanguageCode, $SectionPreferences) = each($this->Preferences)) {
             echo('<h2>'.$this->Context->GetDefinition($SectionLanguageCode).'</h2>
-               <p class="Description">');
+               <ul>');
                $SectionPreferencesCount = count($SectionPreferences);
                for ($i = 0; $i < $SectionPreferencesCount; $i++) {
                   $Preference = $SectionPreferences[$i];
                   $PreferenceDefault = ForceBool(@$this->Context->Configuration['PREFERENCE_'.$Preference['Name']], 0);
-                  echo(GetDynamicCheckBox($Preference['Name'], $PreferenceDefault, $this->Context->Session->User->Preference($Preference['Name']), "PanelSwitch('".$Preference['Name']."', ".ForceBool($Preference['RefreshPageAfterSetting'], 0).");", $this->Context->GetDefinition($Preference['LanguageCode'])));									
+                  echo '<li>
+                     <p>
+                        <span>'.GetDynamicCheckBox($Preference['Name'], $PreferenceDefault, $this->Context->Session->User->Preference($Preference['Name']), "PanelSwitch('".$Preference['Name']."', ".ForceBool($Preference['RefreshPageAfterSetting'], 0).");", $this->Context->GetDefinition($Preference['LanguageCode'])).'</span>
+                     </p>
+                  </li>';									
                }
                
-            echo('</p>');
+            echo '</ul>';
          }
-         echo('</form>
+         echo '</form>
       </fieldset>
-   </div>');
+   </div>';
 }
 ?>

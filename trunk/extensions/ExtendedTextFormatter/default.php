@@ -23,7 +23,7 @@ if (in_array($Context->SelfUrl, array("comments.php", "post.php"))) {
          $sReturn = $String;
          // Only format plain text strings if they are being displayed (save in database as is)
          if ($FormatPurpose == FORMAT_STRING_FOR_DISPLAY) {
-            $sReturn = preg_replace('/(?!\w)(?<!\w)\/me/', $this->GetAccountLink($Object), $sReturn);
+            $sReturn = preg_replace("/\/\bme\b/", $this->GetAccountLink($Object), $sReturn);
             $sReturn = $this->AutoLink($sReturn);
          }
          return $sReturn;
