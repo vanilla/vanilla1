@@ -23,7 +23,18 @@ a {
 /* LoadStatus.. */
 
 #LoadStatus {
-	display:none;
+	z-index: 2;
+	position: fixed;
+	top: 0px;
+	right: 0px;
+	background: #cc0000;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	padding-left: 8px;
+	padding-right: 8px;
+	color: #ffffff;
+	font-size: 11px;
+	display: none;
 	}
 
 /* Session.. */
@@ -210,6 +221,7 @@ a {
 	text-align:center;
 	color:#dddddd !important;
 	width:176px;
+	margin-bottom: 20px;
 	}
 #AboutVanilla a {
 	color:#d0d0d0 !important;
@@ -240,6 +252,8 @@ a {
 	}
 .ContentInfo.Top {
 	padding-top:20px;
+	white-space:nowrap;
+	overflow: hidden;
 	}
 #DiscussionsPage .ContentInfo.Bottom {
 	margin-top:-6px;

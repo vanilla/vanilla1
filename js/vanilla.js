@@ -53,10 +53,10 @@ function DiscussionSwitch(SwitchType, DiscussionID, SwitchValue) {
 	SwitchLoader(1);
    var Url = "./ajax/switch.php";
    var Parameters = "Type="+SwitchType+"&DiscussionID="+DiscussionID+"&Switch="+SwitchValue;
-   var DataManager = new Ajax.Request(
-      Url,
-      { method: 'get', parameters: Parameters, onComplete: HandleDiscussionSwitch }
-   );	
+   var dm = new DataManager();
+	dm.RequestCompleteEvent = HandleDiscussionSwitch;
+	dm.RequestFailedEvent = HandleFailure;
+	dm.LoadData(Url+"?"+Parameters);
 }
 
 function HandleDiscussionSwitch(Request) {
@@ -72,10 +72,10 @@ function ManageComment(Switch, DiscussionID, CommentID, ShowText, HideText) {
 		SwitchLoader(1);
 		var Url = "./ajax/switch.php";
 		var Parameters = "Type=Comment&Switch="+Switch+"&DiscussionID="+DiscussionID+"&CommentID="+CommentID;
-		var DataManager = new Ajax.Request(
-			Url,
-			{ method: 'get', parameters: Parameters, onComplete: ProcessComment }
-		);		
+		var dm = new DataManager();
+		dm.RequestCompleteEvent = ProcessComment;
+		dm.RequestFailedEvent = HandleFailure;
+		dm.LoadData(Url+"?"+Parameters);
 	}
 }
 
@@ -130,10 +130,11 @@ function SetSwitch(SenderName, CurrentSwitchVal, SwitchType, CommentOn, CommentO
 		
 		var Url = "./ajax/switch.php";
 		var Parameters = "Type="+SwitchType+"&Switch="+FlipSwitch+Attributes;
-		var DataManager = new Ajax.Request(
-			Url,
-			{ method: 'get', parameters: Parameters, onComplete: HandleSwitch }
-		);		
+		
+		var dm = new DataManager();
+		dm.RequestCompleteEvent = HandleSwitch;
+		dm.RequestFailedEvent = HandleFailure;
+		dm.LoadData(Url+"?"+Parameters);
 	}
 }
 
@@ -151,10 +152,10 @@ function ToggleCategoryBlock(CategoryID, Block) {
 	SwitchLoader(1);
 	var Url = "./ajax/blockcategory.php";
 	var Parameters = "BlockCategoryID="+CategoryID+"&Block="+Block;
-	var DataManager = new Ajax.Request(
-      Url,
-      { method: 'get', parameters: Parameters, onComplete: RefreshPage }
-   );
+   var dm = new DataManager();
+	dm.RequestCompleteEvent = RefreshPage;
+	dm.RequestFailedEvent = HandleFailure;
+	dm.LoadData(Url+"?"+Parameters);
 }
 
 function ToggleCommentBox(SmallText, BigText) {
@@ -164,13 +165,12 @@ function ToggleCommentBox(SmallText, BigText) {
 	if (CommentBox) {
 		if (CommentBox.className == "LargeCommentBox") SwitchVal = 1;
 		
-		
 		var Url = "./ajax/switch.php";
 		var Parameters = "Type=ShowLargeCommentBox&Switch="+SwitchVal;
-		var DataManager = new Ajax.Request(
-			Url,
-			{ method: 'get', parameters: Parameters, onComplete: DoNothing }
-		);			
+		var dm = new DataManager();
+		dm.RequestCompleteEvent = DoNothing;
+		dm.RequestFailedEvent = HandleFailure;
+		dm.LoadData(Url+"?"+Parameters);		
 	}
 }
 
