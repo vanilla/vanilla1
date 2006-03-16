@@ -50,7 +50,7 @@ function GetCategoryJumper(&$Context) {
          $LastBlocked = $cat->Blocked;
       }         
       return '<h2>'.$Context->GetDefinition('Categories').'</h2>'
-         .'<div class="CategoryJumper">'.$Select->Get().'</div>';
+         .$Select->Get();
    }
 }
 
