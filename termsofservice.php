@@ -33,7 +33,8 @@ class FauxContext {
 $Context = new FauxContext();
 
 // DEFINE THE LANGUAGE DICTIONARY
-include($Configuration["APPLICATION_PATH"]."conf/language.php");
+include($Configuration['LANGUAGES_PATH'].$Configuration['LANGUAGE'].'/definitions.php');
+include($Configuration['APPLICATION_PATH'].'conf/language.php');
 ?>
 <html>
 <head>

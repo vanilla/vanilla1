@@ -67,7 +67,7 @@ if ($this->Context->WarningCollector->Count() > 0) {
          <div class="CommentHeader">
             <ul>
                <li>
-						'.($ShowIcon?'<div class="CommentIcon" style="'."background-image:url('".$Comment->AuthIcon."')".'"></div>':'').'
+						'.($ShowIcon?'<div class="CommentIcon" style="'."background-image:url('".$Comment->AuthIcon."');".'">&nbsp;</div>':'').'
                   <span>'.$this->Context->GetDefinition('CommentAuthor').'</span><a href="'.GetUrl($this->Context->Configuration, 'account.php', '', 'u', $Comment->AuthUserID).'">'.$Comment->AuthUsername.'</a>';
                   
                   // Point out who it was whispered to if necessary
@@ -98,11 +98,11 @@ if ($this->Context->WarningCollector->Count() > 0) {
                      if ((!$this->Discussion->Closed && $this->Discussion->Active) || $PERMISSION_EDIT_COMMENTS || $PERMISSION_EDIT_DISCUSSIONS) $CommentList .= '<a href="'.GetUrl($this->Context->Configuration, 'post.php', '', 'CommentID', $Comment->CommentID).'">'.$this->Context->GetDefinition('edit').'</a>
                      ';
                   }
-                  if ($PERMISSION_HIDE_COMMENTS) $CommentList .= '<a onclick="'
+                  if ($PERMISSION_HIDE_COMMENTS) $CommentList .= '<a href="./" onclick="'
                   ."ManageComment('".($Comment->Deleted?"0":"1")."', '".$this->Discussion->DiscussionID."', '".$Comment->CommentID."', '".$this->Context->GetDefinition("ShowConfirm")."', '".$this->Context->GetDefinition("HideConfirm")."');"
-                  .'">'.$this->Context->GetDefinition($Comment->Deleted?'Show':'Hide').'</a>
+                  .' return false;">'.$this->Context->GetDefinition($Comment->Deleted?'Show':'Hide').'</a>
                   ';
-               }
+					}
                $this->DelegateParameters['CommentList'] = &$CommentList;
                $this->CallDelegate('PostCommentOptionsRender');
                $CommentList .= '
