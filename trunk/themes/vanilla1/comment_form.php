@@ -15,6 +15,7 @@ echo('<div id="Form" class="AddComments">
             <input id="WhisperUsername" name="WhisperUsername" type="text" value="'.FormatStringForDisplay($Comment->WhisperUsername, 0).'" class="Whisper AutoCompleteInput" maxlength="20" />
             <script type="text/javascript">
                var WhisperAutoComplete = AutoComplete("WhisperUsername", false);
+					WhisperAutoComplete.TableID = "WhisperAutoCompleteResults";
                WhisperAutoComplete.KeywordSourceUrl = "./ajax/getusers.php?Search=";
             </script>
          </li>
@@ -25,8 +26,8 @@ echo('<div id="Form" class="AddComments">
       
       echo('<li>
          <label for="CommentBox">'.$this->Context->GetDefinition('EnterYourComments').'
-            <a id="CommentBoxController" onclick="'
-               ."ToggleCommentBox('".$this->Context->GetDefinition('SmallInput')."', '".$this->Context->GetDefinition('BigInput')."');".'">'.$this->Context->GetDefinition($this->Context->Session->User->Preference('ShowLargeCommentBox')?'SmallInput':'BigInput').'</a>
+            <a href="./" id="CommentBoxController" onclick="'
+               ."ToggleCommentBox('".$this->Context->GetDefinition('SmallInput')."', '".$this->Context->GetDefinition('BigInput')."'); return false;".'">'.$this->Context->GetDefinition($this->Context->Session->User->Preference('ShowLargeCommentBox')?'SmallInput':'BigInput').'</a>
          </label>
          <textarea name="Body" class="'
          .($this->Context->Session->User->Preference('ShowLargeCommentBox') ? 'LargeCommentBox' : 'SmallCommentBox')

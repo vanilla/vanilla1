@@ -30,9 +30,7 @@ echo('<dl class="InputBlock ApplyInputs">');
       
       echo('
       <div class="InputBlock TermsOfServiceCheckbox">
-         <div class="CheckboxLabel">'.GetBasicCheckBox('AgreeToTerms', 1, $this->Applicant->AgreeToTerms,'').' '.$this->Context->GetDefinition('IHaveReadAndAgreeTo').' <a href="'
-         ."javascript:PopTermsOfService('../');"
-         .'">'.$this->Context->GetDefinition('TermsOfService').'</a>.</div>
+         <div class="CheckboxLabel">'.GetBasicCheckBox('AgreeToTerms', 1, $this->Applicant->AgreeToTerms,'').' '.$this->Context->GetDefinition('IHaveReadAndAgreeTo').' <a onclick="PopTermsOfService();">'.$this->Context->GetDefinition('TermsOfService').'</a>.</div>
       </div>
       <div class="FormButtons"><input type="submit" name="btnApply" value="'.$this->Context->GetDefinition('Proceed').'" class="Button" /></div>
       </form>

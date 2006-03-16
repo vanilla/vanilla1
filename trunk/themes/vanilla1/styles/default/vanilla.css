@@ -12,7 +12,9 @@ body, div, table, td {
 a {
 	cursor: pointer;
 	}
-
+a:hover {
+	text-decoration: none;
+}
 /* HYPE */
 
 #HYPE {
@@ -21,11 +23,11 @@ a {
 	}
 
 /* LoadStatus.. */
-
 #LoadStatus {
-	z-index: 2;
 	position: fixed;
+	_position:absolute;
 	top: 0px;
+	_top:expression(eval(document.body.scrollTop));
 	right: 0px;
 	background: #cc0000;
 	padding-top: 4px;
@@ -35,6 +37,7 @@ a {
 	color: #ffffff;
 	font-size: 11px;
 	display: none;
+	z-index:200;
 	}
 
 /* Session.. */
@@ -103,7 +106,8 @@ a {
 #Header ul li a:hover {
 	background-color:#919ebe;
 	}
-#Header ul li.TabOn a {
+#Header ul li.TabOn a,
+#Header ul li.TabOn a:hover {
 	background-color:#ffffff;
 	color:#000000;
 	}
@@ -142,8 +146,9 @@ a {
 	font-size:11px;
 	border-bottom:1px solid #cccccc;
 	margin:10px 0px 3px 0px;
-	padding:0px 4px;
-	width:176px;
+	padding:0px;
+	text-indent: 4px;
+	width:180px;
 	}
 
 #Panel ul ul, #Panel ul p, #Panel select {
@@ -178,7 +183,7 @@ a {
 
 #Legend {
 	margin:-3px 0px 0px 0px !important;
-	width:176px;
+	width:180px;
 	}
 #Legend li {
 	margin:0px !important;
@@ -190,8 +195,9 @@ a {
 
 #Mode {
 	margin:20px 0px !important;
-	padding:5px 4px !important;
-	width:176px;
+	padding:5px 0px !important;
+	text-indent: 4px;
+	width:180px;
 	}
 .TextModeOFF {
 	border-top:1px solid #ebc8c6;
@@ -217,10 +223,10 @@ a {
 #AboutVanilla {
 	border-top:1px solid #cccccc;
 	background-color:#f9f9f9;
-	padding:3px;
+	padding: 3px 0px 3px 0px;
 	text-align:center;
 	color:#dddddd !important;
-	width:176px;
+	width:180px;
 	margin-bottom: 20px;
 	}
 #AboutVanilla a {
@@ -364,6 +370,13 @@ a {
 #Discussions ul a {
 	color:#777777;
 	}
+.Discussion {
+	background: yellow;
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+	width: 100%;
+}
 
 .ThreadType {
 	font-size:14px;
@@ -393,6 +406,7 @@ a {
 	font-weight:bold;
 	}
 .ThreadCategory, .ThreadStarted, .ThreadComments, .ThreadLastComment, .ThreadActive, .ThreadNew {
+	width: auto;
 	display:inline;
 	font-size:10px;
 	margin-right:10px!important;
@@ -482,7 +496,7 @@ li.User.Name span {
 	border-bottom:0px;
 	}
 #Comments .CommentHeader li div.CommentIcon {
-	padding:9px 0px 9px 35px;
+	padding:8px 0px 8px 30px;
 	margin-right: 6px;
 	background-repeat:no-repeat;
 	display: inline;
@@ -587,13 +601,20 @@ li.User.Name span {
 	border:1px solid #ffedae;
 	background-color:#ffffff;
 	}
-#Form input.whisper {
-	width:30%;
-	}
+#WhisperUsername,
+#WhisperAutoCompleteResults {
+	width: 200px;
+}
 #Form textarea {
-	width:60%;
+	width:100%;
 	height:150px;
 	}
+#Form textarea.SmallCommentBox {
+	height: 150px;
+}
+#Form textarea.LargeCommentBox {
+	height: 400px;
+}	
 #Form .Button.SubmitButton {
 	margin-right:10px;
 	color: #000000;
@@ -603,7 +624,7 @@ li.User.Name span {
 
 #Form.AddComments label {
 	display:block;
-	width:60%;
+	width:100%;
 	color:#834300;
 	font-weight:bold;
 	}
@@ -924,12 +945,11 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE.. fuck i
 .AutoCompleteContainer {
 	margin: 0px;
 	padding: 0px;
-	border: 1px solid #000;
+	border: 1px solid #888888;
 	border-top: 0px;
-	width: 150px;
 }
 .AutoCompleteContainer td {
-	padding: 4 0 4 2;
+	padding: 3px;
 }
 .AutoCompleteRow td {
 	background: #ffffff;
@@ -938,9 +958,6 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE.. fuck i
 .AutoCompleteHoverRow td {
 	background: #335EA8;
 	color: #ffffff;
-}
-.AutoCompleteInput {
-	width: 150px;
 }
   
 

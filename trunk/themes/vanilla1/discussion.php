@@ -7,7 +7,7 @@ $UnreadUrl = GetUnreadQuerystring($Discussion, $this->Context->Configuration, $C
 $LastUrl = GetLastCommentQuerystring($Discussion, $this->Context->Configuration, $CurrentUserJumpToLastCommentPref);
 
 $DiscussionList .= '
-<li id="Discussion_'.$Discussion->DiscussionID.'" class="'.$Discussion->Status.($Discussion->CountComments == 1?' NoReplies':'').($this->Context->Configuration['USE_CATEGORIES'] ? ' Category_'.$Discussion->CategoryID:'').'">
+<li id="Discussion_'.$Discussion->DiscussionID.'" class="Discussion'.$Discussion->Status.($Discussion->CountComments == 1?' NoReplies':'').($this->Context->Configuration['USE_CATEGORIES'] ? ' Category_'.$Discussion->CategoryID:'').'">
    <ul>
       <li class="ThreadType">
          <span>'.$this->Context->GetDefinition('ThreadType').'</span>'.DiscussionPrefix($this->Context->Configuration, $Discussion).'

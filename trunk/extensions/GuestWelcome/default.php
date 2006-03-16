@@ -25,10 +25,13 @@ $Context->Dictionary["GuestWelcomeBody"] = "<p>Want to take part in these discus
 
 if (in_array($Context->SelfUrl, array("account.php", "categories.php", "comments.php", "index.php", "search.php")) && $Context->Session->UserID == 0) {
    $Panel->AddString('<div id="GuestWelcome">
-      <h1>'.$Context->GetDefinition('GuestWelcomeTitle').'</h1>
-      <p>'.$Context->GetDefinition('GuestWelcomeBody').'</p>
-   </div>', 10);   
+      <h2>'.$Context->GetDefinition('GuestWelcomeTitle').'</h2>
+      '.$Context->GetDefinition('GuestWelcomeBody').'
+   </div>', 10);
+   
+   // Add a stylesheet for this xhtml
+   $Head->AddStyleSheet("extensions/GuestWelcome/style.css");
+
 }
 
-// Add a stylesheet for this xhtml
 ?>

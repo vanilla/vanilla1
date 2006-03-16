@@ -49,6 +49,11 @@ function CloseLoader() {
 	setTimeout("SwitchLoader(0)",600);	
 }
 
+function FocusOnField(FieldID) {
+	 var Field = document.getElementById(FieldID);
+	 if (Field) Field.focus();
+}
+
 function GetElements(ElementName, ElementIDPrefix) {
 	var Elements = document.getElementsByTagName(ElementName);
 	var objects = new Array();
@@ -109,17 +114,17 @@ function SubmitForm(FormName, Sender, WaitText) {
 }
 
 function SwitchElementClass(ElementToChangeID, SenderID, StyleA, StyleB, CommentA, CommentB) {
-	var Element = document.getElementById(ElementToChangeID);
-	Sender = document.getElementById(SenderID);
-	if (Element && Sender) {
-		if (Element.className == StyleB) {
-			Element.className = StyleA;
-			Sender.innerHTML = CommentA;
-		} else {
-			Element.className = StyleB;
-			Sender.innerHTML = CommentB;
-		}			
-	}
+	 var Element = document.getElementById(ElementToChangeID);
+	 Sender = document.getElementById(SenderID);
+	 if (Element && Sender) {
+		  if (Element.className == StyleB) {
+				Element.className = StyleA;
+				Sender.innerHTML = CommentA;
+		  } else {
+				Element.className = StyleB;
+				Sender.innerHTML = CommentB;
+		  }			
+	 }
 }
 
 function SwitchLoader(ShowLoader) {

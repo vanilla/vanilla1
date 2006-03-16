@@ -17,6 +17,8 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 	this.StandardRowClass = 'AutoCompleteRow';
 	this.HoverRowClass = 'AutoCompleteHoverRow';
 	/* --- Styles --- */
+	  
+	this.TableID = 'AutoCompleteTable';
 
 	/* ---- Private Variables ---- */
 	var _DelimWords = new Array();
@@ -69,7 +71,7 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 			_Self._Keywords = new Array();
 		}		
 		_Total = _KWCount;
-		if (document.getElementById('tat_table')){ _Display = false;document.body.removeChild(document.getElementById('tat_table')); } 
+		if (document.getElementById(_Self.TableID)){ _Display = false;document.body.removeChild(document.getElementById(_Self.TableID)); } 
 		if (_KWCount == 0) {
 			_MouseOnList = 0;
 			RemoveAutocomplete();
@@ -80,7 +82,7 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 		a.style.position='absolute';
 		a.style.top = eval(curTop(_Curr) + _Curr.offsetHeight) + "px";
 		a.style.left = curLeft(_Curr) + "px";
-		a.id = 'tat_table';
+		a.id = _Self.TableID;
 		a.cellPadding = '0';
 		a.cellSpacing = '0';
 		document.body.appendChild(a);
@@ -240,7 +242,7 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 	function RemoveAutocomplete(){
 		// if (_MouseOnList==0){
 		_Display = 0;
-		if (document.getElementById('tat_table')){ document.body.removeChild(document.getElementById('tat_table')); }
+		if (document.getElementById(_Self.TableID)){ document.body.removeChild(document.getElementById(_Self.TableID)); }
 		if (_ToId) clearTimeout(_ToId);
 		// }
 	}
@@ -274,7 +276,7 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 				}
 				break;
 			default:
-				setTimeout(function(){GetItems(a)},50);
+				setTimeout(function(){GetItems(a)},1000);
 				break;
 		}
 	}
