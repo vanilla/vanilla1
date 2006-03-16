@@ -30,12 +30,12 @@ function GetCategoryJumper(&$Context) {
       $Select = $Context->ObjectFactory->NewObject($Context, 'Select');
       $Select->Name = 'CategoryID';
       $Select->SelectedID = ForceIncomingInt('CategoryID', 0);
-      $Select->CssClass = 'CategoryJumper';
       if ($Context->Configuration['URL_BUILDING_METHOD'] == 'mod_rewrite') {
          $Select->Attributes = "onchange=\"document.location='./'+(this.options[this.selectedIndex].value > 0 ? this.options[this.selectedIndex].value+'/' : 'discussions/');\"";
       } else {
          $Select->Attributes = "onchange=\"document.location='./'+(this.options[this.selectedIndex].value > 0 ? '?CategoryID='+this.options[this.selectedIndex].value : '');\"";
       }
+      $Select->Attributes .= " id='CategoryJumper'";
       
       $Select->AddOption(0, $Context->GetDefinition('AllUnblockedCategories'));         
       $LastBlocked = -1;
@@ -56,5 +56,6 @@ function GetCategoryJumper(&$Context) {
 
 if (in_array($Context->SelfUrl, array('index.php','comments.php')) && $Configuration['USE_CATEGORIES']) {
    $Panel->AddString(GetCategoryJumper($Context), 5);
+   $Head->AddStyleSheet("extensions/CategoryJumper/style.css");
 }
 ?>
