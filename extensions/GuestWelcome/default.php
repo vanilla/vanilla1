@@ -24,8 +24,11 @@ $Context->Dictionary["GuestWelcomeBody"] = "<p>Want to take part in these discus
    <p>If you don't have an account, <a href=\"".GetUrl($Configuration, "people.php", "", "", "", "", "PostBackAction=ApplyForm")."\">apply for one now</a>.</p>";
 
 if (in_array($Context->SelfUrl, array("account.php", "categories.php", "comments.php", "index.php", "search.php")) && $Context->Session->UserID == 0) {
-   $String = "<div class=\"PanelTitle\">".$Context->GetDefinition("GuestWelcomeTitle")."</div>
-   <div class=\"PanelInformation\" id=\"GuestInfo\">".$Context->GetDefinition("GuestWelcomeBody")."</div>";
-   $Panel->AddString($String, 10);   
+   $Panel->AddString('<div id="GuestWelcome">
+      <h1>'.$Context->GetDefinition('GuestWelcomeTitle').'</h1>
+      <p>'.$Context->GetDefinition('GuestWelcomeBody').'</p>
+   </div>', 10);   
 }
+
+// Add a stylesheet for this xhtml
 ?>
