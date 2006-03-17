@@ -35,7 +35,7 @@ if (in_array($Context->SelfUrl, array("account.php", "categories.php", "comments
          // Clear out existing tabs and put in the new quickkey tabs
          $Menu->ClearTabs();
          $Menu->AddTab($Context->GetDefinition("Discussions_QuickKey"), "discussions", GetUrl($Configuration, "index.php"), "accesskey=\"d\"");
-         if ($Context->Configuration["USE_CATEGORIES"]) $Menu->AddTab($Context->GetDefinition("Categories_QuickKey"), GetUrl($Configuration, "categories.php"), "CategoriesTab", "accesskey=\"c\"");
+         if ($Context->Configuration["USE_CATEGORIES"]) $Menu->AddTab($Context->GetDefinition("Categories_QuickKey"), GetUrl($Configuration, "categories.php"), GetUrl($Configuration, "categories.php"), "accesskey=\"c\"");
          $Menu->AddTab($Context->GetDefinition("Search_QuickKey"), "search", GetUrl($Configuration, "search.php"), "accesskey=\"s\"");
 
 			// Make sure they should be seeing the settings tab
