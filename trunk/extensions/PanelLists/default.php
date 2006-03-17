@@ -63,13 +63,13 @@ if (in_array($Context->SelfUrl, array("index.php", "comments.php"))) {
 					$sReturn .= "</li>";
 				}
 				if ($Count >= $Context->Configuration["PANEL_BOOKMARK_COUNT"]) {
-					$sReturn .= "<li><a class=\"PanelLink\" href=\"".GetUrl($Context->Configuration, "index.php", "", "", "", "", "View=Bookmarks")."\">".$Context->GetDefinition("ShowAll")."</a></li>";
+					$sReturn .= "<li><a href=\"".GetUrl($Context->Configuration, "index.php", "", "", "", "", "View=Bookmarks")."\">".$Context->GetDefinition("ShowAll")."</a></li>";
 				}
 	
-				$sReturn = "<h2 id=\"BookmarkTitle\"".(($OtherBookmarksExist || $ThisDiscussionIsBookmarked)?"":" style=\"display: none;\"").">".$Context->GetDefinition("Bookmarks")."</h2>
-				<ul class=\"LinkedList\" id=\"BookmarkList\"".(($OtherBookmarksExist || $ThisDiscussionIsBookmarked)?"":" style=\"display: none;\"").">"
+				$sReturn = "<ul><li><h2 id=\"BookmarkTitle\"".(($OtherBookmarksExist || $ThisDiscussionIsBookmarked)?"":" style=\"display: none;\"").">".$Context->GetDefinition("Bookmarks")."</h2>
+				<ul id=\"BookmarkList\"".(($OtherBookmarksExist || $ThisDiscussionIsBookmarked)?"":" style=\"display: none;\"").">"
 				.$sReturn
-				."</ul>";
+				."</ul></li></ul>";
 	
 			}
 			$sReturn .= "<form id=\"frmBookmark\" action=\"\"><div class=\"Hidden\"><input type=\"hidden\" name=\"OtherBookmarksExist\" value=\"".$OtherBookmarksExist."\" /></div></form>";

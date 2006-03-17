@@ -169,6 +169,7 @@ a:hover {
 #Panel ul ul li {
 	width:173px;
 	margin-bottom:3px;
+	overflow: hidden;
 	}
 #Panel ul ul li a {
 	font-size:11px;
@@ -177,6 +178,11 @@ a:hover {
 	color:#335eb7;
 	text-decoration:none;
 	}
+#Panel ul ul li a span {
+	color: #cc0000;
+	font-size: 10px;
+	padding-left: 4px;
+}
 #Panel ul ul li a:hover {
 	background-color:#ffffcc;
 	}
@@ -350,9 +356,11 @@ a:hover {
 	height:auto;
 	border:0px;
 	}
+.NoNewComments,
 #Discussions li.Read ul {
 	background-color:#fffeec !important;
 	}
+.NewComments,
 #Discussions li.Read.NewComments ul {
 	background-color:#fefecc !important;
 	}

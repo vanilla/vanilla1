@@ -79,24 +79,21 @@ function HideElement(ElementID, ClearElement) {
 }
 
 function PanelSwitch(PanelItem, RefreshPageWhenComplete) {
-	var chkBox = document.getElementById(PanelItem+"ID");
-	if (chkBox) {
-		ChangeLoaderText("Processing...");
-		SwitchLoader(1);
-		var Url = "./ajax/switch.php";
-		var Parameters = "Type="+PanelItem+"&Switch="+chkBox.checked;
-		if (RefreshPageWhenComplete == 1) {
-			var DataManager = new Ajax.Request(
-				Url,
-				{ method: 'get', parameters: Parameters, onComplete: RefreshPage }
-			);
-		} else {
-			var DataManager = new Ajax.Request(
-				Url,
-				{ method: 'get', parameters: Parameters, onComplete: HandleSwitch }
-			);
-		}
-	}
+	 var chkBox = document.getElementById(PanelItem+"ID");
+	 if (chkBox) {
+		  ChangeLoaderText("Processing...");
+		  SwitchLoader(1);
+		  var Url = "./ajax/switch.php";
+		  var Parameters = "Type="+PanelItem+"&Switch="+chkBox.checked;
+		  var dm = new DataManager();
+		  dm.RequestFailedEvent = HandleFailure;
+		  if (RefreshPageWhenComplete == 1) {
+	 		  dm.RequestCompleteEvent = RefreshPage;
+		  } else {
+	 		  dm.RequestCompleteEvent = HandleSwitch;
+		  }	
+		  dm.LoadData(Url+"?"+Parameters);		
+	 }
 }
 
 function PopTermsOfService() {
