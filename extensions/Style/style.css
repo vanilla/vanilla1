@@ -1,0 +1,49 @@
+#Previews li {
+   text-align:right;
+}
+#Form.ChangeStyle a.StylePreview {
+   display: block;
+   width: 430px;
+   height: 220px;
+   text-align: center;
+   text-decoration: none;
+}
+#Form.ChangeStyle a.StylePreview span {
+   padding-top: 60px;
+   display: block;
+   font-size: 80px;
+   filter:alpha(opacity=40);
+	opacity: 0.4;
+	-moz-opacity:0.4;
+}
+#Form.ChangeStyle a.NoStylePreview {
+   margin-left: 30px;
+   display: block;
+   width: 370px;
+   border:1px solid #F7EED1;
+   text-align: center;
+   text-decoration: none;
+   background: #FFFEF6;
+   padding: 10px 0px 10px 0px;
+}
+#Form.ChangeStyle a.NoStylePreview:hover {
+   margin-left: 30px;
+   display: block;
+   width: 370px;
+   border:1px solid #DDCB94;
+   text-align: center;
+   text-decoration: none;
+   background: #ffffff;
+   padding: 10px 0px 10px 0px;
+}
+#Form.ChangeStyle a.NoStylePreview span {
+   display: block;
+   font-size: 12px;
+   filter:alpha(opacity=80);
+	opacity: 0.8;
+	-moz-opacity:0.8;
+}
+#LinkButton {
+   display: block;
+   text-align: right;
+}

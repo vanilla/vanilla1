@@ -43,8 +43,8 @@ $Context->Dictionary["NoPreview"] = "No preview available";
 $Context->Dictionary["CustomStyle"] = "Use your own, custom style";
 $Context->Dictionary["CustomStyleUrl"] = "Custom style url";
 $Context->Dictionary["CustomStyleNotes"] = "Any web-accessable folder will work, such as: http://www.mysite.com/mystyle/
-	<p>Your custom style folder should contain all files relevant to your style, including a vanilla.css file.</p>
-	<p>For more information about how to style the forum, <a href=\"http://lussumo.com/docs\">read the documentation</a>.</p>";
+	<br />Your custom style folder should contain all files relevant to your style, including a vanilla.css file.
+	<br />For more information about how to style the forum, <a href=\"http://lussumo.com/docs\">read the documentation</a>.";
 $Context->Dictionary["UseCustomStyle"] = "Click here to use your custom style";
 $Context->Dictionary["By"] = "by";
 $Context->Dictionary["XByY"] = "//1 by //2";
@@ -317,7 +317,7 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 				
 				if ($this->PostBackAction == "Style") {
 					$this->PostBackParams->Set("PostBackAction", "ProcessStyle");
-					echo('<div id="Form" class="Account Identity">
+					echo('<div id="Form" class="Account Style">
 						<fieldset>
 							<legend>'.$this->Context->GetDefinition("StyleManagement").'</legend>');
 							if ($StyleID > 0) {
@@ -468,50 +468,51 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 			
 			function Render() {
 				if ($this->IsPostBack) {
-					echo("<div class=\"SettingsForm\">
-					<h1>".$this->Context->GetDefinition("ChangeYourStylesheet")."</h1>
-						<div class=\"Form\">
-							".$this->Get_Warnings()."
-							<h2>".$this->Context->GetDefinition("ForumAppearance")."</h2>
-							<div class=\"InputBlock\">
-								<div class=\"InputNote\">".$this->Context->GetDefinition("ForumAppearanceNotes")."</div>
-							</div>");
+					echo '<div id="Form" class="Account ChangeStyle">
+						<fieldset>
+							<legend>'.$this->Context->GetDefinition('ChangeYourStylesheet').'</legend>'
+							.$this->Get_Warnings()
+							.'<form id="frmCustomStyle" method="post" action="">
+							<h2>'.$this->Context->GetDefinition('ForumAppearance').'</h2>
+							<p>'.$this->Context->GetDefinition('ForumAppearanceNotes').'</p>
+							<ul id="Previews">';
+							
 							$Style = $this->Context->ObjectFactory->NewContextObject($this->Context, "Style");
 							while ($Row = $this->Context->Database->GetRow($this->StyleData)) {
 								$Style->Clear();
 								$Style->GetPropertiesFromDataSet($Row);
 								$Style->FormatPropertiesForDisplay();
-								echo("<div class=\"Preview\">
-									<div class=\"PreviewTitle\">");
+								echo '<li>';
 									if ($Style->AuthUserID > 0) {
 										echo(str_replace(array("//1", "//2"),
-											array($Style->Name, "<a href=\"".GetUrl($this->Context->Configuration, "account.php", "", "u", $Style->AuthUserID)."\">".$Style->AuthUsername."</a>"),
+											array(
+												"<a href=\"./\" onclick=\"SetStyle('".$Style->StyleID."', ''); return false;\"".($Style->PreviewImage == "" ? " class=\"NoStylePreview\"" : " class=\"StylePreview\" style=\"background: url('".$Style->Url.$Style->PreviewImage."') center center no-repeat;\"")."><span>".$Style->Name."</span></a>
+												",
+												"<a href=\"".GetUrl($this->Context->Configuration, "account.php", "", "u", $Style->AuthUserID)."\">".$Style->AuthUsername."</a>
+												"
+											),
 											$this->Context->GetDefinition("XByY")));
 									} else {
-										echo($Style->Name);
+										echo "<a href=\"./\" onclick=\"SetStyle('".$Style->StyleID."', ''); return false;\"".($Style->PreviewImage == "" ? " class=\"NoStylePreview\"" : " class=\"StylePreview\" style=\"background: url('".$Style->Url.$Style->PreviewImage."') center center no-repeat;\"")."><span>".$Style->Name."</span></a>
+										";
 									}
-									echo("</div>");
-									if ($Style->PreviewImage != "") {
-										echo("<a class=\"PreviewImage\" onclick=\"SetStyle('".$Style->StyleID."', '');\"><img src=\"".AppendFolder($Style->Url, "images/").$Style->PreviewImage."\" border=\"0\" height=\"200\" width=\"370\" alt=\"\" /></a>");
-									} else {
-										echo("<a class=\"PreviewEmpty\" onclick=\"SetStyle('".$Style->StyleID."', '');\">".$this->Context->GetDefinition("NoPreview")."</a>");
-									}
-								echo("</div>");
+								echo('</li>');
 							}					
-							echo("<h2>".$this->Context->GetDefinition("CustomStyle")."</h2>
-							<form name=\"frmCustomStyle\" method=\"post\" action=\"\">
-							<dl>
-								<dt>".$this->Context->GetDefinition("CustomStyleUrl")."</dt>
-								<dd><input type=\"text\" name=\"CustomStyle\" value=\"".$this->Context->Session->User->CustomStyle."\" maxlength=\"200\" class=\"SmallInput\" id=\"txtCustomStyle\" /></dd>
-							</dl>
-							<div class=\"InputNote\">
-								".$this->Context->GetDefinition("CustomStyleNotes")."
-								<div class=\"FormLink\"><a onclick=\"SetStyle('0', document.frmCustomStyle.CustomStyle.value);\">".$this->Context->GetDefinition("UseCustomStyle")."</a></div>
-							</div>
+							echo '</ul>
+							<h2>'.$this->Context->GetDefinition('CustomStyle').'</h2>
+							<ul>
+								<li>
+									<label for="txtCustomStyle">'.$this->Context->GetDefinition('CustomStyleUrl').'</label>
+									<input type="text" name="CustomStyle" value="'.$this->Context->Session->User->CustomStyle.'" maxlength="200" class="SmallInput" id="txtCustomStyle" />
+									<p class="Description">
+										'.$this->Context->GetDefinition('CustomStyleNotes')."
+										<a href=\"./\" id=\"LinkButton\" onclick=\"SetStyle('0', document.getElementById('txtCustomStyle').value); return false;\">".$this->Context->GetDefinition("UseCustomStyle").'</a>
+									</p>
+								</li>
+							</ul>
 							</form>
-							
-						</div>
-					</div>");
+						</fieldset>
+					</div>';
 				}
 			}
 		}
@@ -537,5 +538,7 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 		}
 		$Context->AddToDelegate("Account", "AccountProperties", "AddStylePropertyToAccount");
 	}
+	// Add the stylesheet to the account screen
+   $Head->AddStyleSheet("extensions/Style/style.css");
 }
 ?>
