@@ -19,9 +19,11 @@ if ($this->Context->Session->UserID != $this->User->UserID && !$this->Context->S
                for ($i = 0; $i < $SectionPreferencesCount; $i++) {
                   $Preference = $SectionPreferences[$i];
                   $PreferenceDefault = ForceBool(@$this->Context->Configuration['PREFERENCE_'.$Preference['Name']], 0);
+                  $PrefVal = $this->Context->Session->User->Preference($Preference['Name']);
+                  if ($Preference['IsUserProperty']) $PrefVal = $this->Context->Session->User->$Preference['Name'];
                   echo '<li>
                      <p>
-                        <span>'.GetDynamicCheckBox($Preference['Name'], $PreferenceDefault, $this->Context->Session->User->Preference($Preference['Name']), "PanelSwitch('".$Preference['Name']."', ".ForceBool($Preference['RefreshPageAfterSetting'], 0).");", $this->Context->GetDefinition($Preference['LanguageCode'])).'</span>
+                        <span>'.GetDynamicCheckBox($Preference['Name'], $PreferenceDefault, $PrefVal, "PanelSwitch('".$Preference['Name']."', ".ForceBool($Preference['RefreshPageAfterSetting'], 0).");", $this->Context->GetDefinition($Preference['LanguageCode'])).'</span>
                      </p>
                   </li>';									
                }

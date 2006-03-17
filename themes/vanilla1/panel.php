@@ -9,23 +9,27 @@ while (list($Key, $PanelElement) = each($this->PanelElements)) {
    $Type = $PanelElement['Type'];
    $Key = $PanelElement['Key'];
    if ($Type == 'List') {
+      $sReturn = '';
       $Links = $this->Lists[$Key];
       if (count($Links) > 0) {
          ksort($Links);
-         echo('<ul>
+         $sReturn .= '<ul>
             <li>
                <h2>'.$Key.'</h2>
-               <ul>');
+               <ul>';
                while (list($LinkKey, $Link) = each($Links)) {
-                  echo('<li>
-                     <a '.($Link['Link'] != '' ? 'href="'.$Link['Link'].'"' : '').' '.$Link['LinkAttributes'].'>'.$Link['Item'].'</a>');
-                     if ($Link['Suffix'] != '') echo(' '.$this->Context->GetDefinition($Link['Suffix']));
-                  echo('</li>');
+                  $sReturn .= '<li>
+                     <a '.($Link['Link'] != '' ? 'href="'.$Link['Link'].'"' : '').' '.$Link['LinkAttributes'].'>'
+                        .$Link['Item'];
+                        if ($Link['Suffix'] != '') $sReturn .= ' <span>'.$this->Context->GetDefinition($Link['Suffix']).'</span>';
+                     $sReturn .= '</a>';
+                  $sReturn .= '</li>';
                }
-               echo('</ul>
+               $sReturn .= '</ul>
             </li>
-         </ul>');
+         </ul>';
       }
+      echo($sReturn);
    } elseif ($Type == 'String') {
       echo($this->Strings[$Key]);
    }
