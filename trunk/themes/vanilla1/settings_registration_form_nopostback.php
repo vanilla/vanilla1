@@ -23,11 +23,12 @@ if (!$this->Context->Session->User->Permission('PERMISSION_MANAGE_REGISTRATION')
                <label for="ddApprovedRoleID">'.$this->Context->GetDefinition('ApprovedMemberRole').'</label>
                '.$this->ApprovedRoleSelect->Get().'
                <p class="Description">'.$this->Context->GetDefinition('ApprovedMemberRoleNotes').'</p>
-            </li>   
-            <div class="Submit">
-               <input type="submit" name="btnSave" value="'.$this->Context->GetDefinition('Save').'" class="Button SubmitButton" />
-               <a href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl).'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>
-            </div>
+            </li>
+         </ul>
+         <div class="Submit">
+            <input type="submit" name="btnSave" value="'.$this->Context->GetDefinition('Save').'" class="Button SubmitButton" />
+            <a href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl).'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>
+         </div>
          </form>
       </fieldset>
    </div>');

@@ -21,15 +21,13 @@ echo('<div id="Form" class="Account Extensions">
                         <h3>
                            '.GetDynamicCheckBox('chk'.$ExtensionKey, 1, 0, "document.location='".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=ProcessExtension&amp;ExtensionKey=".$ExtensionKey)."';", $Extension->Name.' <span>'.$Extension->Version.'</span>').'
                         </h3>
-                        <p>';
-                        if ($ExtensionKey == $SelectedExtensionKey) {
-                           $ExtensionList .= $Extension->Description
-                           .'<br />'.FormatHyperlink($Extension->Url)
-                           .'<br />'.FormatHyperlink($Extension->AuthorUrl,1,$Extension->Author);
-                        } else {
-                           $ExtensionList .= '<a href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=Extensions&amp;Detail='.$ExtensionKey.'#'.$ExtensionKey).'">'.SliceString($Extension->Description, 60).'</a>';
-                        }
-                        $ExtensionList .= '<p>
+                        <p>'
+								.$Extension->Description
+								.'<br />'
+								.FormatHyperlink($Extension->AuthorUrl,1,$Extension->Author)
+								.' | '
+								.FormatHyperlink($Extension->Url)
+                        .'</p>
                      </li>';
                   }
                   echo($ExtensionList);
@@ -50,15 +48,13 @@ echo('<div id="Form" class="Account Extensions">
                   while (list($ExtensionKey, $Extension) = each($this->EnabledExtensions)) {
                      $ExtensionList .= '<li>
                         <h3>'.GetDynamicCheckBox('chk'.$ExtensionKey, 1, 1, "document.location='".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=ProcessExtension&amp;ExtensionKey=".$ExtensionKey)."';", $Extension->Name.' <span>'.$Extension->Version.'</span>').'</h3>
-                        <p>';
-                        if ($ExtensionKey == $SelectedExtensionKey) {
-                           $ExtensionList .= $Extension->Description
-                           .'<br />'.FormatHyperlink($Extension->Url)
-                           .'<br />'.FormatHyperlink($Extension->AuthorUrl,1,$Extension->Author);
-                        } else {
-                           $ExtensionList .= '<a href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=Extensions&amp;Detail='.$ExtensionKey.'#'.$ExtensionKey).'">'.SliceString($Extension->Description, 60).'</a>';
-                        }
-                        $ExtensionList .= '</p>
+                        <p>'
+								.$Extension->Description
+								.'<br />'
+								.FormatHyperlink($Extension->AuthorUrl,1,$Extension->Author)
+								.' | '
+								.FormatHyperlink($Extension->Url)
+                        .'</p>
                      </li>';
                   }
                   echo($ExtensionList);

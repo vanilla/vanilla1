@@ -24,6 +24,13 @@ class CategoryForm extends PostBackControl {
 		$this->ValidActions = array('Categories', 'Category', 'ProcessCategory', 'CategoryRemove', 'ProcessCategoryRemove');
 		$this->Constructor($Context);
 		if ($this->IsPostBack) {
+			// Add the javascript to the head for sorting categories
+         if ($this->PostBackAction == "Categories") {
+				global $Head;
+				$Head->AddScript('./js/prototype.js');
+				$Head->AddScript('./js/scriptaculous.js');
+			}
+			
 			$CategoryID = ForceIncomingInt('CategoryID', 0);
 			$ReplacementCategoryID = ForceIncomingInt('ReplacementCategoryID', 0);
 			$this->CategoryManager = $this->Context->ObjectFactory->NewContextObject($this->Context, 'CategoryManager');
@@ -100,7 +107,7 @@ class CategoryForm extends PostBackControl {
 				
 			} elseif ($this->PostBackAction == 'CategoryRemove') {
 				$this->PostBackParams->Set('PostBackAction', 'ProcessCategoryRemove');
-				$this->CategorySelect->Attributes = "onchange=\"document.location='?PostBackAction=CategoryRemove&amp;CategoryID='+this.options[this.selectedIndex].value;\"";
+				$this->CategorySelect->Attributes = "onchange=\"document.location='".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=CategoryRemove')."&amp;CategoryID='+this.options[this.selectedIndex].value;\"";
 				$this->CategorySelect->SelectedID = $CategoryID;
             $this->CallDelegate('PreRemoveRender');
             include(ThemeFilePath($this->Context->Configuration, 'settings_category_remove.php'));            

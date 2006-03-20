@@ -114,7 +114,8 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 			c.id = 'tat_td'+(j);
 			c.setAttribute('pos',j);
 			if (_Self.MouseSupport){
-				c.onclick=MouseClick;
+				c.onmousedown = MouseClick;
+				// c.onclick = MouseClick;
 				c.onmouseover = TableHighlight;
 			}
 			j++;
@@ -144,30 +145,6 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 	}
 
 	/* Mouse */
-	function MouseDown(){
-		document.getElementById('tat_tr'+_Pos).className = _Self.StandardRowClass;
-		_Pos++;
-		document.getElementById('tat_tr'+_Pos).className = _Self.HoverRowClass;
-		_Curr.focus();
-		_MouseOnList = 0;
-		if (_ToId) clearTimeout(_ToId);
-		if (_Self.TimeOut > 0) _ToId = setTimeout(function(){_MouseOnList=0;RemoveAutocomplete();},_Self.TimeOut);
-	}
-	function MouseUp(evt){
-		if (!evt) evt = event;
-		if (evt.stopPropagation){
-			evt.stopPropagation();
-		}else{
-			evt.cancelBubble = true;
-		}
-		document.getElementById('tat_tr'+_Pos).className = _Self.StandardRowClass;
-		_Pos--;
-		document.getElementById('tat_tr'+_Pos).className = _Self.HoverRowClass;
-		_Curr.focus();
-		_MouseOnList = 0;
-		if (_ToId) clearTimeout(_ToId);
-		if (_Self.TimeOut > 0) _ToId = setTimeout(function(){_MouseOnList=0;RemoveAutocomplete();},_Self.TimeOut);
-	}
 	function MouseClick(evt){
 		if (!evt) evt = event;
 		if (!_Display) return;
