@@ -1,11 +1,14 @@
 <?php
 // Note: This file is included from the library/Vanilla.Control.RoleForm.php control.
 
-echo('<div class="SettingsForm">
-   '.$this->Get_Warnings().'
-   <h1>'.$this->Context->GetDefinition('RoleManagement').'</h1>
-   <div class="Form" id="Roles">
-      <div class="InputNote">'.$this->Context->GetDefinition('RoleReorderNotes').'</div>
+echo('<div id="Form" class="Account Roles">
+   <fieldset>
+      <legend>'.$this->Context->GetDefinition('RoleManagement').'</legend>'
+      .$this->Get_Warnings().
+      '<form method="get" action="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl).'">
+      <input type="hidden" name="PostBackAction" value="Role" />
+      <p>'.$this->Context->GetDefinition('RoleReorderNotes').'</p>
+      
       <ul class="SortList" id="SortRoles">');
          if ($this->RoleData) {
             $r = $this->Context->ObjectFactory->NewContextObject($this->Context, 'Role');
@@ -15,7 +18,7 @@ echo('<div class="SettingsForm">
                $r->GetPropertiesFromDataSet($Row);
                $r->FormatPropertiesForDisplay();
                echo('<li class="SortListItem'.($this->Context->Session->User->Permission('PERMISSION_SORT_ROLES') ? ' MovableSortListItem' : '').'" id="item_'.$r->RoleID.'">');
-                  if ($this->Context->Session->User->Permission('PERMISSION_REMOVE_ROLES') && !$r->Unauthenticated) echo('<a class="SortRemove" href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=RoleRemove&amp;RoleID='.$r->RoleID).'"><img src="'.$this->Context->StyleUrl.'btn.remove.gif" height="15" width="15" alt="'.$this->Context->GetDefinition('Remove').'" /></a>');
+                  if ($this->Context->Session->User->Permission('PERMISSION_REMOVE_ROLES') && !$r->Unauthenticated) echo('<a class="SortRemove" href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=RoleRemove&amp;RoleID='.$r->RoleID).'">&nbsp;</a>');
                   if ($this->Context->Session->User->Permission('PERMISSION_EDIT_ROLES')) echo('<a class="SortEdit" href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=Role&amp;RoleID='.$r->RoleID).'">'.$this->Context->GetDefinition('Edit').'</a>');
                   echo($r->RoleName.'
                </li>');
@@ -29,9 +32,15 @@ echo('<div class="SettingsForm">
          // ]]>
          </script>");
          // Debug
-         echo('<div id="SortResult"></div>');
+         echo('<div id="SortResult" style="display: none;"></div>');
       }
-      if ($this->Context->Session->User->Permission('PERMISSION_ADD_ROLES')) echo('<div class="FormLink"><a href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=Role').'">'.$this->Context->GetDefinition('CreateANewRole').'</a></div>');
-   echo('</div>
+      if ($this->Context->Session->User->Permission('PERMISSION_ADD_ROLES')) {
+         echo '<div class="Submit">
+            <input type="submit" name="btnSave" value="'.$this->Context->GetDefinition('CreateANewRole').'" class="Button SubmitButton NewRoleButton" />
+            <a href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl).'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>
+         </div>';
+      }
+   echo('</form>
+   </fieldset>
 </div>');
 ?>

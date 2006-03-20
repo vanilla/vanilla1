@@ -274,6 +274,9 @@ a:hover {
 .ContentInfo h1 {
 	color:#000000;
 	float:left;
+	width:80%;
+	overflow:hidden;
+	white-space:nowrap;	
 	}
 .ContentInfo input {
 	font-size:10px;
@@ -616,7 +619,10 @@ li.User.Name span {
 }
 #Form textarea.LargeCommentBox {
 	height: 400px;
-}	
+}
+#Form .Button {
+	cursor: pointer;
+}
 #Form .Button.SubmitButton {
 	margin-right:10px;
 	color: #000000;
@@ -686,23 +692,32 @@ div.Search {
 	margin-bottom:10px;
 	}
 #Form.Account label {
-	float:left;
 	display:block;
 	width:40%;
 	line-height:18px;
+	margin-bottom: 4px;
 	}
+#Form.GlobalsForm label {
+	float: left;
+}
+#Form.Extensions label {
+	width: 100%;
+}
 #Form.Account .Description span label,
 #Form.Account label small {
 	font-weight:normal;
 	}
 #Form.Account input,
 #Form.Account select {
-	width:59%;
+	width:40%;
 	}
+#Form.GlobalsForm input,
+#Form.GlobalsForm select {
+	width: 59%;
+}
 .Description {
 	margin:3px 0px !important;
-	padding:5px !important;
-	background-color:#FFFFDD;
+	padding: 3px 0px 5px 0px !important;
 	font-weight:normal;
 	color:#a99861 !important;
 	}
@@ -726,11 +741,43 @@ div.Search {
 	font-weight: normal;
 	}
 	
+/* Globals Form */
+#Form.GlobalsForm select.SmallSelect {
+	width: 50px;
+}
+/* RoleEdit Form */
+#Form.RoleEditForm li p span label {
+	font-weight: normal !important;
+}
+.Submit input.NewRoleButton {
+	width: 120px !important;
+}
+/* RoleRemove Form */
+.Submit input.RoleRemoveButton {
+	width: 70px !important;
+}
+/* "Check for Updates" Form */
+.Submit input.Update {
+	width:150px !important;
+	}
+/* Category Form */
+.Submit input.NewCategoryButton {
+	width: 150px !important;
+}
+.Submit input.RemoveCategoryButton {
+	width: 70px !important;
+}
+
+
 /* Custom form for extensions management screen */
 
 div.Extensions {
 	width:100% !important;
 	}
+#Form.Extensions div.ExtensionsEnabled h2,
+#Form.Extensions div.ExtensionsDisabled h2 {
+	padding-top:20px;
+}
 div.ExtensionsDisabled {
 	width:48%;
 	float:left;
@@ -781,7 +828,49 @@ div.ExtensionsDisabled ul li p a, div.ExtensionsEnabled ul li p a {
 div.ExtensionsDisabled ul li.hiLite p, div.ExtensionsEnabled ul li.hiLite p {
 	color:#062971 !important;
 	}
-	
+
+/* Custom form for sortable list */
+.SortList {
+	color: #000000;
+	background: rgb(254,254,204);
+	margin-top: 10px !important;
+	padding: 0px;
+	border: 1px solid #ddd;
+	border-top: 0px;
+}
+.MovableSortListItem {
+	cursor: move;
+}
+.SortListItem {
+	border-top: 1px solid #dddddd;
+	padding: 6px !important;
+	margin: 0px !important;
+}
+.SortEdit {
+	position: absolute;
+	margin-left: 364px !important;
+}
+.SortEdit, .SortEdit:link, .SortEdit:active, .SortEdit:visited {
+	font-weight: normal;
+	color: #1EB136 !important;
+	text-decoration: none;
+}
+.SortEdit:hover {
+	font-weight: normal;
+	color: #339933 !important;
+	text-decoration: underline;
+}
+.SortRemove {
+	display: block;
+	position: absolute;
+	margin-left: 394px !important;
+	height: 20px;
+	width: 20px;
+	background: url(btn.remove.gif) no-repeat top right;
+	text-decoration: none;
+}
+
+
 /* */
 
 #CustomInfo li {
@@ -801,9 +890,9 @@ div.ExtensionsDisabled ul li.hiLite p, div.ExtensionsEnabled ul li.hiLite p {
 	float:left;
 	cursor:pointer;
 	}
-.Submit input.Update {
-	width:150px !important;
-	}
+.Submit a {
+	color: #FF6600 !important;
+}
 
 /* Profile Page.. */
 
@@ -956,6 +1045,7 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE.. fuck i
 }
 .AutoCompleteContainer td {
 	padding: 3px;
+	cursor: pointer;
 }
 .AutoCompleteRow td {
 	background: #ffffff;

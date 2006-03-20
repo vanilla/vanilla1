@@ -8,7 +8,7 @@ if ($this->Context->Session->UserID != $this->User->UserID && !$this->Context->S
 } else {				
    $this->PostBackParams->Set('PostBackAction', 'ProcessIdentity');
    $this->PostBackParams->Set('u', $this->User->UserID);
-   $this->PostBackParams->Set('LabelValuePairCount', (count($this->User->Attributes) > 0? count($this->User->Attributes):1));
+   $this->PostBackParams->Set('LabelValuePairCount', (count($this->User->Attributes) > 0? count($this->User->Attributes):1), 1, 'LabelValuePairCount');
    $Required = $this->Context->GetDefinition('Required');
    echo('<div id="Form" class="Account Identity">
       <fieldset>
@@ -98,7 +98,7 @@ if ($this->Context->Session->UserID != $this->User->UserID && !$this->Context->S
                echo('<li>'.$this->Context->GetDefinition('Label').'</li>
                <li>'.$this->Context->GetDefinition('Value').'</li>
                <li><input type="text" name="Label'.$CurrentItem.'" value="" maxlength="20" class="LVLabelInput" /></li>
-               <li="Value'.$CurrentItem.'" value="" maxlength="200" class="LVValueInput" /></li>');
+               <li><input type="text" name="Value'.$CurrentItem.'" value="" maxlength="200" class="LVValueInput" /></li>');
             }
          echo('</ul>');
          

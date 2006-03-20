@@ -15,11 +15,11 @@ if (!$this->Context->Session->User->Permission('PERMISSION_MANAGE_LANGUAGE')) {
          '.$this->Get_PostBackForm('frmLanguageChange').'
          <ul>
             <li>
-               <label for="ddLanguage">'.$this->Context->GetDefinition('ChangeLanguage').'</label
+               <label for="ddLanguage">'.$this->Context->GetDefinition('ChangeLanguage').'</label>
                '.$this->LanguageSelect->Get().'
                <p class="Description">'.$this->Context->GetDefinition('ChangeLanguageNotes').'</p>
             </li>
-         </dl>
+         </ul>
          <div class="Submit">
             <input type="submit" name="btnSave" value="'.$this->Context->GetDefinition('Save').'" class="Button SubmitButton" />
             <a href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl).'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>

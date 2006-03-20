@@ -39,6 +39,7 @@ echo('<div id="Form" class="Account GlobalsForm">
             <label for="ddDiscussionsPerPage">'.$this->Context->GetDefinition('DiscussionsPerPage').'</label>
             ');
             $Selector = $this->Context->ObjectFactory->NewObject($this->Context, 'Select');
+            $Selector->CssClass = 'SmallSelect';
             $Selector->Name = 'DISCUSSIONS_PER_PAGE';
             $Selector->Attributes = ' id="ddDiscussionsPerPage"';
             $i = 10;
@@ -69,6 +70,7 @@ echo('<div id="Form" class="Account GlobalsForm">
             <label for="ddMaxBookmarksInPanel">'.$this->Context->GetDefinition('MaxBookmarksInPanel').'</label>
             ');
             $Selector->Clear();
+            $Selector->CssClass = 'SmallSelect';
             $Selector->Attributes = ' id="ddMaxBookmarksInPanel"';
             $Selector->Name = 'PANEL_BOOKMARK_COUNT';
             for ($i = 3; $i < 11; $i++) {
@@ -124,7 +126,7 @@ echo('<div id="Form" class="Account GlobalsForm">
             <p class="Description">
                '.$this->Context->GetDefinition('MaxCommentLengthNotes'));
                $Selector->Clear();
-               $Selector->CssClass = 'InlineSelect';
+               $Selector->CssClass = 'SmallSelect';
                for ($i = 1; $i < 31; $i++) {
                   $Selector->AddOption($i, $i);
                }
@@ -132,7 +134,7 @@ echo('<div id="Form" class="Account GlobalsForm">
                $Selector->SelectedID = $this->ConfigurationManager->GetSetting('DISCUSSION_POST_THRESHOLD');
                
                $SecondsSelector = $this->Context->ObjectFactory->NewObject($this->Context, 'Select');
-               $SecondsSelector->CssClass = 'InlineSelect';
+               $SecondsSelector->CssClass = 'SmallSelect';
                for ($i = 10; $i < 601; $i++) {
                   $SecondsSelector->AddOption($i, $i);
                   $i += 9;							
@@ -143,9 +145,9 @@ echo('<div id="Form" class="Account GlobalsForm">
                $SecondsSelector2->Name = 'DISCUSSION_THRESHOLD_PUNISHMENT';
                $SecondsSelector2->SelectedID = $this->ConfigurationManager->GetSetting('DISCUSSION_THRESHOLD_PUNISHMENT');
                
-               echo(str_replace(array('//1', '//2', '//3'),
+               echo '<br />'.str_replace(array('//1', '//2', '//3'),
                   array($Selector->Get(), $SecondsSelector->Get(), $SecondsSelector2->Get()),
-                  $this->Context->GetDefinition('XDiscussionsYSecondsZFreeze')));
+                  $this->Context->GetDefinition('XDiscussionsYSecondsZFreeze'));
                   
                $Selector->Name = 'COMMENT_POST_THRESHOLD';
                $Selector->SelectedID = $this->ConfigurationManager->GetSetting('COMMENT_POST_THRESHOLD');
@@ -156,11 +158,11 @@ echo('<div id="Form" class="Account GlobalsForm">
                $SecondsSelector2->Name = 'COMMENT_THRESHOLD_PUNISHMENT';
                $SecondsSelector2->SelectedID = $this->ConfigurationManager->GetSetting('COMMENT_THRESHOLD_PUNISHMENT');
                
-               echo('</p>
-               <p>'.str_replace(array('//1', '//2', '//3'),
-                  array($Selector->Get(), $SecondsSelector->Get(), $SecondsSelector2->Get()),
-                  $this->Context->GetDefinition('XCommentsYSecondsZFreeze'))
-            .'</p>
+               echo('<br />'
+                  .str_replace(array('//1', '//2', '//3'),
+                     array($Selector->Get(), $SecondsSelector->Get(), $SecondsSelector2->Get()),
+                     $this->Context->GetDefinition('XCommentsYSecondsZFreeze'))
+               .'</p>
          </li>
       </ul>
       <h2>'.$this->Context->GetDefinition('SupportTitle').'</h2>

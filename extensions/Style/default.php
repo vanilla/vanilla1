@@ -380,42 +380,45 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 							<legend>'.$this->Context->GetDefinition('StyleManagement').'</legend>
 							'.$this->Get_Warnings().'
 							'.$this->Get_PostBackForm('frmStyleRemove').'
-							<h2>".$this->Context->GetDefinition("SelectStyleToRemove")."</h2>
+							<h2>'.$this->Context->GetDefinition('SelectStyleToRemove').'</h2>
 							<ul>
 								<li>
 									<label for="ddStyleID">'.$this->Context->GetDefinition('Styles').' <small>'.$this->Context->GetDefinition('Required').'</small></label>
 									'.$this->StyleSelect->Get().'
-								</li>';
+								</li>
+							</ul>';
 								
 							if ($StyleID > 0) {
-									$this->StyleSelect->Attributes = "";
-									$this->StyleSelect->RemoveOption($this->StyleSelect->SelectedID);
-									$this->StyleSelect->Name = "ReplacementStyleID";
-									$this->StyleSelect->SelectedID = ForceIncomingInt("ReplacementStyleID", 0);
-									$this->StyleSelect->Attributes = ' id="ddReplacementStyleID"';
-									echo '<h2>'.$this->Context->GetDefinition('SelectAReplacementStyle').'</h2>
+								$this->StyleSelect->Attributes = "";
+								$this->StyleSelect->RemoveOption($this->StyleSelect->SelectedID);
+								$this->StyleSelect->Name = "ReplacementStyleID";
+								$this->StyleSelect->SelectedID = ForceIncomingInt("ReplacementStyleID", 0);
+								$this->StyleSelect->Attributes = ' id="ddReplacementStyleID"';
+								echo '<h2>'.$this->Context->GetDefinition('SelectAReplacementStyle').'</h2>
+								<ul>
 									<li>
-										<label for="ddReplacementStyleID">'.$this->Context-GetDefinition('ReplacementStyle').' <small>'.$this->Context->GetDefinition('Required').'</small></label>
+										<label for="ddReplacementStyleID">'.$this->Context->GetDefinition('ReplacementStyle').' <small>'.$this->Context->GetDefinition('Required').'</small></label>
 										'.$this->StyleSelect->Get().'
 										<p class="Description">'.$this->Context->GetDefinition("ReplacementStyleNotes").'</p>
 									</li>
 								</ul>
 								<div class="Submit">
-									<input type="submit" name="btnSave" value="'.$this->Context->GetDefinition('Remove').'" class="Button SubmitButton" />
+									<input type="submit" name="btnSave" value="'.$this->Context->GetDefinition('Remove').'" class="Button SubmitButton RemoveStyleButton" />
 									<a href="'.GetUrl($this->Context->Configuration, 'settings.php', '', '', '', '', 'PostBackAction=Styles').'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>
 								</div>';
-							} else {
-								echo '</ul>';
 							}
 							echo '</form>
 						</fieldset>
 					</div>';				
 				} else {
-					echo("<div class=\"SettingsForm\">
-						".$this->Get_Warnings()."
-						<h1>".$this->Context->GetDefinition("StyleManagement")."</h1>
-						<div class=\"Form\" id=\"Styles\">
-							<ul class=\"SortList\">");
+					echo '<div id="Form" class="Account SettingsForm">
+						<fieldset>
+							<legend>'.$this->Context->GetDefinition("StyleManagement").'</legend>'
+							.$this->Get_Warnings().
+							'<form method="get" action="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl).'">
+							<input type="hidden" name="PostBackAction" value="Style" />
+
+							<ul class="SortList" id="SortStyles">';
 								if ($this->StyleData) {
 									$s = $this->Context->ObjectFactory->NewContextObject($this->Context, "Style");
 									
@@ -423,17 +426,21 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 										$s->Clear();
 										$s->GetPropertiesFromDataSet($Row);
 										$s->FormatPropertiesForDisplay();
-										echo("<li class=\"SortListItem\">
-											<a class=\"SortRemove\" href=\"".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=StyleRemove&amp;StyleID=".$s->StyleID)."\"><img src=\"".$this->Context->StyleUrl."btn.remove.gif\" height=\"15\" width=\"15\" border=\"0\" alt=\"".$this->Context->GetDefinition("Remove")."\" /></a>
-											<a class=\"SortEdit\" href=\"".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=Style&amp;StyleID=".$s->StyleID)."\">".$this->Context->GetDefinition("Edit")."</a>
-											".$s->Name."
-										</li>");
+										echo '<li class="SortListItem">
+											<a class="SortRemove" href="'.GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=StyleRemove&amp;StyleID=".$s->StyleID).'">&nbsp;</a>
+											<a class="SortEdit" href="'.GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=Style&amp;StyleID=".$s->StyleID).'">'.$this->Context->GetDefinition("Edit").'</a>
+											'.$s->Name.'
+										</li>';
 									}
 								}
-							echo("</ul>
-							<div class=\"FormLink\"><a href=\"".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=Style")."\">".$this->Context->GetDefinition("CreateANewStyle")."</a></div>
-						</div>
-					</div>");
+							echo '</ul>
+							<div class="Submit">
+								<input type="submit" name="btnSave" value="'.$this->Context->GetDefinition('CreateANewStyle').'" class="Button SubmitButton NewStyleButton" />
+								<a href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl).'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>
+							</div>
+							</form>
+						</fieldset>
+					</div>';
 				}
 			}
 		}
@@ -448,6 +455,10 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 		$Panel->AddList($AdministrativeOptions, 10);
 		$Panel->AddListItem($AdministrativeOptions, $Context->GetDefinition("StyleManagement"), GetUrl($Configuration, "settings.php", "", "", "", "", "PostBackAction=Styles"), "", "", 70);
 	}
+	// Add the stylesheet to the account screen
+   $PostBackAction = ForceIncomingString("PostBackAction", "");
+   if (in_array($PostBackAction, array("Styles", "Style", "ProcessStyle", "StyleRemove", "ProcessStyleRemove"))) $Head->AddStyleSheet("extensions/Style/style.css");
+	
 } elseif ($Context->SelfUrl == "account.php" && $Context->Session->UserID > 0) {
 	$AccountUserID = ForceIncomingInt("u", $Context->Session->UserID);
    if ($AccountUserID == $Context->Session->UserID) {
@@ -503,13 +514,16 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 							<ul>
 								<li>
 									<label for="txtCustomStyle">'.$this->Context->GetDefinition('CustomStyleUrl').'</label>
-									<input type="text" name="CustomStyle" value="'.$this->Context->Session->User->CustomStyle.'" maxlength="200" class="SmallInput" id="txtCustomStyle" />
+									<input type="text" name="CustomStyle" value="'.$this->Context->Session->User->CustomStyle.'" maxlength="200" class="CustomStyleInput" id="txtCustomStyle" />
 									<p class="Description">
-										'.$this->Context->GetDefinition('CustomStyleNotes')."
-										<a href=\"./\" id=\"LinkButton\" onclick=\"SetStyle('0', document.getElementById('txtCustomStyle').value); return false;\">".$this->Context->GetDefinition("UseCustomStyle").'</a>
+										'.$this->Context->GetDefinition('CustomStyleNotes').'
 									</p>
 								</li>
 							</ul>
+							<div class="Submit">
+								<input type="button" name="btnCheck" value="'.$this->Context->GetDefinition('UseCustomStyle').'" class="Button SubmitButton CustomStyleButton" onclick="'."SetStyle('0', document.getElementById('txtCustomStyle').value); return false;".'" />
+								<a href="'.GetUrl($this->Context->Configuration, 'account.php').'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>
+							</div>
 							</form>
 						</fieldset>
 					</div>';
@@ -539,6 +553,6 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 		$Context->AddToDelegate("Account", "AccountProperties", "AddStylePropertyToAccount");
 	}
 	// Add the stylesheet to the account screen
-   $Head->AddStyleSheet("extensions/Style/style.css");
+   if (in_array($PostBackAction, array("Styles", "Style", "ProcessStyle", "StyleRemove", "ProcessStyleRemove"))) $Head->AddStyleSheet("extensions/Style/style.css");
 }
 ?>

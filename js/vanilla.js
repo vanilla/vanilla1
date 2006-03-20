@@ -12,17 +12,12 @@
   
 // Add a new custom name/value pair input to the account form
 function AddLabelValuePair() {
-	var frm = document.getElementById("frmAccountPersonal");
-	var Counter = frm.LabelValuePairCount;
-	var Container = document.getElementById("LabelValuePairContainer");
-	if (frm && Counter && Container) {
+	var Counter = document.getElementById('LabelValuePairCount');
+	var Container = document.getElementById('CustomInfo');
+	if (Counter && Container) {
 		Counter.value++;
 
-		// Create the label container
-		var Label = document.createElement("dt");
-		Label.className = "DefinitionItem";
-		
-		// Create the label input
+		var Label = document.createElement("li");
 		var LabelInput = document.createElement("input");
 		LabelInput.type = "text";
 		LabelInput.name = "Label"+Counter.value;
@@ -30,10 +25,7 @@ function AddLabelValuePair() {
 		LabelInput.className = "LVLabelInput";
 		
 		// Create the value container		
-		var Value = document.createElement("dd");
-		Value.className = "DefinitionItem";
-
-		// Create the value input
+		var Value = document.createElement("li");
 		var ValueInput = document.createElement("input");
 		ValueInput.type = "text";
 		ValueInput.name = "Value"+Counter.value;
