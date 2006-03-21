@@ -424,6 +424,87 @@ a:hover {
 	display:inline;
 	}
 
+/* Category Index */
+#CategoryPage div.ContentInfo h1 {
+	text-align: left;
+	width: 100%;
+	border-bottom: 1px solid #cccccc;
+	padding-bottom:6px;
+}
+#Categories, #Categories * {
+	margin:0px;
+	padding:0px;
+	list-style:none;
+	}
+#Categories {
+	margin-bottom: 20px;
+}
+.BlockedCategory {
+	background: #ffffff;
+}
+.UnblockedCategory {
+	background: #f5f9ff;
+}
+#Categories li ul {
+	border-bottom:1px solid #cccccc;
+	}
+#Categories li li {
+	height:auto;
+	border:0px;
+	}
+#Categories li ul {
+	padding: 7px 6px 7px 6px;
+	}
+#Categories ul span, #Categories ul span a, #Categories ul a {
+	color:#aaaaaa;
+	text-decoration:none;
+	}
+#Categories ul span a:hover, #Categories ul a:hover {
+	color:#ff0000;
+	}
+#Categories ul a {
+	color:#777777;
+	}
+.Category {
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+	width: 100%;
+}
+.CategoryName {
+	font-size:14px;
+	margin-right:5px !important;
+	color:#062971 !important;
+	font-weight:bold;
+	line-height:20px;
+	}
+.CategoryName a {
+	color: #3354AA !important;
+	text-decoration: underline !important;
+}
+.CategoryName a:hover {
+	text-decoration: none !important;
+}
+.CategoryName span,
+.CategoryDescription span {
+	display:none;
+	}
+.CategoryName.Normal {
+	display:none;
+	}
+.CategoryDescription {
+	font-size:13px;
+	line-height:20px;
+	overflow: hidden;
+	}
+.CategoryDiscussionCount, .CategoryOptions {
+	width: auto;
+	display:inline;
+	font-size:10px;
+	margin-right:10px!important;
+	}
+
+
 /* Search comments specific */
 
 li.WText ul {

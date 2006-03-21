@@ -1,7 +1,7 @@
 <?php
 // Note: This file is included from the library/Vanilla/Vanilla.Control.DiscussionGrid.php class.
 
-echo('<div class="ContentInfo Top">
+echo '<div class="ContentInfo Top">
 	<h1>
 		'.$this->Context->PageTitle.'
 	</h1>
@@ -12,7 +12,7 @@ echo('<div class="ContentInfo Top">
 	</div>
 </div>
 <div id="ContentBody">
-	<ol id="Discussions">');
+	<ol id="Discussions">';
 
 $Discussion = $this->Context->ObjectFactory->NewObject($this->Context, 'Discussion');
 $FirstRow = 1;
@@ -33,16 +33,16 @@ while ($Row = $this->Context->Database->GetRow($this->DiscussionData)) {
 	
    $FirstRow = 0;
 }
-echo($DiscussionList.'
+echo $DiscussionList.'
 	</ol>
-</div>');
+</div>';
 if ($this->DiscussionDataCount > 0) {
-   echo('<div class="ContentInfo Bottom">
+   echo '<div class="ContentInfo Bottom">
 		<div class="PageInfo">
 			<p>'.$pl->GetPageDetails($this->Context).'</p>
 			'.$PageList.'
 		</div>
 		<a href="'.GetRequestUri().'#pgtop">'.$this->Context->GetDefinition('TopOfPage').'</a>
-	</div>');
+	</div>';
 }
 ?>
