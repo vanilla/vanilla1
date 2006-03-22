@@ -64,9 +64,10 @@ if (
 	$Url = $Url[0]."?".$Params->GetQueryString();
 	$Panel->AddString('<p id="Mode" class="TextMode'.$CurrentModeCSS.'">'.$CurrentMode.' (<a href="'.$Url.'">'.$OppositeMode.'</a>)</p>',
 		200);
+		
+	// Add the stylesheet for these xhtml elements
+	$Head->AddStyleSheet("./extensions/TextMode/style.css");
 }
-
-// TODO: Handle integrating this switch in the comments and account pages here (rather than in-place)
 
 // Make sure that a comment follows the user's preference and enables or disabled html where required
 function Comment_UserHtmlPreference(&$Comment) {
