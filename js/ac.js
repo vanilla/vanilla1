@@ -42,7 +42,7 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 	/* ---- Private Variables---- */
 	
 	var _Self = this;
-	_Self._Curr = null;
+	_Curr = null;
 	_Curr = document.getElementById(TextInputID);
 	
 	if (_Curr) {
@@ -71,7 +71,8 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 			_Self._Keywords = new Array();
 		}		
 		_Total = _KWCount;
-		if (document.getElementById(_Self.TableID)){ _Display = false;document.body.removeChild(document.getElementById(_Self.TableID)); } 
+		if (document.getElementById(_Self.TableID)) { _Display = false; document.body.removeChild(document.getElementById(_Self.TableID)); }
+		if (document.getElementById(_Self.TableID+'_iefix')){ document.body.removeChild(document.getElementById(_Self.TableID+'_iefix')); }
 		if (_KWCount == 0) {
 			_MouseOnList = 0;
 			RemoveAutocomplete();
@@ -85,7 +86,9 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 		a.id = _Self.TableID;
 		a.cellPadding = '0';
 		a.cellSpacing = '0';
+		a.style.zIndex = '200';
 		document.body.appendChild(a);
+		
 		var i;
 		var first = true;
 		var j = 1;
@@ -124,6 +127,22 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 		_RangeD = j-1;
 		_Display = true;
 		if (_Pos <= 0) _Pos = 1;
+		
+		
+		// Fix ie display bugs
+		iframe = document.createElement('iframe');
+		iframe.id = a.id+'_iefix';
+		iframe.src = 'javascript:false;';
+		iframe.style.position='absolute';
+		iframe.style.top = a.style.top;
+		iframe.style.left = a.style.left;
+		iframe.style.zIndex = '100';
+		iframe.style.border = '0';
+		// iframe.style.filter = 'progid:DXImageTransform.Microsoft.Alpha(opacity=0);';
+		iframe.style.width = _Curr.offsetWidth + 'px';
+		iframe.style.height = a.offsetHeight + 'px';
+		// alert(a.offsetHeight);
+		document.body.appendChild(iframe);
 	}
 	function GoUp(){
 		if (!_Display) return;
@@ -220,15 +239,18 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 		// if (_MouseOnList==0){
 		_Display = 0;
 		if (document.getElementById(_Self.TableID)){ document.body.removeChild(document.getElementById(_Self.TableID)); }
+		if (document.getElementById(_Self.TableID+'_iefix')){ document.body.removeChild(document.getElementById(_Self.TableID+'_iefix')); }
 		if (_ToId) clearTimeout(_ToId);
 		// }
 	}
 	function KeyPress(e){
-		if (_CaretMove) stopEvent(e);
+		if (_CaretMove && _Curr.id == getTargetElement(e).id) stopEvent(e);
 		return !_CaretMove;
 	}
 	function CheckKey(evt){
 		if (!evt) evt = event;
+		// alert(_Curr.id+ " must equal "+getTargetElement(evt).id);
+		if (_Curr.id != getTargetElement(evt).id) return;
 		a = evt.keyCode;
 		caret_pos_start = getCaretStart(_Curr);
 		_CaretMove = 0;
@@ -287,6 +309,7 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 			for (i=0;i<_Self.Delimiter.length;i++){
 				delim_split += _Self.Delimiter[i];
 			}
+			if (delim_split == '') delim_split = '##void##';
 			delim_split = delim_split.addslashes();
 			delim_split_rx = new RegExp("(["+delim_split+"])");
 			c = 0;
@@ -338,8 +361,6 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 		_MouseOnList = 0;
 		RemoveAutocomplete();
 	}
-
-	return this;
 }
 /* Event Functions */
 

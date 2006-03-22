@@ -75,15 +75,6 @@ $Head->AddStyleSheet($Context->StyleUrl.'vanilla.css', 'screen');
 $Head->AddStyleSheet($Context->StyleUrl.'vanilla.handheld.css', 'handheld');
 $Head->AddStyleSheet($Context->StyleUrl.'vanilla.print.css', 'print');
 
-// Add the start button to the panel
-if ($Context->Session->UserID > 0 && $Context->Session->User->Permission('PERMISSION_START_DISCUSSION')) {
-   $CategoryID = ForceIncomingInt('CategoryID', 0);
-	if ($CategoryID == 0) $CategoryID = '';
-	$Panel->AddString('<h1>
-		<a href="'.GetUrl($Configuration, 'post.php', 'category/', 'CategoryID', $CategoryID).'">'.$Context->GetDefinition('StartANewDiscussion').'</a>
-	</h1>', 0, 1);
-}
-
 // BUILD THE MAIN MENU
 $Menu->AddTab($Context->GetDefinition('Discussions'), 'discussions', GetUrl($Configuration, './'), '', $Configuration['TAB_POSITION_DISCUSSIONS']);
 if ($Configuration['USE_CATEGORIES']) $Menu->AddTab($Context->GetDefinition('Categories'), 'categories', GetUrl($Configuration, 'categories.php'), '', $Configuration['TAB_POSITION_CATEGORIES']);

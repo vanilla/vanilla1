@@ -3,6 +3,15 @@
 
 echo('<div id="Panel">');
 
+// Add the start button to the panel
+if ($this->Context->Session->UserID > 0 && $this->Context->Session->User->Permission('PERMISSION_START_DISCUSSION')) {
+   $CategoryID = ForceIncomingInt('CategoryID', 0);
+	if ($CategoryID == 0) $CategoryID = '';
+	echo '<h1><a href="'.GetUrl($this->Context->Configuration, 'post.php', 'category/', 'CategoryID', $CategoryID).'">'
+      .$this->Context->GetDefinition('StartANewDiscussion')
+      .'</a></h1>';
+}
+
 $this->CallDelegate('PostStartButtonRender');
 
 while (list($Key, $PanelElement) = each($this->PanelElements)) {

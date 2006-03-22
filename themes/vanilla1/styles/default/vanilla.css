@@ -125,12 +125,13 @@ a:hover {
 	list-style:none;
 	}
 #Panel h1 {
-	margin-top:10px;
-	}
+	margin-top:20px;
+	font-size:14px;
+}
 #Panel h1 a {
 	color:#cc0000;
 	font-size:14px;
-	}
+}
 #Panel h1 a:hover {
 	color:#ff0000;
 	}
@@ -181,45 +182,6 @@ a:hover {
 	background-color:#ffffcc;
 	}
 
-#Legend {
-	margin:-3px 0px 0px 0px !important;
-	width:180px;
-	}
-#Legend li {
-	margin:0px !important;
-	padding:2px 5px;
-	font-size:11px;
-	color:#999999;
-	border-bottom:1px solid #cccccc;
-	}
-
-#Mode {
-	margin:20px 0px !important;
-	padding:5px 0px !important;
-	text-indent: 4px;
-	width:180px;
-	}
-.TextModeOFF {
-	border-top:1px solid #ebc8c6;
-	border-bottom:1px solid #ebc8c6;
-	background-color:#fee8ef;
-	color:#74173d !important;
-}
-.TextModeON {
-	background: #F5F9FF;
-	border-top: 1px solid #ACBEDF;
-	border-bottom: 1px solid #ACBEDF;
-}
-.TextModeOFF a {
-	color:#74173d !important;
-	}
-.TextModeON a {
-	color: #062971 !important;
-	}
-#Mode a:hover {
-	text-decoration:none;
-	}
-
 #AboutVanilla {
 	border-top:1px solid #cccccc;
 	background-color:#f9f9f9;
@@ -265,7 +227,7 @@ a:hover {
 	margin:0px;
 	padding:0px;
 	}
-.ContentInfo h1 {
+#CommentsPage .ContentInfo h1 {
 	color:#000000;
 	float:left;
 	width:60%;
@@ -637,10 +599,18 @@ li.User.Name span {
 	}	
 
 /* Search Page */
-  
+
 #Form.Search {
 	width: 100% !important;
+	padding: 20px 0px 0px 0px !important;
 }
+#Form.Search fieldset legend {
+	padding: 0px !important;
+	margin-bottom: 6px;
+}
+#SearchSimple {
+	margin: 0px !important;
+	}
 #SearchSimple input {
 	width: 10px !important;
 	margin-left: 14px;
@@ -648,6 +618,7 @@ li.User.Name span {
 }
 #SearchSimple label {
 	display: inline !important;
+	width: 10px !important;
 	}
 #MainSearchInput input {
 	width: 60% !important;
@@ -703,8 +674,7 @@ li.User.Name span {
 	}
 #DiscussionAutoCompleteResults, #CommentAutoCompleteResults {
 	width: 180px;
-	}	
-	
+	}
 	
 /* Forms.. */
 
@@ -721,13 +691,14 @@ li.User.Name span {
 	clear:none;
 	}
 #Form fieldset legend {
-	padding-bottom:5px;
+	padding: 4px 0px 4px 0px;
+	margin: 0px;
 	font-size:14px;
 	font-weight:bold;
 	color:#000000;
 	}
 #Form form {
-	margin:10px 0px 50px 0px;
+	margin: 0px 0px 50px 0px;
 	padding:10px 10px 0px 10px;
 	border:1px solid #ffedae;
 	border-left:0px;
@@ -774,6 +745,9 @@ li.User.Name span {
 
 /* Add Comment Form.. */
 
+#Form.AddComments form {
+	margin-top: 0px !important;
+}
 #Form.AddComments label {
 	display:block;
 	width:100%;
@@ -790,9 +764,10 @@ li.User.Name span {
 	
 /* Account Section Forms.. */
 
-#Form.Account {
-	padding-top:10px;
+.Account {
+	padding-top:18px;
 	width:450px;
+	margin: 0px !important;
 	}
 #Form.Account * {
 	color:#84733d;
@@ -1107,9 +1082,9 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
 	font-style:italic;
 	}
 	
-#SettingsPage #Content {
-	padding-top:20px;
-	}
+#SettingsPage #Help {
+	padding-top: 20px;
+}
 #SettingsPage #Content h1 {
 	font-size:14px;
 	color:#000000;
