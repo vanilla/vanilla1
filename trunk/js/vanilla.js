@@ -131,11 +131,16 @@ function SetSwitch(SenderName, CurrentSwitchVal, SwitchType, CommentOn, CommentO
 }
 
 function ShowAdvancedSearch() {
-	var SimpleSearch = document.getElementById("SimpleSearch");
-	var AdvancedSearch = document.getElementById("AdvancedSearch");
-	if (SimpleSearch && AdvancedSearch) {
-		SimpleSearch.style.display = "none";
-		AdvancedSearch.style.display = "block";
+	var SearchSimple = document.getElementById("SearchSimple");
+	var SearchDiscussions = document.getElementById("SearchDiscussions");
+	var SearchComments = document.getElementById("SearchComments");
+	var SearchUsers = document.getElementById("SearchUsers");
+	
+	if (SearchSimple && SearchDiscussions && SearchComments && SearchUsers ) {
+		SearchSimple.style.display = "none";
+		SearchDiscussions.style.display = "block";
+		SearchComments.style.display = "block";
+		SearchUsers.style.display = "block";
 	}
 }
 

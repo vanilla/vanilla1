@@ -247,12 +247,6 @@ a:hover {
 
 /* ContentInfo/Control/Whatever - Universal to Discussion Index & Comments */
 
-#SearchPage .ContentInfo.Top {
-	margin-top:-40px;
-	}
-#SearchPage .ContentInfo.Bottom {
-	margin-top:-6px;
-	}
 .ContentInfo {
 	text-align:right;
 	}
@@ -274,10 +268,11 @@ a:hover {
 .ContentInfo h1 {
 	color:#000000;
 	float:left;
-	width:80%;
+	width:60%;
 	overflow:hidden;
 	white-space:nowrap;	
 	}
+body>.ContentInfo h1{ width:80%; }	
 .ContentInfo input {
 	font-size:10px;
 	margin-left:5px;
@@ -505,7 +500,7 @@ a:hover {
 	}
 
 
-/* Search comments specific */
+/* Search comments specific 
 
 li.WText ul {
 	background-color:#ffffff !important;
@@ -523,8 +518,8 @@ li.WText ul {
 .ThreadText a:hover {
 	background-color:#ffffcc;
 	}
-
-/* Search user specific... */
+*/
+/* Search user specific... 
 
 li.UserAccount.Odd ul {
 	background-color:#ffffff !important;
@@ -548,7 +543,7 @@ li.User.Name.WIcon {
 li.User.Name span {
 	display:none;
 	}
-
+*/
 /* Comments.. */
 
 #Comments {
@@ -639,10 +634,78 @@ li.User.Name span {
 	padding-left: 16px;
 	display: block;
 	white-space: pre;
-	}
-	
-	
+	}	
 
+/* Search Page */
+  
+#Form.Search {
+	width: 100% !important;
+}
+#SearchSimple input {
+	width: 10px !important;
+	margin-left: 14px;
+	margin-right: 6px;
+}
+#SearchSimple label {
+	display: inline !important;
+	}
+#MainSearchInput input {
+	width: 60% !important;
+	margin-left: 0px !important;
+}
+#MainSearchInput label {
+	display: none !important;
+}
+#Form.Search .Submit input {
+	margin: 0px !important;
+	width: 70px !important;
+	color: #000000 !important;
+}
+
+/* Advanced Search Form */
+
+#SearchDiscussions, #SearchComments, #SearchUsers {
+	display: none;
+}
+#SearchDiscussions, #SearchComments {
+	border-bottom: 0px !important;
+	margin: 0px !important;
+	}
+#SearchComments, #SearchUsers {
+	border-top: 0px !important;
+	}
+#SearchUsers {
+	margin-top: 0px !important;
+	padding-bottom: 16px !important;
+}
+#SearchDiscussions label, #SearchComments label, #SearchUsers label {
+	width: 200px !important;
+	float: left;	
+	margin: 0px !important;
+	}
+#SearchDiscussions input, #SearchComments input, #SearchUsers input,
+#SearchDiscussions select, #SearchComments select, #SearchUsers select {
+	width: 180px !important;
+	margin: 0px 12px 0px 0px !important;
+	padding: 0px !important;
+}
+#SearchDiscussions select, #SearchComments select, #SearchUsers select {
+	margin: 0px 16px 0px 0px !important;
+	}
+#Form.Search .SearchButton {
+	margin: 0px !important;
+	width: 70px !important;
+	color: #000000 !important;
+	cursor: pointer;
+	}
+#txtDiscussionKeywords, #txtCommentKeywords, #txtUserKeywords {
+	clear: left;
+	}
+#DiscussionAutoCompleteResults, #CommentAutoCompleteResults {
+	width: 180px;
+	}	
+	
+	
 /* Forms.. */
 
 #Form * {
@@ -724,38 +787,7 @@ li.User.Name span {
 #Form.AddComments {
 	margin: 4px 0px 4px 0px;
 	}
-
-/* Search form.. */
-
-div.Search {
-	width:100% !important;
-	}
-
-#Form.Search input.Radio {
-	width:12px !important;
-	}
-#Form.Search label.Radio {
-	display:inline !important;
-	width:auto !important;
-	float:none;
-	margin:0px;
-	}
-
-#Form.Search #SearchSimple label {
-	width:auto !important;
-	margin-right:10px;
-	}
-#Form.Search #SearchAdvanced label {
-	width:33%;
-	}
-#Form.Search #SearchAdvanced input, #Form.Search #SearchAdvanced select {
-	width:30%;
-	margin-right:3%;
-	}
-#Form.Search #SearchAdvanced div.Submit {
-	margin:10px 0px 25px 0px !important;
-	}
-
+	
 /* Account Section Forms.. */
 
 #Form.Account {
@@ -849,7 +881,6 @@ div.Search {
 	width: 70px !important;
 }
 
-
 /* Custom form for extensions management screen */
 
 div.Extensions {
@@ -911,6 +942,7 @@ div.ExtensionsDisabled ul li.hiLite p, div.ExtensionsEnabled ul li.hiLite p {
 	}
 
 /* Custom form for sortable list */
+  
 .SortList {
 	color: #000000;
 	background: rgb(254,254,204);
@@ -1033,7 +1065,7 @@ div.ExtensionsDisabled ul li.hiLite p, div.ExtensionsEnabled ul li.hiLite p {
 	margin-left:320px;
 	padding-top:20px;
 	}
-html>body #AccountHistory { /* ugly hack, but fixes display error in IE.. fuck it */
+html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
 	margin-left:300px !important;
 	}
 #AccountHistory * {
