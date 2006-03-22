@@ -15,26 +15,26 @@ You should have received a copy of the GNU General Public License along with Van
 The latest source code for Vanilla is available at www.lussumo.com
 Contact Mark O'Sullivan at mark [at] lussumo [dot] com
 */
-$Context->Dictionary["Searches"] = "Searches";
-$Context->Dictionary["RemoveLower"] = "remove";
-$Context->Dictionary["NoSavedSearches"] = "You have no saved searches.";
-$Context->Dictionary["SaveSearch"] = "Save Search";
-$Context->Dictionary["DisplaySavedSearches"] = "Display your saved searches in the control panel";
+$Context->Dictionary['Searches'] = 'Searches';
+$Context->Dictionary['RemoveLower'] = 'remove';
+$Context->Dictionary['NoSavedSearches'] = 'You have no saved searches.';
+$Context->Dictionary['SaveSearch'] = 'Save Search';
+$Context->Dictionary['DisplaySavedSearches'] = 'Display your saved searches in the control panel';
 
 // Write the saved searches to the screen
 if (
-		in_array($Context->SelfUrl, array("index.php", "search.php", "comments.php"))
+		in_array($Context->SelfUrl, array('index.php', 'search.php', 'comments.php'))
 		&& $Context->Session->UserID > 0
-		&& $Context->Session->User->Preference("ShowSavedSearches")
+		&& $Context->Session->User->Preference('ShowSavedSearches')
 	) {
 
-	$AllowEdit = $Context->SelfUrl == "search.php";
-   $SearchManager = $Context->ObjectFactory->NewContextObject($Context, "SearchManager");
-   $Data = $SearchManager->GetSearchList($Configuration["PANEL_SEARCH_COUNT"], $Context->Session->UserID);
+	$AllowEdit = $Context->SelfUrl == 'search.php';
+   $SearchManager = $Context->ObjectFactory->NewContextObject($Context, 'SearchManager');
+   $Data = $SearchManager->GetSearchList($Configuration['PANEL_SEARCH_COUNT'], $Context->Session->UserID);
 	$SearchCount = 0;
-	$String = "<ul>
+	$String = '<ul>
 		<li>
-			<h2>".$Context->GetDefinition("Searches")."</h2>";
+			<h2>'.$Context->GetDefinition('Searches').'</h2>';
 	if ($Data) $SearchCount = $Context->Database->RowCount($Data);
 	if ($SearchCount > 0) {
 		if ($AllowEdit) $String .= '<div class="Hidden"><input type="hidden" id="SavedSearchCount" value="'.$SearchCount.'" /></div>';
@@ -46,16 +46,16 @@ if (
 					$s->Clear();
 					$s->GetPropertiesFromDataSet($Row);
 					$s->FormatPropertiesForDisplay();
-					$String .= "<li id=\"SavedSearch_".$s->SearchID."\"><a class=\"PanelLink\" href=\"".GetUrl($Configuration, "search.php", "saved/", "SearchID", $s->SearchID)."\">".$s->Label."</a>";
-					if ($AllowEdit) $String .= " (<a href=\"javascript:RemoveSearch(".$s->SearchID.");\">".$Context->GetDefinition("RemoveLower")."</a>)";
-					$String .= "</li>";
+					$String .= '<li id="SavedSearch_'.$s->SearchID.'"><a class="PanelLink" href="'.GetUrl($Configuration, 'search.php', 'saved/', 'SearchID', $s->SearchID).'">'.$s->Label.'</a>';
+					if ($AllowEdit) $String .= ' (<a href="./" onclick="RemoveSearch('.$s->SearchID.'); return false;">'.$Context->GetDefinition('RemoveLower').'</a>)';
+					$String .= '</li>';
 				}
-			$String .= "</ul>";
+			$String .= '</ul>';
 		}
 	}
-	$String .= "</li>
+	$String .= '</li>
 	</ul>
-	<p id=\"SearchSavingHelp\" ".(($SearchCount > 0) ? "style=\"display: none;\"":"").">".$Context->GetDefinition("NoSavedSearches")."</p>";
+	<p id="SearchSavingHelp" '.(($SearchCount > 0) ? 'style="display: none;"':'').'>'.$Context->GetDefinition('NoSavedSearches').'</p>';
 	$Panel->AddString($String, 20);
 }
 

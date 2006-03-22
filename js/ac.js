@@ -42,7 +42,7 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 	/* ---- Private Variables---- */
 	
 	var _Self = this;
-
+	_Self._Curr = null;
 	_Curr = document.getElementById(TextInputID);
 	
 	if (_Curr) {
