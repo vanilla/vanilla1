@@ -1,7 +1,9 @@
 <?php
 /*
- Note: this is a "-dist" file. You must create a copy of this file without the
- "-dist" in the filename for your installation.
+ Note: this is a "-dist" (distribution) file. You must create a copy of this
+ file without the "-dist" in the filename for your installation. This way when
+ you perform upgrades of Vanilla, your copy of the -dist file will not be
+ overwritten.
  
  Copyright 2003 - 2005 Mark O'Sullivan
  This file is part of Vanilla.
@@ -12,8 +14,7 @@
  Contact Mark O'Sullivan at mark [at] lussumo [dot] com
 
  Description: Create a copy of this file and name it settings.php. Use that file
- to specify your own custom information. DO NOT ADD your settings.php file to
- the repository or others will see your information.
+ to specify your own custom information.
 */
 
 // Path Settings
