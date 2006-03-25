@@ -867,17 +867,22 @@ li.User.Name span {
 	margin-right:10px;
 	}
 
-/* Add Comment Form.. */
+/* Add Comment & Start Discussion Forms */
 
+#Form.StartDiscussion legend {
+	padding-top: 20px;
+	}
 #Form.AddComments form {
 	margin-top: 0px !important;
 }
+#Form.StartDiscussion label, 
 #Form.AddComments label {
 	display:block;
 	width:100%;
 	color:#834300;
 	font-weight:bold;
 	}
+#Form.StartDiscussion label.Radio,
 #Form.AddComments label.Radio {
 	display:inline !important;
 	width:auto !important;
@@ -885,7 +890,16 @@ li.User.Name span {
 #Form.AddComments {
 	margin: 4px 0px 4px 0px;
 	}
-	
+.DiscussionBox {
+	width: 400px;
+	}
+#Form.StartDiscussion .Submit .StartDiscussionButton {
+	width:150px !important;
+	}
+#Form.StartDiscussion a {
+	font-weight: normal;
+	}
+
 /* Account Section Forms.. */
 
 .Account {

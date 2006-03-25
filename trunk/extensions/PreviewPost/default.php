@@ -67,14 +67,14 @@ if(in_array($Context->SelfUrl, array('post.php', 'comments.php')))
 	function DiscussionForm_PreviewPostButton(&$DiscussionForm)
 	{
 		echo(
-			'<input name="btnPreview" value="'.$DiscussionForm->Context->GetDefinition("PreviewPost").'" class="Button SubmitButton" type="button" onclick="ShowPreview(\'./extensions/PreviewPost/ajax.php\')" />'
+			'<input name="btnPreview" value="'.$DiscussionForm->Context->GetDefinition("PreviewPost").'" class="Button SubmitButton PreviewButton" type="button" onclick="ShowPreview(\'./extensions/PreviewPost/ajax.php\')" />'
 		);
 	}
 	
 	function CommentForm_PreviewPostButton(&$CommentForm)
 	{
 		echo(
-			'<input name="btnPreview" value="'.$CommentForm->Context->GetDefinition("PreviewPost").'" class="Button SubmitButton" type="button" onclick="ShowPreview(\'./extensions/PreviewPost/ajax.php\')" />'
+			'<input name="btnPreview" value="'.$CommentForm->Context->GetDefinition("PreviewPost").'" class="Button SubmitButton PreviewButton" type="button" onclick="ShowPreview(\'./extensions/PreviewPost/ajax.php\')" />'
 		);
 	}
 	
