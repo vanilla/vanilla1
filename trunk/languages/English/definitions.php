@@ -142,12 +142,26 @@ $Context->Dictionary['MembershipApplicants'] = 'Membership Applicants';
 $Context->Dictionary['GlobalApplicationSettings'] = 'Global Application Settings';
 $Context->Dictionary['GlobalApplicationSettingsNotes'] = 'BE CAREFUL with the changes you make on this page. Erroneous information entered here could cause your forum to crash and may require you manually altering settings files to repair the problem.';
 $Context->Dictionary['AboutSettings'] = 'About settings';
-$Context->Dictionary['AboutSettingsNotes'] = "<dl><dt>What are settings?</dt>
-	<dd>Using the settings section, administrators can manipulate the way this site appears and functions.</dd>
-	<dt>What's the difference between settings and account?</dt>
-	<dd>The settings section is only seen and manipulated by users with administrative capabilities.</dd>
-	<dt>Can all administrators see the settings section?</dt>
-	<dd>Yes. However, the administrators will only be able to manipulate settings for parts of the site for which they have administrative access.</dd></dl>";
+$Context->Dictionary['AboutSettingsNotes'] = "<p class=\"Description\">Using this section you can manipulate all configurable settings for your Vanilla installation. Summarized below are the standard menu items and their functions. Depending on your permissions, you may or may not see all of the menu items listed:</p>
+	<dl><dt>Application Settings</dt>
+	<dd>This is the main configuration screen for Vanilla. It allows you to change the banner text, manipulate spam controls, define cookie settings, and change basic forum options like whispers, categories, etc.</dd>
+	<dt>Check for Updates</dt>
+	<dd>Make sure you have the latest updates for Vanilla by using this menu option often.</dd>
+	<dt>Manage Extensions</dt>
+	<dd>Extensions are the bread and butter of Vanilla. Vanilla is plain by default, but can do remarkable things when you add to it. Use this menu option to enable extensions and find new extensions from Lussumo.</dd>
+	<dt>Language Management</dt>
+	<dd>Use this menu option to switch the language dictionary that Vanilla uses.</dd>
+	<dt>Role Management</dt>
+	<dd>Use this menu option to add, edit, and organize roles and permissions.</dd>
+	<dt>Category Management</dt>
+	<dd>use this menu option to add, edit, and organize categories.</dd>
+	<dt>Registration Management</dt>
+	<dd>Using this menu option you can define how new members are handled: which role they are assigned to, do they require administrative approval, etc.</dd>
+	<dt>Membership Applicants</dt>
+	<dd>Vanilla does not have a \"member list\" like many other popular web forums. Instead we use our search to find and manage members. This link will run a search that filters down to new (unapproved) members.</dd>
+	<dt>Other options</dt>
+	<dd>Depending on both your role's permissions and which extensions you have enabled, there may be more options in the menu(s) in this section. Welcome to the magic of Vanilla's extensions!</dd>
+</dl>";
 $Context->Dictionary['HiddenInformation'] = 'Hidden information';
 $Context->Dictionary['DisplayHiddenDiscussions'] = 'Display hidden discussions';
 $Context->Dictionary['DisplayHiddenComments'] = 'Display hidden comments';
@@ -164,9 +178,12 @@ $Context->Dictionary['RolesInCategory'] = 'Roles allowed to take part in this ca
 $Context->Dictionary['SelectCategoryToRemove'] = '1. Select the category you would like to remove';
 $Context->Dictionary['SelectReplacementCategory'] = '2. Select a replacement category';
 $Context->Dictionary['ReplacementCategory'] = 'Replacement category';
-$Context->Dictionary['ReplacementCategoryNotes'] = 'When you remove a category from the system, discussions which have been categorized with that category lose their meaning. The replacement category will be assigned to all discussions that are currently assigned to the category you are removing.';
+$Context->Dictionary['ReplacementCategoryNotes'] = 'When you remove a category from the system, discussions which have been placed in that category are orphaned. The replacement category will be assigned to all discussions that are currently assigned to the category you are removing.';
 $Context->Dictionary['Remove'] = 'Remove';
 $Context->Dictionary['CreateNewCategory'] = 'Create a new category';
+$Context->Dictionary['CategoryRemoved'] = 'The category has been removed.';
+$Context->Dictionary['CategorySaved'] = 'Your changes were saved successfully.';
+$Context->Dictionary['NewCategorySaved'] = 'The category was created successfully.';
 $Context->Dictionary['SelectRoleToEdit'] = '1. Select the role you would like to edit';
 $Context->Dictionary['Roles'] = 'Roles';
 $Context->Dictionary['ModifyRoleDefinition'] = '2. Modify the role definition';
@@ -180,6 +197,9 @@ $Context->Dictionary['RoleTagline'] = 'Role tagline';
 $Context->Dictionary['RoleTaglineNotes'] = "The role tagline will appear on the user's account page underneath his/her name. If you do not supply a value for this field, the tagline will simply not appear on the user's account page.";
 $Context->Dictionary['RoleAbilities'] = 'Role abilities';
 $Context->Dictionary['RoleAbilitiesNotes'] = 'Check any abilities you wish users in this role to have.';
+$Context->Dictionary['RoleRemoved'] = 'The role has been removed.';
+$Context->Dictionary['RoleSaved'] = 'Your changes were saved successfully.';
+$Context->Dictionary['NewRoleSaved'] = 'The role was created successfully.';
 $Context->Dictionary['StartANewDiscussion'] = 'Start a new discussion';
 $Context->Dictionary['SelectRoleToRemove'] = '1. Select the role you would like to remove';
 $Context->Dictionary['SelectReplacementRole'] = '2. Select a replacement role';
@@ -308,7 +328,7 @@ $Context->Dictionary['PasswordResetRequest'] = 'Password Reset Request';
 $Context->Dictionary['LanguageManagement'] = 'Language Management';
 $Context->Dictionary['LanguageChangesSaved'] = 'The language has been changed successfully.';
 $Context->Dictionary['ChangeLanguage'] = 'Choose a language';
-$Context->Dictionary['ChangeLanguageNotes'] = 'Once you have clicked "Save" you will still need to click the "click here to continue" button to see the new language assignment.';
+$Context->Dictionary['ChangeLanguageNotes'] = 'If your language does not appear here, you can <a href="http://getvanilla.com/languages" target="_blank">download the latest language packs from Lussumo</a>.';
 $Context->Dictionary['CloseThisDiscussion'] = 'Close this discussion';
 $Context->Dictionary['ReOpenThisDiscussion'] = 'Re-Open this discussion';
 $Context->Dictionary['MakeThisDiscussionUnsticky'] = 'Make this discussion UnSticky';
@@ -407,13 +427,15 @@ $Context->Dictionary['BookmarkedLabel'] = 'Bookmarked label';
 $Context->Dictionary['DefaultStyleFolder'] = 'Default style folder';
 $Context->Dictionary['WebPathToVanilla'] = 'Web-path to Vanilla';
 $Context->Dictionary['CookieDomain'] = 'Cookie domain';
-$Context->Dictionary['ApplicationSettingsNotes'] = 'The default style folder should be a relative path from the root of the application. The web-path to Vanilla should be a complete path to Vanilla just as you would type it into a web browser (minus the http://). The cookie domain is where you want cookies assigned to for Vanilla. Cookies can be further defined to a particular path on your website using the "cookie path" setting.';
+$Context->Dictionary['DefaultStyleFolderNotes'] = 'The default style folder should be a relative path from the root of the application.';
+$Context->Dictionary['WebPathNotes'] = 'The web-path to Vanilla should be a complete path to Vanilla just as you would type it into a web browser.';
+$Context->Dictionary['CookieSettingsNotes'] = 'The cookie domain is where you want cookies assigned to for Vanilla. Cookies can be further defined to a particular path on your website using the "cookie path" setting.';
 $Context->Dictionary['AllowNameChange'] = 'Allow members to change their usernames';
 $Context->Dictionary['AllowPublicBrowsing'] = 'Allow non-members to browse the forum';
 $Context->Dictionary['UseCategories'] = 'Allow discussions to be categorized';
 $Context->Dictionary['DiscussionLabelsNotes'] = "The discussion labels will appear in-front of discussion topics on the main discussion page. The discussion label prefix and suffix will be placed on either side of the discussion label. If a discussion label is left blank, the discussion label's prefix and suffix will not appear.";
 $Context->Dictionary['ForumOptions'] = 'Forum Options';
-$Context->Dictionary['GlobalApplicationChangesSaved'] = 'Your changes have been saved';
+$Context->Dictionary['GlobalApplicationChangesSaved'] = 'Your changes have been saved successfully';
 $Context->Dictionary['ApprovedMemberRole'] = 'Membership approval role';
 $Context->Dictionary['ApprovedMemberRoleNotes'] = 'When a user is approved for membership by an administrator (if membership approval is required), this is the role to which applicants will be assigned.';
 $Context->Dictionary['NewMemberWelcomeAboard'] = 'You have been granted membership access. Welcome aboard!';
@@ -488,6 +510,8 @@ $Context->Dictionary['PERMISSION_MANAGE_LANGUAGE'] = 'Change language';
 $Context->Dictionary['PERMISSION_MANAGE_STYLES'] = 'Manage styles';
 $Context->Dictionary['PERMISSION_RECEIVE_APPLICATION_NOTIFICATION'] = 'Notify by email of new applicants';
 $Context->Dictionary['PERMISSION_ALLOW_DEBUG_INFO'] = 'Can view debug info';
+$Context->Dictionary['PERMISSION_DATABASE_CLEANUP'] = 'Allow use of the cleanup extension';
+$Context->Dictionary['PERMISSION_ADD_ADDONS'] = 'Can add add-ons';
 $Context->Dictionary['NoEnabledExtensions'] = 'There are currently no enabled extensions.';
 $Context->Dictionary['NoDisabledExtensions'] = 'There are currently no disabled extensions.';
 $Context->Dictionary['NA'] = 'n/a';
@@ -503,6 +527,6 @@ $Context->Dictionary['ConfirmSink'] = 'Are you sure you want to sink this discus
 $Context->Dictionary['ErrPermissionSinkDiscussions'] = 'You do not have permission to sink discussions';
 
 /* Please do not remove or alter this definition */
-$Context->Dictionary['PanelFooter'] = '<p id="AboutVanilla"><a href="http://getvanilla.com">Vanilla ('.VANILLA_VERSION.')</a> is a product of <a href="http://lussumo.com">Lussumo</a>. More Information: <a href="http://lussumo.com/docs">Documentation</a>, <a href="http://lussumo.com/community">Community Support</a>.</p>';
+$Context->Dictionary['PanelFooter'] = '<p id="AboutVanilla"><a href="http://getvanilla.com">Vanilla ('.APPLICATION_VERSION.')</a> is a product of <a href="http://lussumo.com">Lussumo</a>. More Information: <a href="http://lussumo.com/docs">Documentation</a>, <a href="http://lussumo.com/community">Community Support</a>.</p>';
 
 ?>

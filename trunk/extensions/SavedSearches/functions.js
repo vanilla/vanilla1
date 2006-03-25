@@ -6,10 +6,10 @@ function RemoveSearch(SearchID) {
 		if (confirm("Are you sure you want to remove this search?")) {
          var Url = "./extensions/SavedSearches/removesearch.php";
          var Parameters = "SearchID="+SearchID;
-         var DataManager = new Ajax.Request(
-            Url,
-            { method: 'get', parameters: Parameters, onComplete: HideSearchInPage }
-         );
+			var dm = new DataManager();
+			dm.RequestFailedEvent = HandleFailure;
+			dm.RequestCompleteEvent = RefreshPage;
+			dm.LoadData(Url+"?"+Parameters);		
 		}
 	}
 }

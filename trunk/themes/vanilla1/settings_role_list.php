@@ -1,15 +1,24 @@
 <?php
 // Note: This file is included from the library/Vanilla.Control.RoleForm.php control.
 
-echo('<div id="Form" class="Account Roles">
-   <fieldset>
+echo '<div id="Form" class="Account Roles">';
+   $Action = ForceIncomingString("Action", "");
+   if ($Action == 'Removed') {
+      echo '<div class="Success">'.$this->Context->GetDefinition('RoleRemoved').'</div>';
+   } else if ($Action == 'Saved') {
+      echo '<div class="Success">'.$this->Context->GetDefinition('RoleSaved').'</div>';
+   } else if ($Action == 'SavedNew') {
+      echo '<div class="Success">'.$this->Context->GetDefinition('NewRoleSaved').'</div>';
+   }
+
+   echo '<fieldset>
       <legend>'.$this->Context->GetDefinition('RoleManagement').'</legend>'
       .$this->Get_Warnings().
       '<form method="get" action="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl).'">
       <input type="hidden" name="PostBackAction" value="Role" />
       <p>'.$this->Context->GetDefinition('RoleReorderNotes').'</p>
       
-      <ul class="SortList" id="SortRoles">');
+      <ul class="SortList" id="SortRoles">';
          if ($this->RoleData) {
             $r = $this->Context->ObjectFactory->NewContextObject($this->Context, 'Role');
             
@@ -17,11 +26,11 @@ echo('<div id="Form" class="Account Roles">
                $r->Clear();
                $r->GetPropertiesFromDataSet($Row);
                $r->FormatPropertiesForDisplay();
-               echo('<li class="SortListItem'.($this->Context->Session->User->Permission('PERMISSION_SORT_ROLES') ? ' MovableSortListItem' : '').'" id="item_'.$r->RoleID.'">');
-                  if ($this->Context->Session->User->Permission('PERMISSION_REMOVE_ROLES') && !$r->Unauthenticated) echo('<a class="SortRemove" href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=RoleRemove&amp;RoleID='.$r->RoleID).'">&nbsp;</a>');
-                  if ($this->Context->Session->User->Permission('PERMISSION_EDIT_ROLES')) echo('<a class="SortEdit" href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=Role&amp;RoleID='.$r->RoleID).'">'.$this->Context->GetDefinition('Edit').'</a>');
-                  echo($r->RoleName.'
-               </li>');
+               echo '<li class="SortListItem'.($this->Context->Session->User->Permission('PERMISSION_SORT_ROLES') ? ' MovableSortListItem' : '').'" id="item_'.$r->RoleID.'">';
+                  if ($this->Context->Session->User->Permission('PERMISSION_EDIT_ROLES')) echo '<a class="SortEdit" href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=Role&amp;RoleID='.$r->RoleID).'">'.$this->Context->GetDefinition('Edit').'</a>';
+                  if ($this->Context->Session->User->Permission('PERMISSION_REMOVE_ROLES') && !$r->Unauthenticated) echo '<a class="SortRemove" href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=RoleRemove&amp;RoleID='.$r->RoleID).'">&nbsp;</a>';
+                  echo $r->RoleName
+               .'</li>';
             }
          }
       echo('</ul>');

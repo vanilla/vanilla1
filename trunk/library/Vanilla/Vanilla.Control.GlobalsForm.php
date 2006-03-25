@@ -45,19 +45,13 @@ class GlobalsForm extends PostBackControl {
       $this->CallDelegate('Constructor');
 	}
 	
-	function Render_ValidPostBack() {
-      $this->CallDelegate('PreValidPostBackRender');
-      include(ThemeFilePath($this->Context->Configuration, 'settings_globals_form_validpostback.php'));
-      $this->CallDelegate('PostValidPostBackRender');
-	}
-	
-	function Render_NoPostBack() {
+	function Render() {
 		if ($this->IsPostBack) {
-         $this->CallDelegate('PreNoPostBackRender');
+         $this->CallDelegate('PreRender');
 			$this->PostBackParams->Clear();
 			$this->PostBackParams->Set('PostBackAction', 'ProcessGlobals');
-         include(ThemeFilePath($this->Context->Configuration, 'settings_globals_form_nopostback.php'));
-         $this->CallDelegate('PostNoPostBackRender');
+         include(ThemeFilePath($this->Context->Configuration, 'settings_globals_form.php'));
+         $this->CallDelegate('PostRender');
 		}
 	}
 }

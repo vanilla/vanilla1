@@ -83,7 +83,7 @@ function ReturnWrappedFeedForAtom(&$Context, $FeedItems) {
 		  <id>'.$Context->Configuration['BASE_URL'].'</id>
 		  <link rel="alternate" type="text/html" hreflang="en" href="'.$AlternateLink.'"/>
 		  <link rel="self" type="application/atom+xml" href="'.$SelfLink.'"/>
-		  <generator uri="http://getvanilla.com/" version="'.VANILLA_VERSION.'">
+		  <generator uri="http://getvanilla.com/" version="'.APPLICATION_VERSION.'">
 			 Lussumo Vanilla
 		  </generator>
 		  '.$FeedItems.'

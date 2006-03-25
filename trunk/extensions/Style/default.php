@@ -54,6 +54,9 @@ $Context->Dictionary["StyleUrlLower"] = "style url";
 $Context->Dictionary["ErrStyleNotFound"] = "The requested style could not be found.";
 $Context->Dictionary["ErrStyleAuthor"] = "A user with the username you provided for \"Style author\" could not be found.";
 $Context->Dictionary["System"] = "System";
+$Context->Dictionary["StyleRemoved"] = "The style has been removed successfully.";
+$Context->Dictionary["StyleSaved"] = "Your changes have been saved successfully.";
+$Context->Dictionary["NewStyleSaved"] = "The style was added successfully";
 
 
 
@@ -195,15 +198,16 @@ if (in_array($Context->SelfUrl, array("settings.php", "account.php"))) {
 		function RemoveStyle($RemoveStyleID, $ReplacementStyleID) {
 			// Reassign the user-chosen styles
 			$s = $this->Context->ObjectFactory->NewContextObject($this->Context, "SqlBuilder");
-			$s->SetMainTable("User", "u");
-			$s->AddFieldNameValue("StyleID", $ReplacementStyleID);
-			$s->AddWhere('u', 'StyleID', '', $RemoveStyleID, "=");
+			$s->SetMainTable('User', 'u');
+			$s->AddFieldNameValue('StyleID', $ReplacementStyleID);
+			$s->AddWhere('u', 'StyleID', '', $RemoveStyleID, '=');
 			$this->Context->Database->Update($s, $this->Name, "RemoveStyle", "An error occurred while attempting to re-assign user styles.");
 			// Now remove the style itself
 			$s->Clear();
 			$s->SetMainTable("Style", "s");
-			$s->AddWhere('u', 'StyleID', '', $RemoveStyleID, "=");
+			$s->AddWhere('s', 'StyleID', '', $RemoveStyleID, "=");
 			$this->Context->Database->Delete($s, $this->Name, "RemoveStyle", "An error occurred while attempting to remove the style.");
+			return true;
 		}
 		
 		function SaveStyle(&$Style) {
@@ -276,12 +280,13 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 				if ($this->PostBackAction == "ProcessStyle") {
 					$this->Style = $this->Context->ObjectFactory->NewContextObject($this->Context, "Style");
 					$this->Style->GetPropertiesFromForm($this->Context);
+					$Action = ($this->Style->StyleID == 0) ? "SavedNew" : "Saved";
 					if ($this->StyleManager->SaveStyle($this->Style)) {
-						header("location: ".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=Styles"));
+						header("location: ".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=Styles&Action=".$Action));
 					}
 				} elseif ($this->PostBackAction == "ProcessStyleRemove") {
 					if ($this->StyleManager->RemoveStyle($StyleID, $ReplacementStyleID)) {
-						header("location: ".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=Styles"));
+						header("location: ".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=Styles&Action=Removed"));
 					}
 				}
 				
@@ -345,10 +350,11 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 								</li>
 								<li>
 									<label for="txtAuthUsername">'.$this->Context->GetDefinition("StyleAuthor").'</label>
-									<input id="txtAuthUsername" name="AuthUsername" type="text" value="'.FormatStringForDisplay(($this->Style->AuthUserID == 0 ? '' : $this->Style->AuthUsername), 0).'" class="WhisperBox" maxlength="20" />
+									<input id="txtAuthUsername" name="AuthUsername" type="text" value="'.FormatStringForDisplay(($this->Style->AuthUserID == 0 ? '' : $this->Style->AuthUsername), 0).'" class="AuthorInput" maxlength="20" />
 									<script type="text/javascript">
-										var WhisperAutoComplete = AutoComplete("txtAuthUsername", false);
-										WhisperAutoComplete.KeywordSourceUrl = "../ajax/getusers.php";
+										var AuthorAutoComplete = new AutoComplete("txtAuthUsername", false);
+										AuthorAutoComplete.TableID = "WhisperAutoCompleteResults";
+										AuthorAutoComplete.KeywordSourceUrl = "./ajax/getusers.php?Search=";
 									</script>
 									<p class="Description">'.$this->Context->GetDefinition('StyleAuthorNotes').'</p>
 								</li>
@@ -373,7 +379,7 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 					
 				} elseif ($this->PostBackAction == "StyleRemove") {
 					$this->PostBackParams->Set("PostBackAction", "ProcessStyleRemove");
-					$this->StyleSelect->Attributes = "onchange=\"document.location='".GetUrl($this->Context->Configuration, "index.php", "", "", "", "", "PostBackAction=StyleRemove&amp;StyleID='+this.options[this.selectedIndex].value").";\"";
+					$this->StyleSelect->Attributes = "onchange=\"document.location='".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=StyleRemove&amp;StyleID='+this.options[this.selectedIndex].value").";\"";
 					$this->StyleSelect->SelectedID = $StyleID;
 					echo '<div id="Form" class="Account Identity">
 						<fieldset>
@@ -411,8 +417,16 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 						</fieldset>
 					</div>';				
 				} else {
-					echo '<div id="Form" class="Account SettingsForm">
-						<fieldset>
+					echo '<div id="Form" class="Account SettingsForm">';
+						$Action = ForceIncomingString("Action", "");
+						if ($Action == 'Removed') {
+							echo '<div class="Success">'.$this->Context->GetDefinition('StyleRemoved').'</div>';
+						} else if ($Action == 'Saved') {
+							echo '<div class="Success">'.$this->Context->GetDefinition('StyleSaved').'</div>';
+						} else if ($Action == 'SavedNew') {
+							echo '<div class="Success">'.$this->Context->GetDefinition('NewStyleSaved').'</div>';
+						}
+						echo '<fieldset>
 							<legend>'.$this->Context->GetDefinition("StyleManagement").'</legend>'
 							.$this->Get_Warnings().
 							'<form method="get" action="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl).'">
@@ -427,8 +441,8 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 										$s->GetPropertiesFromDataSet($Row);
 										$s->FormatPropertiesForDisplay();
 										echo '<li class="SortListItem">
-											<a class="SortRemove" href="'.GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=StyleRemove&amp;StyleID=".$s->StyleID).'">&nbsp;</a>
 											<a class="SortEdit" href="'.GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=Style&amp;StyleID=".$s->StyleID).'">'.$this->Context->GetDefinition("Edit").'</a>
+											<a class="SortRemove" href="'.GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=StyleRemove&amp;StyleID=".$s->StyleID).'">&nbsp;</a>
 											'.$s->Name.'
 										</li>';
 									}
