@@ -660,7 +660,7 @@ html>body .ContentInfo h1 { width:80% !important; }
 	cursor: pointer;
 	}
 #txtDiscussionKeywords, #txtCommentKeywords, #txtUserKeywords {
-	clear: left !important;
+	clear: both !important;
 	}
 #DiscussionAutoCompleteResults, #CommentAutoCompleteResults {
 	width: 180px;
