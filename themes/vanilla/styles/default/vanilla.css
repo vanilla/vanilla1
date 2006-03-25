@@ -1,1553 +1,1307 @@
+body {
+	margin:0px;
+	padding:0px;
+	background:#ffffff url('panelfade.gif') top left repeat-y;
+	}
+
+body, div, table, td {
+	font-family:'Trebuchet MS', 'Verdana', 'Tahoma', 'Arial', sans-serif;
+	font-size:12px;
+	color:#062971;
+	}
+a {
+	cursor: pointer;
+	}
+a:hover {
+	text-decoration: none;
+}
+
+/* Errors & Success */
+.ErrorContainer {
+	background: url(alert.gif) no-repeat top left #FFEDEF;
+	border: 1px solid #FFC2CA;
+	padding: 10px;
+	padding-left: 27px;
+	color: #c00;
+	margin: 10px;
+	margin-bottom: 0px;
+	}
+.ErrorTitle {
+	font-weight: bold;
+	color: #c00;
+	}
+.Error {
+	color: #c00;
+	}
+.Success {
+	border-top: 1px solid #99CC99;
+	border-bottom: 1px solid #99CC99;
+	background: #E2F9E3;
+	color: #006600 !important;
+	display: block;
+	padding: 6px !important;
+	text-align: center;
+	font-size: 13px;
+	margin-bottom: 10px !important;
+	}
+  
+
+/* LoadStatus.. */
+#LoadStatus {
+	position: fixed;
+	_position:absolute;
+	top: 0px;
+	_top:expression(eval(document.body.scrollTop));
+	right: 0px;
+	background: #cc0000;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	padding-left: 8px;
+	padding-right: 8px;
+	color: #ffffff;
+	font-size: 11px;
+	display: none;
+	z-index:200;
+	}
+
+/* Session.. */
+
+#Session {
+	width:100%;
+	position:absolute;
+	top:25px;
+	right:18px;
+	text-align:right;
+	font-size:11px;
+	color:#5d709f;
+	}
+#Session a {
+	color:#5d709f;
+	text-decoration:none;
+	}
+#Session a:hover {
+	color:#000000;
+	}
+
+/* Header.. */
+
+#Header {
+	background: url(waves.blue.gif) repeat-x left top #E5EAF6;
+	border-top:1px solid #acbedf;
+	border-bottom:1px solid #acbedf;
+	}
+
+#Header * {
+	margin:0px;
+	padding:0px;
+	}
+
+#Header h1 {
+	text-align:center;
+	color:#000000;
+	font-size:22px;
+	margin:10px 0px;
+	}
+#Header h1 strong {
+	color:#ffa500;
+	}
+
+#Header ul {
+	text-align:center;
+	}
+#Header ul li {
+	display:inline;
+	margin:0px 1px;
+	border-bottom:1px solid #acbedf;
+	}
+#Header ul li.TabOn {
+	background-color:#ffffff;
+	border:1px solid #acbedf;
+	border-bottom:1px solid #ffffff;
+	font-weight:bold;
+	}
+#Header ul li a {
+	padding:1px 5px;
+	font-size:11px;
+	text-decoration:none;
+	background-color:#5d709f;
+	color:#ffffff;
+	}
+#Header ul li a:hover {
+	background-color:#919ebe;
+	}
+#Header ul li.TabOn a,
+#Header ul li.TabOn a:hover {
+	background-color:#ffffff;
+	color:#000000;
+	}
+#Header ul li a em {
+	font-style:normal;
+	text-decoration:underline;
+	}
+
+/* Panel.. */
+
+#Panel {
+	width:201px;
+	margin-left:18px;
+	float:left;
+	background:url('panelfadetop.gif') top right no-repeat;
+	display: inline;
+	}
+#Panel * {
+	margin:0px;
+	padding:0px;
+	list-style:none;
+	}
+#Panel h1 {
+	margin-top:20px;
+	font-size:14px;
+}
+#Panel h1 a {
+	color:#cc0000;
+	font-size:14px;
+}
+#Panel h1 a:hover {
+	color:#ff0000;
+	}
+
+#Panel h2 {
+	color:#000000;
+	font-size:11px;
+	border-bottom:1px solid #cccccc;
+	margin:10px 0px 3px 0px;
+	padding:0px;
+	text-indent: 4px;
+	width:180px;
+	}
+
+#Panel ul ul, #Panel ul p, #Panel select {
+	margin:0px 4px;
+	}
+#Panel ul, #Panel p {
+	color:#335eb7;
+	font-size:11px;
+	}
+#Panel ul ul {
+	color:#ff0000;
+	font-size:10px;
+	}
+#Panel select {
+	width:167px;
+	margin-top:3px;
+	}
+#Panel ul ul li {
+	width:173px;
+	margin-bottom:3px;
+	overflow: hidden;
+	}
+#Panel ul ul li a {
+	font-size:11px;
+	display:block;
+	width:100%;
+	color:#335eb7;
+	text-decoration:none;
+	}
+#Panel ul ul li a span {
+	color: #cc0000;
+	font-size: 10px;
+	padding-left: 4px;
+}
+#Panel ul ul li a:hover {
+	background-color:#ffffcc;
+	}
+
+#AboutVanilla {
+	margin: 20px 0px 20px 0px !important;
+	border-top:1px solid #cccccc;
+	background-color:#f9f9f9;
+	padding: 3px 0px 3px 0px;
+	text-align:center;
+	color:#dddddd !important;
+	width:180px;
+	}
+#AboutVanilla a {
+	color:#d0d0d0 !important;
+	text-decoration:none;
+	}
+#AboutVanilla a:hover {
+	color:#aaaaaa !important;
+	text-decoration:underline;
+	}
+
+/* Content.. */
+
+#Content {
+	margin-left:235px;
+	margin-right:18px;
+	}
+
+/* ContentInfo/Control/Whatever - Universal to Discussion Index & Comments */
+
+.ContentInfo {
+	text-align:right;
+	}
+.ContentInfo.Top {
+	padding-top:20px;
+	white-space:nowrap;
+	overflow: hidden;
+	}
+#DiscussionsPage .ContentInfo.Bottom {
+	margin-top:-6px;
+	margin-bottom: 8px;
+	}
+.ContentInfo * {
+	font-size:14px;
+	font-weight:bold;
+	margin:0px;
+	padding:0px;
+	}
+#CommentsPage .ContentInfo h1 {
+	color:#000000;
+	float:left;
+	width:60%;
+	overflow:hidden;
+	white-space:nowrap;	
+	}
+
+html>body .ContentInfo h1 { width:80% !important; }
+.ContentInfo input {
+	font-size:10px;
+	margin-left:5px;
+	}
+#DiscussionsPage .ContentInfo h1 {
+	float:none;
+	text-align:left;
+	}
+.ContentInfo h1 a {
+	color:#3354aa;
+	text-decoration:none;
+	}
+.ContentInfo h1 a:hover {
+	color:#000000;
+	}
+.ContentInfo a {
+	color:#cccccc;
+	text-decoration:none;
+	}
+.ContentInfo a:hover {
+	color:#3354aa;
+	}
+
+.PageInfo {
+	color:#cccccc;
+	border-top:1px solid #cccccc;
+	border-bottom:1px solid #cccccc;
+	padding:0px 1px;
+	margin:5px 0px;
+	height:23px;
+	line-height:23px;
+	font-weight:bold;
+	}
+.PageInfo p {
+	margin:0px;
+	padding:0px;
+	display:inline;
+	float:left;
+	}
+.PageList {
+	margin:0px;
+	padding:0px;
+	list-style:none;
+	color: #cccccc;
+	}
+.PageList li {
+	display:inline;
+	}
+.PageList a,
+.PageList li a {
+	text-decoration:none;
+	color:#3354aa !important;
+	}
+
+/* Discussion Index */
+#PageJump {
+	position: absolute;
+	margin-top: -16px;
+	right: 20px;
+	display: block;
+	}
+#Discussions {
+	margin-top:-5px !important;
+	}
+#Discussions, #Discussions * {
+	margin:0px;
+	padding:0px;
+	list-style:none;
+	}
+#Discussions li ul {
+	background-color:#fefecc;
+	border-bottom:1px solid #cccccc;
+	}
+#Discussions li li {
+	height:auto;
+	border:0px;
+	}
+.NoNewComments,
+#Discussions li.Read ul {
+	background-color:#fffeec !important;
+	}
+.NewComments,
+#Discussions li.Read.NewComments ul {
+	background-color:#fefecc !important;
+	}
+#Discussions li ul {
+	padding: 7px 6px 7px 6px;
+	color:#777777;
+	}
+#Discussions ul span, #Discussions ul span a, #Discussions ul a {
+	color:#aaaaaa;
+	text-decoration:none;
+	}
+#Discussions ul span a:hover, #Discussions ul a:hover {
+	color:#ff0000;
+	}
+#Discussions ul a {
+	color:#777777;
+	}
+.Discussion {
+	background: yellow;
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+	width: 100%;
+}
+.DiscussionType {
+	font-size:14px;
+	float:left;
+	margin-right:5px !important;
+	color:#062971;
+	font-weight:bold;
+	line-height:20px;
+	}
+.DiscussionType span {
+	display:none;
+	}
+.DiscussionType.Normal {
+	display:none;
+	}
+.DiscussionTopic, .User.Name {
+	font-size:14px;
+	line-height:20px;
+	overflow: hidden;
+	}
+.DiscussionTopic span {
+	display:none;
+	}
+.DiscussionTopic a, .User.Name a {
+	color:#3354aa !important;
+	text-decoration:underline !important;
+	font-weight:bold;
+	}
+.DiscussionTopic a:hover {
+	text-decoration: none !important;
+	}
+.DiscussionCategory, .DiscussionStarted, .DiscussionComments, .DiscussionLastComment, .DiscussionActive, .DiscussionNew {
+	width: auto;
+	display:inline;
+	font-size:10px;
+	margin-right:10px!important;
+	}
+
+.NewComments .DiscussionNew a {
+	color:#cc0000 !important;
+	}
+#Discussions li.Read.NewComments .DiscussionNew {
+	display:inline;
+	}
+
+/* Category Index */
+#CategoryPage div.ContentInfo h1 {
+	text-align: left;
+	width: 100%;
+	border-bottom: 1px solid #cccccc;
+	padding-bottom:6px;
+}
+#Categories, #Categories * {
+	margin:0px;
+	padding:0px;
+	list-style:none;
+	}
+#Categories {
+	margin-bottom: 20px;
+}
+.BlockedCategory {
+	background: #ffffff;
+}
+.UnblockedCategory {
+	background: #f5f9ff;
+}
+#Categories li ul {
+	border-bottom:1px solid #cccccc;
+	}
+#Categories li li {
+	height:auto;
+	border:0px;
+	}
+#Categories li ul {
+	padding: 7px 6px 7px 6px;
+	}
+#Categories ul span, #Categories ul span a, #Categories ul a {
+	color:#aaaaaa;
+	text-decoration:none;
+	}
+#Categories ul span a:hover, #Categories ul a:hover {
+	color:#ff0000;
+	}
+#Categories ul a {
+	color:#777777;
+	}
+.Category {
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+	width: 100%;
+}
+.CategoryName {
+	font-size:14px;
+	margin-right:5px !important;
+	color:#062971 !important;
+	font-weight:bold;
+	line-height:20px;
+	}
+.CategoryName a {
+	color: #3354AA !important;
+	text-decoration: underline !important;
+}
+.CategoryName a:hover {
+	text-decoration: none !important;
+}
+.CategoryName span,
+.CategoryDescription span {
+	display:none;
+	}
+.CategoryName.Normal {
+	display:none;
+	}
+.CategoryDescription {
+	font-size:13px;
+	line-height:20px;
+	overflow: hidden;
+	}
+.CategoryDiscussionCount, .CategoryOptions {
+	width: auto;
+	display:inline;
+	font-size:10px;
+	margin-right:10px!important;
+	}
+
+/* Comments.. */
+
+#Comments {
+	margin:0px;
+	padding:0px;
+	list-style:none;
+	}
+#Comments li {
+	margin:0px;
+	padding:10px 0px;
+	border-bottom:1px solid #cccccc;
+	}
+#Comments .CommentHeader {
+	padding-left: 8px;
+	padding-right: 8px;
+	text-align:right;
+	line-height:32px;
+	}
+#Comments .CommentHeader ul {
+	float:left;
+	margin:0px;
+	padding:0px;
+	list-style:none;
+	}
+#Comments .CommentHeader li {
+	margin:0px;
+	padding:0px;
+	display:inline;
+	color:#aaaaaa;
+	font-size:11px;
+	border-bottom:0px;
+	}
+#Comments .CommentHeader li div.CommentIcon {
+	padding:8px 0px 8px 30px;
+	margin-right: 6px;
+	background-repeat:no-repeat;
+	display: inline;
+	background: #fff center center no-repeat;
+	
+	}
+#Comments .CommentHeader li span {
+	display:none;
+	}
+#Comments .CommentHeader em {
+	color:#cccccc;
+	font-style:normal;
+	}
+#Comments .CommentHeader a {
+	text-decoration:none;
+	font-weight:bold;
+	font-size:13px;
+	color:#3354aa;
+	}
+#Comments .CommentHeader span {
+	font-size:10px;
+	font-weight: normal;
+	color:#aaaaaa;
+}
+#Comments .CommentHeader span a {
+	font-size:10px;
+	font-weight: normal;
+	color:#aaaaaa;
+	margin-left:3px;
+	padding-left:3px;
+	cursor: pointer;
+	text-decoration: underline;
+	}
+#Comments .CommentHeader span a:hover {
+	text-decoration: underline;
+	color: #333;
+	}
+#Comments .CommentBody {
+	display:block;
+	margin:10px;
+	color:#000000;
+	}
+#CommentsPage .ContentInfo.Middle .PageInfo {
+	border-top: 0px;
+	margin:0px;
+	}
+#CommentsPage .ContentInfo.Bottom {
+	margin-bottom: 20px;
+	}
+#Comments code {
+	border-left: 6px solid #FFFFAA;
+	background: #FFFFEE;
+	padding: 8px;
+	padding-left: 16px;
+	display: block;
+	white-space: pre;
+	}	
+
+/* Search Page */
+
+#Form.Search {
+	width: 100% !important;
+	padding: 20px 0px 0px 0px !important;
+}
+#Form.Search fieldset legend {
+	padding: 0px !important;
+	margin-bottom: 6px;
+}
+#SearchSimple {
+	margin: 0px !important;
+	}
+#SearchSimple input {
+	width: 10px !important;
+	margin-left: 14px;
+	margin-right: 6px;
+}
+#SearchSimple label {
+	display: inline !important;
+	width: 10px !important;
+	}
+#MainSearchInput input {
+	width: 60% !important;
+	margin-left: 0px !important;
+}
+#MainSearchInput label {
+	display: none !important;
+}
+#Form.Search .Submit input {
+	margin: 0px !important;
+	width: 70px !important;
+	color: #000000 !important;
+}
+
+/* Advanced Search Form */
+
+#SearchDiscussions, #SearchComments, #SearchUsers {
+	display: none;
+}
+#SearchDiscussions, #SearchComments {
+	border-bottom: 0px !important;
+	margin: 0px !important;
+	}
+#SearchComments, #SearchUsers {
+	border-top: 0px !important;
+	}
+#SearchUsers {
+	margin-top: 0px !important;
+	padding-bottom: 16px !important;
+}
+#SearchDiscussions label, #SearchComments label, #SearchUsers label {
+	width: 200px !important;
+	float: left;	
+	margin: 0px !important;
+	}
+#SearchDiscussions input, #SearchComments input, #SearchUsers input,
+#SearchDiscussions select, #SearchComments select, #SearchUsers select {
+	width: 180px !important;
+	margin: 0px 12px 0px 0px !important;
+	padding: 0px !important;
+}
+#SearchDiscussions select, #SearchComments select, #SearchUsers select {
+	margin: 0px 16px 0px 0px !important;
+	}
+#Form.Search .SearchButton {
+	margin: 0px !important;
+	width: 70px !important;
+	cursor: pointer;
+	}
+#txtDiscussionKeywords, #txtCommentKeywords, #txtUserKeywords {
+	clear: left;
+	}
+#DiscussionAutoCompleteResults, #CommentAutoCompleteResults {
+	width: 180px;
+	}
+	
+/* Search Results */
+#SearchPage {
+	margin-bottom: 20px;
+	}
+#SearchPage .ContentInfo h1 {
+	text-align: left !important;
+	}
+#SearchPage .Bottom .PageInfo {
+	margin-top: 0px !important;
+	border-top: 0px !important;
+	}
+
+/* Comment Search Results */
+  
+#CommentResults {
+	margin-top:-5px !important;
+	}
+#CommentResults, #CommentResults * {
+	margin:0px;
+	padding:0px;
+	list-style:none;
+	}
+#CommentResults li li {
+	height:auto;
+	border:0px;
+	}
+#CommentResults li ul {
+	padding: 6px 6px 7px 6px;
+	color:#777777;
+	background-color:#fefecc;
+	border-bottom:1px solid #cccccc;
+	}
+#CommentResults ul span, #CommentResults ul span a, #CommentResults ul a {
+	color:#aaaaaa;
+	text-decoration:none;
+	}
+#CommentResults ul span a:hover, #CommentResults ul a:hover {
+	color:#ff0000;
+	}
+#CommentResults ul a {
+	color:#777777;
+	}	
+#CommentResults .CommentResult ul {
+	background-color:#ffffff !important;
+	}
+#CommentResults .CommentText {
+	margin:6px 0px 4px 0px !important;
+	}
+#CommentResults .CommentText span {
+	display:none;
+	}
+#CommentResults .CommentText a {
+	color:#000000 !important;
+	}
+#CommentResults .CommentText a:hover {
+	background-color:#ffffaa;
+	}
+.CommentAuthor, .CommentAdded {
+	width: auto;
+	display:inline;
+	font-size:10px;
+	margin-right:10px!important;
+	}
 /*
-* Copyright 2003 - 2005 Mark O'Sullivan
-* This file is part of Vanilla.
-* Vanilla is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
-* Vanilla is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-* You should have received a copy of the GNU General Public License along with Vanilla; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-* The latest source code for Vanilla is available at www.lussumo.com
-* Contact Mark O'Sullivan at mark [at] lussumo [dot] com
-*
-* Description: Default cascading stylesheet for Vanilla
+  This is an IE kludge.
+  For some reason IE was adding about 20px of padding to the top of this element
+  and the only way to get rid of it was to add a 1px border to the top.
 */
+#CommentResults .SearchComment {
+	border-top: 1px solid #fefecc;
+	}
+#CommentResults .SearchComment ul {
+	margin: 0px !important;
+	}
 
-/* BEGIN GLOBAL DEFINITIONS (common to all pages) */
-	body { 
-		background: url(panelfade.gif) repeat-y top left #ffffff;
-		margin: 0px;
-		padding: 0px;
-	}
-	body, div, table, td {
-		font-family: Trebuchet MS, Verdana, Tahoma, Arial;
-		font-size: 12px;
-		color: #062971;
-	}
-	input, textarea, select {
-		font-family: arial, sans-serif, verdana;
-		font-size: 12px;
-		color: #000;
-	}
-	a, a:link, a:visited {
-		color: #3354AA;
-		text-decoration: underline;
-		cursor: pointer;
-	}
-	a:hover {
-		color: #4B6DB7;
-		text-decoration: none;
-		cursor: pointer;
-	}
-	img {
-		border: 0px;
-	}
-	fieldset {
-		border: 0px;
-		padding: 0px;
-		margin: 0px;
-	}
-	ul {
-		margin-bottom: 0px;
-		margin-top: 0px;
-	}
-	form {
-		display: inline;
-	}
-	.Hidden {
-		display: none;
-	}
-	.ErrorContainer {
-		background: url(alert.gif) no-repeat top left #FFEDEF;
-		border: 1px solid #FFC2CA;
-		padding: 10px;
-		padding-left: 27px;
-		color: #c00;
-		margin: 10px;
-		margin-bottom: 0px;
-	}
-	.ErrorTitle {
-		font-weight: bold;
-		color: #c00;
-	}
-	.Error {
-		color: #c00;
-	}	
-	
-	/* Autocomplete results style */
-		div.Autocomplete {
-			width: 350px;
-			background: #fff;
-			z-index: 3;
-		}
-		div.Autocomplete ul {
-			border: 1px solid #888;
-			margin: 0;
-			padding: 0;
-			width: 100%;
-			list-style-type: none;
-		}
-		div.Autocomplete ul li {
-			margin: 0;
-			padding: 3px;
-			cursor: pointer;
-			color: #000000;
-		}
-		div.Autocomplete ul li.selected { 
-			background-color: #335EA8;
-			color: #ffffff;
-		}
-		div.Autocomplete ul strong.highlight { 
-			color: #800; 
-			margin: 0;
-			padding: 0;
-		}	  	
-	
-	/* NAMED ELEMENTS COMMON TO EVERY PAGE */
-		/* LoadStatus: A tiny window that becomes visible when an AJAX action is performed */
-		#LoadStatus {
-			z-index: 2;
-			position: fixed;
-			top: 0px;
-			left: 0px;
-			border-right: 1px solid #ACBEDF;
-			border-bottom: 1px solid #ACBEDF;
-			background: #fff;
-			padding-top: 4px;
-			padding-bottom: 4px;
-			padding-left: 8px;
-			padding-right: 8px;
-			color: #062971;
-			font-size: 11px;
-		}
-		
-		/* InlineSelect: A small-font style of select meant to go inline with
-		  paragraph text. Currently used on the "settings > application
-		  settings" form. */
-		.InlineSelect {
-			font-size: 10px;
-		}
-		
-		/* Session: The message about who you are signed in as w/ option to sign out. */
-		.Session {
-			position: absolute;
-			font-size: 11px;
-			color: #5D709F;
-			right: 16px;
-			top: 22px;
-		}
-		.Session a, .Session a:link, .Session a:visited {
-			text-decoration: none;
-			color: #5D709F;
-		}
-		.Session a:hover {
-			color: #000;
-			text-decoration: none;
-		}
-		
-		/* Head: The banner/menu container. */
-		.Head {
-			background: url(waves.blue.gif) repeat-x left top #E5EAF6;
-			margin: 0px;
-		}
-		
-		/* Logo: A container for the logo above the menu. */
-		.Logo {
-			text-align: center;
-			font-size: 22px;
-			font-weight: bold;
-			padding-top: 8px;
-			padding-bottom: 8px;
-			color: #000;
-		}
-		.Logo a,
-		.Logo a:link,
-		.Logo a:visited,
-		.Logo a:hover {
-			color: #000;
-			text-decoration: none;
-		}
-		.Logo strong,
-		.Logo strong a,
-		.Logo strong a:link,
-		.Logo strong a:visited,
-		.Logo strong a:hover {
-			font-weight: normal;
-			color: #FFA500;
-			text-decoration: none;
-		}
-		
-		/* MenuForum: The main menu, an unordered-list, contained within 
-		  the Head class. */
-		#MenuForum {
-			list-style: none; 
-			padding: 0px;
-			margin: 0px;
-			text-align: center;
-		}
-		#MenuForum li {
-			display: inline;
-			margin-right: 1px;
-			margin-left: 1px;
-		}
-		
-		/* TabOn/TabOff: The tabs in the main menu, which can appear different if
-		  they are identified as the current tab (TabOn). */
-		.TabOn, .TabOn:link, .TabOn:visited, .TabOn:hover,
-		.TabOff, .TabOff:link, .TabOff:visited, .TabOff:hover {
-			position: relative;
-			padding: 6px;
-			padding-top: 2px;
-			font-size: 11px;
-			text-align: center;
-			text-decoration: none;
-		}
-		.TabOn, .TabOn:link, .TabOn:visited, .TabOn:hover {
-			padding-bottom: 2px;
-			border: 1px solid #ACBEDF;
-			border-bottom: 0px;
-			font-weight: bold;
-			background: #fff;
-			color: #000;
-		}
-		.TabOff, .TabOff:link, .TabOff:visited {
-			padding-bottom: 1px;
-			background: #5D709F;
-			color: #fff;
-		}
-		.TabOff:hover {
-			background: #919EBE;
-			padding-bottom: 1px;
-			color: #fff;
-		}
-		
-		/* Body: The element containing everything below the Head (panel and
-		  page content). */
-		.Body {
-			background: url(panelfadetop.gif) no-repeat top left;
-			border-top: 1px solid #ACBEDF;
-			padding-top: 20px;
-			padding-bottom: 40px;
-		}
-/* END GLOBAL DEFINITIONS */
+/* User Search Results */
   
-  
-
-/* BEGIN PANEL */
-	.Panel {
-		position: absolute;
-		left:18px;
-		padding-right:18px;
+#UserResults {
+	margin-top:-5px !important;
 	}
-	/* PanelTitle: Only used for the "welcome, guest" text when
-	  unauthenticated users are allowed to browse the forum. */
-	.PanelTitle {
-		width: 180px;
-		padding: 0px;
-		margin: 0px;
-		text-indent: 4px;
-		font-size: 11px;
-		font-weight: bold;
-		color: #000;	
+#UserResults, #UserResults * {
+	margin:0px;
+	padding:0px;
+	list-style:none;
 	}
-	/* PanelButton: The "Start a New Discussion" button. */
-	.PanelButton {
-		width: 180px;
-		display: block;
-		margin-bottom: 10px;
+/*
+  This is an IE kludge.
+  For some reason IE was adding about 20px of padding to the top of this element
+  and the only way to get rid of it was to add a 1px border to the top.
+*/
+#UserResults li {
+	border-top: 1px solid #fefecc;
 	}
-	.PanelButton, .PanelButton:link, .PanelButton:visited {
-		font-size: 14px;
-		font-weight: bold;
-		color: #CC0000;
+#UserResults li ul {
+	margin-top: 0px !important;
+	background-color:#fefecc;
+	border-bottom:1px solid #cccccc;
 	}
-	.PanelButton:hover {
-		font-size: 14px;
-		font-weight: bold;
-		color: #FF0000;
+#UserResults li li {
+	height:auto;
+	border:0px;
 	}
-	.Panel h2 {
-		width: 180px;
-		padding-top: 0px;
-		margin-top: 0px;
-		margin-bottom: 0px;
-		text-indent: 4px;
-		border-bottom: 1px solid #ccc;
-		font-size: 11px;
-		font-weight: bold;
-		color: #000;	
+#UserResults li ul {
+	padding: 6px 6px 7px 6px;
+	color:#777777;
 	}
-	.Panel p {
-		padding: 0px;
-		margin: 0px;
-		padding-left: 4px;
-		padding-bottom: 12px;
+li.User {
+	display:inline;
+	font-size:10px;
+	margin-right:10px !important;
 	}
-	.PanelInformation {
-		background: #F5F9FF;
-		border-top: 1px solid #ACBEDF;
-		border-bottom: 1px solid #ACBEDF;
-		margin-bottom: 20px;
-		display: block;
-		width: 180px;
+li.User span {
+	color: #aaaaaa;
 	}
-	.PanelInformation p {
-		margin: 0px;
-		padding: 4px;
+li.User.Name {
+	display:block;
+	font-size: 11px;
+	}
+li.User.Name a {
+	font-size: 14px;
+	}
+li.User.Name.WithIcon {
+	background-repeat:no-repeat;
+	line-height:32px;
+	}
+li.User.Name.WithIcon a {
+	padding:0px 0px 0px 39px !important;
+	}
+li.User.Name a:hover {
+	text-decoration: none !important;
+	}
+li.User.Name span {
+	display:none;
 	}
 
-	/* SPECIAL PANEL ELEMENTS */
-	  
-		/* CategoryJumper: An extension that allows the categories to
-	    be navigated by a select list in the panel. */
-		.CategoryJumper {
-			margin-top: 4px;
-			margin-bottom: 8px;
-			margin-left: 2px;
-		}
-		.CategoryJumper select {
-			width: 170px;
-			font-size: 11px;
-		}
-		
-		/* TextMode: Text-Only mode switches */
-		.TextModeOFF {
-			border-top: 1px solid #EBC8C6;
-			border-bottom: 1px solid #ebc8c6;
-			color: #741703;
-			background: #FEE8EF;
-		}
-		.TextModeON a, .TextModeON a:link, .TextModeON a:visited,
-		.TextModeOFF a, .TextModeOFF a:link, .TextModeOFF a:visited {
-			padding-left: 0px;
-			padding-right: 0px;
-			display: inline;
-			text-decoration: underline;
-			background: none;
-		}
-		.TextModeON a:hover,
-		.TextModeOFF a:hover {
-			padding-left: 0px;
-			padding-right: 0px;
-			display: inline;
-			text-decoration: none;
-			background: none;
-		}
-		.TextModeOFF a, .TextModeOFF a:link, .TextModeOFF a:visited, .TextModeOff a:hover {
-			color: #741703;
-		}
-		.TextModeON,
-		.TextModeOFF {
-			margin-top: 20px;
-			text-align: center;
-			padding-top: 5px;
-			padding-bottom: 5px;
-		}
-		
-		/* LinkedList: Used for discussion lists & searches in the panel */
-		.LinkedList {
-			width: 180px;
-			margin-left: 0px;
-			padding-left: 0px;
-			margin-bottom: 10px;
-			list-style: none;
-		}
-		.LinkedList li {
-			padding-top: 2px;
-			padding-bottom: 2px;
-			color: #999;
-			font-size: 10px;
-		}
-		.LinkedList li small {
-			color: #999;
-			font-size: 10px;
-			padding-left: 5px;
-			padding-right: 5px;
-		}
-		.LinkedList strong {
-			font-weight: normal;
-			color: #c00;
-		}
-		.LinkedListFootNote {
-			text-align: right;
-			font-size: 11px;
-		}
-		
-		/* PanelLink: A special class sometimes applied to LinkedList items
-		  for special formatting. */
-		.PanelLink {
-			display: block;
-			padding-left: 4px;
-			padding-right: 4px;
-		}
-		.PanelLink, .PanelLink:link, .PanelLink:visited {
-			text-decoration: none;
-			font-size: 11px;
-		}
-		.PanelLink:hover {
-			background: #ffffcc;
-			font-size: 11px;
-		}
-		.SavedSearchContainer .PanelLink {
-			display: inline;
-		}
-		
-		/* Legend: Used to display color co-ordination appendices on various pages */
-		.Legend {
-			margin: 0px;
-			padding: 0px;
-			width: 180px;
-		}
-		.Legend li {
-			text-indent: 6px;
-			font-size: 11px;
-			border-bottom: 1px solid #ccc;
-		}
-		
-		.AboutVanilla {
-			background: #f9f9f9;
-			text-align: center;
-			margin-top: 20px;
-			border-top: 1px solid #dddddd;
-			padding-top: 6px;
-			padding-bottom: 6px;
-			color: #dddddd;
-			width: 180px;
-			line-height: 120%;
-			font-size: 11px;
-		}
-		.AboutVanilla a, .AboutVanilla a:link, .AboutVanilla a:visited, .AboutVanilla a:active {
-			color: #d0d0d0;
-			text-decoration: none;
-		}
-		.AboutVanilla a:hover {
-			color: #aaaaaa;
-			text-decoration: underline;
-		}
+/* Forms.. */
 
-/* END PANEL */
-  
-/* BEGIN PAGEBODY (All content within the body that is not in the panel) */
+#Form * {
+	margin:0px;
+	padding:0px;
+	list-style:none;
+	}
+#Form {
+	margin-bottom: 10px;
+}
+#Form fieldset {
+	border:0px;
+	clear:none;
+	}
+#Form fieldset legend {
+	padding: 4px 0px 4px 0px;
+	margin: 0px;
+	font-size:14px;
+	font-weight:bold;
+	color:#000000;
+	}
+#Form form {
+	margin: 0px 0px 50px 0px;
+	padding:10px 10px 0px 10px;
+	border:1px solid #ffedae;
+	border-left:0px;
+	border-right:0px;
+	background-color:#fef9e9;
+	}
+#Form li {
+	margin-bottom:10px;
+	color:#834300;
+	font-weight:bold;
+	}
+#Form label a {
+	margin-bottom:-3px;
+	margin-right:15px;
+	float:right;
+	padding:3px 6px;
+	color:#834300;
+	text-decoration:none;
+	font-weight:normal;
+	border:1px solid #ffedae;
+	background-color:#ffffff;
+	}
+#WhisperUsername,
+#WhisperAutoCompleteResults {
+	width: 200px;
+}
+#Form textarea {
+	width:100%;
+	height:150px;
+	}
+#Form textarea.SmallCommentBox {
+	height: 150px;
+}
+#Form textarea.LargeCommentBox {
+	height: 400px;
+}
+#Form .Button {
+	cursor: pointer;
+	color: #000000 !important;
+}
+#Form .Button.SubmitButton {
+	margin-right:10px;
+	}
 
-	.PageBody {
-		margin-left: 216px;
-		padding-right: 18px;
-		padding-left: 18px;
+/* Add Comment Form.. */
+
+#Form.AddComments form {
+	margin-top: 0px !important;
+}
+#Form.AddComments label {
+	display:block;
+	width:100%;
+	color:#834300;
+	font-weight:bold;
+	}
+#Form.AddComments label.Radio {
+	display:inline !important;
+	width:auto !important;
+	}
+#Form.AddComments {
+	margin: 4px 0px 4px 0px;
 	}
 	
-	/* PAGEBODY ELEMENTS */
+/* Account Section Forms.. */
 
-	/* Title: used to write the page title (heading on each page). */
-	.Title a, .Title a:link, .Title a:visited {
-		text-decoration: none;
+.Account {
+	padding-top:18px;
+	width:450px;
+	margin: 0px !important;
 	}
-	.Title a:hover {
-		text-decoration: none;
-		color: #000;
+#Form.Account * {
+	color:#84733d;
+	}
+#Form.Account legend {
+	color:#000000;
+	}
+#Form.Account h2 {
+	font-size:14px;
+	margin-bottom:10px;
+	}
+#Form.Account label {
+	display:block;
+	width:40%;
+	line-height:18px;
+	margin-bottom: 4px;
+	}
+#Form.GlobalsForm label {
+	float: left;
+}
+#Form.Extensions label {
+	width: 100%;
+}
+#Form.Account .Description span label,
+#Form.Account label small {
+	font-weight:normal;
+	}
+#Form.Account input,
+#Form.Account select {
+	width:40%;
+	}
+#Form.GlobalsForm input,
+#Form.GlobalsForm select {
+	width: 59%;
+}
+.Description {
+	margin:3px 0px !important;
+	padding: 3px 0px 5px 0px !important;
+	font-weight:normal;
+	color:#a99861 !important;
+	}
+#Form.Account p span {
+	display:block;
+	margin-top:5px;
+	}
+#Form.Account p span label {
+	float:none;	
+	display:inline;
+	margin-left:5px;
+	font-weight:bold;
+	line-height:20px;
+	width:90%;
+	}
+#Form.Account p span input {
+	width:12px;
+	}
+
+#Form.Preferences p span label {
+	font-weight: normal;
+	}
+/* Change Role Form */
+#Form.Role .Submit .ChangeRoleButton {
+	width: 100px !important;
+	}
+/* Globals Form */
+#Form.GlobalsForm select.SmallSelect {
+	width: 50px;
+}
+/* Update Check form */
+#Form.UpdateCheck p.Description {
+	padding: 0px !important;
+	margin: 0px 0px 10px 0px !important;
+	}  
+  
+/* RoleEdit Form */
+#Form.RoleEditForm li p span label {
+	font-weight: normal !important;
+}
+.Submit input.NewRoleButton {
+	width: 120px !important;
+}
+/* RoleRemove Form */
+.Submit input.RoleRemoveButton {
+	width: 70px !important;
+}
+/* "Check for Updates" Form */
+.Submit input.Update {
+	width:150px !important;
+	}
+/* Category Form */
+.Submit input.NewCategoryButton {
+	width: 150px !important;
+}
+.Submit input.RemoveCategoryButton {
+	width: 70px !important;
+}
+
+/* Custom form for extensions management screen */
+
+div.Extensions {
+	width:100% !important;
+	}
+#Form.Extensions div.ExtensionsEnabled h2,
+#Form.Extensions div.ExtensionsDisabled h2 {
+	padding-top:20px;
+}
+#Form.Extensions p a {
+	color: #335eb7;
+	}
+div.ExtensionsDisabled {
+	width:48%;
+	float:left;
+	}
+div.ExtensionsEnabled {
+	width:48%;
+	float:right;
+	}
+div.ExtensionsDisabled ul, div.ExtensionsEnabled ul {
+	border:1px solid #dddddd;
+	border-bottom:0px;
+	margin-bottom:20px !important;
+	}
+div.ExtensionsDisabled ul {
+	background-color:#fffeec;
+	}
+div.ExtensionsEnabled ul {
+	background-color:#fffecc;
+	}
+div.ExtensionsDisabled ul li, div.ExtensionsEnabled ul li { 
+	border-bottom:1px solid #dddddd;
+	margin:0px !important;
+	padding:10px !important;
+	}
+div.ExtensionsDisabled h3, div.ExtensionsDisabled h3 span, div.ExtensionsEnabled h3, div.ExtensionsEnabled h3 span {
+	font-size:12px !important;
+	color:#062971 !important;
+	}
+div.ExtensionsDisabled ul li input, div.ExtensionsEnabled ul li input {
+	width:auto !important;
+	margin-right:5px !important;
+	}
+div.ExtensionsDisabled ul li span, div.ExtensionsEnabled ul li span {
+	margin-left:20px !important;
+	}
+div.ExtensionsDisabled ul li p, div.ExtensionsEnabled ul li p {
+	margin-left:21px !important;
+	color:#000000 !important;
+	font-weight:normal;
+	}
+div.ExtensionsDisabled ul li p a, div.ExtensionsEnabled ul li p a {
+	color:#335eb7 !important;
+	text-decoration: none;
+	}
+div.ExtensionsDisabled ul li p a:hover, div.ExtensionsEnabled ul li p a:hover {
+	color:#062971 !important;
+	text-decoration: underline;
+	}
+div.ExtensionsDisabled ul li.hiLite p, div.ExtensionsEnabled ul li.hiLite p {
+	color:#ffffcc !important;
+	}
+
+/* Custom form for sortable list */
+  
+.SortList {
+	color: #000000;
+	background: rgb(254,254,204);
+	margin-top: 10px !important;
+	padding: 0px;
+	border: 1px solid #ddd;
+	border-top: 0px;
+}
+.MovableSortListItem {
+	cursor: move;
+}
+.SortListItem {
+	border-top: 1px solid #dddddd;
+	padding: 6px !important;
+	margin: 0px !important;
+}
+.SortEdit {
+	position: absolute;
+	margin-left: 364px !important;
+}
+.SortEdit, .SortEdit:link, .SortEdit:active, .SortEdit:visited {
+	font-weight: normal;
+	color: #1EB136 !important;
+	text-decoration: none;
+}
+.SortEdit:hover {
+	font-weight: normal;
+	color: #339933 !important;
+	text-decoration: underline;
+}
+.SortRemove {
+	display: block;
+	position: absolute;
+	margin-left: 394px !important;
+	height: 20px;
+	width: 20px;
+	background: url(btn.remove.gif) no-repeat top right;
+	text-decoration: none;
+}
+
+
+/* */
+
+#CustomInfo li {
+	width:50%;
+	float:left;
+	}
+#CustomInfo li input {
+	width:80% !important;
+	}
+
+.Submit {
+	margin:20px 0px !important;
+	text-align:right;
+	}
+.Submit input {
+	width:50px !important;
+	float:left;
+	cursor:pointer;
+	}
+.Submit a {
+	color: #FF6600 !important;
+}
+
+/* Profile Page.. */
+
+#AccountProfile {
+	float:left;
+	width:300px;
+	margin-top:20px;
+	border-right:1px solid #cccccc;
+	}
+#AccountProfile * {
+	margin:0px;
+	padding:0px;
+	list-style:none;
+	}
+#AccountProfile li {
+	clear:both;
+	margin-right:20px;
+	line-height:18px;
+	}
+#AccountProfile h3 {
+	font-size:12px;
+	width:44%;
+	float:left;
+	}
+#AccountProfile p {
+	float:left;
+	width:55%;
+	}
+#AccountProfile h2 {
+	font-size:14px;
+	color:#000000;
+	width:60%;
+	float:left;
+	}
+#AccountProfile .ProfileTitle * {
+	line-height:32px;
+	}
+.ProfileTitleIcon {
+	background-repeat:no-repeat;
+	}
+.ProfileTitleIcon h2 {
+	padding-left:36px !important;
+	width:48% !important;
+	}
+#AccountProfile .ProfileTitle p {
+	width:40%;
+	text-align:right;
+	font-size:11px;
+	color:#aaaaaa;
+	}
+#AccountProfile .ProfileTitle {
+	line-height:20px;
+	margin-bottom:10px;
+	}
+
+#AccountHistory {
+	margin-left:320px;
+	padding-top:20px;
+	}
+html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
+	margin-left:300px !important;
+	}
+#AccountHistory * {
+	margin:0px;
+	padding:0px;
+	list-style:none;
+	color:#999999;
+	}
+#AccountHistory ul, #AccountHistory h2 {
+	margin:0px 20px;
+	}
+#AccountHistory ul {
+	margin-bottom:20px;
+	}
+#AccountHistory h2 {
+	font-size:14px;
+	color:#000000;
+	}
+#AccountHistory ul {
+	border-top:1px solid #cccccc;
+	}
+#AccountHistory li {
+	padding:5px;
+	border-bottom:1px solid #cccccc;
+	}
+#AccountHistory h3 {
+	color:#666666;
+	font-size:12px;
+	}
+#AccountHistory h3 small {
+	font-size:11px;
+	}
+#AccountHistory p {
+	font-size:11px;
+	}
+#AccountHistory p.Note {
+	padding:3px;
+	padding-bottom:0px;
+	font-style:italic;
 	}
 	
-	/* DataItem & MetaItem: common classes used to identify themes
-	  among the discussion list, category list, and search results. */
-   .DataItem {
-		padding: 0px;
-		margin: 0px;
-		overflow: hidden;
-	}
-	.DataItem,
-	.DataItem a,
-	.DataItem a:link,
-	.DataItem a:visited,
-	.DataItem a:hover {
-		font-weight: bold;
-		font-size: 14px;
-	}
-	.DataItemLabel {
-		display: none;
-	}
-	.MetaItemLabel,
-	.MetaItem {
-		font-size: 10px;
-		display: inline;
-		margin: 0px;
-	}
-	.MetaItemLabel {
-		color: #aaa;
-		padding-right: 2px;
-	}
-	.MetaItem {
-		color: #777;
-		padding-right: 7px;
-	}
-	.MetaItem a, .MetaItem a:link, .MetaItem a:visited {
-		color: #777;
-		text-decoration: none;
-	}
-	.MetaItemLabel a, .MetaItemLabel a:link, .MetaItemLabel a:visited {
-		color: #aaa;
-		text-decoration: none;
-	}	
-	.NewCommentsPresent a, .NewCommentsPresent a:link, .NewCommentsPresent a:visited,
-	.MetaItemLabel a:hover {
-		color: #c00;
-	}
-	.ExtendedMetaItemLabel {
-		display: none;
-	}
-	.ExtendedMetaItem {
-		padding: 0px;
-		margin: 0px;
-	}
-
-	/* Discussion: Container for a discussion on the discussion index page. */
-	.Discussion {
-		margin: 0px;
-		border-bottom: 1px solid #ccc;
-		padding-bottom: 8px;
-		padding-left: 8px;
-	}
-	.DiscussionTopic {
-		padding-top: 8px;
-		padding-right: 8px;
-	}
-	.Bookmarked .DataItem {
-		background: url(ico.bookmark.gif) top right no-repeat;
-	}
-	.NewComments { background: #FEFECC; }
-	.NoNewComments { background: #FFFEEC; }
-	
-
-	/* Category: Container for a category on the category page. */
-	.Category {
-		margin: 0px;
-		border-bottom: 1px solid #ccc;
-		padding: 8px;
-		padding-top: 6px;
-	}
-	.CategoryDescription {
-		display: block;
-		padding: 4px;
-	}
-	.UnblockedCategory { background: #f5f9ff; }
-
+/* Settings Home */
   
-	/* Comment: Container for a comment on the comment page. */
-	.Comment {
-		padding: 8px;
-		padding-top: 12px;
-		padding-bottom: 2px;
-		border-bottom: 1px solid #DEDEDF;
+#Form.Help legend {
+	padding-top: 22px !important;
+}
+#Form.Help form {
+	width: 450px !important;
+	margin: 0px;
+	padding: 0px;
 	}
-	/* Some special formatting for comments */
-		.Comment code {
-			border-left: 6px solid #FFFFAA;
-			background: #FFFFEE;
-			padding: 8px;
-			padding-left: 16px;
-			display: block;
-			white-space: pre;
-		}
-		.WhisperTo { background: #FEEBFA; }
-		.WhisperFrom { background: #FEFCEB; }
-		.CommentAuthor,
-		.CommentWhisper,
-		.CommentTime {
-			color: #aaa;
-			float: left;
-		}
-		.CommentTime em {
-			font-style: normal;
-			color: #ccc;
-			padding-left: 4px;
-		}
-		.CommentAuthor {
-			margin-top: 5px;
-			font-size: 13px;
-			font-weight: bold;
-			margin-right: 8px;
-		}
-		.CommentAuthor a, .CommentAuthor a:link, .CommentAuthor a:visited, .CommentAuthor a:hover {
-			text-decoration: none;
-		}
-		.CommentWhisper,
-		.CommentTime {
-			margin-top: 7px;
-			font-size: 11px;
-		}
-		.CommentWhisper {
-			margin-right: 4px;
-		}
-		.CommentNotice {
-			margin-top: 24px;
-		}
-		.CommentBody {
-			font-size: 12px;
-			padding: 8px;
-			padding-top: 0px;
-			margin-top: 24px;
-			color: #333;
-		}
-		.CommentHidden {
-			margin-bottom: 4px;
-		}
-		.Highlight {
-			background: #ff9;
-		}
-		.CommentOptions,
-		.WhisperBack {
-			margin-top: 0px;
-			text-align: right;
-			font-size: 10px;
-		}
-		.WhisperBack a, .WhisperBack a:link, .WhisperBack a:visited,
-		.CommentOptions div a, .CommentOptions div a:link, .CommentOptions div a:visited {
-			color: #bbb;
-			text-decoration: none;
-		}
-		.CommentOptions {
-			height: 15px;
-		}
-		.WhisperBack a:hover,
-		.CommentOptions div a:hover {
-			color: #3354AA;
-			text-decoration: underline;
-		}
-		.CommentIp,
-		.CommentEdit,
-		.CommentHide,
-		.CommentBlockUser,
-		.CommentBlockComment {
-			display: inline;
-			font-size: 10px;
-			color: #ccc;
-		}
-		.CommentIp {
-			padding-right: 4px;
-			border-right: 1px solid #eee;
-			margin-right: 4px;
-		}
-		.CommentHide,
-		.CommentBlockUser,
-		.CommentBlockComment {
-			margin-left: 4px;
-			border-left: 1px solid #eee;
-			padding-left: 4px;
-		}
-		.CommentAuthorWithIcon {
-		  position: relative;
-		  padding-left: 40px;
-		}
-		
-		.CommentIcon {
-		  position: absolute;
-		  top: 50%;
-		  margin: -16px 0 0 -40px;
-		  display: block;
-		  height: 32px;
-		  width: 32px;
-		  background: #fff center center no-repeat;
-		}		
+#SettingsPage #Form.Help p.Description {
+	padding: 10px !important;
+	color:#84733d !important;
+}
+#SettingsPage #Content dl * {
+	margin:0px;
+	padding:0px;
+	color: #84733d;
+	font-size:12px;
+	}
+#SettingsPage #Content dl dt {
+	margin: 10px 10px;
+	font-weight:bold;
+	font-size:14px;
+	}
+#SettingsPage #Content dl dd {
+	margin:10px;
+	}
 
+.WhisperFrom {
+	background-color:#fefceb;
+	}
+.WhisperTo {
+	background-color:#feebfa;
+	}
 
-	/* Page Navigation (above and below discussions, categories, and searches. */
-		.PageNav,
-		.PageJump,
-		.PageDetails,
-		.Title {
-			padding-top: 3px;
-			padding-bottom: 3px;
-			font-weight: bold;
-			font-size: 14px;
-			border-bottom: 1px solid #ccc;
-			overflow: hidden;
-			color: #000;
-		}
-		.PageList {
-			margin: 0px;
-			padding: 3px;
-			font-weight: bold;
-			font-size: 14px;
-			border-bottom: 1px solid #ccc;
-			overflow: hidden;
-			color: #000;
-			list-style: none;
-		}
-		.PageList li {
-			display: inline;
-		}
-		.PageList a, .PageList a:link, .PageList a:visited, .PageList a:hover {
-			font-weight: bold;
-			font-size: 14px;
-			text-decoration: none;
-		}
-		.SettingsTitle {
-			border-bottom: 0px;
-		}
-		.PageDetails {
-			color: #ccc;
-		}
-		.PageDetails strong {
-			font-weight: bold;
-			color: #d0d0d0;
-		}
-		.PageNav {
-			display: block;
-			width: 160px;
-			border-bottom: 0px;
-		}
-		.PageJump {
-			padding-left: 10px;
-			border: 0px;
-		}
-		.AllDiscussions,
-		.Bottom {
-			border-bottom: 1px solid #ccc;
-		}
-		.PageJump,
-		.PageList {
-			position: absolute;
-			right: 18px;
-			background: none;
-			color: #999;
-			z-index: 10;
-		}
-		.PageNav .PageNav:link, .PageNav:visited,
-		.PageJump, .PageJump:link, .PageJump:visited {
-			text-decoration: none;
-			color: #ccc;
-		}
-		.PageNav:hover,
-		.PageJump:hover {
-			text-decoration: none;
-			color: #3354AA;
-		}
-		
+.left {
+	float:left;
+	}
 
-	/* Basic Search Results Definitions */
-		.Search .Title {
-			padding-top: 6px;
-			padding-bottom: 6px;
-			margin-top: 40px;
-			display: block;
-			border-top: 1px solid #ACBEDF;
-			border-bottom: 0px;
-			background: #F2F3FF;
-			text-indent: 4px;
-		}
-		.SearchErrors,
-		.SearchComment {
-			margin-top: 30px;
-		}
-		.Search .PageDetails {
-			background: #f9faff;
-			color: #ccc;
-			text-indent: 4px;
-		}
-		.Search .PageList {
-			background: #f9faff;
-		}
-		.Search .PageList,
-		.Search .PageJump {
-			padding-right: 4px;
-		}
+.hiLite {
+	background-color:#ffff99;
+	font-style:normal;
+	}
 
-	/* User Search Results */
-		.UserAlternate { background: #f6f6f6; }
-		.User, .UserAlternate {
-			padding-left: 8px;
-			padding-right: 8px;
-			padding-top: 5px;
-			padding-bottom: 8px;
-			border-bottom: 1px solid #ccc;
-			margin: 0px;
-		}
-		.SearchUser {
-			line-height: 28px;
-			font-size: 11px;
-			color: #999;
-			margin-bottom: 5px;
-			margin-left: 0px;
-			font-weight: normal;
-		}
-		.SearchUserWithIcon {
-			position: relative;
-			padding-left: 40px;
-			padding-bottom: 4px;
-		}
-		.SearchIcon {
-			position: absolute;
-			margin: 0 0 0 -40px;
-			display: block;
-			height: 32px;
-			width: 32px;
-			background: #fff center center no-repeat;
-		}
-
-
-	/* Comment Search Results */
-		.SearchComment {
-			margin: 0px;
-			padding: 0px;
-			padding-bottom: 6px;
-			border-bottom: 1px solid #DEDEDF;
-		}
-		.SearchCommentTopic {
-			padding-left: 8px;
-		}
-		.SearchCommentBody a, .SearchCommentBody a:link, .SearchCommentBody a:visited, .SearchCommentBody a:hover {
-			display: block;
-			text-decoration: none;
-			color: #000;
-			padding: 8px;
-			padding-top: 4px;
-			padding-bottom: 4px;
-			margin-top: 4px;
-			margin-bottom: 4px;
-		}
-		.SearchCommentBody a:hover {
-			background: #ffc;
-		}
-		.SearchCommentInformationLabel {
-			padding-left: 8px;
-		}
-
-	/* [Administrative] Settings Page Layout */
-	  
-		/* SettingsBody: Really only used on the "instruction" page when you
-		  first click the settings tab. */
-		.SettingsBody h1 {
-			font-size: 14px;
-			margin: 0px;
-			padding: 0px;
-			margin-bottom: 6px;
-		}
-		.SettingsBody {
-			color: #999;
-			padding: 4px;
-			margin-top: 10px;
-		}
-		.SettingsBody p {
-			padding-left: 10px;
-			padding-right: 10px;
-			margin-top: 0px;
-			margin-bottom: 10px;
-		}
-		
-
-	/* Account Page Layout */
-		.Account {
-			position: absolute;
-			left: 234px;
-			padding-right: 19px;
-			border-right: 1px solid #ccc;
-		}
-		.Account h1 {
-			color: #000;
-			font-size: 14px;
-			padding: 0px;
-			margin: 0px;
-		}
-		.AccountWithIcon {
-			position: relative;
-			left: 40px;
-		}
-		.AccountIcon {
-		  position: absolute;
-		  margin: -7px 0 0 -40px;
-		  display: block;
-		  height: 32px;
-		  width: 32px;
-		  background: #fff center center no-repeat;
-		}
-		.Account small {
-			display: block;
-			text-align: right;
-			position: relative;
-			margin-top: -17px;
-			font-size: 11px;
-			color: #ccc;
-			padding-left: 10px;
-		}
-		.AccountBody {
-			margin-top: 8px;
-			width: 281px;
-			overflow: hidden;
-		}
-		/* AccountBody blockquote & CommentNotice: If a role has an alert
-		  associated with it, it will be encompassed by these classes on
-        the account page and the comment list. */
-			.AccountBody blockquote,
-			.CommentNotice {
-				border: 1px solid #FFC2CA;
-				background: #FFEDEF;
-				padding: 8px;
-				font-size: 12px;
-				color: #CC0000; 
-			}
-			.AccountBody blockquote {
-				margin: 0px;
-				margin-top: 10px;
-				margin-bottom: 4px;
-			}
-		/* .Account .Picture: A bug cropped up where the dl's below the
-		  account picture would partially slide up the page if the picture
-        didn't load for some reason. This fixed height repairs that bug. */
-			.Account .Picture {
-				height: 218px;
-			}
-		.Account .Picture img {
-			margin-top: 8px;
-			margin-bottom: 10px;
-			height: 200px;
-			width: 280px;
-		}
-		.AccountBody dl {
-			margin-top: 0px;
-		}
-		.AccountBody dt {
-			position: absolute;
-			font-weight: bold;
-			width: 120px;
-			overflow: hidden;
-		}
-		.AccountBody dd {
-			margin-left: 0px;
-			padding-left: 126px;
-			padding-bottom: 2px;
-		}
-		
-		/* .Discovery & .IpHistory are only visible to user-adminning roles,
-		  but should be styled almost exactly like the Role History. */
-			.Discovery,
-			.IpHistory,
-			.RoleHistory {
-				border-left: 1px solid #ccc;
-				margin-left: 300px;
-				padding-left: 18px;
-			}
-			.RoleAlternate,
-			.Role {
-				border-top: 1px solid #DEDEDF;
-				padding: 8px;
-			}
-			.Discovery h1,
-			.IpHistory h1, 
-			.RoleHistory h1 {
-				border-bottom: 1px solid #ccc;
-				font-size: 14px;
-				font-weight: bold;
-				color: #000;
-				margin-top: 0px;
-				margin-bottom: 0px;
-				padding-bottom: 4px;
-			}
-			.IpHistory {
-				padding-top: 20px;
-			}
-			.Discovery blockquote,
-			.IpHistory blockquote,
-			.RoleHistory blockquote {
-				margin: 0px;
-				padding: 6px;
-				border-bottom: 1px solid #ccc;
-			}
-			.RoleHistory blockquote {
-				color: #999;
-			}			
-			.RoleDetails {
-				font-size: 11px;
-				color: #999;
-			}
-			.RoleDetails blockquote {
-				padding: 4px;
-				margin: 0px;
-				margin-top: 2px;
-				font-style: italic;
-				background: #f9f9f9;
-				color: #999;
-			}
-			.Discovery h2,
-			.RoleHistory h2,
-			.IpHistory h2 {
-				font-size: 11px;
-				color: #666;
-				font-weight: bold;
-				display: inline;
-			}
-			.Small {
-				display: inline;
-				font-size: 11px;
-				color: #999;
-			}
-			.Discovery h3,
-			.RoleHistory h3,
-			.IpHistory h3 {
-				font-size: 11px;
-				color: #999;
-				font-weight: normal;
-				margin: 0px;
-				margin-top: 2px;
-			}
-			.Discovery p,
-			.RoleHistory p,
-			.IpHistory p {
-				padding: 0px;
-				padding-left: 6px;
-				padding-right: 6px;
-				margin: 0px;
-				margin-bottom: 5px;
-				background: #f9f9f9;
-				font-style: italic;
-			}
-
-	/* Generic styling for Forms */
-		.Form {
-			background: #FEF9E9;
-			border: 1px solid #FFEDAE;
-			padding: 8px;
-			padding-bottom: 0px;
-			width: 400px;
-		}
-		.Form dl {
-			margin: 0px;
-			margin-top: 4px;
-			margin-bottom: 2px;
-			padding-left: 6px;
-		}
-		.Form .InputLabel,
-		.Form dt,
-		.Form dd {
-			color: #A99861;
-		}
-		.Form .InputLabel,
-		.Form dt {
-			margin-left: 0px;
-			font-weight: bold;
-			position: absolute;
-			width: 160px;
-			overflow: hidden;
-		}
-		.Form dd {
-			margin-left: 0px;
-			padding-left: 170px;
-		}
-		.Form h2 {
-			margin: 0px;
-			margin-bottom: 10px;
-			font-size: 14px;
-			font-weight: bold;
-			color: #84733D;
-			background: #FBF8DE;
-			padding: 3px;
-		}
-		.InputNote {
-			padding: 6px;
-			margin-bottom: 10px;
-			color: #A99861;
-			background: #FBF8DE;
-			text-align: left;
-		}
-		.InputBlock {
-			margin-bottom: 12px;
-		}
-		.InputBlock .Radio,
-		.InputBlock .CheckBox {
-			padding-left: 4px;
-			color: #84733D;
-		}
-		.InputNote .CheckBox,
-		.InputNote .Radio {
-			padding-top: 4px;
-			color: #84733D;
-		}
-		.CheckBox {
-			text-align: left;
-			line-height: 200%;
-		}
-		.MultiLineCheckBoxes label {
-			padding-left: 8px;
-			display: block;
-			color: #84733D;
-		}		
-		.Button {
-			cursor: pointer;
-		}
-		.SmallInput {
-			width: 138px;
-		}
-		.LargeTextbox {
-			width: 218px;
-			height: 100px;
-		}
-		.CancelButton, .CancelButton:link, .CancelButton:visited, .CancelButton:hover {
-			position: relative;
-			top: -10px;
-			margin-left: 40px;
-			text-decoration: underline;
-		}
-		.CancelButton, .CancelButton:link, .CancelButton:visited {
-			color: #FF6600;
-		}
-		.CancelButton:hover {
-			color: #000;
-		}		
-		
-	/* .GlobalsForm: Elements specific to the "Settings > Application
-	Settings" form. */
-		.GlobalsForm dt {
-			margin-top: 5px;
-			width: 230px;
-		}
-		.GlobalsForm dd {
-			padding-top: 6px;
-			padding-left: 230px;
-		}
-
-	/* ExtensionsForm: Elements specific to the "Settings > Manage
-	Extensions" form. */
-	.ExtensionsForm {
-		background: #FEF9E9;
-		border: 1px solid #FFEDAE;
-		padding: 8px;
-		padding-bottom: 0px;
-	}
-	.ExtensionsForm table td {
-		width: 50%;
-	}
-   .ExtensionsForm h2 {
-		margin: 0px;
-		margin-bottom: 10px;
-		font-size: 14px;
-		font-weight: bold;
-		color: #84733D;
-		background: #FBF8DE;
-		padding: 3px;
-	}
-	.ExtensionsForm dl {
-		border: 1px solid #ddd;
-		margin-bottom: 10px;
-	}
-	.ExtensionsForm dt {
-		padding-right: 6px;
-	}
-	.ExtensionsForm dd {
-		padding-bottom: 6px;
-		padding-right: 6px;
-	}
-	.ExtensionsForm dd a,
-	.ExtensionsForm dd a:link,
-	.ExtensionsForm dd a:visited,
-	.ExtensionsForm dd a:hover {
-		text-decoration: none;
-		color: #000;
-	}
-	dt.EnabledExtension,
-	dt.DisabledExtension {
-		border-top: 1px dotted #ddd;
-		padding-top: 6px;
-	}
-	dt.FirstExtension {
-		border-top: 0px;
-	}
-	.DisabledExtensions {
-		padding-right: 20px;
-	}
-	.EnabledExtensions {
-		padding-left: 20px;
-	}
-	.EnabledExtensions .Extensions {
-		background: #FEFECC;
-	}
-	.DisabledExtensions .Extensions {
-		background: #FFFEEC;
-	}
-	.SelectedExtension {
-		background: #ff9;
-	}
-	.ExtensionsForm dl input {
-		position: absolute;
-		margin-left: -22px;
-	}
-	.ExtensionsForm dt,
-	.ExtensionsForm dd {
-		margin: 0px;
-		padding-left: 30px;
-	}
-	.ExtensionsForm strong {
-		margin-right: 10px;
-	}
+/* Autocomplete results */
+.AutoCompleteContainer {
+	margin: 0px;
+	padding: 0px;
+	border: 1px solid #888888;
+	border-top: 0px;
+}
+.AutoCompleteContainer td {
+	padding: 3px;
+	cursor: pointer;
+}
+.AutoCompleteRow td {
+	background: #ffffff;
+	color: #000000;
+}
+.AutoCompleteHoverRow td {
+	background: #335EA8;
+	color: #ffffff;
+}
   
-	/* SearchForm: Elements specific to the Search page. */
-		.SearchForm {
-			margin-left: 10px;
-		}
-		.SearchInput {
-			color: #333;
-			width: 300px;
-		}
-		.SearchTypes {
-			margin-top: 4px;
-		}
-		.SearchTypeLabel {
-			margin-left: 12px;
-		}
-		.SearchTypeLabel,
-		.SearchType {
-			margin-right: 16px;
-			display: inline;
-		}
-		.SearchType {
-			margin-bottom: 10px;
-			margin-right: 10px;
-			text-transform: lowercase;
-		}
-		.SearchType a, .SearchType a:link, .SearchType a:visited, .SearchType a:hover {
-			text-decoration: none;
-			color: #000;
-		}
-		.SearchType input {
-			vertical-align: text-top;
-		}
-		.SearchButton {
-			cursor: pointer;
-		}
-		#AdvancedSearchButton {
-			font-size: 10px;
-			margin-left: 10px;
-		}
-		
-		/* SearchTitle: Appears above the different search types on the
-		  advanced search form.*/
-		.SearchTitle {
-			font-weight: bold;
-			font-size: 14px;
-			padding: 4px;
-			padding-top: 10px;
-		}
-		.SearchLabels td {
-			padding-left: 4px;
-			padding-right: 4px;
-			padding-top: 6px;
-			background: #f3f3f3;
-		}
-		.SearchInputs td {
-			padding: 4px;
-			padding-top: 0px;
-			padding-bottom: 8px;
-			background: #f3f3f3;
-		}
-		.AdvancedUserInput {
-			width: 140px;
-		}
-		.AdvancedSearchInput {
-			width: 200px;
-		}
 
-	/* Discussion & Comment forms */
-		.StartDiscussion .Title {
-			margin-bottom: 0px;
-			border-bottom: 0px;
-		}
-		.DiscussionForm {
-			padding-top: 10px;
-		}
-		.DiscussionForm,
-		.CommentForm {
-			margin-top: 0px;
-			background: #FEF9E9;
-			border-top: 1px solid #FFEDAE;
-			border-bottom: 1px solid #FFEDAE;
-			padding-left: 12px;
-			padding-right: 12px;
-			padding-bottom: 0px;
-			color: #834300;
-		}
-		.CommentInputTitle {
-			border-bottom: 0px;
-		}
-		.DiscussionForm dl,
-		.CommentForm dl {
-			margin-bottom: 0px;
-			margin-top: 0px;
-		}
-		.DiscussionForm dt,
-		.CommentForm dt {
-			font-weight: bold;
-		}
-		.DiscussionForm dt small,
-		.CommentForm dt small {
-			font-weight: normal;
-			font-size: 10px;
-			color: #A6730D;
-		}
-		.DiscussionForm dd,
-		.CommentForm dd {
-			margin-left: 2px;
-		}
-		.AddCommentsTitle {
-			border-bottom: 0px;
-		}
-		.CommentForm .ErrorContainer,
-		.DiscussionForm .ErrorContainer {
-			margin-top: 5px;
-			margin-bottom: 10px;
-			width: 444px;
-		}
-		.CategorySelect {
-			width: 230px;
-		}
-		.CategoryInput,
-		.DiscussionInput {
-			margin-bottom: 6px;
-		}
-		.SubmitButton {
-			margin-bottom: 10px;
-		}
-		/* DiscussionBox: The discussion title input. */
-		.DiscussionBox {
-			width: 460px;
-		}
-		
-		/* CommentBoxController: The switch between viewing the comment box
-		  as a large or small input. */
-			#CommentBoxController {
-				border: 1px solid #FFEDAE;
-				border-bottom: 0px;
-				background: #fff;
-				padding-left: 4px;
-				padding-right: 4px;
-				padding-top: 2px;
-				padding-bottom: 3px;
-				font-weight: normal;
-				margin-left: 260px;
-			}
-			#CommentBoxController, #CommentBoxController:link, #CommentBoxController:visited {
-				color: #A99861;
-				text-decoration: none;
-				/* Error: Error in parsing value for property 'cursor'.  Declaration dropped. -Mozilla 
-				cursor: hand;
-				*/
-			}
-			#CommentBoxController:hover {
-				color: #663300;
-				/* Error: Error in parsing value for property 'cursor'.  Declaration dropped. -Mozilla 
-				cursor: hand;
-				*/
-			}
-			.SmallCommentBox,
-			.LargeCommentBox {
-				width: 460px;
-				font-size: 12px;
-			}
-			.SmallCommentBox {
-				height: 130px;
-			}
-			.LargeCommentBox {
-				height: 400px;
-			}
-		
-		/* FormatType: A radio list of the various comment formatting options. */
-			.FormatType {
-				padding-top: 4px;
-				font-size: 11px;
-				font-weight: bold;
-				color: #996600;
-			}
-			.FormatTypeRadio {
-				font-weight: normal;
-				color: #996600;
-				display: inline;
-				padding-left: 16px;
-			}
-			.FormatTypeRadio input {
-				vertical-align: text-top;
-			}
-			.FormatTypeRadio a, .FormatTypeRadio a:link, .FormatTypeRadio a:visited, .FormatTypeRadio a:hover {
-				text-decoration: none;
-				color: #996600;
-			}
-			
-		/* Whisper & Comment elements */
-			.WhisperBox {
-				width: 200px;
-			}
-			.CommentInputLabel,
-			.WhisperInputLabel {
-				margin-top: 10px;
-			}
-			.CommentButtons,
-			.DiscussionButtons {
-				margin-top: 10px;
-				margin-bottom: 6px;
-			}
+/* Thank you positioniseverything.com*/
 
-	/* Settings & Account forms & buttons */
-	  
-		/* SettingsForm h1, AccountForm h1: Generic styles for headings on
-		  the settings & account pages. */
-		.SettingsForm h1,
-		.AccountForm h1 {
-			margin: 0px;
-			padding-bottom: 3px;
-			font-weight: bold;
-			font-size: 14px;
-			overflow: hidden;
-			color: #000;
-		}
-		/* InputCustom & DefinitionHeading: The custom, user-defined
-		  account properties. */
-		.Form .InputCustom dt,
-		.Form .InputCustom dd {
-			font-weight: normal;
-		}
-		.Form .InputCustom .DefinitionHeading {
-			font-weight: bold;
-		}
-
-		/* AppearanceForm: The form in "Settings > Forum Appearance". */
-		.AppearanceForm {
-			padding-bottom: 16px;
-		}
-		
-		/* RoleAbilities .InputLabel: Fixes a glitch on the "Settings > Role
-		  Management > Edit Role" form && the "Settings > Category Management
-        > Edit Category" form. */
-      #CategoryRoles .InputLabel,
-		#RoleAbilities .InputLabel {
-			position: relative;
-			padding-top: 4px;
-			padding-bottom: 4px;
-		}
-		
-		.AccountPersonal .FormButtons {
-			margin-top: 30px;
-		}
-		
-		.FormLink {
-			margin: 10px;
-		}
-		.FormLink a, .FormLink a:link, .FormLink a:visited {
-			color: #FF6600;
-			text-decoration: underline;
-		}
-		.FormLink a:hover {
-			color: brown;
-			text-decoration: underline;
-		}
-
-	/* Style Preview Form */
-		.Preview {
-			background: #FBF8DE;
-			padding-bottom: 4px;
-			margin-bottom: 8px;
-		}
-		.PreviewTitle {
-			font-size: 14px;
-			font-weight: bold;
-			color: #84733D;
-			padding: 3px;
-		}
-		.PreviewImage, .PreviewImage:link, .PreviewImage:visited, .PreviewImage:hover {
-			display: block;
-			text-align: center;
-			margin: 6px;
-		}
-		.PreviewEmpty, .PreviewEmpty:link, .PreviewEmpty:visited, .PreviewEmpty:hover {
-			text-decoration: none;
-			display: block;
-			margin: 6px;
-			text-align: center;
-			line-height: 400%;
-			background: #FFFEF6;
-		}
-		.PreviewEmpty, .PreviewEmpty:link, .PreviewEmpty:visited {
-			color: #D4C080;
-			border: 1px solid #F7EED1;
-		}
-		.PreviewEmpty:hover {
-			color: #B49D55;
-			border: 1px solid #EDE2C0;
-		}
-
-	/* Footer */
-		.Foot {
-			margin-top: 6px;
-			border-top: 1px solid #ccc;
-			margin-left: 235px;
-			margin-right: 16px;
-		}
-		.Links {
-			position: absolute;
-			right: 18px;
-		}
-		.Copyright {
-			padding-left: 2px;
-		}
-		.Copyright,
-		.Links {
-			color: #cccccc;
-			line-height: 200%;
-			margin-bottom: 20px;
-		}
-		.Foot a, .Foot a:link, .Foot a:visited {
-			color: #cccccc;
-			text-decoration: none;
-		}
-		.Foot a:hover {
-			color: #555555;
-			text-decoration: none;
-		}
-
-	/* SortList: Styles for the "sortable list" on the category form */
-		.SortList {
-			list-style: none;
-			margin: 0px;
-			color: #000000;
-			background: rgb(254,254,204);
-			border: 1px solid #ddd;
-			border-top: 0px;
-			padding: 0px;
-		}
-		.MovableSortListItem {
-			cursor: move;
-		}
-		.SortListItem {
-			border-top: 1px solid #dddddd;
-			padding-top: 6px;
-			padding-bottom: 6px;
-			padding-left: 6px;
-		}
-		.SortEdit {
-			position: absolute;
-			margin-left: 340px;
-		}
-		.SortEdit, .SortEdit:link, .SortEdit:active, .SortEdit:visited {
-			color: #1EB136;
-			text-decoration: none;
-		}
-		.SortEdit:hover {
-			color: #339933;
-			text-decoration: underline;
-		}
-		.SortRemove {
-			position: absolute;
-			margin-left: 370px;
-		}
-		.SortListItem img {
-			position: absolute;
-			margin-top: 1px;
-		}
-		
-/* END PAGE BODY */
-
-
-/* BEGIN DEBUG OPTIONS */
-	.DebugBar {
-		padding: 4px;
-		text-align: left;
-		margin: 20px;
-		margin-left: 240px;
+.clearfix:after {
+	content:".";
+	display:block;
+	height:0;
+	clear:both;
+	visibility:hidden;
 	}
-	.Sql {
-		border-top: 2px dashed #efefef;
-		margin-top: 4px;
-		padding-top: 2px;
-		color: #CA0971;
+.clearfix {
+	display:inline-table;
 	}
-/* END DEBUG OPTIONS */
+/* Hides from IE-mac \*/
+* html .clearfix {
+	height:1%;
+	}
+.clearfix {
+	display:block;
+	}
+/* End hide from IE-mac */
