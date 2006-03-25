@@ -1,7 +1,7 @@
 <?php
-// Note: This file is included from the library/Vanilla.Control.UpdateCheck.php control.
+// Note: This file is included from the library/Framework/Framework.Control.UpdateCheck.php control.
 
-echo '<div id="Form" class="Account Identity">
+echo '<div id="Form" class="Account UpdateCheck">
    <fieldset>
       <legend>'.$this->Context->GetDefinition('UpdateCheck').'</legend>
       '.$this->Get_Warnings().'

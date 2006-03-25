@@ -960,6 +960,12 @@ li.User.Name span {
 #Form.GlobalsForm select.SmallSelect {
 	width: 50px;
 }
+/* Update Check form */
+#Form.UpdateCheck p.Description {
+	padding: 0px !important;
+	margin: 0px 0px 10px 0px !important;
+	}  
+  
 /* RoleEdit Form */
 #Form.RoleEditForm li p span label {
 	font-weight: normal !important;
@@ -992,6 +998,9 @@ div.Extensions {
 #Form.Extensions div.ExtensionsDisabled h2 {
 	padding-top:20px;
 }
+#Form.Extensions p a {
+	color: #335eb7;
+	}
 div.ExtensionsDisabled {
 	width:48%;
 	float:left;
@@ -1011,7 +1020,7 @@ div.ExtensionsDisabled ul {
 div.ExtensionsEnabled ul {
 	background-color:#fffecc;
 	}
-div.ExtensionsDisabled ul li, div.ExtensionsEnabled ul li { /* heh, these declarations are getting retardeder */
+div.ExtensionsDisabled ul li, div.ExtensionsEnabled ul li { 
 	border-bottom:1px solid #dddddd;
 	margin:0px !important;
 	padding:10px !important;
@@ -1019,9 +1028,6 @@ div.ExtensionsDisabled ul li, div.ExtensionsEnabled ul li { /* heh, these declar
 div.ExtensionsDisabled h3, div.ExtensionsDisabled h3 span, div.ExtensionsEnabled h3, div.ExtensionsEnabled h3 span {
 	font-size:12px !important;
 	color:#062971 !important;
-	}
-div.ExtensionsDisabled ul li.hiLite, div.ExtensionsEnabled ul li.hiLite {
-	background-color:#ffff99;
 	}
 div.ExtensionsDisabled ul li input, div.ExtensionsEnabled ul li input {
 	width:auto !important;
@@ -1036,11 +1042,15 @@ div.ExtensionsDisabled ul li p, div.ExtensionsEnabled ul li p {
 	font-weight:normal;
 	}
 div.ExtensionsDisabled ul li p a, div.ExtensionsEnabled ul li p a {
-	color:#000000 !important;
-	text-decoration:none;
+	color:#335eb7 !important;
+	text-decoration: none;
+	}
+div.ExtensionsDisabled ul li p a:hover, div.ExtensionsEnabled ul li p a:hover {
+	color:#062971 !important;
+	text-decoration: underline;
 	}
 div.ExtensionsDisabled ul li.hiLite p, div.ExtensionsEnabled ul li.hiLite p {
-	color:#062971 !important;
+	color:#ffffcc !important;
 	}
 
 /* Custom form for sortable list */
