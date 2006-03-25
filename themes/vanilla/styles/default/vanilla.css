@@ -262,7 +262,8 @@ a:hover {
 	float:left;
 	width:60%;
 	overflow:hidden;
-	white-space:nowrap;	
+	white-space:nowrap;
+	text-align:left;
 	}
 
 html>body .ContentInfo h1 { width:80% !important; }
