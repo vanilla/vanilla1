@@ -2,24 +2,29 @@
 // Note: This file is included from the library/Vanilla.Control.SearchForm.php class.
 
 $ShowIcon = ($u->DisplayIcon != '' && $this->Context->Session->User->Preference('HtmlOn'));
-$UserList .= '<dl class="User'.($Switch == 1?'':'Alternate').($FirstRow?' FirstUser':'').'">
-   <dt class="DataItemLabel SearchUserLabel">'.$this->Context->GetDefinition('User').'</dt>
-   <dd class="DataItem SearchUser'.($ShowIcon?' SearchUserWithIcon':'').'">';
-      if ($ShowIcon) $UserList .= '<span class="SearchIcon" style="'
-         ."background-image:url('".$u->DisplayIcon."');"
-         .'">&nbsp;</span>';
-      $UserList .= '<a href="'.GetUrl($this->Context->Configuration, 'account.php', '', 'u', $u->UserID).'">'.$u->Name.'</a> ('.$u->Role.')
-   </dd>
-   <dt class="MetaItemLabel SearchUserInformationLabel SearchUserAccountCreatedLabel">'.$this->Context->GetDefinition('AccountCreated').'</dt>
-   <dd class="MetaItem SearchUserInformation SearchUserAccountCreated">'.TimeDiff($this->Context, $u->DateFirstVisit,mktime()).'</dd>
-   <dt class="MetaItemLabel SearchUserInformationLabel SearchUserLastActiveLabel">'.$this->Context->GetDefinition('LastActive').'</dt>
-   <dd class="MetaItem SearchUserInformation SearchUserLastActive">'.TimeDiff($this->Context, $u->DateLastActive,mktime()).'</dd>
-   <dt class="MetaItemLabel SearchUserInformationLabel SearchUserVisitCountLabel">'.$this->Context->GetDefinition('VisitCount').'</dt>
-   <dd class="MetaItem SearchUserInformation SearchUserVisitCount">'.$u->CountVisit.'</dd>
-   <dt class="MetaItemLabel SearchUserInformationLabel SearchUserDiscussionsCreatedLabel">'.$this->Context->GetDefinition('DiscussionsCreated').'</dt>
-   <dd class="MetaItem SearchUserInformation SearchUserDiscussionsCreated">'.$u->CountDiscussions.'</dd>
-   <dt class="MetaItemLabel SearchUserInformationLabel SearchUserCommentsAddedLabel">'.$this->Context->GetDefinition('CommentsAdded').'</dt>
-   <dd class="MetaItem SearchUserInformation SearchUserCommentsAdded">'.$u->CountComments.'</dd>
-</dl>';
+$UserList .= '<li class="UserAccount'.($Switch == 1?'':' Alternate').($FirstRow?' FirstUser':'').'">
+   <ul>
+      <li class="User Name'.($ShowIcon?' WithIcon':'').'"';
+      if ($ShowIcon) $UserList .= ' style="'."background-image:url('".$u->DisplayIcon."');\"";
+      $UserList .= '>
+         <span>'.$this->Context->GetDefinition('User').'</span> <a href="'.GetUrl($this->Context->Configuration, 'account.php', '', 'u', $u->UserID).'">'.$u->Name.'</a> ('.$u->Role.')
+      </li>
+      <li class="User AccountCreated">
+         <span>'.$this->Context->GetDefinition('AccountCreated').'</span> '.TimeDiff($this->Context, $u->DateFirstVisit,mktime()).'
+      </li>
+      <li class="User LastActive">
+         <span>'.$this->Context->GetDefinition('LastActive').'</span> '.TimeDiff($this->Context, $u->DateLastActive,mktime()).'
+      </li>
+      <li class="User VisitCount">
+         <span>'.$this->Context->GetDefinition('VisitCount').'</span> '.$u->CountVisit.'
+      </li>
+      <li class="User DiscussionsCreated">
+         <span>'.$this->Context->GetDefinition('DiscussionsCreated').'</span> '.$u->CountDiscussions.'
+      </li>
+      <li class="User CommentsAdded">
+         <span>'.$this->Context->GetDefinition('CommentsAdded').'</span> '.$u->CountComments.'
+      </li>
+   </ul>
+</li>';
 
 ?>

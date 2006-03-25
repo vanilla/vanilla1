@@ -1,7 +1,8 @@
 <?php
 // Note: This file is included from the library/Vanilla.Control.GlobalsForm.php control.
-echo('<div id="Form" class="Account GlobalsForm">
-   <fieldset>
+echo '<div id="Form" class="Account GlobalsForm">';
+   if ($this->PostBackValidated) echo '<div class="Success">'.$this->Context->GetDefinition('GlobalApplicationChangesSaved').'</div>';
+   echo '<fieldset>
       <legend>'.$this->Context->GetDefinition('GlobalApplicationSettings').'</legend>
       '.$this->Get_Warnings().'
       '.$this->Get_PostBackForm('frmApplicationGlobals').'
@@ -37,7 +38,7 @@ echo('<div id="Form" class="Account GlobalsForm">
       <ul>
          <li>
             <label for="ddDiscussionsPerPage">'.$this->Context->GetDefinition('DiscussionsPerPage').'</label>
-            ');
+            ';
             $Selector = $this->Context->ObjectFactory->NewObject($this->Context, 'Select');
             $Selector->CssClass = 'SmallSelect';
             $Selector->Name = 'DISCUSSIONS_PER_PAGE';
@@ -48,27 +49,27 @@ echo('<div id="Form" class="Account GlobalsForm">
                $i += 10;
             }
             $Selector->SelectedID = $this->ConfigurationManager->GetSetting('DISCUSSIONS_PER_PAGE');
-            echo($Selector->Get().'
+            echo $Selector->Get().'
          </li>
          <li>
             <label for="ddCommentsPerPage">'.$this->Context->GetDefinition('CommentsPerPage').'</label>
-            ');
+            ';
             $Selector->Name = 'COMMENTS_PER_PAGE';
             $Selector->Attributes = ' id="ddCommentsPerPage"';
             $Selector->SelectedID = $this->ConfigurationManager->GetSetting('COMMENTS_PER_PAGE');
-            echo($Selector->Get().'
+            echo $Selector->Get().'
          </li>
          <li>
             <label for="ddSearchResultsPerPage">'.$this->Context->GetDefinition('SearchResultsPerPage').'</label>
-            ');
+            ';
             $Selector->Name = 'SEARCH_RESULTS_PER_PAGE';
             $Selector->Attributes = ' id="ddSearchResultsPerPage"';
             $Selector->SelectedID = $this->ConfigurationManager->GetSetting('SEARCH_RESULTS_PER_PAGE');
-            echo($Selector->Get().'
+            echo $Selector->Get().'
          </li>
          <li>
             <label for="ddMaxBookmarksInPanel">'.$this->Context->GetDefinition('MaxBookmarksInPanel').'</label>
-            ');
+            ';
             $Selector->Clear();
             $Selector->CssClass = 'SmallSelect';
             $Selector->Attributes = ' id="ddMaxBookmarksInPanel"';
@@ -81,39 +82,39 @@ echo('<div id="Form" class="Account GlobalsForm">
                $i += 4;
             }
             $Selector->SelectedID = $this->ConfigurationManager->GetSetting('PANEL_BOOKMARK_COUNT');
-            echo($Selector->Get().'
+            echo $Selector->Get().'
          </li>
          <li>
             <label for="ddMaxPrivateInPanel">'.$this->Context->GetDefinition('MaxPrivateInPanel').'</label>
-            ');
+            ';
             $Selector->Name = 'PANEL_PRIVATE_COUNT';
             $Selector->Attributes = ' id="ddMaxPrivateInPanel"';
             $Selector->SelectedID = $this->ConfigurationManager->GetSetting('PANEL_PRIVATE_COUNT');
-            echo($Selector->Get().'
+            echo $Selector->Get().'
          </li>
          <li>
             <label for="ddMaxBrowsingHistoryInPanel">'.$this->Context->GetDefinition('MaxBrowsingHistoryInPanel').'</label>
-            ');
+            ';
             $Selector->Name = 'PANEL_HISTORY_COUNT';
             $Selector->Attributes = ' id="ddMaxBrowsingHistoryInPanel"';
             $Selector->SelectedID = $this->ConfigurationManager->GetSetting('PANEL_HISTORY_COUNT');
-            echo($Selector->Get().'
+            echo $Selector->Get().'
          </li>
          <li>
             <label for="ddMaxDiscussionsInPanel">'.$this->Context->GetDefinition('MaxDiscussionsInPanel').'</label>
-            ');
+            ';
             $Selector->Name = 'PANEL_USERDISCUSSIONS_COUNT';
             $Selector->Attributes = ' id="ddMaxDiscussionsInPanel"';
             $Selector->SelectedID = $this->ConfigurationManager->GetSetting('PANEL_USERDISCUSSIONS_COUNT');
-            echo($Selector->Get().'
+            echo $Selector->Get().'
          </li>
          <li>
             <label for="ddMaxSavedSearchesInPanel">'.$this->Context->GetDefinition('MaxSavedSearchesInPanel').'</label>
-            ');
+            ';
             $Selector->Name = 'PANEL_SEARCH_COUNT';
             $Selector->Attributes = ' id="ddMaxSavedSearchesInPanel"';
             $Selector->SelectedID = $this->ConfigurationManager->GetSetting('PANEL_SEARCH_COUNT');
-            echo($Selector->Get().'
+            echo $Selector->Get().'
             <p class="Description">'.$this->Context->GetDefinition('CountsNotes').'</p>
          </li>
       </ul>
@@ -124,7 +125,7 @@ echo('<div id="Form" class="Account GlobalsForm">
             <label for="txtMaxCommentLength">'.$this->Context->GetDefinition('MaxCommentLength').'</label>
             <input type="text" name="MAX_COMMENT_LENGTH" value="'.$this->ConfigurationManager->GetSetting('MAX_COMMENT_LENGTH').'" maxlength="255" class="SmallInput" id="txtMaxCommentLength" />
             <p class="Description">
-               '.$this->Context->GetDefinition('MaxCommentLengthNotes'));
+               '.$this->Context->GetDefinition('MaxCommentLengthNotes');
                $Selector->Clear();
                $Selector->CssClass = 'SmallSelect';
                for ($i = 1; $i < 31; $i++) {
@@ -158,7 +159,7 @@ echo('<div id="Form" class="Account GlobalsForm">
                $SecondsSelector2->Name = 'COMMENT_THRESHOLD_PUNISHMENT';
                $SecondsSelector2->SelectedID = $this->ConfigurationManager->GetSetting('COMMENT_THRESHOLD_PUNISHMENT');
                
-               echo('<br />'
+               echo '<br />'
                   .str_replace(array('//1', '//2', '//3'),
                      array($Selector->Get(), $SecondsSelector->Get(), $SecondsSelector2->Get()),
                      $this->Context->GetDefinition('XCommentsYSecondsZFreeze'))
@@ -218,10 +219,12 @@ echo('<div id="Form" class="Account GlobalsForm">
          <li>
             <label for="txtDefaultStyleFolder">'.$this->Context->GetDefinition('DefaultStyleFolder').'</label>
             <input type="text" name="DEFAULT_STYLE" value="'.$this->ConfigurationManager->GetSetting('DEFAULT_STYLE').'" maxlength="255" class="SmallInput" id="txtDefaultStyleFolder" />
+            <p class="Description">'.$this->Context->GetDefinition('DefaultStyleFolderNotes').'</p>
          </li>
          <li>
             <label for="txtWebPathtoVanilla">'.$this->Context->GetDefinition('WebPathToVanilla').'</label>
             <input type="text" name="DOMAIN" value="'.$this->ConfigurationManager->GetSetting('DOMAIN').'" maxlength="255" class="SmallInput" id="txtWebPathToVanilla" />
+            <p class="Description">'.$this->Context->GetDefinition('WebPathNotes').'</p>
          </li>
          <li>
             <label for="txtCookieDomain">'.$this->Context->GetDefinition('CookieDomain').'</label>
@@ -230,7 +233,7 @@ echo('<div id="Form" class="Account GlobalsForm">
          <li>
             <label for="txtCookiePath">'.$this->Context->GetDefinition('CookiePath').'</label>
             <input type="text" name="COOKIE_PATH" value="'.$this->ConfigurationManager->GetSetting('COOKIE_PATH').'" maxlength="255" class="SmallInput" id="txtCookiePath" />
-            <p class="Description">'.$this->Context->GetDefinition('ApplicationSettingsNotes').'</p>
+            <p class="Description">'.$this->Context->GetDefinition('CookieSettingsNotes').'</p>
          </li>
       </ul>
       
@@ -240,5 +243,5 @@ echo('<div id="Form" class="Account GlobalsForm">
       </div>
       </form>
    </fieldset>
-</div>');
+</div>';
 ?>
