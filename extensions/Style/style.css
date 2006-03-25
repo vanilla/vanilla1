@@ -24,9 +24,8 @@
 	-moz-opacity:1.0 !important;
 }
 #Form.ChangeStyle a.NoStylePreview {
-   margin-left: 30px;
    display: block;
-   width: 370px;
+	margin: 0px 30px 0px 30px;
    border:1px solid #F7EED1;
    text-align: center;
    text-decoration: none;
@@ -39,9 +38,8 @@
 	color: #9F8942 !important;
 }
 #Form.ChangeStyle a.NoStylePreview:hover {
-   margin-left: 30px;
+	margin: 0px 30px 0px 30px;
    display: block;
-   width: 370px;
    border:1px solid #DDCB94;
    text-align: center;
    text-decoration: none;
@@ -54,9 +52,6 @@
 #Form.ChangeStyle a.NoStylePreview span {
    display: block;
    font-size: 12px;
-   filter:alpha(opacity=80);
-	opacity: 0.8;
-	-moz-opacity:0.8;
 }
 #LinkButton {
    display: block;
@@ -73,4 +68,7 @@
 }
 #Form input.CustomStyleInput {
 	width: 400px;
+}
+.AuthorInput {
+	width: 200px !important;
 }

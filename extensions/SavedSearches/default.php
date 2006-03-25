@@ -40,14 +40,14 @@ if (
 		if ($AllowEdit) $String .= '<div class="Hidden"><input type="hidden" id="SavedSearchCount" value="'.$SearchCount.'" /></div>';
 
 		if ($SearchCount > 0) {
-			$String .= "<ul>";
+			$String .= '<ul class="SavedSearches">';
 				$s = $Context->ObjectFactory->NewObject($Context, "Search");
 				while ($Row = $Context->Database->GetRow($Data)) {
 					$s->Clear();
 					$s->GetPropertiesFromDataSet($Row);
 					$s->FormatPropertiesForDisplay();
-					$String .= '<li id="SavedSearch_'.$s->SearchID.'"><a class="PanelLink" href="'.GetUrl($Configuration, 'search.php', 'saved/', 'SearchID', $s->SearchID).'">'.$s->Label.'</a>';
-					if ($AllowEdit) $String .= ' (<a href="./" onclick="RemoveSearch('.$s->SearchID.'); return false;">'.$Context->GetDefinition('RemoveLower').'</a>)';
+					$String .= '<li id="SavedSearch_'.$s->SearchID.'"><a href="'.GetUrl($Configuration, 'search.php', 'saved/', 'SearchID', $s->SearchID).'">'.$s->Label.'</a>';
+					if ($AllowEdit) $String .= ' <span>(<a href="./" onclick="RemoveSearch('.$s->SearchID.'); return false;">'.$Context->GetDefinition('RemoveLower').'</a>)</span>';
 					$String .= '</li>';
 				}
 			$String .= '</ul>';

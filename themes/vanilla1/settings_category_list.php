@@ -1,8 +1,16 @@
 <?php
 // Note: This file is included from the library/Vanilla.Control.CategoryForm.php control.
 
-echo '<div id="Form" class="Account CategoryList">
-   <fieldset>
+echo '<div id="Form" class="Account CategoryList">';
+   $Action = ForceIncomingString("Action", "");
+   if ($Action == 'Removed') {
+      echo '<div class="Success">'.$this->Context->GetDefinition('CategoryRemoved').'</div>';
+   } else if ($Action == 'Saved') {
+      echo '<div class="Success">'.$this->Context->GetDefinition('CategorySaved').'</div>';
+   } else if ($Action == 'SavedNew') {
+      echo '<div class="Success">'.$this->Context->GetDefinition('NewCategorySaved').'</div>';
+   }
+   echo '<fieldset>
       <legend>'.$this->Context->GetDefinition('CategoryManagement').'</legend>'
       .$this->Get_Warnings()
       .'<form method="get" action="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl).'">
@@ -16,9 +24,9 @@ echo '<div id="Form" class="Account CategoryList">
                $c->GetPropertiesFromDataSet($Row);
                $c->FormatPropertiesForDisplay();
                echo '<li class="SortListItem'.($this->Context->Session->User->Permission('PERMISSION_SORT_CATEGORIES') ? ' MovableSortListItem':'').'" id="item_'.$c->CategoryID.'">';
-                  if ($this->Context->Session->User->Permission('PERMISSION_REMOVE_CATEGORIES')) echo '<a class="SortRemove" href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=CategoryRemove&amp;CategoryID='.$c->CategoryID).'">&nbsp;</a>';
                   if ($this->Context->Session->User->Permission('PERMISSION_EDIT_CATEGORIES')) echo '<a class="SortEdit" href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=Category&amp;CategoryID='.$c->CategoryID).'">'.$this->Context->GetDefinition('Edit').'</a>';
-                  echo$c->Name.'
+                  if ($this->Context->Session->User->Permission('PERMISSION_REMOVE_CATEGORIES')) echo '<a class="SortRemove" href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=CategoryRemove&amp;CategoryID='.$c->CategoryID).'">&nbsp;</a>';
+                  echo $c->Name.'
                </li>';
             }
          }

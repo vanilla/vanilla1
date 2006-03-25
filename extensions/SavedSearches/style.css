@@ -2,15 +2,37 @@
   you to save the search. */
 .SearchLabelForm {
    position: absolute;
-   right: 20px;
-   margin-top: 44px;
+   right: 10px;
+   margin-top: 12px;
    z-index: 10;
+   width: 300px;
+   text-align: right;
+}
+.SearchLabelForm fieldset {
+   border: 0px;
 }
 .SearchLabelInput,
 .SearchLabelButton {
    font-size: 10px;
 }
+.SearchLabelButton {
+   cursor: pointer;
+   }
 .SearchLabelInput {
-   width: 100px;
+   width: 160px;
    text-indent: 2px;
 }
+
+/* Saved searches in Panel */
+#Panel ul ul.SavedSearches li a {
+   display: inline !important;
+   width: auto;
+   }
+#Panel ul ul.SavedSearches li span {
+   font-size: 10px !important;
+   color: #aaaaaa;
+   padding-left: 6px;
+   }
+#Panel ul ul.SavedSearches li span a {
+   font-size: 10px !important;   
+   }

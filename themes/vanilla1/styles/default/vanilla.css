@@ -1219,31 +1219,34 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
 	font-style:italic;
 	}
 	
-#SettingsPage #Help {
-	padding-top: 20px;
+/* Settings Home */
+  
+#Form.Help legend {
+	padding-top: 22px !important;
 }
-#SettingsPage #Content h1 {
-	font-size:14px;
-	color:#000000;
-	margin:0px;
-	padding:0px;
-	padding-bottom:5px;
-	border-bottom:1px solid #cccccc;
+#Form.Help form {
+	width: 450px !important;
+	margin: 0px;
+	padding: 0px;
 	}
+#SettingsPage #Form.Help p.Description {
+	padding: 10px !important;
+	color:#84733d !important;
+}
 #SettingsPage #Content dl * {
 	margin:0px;
 	padding:0px;
-	color:#999999;
+	color: #84733d;
 	font-size:12px;
 	}
 #SettingsPage #Content dl dt {
+	margin: 10px 10px;
 	font-weight:bold;
 	font-size:14px;
 	}
 #SettingsPage #Content dl dd {
 	margin:10px;
 	}
-	
 
 .WhisperFrom {
 	background-color:#fefceb;

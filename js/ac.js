@@ -128,21 +128,23 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 		_Display = true;
 		if (_Pos <= 0) _Pos = 1;
 		
-		
 		// Fix ie display bugs
-		iframe = document.createElement('iframe');
-		iframe.id = a.id+'_iefix';
-		iframe.src = 'javascript:false;';
-		iframe.style.position='absolute';
-		iframe.style.top = a.style.top;
-		iframe.style.left = a.style.left;
-		iframe.style.zIndex = '100';
-		iframe.style.border = '0';
-		// iframe.style.filter = 'progid:DXImageTransform.Microsoft.Alpha(opacity=0);';
-		iframe.style.width = _Curr.offsetWidth + 'px';
-		iframe.style.height = a.offsetHeight + 'px';
-		// alert(a.offsetHeight);
-		document.body.appendChild(iframe);
+		if (document.body.insertAdjacentHTML) {
+			document.body.insertAdjacentHTML('beforeEnd', '<iframe '
+				+'id="'+a.id+'_iefix" '
+				+'style="position:absolute;'
+					+'filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0);'
+					+'top:'+a.style.top+';'
+					+'left:'+a.style.left+';'
+					+'width:'+a.offsetWidth+'px;'
+					+'height:'+a.offsetHeight+'px;'
+					+'z-index:100;'
+					+'border:0;'
+				+'" '
+				+'src="javascript:false;" '
+				+'frameborder="0" '
+				+'scrolling="no"></iframe>');
+		}
 	}
 	function GoUp(){
 		if (!_Display) return;

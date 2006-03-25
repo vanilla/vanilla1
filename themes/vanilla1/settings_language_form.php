@@ -3,13 +3,14 @@
 
 if (!$this->Context->Session->User->Permission('PERMISSION_MANAGE_LANGUAGE')) {
    $this->Context->WarningCollector->Add($this->Context->GetDefinition('PermissionError'));
-   echo('<div class="SettingsForm">
+   echo '<div class="SettingsForm">
          '.$this->Get_Warnings().'
-   </div>');				
-} else {				
+   </div>';				
+} else {
    $this->PostBackParams->Set('PostBackAction', 'ProcessLanguageChange');
-   echo('<div id="Form" class="Account Identity">
-      <fieldset>
+   echo '<div id="Form" class="Account Identity">';
+   if ($this->PostBackValidated) echo '<div class="Success">'.$this->Context->GetDefinition('LanguageChangesSaved').'</div>';
+      echo '<fieldset>
          <legend>'.$this->Context->GetDefinition('LanguageManagement').'</legend>
          '.$this->Get_Warnings().'
          '.$this->Get_PostBackForm('frmLanguageChange').'
@@ -26,6 +27,6 @@ if (!$this->Context->Session->User->Permission('PERMISSION_MANAGE_LANGUAGE')) {
          </div>
          </form>
       </fieldset>
-   </div>');
+   </div>';
 }
 ?>

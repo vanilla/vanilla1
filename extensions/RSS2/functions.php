@@ -68,7 +68,7 @@ function ReturnWrappedFeedForRSS2(&$Context, $FeedItems) {
 			<lastBuildDate>'.FixDateForRSS2().'</lastBuildDate>
 			<link>'.$Context->Configuration['BASE_URL'].'</link>
 			<description></description>
-			<generator>Lussumo Vanilla '.VANILLA_VERSION.'</generator>
+			<generator>Lussumo Vanilla '.APPLICATION_VERSION.'</generator>
 			'.$FeedItems.'
 		</channel>
 	</rss>';
