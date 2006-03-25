@@ -1,8 +1,15 @@
 <?php
-// Note: This file is included from the library/Vanilla.Control.SearchForm.php class.
+// Note: This file is included from the library/Vanilla/Vanilla.Control.SearchForm.php class.
 
-echo($this->PageList
-	.$this->PageDetails
-	.'<a class="PageJump Top" href="'.GetRequestUri().'#pgtop">'.$this->Context->GetDefinition('TopOfPage').'</a>');
-   
+echo '</ol>
+</div>';
+if ($this->PageList != '') {
+   echo '<div class="ContentInfo Bottom">
+      <div class="PageInfo">
+         <p>'.$this->PageDetails.'</p>
+         '.$this->PageList.'
+      </div>
+      <a href="'.GetRequestUri().'#pgtop">'.$this->Context->GetDefinition('TopOfPage').'</a>
+   </div>';
+}
 ?>
