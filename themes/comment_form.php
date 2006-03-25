@@ -1,11 +1,11 @@
 <?php
 // Note: This file is included from the library/Vanilla.Control.DiscussionForm.php class.
-echo('<div id="Form" class="AddComments">
+echo '<div id="Form" class="AddComments">
    <fieldset>
 		<legend>'.$this->Title.'</legend>'
 		.$this->Get_PostBackForm('frmPostComment', 'post', 'post.php')
       .$this->Get_Warnings()
-   .'<ul>');
+   .'<ul>';
    
       $this->CallDelegate('CommentForm_PreWhisperInputRender');
    
