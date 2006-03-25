@@ -32,7 +32,8 @@ echo '<div id="Form" class="Account Search">
       if ($this->Context->Configuration['USE_CATEGORIES']) echo '<label for="ddDiscussionCategories">'.$this->Context->GetDefinition('InTheCategory').'</label>';
       echo '<label for="DiscussionAuthUsername">'.$this->Context->GetDefinition('WhereTheAuthorWas').'</label>
       
-      <br /><input id="txtDiscussionKeywords" type="text" name="Keywords" value="'.($this->Search->Type == 'Topics'?$this->Search->Query:'').'" class="AdvancedSearchInput" />
+      <div class="Inputs">
+		<input id="txtDiscussionKeywords" type="text" name="Keywords" value="'.($this->Search->Type == 'Topics'?$this->Search->Query:'').'" class="AdvancedSearchInput" />
       ';
       if ($this->Context->Configuration['USE_CATEGORIES']) {
          $this->CategorySelect->Attributes = ' id="ddDiscussionCategories"';
@@ -47,6 +48,7 @@ echo '<div id="Form" class="Account Search">
          DiscussionAutoComplete.KeywordSourceUrl = "./ajax/getusers.php?Search=";
       </script>
       <input type="submit" name="btnSubmit" value="'.$this->Context->GetDefinition('Search').'" class="SearchButton" />
+		</div>
    </form>';
    
    // Begin Advanced Comment Search Form   
@@ -57,7 +59,8 @@ echo '<div id="Form" class="Account Search">
       if ($this->Context->Configuration['USE_CATEGORIES']) echo '<label for="ddCommentCategories">'.$this->Context->GetDefinition('InTheCategory').'</label>';
       echo '<label for="">'.$this->Context->GetDefinition('WhereTheAuthorWas').'</label>
       
-      <br /><input id="txtCommentKeywords" type="text" name="Keywords" value="'.($this->Search->Type == 'Comments'?$this->Search->Query:'').'" class="AdvancedSearchInput" />
+      <div class="Inputs">
+		<input id="txtCommentKeywords" type="text" name="Keywords" value="'.($this->Search->Type == 'Comments'?$this->Search->Query:'').'" class="AdvancedSearchInput" />
       ';
       if ($this->Context->Configuration['USE_CATEGORIES']) {
          $this->CategorySelect->Attributes = ' id="ddCommentCategories"';
@@ -72,6 +75,7 @@ echo '<div id="Form" class="Account Search">
          CommentAutoComplete.KeywordSourceUrl = "./ajax/getusers.php?Search=";
       </script>
       <input type="submit" name="btnSubmit" value="'.$this->Context->GetDefinition('Search').'" class="SearchButton" />
+		</div>
    </form>';
    
    // Begin Advanced User Search Form
@@ -85,11 +89,12 @@ echo '<div id="Form" class="Account Search">
       <label for="ddRoles">'.$this->Context->GetDefinition('InTheRole').'</label>
       <label for="ddOrder">'.$this->Context->GetDefinition('SortResultsBy').'</label>
       
-      <br />
+      <div class="Inputs">
       <input id="txtUserKeywords" type="text" name="Keywords" value="'.($this->Search->Type == 'Users'?$this->Search->Query:'').'" class="AdvancedSearchInput" />
       '.$this->RoleSelect->Get().'
       '.$this->OrderSelect->Get().'
       <input type="submit" name="btnSubmit" value="'.$this->Context->GetDefinition('Search').'" class="SearchButton" />
+		</div>
    </form>
    </fieldset>
 </div>';
