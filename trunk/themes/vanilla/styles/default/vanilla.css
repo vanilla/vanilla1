@@ -659,8 +659,8 @@ html>body .ContentInfo h1 { width:80% !important; }
 	width: 70px !important;
 	cursor: pointer;
 	}
-#txtDiscussionKeywords, #txtCommentKeywords, #txtUserKeywords {
-	clear: both !important;
+#Form.Search .Inputs {
+	clear: left;
 	}
 #DiscussionAutoCompleteResults, #CommentAutoCompleteResults {
 	width: 180px;
