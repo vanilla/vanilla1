@@ -36,9 +36,9 @@ if ($Context->SelfUrl == "account.php") {
       function Render() {
          if ($this->IsPostBack) {
             $this->Context->WarningCollector->Add($this->Contex->GetDefinition("ErrGuestPassword"));
-            echo("<div class=\"AccountForm\">
-               ".$this->Get_Warnings()."
-            </div>");				
+            echo '<div class="AccountForm">
+               '.$this->Get_Warnings().'
+            </div>';				
          }
       }
    }

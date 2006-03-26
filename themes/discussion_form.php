@@ -38,9 +38,10 @@ echo '<div id="Form" class="StartDiscussion">
    $this->CallDelegate('DiscussionForm_PreCommentRender');
    
    echo '<li>
-      <label for="CommentBox">'.$this->Context->GetDefinition('EnterYourComments').'
+      <label for="CommentBox">
          <a href="./" id="CommentBoxController" onclick="'
             ."ToggleCommentBox('".$this->Context->GetDefinition('SmallInput')."', '".$this->Context->GetDefinition('BigInput')."'); return false;".'">'.$this->Context->GetDefinition($this->Context->Session->User->Preference('ShowLargeCommentBox')?'SmallInput':'BigInput').'</a>
+         '.$this->Context->GetDefinition('EnterYourComments').'
       </label>
       <textarea name="Body" class="'
       .($this->Context->Session->User->Preference('ShowLargeCommentBox') ? 'LargeCommentBox' : 'SmallCommentBox')
