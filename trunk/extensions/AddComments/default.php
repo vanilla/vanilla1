@@ -39,7 +39,7 @@ if (in_array($Context->SelfUrl, array('comments.php', 'post.php'))) {
             'DiscussionForm_AddCredentialInputs');
          
          function DiscussionForm_AddCredentialInputs(&$DiscussionForm) {
-            echo('<table border="0" cellpadding="0" cellspacing="0">
+            echo '<table border="0" cellpadding="0" cellspacing="0">
                <tr>
                   <td class="CredentialsLabel LabelUsername">'.$DiscussionForm->Context->GetDefinition('Username').'</td>
                   <td class="CredentialsLabel LabelPassword">'.$DiscussionForm->Context->GetDefinition('Password').'</td>
@@ -48,7 +48,7 @@ if (in_array($Context->SelfUrl, array('comments.php', 'post.php'))) {
                   <td class="CredentialsInput InputUsername"><input type="text" name="Username" value="'.FormatStringForDisplay(ForceIncomingString('Username', '')).'" /></td>
                   <td class="CredentialsInput InputPassword"><input type="password" name="Password" value="'.FormatStringForDisplay(ForceIncomingString('Password', '')).'" /></td>
                </tr>
-            </table>');
+            </table>';
          }
       }
       
