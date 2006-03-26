@@ -87,7 +87,8 @@ if ($this->Context->WarningCollector->Count() > 0) {
                   if ($Comment->DateEdited != '') $CommentList .= ' <em>'.$this->Context->GetDefinition('Edited').'</em>';
                $CommentList .= '</li>
             </ul>
-            <span>';
+            <span>
+					&nbsp;';
             
                // Set up comment options            
                $this->DelegateParameters['Comment'] = &$Comment;
