@@ -568,7 +568,7 @@ html>body .ContentInfo h1 { width:80% !important; }
 	}
 #Comments .CommentBody {
 	display:block;
-	margin:10px;
+	margin: 10px 10px 10px 10px;
 	color:#000000;
 	}
 #CommentsPage .ContentInfo.Middle .PageInfo {
