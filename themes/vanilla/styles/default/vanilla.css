@@ -787,9 +787,6 @@ li.User.Name a {
 li.User.Name.WithIcon {
 	line-height:32px;
 	}
-li.User.Name.WithIcon a {
-	padding:0px 0px 0px 39px !important;
-	}
 li.User.Name a:hover {
 	text-decoration: none !important;
 	}
