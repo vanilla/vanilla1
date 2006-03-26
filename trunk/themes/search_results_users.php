@@ -4,9 +4,9 @@
 $ShowIcon = ($u->DisplayIcon != '' && $this->Context->Session->User->Preference('HtmlOn'));
 $UserList .= '<li class="UserAccount'.($Switch == 1?'':' Alternate').($FirstRow?' FirstUser':'').'">
    <ul>
-      <li class="User Name'.($ShowIcon?' WithIcon':'').'"';
-      if ($ShowIcon) $UserList .= ' style="'."background-image:url('".$u->DisplayIcon."');\"";
-      $UserList .= '>
+      <li class="User Name'.($ShowIcon?' WithIcon':'').'">';
+         if ($ShowIcon) $UserList .= '<div class="UserIcon" style="'."background-image:url('".$u->DisplayIcon."');\">&nbsp;</div>";
+         $UserList .= '
          <span>'.$this->Context->GetDefinition('User').'</span> <a href="'.GetUrl($this->Context->Configuration, 'account.php', '', 'u', $u->UserID).'">'.$u->Name.'</a> ('.$u->Role.')
       </li>
       <li class="User AccountCreated">

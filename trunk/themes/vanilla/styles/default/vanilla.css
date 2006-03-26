@@ -774,11 +774,17 @@ li.User.Name {
 	display:block;
 	font-size: 11px;
 	}
+li.User.Name div.UserIcon {
+	padding:8px 0px 8px 30px !important;
+	margin-right: 6px !important;
+	background-repeat:no-repeat !important;
+	display: inline !important;
+	background: #fffff center center no-repeat !important;	
+	}
 li.User.Name a {
 	font-size: 14px;
 	}
 li.User.Name.WithIcon {
-	background-repeat:no-repeat;
 	line-height:32px;
 	}
 li.User.Name.WithIcon a {
