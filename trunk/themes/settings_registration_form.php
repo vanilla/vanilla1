@@ -8,8 +8,9 @@ if (!$this->Context->Session->User->Permission('PERMISSION_MANAGE_REGISTRATION')
    </div>');				
 } else {				
    $this->PostBackParams->Set('PostBackAction', 'ProcessRegistrationChange');
-   echo('<div id="Form" class="Account Identity">
-      <fieldset>
+   echo '<div id="Form" class="Account Identity">';
+   if ($this->PostBackValidated) echo '<div class="Success">'.$this->Context->GetDefinition('RegistrationChangesSaved').'</div>';
+      echo '<fieldset>
          <legend>'.$this->Context->GetDefinition('RegistrationManagement').'</legend>
          '.$this->Get_Warnings().'
          '.$this->Get_PostBackForm('frmRegistrationChange').'
@@ -31,6 +32,6 @@ if (!$this->Context->Session->User->Permission('PERMISSION_MANAGE_REGISTRATION')
          </div>
          </form>
       </fieldset>
-   </div>');
+   </div>';
 }
 ?>
