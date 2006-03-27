@@ -892,9 +892,13 @@ li.User.Name span {
 .DiscussionBox {
 	width: 400px;
 	}
+#Form.AddComments .Submit .AddCommentsButton {
+	width: 140px !important;
+	}
 #Form.StartDiscussion .Submit .StartDiscussionButton {
 	width:150px !important;
 	}
+#Form.AddComments a,
 #Form.StartDiscussion a {
 	font-weight: normal;
 	}
