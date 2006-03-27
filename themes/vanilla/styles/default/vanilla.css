@@ -377,6 +377,9 @@ html>body .ContentInfo h1 { width:80% !important; }
 .DiscussionType.Normal {
 	display:none;
 	}
+.DiscussionType * {
+	float: left;
+	}
 .DiscussionTopic, .User.Name {
 	font-size:14px;
 	line-height:20px;
