@@ -36,26 +36,28 @@ echo '<div id="Form" class="AddComments">
          .$this->Comment->Body
          .'</textarea>
       </li>
-      '.$this->GetPostFormatting($Comment->FormatType));
+		'.$this->GetPostFormatting($Comment->FormatType)
+	.'</ul>');
    
-      $this->CallDelegate('CommentForm_PreButtonsRender');
+   $this->CallDelegate('CommentForm_PreButtonsRender');
    
-      echo('<li>
-         <input type="submit" name="btnSave" value="'.($Comment->CommentID > 0 ? $this->Context->GetDefinition('SaveYourChanges') : $this->Context->GetDefinition('AddYourComments'))
-            .'" class="Button SubmitButton" onclick="'
-            ."Wait(this, '".$this->Context->GetDefinition('Wait')."');"
-            .'" />');
-         $this->CallDelegate('CommentForm_PostSubmitRender');
-         
-         if ($this->PostBackAction == 'SaveComment' || ($this->PostBackAction == '' && $Comment->CommentID > 0)) {
-            if ($this->Comment->DiscussionID > 0) {
-               echo('<a href="'.GetUrl($this->Context->Configuration, 'comments.php', '', 'DiscussionID', $this->Comment->DiscussionID).'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>');
-            } else {
-               echo('<a href="'.GetUrl($this->Context->Configuration, 'index.php').'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>');
-            }
-         }
-      echo('</li>
-	</ul>');
+	echo '<div class="Submit">
+		<input type="submit" name="btnSave" value="'.($Comment->CommentID > 0 ? $this->Context->GetDefinition('SaveYourChanges') : $this->Context->GetDefinition('AddYourComments'))
+			.'" class="Button SubmitButton AddCommentsButton" onclick="'
+			."Wait(this, '".$this->Context->GetDefinition('Wait')."');"
+			.'" />';
+		$this->CallDelegate('CommentForm_PostSubmitRender');
+		
+		echo '&nbsp;';
+		
+		if ($this->PostBackAction == 'SaveComment' || ($this->PostBackAction == '' && $Comment->CommentID > 0)) {
+			if ($this->Comment->DiscussionID > 0) {
+				echo('<a href="'.GetUrl($this->Context->Configuration, 'comments.php', '', 'DiscussionID', $this->Comment->DiscussionID).'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>');
+			} else {
+				echo('<a href="'.GetUrl($this->Context->Configuration, 'index.php').'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>');
+			}
+		}
+	echo '</div>';
       
    $this->CallDelegate('CommentForm_PostButtonsRender');
    
