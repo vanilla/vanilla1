@@ -320,7 +320,9 @@ html>body .ContentInfo h1 { width:80% !important; }
 	}
 #Discussions {
 	margin-top:-5px !important;
-	}
+	float: left;
+	width: 100%;
+	}	
 #Discussions, #Discussions * {
 	margin:0px;
 	padding:0px;
