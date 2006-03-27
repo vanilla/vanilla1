@@ -64,7 +64,8 @@ if ($this->Context->WarningCollector->Count() > 0) {
 		if ($Comment->Deleted) $CommentClass .= ' Hidden';
 
       $CommentList .= '<li id="Comment_'.$Comment->CommentID.'"'.($CommentClass == ''?'':' class="'.$CommentClass.'"').'>
-         <div class="CommentHeader">
+         <a name="Item_'.$RowNumber.'" />
+			<div class="CommentHeader">
             <ul>
                <li>
 						'.($ShowIcon?'<div class="CommentIcon" style="'."background: #fffff center center no-repeat; background-image:url('".$Comment->AuthIcon."');".'">&nbsp;</div>':'').'
