@@ -59,6 +59,8 @@ if ($this->Context->WarningCollector->Count() > 0) {
 			} else {
 				$CommentClass = 'WhisperFrom';
 			}
+		} else if ($this->Discussion->WhisperUserID > 0) {
+			$CommentClass = ($Comment->AuthUserID == $this->Context->Session->UserID) ? 'WhisperFrom' : 'WhisperTo';
 		}
 		
 		if ($Comment->Deleted) $CommentClass .= ' Hidden';

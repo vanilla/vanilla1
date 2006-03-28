@@ -525,6 +525,7 @@ $Context->Dictionary['MakeThisDiscussionUnSink'] = 'Unsink this discussion';
 $Context->Dictionary['ConfirmUnSink'] = 'Are you sure you want to unsink this discussion?';
 $Context->Dictionary['ConfirmSink'] = 'Are you sure you want to sink this discussion?';
 $Context->Dictionary['ErrPermissionSinkDiscussions'] = 'You do not have permission to sink discussions';
+$Context->Dictionary['YourCommentsWillBeWhisperedToX'] = 'Your comments will be whispered to //1';
 
 /* Please do not remove or alter this definition */
 $Context->Dictionary['PanelFooter'] = '<p id="AboutVanilla"><a href="http://getvanilla.com">Vanilla ('.APPLICATION_VERSION.')</a> is a product of <a href="http://lussumo.com">Lussumo</a>. More Information: <a href="http://lussumo.com/docs">Documentation</a>, <a href="http://lussumo.com/community">Community Support</a>.</p>';
