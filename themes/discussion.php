@@ -4,6 +4,7 @@
 // themes/discussions.php include template.
 
 $UnreadUrl = GetUnreadQuerystring($Discussion, $this->Context->Configuration, $CurrentUserJumpToLastCommentPref);
+$NewUrl = GetUnreadQuerystring($Discussion, $this->Context->Configuration, 1);
 $LastUrl = GetLastCommentQuerystring($Discussion, $this->Context->Configuration, $CurrentUserJumpToLastCommentPref);
 
 $DiscussionList .= '
@@ -38,7 +39,7 @@ $DiscussionList .= '
       if ($this->Context->Session->UserID > 0) {
          $DiscussionList .= '
       <li class="DiscussionNew">
-         <a href="'.$UnreadUrl.'"><span>'.$this->Context->GetDefinition('NewCaps').' </span>'.$Discussion->NewComments.'</a>
+         <a href="'.$NewUrl.'"><span>'.$this->Context->GetDefinition('NewCaps').' </span>'.$Discussion->NewComments.'</a>
       </li>
       ';
       }
