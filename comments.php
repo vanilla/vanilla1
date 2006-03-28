@@ -29,6 +29,7 @@ $CommentGrid = $Context->ObjectFactory->CreateControl($Context, "CommentGrid", $
 // Create the comment form
 if ($CommentGrid->ShowForm) {
 	$CommentForm = $Context->ObjectFactory->CreateControl($Context, 'DiscussionForm');
+	$CommentForm->Discussion = &$CommentGrid->Discussion;
 	$CommentFoot = $Context->ObjectFactory->CreateControl($Context, 'Filler', 'comments_foot.php');
 }
 
