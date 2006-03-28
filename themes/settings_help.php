@@ -1,5 +1,5 @@
 <?php
-// Note: This file is included from the library/Vanilla.Control.SettingsHelp.php control.
+// Note: This file is included from the library/Vanilla/Vanilla.Control.SettingsHelp.php control.
 
 echo '<div id="Form" class="Settings Help">
    <fieldset>

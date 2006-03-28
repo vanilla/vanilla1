@@ -3,14 +3,14 @@
 
 if (!$this->Context->Session->User->Permission('PERMISSION_CHANGE_USER_ROLE')) {
    $this->Context->WarningCollector->Add($this->Context->GetDefinition('PermissionError'));
-   echo('<div id="Form" class="Account Role">
+   echo '<div id="Form" class="Account Role">
       '.$this->Get_Warnings().'
-   </div>');				
+   </div>';
 } else {				
    $this->PostBackParams->Set('PostBackAction', 'ProcessRole');
    $this->PostBackParams->Set('u', $this->User->UserID);
    $Required = $this->Context->GetDefinition('Required');
-   echo('<div id="Form" class="Account Role">
+   echo '<div id="Form" class="Account Role">
       <fieldset>
          <legend>'.$this->Context->GetDefinition('ChangeRole').'</legend>
          '.$this->Get_Warnings().'
@@ -33,6 +33,6 @@ if (!$this->Context->Session->User->Permission('PERMISSION_CHANGE_USER_ROLE')) {
          </div>
          </form>
       </fieldset>
-   </div>');
+   </div>';
 }
 ?>

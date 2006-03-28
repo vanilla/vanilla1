@@ -1,5 +1,5 @@
 <?php
-// Note: This file is included from the library/Vanilla.Control.CommentGrid.php class.
+// Note: This file is included from the library/Vanilla/Vanilla.Control.CommentGrid.php class.
 
 $CommentList = '';
 if ($this->Context->WarningCollector->Count() > 0) {
@@ -136,5 +136,5 @@ if ($this->Context->WarningCollector->Count() > 0) {
       </div>';
    }
 }
-echo($CommentList);
+echo $CommentList;
 ?>

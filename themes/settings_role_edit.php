@@ -1,9 +1,9 @@
 <?php
-// Note: This file is included from the library/People.Control.RoleForm.php control.
+// Note: This file is included from the library/People/People.Control.RoleForm.php control.
 
-echo('<div id="Form" class="Account RoleEditForm">
+echo '<div id="Form" class="Account RoleEditForm">
    <fieldset>
-      <legend>'.$this->Context->GetDefinition('RoleManagement').'</legend>');
+      <legend>'.$this->Context->GetDefinition('RoleManagement').'</legend>';
    if ($RoleID > 0) {
       $this->RoleSelect->Attributes = "onchange=\"document.location='".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=Role')."&amp;RoleID='+this.options[this.selectedIndex].value;\" id=\"sRoleSelect\"";
       $this->RoleSelect->SelectedID = $RoleID;

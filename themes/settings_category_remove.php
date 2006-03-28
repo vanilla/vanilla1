@@ -1,5 +1,5 @@
 <?php
-// Note: This file is included from the library/Vanilla.Control.CategoryForm.php control.
+// Note: This file is included from the library/Vanilla/Vanilla.Control.CategoryForm.php control.
 
 echo '<div id="Form" class="Account CategoryRemoveForm">
    <fieldset>
@@ -19,7 +19,7 @@ echo '<div id="Form" class="Account CategoryRemoveForm">
          $this->CategorySelect->RemoveOption($this->CategorySelect->SelectedID);
          $this->CategorySelect->Name = 'ReplacementCategoryID';
          $this->CategorySelect->SelectedID = ForceIncomingInt('ReplacementCategoryID', 0);
-         echo('<h2>'.$this->Context->GetDefinition('SelectReplacementCategory').'</h2>
+         echo '<h2>'.$this->Context->GetDefinition('SelectReplacementCategory').'</h2>
          <ul>
             <li>
                <label for="sReplacementCategory">'.$this->Context->GetDefinition('ReplacementCategory').' <small>'.$this->Context->GetDefinition('Required').'</small></label>
@@ -30,9 +30,9 @@ echo '<div id="Form" class="Account CategoryRemoveForm">
          <div class="Submit">
             <input type="submit" name="btnSave" value="'.$this->Context->GetDefinition('Remove').'" class="Button SubmitButton RemoveCategoryButton" />
             <a href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=Categories').'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>
-         </div>');
+         </div>';
       }
-      echo('</form>
+      echo '</form>
    </fieldset>
-</div>');				
+</div>';
 ?>
