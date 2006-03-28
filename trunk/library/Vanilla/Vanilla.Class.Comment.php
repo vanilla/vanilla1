@@ -130,7 +130,7 @@ class Comment extends Delegation {
       $this->WhisperUsername = FormatStringForDisplay($this->WhisperUsername);
 		$this->Discussion = FormatStringForDisplay($this->Discussion);
 		$this->Category = FormatStringForDisplay($this->Category);
-		$this->Body = FormatHtmlStringInline($this->Body);
+		$this->Body = FormatHtmlStringInline($this->Body, 0, 1);
 		$this->AuthIcon = FormatStringForDisplay($this->AuthIcon, 1, 0);
 	}
 
