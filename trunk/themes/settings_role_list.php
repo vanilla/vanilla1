@@ -1,5 +1,5 @@
 <?php
-// Note: This file is included from the library/Vanilla.Control.RoleForm.php control.
+// Note: This file is included from the library/Vanilla/Vanilla.Control.RoleForm.php control.
 
 echo '<div id="Form" class="Account Roles">';
    $Action = ForceIncomingString("Action", "");
@@ -33,15 +33,15 @@ echo '<div id="Form" class="Account Roles">';
                .'</li>';
             }
          }
-      echo('</ul>');
+      echo '</ul>';
       if ($this->Context->Session->User->Permission('PERMISSION_SORT_ROLES')) {
-         echo("<script type=\"text/javascript\" language=\"javascript\">
+         echo "<script type=\"text/javascript\" language=\"javascript\">
          // <![CDATA[
             Sortable.create('SortRoles', {dropOnEmpty:true, tag:'li', constraint: 'vertical', ghosting: false, onUpdate: function() {new Ajax.Updater('SortResult', './ajax/sortroles.php', {onComplete: function(request) { new Effect.Highlight('SortRoles',{startcolor:'#ffff99'});}, parameters:Sortable.serialize('SortRoles', {tag:'li', name:'RoleID'}), evalScripts:true, asynchronous:true})}});
          // ]]>
-         </script>");
+         </script>";
          // Debug
-         echo('<div id="SortResult" style="display: none;"></div>');
+         echo '<div id="SortResult" style="display: none;"></div>';
       }
       if ($this->Context->Session->User->Permission('PERMISSION_ADD_ROLES')) {
          echo '<div class="Submit">
@@ -49,7 +49,7 @@ echo '<div id="Form" class="Account Roles">';
             <a href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl).'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>
          </div>';
       }
-   echo('</form>
+   echo '</form>
    </fieldset>
-</div>');
+</div>';
 ?>

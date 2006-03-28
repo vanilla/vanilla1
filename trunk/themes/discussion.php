@@ -1,7 +1,7 @@
 <?php
-// Note: This file is included from the library/Vanilla.Control.SearchForm.php class and
-// also from the library/Vanilla/Control/DiscussionForm.php's templates/discussions.php
-// include template.
+// Note: This file is included from the library/Vanilla/Vanilla.Control.SearchForm.php
+// class and also from the library/Vanilla/Vanilla.Control.DiscussionForm.php's
+// themes/discussions.php include template.
 
 $UnreadUrl = GetUnreadQuerystring($Discussion, $this->Context->Configuration, $CurrentUserJumpToLastCommentPref);
 $LastUrl = GetLastCommentQuerystring($Discussion, $this->Context->Configuration, $CurrentUserJumpToLastCommentPref);

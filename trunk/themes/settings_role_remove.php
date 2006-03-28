@@ -1,5 +1,5 @@
 <?php
-// Note: This file is included from the library/People.Control.RoleForm.php control.
+// Note: This file is included from the library/People/People.Control.RoleForm.php control.
 
 echo '<div id="Form" class="Account RoleRemoveForm">
    <fieldset>
@@ -33,7 +33,7 @@ echo '<div id="Form" class="Account RoleRemoveForm">
             <a href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=Roles').'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>
          </div>';
       }
-      echo'</form>
+      echo '</form>
    </fieldset>
-</div>';				
+</div>';
 ?>

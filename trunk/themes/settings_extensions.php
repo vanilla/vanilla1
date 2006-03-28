@@ -1,7 +1,7 @@
 <?php
-// Note: This file is included from the library/Vanilla.Control.ExtensionForm.php control.
+// Note: This file is included from the library/Vanilla/Vanilla.Control.ExtensionForm.php control.
 
-echo('<div id="Form" class="Account Extensions">
+echo '<div id="Form" class="Account Extensions">
    <fieldset>
       <legend>'.$this->Context->GetDefinition('Extensions').'</legend>'
       .$this->Get_Warnings()
@@ -11,7 +11,7 @@ echo('<div id="Form" class="Account Extensions">
       <div class="ExtensionListContainer clearfix">
          <div class="ExtensionsDisabled">
             <h2>'.$this->Context->GetDefinition('DisabledExtensions').'</h2>
-            <ul>');
+            <ul>';
                if (is_array($this->DisabledExtensions)) {
                   $ExtensionList = '';
                   ksort($this->DisabledExtensions);
@@ -30,17 +30,17 @@ echo('<div id="Form" class="Account Extensions">
                         .'</p>
                      </li>';
                   }
-                  echo($ExtensionList);
+                  echo $ExtensionList;
                } else {
-                  echo('<li><p>'.$this->Context->GetDefinition('NoDisabledExtensions').'</p></li>');
+                  echo '<li><p>'.$this->Context->GetDefinition('NoDisabledExtensions').'</p></li>';
                }
-            echo('</ul>
+            echo '</ul>
          </div>
          <div class="ExtensionsEnabled">
             <h2>
                '.$this->Context->GetDefinition('EnabledExtensions').'
             </h2>
-            <ul>');
+            <ul>';
                if (is_array($this->EnabledExtensions)) {
                   $ExtensionList = '';
                   ksort($this->EnabledExtensions);
@@ -57,14 +57,14 @@ echo('<div id="Form" class="Account Extensions">
                         .'</p>
                      </li>';
                   }
-                  echo($ExtensionList);
+                  echo $ExtensionList;
                } else {
-                  echo('<li><p>'.$this->Context->GetDefinition('NoEnabledExtensions').'</p></li>');
+                  echo '<li><p>'.$this->Context->GetDefinition('NoEnabledExtensions').'</p></li>';
                }
-            echo('</ul>
+            echo'</ul>
          </div>
       </div>
       </form>					
    </fieldset>
-</div>');
+</div>';
 ?>

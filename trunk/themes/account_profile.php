@@ -1,28 +1,28 @@
 <?php
-// Note: This file is included from the library/Vanilla.Control.Account.php class.
+// Note: This file is included from the library/Vanilla/Vanilla.Control.Account.php class.
 
-echo('<div id="AccountProfile">
-   <ul>');
+echo '<div id="AccountProfile">
+   <ul>';
 
       $this->CallDelegate('PreUsernameRender');
       
       if ($this->User->DisplayIcon != '') {
-         echo('<li class="ProfileTitle ProfileTitleIcon clearfix" style="background-image:url('."'".$this->User->DisplayIcon."'".')">');
+         echo '<li class="ProfileTitle ProfileTitleIcon clearfix" style="background-image:url('."'".$this->User->DisplayIcon."'".')">';
       } else {
-         echo('<li class="ProfileTitle clearfix">');
+         echo '<li class="ProfileTitle clearfix">';
       }
-         echo('<h2>'.$this->User->Name.'</h2>
+         echo '<h2>'.$this->User->Name.'</h2>
          <p>'.$this->User->Role.'</p>
-      </li>');
+      </li>';
       if ($this->User->RoleDescription != '') echo('<li class="Tagline">'.$this->User->RoleDescription.'</li>');
       if ($this->User->Picture != "" && $this->User->Permission('PERMISSION_HTML_ALLOWED')) echo('<li class="Picture"><img src="'.$this->User->Picture.'" id="Picture" /></li>');
       if ($this->Context->Configuration['USE_REAL_NAMES'] && ($this->User->ShowName || $this->Context->Session->User->Permission('PERMISSION_EDIT_USERS'))) {
-         echo('<li>
+         echo '<li>
             <h3>'.$this->Context->GetDefinition('RealName').'</h3>
             <p>'.ReturnNonEmpty($this->User->FullName).'</p>
-         </li>');
+         </li>';
       }
-      echo('<li>
+      echo '<li>
          <h3>'.$this->Context->GetDefinition('Email').'</h3>
          <p>'.(($this->Context->Session->UserID > 0 && $this->User->UtilizeEmail) ? GetEmail($this->User->Email) : $this->Context->GetDefinition('NA')).'</p>
       </li>
@@ -45,30 +45,30 @@ echo('<div id="AccountProfile">
       <li>
          <h3>'.$this->Context->GetDefinition('CommentsAdded').'</h3>
          <p>'.$this->User->CountComments.'</p>
-      </li>');
+      </li>';
          
       $this->CallDelegate('PostBasicPropertiesRender');
          
       if ($this->Context->Session->User->Permission('PERMISSION_IP_ADDRESSES_VISIBLE')) {
-         echo('<li>
+         echo '<li>
             <h3>'.$this->Context->GetDefinition('LastKnownIp').'</h3>
             <p>'.$this->User->RemoteIp.'</p>
-         </li>');
+         </li>';
       }
          
       if (count($this->User->Attributes) > 0) {
          $AttributeCount = count($this->User->Attributes);
          for ($i = 0; $i < $AttributeCount; $i++) {
-            echo('<li>
+            echo '<li>
                <h3>'.$this->User->Attributes[$i]['Label'].'</h3>
                <p>'.FormatHyperlink($this->User->Attributes[$i]['Value']).'</p>
-            </li>');
+            </li>';
          }
       }
       
       $this->CallDelegate('PostAttributesRender');
          
-   echo('</ul>
-</div>');
+   echo '</ul>
+</div>';
 
 ?>

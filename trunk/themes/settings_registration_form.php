@@ -1,11 +1,11 @@
 <?php
-// Note: This file is included from the library/Vanilla.Control.RegistrationForm.php control.
+// Note: This file is included from the library/Vanilla/Vanilla.Control.RegistrationForm.php control.
 
 if (!$this->Context->Session->User->Permission('PERMISSION_MANAGE_REGISTRATION')) {
    $this->Context->WarningCollector->Add($this->Context->GetDefinition('PermissionError'));
-   echo('<div class="SettingsForm">
+   echo '<div class="SettingsForm">
          '.$this->Get_Warnings().'
-   </div>');				
+   </div>';
 } else {				
    $this->PostBackParams->Set('PostBackAction', 'ProcessRegistrationChange');
    echo '<div id="Form" class="Account Identity">';

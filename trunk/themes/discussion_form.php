@@ -1,5 +1,6 @@
 <?php
-// Note: This file is included from the library/Vanilla.Control.DiscussionForm.php class.
+// Note: This file is included from the library/Vanilla/Vanilla.Control.DiscussionForm.php class.
+
 echo '<div id="Form" class="StartDiscussion">
    <fieldset>
 		<legend>'.$this->Title.'</legend>'
@@ -23,7 +24,7 @@ echo '<div id="Form" class="StartDiscussion">
    </li>';
 
    if ($this->Context->Configuration['ENABLE_WHISPERS'] && $Discussion->DiscussionID == 0) {   
-      echo('<li>
+      echo '<li>
          <label for="WhisperUsername">'.$this->Context->GetDefinition('WhisperYourCommentsTo').'</label>
          <input id="WhisperUsername" name="WhisperUsername" type="text" value="'.FormatStringForDisplay($Discussion->WhisperUsername, 0).'" class="Whisper AutoCompleteInput" maxlength="20" />
          <script type="text/javascript">
@@ -32,7 +33,7 @@ echo '<div id="Form" class="StartDiscussion">
             WhisperAutoComplete.KeywordSourceUrl = "./ajax/getusers.php?Search=";
          </script>
       </li>
-      ');
+      ';
    }
 
    $this->CallDelegate('DiscussionForm_PreCommentRender');
@@ -54,17 +55,17 @@ echo '<div id="Form" class="StartDiscussion">
    
    $this->CallDelegate('DiscussionForm_PreButtonsRender');
    
-   echo('<div class="Submit">
+   echo '<div class="Submit">
       <input type="submit" name="btnSave" value="'.$this->Context->GetDefinition(($Discussion->DiscussionID > 0) ? 'SaveYourChanges' : 'StartYourDiscussion').'" class="Button SubmitButton StartDiscussionButton" onclick="'
       ."Wait(this, '".$this->Context->GetDefinition('Wait')."');"
-      .'"/>');
+      .'"/>';
       $this->CallDelegate('DiscussionForm_PostSubmitRender');
-      echo('<a href="'.(!$this->IsPostBack?'javascript:history.back();':'./').'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>
-   </div>');
+      echo '<a href="'.(!$this->IsPostBack?'javascript:history.back();':'./').'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>
+   </div>';
    
    $this->CallDelegate('DiscussionForm_PostButtonsRender');
    
-   echo('</form>
+   echo'</form>
    </fieldset>
-</div>');
+</div>';
 ?>

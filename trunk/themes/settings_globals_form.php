@@ -1,5 +1,5 @@
 <?php
-// Note: This file is included from the library/Vanilla.Control.GlobalsForm.php control.
+// Note: This file is included from the library/Vanilla/Vanilla.Control.GlobalsForm.php control.
 echo '<div id="Form" class="Account GlobalsForm">';
    if ($this->PostBackValidated) echo '<div class="Success">'.$this->Context->GetDefinition('GlobalApplicationChangesSaved').'</div>';
    echo '<fieldset>

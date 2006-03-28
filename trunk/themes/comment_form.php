@@ -1,5 +1,6 @@
 <?php
 // Note: This file is included from the library/Vanilla/Vanilla.Control.DiscussionForm.php class.
+
 echo '<div id="Form" class="AddComments">
    <fieldset>
 		<legend>'.$this->Title.'</legend>'

@@ -1,5 +1,5 @@
 <?php
-// Note: This file is included from the library/Vanilla.Control.CategoryForm.php control.
+// Note: This file is included from the library/Vanilla/Vanilla.Control.CategoryForm.php control.
 
 echo '<div id="Form" class="Account CategoryList">';
    $Action = ForceIncomingString("Action", "");
@@ -34,12 +34,12 @@ echo '<div id="Form" class="Account CategoryList">';
       <div id="SortResult" style="display: none;"></div>';
       
       if ($this->Context->Session->User->Permission('PERMISSION_SORT_CATEGORIES')) {
-         echo("
+         echo "
          <script type=\"text/javascript\" language=\"javascript\">
          // <![CDATA[
             Sortable.create('SortCategories', {dropOnEmpty:true, tag:'li', constraint: 'vertical', ghosting: false, onUpdate: function() {new Ajax.Updater('SortResult', './ajax/sortcategories.php', {onComplete: function(request) { new Effect.Highlight('SortCategories',{startcolor:'#ffff99'});}, parameters:Sortable.serialize('SortCategories', {tag:'li', name:'CategoryID'}), evalScripts:true, asynchronous:true})}});
          // ]]>
-         </script>");
+         </script>";
       }
       echo '<div class="Submit">
          <input type="submit" name="btnSave" value="'.$this->Context->GetDefinition('CreateNewCategory').'" class="Button SubmitButton NewCategoryButton" />

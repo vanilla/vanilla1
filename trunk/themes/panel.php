@@ -1,7 +1,7 @@
 <?php
 // Note: This file is included from the library/Framework/Framework.Control.Panel.php class.
 
-echo('<div id="Panel">');
+echo '<div id="Panel">';
 
 // Add the start button to the panel
 if ($this->Context->Session->UserID > 0 && $this->Context->Session->User->Permission('PERMISSION_START_DISCUSSION')) {
@@ -38,14 +38,14 @@ while (list($Key, $PanelElement) = each($this->PanelElements)) {
             </li>
          </ul>';
       }
-      echo($sReturn);
+      echo $sReturn;
    } elseif ($Type == 'String') {
-      echo($this->Strings[$Key]);
+      echo $this->Strings[$Key];
    }
 }
 
 $this->CallDelegate('PostElementsRender');
 
-echo('</div>
-<div id="Content">');
+echo '</div>
+<div id="Content">';
 ?>
