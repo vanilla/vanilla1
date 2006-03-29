@@ -1212,6 +1212,15 @@ div.Extensions ul li p a:hover {
 #AccountProfile .ProfileTitle * {
 	line-height:32px;
 	}
+#AccountProfile .Tagline {
+	padding: 6px;
+	text-align: center;
+	border-top: 1px solid #99CC99;
+	border-bottom: 1px solid #99CC99;
+	background: #E2F9E3;
+	color: #006600 !important;
+	margin: 0px 20px 10px 0px;
+	}
 .ProfileTitleIcon {
 	background-repeat:no-repeat;
 	}
