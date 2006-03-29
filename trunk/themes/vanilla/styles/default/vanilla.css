@@ -567,6 +567,17 @@ html>body .ContentInfo h1 { width:80% !important; }
 	text-decoration: underline;
 	color: #333;
 	}
+#Comments .CommentNotice {
+	padding: 6px;
+	text-align: center;
+	font-size:13px;
+	border-top: 1px solid #99CC99;
+	border-bottom: 1px solid #99CC99;
+	background: #E2F9E3;
+	color: #006600 !important;
+	margin-bottom: 10px;
+
+	}
 #Comments .CommentBody {
 	display:block;
 	margin: 10px;
