@@ -55,7 +55,8 @@ $Configuration['FORWARD_VALIDATED_USER_URL'] = './';
 $Configuration['DEFAULT_ROLE'] = '0'; 
 $Configuration['ALLOW_IMMEDIATE_ACCESS'] = '0'; 
 $Configuration['APPROVAL_ROLE'] = '4'; 
-$Configuration['SAFE_REDIRECT'] = 'people.php?PageAction=SignOutNow'; 
+$Configuration['SAFE_REDIRECT'] = 'people.php?PageAction=SignOutNow';
+$Configuration['PEOPLE_USE_EXTENSIONS'] = '1';
 
 // Framework Settings
 $Configuration['SMTP_HOST'] = '';

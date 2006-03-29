@@ -416,6 +416,7 @@ html>body .ContentInfo h1 { width:80% !important; }
 /* Category Index */
   
 #CategoryPage div.ContentInfo h1 {
+	float: left;
 	text-align: left;
 	width: 100%;
 	border-bottom: 1px solid #cccccc;
@@ -428,6 +429,8 @@ html>body .ContentInfo h1 { width:80% !important; }
 	}
 #Categories {
 	margin-bottom: 20px;
+	float: left;
+	width: 100%;
 	}
 .BlockedCategory {
 	background: #ffffff;
