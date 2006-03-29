@@ -1071,7 +1071,8 @@ div.Extensions h3 label {
 	}
 div.Extensions ul li input {
 	width: auto !important;
-	margin: 3px -27px !important;
+	margin-top: 3px !important;
+	left: 260px;
 	position: absolute;
 	}
 div.Extensions h3 a {
