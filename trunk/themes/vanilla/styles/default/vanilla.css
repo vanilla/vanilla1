@@ -1064,10 +1064,10 @@ div.Extensions ul li.Processing * {
 div.Extensions h3 {
 	font-size:13px;
 	color:#000 !important;
-	text-indent: 30px !important;
 	}
 div.Extensions h3 label {
 	display: inline !important;
+	padding-left: 30px !important;
 	}
 div.Extensions ul li input {
 	width: auto !important;
