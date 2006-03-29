@@ -63,7 +63,7 @@ $Foot = $Context->ObjectFactory->CreateControl($Context, 'PeopleFoot');
 $PageEnd = $Context->ObjectFactory->CreateControl($Context, 'PageEnd');
 
 // INCLUDE EXTENSIONS
-include($Configuration['APPLICATION_PATH'].'conf/extensions.php');
+if ($Configuration['PEOPLE_USE_EXTENSIONS']) include($Configuration['APPLICATION_PATH'].'conf/extensions.php');
 
 // BUILD THE PAGE HEAD
 // Every page will require some basic definitions for the header.
