@@ -1022,66 +1022,90 @@ li.User.Name span {
 
 /* Custom form for extensions management screen */
 
-div.Extensions {
-	width:100% !important;
+#Form.Extensions {
+	margin: 0px 0px 20px 0px !important;
 	}
 #Form.Extensions div.ExtensionsEnabled h2,
 #Form.Extensions div.ExtensionsDisabled h2 {
 	padding-top:20px;
 	}
-#Form.Extensions p a {
-	color: #335eb7;
-	}
-div.ExtensionsDisabled {
-	width:48%;
-	float:left;
-	}
-div.ExtensionsEnabled {
-	width:48%;
-	float:right;
-	}
-div.ExtensionsDisabled ul, div.ExtensionsEnabled ul {
+div.Extensions ul {
 	border:1px solid #dddddd;
 	border-bottom:0px;
-	margin-bottom:20px !important;
+	margin: 20px 0px 20px 0px !important;
 	}
-div.ExtensionsDisabled ul {
+div.Extensions ul {
 	background-color:#fffeec;
 	}
-div.ExtensionsEnabled ul {
-	background-color:#fffecc;
-	}
-div.ExtensionsDisabled ul li, div.ExtensionsEnabled ul li { 
+div.Extensions ul li { 
 	border-bottom:1px solid #dddddd;
 	margin:0px !important;
 	padding:10px !important;
 	}
-div.ExtensionsDisabled h3, div.ExtensionsDisabled h3 span, div.ExtensionsEnabled h3, div.ExtensionsEnabled h3 span {
-	font-size:12px !important;
-	color:#062971 !important;
+div.Extensions ul li.Enabled {
+	background: #FEFECB;
 	}
-div.ExtensionsDisabled ul li input, div.ExtensionsEnabled ul li input {
-	width:auto !important;
-	margin-right:5px !important;
+div.Extensions ul li.Disabled {
+	background: url(disabled-tile.gif) #F4F4C2;
 	}
-div.ExtensionsDisabled ul li span, div.ExtensionsEnabled ul li span {
-	margin-left:20px !important;
+div.Extensions ul li.Processing {
+	background: #FEFECB;
 	}
-div.ExtensionsDisabled ul li p, div.ExtensionsEnabled ul li p {
-	margin-left:21px !important;
-	color:#000000 !important;
+div.Extensions ul li.Processing label {
+	background: url(progress.gif) no-repeat center left;
+	}
+div.Extensions ul li.Processing input {
+	display: none;
+	}
+div.Extensions ul li.Processing * {
+	color: #B9AB7E !important;
+	}
+div.Extensions h3 {
+	font-size:13px;
+	color:#000 !important;
+	}
+div.Extensions h3 label {
+	display: inline !important;
+	padding-left: 30px !important;
+	}
+div.Extensions ul li input {
+	width: auto !important;
+	margin: 3px -27px !important;
+	background: red;
+	position: absolute;
+	}
+div.Extensions h3 a {
+	color:#1EB136 !important;
+	text-decoration: none;
+	}
+div.Extensions h3 a:hover {
+	text-decoration: underline;
+	}
+div.Extensions ul li span,
+div.Extensions ul li span * {
+	font-size: 12px;
+	font-weight: normal;
+	z-index: 1;
+	}
+div.Extensions ul li span {
+	margin-left: 10px !important;
+	}
+div.Extensions .Version {
+	font-weight: bold;
+	margin-left: 5px !important;
+	}
+div.Extensions ul li p {
+	padding-left:30px !important;
+	color:#000 !important;
 	font-weight:normal;
 	}
-div.ExtensionsDisabled ul li p a, div.ExtensionsEnabled ul li p a {
+div.Extensions ul li p a {
 	color:#335eb7 !important;
 	text-decoration: none;
 	}
-div.ExtensionsDisabled ul li p a:hover, div.ExtensionsEnabled ul li p a:hover {
+div.Extensions ul li p a:hover {
 	color:#062971 !important;
 	text-decoration: underline;
-	}
-div.ExtensionsDisabled ul li.hiLite p, div.ExtensionsEnabled ul li.hiLite p {
-	color:#ffffcc !important;
 	}
 
 /* Custom form for sortable list */

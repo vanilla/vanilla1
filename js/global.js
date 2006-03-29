@@ -124,6 +124,32 @@ function SwitchElementClass(ElementToChangeID, SenderID, StyleA, StyleB, Comment
 	 }
 }
 
+function SwitchExtension(ExtensionKey) {
+    var Item = document.getElementById(ExtensionKey);
+    if (Item) Item.className = "Processing";
+    var Url = "./ajax/switchextension.php";
+    var Parameters = "ExtensionKey="+ExtensionKey;
+    var dm = new DataManager();
+    dm.RequestFailedEvent = SwitchExtensionResult;
+    dm.RequestCompleteEvent = SwitchExtensionResult;
+    dm.LoadData(Url+"?"+Parameters);
+}
+
+function SwitchExtensionResult(Request) {
+    var Item = document.getElementById(Request.responseText);
+    if (Item) {
+        setTimeout("SwitchExtensionItemClass('"+Request.responseText+"')",600);
+    } else {
+        alert("Failed to modify extension.");
+    }
+}
+
+function SwitchExtensionItemClass(ItemID) {
+    var Item = document.getElementById(ItemID);
+    var chk = document.getElementById('chk'+ItemID+'ID');
+    if (Item && chk) Item.className = chk.checked ? 'Enabled' : 'Disabled';
+}
+
 function SwitchLoader(ShowLoader) {
 	var Loader = document.getElementById("LoadStatus");
 	if (Loader) Loader.style.display = (ShowLoader == 1)?"block":"none";
