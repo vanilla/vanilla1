@@ -2,7 +2,8 @@
 // Note: This file is included from the library/Vanilla/Vanilla.Control.Foot.php class.
 
 echo'</div>
-</div>';
+</div>
+<a name="pgbottom"></a>';
 
 $AllowDebugInfo = 0;
 if ($this->Context->Session->User) {
