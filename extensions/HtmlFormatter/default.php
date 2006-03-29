@@ -71,19 +71,16 @@ class HtmlFormatter extends StringFormatter
 			$String);
 		$Len = strlen($String);
 		$Out = '';
-		for($i = $Escape = $CurStr = $InTag = 0; $i < $Len; $i++)
+		
+		for($i = $CurStr = $InTag = 0; $i < $Len; $i++)
 		{
 			$Got = 0;
 			if($InTag)
 			{
-				if($String[$i] == '"' || $String[$i] == '\'' || $String[$i] == '`')
+				if($String[$i] == '"' || $String[$i] == '\'')
 				{
-					if(!$Escape)
-					{
-						if(!$CurStr) $CurStr = $String[$i];
-						else $CurStr = 0;
-					}
-					else if($CurStr && @$String[$i+1] == '>') $InTag = $CurStr = 0; //in case we're mistaking escaped quotes for folder paths
+					if(!$CurStr) $CurStr = $String[$i];
+					else $CurStr = 0;
 				}
 				else if($String[$i] == '<')
 				{
@@ -99,7 +96,6 @@ class HtmlFormatter extends StringFormatter
 					}
 					else $InTag = 0;
 				}
-				else if($String[$i] == "\\") {if(!$Escape && $CurStr) $Escape = 1;}
 			}
 			else
 			{
@@ -108,8 +104,6 @@ class HtmlFormatter extends StringFormatter
 			}
 			
 			if(!$Got) $Out .= $String[$i];
-			if($Escape == 1) $Escape = 2;
-			else if($Escape == 2) $Escape = 0;
 		}
 		if($InTag) $Out .= '>';
 		
