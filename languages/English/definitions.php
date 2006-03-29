@@ -461,7 +461,7 @@ $Context->Dictionary['XSecondAgo'] = '//1 second ago';
 $Context->Dictionary['XSecondsAgo'] = '//1 seconds ago';
 $Context->Dictionary['nothing'] = 'nothing';
 $Context->Dictionary['EnableWhispers'] = 'Enable Whispers';
-$Context->Dictionary['ExtensionFormNotes'] = 'To enable an extension, click on the extension name or check the extension checkbox. To read the full description of an extension, click on the brief description displayed below the extension name. <a href="http://getvanilla.com/extensions" target="_blank">Click here for more extensions from Lussumo</a>.';
+$Context->Dictionary['ExtensionFormNotes'] = 'To enable an extension, check the box next to the extension name. <a href="http://getvanilla.com/extensions" target="_blank">Click here for more extensions from Lussumo</a>.';
 $Context->Dictionary['EnabledExtensions'] = 'Enabled Extensions';
 $Context->Dictionary['DisabledExtensions'] = 'Disabled Extensions';
 $Context->Dictionary['ErrExtensionNotFound'] = 'The specified extension could not be found.';
