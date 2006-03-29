@@ -1041,6 +1041,7 @@ div.Extensions ul li {
 	border-bottom:1px solid #dddddd;
 	margin:0px !important;
 	padding:10px !important;
+	overflow: hidden;
 	}
 div.Extensions ul li.Enabled {
 	background: #FEFECB;
