@@ -52,5 +52,6 @@ if ($Type == 'Bookmark' && $DiscussionID > 0) {
 	$um->SwitchUserPreference($Type, $Switch);
 }
 
-echo('Complete');
+echo 'Complete';
+$Context->Unload();
 ?>

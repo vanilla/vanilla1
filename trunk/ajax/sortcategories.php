@@ -11,15 +11,16 @@
 * Description: File used by Dynamic Data Management object to change the order of categories
 */
 
-include("../appg/settings.php");
-include("../conf/settings.php");
-include("../appg/init_ajax.php");
+include('../appg/settings.php');
+include('../conf/settings.php');
+include('../appg/init_ajax.php');
 
-$Sql = "update ".$Configuration["DATABASE_TABLE_PREFIX"]."Category set Priority = '//1' where CategoryID = '//2';";
-$SortOrder = ForceIncomingArray("CategoryID", array());
+$Sql = 'update '.$Configuration['DATABASE_TABLE_PREFIX']."Category set Priority = '//1' where CategoryID = '//2';";
+$SortOrder = ForceIncomingArray('CategoryID', array());
 $ItemCount = count($SortOrder);
 for ($i = 0; $i < $ItemCount; $i++) {
-   $ExecSql = str_replace(array("//1", "//2"), array($i, $SortOrder[$i]), $Sql);
-   $Context->Database->Execute($ExecSql, "AJAX", "ReorderCategories", "Failed to reorder categories", 0);
+   $ExecSql = str_replace(array('//1', '//2'), array($i, $SortOrder[$i]), $Sql);
+   $Context->Database->Execute($ExecSql, 'AJAX', 'ReorderCategories', 'Failed to reorder categories', 0);
 }
+$Context->Unload();
 ?>

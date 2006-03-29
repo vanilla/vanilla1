@@ -11,15 +11,15 @@
 * Description: File used by Dynamic Data Management object to block/unblock categories
 */
 
-include("../appg/settings.php");
-include("../conf/settings.php");
-include("../appg/init_ajax.php");
+include('../appg/settings.php');
+include('../conf/settings.php');
+include('../appg/init_ajax.php');
 
-$Block = ForceIncomingBool("Block", 0);
-$BlockCategoryID = ForceIncomingInt("BlockCategoryID", 0);
+$Block = ForceIncomingBool('Block', 0);
+$BlockCategoryID = ForceIncomingInt('BlockCategoryID', 0);
 
 if ($BlockCategoryID > 0) {
-	$um = $Context->ObjectFactory->NewContextObject($Context, "UserManager");
+	$um = $Context->ObjectFactory->NewContextObject($Context, 'UserManager');
    if ($Block) {
       $um->AddCategoryBlock($BlockCategoryID);
    } else {
@@ -28,5 +28,6 @@ if ($BlockCategoryID > 0) {
 }
 
 // Report success
-echo("Complete");
+echo 'Complete';
+$Context->Unload();
 ?>
