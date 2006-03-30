@@ -7,7 +7,8 @@ echo '<div id="AccountProfile">
       $this->CallDelegate('PreUsernameRender');
       
       if ($this->User->DisplayIcon != '') {
-         echo '<li class="ProfileTitle ProfileTitleIcon clearfix" style="background-image:url('."'".$this->User->DisplayIcon."'".')">';
+         echo '<li class="ProfileTitle WithIcon clearfix">
+            <div class="ProfileIcon" style="background-image:url(\''.$this->User->DisplayIcon.'\')">&nbsp;</div>';
       } else {
          echo '<li class="ProfileTitle clearfix">';
       }
