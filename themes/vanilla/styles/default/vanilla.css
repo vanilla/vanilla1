@@ -1235,12 +1235,24 @@ div.Extensions ul li p a:hover {
 .ProfileTitleIcon {
 	background-repeat:no-repeat;
 	}
-.ProfileTitleIcon h2 {
-	padding-left:36px !important;
+.ProfileTitle h2 {
 	width:48% !important;
 	}
+.ProfileTitle.WithIcon h2 {
+	padding-left:4px !important;
+	width: auto;
+	}
+.ProfileTitle.WithIcon .ProfileIcon {
+	padding:8px 0px 8px 30px;
+	background: #ffffff no-repeat center center;
+	margin-right: 6px;
+	display: inline;
+	float: left;
+	width: 32px;
+	}	
 #AccountProfile .ProfileTitle p {
-	width:40%;
+	width:auto;
+	float: right;
 	text-align:right;
 	font-size:11px;
 	color:#aaaaaa;
