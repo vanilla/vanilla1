@@ -9,12 +9,14 @@ body, div, table, td {
 	color:#062971;
 	}
 a {
+	color: #3354AA;
+	text-decoration: underline;
 	cursor: pointer;
 	}
 a:hover {
+	color: #4B6DB7;
 	text-decoration: none;
 	}
-
 /* Errors & Success */
 .ErrorContainer {
 	background: url(alert.gif) no-repeat top left #FFEDEF;
