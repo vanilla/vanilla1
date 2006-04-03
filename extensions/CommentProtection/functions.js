@@ -62,10 +62,12 @@ function BlockSaved(Request) {
 
 function DecodeElement(Element) {
 	var String = Element.innerHTML;
+	var regex_amp = new RegExp("&amp;", "gi");
 	var regex_lt = new RegExp("&lt;", "gi");
 	var regex_gt = new RegExp("&gt;","gi");
 	String = String.replace(regex_lt,"<");
 	String = String.replace(regex_gt,">");
+	String = String.replace(regex_amp,"&");
 	Element.innerHTML = String;
 }
 
@@ -73,9 +75,11 @@ function EncodeElement(Element) {
 	var String = Element.innerHTML;
 	var regex_br1 = new RegExp("<br>", "gi");
 	var regex_br2 = new RegExp("::br::", "gi");
+	var regex_amp = new RegExp("&", "gi");
 	var regex_lt = new RegExp("<", "gi");
 	var regex_gt = new RegExp(">","gi");
 	String = String.replace(regex_br1,"::br::");
+	String = String.replace(regex_amp,"&amp;");
 	String = String.replace(regex_lt,"&lt;");
 	String = String.replace(regex_gt,"&gt;");
 	String = String.replace(regex_br2,"<br />");
