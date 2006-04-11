@@ -743,6 +743,14 @@ html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
 #CommentResults .CommentResult ul {
 	background-color:#ffffff !important;
 	}
+#CommentResults .CommentText span {
+	display: none;
+	}
+#CommentResults .CommentText span.Highlight {
+	display:inline;
+	color: #f00;
+	background: #ff9;
+	}
 #CommentResults .CommentText {
 	margin:6px 0px 4px 0px !important;
 	}
