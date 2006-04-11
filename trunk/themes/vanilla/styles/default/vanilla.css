@@ -293,7 +293,7 @@ html>body .ContentInfo h1 { width:80% !important; }
 	line-height:23px;
 	font-weight:bold;
 	}
-.ContentInfo.Top .PageInfo{
+#CommentsPage .ContentInfo.Top .PageInfo{
 		margin:5px 0px 0px 0px !important;
 	}
 .PageInfo p {
