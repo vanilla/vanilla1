@@ -20,6 +20,6 @@ if ($this->Context->Session->User->Preference('ShowFormatSelector') && $FormatCo
       $FormatTypeToUse = $this->Context->Configuration['DEFAULT_FORMAT_TYPE'];
    }
    
-   $sReturn .= '<input type="hidden" name="FormatType" value="'.$FormatTypeToUse.'" />';
+   $sReturn .= '<li><input type="hidden" name="FormatType" value="'.$FormatTypeToUse.'" /></li>';
 }
 ?>
