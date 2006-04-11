@@ -154,7 +154,7 @@ $Context->Dictionary['AboutSettingsNotes'] = "<p class=\"Description\">Using thi
 	<dt>Role Management</dt>
 	<dd>Use this menu option to add, edit, and organize roles and permissions.</dd>
 	<dt>Category Management</dt>
-	<dd>use this menu option to add, edit, and organize categories.</dd>
+	<dd>Use this menu option to add, edit, and organize categories.</dd>
 	<dt>Registration Management</dt>
 	<dd>Using this menu option you can define how new members are handled: which role they are assigned to, do they require administrative approval, etc.</dd>
 	<dt>Membership Applicants</dt>

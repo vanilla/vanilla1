@@ -2,8 +2,9 @@
 // Note: This file is included from the library/Vanilla/Vanilla.Control.Foot.php class.
 
 echo'</div>
-</div>
 <a name="pgbottom"></a>
+</div>
+
 <div id="LoadStatus">'.$this->Context->GetDefinition('Loading').'</div>';
 
 $AllowDebugInfo = 0;
