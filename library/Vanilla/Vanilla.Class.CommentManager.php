@@ -260,9 +260,9 @@ class CommentManager {
 			$s->AddWhere('c', 'WhisperUserID', '', 0, '=', 'or', '', 0);
 			$s->AddWhere('c', 'WhisperUserID', '', 'null', 'is', 'or', '', 0);
 			$s->EndWhereGroup();
-			$s->AddWhere('d.WhisperUserID', 0, '=', 'and', '', 1, 1);
-			$s->AddWhere('d.WhisperUserID', 0, '=', 'or', '', 0);
-			$s->AddWhere('d.WhisperUserID', 'null', 'is', 'or', '', 0);
+			$s->AddWhere('d', 'WhisperUserID', '', 0, '=', 'and', '', 1, 1);
+			$s->AddWhere('d', 'WhisperUserID', '', 0, '=', 'or', '', 0);
+			$s->AddWhere('d', 'WhisperUserID', '', 'null', 'is', 'or', '', 0);
 			$s->EndWhereGroup();
 		}
 		return $s;

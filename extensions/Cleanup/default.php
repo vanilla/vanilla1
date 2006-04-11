@@ -191,7 +191,7 @@ if ($Context->SelfUrl == 'settings.php' && $Context->Session->User->Permission('
 					// Now remove comments associated with those discussions
                $s->Clear();
 					$s->SetMainTable('Comment', 'c');
-					$s->AddWhere('d', 'DiscussionID', '', '('.implode(',',$HiddenDiscussionIDs).')', 'in', 'and', '', 0);
+					$s->AddWhere('c', 'DiscussionID', '', '('.implode(',',$HiddenDiscussionIDs).')', 'in', 'and', '', 0);
 					$this->Context->Database->Delete($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove hidden discussion comments.');
 					
 					// Clean up the whisper tables
@@ -356,27 +356,44 @@ if ($Context->SelfUrl == 'settings.php' && $Context->Session->User->Permission('
 		}
 		
 		function Render_ValidPostBack() {
-			echo('<div class="SettingsForm">');
+			echo '<div id="Form" class="Account CleanupForm">
+				<fieldset>';
 			if ($this->PostBackAction == 'CleanupUsers') {
-				echo('<h1>'.$this->Context->GetDefinition('CleanupUsers').'</h1>
-				<div class="Form LanguageChange">
-					<div class="InputNote">'.$this->NumberOfUsersRemoved.$this->Context->GetDefinition('UsersRemovedSuccessfully').'</div>');
+				echo '<legend>'.$this->Context->GetDefinition('CleanupUsers').'</legend>
+				<form>
+				<ul>
+					<li>
+						<p class="Description">'.str_replace('//1', $this->NumberOfUsersRemoved, $this->Context->GetDefinition('UsersRemovedSuccessfully')).'</p>
+					</li>';
 			} elseif ($this->PostBackAction == 'CleanupComments') {
-				echo('<h1>'.$this->Context->GetDefinition('CleanupComments').'</h1>
-				<div class="Form LanguageChange">
-					<div class="InputNote">'.$this->Context->GetDefinition('CommentsRemovedSuccessfully').'</div>');
+				echo '<legend>'.$this->Context->GetDefinition('CleanupComments').'</legend>
+				<form>
+				<ul>
+					<li>
+						<p class="Description">'.$this->Context->GetDefinition('CommentsRemovedSuccessfully').'</p>
+					</li>';
 			} elseif ($this->PostBackAction == 'CleanupDiscussions') {
-				echo('<h1>'.$this->Context->GetDefinition('CleanupDiscussions').'</h1>
-				<div class="Form LanguageChange">
-					<div class="InputNote">'.$this->Context->GetDefinition('DiscussionsRemovedSuccessfully').'</div>');
+				echo '<legend>'.$this->Context->GetDefinition('CleanupDiscussions').'</legend>
+				<form>
+				<ul>
+					<li>
+						<p class="Description">'.$this->Context->GetDefinition('DiscussionsRemovedSuccessfully').'</p>
+					</li>';
 			} elseif ($this->PostBackAction == 'PurgeDiscussions') {
-				echo('<h1>'.$this->Context->GetDefinition('PurgeDiscussions').'</h1>
-				<div class="Form LanguageChange">
-					<div class="InputNote">'.$this->Context->GetDefinition('DiscussionsPurgedSuccessfully').'</div>');
+				echo '<legend>'.$this->Context->GetDefinition('PurgeDiscussions').'</legend>
+				<form>
+				<ul>
+					<li>
+						<p class="Description">'.$this->Context->GetDefinition('DiscussionsPurgedSuccessfully').'</p>
+					</li>';
 			}
-					echo('<div class="FormLink"><a href="'.GetUrl($this->Context->Configuration, 'settings.php', '', '', '', '', 'PostBackAction=Cleanup').'">'.$this->Context->GetDefinition('ClickHereToContinue').'</a></div>
-				</div>
-			</div>');
+			echo '<li>
+				<p class="Description"><a href="'.GetUrl($this->Context->Configuration, 'settings.php', '', '', '', '', 'PostBackAction=Cleanup').'">'.$this->Context->GetDefinition('ClickHereToContinue').'</a></p>
+				</li>
+			</ul>
+			</form>
+			</fieldset>
+			</div>';
 		}
 		
 		function Render_NoPostBack() {
@@ -385,6 +402,7 @@ if ($Context->SelfUrl == 'settings.php' && $Context->Session->User->Permission('
 					$DaySelect = $this->Context->ObjectFactory->NewObject($this->Context, 'Select');
 					$DaySelect->Name = 'Days';
 					$DaySelect->CssClass = 'InlineSelect';
+					$DaySelect->Attributes = ' id="DaySelect"';
 					for ($i = 0; $i < 11; $i++) {
 						$DaySelect->AddOption($i, $i);
 					}
@@ -404,71 +422,69 @@ if ($Context->SelfUrl == 'settings.php' && $Context->Session->User->Permission('
 						$i += 30;
 					}
 					$DaySelect->SelectedID = 30;
-					echo("<div class=\"SettingsForm\">
-						<h1>".$this->Context->GetDefinition("SystemCleanup")."</h1>
-						<div class=\"Form Cleanup\">
-							<div class=\"InputNote\">
-								<h2>".$this->Context->GetDefinition("BackupDatabase")."</h2>
-								<a href=\"".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=BackupDatabase")."\">".$this->Context->GetDefinition("ClickHereToBackupDatabase")."</a>
-								<p>".$this->Context->GetDefinition("BackupDatabaseNotes")."</p>
-							</div>
-
-
-							<div class=\"InputNote\">
-								<h2>".$this->Context->GetDefinition("CleanupUsers")."</h2>
-									<script language=\"javascript\" type=\"text/javascript\">
-									//<![CDATA[	
-									function RemoveUsers() {
-										if (confirm('".$this->Context->GetDefinition("RemoveUsersConfirm")."')) {
-											document.location = '".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=CleanupUsers&Days='+document.frmUserCleanup.Days.options[document.frmUserCleanup.Days.selectedIndex].value").";
-										}
-									}
-									//]]>
-									</script>
-								<form name=\"frmUserCleanup\" method=\"post\" action=\"\">"
-									.str_replace(array("//1","//2"), array($this->InactiveUsers, $DaySelect->Get()), $this->Context->GetDefinition("RemoveUsersMessage"))
-									."<a href=\"javascript:RemoveUsers();\">".$this->Context->GetDefinition("Go")."</a>
-								</form>
-							</div>
-							<div class=\"InputNote\">
-								<h2>".$this->Context->GetDefinition("CleanupDiscussions")."</h2>
-									<script language=\"javascript\" type=\"text/javascript\">
-									//<![CDATA[	
-									function RemoveDiscussions() {
-										if (confirm('".$this->Context->GetDefinition("RemoveDiscussionsConfirm")."')) {
-											document.location = '".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=CleanupDiscussions")."';
-										}
-									}
-									function RemoveComments() {
-										if (confirm('".$this->Context->GetDefinition("RemoveCommentsConfirm")."')) {
-											document.location = '".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=CleanupComments")."';
-										}
-									}
-									function PurgeDiscussions() {
-										if (confirm('".$this->Context->GetDefinition("PurgeDiscussionsConfirm")."')) {
-											document.location = '".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=PurgeDiscussions")."';
-										}
-									}
-									//]]>
-									</script>
-								<p>"								
-									.str_replace("//1", $this->HiddenDiscussions, $this->Context->GetDefinition("XHiddenDiscussions"))
-									."<a href=\"javascript:RemoveDiscussions();\">".$this->Context->GetDefinition("ClickHereToRemoveAllHiddenDiscussions")."</a>
-								</p>
-								<p>"								
-									.str_replace("//1", $this->HiddenComments, $this->Context->GetDefinition("XHiddenComments"))
-									."<a href=\"javascript:RemoveComments();\">".$this->Context->GetDefinition("ClickHereToRemoveAllHiddenComments")."</a>
-								</p>
-								<p><a href=\"javascript:PurgeDiscussions();\">".$this->Context->GetDefinition("ClickHereToPurgeAllDiscussions")."</a></p>
-							</div>
-						</div>
-					</div>");
+					echo '<div id="Form" class="Account CleanupForm">
+						<fieldset>
+						<legend>'.$this->Context->GetDefinition('SystemCleanup').'</legend>
+						<form>
+						<h2>'.$this->Context->GetDefinition("BackupDatabase").'</h2>
+						<p><a href="'.GetUrl($this->Context->Configuration, 'settings.php', '', '', '', '', 'PostBackAction=BackupDatabase').'">'.$this->Context->GetDefinition('ClickHereToBackupDatabase').'</a></p>
+						<p class="Description">'.$this->Context->GetDefinition("BackupDatabaseNotes").'</p>
+						
+						<h2>'.$this->Context->GetDefinition('CleanupUsers').'</h2>
+						
+						<script language="javascript" type="text/javascript">'."
+						//<![CDATA[	
+						function RemoveUsers() {
+							if (confirm('".$this->Context->GetDefinition("RemoveUsersConfirm")."')) {
+								var sel = document.getElementById('DaySelect');
+								document.location = '".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=CleanupUsers&Days='+sel.options[sel.selectedIndex].value").";
+							}
+						}
+						//]]>".'
+						</script>
+						<p class="Description">'
+							.str_replace(array('//1','//2'), array($this->InactiveUsers, $DaySelect->Get()), $this->Context->GetDefinition('RemoveUsersMessage'))
+						.' <strong><a href="javascript:RemoveUsers();">'.$this->Context->GetDefinition('Go').'</a></strong></p>
+						
+						<h2>'.$this->Context->GetDefinition('CleanupDiscussions').'</h2>
+						<script language="javascript" type="text/javascript">'."
+						//<![CDATA[	
+						function RemoveDiscussions() {
+							if (confirm('".$this->Context->GetDefinition("RemoveDiscussionsConfirm")."')) {
+								document.location = '".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=CleanupDiscussions")."';
+							}
+						}
+						function RemoveComments() {
+							if (confirm('".$this->Context->GetDefinition("RemoveCommentsConfirm")."')) {
+								document.location = '".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=CleanupComments")."';
+							}
+						}
+						function PurgeDiscussions() {
+							if (confirm('".$this->Context->GetDefinition("PurgeDiscussionsConfirm")."')) {
+								document.location = '".GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=PurgeDiscussions")."';
+							}
+						}
+						//]]>".'
+						</script>
+						<p class="Description">'
+							.str_replace('//1', $this->HiddenDiscussions, $this->Context->GetDefinition('XHiddenDiscussions'))
+							.'<a href="javascript:RemoveDiscussions();">'.$this->Context->GetDefinition('ClickHereToRemoveAllHiddenDiscussions').'</a>
+						</p>
+						<p class="Description">'
+							.str_replace('//1', $this->HiddenComments, $this->Context->GetDefinition('XHiddenComments'))
+							.'<a href="javascript:RemoveComments();">'.$this->Context->GetDefinition('ClickHereToRemoveAllHiddenComments').'</a>
+						</p>
+						<p class="Description"><a href="javascript:PurgeDiscussions();">'.$this->Context->GetDefinition('ClickHereToPurgeAllDiscussions').'</a></p>
+						</form>
+				</fieldset>
+			</div>';
 				}					
 			}
 		}
 	}
 	
-	$CleanupForm = $Context->ObjectFactory->NewContextObject($Context, "CleanupForm");
-	$Page->AddRenderControl($CleanupForm, $Configuration["CONTROL_POSITION_BODY_ITEM"] + 80);
-	$Panel->AddListItem($Context->GetDefinition("AdministrativeOptions"), $Context->GetDefinition("SystemCleanup"), GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=Cleanup"), "", "", 80);
+	$CleanupForm = $Context->ObjectFactory->NewContextObject($Context, 'CleanupForm');
+	$Page->AddRenderControl($CleanupForm, $Configuration['CONTROL_POSITION_BODY_ITEM'] + 80);
+	$Panel->AddListItem($Context->GetDefinition('AdministrativeOptions'), $Context->GetDefinition('SystemCleanup'), GetUrl($this->Context->Configuration, 'settings.php', '', '', '', '', 'PostBackAction=Cleanup'), '', '', 80);
 }
+?>

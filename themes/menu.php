@@ -1,8 +1,7 @@
 <?php
 // Note: This file is included from the library/Vanilla/Vanilla.Control.Menu.php class.
 
-echo '<div id="LoadStatus">'.$this->Context->GetDefinition('Loading').'</div>
-   <div id="Session">';
+echo '<div id="Session">';
    if ($this->Context->Session->UserID > 0) {
       echo str_replace('//1',
          $this->Context->Session->User->Name,

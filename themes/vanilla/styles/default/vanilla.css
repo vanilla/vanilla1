@@ -293,6 +293,9 @@ html>body .ContentInfo h1 { width:80% !important; }
 	line-height:23px;
 	font-weight:bold;
 	}
+.ContentInfo.Top .PageInfo{
+		margin:5px 0px 0px 0px !important;
+	}
 .PageInfo p {
 	margin:0px;
 	padding:0px;
@@ -421,7 +424,6 @@ html>body .ContentInfo h1 { width:80% !important; }
 	float: left;
 	text-align: left;
 	width: 100%;
-	border-bottom: 1px solid #cccccc;
 	padding-bottom:6px;
 	}
 #Categories, #Categories * {
@@ -430,6 +432,7 @@ html>body .ContentInfo h1 { width:80% !important; }
 	list-style:none;
 	}
 #Categories {
+	border-top: 1px solid #cccccc;
 	margin-bottom: 20px;
 	float: left;
 	width: 100%;
@@ -541,6 +544,17 @@ html>body .ContentInfo h1 { width:80% !important; }
 #Comments .CommentHeader li span {
 	display:none;
 	}
+#Comments .CommentHeader a.WhisperBack {
+	padding-left: 10px;
+	color: #aaa;
+	text-decoration: underline;
+	font-size: 11px;
+	font-weight: normal;
+	}
+#Comments .CommentHeader a.WhisperBack:hover {
+	color: #333;
+	
+	}
 #Comments .CommentHeader em {
 	color:#cccccc;
 	font-style:normal;
@@ -571,13 +585,13 @@ html>body .ContentInfo h1 { width:80% !important; }
 	}
 #Comments .CommentNotice {
 	padding: 6px;
-	text-align: center;
 	font-size:13px;
-	border-top: 1px solid #99CC99;
-	border-bottom: 1px solid #99CC99;
-	background: #E2F9E3;
-	color: #006600 !important;
-	margin-bottom: 10px;
+	text-align: center;
+	border-top: 1px solid #D9999A;
+	border-bottom: 1px solid #D9999A;
+	background: #FEE1E1;
+	color: #850406 !important;
+	margin: 10px 0px 10px 0px;
 
 	}
 #Comments .CommentBody {
@@ -604,9 +618,13 @@ html>body .ContentInfo h1 { width:80% !important; }
 /* Search Page */
 
 #Form.Search {
-	width: 100% !important;
+	width: 99% !important;
 	padding: 20px 0px 0px 0px !important;
 	}
+html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
+		width: 100% !important;
+	}
+
 #Form.Search fieldset legend {
 	padding: 0px !important;
 	margin-bottom: 6px;
@@ -670,6 +688,7 @@ html>body .ContentInfo h1 { width:80% !important; }
 	margin: 0px !important;
 	width: 70px !important;
 	cursor: pointer;
+	color: #000;
 	}
 #Form.Search .Inputs {
 	clear: left;
@@ -727,9 +746,6 @@ html>body .ContentInfo h1 { width:80% !important; }
 #CommentResults .CommentText {
 	margin:6px 0px 4px 0px !important;
 	}
-#CommentResults .CommentText span {
-	display:none;
-	}
 #CommentResults .CommentText a {
 	color:#000000 !important;
 	}
@@ -770,11 +786,11 @@ html>body .ContentInfo h1 { width:80% !important; }
   and the only way to get rid of it was to add a 1px border to the top.
 */
 #UserResults li {
-	border-top: 1px solid #fefecc;
+	border-top: 1px solid #fff;
 	}
 #UserResults li ul {
 	margin-top: 0px !important;
-	background-color:#fefecc;
+	xbackground-color:#fefecc;
 	border-bottom:1px solid #cccccc;
 	}
 #UserResults li li {
@@ -830,6 +846,7 @@ li.User.Name span {
 #Form fieldset {
 	border:0px;
 	clear:none;
+	margin-bottom: 20px;
 	}
 #Form fieldset legend {
 	padding: 4px 0px 4px 0px;
@@ -839,7 +856,7 @@ li.User.Name span {
 	color:#000000;
 	}
 #Form form {
-	margin: 0px 0px 50px 0px;
+	margin: 0px;
 	padding:10px 10px 0px 10px;
 	border:1px solid #ffedae;
 	border-left:0px;
@@ -888,6 +905,9 @@ li.User.Name span {
 
 #Form.StartDiscussion legend {
 	padding-top: 20px;
+	}
+#Form.AddComments fieldset {
+	margin: 0px;
 	}
 #Form.AddComments form {
 	margin-top: 0px !important;
@@ -1228,10 +1248,10 @@ div.Extensions ul li p a:hover {
 #AccountProfile .Tagline {
 	padding: 6px;
 	text-align: center;
-	border-top: 1px solid #99CC99;
-	border-bottom: 1px solid #99CC99;
-	background: #E2F9E3;
-	color: #006600 !important;
+	border-top: 1px solid #D9999A;
+	border-bottom: 1px solid #D9999A;
+	background: #FEE1E1;
+	color: #850406 !important;
 	margin: 0px 20px 10px 0px;
 	}
 .ProfileTitleIcon {
@@ -1293,7 +1313,8 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
 	padding:5px;
 	border-bottom:1px solid #cccccc;
 	}
-#AccountHistory h3 {
+#AccountHistory h3,
+#AccountHistory h3 a {
 	color:#666666;
 	font-size:12px;
 	}
