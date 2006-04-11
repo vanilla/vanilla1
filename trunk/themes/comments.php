@@ -88,6 +88,11 @@ if ($this->Context->WarningCollector->Count() > 0) {
                <li>
                   <span>'.$this->Context->GetDefinition('CommentTime').'</span>'.TimeDiff($this->Context, $Comment->DateCreated);
                   if ($Comment->DateEdited != '') $CommentList .= ' <em>'.$this->Context->GetDefinition('Edited').'</em>';
+						// Whisper back button
+						if ($Comment->WhisperUserID > 0 && $Comment->WhisperUserID == $this->Context->Session->UserID) $CommentList .= '<a class="WhisperBack" onclick="'
+							."WhisperBack('".$Comment->DiscussionID."', '".str_replace("'", "\'", $Comment->AuthUsername)."');"
+						 .'">'.$this->Context->GetDefinition('WhisperBack').'</a>';
+						
                $CommentList .= '</li>
             </ul>
             <span>
@@ -112,14 +117,10 @@ if ($this->Context->WarningCollector->Count() > 0) {
                $CommentList .= '
                
             </span>
-         </div>
-         <div class="CommentBody" id="CommentBody_'.$Comment->CommentID.'">';
-            if ($Comment->AuthRoleDesc != '') $CommentList .= '<div class="CommentNotice">'.$Comment->AuthRoleDesc.'</div>';
-            $CommentList .= $Comment->Body;
-            if ($Comment->WhisperUserID > 0 && $Comment->WhisperUserID == $this->Context->Session->UserID) $CommentList .= '<div class="WhisperBack"><a onclick="'
-               ."WhisperBack('".$Comment->DiscussionID."', '".str_replace("'", "\'", $Comment->AuthUsername)."');"
-               .'">'.$this->Context->GetDefinition('WhisperBack').'</a></div>';
-         $CommentList .= '
+         </div>';
+         if ($Comment->AuthRoleDesc != '') $CommentList .= '<div class="CommentNotice">'.$Comment->AuthRoleDesc.'</div>';
+         $CommentList .= '<div class="CommentBody" id="CommentBody_'.$Comment->CommentID.'">';
+            $CommentList .= $Comment->Body.'
          </div>
       </li>';
    }

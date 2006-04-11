@@ -3,7 +3,8 @@
 
 echo'</div>
 </div>
-<a name="pgbottom"></a>';
+<a name="pgbottom"></a>
+<div id="LoadStatus">'.$this->Context->GetDefinition('Loading').'</div>';
 
 $AllowDebugInfo = 0;
 if ($this->Context->Session->User) {

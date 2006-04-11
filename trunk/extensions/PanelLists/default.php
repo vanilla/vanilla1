@@ -29,6 +29,7 @@ $Context->Dictionary["DisplayBookmarks"] = "Display your bookmarks in the contro
 $Context->Dictionary["DisplayPrivateDiscussions"] = "Display your private discussions in the control panel";
 $Context->Dictionary["DisplayYourDiscussions"] = "Display your discussions in the control panel";
 $Context->Dictionary["DisplayBrowsingHistory"] = "Display your browsing history in the control panel";
+$Context->Dictionary['XNew'] = '//1 new';
 
 
 if ($Context->SelfUrl == "account.php") {
@@ -58,9 +59,9 @@ if (in_array($Context->SelfUrl, array("index.php", "comments.php"))) {
 					$Discussion->FormatPropertiesForDisplay();
 					if ($Discussion->DiscussionID != $OptionalDiscussionID) $OtherBookmarksExist = 1;
 					if ($Discussion->DiscussionID == $OptionalDiscussionID && $Discussion->Bookmarked) $ThisDiscussionIsBookmarked = 1;
-					$sReturn .= "<li id=\"Bookmark_".$Discussion->DiscussionID."\"".(($Discussion->DiscussionID == $OptionalDiscussionID && !$Discussion->Bookmarked)?" style=\"display: none;\"":"")."><a class=\"PanelLink\" href=\"".GetUrl($Context->Configuration, "comments.php", "", "DiscussionID", $Discussion->DiscussionID)."\">".$Discussion->Name."</a>";
-					if ($Discussion->NewComments > 0) $sReturn .= " <small><strong>".$Discussion->NewComments." ".$Context->GetDefinition("New")."</strong></small>";
-					$sReturn .= "</li>";
+					$sReturn .= "<li id=\"Bookmark_".$Discussion->DiscussionID."\"".(($Discussion->DiscussionID == $OptionalDiscussionID && !$Discussion->Bookmarked)?" style=\"display: none;\"":"")."><a href=\"".GetUrl($Context->Configuration, "comments.php", "", "DiscussionID", $Discussion->DiscussionID)."\">".$Discussion->Name;
+					if ($Discussion->NewComments > 0) $sReturn .= " <span>".str_replace('//1', $Discussion->NewComments, $Context->GetDefinition("XNew"))."</span>";
+					$sReturn .= "</a></li>";
 				}
 				if ($Count >= $Context->Configuration["PANEL_BOOKMARK_COUNT"]) {
 					$sReturn .= "<li><a href=\"".GetUrl($Context->Configuration, "index.php", "", "", "", "", "View=Bookmarks")."\">".$Context->GetDefinition("ShowAll")."</a></li>";
@@ -91,7 +92,7 @@ if (in_array($Context->SelfUrl, array("index.php", "comments.php"))) {
                $Discussion->GetPropertiesFromDataSet($Row, $Context->Configuration);
                $Discussion->FormatPropertiesForDisplay();
                $Suffix = "";
-               if ($Discussion->NewComments > 0) $Suffix .= $Discussion->NewComments." ".$Context->GetDefinition("New");
+               if ($Discussion->NewComments > 0) $Suffix .= str_replace('//1', $Discussion->NewComments, $Context->GetDefinition("XNew"));
                $Panel->AddListItem($ListTitle, $Discussion->Name, GetUrl($Context->Configuration, "comments.php", "", "DiscussionID", $Discussion->DiscussionID), $Suffix);
             }
             if ($ActualRecords >= $MaxRecords) $Panel->AddListItem($ListTitle, $Context->GetDefinition("ShowAll"), GetUrl($Context->Configuration, "index.php", "", "", "", "", "View=".$UrlAction));

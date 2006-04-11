@@ -35,20 +35,14 @@ if (in_array($Context->SelfUrl, array("comments.php", "post.php"))) {
    
       function GetAccountLink($Object) {
          if ($Object->AuthUserID != "" && $Object->AuthUsername != "") {
-            return "<a href=\"account.php?u=".$Object->AuthUserID."\">".$Object->AuthUsername."</a>";
+            return '<a href="'.GetUrl($Object->Context->Configuration, 'account.php', '', 'u', $Object->AuthUserID).'">'.$Object->AuthUsername.'</a>';
          } else {
-            return "/me";
+            return '/me';
          }
       }
    }
    
    $ExtendedTextFormatter = $Context->ObjectFactory->NewObject($Context, "ExtendedTextFormatter");
-   /*
-   $TextFormatter = 0;
-   $TextFormatter &= $Context->StringManipulator->Formatters[$Configuration["DEFAULT_FORMAT_TYPE"]];
-   if ($TextFormatter) $TextFormatter->AddChildFormatter($ExtendedTextFormatter);
-   */
-   
    $Context->StringManipulator->Formatters[$Configuration["DEFAULT_FORMAT_TYPE"]]->AddChildFormatter($ExtendedTextFormatter);
 }
 
