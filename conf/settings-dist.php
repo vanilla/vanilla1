@@ -30,9 +30,6 @@ $Configuration['COOKIE_DOMAIN'] = '.yourdomain.com';
 $Configuration['COOKIE_PATH'] = '/'; 
 $Configuration['SUPPORT_EMAIL'] = 'support@yourdomain.com'; 
 
-// Framework Settings
-$Configuration['DOMAIN'] = 'http://www.yourdomain.com/vanilla/'; 
-
 // Extension Configuration Parameters
 $Configuration['PERMISSION_DATABASE_CLEANUP'] = '0';
 ?>

@@ -1,7 +1,7 @@
 <?php
 // Note: This file is included from the library/Vanilla/Vanilla.Control.GlobalsForm.php control.
 echo '<div id="Form" class="Account GlobalsForm">';
-   if ($this->PostBackValidated) echo '<div class="Success">'.$this->Context->GetDefinition('GlobalApplicationChangesSaved').'</div>';
+   if (ForceIncomingBool('Success',0)) echo '<div class="Success">'.$this->Context->GetDefinition('GlobalApplicationChangesSaved').'</div>';
    echo '<fieldset>
       <legend>'.$this->Context->GetDefinition('GlobalApplicationSettings').'</legend>
       '.$this->Get_Warnings().'
@@ -26,11 +26,12 @@ echo '<div id="Form" class="Account GlobalsForm">';
 
       <h2>'.$this->Context->GetDefinition('ForumOptions').'</h2>
       <ul>
-         <li>
+         <li id="ForumOptions">
             <p><span>'.GetDynamicCheckBox('ENABLE_WHISPERS', 1, $this->ConfigurationManager->GetSetting('ENABLE_WHISPERS'), '', $this->Context->GetDefinition('EnableWhispers')).'</span></p>
             <p><span>'.GetDynamicCheckBox('ALLOW_NAME_CHANGE', 1, $this->ConfigurationManager->GetSetting('ALLOW_NAME_CHANGE'), '', $this->Context->GetDefinition('AllowNameChange')).'</span></p>
             <p><span>'.GetDynamicCheckBox('PUBLIC_BROWSING', 1, $this->ConfigurationManager->GetSetting('PUBLIC_BROWSING'), '', $this->Context->GetDefinition('AllowPublicBrowsing')).'</span></p>
             <p><span>'.GetDynamicCheckBox('USE_CATEGORIES', 1, $this->ConfigurationManager->GetSetting('USE_CATEGORIES'), '', $this->Context->GetDefinition('UseCategories')).'</span></p>
+            <p><span>'.GetDynamicCheckBox('LOG_ALL_IPS', 1, $this->ConfigurationManager->GetSetting('LOG_ALL_IPS'), '', $this->Context->GetDefinition('LogAllIps')).'</span></p>
          </li>
       </ul>
       
@@ -166,7 +167,7 @@ echo '<div id="Form" class="Account GlobalsForm">';
                .'</p>
          </li>
       </ul>
-      <h2>'.$this->Context->GetDefinition('SupportTitle').'</h2>
+      <h2>'.$this->Context->GetDefinition('EmailSettings').'</h2>
       <ul>
          <li>
             <label for="txtSupportName">'.$this->Context->GetDefinition('SupportName').'</label>
@@ -176,6 +177,19 @@ echo '<div id="Form" class="Account GlobalsForm">';
             <label for="txtSupportEmail">'.$this->Context->GetDefinition('SupportEmail').'</label>
             <input type="text" name="SUPPORT_EMAIL" value="'.$this->ConfigurationManager->GetSetting('SUPPORT_EMAIL').'" maxlength="255" class="SmallInput" id="txtSupportEmail" />
             <p class="Description">'.$this->Context->GetDefinition('SupportContactNotes').'</p>
+         </li>
+         <li>
+            <label for="txtSMTPHost">'.$this->Context->GetDefinition('SMTPHost').'</label>
+            <input type="text" name="SMTP_HOST" value="'.$this->ConfigurationManager->GetSetting('SMTP_HOST').'" maxlength="255" class="SmallInput" id="txtSMTPHost" />
+         </li>
+         <li>
+            <label for="txtSMTPUser">'.$this->Context->GetDefinition('SMTPUser').'</label>
+            <input type="text" name="SMTP_USER" value="'.$this->ConfigurationManager->GetSetting('SMTP_USER').'" maxlength="255" class="SmallInput" id="txtSMTPUser" />
+         </li>
+         <li>
+            <label for="txtSMTPPassword">'.$this->Context->GetDefinition('SMTPPassword').'</label>
+            <input type="password" name="SMTP_PASSWORD" value="'.$this->ConfigurationManager->GetSetting('SMTP_PASSWORD').'" maxlength="255" class="SmallInput" id="txtSMTPPassword" />
+            <p class="Description">'.$this->Context->GetDefinition('SMTPSettingsNotes').'</p>
          </li>
       </ul>
       
@@ -196,6 +210,10 @@ echo '<div id="Form" class="Account GlobalsForm">';
          <li>
             <label for="txtStickyLabel">'.$this->Context->GetDefinition('StickyLabel').'</label>
             <input type="text" name="TEXT_STICKY" value="'.$this->ConfigurationManager->GetSetting('TEXT_STICKY').'" maxlength="30" class="SmallInput" id="txtStickyLabel" />
+         </li>
+         <li>
+            <label for="txtSinkLabel">'.$this->Context->GetDefinition('SinkLabel').'</label>
+            <input type="text" name="TEXT_SINK" value="'.$this->ConfigurationManager->GetSetting('TEXT_SINK').'" maxlength="30" class="SmallInput" id="txtSinkLabel" />
          </li>
          <li>
             <label for="txtClosedLabel">'.$this->Context->GetDefinition('ClosedLabel').'</label>
@@ -223,7 +241,7 @@ echo '<div id="Form" class="Account GlobalsForm">';
          </li>
          <li>
             <label for="txtWebPathtoVanilla">'.$this->Context->GetDefinition('WebPathToVanilla').'</label>
-            <input type="text" name="DOMAIN" value="'.$this->ConfigurationManager->GetSetting('DOMAIN').'" maxlength="255" class="SmallInput" id="txtWebPathToVanilla" />
+            <input type="text" name="BASE_URL" value="'.$this->ConfigurationManager->GetSetting('BASE_URL').'" maxlength="255" class="SmallInput" id="txtWebPathToVanilla" />
             <p class="Description">'.$this->Context->GetDefinition('WebPathNotes').'</p>
          </li>
          <li>

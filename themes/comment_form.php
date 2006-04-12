@@ -28,7 +28,6 @@ echo '<div id="Form" class="AddComments">
       }
    
       $this->CallDelegate('CommentForm_PreCommentsInputRender');
-      
       echo '<li>
          <label for="CommentBox">
             <a href="./" id="CommentBoxController" onclick="'
@@ -38,7 +37,7 @@ echo '<div id="Form" class="AddComments">
          <textarea name="Body" class="'
          .($this->Context->Session->User->Preference('ShowLargeCommentBox') ? 'LargeCommentBox' : 'SmallCommentBox')
          .'" id="CommentBox" rows="10" cols="85">'
-         .$this->Comment->Body
+         .$Comment->Body
          .'</textarea>
       </li>
 		'.$this->GetPostFormatting($Comment->FormatType)
