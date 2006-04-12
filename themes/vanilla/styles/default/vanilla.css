@@ -919,6 +919,12 @@ li.User.Name span {
 #Form.StartDiscussion legend {
 	padding-top: 20px;
 	}
+.AddComments {
+	width: 99%;
+	}
+#Form.AddComments {
+	width: 100%;
+	}	
 #Form.AddComments fieldset {
 	margin: 0px;
 	}
