@@ -45,7 +45,7 @@ class DiscussionGrid extends Control {
 			$this->DiscussionData = $DiscussionManager->GetDiscussionList($this->Context->Configuration['DISCUSSIONS_PER_PAGE'], $this->CurrentPage, $CategoryID);
 			$this->DiscussionDataCount = $DiscussionManager->GetDiscussionCount($CategoryID);		
 			if ($Category) {
-				if ($this->Context->PageTitle == '') $this->Context->PageTitle = $Category->Name;
+				if ($this->Context->PageTitle == '') $this->Context->PageTitle = htmlspecialchars($Category->Name);
 			} else {
 				if ($this->Context->PageTitle == '') $this->PageJump = '';
 				if ($this->Context->Session->User->BlocksCategories) {

@@ -16,7 +16,7 @@ echo '<div id="AccountProfile">
          <p>'.$this->User->Role.'</p>
       </li>';
       if ($this->User->RoleDescription != '') echo('<li class="Tagline">'.$this->User->RoleDescription.'</li>');
-      if ($this->User->Picture != "" && $this->User->Permission('PERMISSION_HTML_ALLOWED')) echo('<li class="Picture"><img src="'.$this->User->Picture.'" id="Picture" /></li>');
+      if ($this->User->Picture != "" && $this->User->Permission('PERMISSION_HTML_ALLOWED')) echo('<li class="Picture"><img src="'.$this->User->Picture.'" id="Picture" alt="'.$this->User->Name.'" /></li>');
       if ($this->Context->Configuration['USE_REAL_NAMES'] && ($this->User->ShowName || $this->Context->Session->User->Permission('PERMISSION_EDIT_USERS'))) {
          echo '<li>
             <h3>'.$this->Context->GetDefinition('RealName').'</h3>
@@ -61,8 +61,8 @@ echo '<div id="AccountProfile">
          $AttributeCount = count($this->User->Attributes);
          for ($i = 0; $i < $AttributeCount; $i++) {
             echo '<li>
-               <h3>'.$this->User->Attributes[$i]['Label'].'</h3>
-               <p>'.FormatHyperlink($this->User->Attributes[$i]['Value']).'</p>
+               <h3>'.htmlspecialchars($this->User->Attributes[$i]['Label']).'</h3>
+               <p>'.FormatHyperlink(htmlspecialchars($this->User->Attributes[$i]['Value'])).'</p>
             </li>';
          }
       }
