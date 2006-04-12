@@ -66,7 +66,7 @@ if ($this->Context->WarningCollector->Count() > 0) {
 		if ($Comment->Deleted) $CommentClass .= ' Hidden';
 
       $CommentList .= '<li id="Comment_'.$Comment->CommentID.'"'.($CommentClass == ''?'':' class="'.$CommentClass.'"').'>
-         <a name="Item_'.$RowNumber.'" />
+         <a name="Item_'.$RowNumber.'"></a>
 			<div class="CommentHeader">
             <ul>
                <li>
