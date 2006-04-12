@@ -37,7 +37,6 @@ echo '<div id="Form" class="StartDiscussion">
    }
 
    $this->CallDelegate('DiscussionForm_PreCommentRender');
-   
    echo '<li>
       <label for="CommentBox">
          <a href="./" id="CommentBoxController" onclick="'
@@ -47,7 +46,7 @@ echo '<div id="Form" class="StartDiscussion">
       <textarea name="Body" class="'
       .($this->Context->Session->User->Preference('ShowLargeCommentBox') ? 'LargeCommentBox' : 'SmallCommentBox')
       .'" id="CommentBox" rows="10" cols="85">'
-      .$this->Comment->Body
+      .$Discussion->Comment->Body
       .'</textarea>
    </li>
    </ul>'
