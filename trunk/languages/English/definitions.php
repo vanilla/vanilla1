@@ -421,6 +421,7 @@ $Context->Dictionary['LabelPrefix'] = 'Label prefix';
 $Context->Dictionary['LabelSuffix'] = 'Label suffix';
 $Context->Dictionary['WhisperLabel'] = 'Private label';
 $Context->Dictionary['StickyLabel'] = 'Sticky label';
+$Context->Dictionary['SinkLabel'] = 'Sink label';
 $Context->Dictionary['ClosedLabel'] = 'Closed label';
 $Context->Dictionary['HiddenLabel'] = 'Hidden label';
 $Context->Dictionary['BookmarkedLabel'] = 'Bookmarked label';
@@ -428,8 +429,8 @@ $Context->Dictionary['DefaultStyleFolder'] = 'Default style folder';
 $Context->Dictionary['WebPathToVanilla'] = 'Web-path to Vanilla';
 $Context->Dictionary['CookieDomain'] = 'Cookie domain';
 $Context->Dictionary['DefaultStyleFolderNotes'] = 'The default style folder should be a relative path from the root of the application.';
-$Context->Dictionary['WebPathNotes'] = 'The web-path to Vanilla should be a complete path to Vanilla just as you would type it into a web browser.';
-$Context->Dictionary['CookieSettingsNotes'] = 'The cookie domain is where you want cookies assigned to for Vanilla. Cookies can be further defined to a particular path on your website using the "cookie path" setting.';
+$Context->Dictionary['WebPathNotes'] = 'The web-path to Vanilla should be a complete path to Vanilla just as you would type it into a web browser. Something like this: http://www.yourdomain.com/vanilla/';
+$Context->Dictionary['CookieSettingsNotes'] = 'The cookie domain is where you want cookies assigned to for Vanilla. Typically the cookie domain will be something like www.yourdomain.com. Cookies can be further defined to a particular path on your website using the "cookie path" setting. (TIP: If you want your Vanilla cookies to apply to all subdomains of your domain, use ".yourdomain.com" as the cookie domain)';
 $Context->Dictionary['AllowNameChange'] = 'Allow members to change their usernames';
 $Context->Dictionary['AllowPublicBrowsing'] = 'Allow non-members to browse the forum';
 $Context->Dictionary['UseCategories'] = 'Allow discussions to be categorized';
@@ -448,7 +449,7 @@ $Context->Dictionary['RELEASE'] = 'Release';
 $Context->Dictionary['SwitchApplicationMode'] = 'Click here to switch the application mode';
 $Context->Dictionary['BackToApplication'] = 'Click here to go back to Vanilla';
 $Context->Dictionary['ErrReadFileSettings'] = 'An error occurred while attempting to read settings from the configuration file: ';
-$Context->Dictionary['CookiePath'] = 'Cookie Path';
+$Context->Dictionary['CookiePath'] = 'Cookie path';
 $Context->Dictionary['Wait'] = 'Wait';
 $Context->Dictionary['OldPostDateFormatCode'] = 'M jS Y';
 $Context->Dictionary['XDayAgo'] = '//1 day ago';
@@ -526,6 +527,15 @@ $Context->Dictionary['ConfirmUnSink'] = 'Are you sure you want to unsink this di
 $Context->Dictionary['ConfirmSink'] = 'Are you sure you want to sink this discussion?';
 $Context->Dictionary['ErrPermissionSinkDiscussions'] = 'You do not have permission to sink discussions';
 $Context->Dictionary['YourCommentsWillBeWhisperedToX'] = 'Your comments will be whispered to //1';
+
+$Context->Dictionary['SMTPHost'] = 'SMTP host';
+$Context->Dictionary['SMTPUser'] = 'SMTP user';
+$Context->Dictionary['SMTPPassword'] = 'SMTP password';
+$Context->Dictionary['SMTPSettingsNotes'] = 'Typically Vanilla will use the mail server that is set up on the server where Vanilla resides. If, for some reason, you want to use a separate SMTP mail server to send outgoing e-mails, you can configure it with these three options. If you do not want to use an SMTP server, leave these fields blank.';
+
+$Context->Dictionary['PagelistNextText'] = 'Next';
+$Context->Dictionary['PagelistPreviousText'] = 'Prev';
+$Context->Dictionary['EmailSettings'] = 'Email Settings';
 
 /* Please do not remove or alter this definition */
 $Context->Dictionary['PanelFooter'] = '<p id="AboutVanilla"><a href="http://getvanilla.com">Vanilla ('.APPLICATION_VERSION.')</a> is a product of <a href="http://lussumo.com">Lussumo</a>. More Information: <a href="http://lussumo.com/docs">Documentation</a>, <a href="http://lussumo.com/community">Community Support</a>.</p>';

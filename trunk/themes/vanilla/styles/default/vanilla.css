@@ -599,6 +599,11 @@ html>body .ContentInfo h1 { width:80% !important; }
 	margin: 10px;
 	color:#000000;
 	}
+#Comments .CommentBody ul li,
+#Comments .CommentBody ol li {
+	border-bottom:none;
+	padding:0;
+	}	
 #CommentsPage .ContentInfo.Middle .PageInfo {
 	border-top: 0px;
 	margin:0px;
@@ -1025,6 +1030,15 @@ li.User.Name span {
   
 #Form.GlobalsForm select.SmallSelect {
 	width: 50px;
+	}
+#Form.GlobalsForm #ForumOptions p span label {
+	font-weight: normal !important;
+	}
+#Form.GlobalsForm #ForumOptions {
+	margin-bottom: 20px;
+	}
+#Form.GlobalsForm p {
+	margin-bottom: 10px;
 	}
 	
 /* Update Check form */

@@ -67,8 +67,6 @@ $Configuration['URL_BUILDING_METHOD'] = 'Standard';  // Standard or mod_rewrite
 $Configuration['BASE_URL'] = 'http://your.base.url/to/vanilla/';
 $Configuration['CHARSET'] = 'utf-8';
 $Configuration['PAGE_EVENTS'] = array('Page_Init', 'Page_Render', 'Page_Unload');
-$Configuration['PAGELIST_NEXT_TEXT'] = 'Prev';
-$Configuration['PAGELIST_PREVIOUS_TEXT'] = 'Next';
 $Configuration['PAGELIST_NUMERIC_TEXT'] = '0';
 $Configuration['LIBRARY_NAMESPACE_ARRAY'] = array('Framework', 'People', 'Vanilla');
 $Configuration['DEFAULT_FORMAT_TYPE'] = 'Text';
@@ -76,7 +74,6 @@ $Configuration['FORMAT_TYPES'] = array('Text');
 $Configuration['APPLICATION_TITLE'] = 'Vanilla'; 
 $Configuration['BANNER_TITLE'] = 'Vanilla'; 
 $Configuration['DEFAULT_STYLE'] = './themes/vanilla/styles/default/'; 
-$Configuration['DOMAIN'] = 'http://www.domain.com/vanilla/';
 $Configuration['SIGNIN_URL'] = './people.php';
 $Configuration['SIGNOUT_URL'] = './people.php?PostBackAction=SignOutNow';
 

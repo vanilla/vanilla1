@@ -36,7 +36,7 @@ class GlobalsForm extends PostBackControl {
             $this->ConfigurationManager->DefineSetting('LOG_ALL_IPS', ForceIncomingBool('LOG_ALL_IPS', 0), 0);
 				// And save everything
 				if ($this->ConfigurationManager->SaveSettingsToFile($SettingsFile)) {
-					$this->PostBackValidated = 1;
+					header('location: '.$this->Context->SelfUrl.'?PostBackAction=Globals&Success=1');
 				} else {
 					$this->PostBackAction = 'Globals';
 				}
