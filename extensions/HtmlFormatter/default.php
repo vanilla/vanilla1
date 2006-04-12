@@ -145,8 +145,10 @@ class HtmlFormatter extends StringFormatter
 	
 	function Parse($String, $Object, $FormatPurpose)
 	{
-		if($FormatPurpose == FORMAT_STRING_FOR_DISPLAY) return $this->Execute($String);
-		else return $String;
+		$sReturn = '';
+		if($FormatPurpose == FORMAT_STRING_FOR_DISPLAY) $sReturn = $this->Execute($String);
+		else $sReturn = $String;
+		return $this->ParseChildren($sReturn, $Object, $FormatPurpose);
 	}
 }
 
