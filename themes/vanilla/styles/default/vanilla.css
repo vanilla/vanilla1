@@ -426,7 +426,7 @@ html>body .ContentInfo h1 { width:80% !important; }
 	width: 100%;
 	padding-bottom:6px;
 	}
-#Categories, #Categories * {
+#Categories {
 	margin:0px;
 	padding:0px;
 	list-style:none;
