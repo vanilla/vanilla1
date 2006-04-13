@@ -32,6 +32,7 @@ class SearchForm extends PostBackControl {
       $this->DataCount = 0;
 		$this->Constructor($Context);
 		if ($this->PostBackAction == '') $this->IsPostBack = 1;
+		$this->Context->BodyAttributes .= " onload=\"Focus('txtKeywords');\"";
 		
 		$CurrentPage = ForceIncomingInt('page', 1);
 		
