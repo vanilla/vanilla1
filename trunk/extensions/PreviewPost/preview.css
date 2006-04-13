@@ -14,7 +14,3 @@
 .CommentForm, .DiscussionForm {
 	padding-bottom: 10px;
 }
-#Form.StartDiscussion .Submit .PreviewButton,
-#Form.AddComments .Submit .PreviewButton {
-	width: 100px !important;
-	}

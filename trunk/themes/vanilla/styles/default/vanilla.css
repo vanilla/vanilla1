@@ -691,7 +691,6 @@ html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
 	}
 #Form.Search .SearchButton {
 	margin: 0px !important;
-	width: 70px !important;
 	cursor: pointer;
 	color: #000;
 	}
@@ -949,11 +948,8 @@ li.User.Name span {
 .DiscussionBox {
 	width: 400px;
 	}
-#Form.AddComments .Submit .AddCommentsButton {
-	width: 140px !important;
-	}
-#Form.StartDiscussion .Submit .StartDiscussionButton {
-	width:150px !important;
+#Form .Button {
+	width: auto !important;
 	}
 #Form.AddComments a,
 #Form.StartDiscussion a {
@@ -1026,12 +1022,6 @@ li.User.Name span {
 	font-weight: normal;
 	}
 	
-/* Change Role Form */
-  
-#Form.Role .Submit .ChangeRoleButton {
-	width: 100px !important;
-	}
-	
 /* Globals Form */
   
 #Form.GlobalsForm select.SmallSelect {
@@ -1058,30 +1048,6 @@ li.User.Name span {
   
 #Form.RoleEditForm li p span label {
 	font-weight: normal !important;
-	}
-.Submit input.NewRoleButton {
-	width: 120px !important;
-	}
-	
-/* RoleRemove Form */
-  
-.Submit input.RoleRemoveButton {
-	width: 70px !important;
-	}
-	
-/* "Check for Updates" Form */
-  
-.Submit input.Update {
-	width:150px !important;
-	}
-	
-/* Category Form */
-  
-.Submit input.NewCategoryButton {
-	width: 150px !important;
-	}
-.Submit input.RemoveCategoryButton {
-	width: 70px !important;
 	}
 
 /* Custom form for extensions management screen */
