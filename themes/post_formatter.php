@@ -10,7 +10,7 @@ if ($this->Context->Session->User->Preference('ShowFormatSelector') && $FormatCo
       $f->AddOption($Name, $this->Context->GetDefinition($Name));
    }
    
-   $sReturn .= '<li>'
+   $sReturn .= '<li id="CommentFormats">'
       .$this->Context->GetDefinition('FormatCommentsAs')
       .$f->Get()
    .'</li>';

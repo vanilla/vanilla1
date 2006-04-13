@@ -930,6 +930,12 @@ li.User.Name span {
 #Form.StartDiscussion a {
 	font-weight: normal;
 	}
+#CommentsFormats label {
+	font-weight: normal !important;
+	}
+#CommentFormats input {
+	margin: 0px 2px 0px 12px;
+	}
 
 /* Account Section Forms.. */
 
