@@ -42,7 +42,7 @@ if ($this->DiscussionDataCount > 0) {
 			<p>'.$pl->GetPageDetails($this->Context).'</p>
 			'.$PageList.'
 		</div>
-		<a href="'.GetRequestUri().'#pgtop">'.$this->Context->GetDefinition('TopOfPage').'</a>
+		<a id="TopOfPage" href="'.GetRequestUri().'#pgtop">'.$this->Context->GetDefinition('TopOfPage').'</a>
 	</div>';
 }
 ?>
