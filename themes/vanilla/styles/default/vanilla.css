@@ -17,6 +17,7 @@ a:hover {
 	color: #4B6DB7;
 	text-decoration: none;
 	}
+	
 /* Errors & Success */
 .ErrorContainer {
 	background: url(alert.gif) no-repeat top left #FFEDEF;
@@ -44,8 +45,8 @@ a:hover {
 	margin-bottom: 10px !important;
 	}
   
-
 /* LoadStatus.. */
+  
 #LoadStatus {
 	position: fixed;
 	_position:absolute;
@@ -590,7 +591,6 @@ html>body .ContentInfo h1 { width:80% !important; }
 	background: #FEE1E1;
 	color: #850406 !important;
 	margin: 10px 0px 10px 0px;
-
 	}
 #Comments .CommentBody {
 	display:block;
@@ -635,16 +635,11 @@ html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
 #SearchSimple {
 	margin: 0px !important;
 	}
-#SearchSimple input {
-	width: 10px !important;
-	margin-left: 14px;
-	margin-right: 6px;
-	}
 #SearchSimple label {
 	display: inline !important;
 	width: 10px !important;
 	}
-#MainSearchInput input {
+#MainSearchInput #txtKeywords {
 	width: 60% !important;
 	margin-left: 0px !important;
 	}
@@ -653,50 +648,41 @@ html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
 	}
 #Form.Search .Submit input {
 	margin: 0px !important;
-	width: 70px !important;
 	color: #000000 !important;
+	}
+.SearchInput,
+.SearchSelect {
+	color: #000 !important;
+	}
+#SimpleSearchRadios input {
+	width: auto !important;
+	margin: 0px 2px 0px 12px;
+	}
+#SimpleSearchRadios label {
+	font-weight: normal !important;
+	}
+.SearchSwitch {
+	display: block;
+	position: absolute;
+	top: 86px;
+	right: 20px;
+	color: #FF6600 !important;
 	}
 
 /* Advanced Search Form */
-
-#SearchDiscussions, #SearchComments, #SearchUsers {
+#SearchDiscussionFields, #SearchCommentFields, #SearchUserFields {
 	display: none;
 	}
-#SearchDiscussions, #SearchComments {
-	border-bottom: 0px !important;
-	margin: 0px !important;
+.AdvancedSearchInput {
+	width: 60% !important;
 	}
-#SearchComments, #SearchUsers {
-	border-top: 0px !important;
+.AdvancedUserInput,
+#DiscussionAutoCompleteResults,
+#CommentAutoCompleteResults {
+	width: 160px !important;
 	}
-#SearchUsers {
-	margin-top: 0px !important;
-	padding-bottom: 16px !important;
-	}
-#SearchDiscussions label, #SearchComments label, #SearchUsers label {
-	width: 200px !important;
-	float: left;	
-	margin: 0px !important;
-	}
-#SearchDiscussions input, #SearchComments input, #SearchUsers input,
-#SearchDiscussions select, #SearchComments select, #SearchUsers select {
-	width: 180px !important;
-	margin: 0px 12px 0px 0px !important;
-	padding: 0px !important;
-	}
-#SearchDiscussions select, #SearchComments select, #SearchUsers select {
-	margin: 0px 16px 0px 0px !important;
-	}
-#Form.Search .SearchButton {
-	margin: 0px !important;
-	cursor: pointer;
-	color: #000;
-	}
-#Form.Search .Inputs {
-	clear: left;
-	}
-#DiscussionAutoCompleteResults, #CommentAutoCompleteResults {
-	width: 180px;
+#ddRoles, #ddOrder, #ddCommentCategories, #ddDiscussionCategories {
+	width: auto !important;
 	}
 	
 /* Search Results */
@@ -1193,7 +1179,7 @@ div.Extensions ul li p a:hover {
 	text-align:right;
 	}
 .Submit input {
-	width:50px !important;
+	width: auto !important;
 	float:left;
 	cursor:pointer;
 	}
