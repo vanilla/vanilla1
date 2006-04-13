@@ -651,7 +651,8 @@ html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
 	color: #000000 !important;
 	}
 .SearchInput,
-.SearchSelect {
+.SearchSelect,
+.SearchSelect option {
 	color: #000 !important;
 	}
 #SimpleSearchRadios input {
