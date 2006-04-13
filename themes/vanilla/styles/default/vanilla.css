@@ -1,7 +1,7 @@
 body {
 	margin:0px;
 	padding:0px;
-	background:#ffffff url('panelfade.gif') top left repeat-y;
+	background:#fff url('panelfade.gif') top left repeat-y;
 	}
 body, div, table, td {
 	font-family:'Trebuchet MS', 'Verdana', 'Tahoma', 'Arial', sans-serif;
@@ -28,16 +28,16 @@ a:hover {
 	}
 .ErrorTitle {
 	font-weight: bold;
-	color: #cc0000 !important;
+	color: #c00 !important;
 	}
 .Error {
-	color: #cc0000 !important;
+	color: #c00 !important;
 	}
 .Success {
-	border-top: 1px solid #99CC99;
-	border-bottom: 1px solid #99CC99;
+	border-top: 1px solid #9C9;
+	border-bottom: 1px solid #9C9;
 	background: #E2F9E3;
-	color: #006600 !important;
+	color: #060 !important;
 	display: block;
 	padding: 6px !important;
 	text-align: center;
@@ -53,12 +53,12 @@ a:hover {
 	top: 0px;
 	_top:expression(eval(document.body.scrollTop));
 	right: 0px;
-	background: #cc0000;
+	background: #c00;
 	padding-top: 4px;
 	padding-bottom: 4px;
 	padding-left: 8px;
 	padding-right: 8px;
-	color: #ffffff;
+	color: #fff;
 	font-size: 11px;
 	display: none;
 	z-index:200;
@@ -80,7 +80,7 @@ a:hover {
 	text-decoration:none;
 	}
 #Session a:hover {
-	color:#000000;
+	color:#000;
 	}
 
 /* Header.. */
@@ -96,7 +96,7 @@ a:hover {
 	}
 #Header h1 {
 	text-align:center;
-	color:#000000;
+	color:#000;
 	font-size:22px;
 	margin:10px 0px;
 	}
@@ -112,9 +112,9 @@ a:hover {
 	border-bottom:1px solid #acbedf;
 	}
 #Header ul li.TabOn {
-	background-color:#ffffff;
+	background-color:#fff;
 	border:1px solid #acbedf;
-	border-bottom:1px solid #ffffff;
+	border-bottom:1px solid #fff;
 	font-weight:bold;
 	}
 #Header ul li a {
@@ -122,14 +122,14 @@ a:hover {
 	font-size:11px;
 	text-decoration:none;
 	background-color:#5d709f;
-	color:#ffffff;
+	color:#fff;
 	}
 #Header ul li a:hover {
 	background-color:#919ebe;
 	}
 #Header ul li.TabOn a,
 #Header ul li.TabOn a:hover {
-	background-color:#ffffff;
+	background-color:#fff;
 	color:#000000;
 	}
 #Header ul li a em {
@@ -156,16 +156,16 @@ a:hover {
 	font-size:14px;
 	}
 #Panel h1 a {
-	color:#cc0000;
+	color:#c00;
 	font-size:14px;
 	}
 #Panel h1 a:hover {
-	color:#ff0000;
+	color:#f00;
 	}
 #Panel h2 {
-	color:#000000;
+	color:#000;
 	font-size:11px;
-	border-bottom:1px solid #cccccc;
+	border-bottom:1px solid #ccc;
 	margin:10px 0px 3px 0px;
 	padding:0px;
 	text-indent: 4px;
@@ -179,7 +179,7 @@ a:hover {
 	font-size:11px;
 	}
 #Panel ul ul {
-	color:#ff0000;
+	color:#f00;
 	font-size:10px;
 	}
 #Panel select {
@@ -199,20 +199,20 @@ a:hover {
 	text-decoration:none;
 	}
 #Panel ul ul li a span {
-	color: #cc0000;
+	color: #c00;
 	font-size: 10px;
 	padding-left: 4px;
 	}
 #Panel ul ul li a:hover {
-	background-color:#ffffcc;
+	background-color:#ffc;
 	}
 #AboutVanilla {
 	margin: 20px 0px 20px 0px !important;
-	border-top:1px solid #cccccc;
+	border-top:1px solid #ccc;
 	background-color:#f9f9f9;
 	padding: 3px 0px 3px 0px;
 	text-align:center;
-	color:#dddddd !important;
+	color:#ddd !important;
 	width:180px;
 	}
 #AboutVanilla a {
@@ -220,15 +220,14 @@ a:hover {
 	text-decoration:none;
 	}
 #AboutVanilla a:hover {
-	color:#aaaaaa !important;
+	color:#aaa !important;
 	text-decoration:underline;
 	}
 
 /* Content.. */
 
 #Content {
-	margin-left:235px;
-	margin-right:18px;
+	margin:0px 18px 0px 235px;
 	}
 
 /* ContentInfo/Control/Whatever - Universal to Discussion Index & Comments */
@@ -242,8 +241,7 @@ a:hover {
 	overflow: hidden;
 	}
 #DiscussionsPage .ContentInfo.Bottom {
-	margin-top:-6px;
-	margin-bottom: 8px;
+	margin: -6px 0px 8px 0px;
 	}
 .ContentInfo * {
 	font-size:14px;
@@ -275,22 +273,21 @@ html>body .ContentInfo h1 { width:80% !important; }
 	text-decoration:none;
 	}
 .ContentInfo h1 a:hover {
-	color:#000000;
+	color:#000;
 	}
 .ContentInfo a {
-	color:#cccccc;
+	color:#ccc;
 	text-decoration:none;
 	}
 .ContentInfo a:hover {
 	color:#3354aa;
 	}
 .PageInfo {
-	color:#cccccc;
-	border-top:1px solid #cccccc;
-	border-bottom:1px solid #cccccc;
+	color:#ccc;
+	border-top:1px solid #ccc;
+	border-bottom:1px solid #ccc;
 	padding:0px 1px;
 	margin:5px 0px;
-	height:23px;
 	line-height:23px;
 	font-weight:bold;
 	}
@@ -301,13 +298,13 @@ html>body .ContentInfo h1 { width:80% !important; }
 	margin:0px;
 	padding:0px;
 	display:inline;
-	float:left;
+	float: left;
 	}
 .PageList {
 	margin:0px;
 	padding:0px;
 	list-style:none;
-	color: #cccccc;
+	color: #ccc;
 	}
 .PageList li {
 	display:inline;
@@ -338,7 +335,7 @@ html>body .ContentInfo h1 { width:80% !important; }
 	}
 #Discussions li ul {
 	background-color:#fefecc;
-	border-bottom:1px solid #cccccc;
+	border-bottom:1px solid #ccc;
 	}
 #Discussions li li {
 	height:auto;
@@ -354,17 +351,17 @@ html>body .ContentInfo h1 { width:80% !important; }
 	}
 #Discussions li ul {
 	padding: 7px 6px 7px 6px;
-	color:#777777;
+	color:#777;
 	}
 #Discussions ul span, #Discussions ul span a, #Discussions ul a {
-	color:#aaaaaa;
+	color:#aaa;
 	text-decoration:none;
 	}
 #Discussions ul span a:hover, #Discussions ul a:hover {
-	color:#ff0000;
+	color:#f00;
 	}
 #Discussions ul a {
-	color:#777777;
+	color:#777;
 	}
 .Discussion {
 	background: yellow;
@@ -381,9 +378,7 @@ html>body .ContentInfo h1 { width:80% !important; }
 	font-weight:bold;
 	line-height:20px;
 	}
-.DiscussionType span {
-	display:none;
-	}
+.DiscussionType span,
 .DiscussionType.Normal {
 	display:none;
 	}
@@ -413,7 +408,7 @@ html>body .ContentInfo h1 { width:80% !important; }
 	margin-right:10px!important;
 	}
 .NewComments .DiscussionNew a {
-	color:#cc0000 !important;
+	color:#c00 !important;
 	}
 #Discussions li.Read.NewComments .DiscussionNew {
 	display:inline;
@@ -431,19 +426,19 @@ html>body .ContentInfo h1 { width:80% !important; }
 	margin:0px;
 	padding:0px;
 	list-style:none;
-	border-top: 1px solid #cccccc;
+	border-top: 1px solid #ccc;
 	margin-bottom: 20px;
 	float: left;
 	width: 100%;
 	}
 .BlockedCategory {
-	background: #ffffff;
+	background: #fff;
 	}
 .UnblockedCategory {
 	background: #f5f9ff;
 	}
 #Categories li ul {
-	border-bottom:1px solid #cccccc;
+	border-bottom:1px solid #ccc;
 	}
 #Categories li li {
 	height:auto;
@@ -457,10 +452,10 @@ html>body .ContentInfo h1 { width:80% !important; }
 	text-decoration:none;
 	}
 #Categories ul span a:hover, #Categories ul a:hover {
-	color:#ff0000;
+	color:#f00;
 	}
 #Categories ul a {
-	color:#777777;
+	color:#777;
 	}
 .Category {
 	margin: 0px;
@@ -483,9 +478,7 @@ html>body .ContentInfo h1 { width:80% !important; }
 	text-decoration: none !important;
 	}
 .CategoryName span,
-.CategoryDescription span {
-	display:none;
-	}
+.CategoryDescription span,
 .CategoryName.Normal {
 	display:none;
 	}
@@ -511,7 +504,7 @@ html>body .ContentInfo h1 { width:80% !important; }
 #Comments li {
 	margin:0px;
 	padding:10px 0px;
-	border-bottom:1px solid #cccccc;
+	border-bottom:1px solid #ccc;
 	}
 #Comments .CommentHeader {
 	padding-left: 8px;
@@ -529,7 +522,7 @@ html>body .ContentInfo h1 { width:80% !important; }
 	margin:0px;
 	padding:0px;
 	display:inline;
-	color:#aaaaaa;
+	color:#aaa;
 	font-size:11px;
 	border-bottom:0px;
 	}
@@ -538,7 +531,7 @@ html>body .ContentInfo h1 { width:80% !important; }
 	margin-right: 6px;
 	background-repeat:no-repeat;
 	display: inline;
-	background: #ffffff center center no-repeat;
+	background: #fff center center no-repeat;
 	}
 #Comments .CommentHeader li span {
 	display:none;
@@ -552,10 +545,9 @@ html>body .ContentInfo h1 { width:80% !important; }
 	}
 #Comments .CommentHeader a.WhisperBack:hover {
 	color: #333;
-	
 	}
 #Comments .CommentHeader em {
-	color:#cccccc;
+	color:#ccc;
 	font-style:normal;
 	}
 #Comments .CommentHeader a {
@@ -567,12 +559,12 @@ html>body .ContentInfo h1 { width:80% !important; }
 #Comments .CommentHeader span {
 	font-size:10px;
 	font-weight: normal;
-	color:#aaaaaa;
+	color:#aaa;
 }
 #Comments .CommentHeader span a {
 	font-size:10px;
 	font-weight: normal;
-	color:#aaaaaa;
+	color:#aaa;
 	margin-left:3px;
 	padding-left:3px;
 	cursor: pointer;
@@ -595,12 +587,12 @@ html>body .ContentInfo h1 { width:80% !important; }
 #Comments .CommentBody {
 	display:block;
 	margin: 10px;
-	color:#000000;
+	color:#000;
 	}
 #Comments .CommentBody ul li,
 #Comments .CommentBody ol li {
 	border-bottom:none;
-	padding:0;
+	padding:0px;
 	}	
 #CommentsPage .ContentInfo.Middle .PageInfo {
 	border-top: 0px;
@@ -625,9 +617,8 @@ html>body .ContentInfo h1 { width:80% !important; }
 	padding: 20px 0px 0px 0px !important;
 	}
 html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
-		width: 100% !important;
+	width: 100% !important;
 	}
-
 #Form.Search fieldset legend {
 	padding: 0px !important;
 	margin-bottom: 6px;
@@ -648,7 +639,7 @@ html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
 	}
 #Form.Search .Submit input {
 	margin: 0px !important;
-	color: #000000 !important;
+	color: #000 !important;
 	}
 .SearchInput,
 .SearchSelect,
@@ -667,7 +658,7 @@ html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
 	position: absolute;
 	top: 86px;
 	right: 20px;
-	color: #FF6600 !important;
+	color: #f60 !important;
 	}
 
 /* Advanced Search Form */
@@ -715,22 +706,22 @@ html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
 	}
 #CommentResults li ul {
 	padding: 6px 6px 7px 6px;
-	color:#777777;
+	color:#777;
 	background-color:#fefecc;
-	border-bottom:1px solid #cccccc;
+	border-bottom:1px solid #ccc;
 	}
 #CommentResults ul span, #CommentResults ul span a, #CommentResults ul a {
-	color:#aaaaaa;
+	color:#aaa;
 	text-decoration:none;
 	}
 #CommentResults ul span a:hover, #CommentResults ul a:hover {
-	color:#ff0000;
+	color:#f00;
 	}
 #CommentResults ul a {
-	color:#777777;
+	color:#777;
 	}	
 #CommentResults .CommentResult ul {
-	background-color:#ffffff !important;
+	background-color:#fff !important;
 	}
 #CommentResults .CommentText span {
 	display: none;
@@ -744,10 +735,10 @@ html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
 	margin:6px 0px 4px 0px !important;
 	}
 #CommentResults .CommentText a {
-	color:#000000 !important;
+	color:#000 !important;
 	}
 #CommentResults .CommentText a:hover {
-	background-color:#ffffaa;
+	background-color:#ffa;
 	}
 .CommentAuthor, .CommentAdded {
 	width: auto;
@@ -787,8 +778,7 @@ html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
 	}
 #UserResults li ul {
 	margin-top: 0px !important;
-	xbackground-color:#fefecc;
-	border-bottom:1px solid #cccccc;
+	border-bottom:1px solid #ccc;
 	}
 #UserResults li li {
 	height:auto;
@@ -796,7 +786,7 @@ html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
 	}
 #UserResults li ul {
 	padding: 6px 6px 7px 6px;
-	color:#777777;
+	color:#777;
 	}
 li.User {
 	display:inline;
@@ -804,7 +794,7 @@ li.User {
 	margin-right:10px !important;
 	}
 li.User span {
-	color: #aaaaaa;
+	color: #aaa;
 	}
 li.User.Name {
 	display:block;
@@ -850,7 +840,7 @@ li.User.Name span {
 	margin: 0px;
 	font-size:14px;
 	font-weight:bold;
-	color:#000000;
+	color:#000;
 	}
 #Form form {
 	margin: 0px;
@@ -874,7 +864,7 @@ li.User.Name span {
 	text-decoration:none;
 	font-weight:normal;
 	border:1px solid #ffedae;
-	background-color:#ffffff;
+	background-color:#fff;
 	}
 #WhisperUsername,
 #WhisperAutoCompleteResults {
@@ -892,7 +882,7 @@ li.User.Name span {
 	}
 #Form .Button {
 	cursor: pointer;
-	color: #000000 !important;
+	color: #000 !important;
 	}
 #Form .Button.SubmitButton {
 	margin-right:10px;
@@ -952,7 +942,7 @@ li.User.Name span {
 	color:#84733d;
 	}
 #Form.Account legend {
-	color:#000000;
+	color:#000;
 	}
 #Form.Account h2 {
 	font-size:14px;
@@ -1045,7 +1035,7 @@ li.User.Name span {
 	padding-top:20px;
 	}
 div.Extensions ul {
-	border:1px solid #dddddd;
+	border:1px solid #ddd;
 	border-bottom:0px;
 	margin: 20px 0px 20px 0px !important;
 	}
@@ -1053,7 +1043,7 @@ div.Extensions ul {
 	background-color:#fffeec;
 	}
 div.Extensions ul li { 
-	border-bottom:1px solid #dddddd;
+	border-bottom:1px solid #ddd;
 	margin:0px !important;
 	padding:10px !important;
 	overflow: hidden;
@@ -1127,7 +1117,7 @@ div.Extensions ul li p a:hover {
 /* Custom form for sortable list */
   
 .SortList {
-	color: #000000;
+	color: #000;
 	background: rgb(254,254,204);
 	margin-top: 10px !important;
 	padding: 0px;
@@ -1138,7 +1128,7 @@ div.Extensions ul li p a:hover {
 	cursor: move;
 	}
 .SortListItem {
-	border-top: 1px solid #dddddd;
+	border-top: 1px solid #ddd;
 	padding: 6px !important;
 	margin: 0px !important;
 	}
@@ -1153,7 +1143,7 @@ div.Extensions ul li p a:hover {
 	}
 .SortEdit:hover {
 	font-weight: normal;
-	color: #339933 !important;
+	color: #393 !important;
 	text-decoration: underline;
 	}
 .SortRemove {
@@ -1185,7 +1175,7 @@ div.Extensions ul li p a:hover {
 	cursor:pointer;
 	}
 .Submit a {
-	color: #FF6600 !important;
+	color: #f60 !important;
 	}
 
 /* Profile Page.. */
@@ -1194,7 +1184,7 @@ div.Extensions ul li p a:hover {
 	float:left;
 	width:300px;
 	margin-top:20px;
-	border-right:1px solid #cccccc;
+	border-right:1px solid #ccc;
 	}
 #AccountProfile * {
 	margin:0px;
@@ -1217,7 +1207,7 @@ div.Extensions ul li p a:hover {
 	}
 #AccountProfile h2 {
 	font-size:14px;
-	color:#000000;
+	color:#000;
 	width:60%;
 	float:left;
 	}
@@ -1245,7 +1235,7 @@ div.Extensions ul li p a:hover {
 	}
 .ProfileTitle.WithIcon .ProfileIcon {
 	padding:8px 0px 8px 30px;
-	background: #ffffff no-repeat center center;
+	background: #fff no-repeat center center;
 	margin-right: 6px;
 	display: inline;
 	float: left;
@@ -1256,7 +1246,7 @@ div.Extensions ul li p a:hover {
 	float: right;
 	text-align:right;
 	font-size:11px;
-	color:#aaaaaa;
+	color:#aaa;
 	}
 #AccountProfile .ProfileTitle {
 	line-height:20px;
@@ -1273,7 +1263,7 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
 	margin:0px;
 	padding:0px;
 	list-style:none;
-	color:#999999;
+	color:#999;
 	}
 #AccountHistory ul, #AccountHistory h2 {
 	margin:0px 20px;
@@ -1283,18 +1273,18 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
 	}
 #AccountHistory h2 {
 	font-size:14px;
-	color:#000000;
+	color:#000;
 	}
 #AccountHistory ul {
-	border-top:1px solid #cccccc;
+	border-top:1px solid #ccc;
 	}
 #AccountHistory li {
 	padding:5px;
-	border-bottom:1px solid #cccccc;
+	border-bottom:1px solid #ccc;
 	}
 #AccountHistory h3,
 #AccountHistory h3 a {
-	color:#666666;
+	color:#666;
 	font-size:12px;
 	}
 #AccountHistory h3 small {
@@ -1347,7 +1337,7 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
 	float:left;
 	}
 .hiLite {
-	background-color:#ffff99;
+	background-color:#ff9;
 	font-style:normal;
 	}
 
@@ -1356,7 +1346,7 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
 .AutoCompleteContainer {
 	margin: 0px;
 	padding: 0px;
-	border: 1px solid #888888;
+	border: 1px solid #888;
 	border-top: 0px;
 	}
 .AutoCompleteContainer td {
@@ -1364,12 +1354,12 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
 	cursor: pointer;
 	}
 .AutoCompleteRow td {
-	background: #ffffff;
+	background: #fff;
 	color: #000000;
 	}
 .AutoCompleteHoverRow td {
 	background: #335EA8;
-	color: #ffffff;
+	color: #fff;
 	}  
 
 /* Thank you positioniseverything.com*/
