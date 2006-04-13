@@ -197,7 +197,7 @@ $Configuration['PREFERENCE_ShowDeletedComments'] = '0';
 // Application versions
 define('APPLICATION', 'Vanilla');
 define('PEOPLE_VERSION', '0.0.1');
-define('APPLICATION_VERSION', '0.9.3');
+define('APPLICATION_VERSION', '1');
 
 // Application Mode Constants
 define('MODE_DEBUG', 'DEBUG'); 
