@@ -79,6 +79,11 @@ function ProcessComment(Request) {
 function DoNothing() {
 }
 
+function Focus(ElementID) {
+	var el = document.getElementById(ElementID);
+	if (el) el.focus();
+}
+
 // Apply or remove a bookmark
 function SetBookmark(CurrentSwitchVal, Identifier, BookmarkText, UnbookmarkText) {
 	SetSwitch('SetBookmark', CurrentSwitchVal, 'Bookmark', BookmarkText, UnbookmarkText, Identifier, "&DiscussionID="+Identifier);
