@@ -3,8 +3,8 @@
 Extension Name: Html Formatter
 Extension Url: http://lussumo.com/docs/
 Description: Allows html to be used in strings, but breaks out all "script" related activities.
-Version: 1.2
-Author: SirNot
+Version: 1.3
+Author: SirNotAppearingOnThisForum
 Author Url: N/A
 */
 
@@ -66,8 +66,8 @@ class HtmlFormatter extends StringFormatter
 	function ParseTags($String)
 	{
 		$String = preg_replace(
-			array("/<code>(.+?)<\/code>/sei", "/<(?![a-z\/])/i"), //yet again, order is important
-			array('"<code>".htmlspecialchars($this->RemoveQuoteSlashes(\'\\1\'))."</code>"', '&lt;'), 
+			array("/<code([^>]*)>(.+?)<\/code>/sei", "/<(?![a-z\/])/i"), //yet again, order is important
+			array('\'<code\'.$this->RemoveQuoteSlashes(\'\\1\').\'>\'.htmlspecialchars($this->RemoveQuoteSlashes(\'\\2\'))."</code>"', '&lt;'), 
 			$String);
 		$Len = strlen($String);
 		$Out = '';
