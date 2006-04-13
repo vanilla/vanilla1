@@ -101,6 +101,7 @@ if ($this->Context->WarningCollector->Count() > 0) {
                // Set up comment options            
                $this->DelegateParameters['Comment'] = &$Comment;
                $this->DelegateParameters['CommentList'] = &$CommentList;
+					$this->DelegateParameters['RowNumber'] = &$RowNumber;
                $CommentList .= $this->CallDelegate('PreCommentOptionsRender');
                if ($this->Context->Session->UserID > 0) {
                   if ($Comment->AuthUserID == $this->Context->Session->UserID || $PERMISSION_EDIT_COMMENTS || $PERMISSION_EDIT_DISCUSSIONS) {
