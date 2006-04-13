@@ -16,7 +16,8 @@ echo '<div id="Form" class="Account CategoryList">';
       .'<form method="get" action="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl).'">
       <input type="hidden" name="PostBackAction" value="Category" />
       <p>'.$this->Context->GetDefinition('CategoryReorderNotes').'</p>
-      <ul class="SortList" id="SortCategories">';
+      <ul class="SortList" id="SortCategories">
+      ';
          if ($this->CategoryData) {
             $c = $this->Context->ObjectFactory->NewObject($this->Context, 'Category');
             while ($Row = $this->Context->Database->GetRow($this->CategoryData)) {
@@ -27,7 +28,8 @@ echo '<div id="Form" class="Account CategoryList">';
                   if ($this->Context->Session->User->Permission('PERMISSION_EDIT_CATEGORIES')) echo '<a class="SortEdit" href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=Category&amp;CategoryID='.$c->CategoryID).'">'.$this->Context->GetDefinition('Edit').'</a>';
                   if ($this->Context->Session->User->Permission('PERMISSION_REMOVE_CATEGORIES')) echo '<a class="SortRemove" href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=CategoryRemove&amp;CategoryID='.$c->CategoryID).'">&nbsp;</a>';
                   echo $c->Name.'
-               </li>';
+               </li>
+               ';
             }
          }
       echo '</ul>
