@@ -485,6 +485,6 @@ if ($Context->SelfUrl == 'settings.php' && $Context->Session->User->Permission('
 	
 	$CleanupForm = $Context->ObjectFactory->NewContextObject($Context, 'CleanupForm');
 	$Page->AddRenderControl($CleanupForm, $Configuration['CONTROL_POSITION_BODY_ITEM'] + 80);
-	$Panel->AddListItem($Context->GetDefinition('AdministrativeOptions'), $Context->GetDefinition('SystemCleanup'), GetUrl($this->Context->Configuration, 'settings.php', '', '', '', '', 'PostBackAction=Cleanup'), '', '', 80);
+	$Panel->AddListItem($Context->GetDefinition('AdministrativeOptions'), $Context->GetDefinition('SystemCleanup'), GetUrl($Context->Configuration, $Context->SelfUrl, '', '', '', '', 'PostBackAction=Cleanup'), '', '', 80);
 }
 ?>

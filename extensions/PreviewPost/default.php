@@ -56,8 +56,8 @@ else
 if(in_array($Context->SelfUrl, array('post.php', 'comments.php')))
 {
 	//print_r($Context);
-	$Head->AddScript('./extensions/PreviewPost/preview.js');
-	$Head->AddStyleSheet('./extensions/PreviewPost/preview.css');
+	$Head->AddScript($Configuration['WEB_ROOT'].'extensions/PreviewPost/preview.js');
+	$Head->AddStyleSheet($Configuration['WEB_ROOT'].'extensions/PreviewPost/preview.css');
 	
 	$Context->AddToDelegate('DiscussionForm', 'DiscussionForm_PostSubmitRender', 'DiscussionForm_PreviewPostButton');
 	$Context->AddToDelegate('DiscussionForm', 'DiscussionForm_PostButtonsRender', 'PostForm_PreviewPostField');

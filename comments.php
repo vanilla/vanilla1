@@ -51,7 +51,7 @@ $Context->PageTitle = $CommentGrid->Discussion->Name;
 			$BookmarkText,
 			"./",
 			"",
-			"id=\"SetBookmark\" onclick=\"SetBookmark(".$CommentGrid->Discussion->Bookmarked.", '".$CommentGrid->Discussion->DiscussionID."', '".$Context->GetDefinition("BookmarkText")."', '".$Context->GetDefinition("UnbookmarkThisDiscussion")."'); return false;\"");
+			"id=\"SetBookmark\" onclick=\"SetBookmark('".$Configuration['WEB_ROOT']."ajax/switch.php', ".$CommentGrid->Discussion->Bookmarked.", '".$CommentGrid->Discussion->DiscussionID."', '".$Context->GetDefinition("BookmarkText")."', '".$Context->GetDefinition("UnbookmarkThisDiscussion")."'); return false;\"");
 
 		if ($Context->Session->User->Permission("PERMISSION_HIDE_DISCUSSIONS")) {
 			$HideText = $Context->GetDefinition(($CommentGrid->Discussion->Active?"Hide":"Unhide")."ThisDiscussion");
@@ -59,7 +59,7 @@ $Context->PageTitle = $CommentGrid->Discussion->Name;
 				$HideText,
 				"./",
 				"",
-				"onclick=\"if (confirm('".$Context->GetDefinition($CommentGrid->Discussion->Active?"ConfirmHideDiscussion":"ConfirmUnhideDiscussion")."')) DiscussionSwitch('Active', '".$CommentGrid->Discussion->DiscussionID."', '".FlipBool($CommentGrid->Discussion->Active)."'); return false;\"");
+				"onclick=\"if (confirm('".$Context->GetDefinition($CommentGrid->Discussion->Active?"ConfirmHideDiscussion":"ConfirmUnhideDiscussion")."')) DiscussionSwitch('".$CommentGrid->Context->Configuration['WEB_ROOT']."ajax/switch.php', 'Active', '".$CommentGrid->Discussion->DiscussionID."', '".FlipBool($CommentGrid->Discussion->Active)."'); return false;\"");
 		}
 		if ($Context->Session->User->Permission("PERMISSION_CLOSE_DISCUSSIONS")) {		
 			$CloseText = $Context->GetDefinition(($CommentGrid->Discussion->Closed?"ReOpen":"Close")."ThisDiscussion");
@@ -67,7 +67,7 @@ $Context->PageTitle = $CommentGrid->Discussion->Name;
 				$CloseText,
 				"./",
 				"",
-				"onclick=\"if (confirm('".$Context->GetDefinition($CommentGrid->Discussion->Closed?"ConfirmReopenDiscussion":"ConfirmCloseDiscussion")."')) DiscussionSwitch('Closed', '".$CommentGrid->Discussion->DiscussionID."', '".FlipBool($CommentGrid->Discussion->Closed)."'); return false;\"");
+				"onclick=\"if (confirm('".$Context->GetDefinition($CommentGrid->Discussion->Closed?"ConfirmReopenDiscussion":"ConfirmCloseDiscussion")."')) DiscussionSwitch('".$CommentGrid->Context->Configuration['WEB_ROOT']."ajax/switch.php', 'Closed', '".$CommentGrid->Discussion->DiscussionID."', '".FlipBool($CommentGrid->Discussion->Closed)."'); return false;\"");
 		}
 		if ($Context->Session->User->Permission("PERMISSION_STICK_DISCUSSIONS")) {
 			$StickyText = $Context->GetDefinition("MakeThisDiscussion".($CommentGrid->Discussion->Sticky?"Unsticky":"Sticky"));
@@ -75,7 +75,7 @@ $Context->PageTitle = $CommentGrid->Discussion->Name;
 				$StickyText,
 				"./",
 				"",
-				"onclick=\"if (confirm('".$Context->GetDefinition($CommentGrid->Discussion->Sticky?"ConfirmUnsticky":"ConfirmSticky")."')) DiscussionSwitch('Sticky', '".$CommentGrid->Discussion->DiscussionID."', '".FlipBool($CommentGrid->Discussion->Sticky)."'); return false;\"");
+				"onclick=\"if (confirm('".$Context->GetDefinition($CommentGrid->Discussion->Sticky?"ConfirmUnsticky":"ConfirmSticky")."')) DiscussionSwitch('".$CommentGrid->Context->Configuration['WEB_ROOT']."ajax/switch.php', 'Sticky', '".$CommentGrid->Discussion->DiscussionID."', '".FlipBool($CommentGrid->Discussion->Sticky)."'); return false;\"");
 		}
 		if ($Context->Session->User->Permission("PERMISSION_SINK_DISCUSSIONS")) {
 			$SinkText = $Context->GetDefinition("MakeThisDiscussion".($CommentGrid->Discussion->Sink?"UnSink":"Sink"));
@@ -83,7 +83,7 @@ $Context->PageTitle = $CommentGrid->Discussion->Name;
 				$SinkText,
 				"./",
 				"",
-				"onclick=\"if (confirm('".$Context->GetDefinition($CommentGrid->Discussion->Sink?"ConfirmUnSink":"ConfirmSink")."')) DiscussionSwitch('Sink', '".$CommentGrid->Discussion->DiscussionID."', '".FlipBool($CommentGrid->Discussion->Sink)."'); return false;\"");
+				"onclick=\"if (confirm('".$Context->GetDefinition($CommentGrid->Discussion->Sink?"ConfirmUnSink":"ConfirmSink")."')) DiscussionSwitch('".$CommentGrid->Context->Configuration['WEB_ROOT']."ajax/switch.php', 'Sink', '".$CommentGrid->Discussion->DiscussionID."', '".FlipBool($CommentGrid->Discussion->Sink)."'); return false;\"");
 		}
 	}
 	

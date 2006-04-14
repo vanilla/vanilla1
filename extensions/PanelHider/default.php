@@ -20,8 +20,8 @@ Contact Mark O'Sullivan at mark [at] lussumo [dot] com
 if (in_array($Context->SelfUrl, array("account.php", "categories.php", "comments.php", "index.php", "post.php", "search.php", "settings.php")) && $Context->Session->UserID > 0) {
    
    function Panel_AddHiderBeforeRender(&$Panel) {
-      echo("<div id=\"HiddenPanel\"><a href=\"javascript:RevealPanel();\">&nbsp;</a></div>
-      <div id=\"HidePanel\"><a href=\"javascript:HidePanel();\">&nbsp;</a></div>");
+      echo("<div id=\"HiddenPanel\"><a href=\"javascript:RevealPanel('".$Panel->Context->Configuration['WEB_ROOT']."ajax/switch.php');\">&nbsp;</a></div>
+      <div id=\"HidePanel\"><a href=\"javascript:HidePanel('".$Panel->Context->Configuration['WEB_ROOT']."ajax/switch.php');\">&nbsp;</a></div>");
    }
    
    $Context->AddToDelegate("Panel",
@@ -29,13 +29,13 @@ if (in_array($Context->SelfUrl, array("account.php", "categories.php", "comments
       "Panel_AddHiderBeforeRender");
       
    if (@$Head) {
-      $Head->AddScript("./extensions/PanelHider/functions.js");
+      $Head->AddScript($Configuration['WEB_ROOT'].'extensions/PanelHider/functions.js');
       if ($Context->Session->User->Preference("HidePanel")) {
-         $Head->AddStyleSheet("./extensions/PanelHider/panelhider.hidden.css", "screen");
+         $Head->AddStyleSheet($Configuration['WEB_ROOT'].'extensions/PanelHider/panelhider.hidden.css', "screen");
       } else {
-         $Head->AddStyleSheet("./extensions/PanelHider/panelhider.visible.css", "screen");
+         $Head->AddStyleSheet($Configuration['WEB_ROOT'].'extensions/PanelHider/panelhider.visible.css', "screen");
       }
-      $Head->AddStyleSheet("./extensions/PanelHider/panelhider.handheld.css", "handheld");
+      $Head->AddStyleSheet($Configuration['WEB_ROOT'].'extensions/PanelHider/panelhider.handheld.css', "handheld");
    }
 }
 

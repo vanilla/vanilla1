@@ -47,7 +47,7 @@ if (
 					$s->GetPropertiesFromDataSet($Row);
 					$s->FormatPropertiesForDisplay();
 					$String .= '<li id="SavedSearch_'.$s->SearchID.'"><a href="'.GetUrl($Configuration, 'search.php', 'saved/', 'SearchID', $s->SearchID).'">'.$s->Label.'</a>';
-					if ($AllowEdit) $String .= ' <span>(<a href="./" onclick="RemoveSearch('.$s->SearchID.'); return false;">'.$Context->GetDefinition('RemoveLower').'</a>)</span>';
+					if ($AllowEdit) $String .= ' <span>(<a href="./" onclick="RemoveSearch('."'".$Configuration['WEB_ROOT']."extensions/SavedSearches/removesearch.php', ".$s->SearchID.'); return false;">'.$Context->GetDefinition('RemoveLower').'</a>)</span>';
 					$String .= '</li>';
 				}
 			$String .= '</ul>';
@@ -61,8 +61,8 @@ if (
 
 if ($Context->SelfUrl == "search.php") {
 	// Add the savedsearch js to the page
-   $Head->AddScript("./extensions/SavedSearches/functions.js");
-	$Head->AddStyleSheet("./extensions/SavedSearches/style.css");
+   $Head->AddScript($Configuration['WEB_ROOT'].'extensions/SavedSearches/functions.js');
+	$Head->AddStyleSheet($Configuration['WEB_ROOT'].'extensions/SavedSearches/style.css');
 	
 	// Write the "save your search" form to the screen
 	function SearchForm_WriteSaveSearchForm(&$SearchForm) {

@@ -63,7 +63,7 @@ $Context->Dictionary["NewStyleSaved"] = "The style was added successfully";
 
 // Load the javascript if we're on a page that should allow changing of the style
 if (in_array($Context->SelfUrl, array("comments.php", "account.php"))) {
-	$Head->AddScript("./extensions/Style/functions.js");
+	$Head->AddScript($Configuration['WEB_ROOT'].'extensions/Style/functions.js');
 }
 
 // Let it skip these classes if it doesn't need them
@@ -471,7 +471,7 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 	}
 	// Add the stylesheet to the account screen
    $PostBackAction = ForceIncomingString("PostBackAction", "");
-   if (in_array($PostBackAction, array("Styles", "Style", "ProcessStyle", "StyleRemove", "ProcessStyleRemove"))) $Head->AddStyleSheet("extensions/Style/style.css");
+   if (in_array($PostBackAction, array("Styles", "Style", "ProcessStyle", "StyleRemove", "ProcessStyleRemove"))) $Head->AddStyleSheet($Configuration['WEB_ROOT'].'extensions/Style/style.css');
 	
 } elseif ($Context->SelfUrl == "account.php" && $Context->Session->UserID > 0) {
 	$AccountUserID = ForceIncomingInt("u", $Context->Session->UserID);
@@ -511,14 +511,14 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 									if ($Style->AuthUserID > 0) {
 										echo(str_replace(array("//1", "//2"),
 											array(
-												"<a href=\"./\" onclick=\"SetStyle('".$Style->StyleID."', ''); return false;\"".($Style->PreviewImage == "" ? " class=\"NoStylePreview\"" : " class=\"StylePreview\" style=\"background: url('".$Style->Url.$Style->PreviewImage."') center center no-repeat;\"")."><span>".$Style->Name."</span></a>
+												"<a href=\"./\" onclick=\"SetStyle('".$this->Context->Configuration['WEB_ROOT']."extensions/Style/setstyle.php', '".$Style->StyleID."', ''); return false;\"".($Style->PreviewImage == "" ? " class=\"NoStylePreview\"" : " class=\"StylePreview\" style=\"background: url('".$Style->Url.$Style->PreviewImage."') center center no-repeat;\"")."><span>".$Style->Name."</span></a>
 												",
 												"<a href=\"".GetUrl($this->Context->Configuration, "account.php", "", "u", $Style->AuthUserID)."\">".$Style->AuthUsername."</a>
 												"
 											),
 											$this->Context->GetDefinition("XByY")));
 									} else {
-										echo "<a href=\"./\" onclick=\"SetStyle('".$Style->StyleID."', ''); return false;\"".($Style->PreviewImage == "" ? " class=\"NoStylePreview\"" : " class=\"StylePreview\" style=\"background: url('".$Style->Url.$Style->PreviewImage."') center center no-repeat;\"")."><span>".$Style->Name."</span></a>
+										echo "<a href=\"./\" onclick=\"SetStyle('".$this->Context->Configuration['WEB_ROOT']."extensions/Style/setstyle.php', '".$Style->StyleID."', ''); return false;\"".($Style->PreviewImage == "" ? " class=\"NoStylePreview\"" : " class=\"StylePreview\" style=\"background: url('".$Style->Url.$Style->PreviewImage."') center center no-repeat;\"")."><span>".$Style->Name."</span></a>
 										";
 									}
 								echo('</li>');
@@ -535,7 +535,7 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 								</li>
 							</ul>
 							<div class="Submit">
-								<input type="button" name="btnCheck" value="'.$this->Context->GetDefinition('UseCustomStyle').'" class="Button SubmitButton CustomStyleButton" onclick="'."SetStyle('0', document.getElementById('txtCustomStyle').value); return false;".'" />
+								<input type="button" name="btnCheck" value="'.$this->Context->GetDefinition('UseCustomStyle').'" class="Button SubmitButton CustomStyleButton" onclick="'."SetStyle('".$this->Context->Configuration['WEB_ROOT']."extensions/Style/setstyle.php', '0', document.getElementById('txtCustomStyle').value); return false;".'" />
 								<a href="'.GetUrl($this->Context->Configuration, 'account.php').'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>
 							</div>
 							</form>
@@ -549,7 +549,7 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 		$AccountOptions = $Context->GetDefinition("AccountOptions");
 		$Panel->AddList($AccountOptions, 10);
 		$Page->AddRenderControl($UserStyleForm, $Configuration["CONTROL_POSITION_BODY_ITEM"] + 1);
-		$Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangeYourStylesheet"), GetUrl($this->Context->Configuration, "account.php", "", "", "", "", "PostBackAction=Style"), "", "", 50);
+		$Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangeYourStylesheet"), GetUrl($Context->Configuration, $Context->SelfUrl, "", "", "", "", "PostBackAction=Style"), "", "", 50);
 	}
 	// Include the style definition on the user's profile & the account profile is being display
 	$PostBackAction = ForceIncomingString("PostBackAction", "");
@@ -558,7 +558,7 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 			echo("<dt>".$AccountControl->Context->GetDefinition("Style")."</dt>
 			<dd>");
 			if ($AccountControl->Context->Session->UserID > 0 && $AccountControl->Context->Session->User->StyleID != $AccountControl->User->StyleID && $AccountControl->Context->Session->UserID != $AccountControl->User->UserID) {
-				echo("<a onclick=\"SetStyle('".$AccountControl->User->StyleID."', '".($AccountControl->User->StyleID == 0?urlencode($AccountControl->User->CustomStyle):"")."');\">".$AccountControl->User->Style."</a>");
+				echo("<a onclick=\"SetStyle('".$this->Context->Configuration['WEB_ROOT']."extensions/Style/setstyle.php', '".$AccountControl->User->StyleID."', '".($AccountControl->User->StyleID == 0?urlencode($AccountControl->User->CustomStyle):"")."');\">".$AccountControl->User->Style."</a>");
 			} else {
 				echo($AccountControl->User->Style);
 			}
@@ -567,6 +567,6 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 		$Context->AddToDelegate("Account", "AccountProperties", "AddStylePropertyToAccount");
 	}
 	// Add the stylesheet to the account screen
-   if (in_array($PostBackAction, array("Styles", "Style", "ProcessStyle", "StyleRemove", "ProcessStyleRemove"))) $Head->AddStyleSheet("extensions/Style/style.css");
+   if (in_array($PostBackAction, array("Styles", "Style", "ProcessStyle", "StyleRemove", "ProcessStyleRemove"))) $Head->AddStyleSheet($Configuration['WEB_ROOT'].'extensions/Style/style.css');
 }
 ?>

@@ -40,15 +40,14 @@ function AddLabelValuePair() {
 	}
 }
 
-function DiscussionSwitch(SwitchType, DiscussionID, SwitchValue) {
+function DiscussionSwitch(AjaxUrl, SwitchType, DiscussionID, SwitchValue) {
 	ChangeLoaderText("Processing...");
 	SwitchLoader(1);
-   var Url = "./ajax/switch.php";
    var Parameters = "Type="+SwitchType+"&DiscussionID="+DiscussionID+"&Switch="+SwitchValue;
    var dm = new DataManager();
 	dm.RequestCompleteEvent = HandleDiscussionSwitch;
 	dm.RequestFailedEvent = HandleFailure;
-	dm.LoadData(Url+"?"+Parameters);
+	dm.LoadData(AjaxUrl+"?"+Parameters);
 }
 
 function HandleDiscussionSwitch(Request) {
@@ -57,17 +56,16 @@ function HandleDiscussionSwitch(Request) {
 }
 
 // Delete or Undelete a comment
-function ManageComment(Switch, DiscussionID, CommentID, ShowText, HideText) {
+function ManageComment(AjaxUrl, Switch, DiscussionID, CommentID, ShowText, HideText) {
 	var ConfirmText = (Switch==1?HideText:ShowText);
 	if (confirm(ConfirmText)) {
 		ChangeLoaderText("Processing...");
 		SwitchLoader(1);
-		var Url = "./ajax/switch.php";
 		var Parameters = "Type=Comment&Switch="+Switch+"&DiscussionID="+DiscussionID+"&CommentID="+CommentID;
 		var dm = new DataManager();
 		dm.RequestCompleteEvent = ProcessComment;
 		dm.RequestFailedEvent = HandleFailure;
-		dm.LoadData(Url+"?"+Parameters);
+		dm.LoadData(AjaxUrl+"?"+Parameters);
 	}
 }
 
@@ -85,8 +83,8 @@ function Focus(ElementID) {
 }
 
 // Apply or remove a bookmark
-function SetBookmark(CurrentSwitchVal, Identifier, BookmarkText, UnbookmarkText) {
-	SetSwitch('SetBookmark', CurrentSwitchVal, 'Bookmark', BookmarkText, UnbookmarkText, Identifier, "&DiscussionID="+Identifier);
+function SetBookmark(AjaxUrl, CurrentSwitchVal, Identifier, BookmarkText, UnbookmarkText) {
+	SetSwitch(AjaxUrl, 'SetBookmark', CurrentSwitchVal, 'Bookmark', BookmarkText, UnbookmarkText, Identifier, "&DiscussionID="+Identifier);
 	var Sender = document.getElementById('SetBookmark');
 	var BookmarkTitle = document.getElementById("BookmarkTitle");
 	var BookmarkList = document.getElementById("BookmarkList");
@@ -115,7 +113,7 @@ function SetBookmark(CurrentSwitchVal, Identifier, BookmarkText, UnbookmarkText)
 }
 
 // Generic Switch
-function SetSwitch(SenderName, CurrentSwitchVal, SwitchType, CommentOn, CommentOff, Identifier, Attributes) {
+function SetSwitch(AjaxUrl, SenderName, CurrentSwitchVal, SwitchType, CommentOn, CommentOff, Identifier, Attributes) {
 	var Sender = document.getElementById(SenderName);
 	if (Sender) {
       ChangeLoaderText("Processing...");
@@ -125,13 +123,12 @@ function SetSwitch(SenderName, CurrentSwitchVal, SwitchType, CommentOn, CommentO
 		Sender.innerHTML = (FlipSwitch==0?CommentOn:CommentOff);
 		Sender.name = FlipSwitch;
 		
-		var Url = "./ajax/switch.php";
 		var Parameters = "Type="+SwitchType+"&Switch="+FlipSwitch+Attributes;
 		
 		var dm = new DataManager();
 		dm.RequestCompleteEvent = HandleSwitch;
 		dm.RequestFailedEvent = HandleFailure;
-		dm.LoadData(Url+"?"+Parameters);
+		dm.LoadData(AjaxUrl+"?"+Parameters);
 	}
 }
 
@@ -162,30 +159,28 @@ function ShowSimpleSearch() {
 	}
 }
 
-function ToggleCategoryBlock(CategoryID, Block) {
+function ToggleCategoryBlock(AjaxUrl, CategoryID, Block) {
 	ChangeLoaderText("Processing...");
 	SwitchLoader(1);
-	var Url = "./ajax/blockcategory.php";
 	var Parameters = "BlockCategoryID="+CategoryID+"&Block="+Block;
    var dm = new DataManager();
 	dm.RequestCompleteEvent = RefreshPage;
 	dm.RequestFailedEvent = HandleFailure;
-	dm.LoadData(Url+"?"+Parameters);
+	dm.LoadData(AjaxUrl+"?"+Parameters);
 }
 
-function ToggleCommentBox(SmallText, BigText) {
+function ToggleCommentBox(AjaxUrl, SmallText, BigText) {
    SwitchElementClass('CommentBox', 'CommentBoxController', 'SmallCommentBox', 'LargeCommentBox', BigText, SmallText);
 	var SwitchVal = 0;
 	var CommentBox = document.getElementById("CommentBox");
 	if (CommentBox) {
 		if (CommentBox.className == "LargeCommentBox") SwitchVal = 1;
 		
-		var Url = "./ajax/switch.php";
 		var Parameters = "Type=ShowLargeCommentBox&Switch="+SwitchVal;
 		var dm = new DataManager();
 		dm.RequestCompleteEvent = DoNothing;
 		dm.RequestFailedEvent = HandleFailure;
-		dm.LoadData(Url+"?"+Parameters);		
+		dm.LoadData(AjaxUrl+"?"+Parameters);		
 	}
 }
 

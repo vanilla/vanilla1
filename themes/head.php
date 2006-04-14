@@ -5,7 +5,6 @@ $HeadString = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-ca">
    <head>
       <title>'.$this->Context->Configuration['APPLICATION_TITLE'].' - '.$this->Context->PageTitle.'</title>
-      <base href="'.$this->Context->Configuration['BASE_URL'].'" />
       <link rel="shortcut icon" href="/favicon.ico" />';
       if (is_array($this->StyleSheets)) {
          while (list($Key, $StyleSheet) = each($this->StyleSheets)) {

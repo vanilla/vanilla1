@@ -26,9 +26,9 @@ $Context->Dictionary["Preview"] = "Preview";
 // Add the Preview button to the account and post pages
 if (in_array($Context->SelfUrl, array("comments.php", "post.php"))) {
    // Add the extension js
-   $Head->AddScript("./extensions/PostPreview/functions.js");
+   $Head->AddScript($Configuration['WEB_ROOT'].'extensions/PostPreview/functions.js');
    // Add the css
-   $Head->AddStyleSheet("./extensions/PostPreview/PreviewStyle.css");
+   $Head->AddStyleSheet($Configuration['WEB_ROOT'].'extensions/PostPreview/PreviewStyle.css');
    
    // Add to the discussion form
    function DiscussionForm_AddPreviewButton(&$Form) {

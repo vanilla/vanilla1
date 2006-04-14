@@ -78,12 +78,11 @@ function HideElement(ElementID, ClearElement) {
 	}
 }
 
-function PanelSwitch(PanelItem, RefreshPageWhenComplete) {
+function PanelSwitch(AjaxUrl, PanelItem, RefreshPageWhenComplete) {
 	 var chkBox = document.getElementById(PanelItem+"ID");
 	 if (chkBox) {
 		  ChangeLoaderText("Processing...");
 		  SwitchLoader(1);
-		  var Url = "./ajax/switch.php";
 		  var Parameters = "Type="+PanelItem+"&Switch="+chkBox.checked;
 		  var dm = new DataManager();
 		  dm.RequestFailedEvent = HandleFailure;
@@ -92,7 +91,7 @@ function PanelSwitch(PanelItem, RefreshPageWhenComplete) {
 		  } else {
 	 		  dm.RequestCompleteEvent = HandleSwitch;
 		  }	
-		  dm.LoadData(Url+"?"+Parameters);		
+		  dm.LoadData(AjaxUrl+"?"+Parameters);		
 	 }
 }
 
@@ -124,15 +123,14 @@ function SwitchElementClass(ElementToChangeID, SenderID, StyleA, StyleB, Comment
 	 }
 }
 
-function SwitchExtension(ExtensionKey) {
+function SwitchExtension(AjaxUrl, ExtensionKey) {
     var Item = document.getElementById(ExtensionKey);
     if (Item) Item.className = "Processing";
-    var Url = "./ajax/switchextension.php";
     var Parameters = "ExtensionKey="+ExtensionKey;
     var dm = new DataManager();
     dm.RequestFailedEvent = SwitchExtensionResult;
     dm.RequestCompleteEvent = SwitchExtensionResult;
-    dm.LoadData(Url+"?"+Parameters);
+    dm.LoadData(AjaxUrl+"?"+Parameters);
 }
 
 function SwitchExtensionResult(Request) {

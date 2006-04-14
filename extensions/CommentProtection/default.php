@@ -37,7 +37,7 @@ $Context->Dictionary['UnblockUserTitle'] = 'Allow HTML in all comments by this u
 
 if ($Context->SelfUrl == "comments.php") {
 	// Include required js for ajaxing of comment/user blocking
-   $Head->AddScript("./extensions/CommentProtection/functions.js");	
+   $Head->AddScript($Configuration['WEB_ROOT'].'extensions/CommentProtection/functions.js');	
 	
 	// Add the options to the grid
 	function CommentGrid_BlockOptions(&$CommentGrid) {
@@ -46,9 +46,9 @@ if ($Context->SelfUrl == "comments.php") {
          $ShowHtml = $CommentGrid->DelegateParameters["ShowHtml"];
 			$CommentList = &$CommentGrid->DelegateParameters["CommentList"];
          if ($CommentGrid->Context->Session->User->Preference("HtmlOn") && !$Comment->Deleted) {
-            $CommentList .= "<a href=\"./\" id=\"BlockUser_".$Comment->AuthUserID."_Comment_".$Comment->CommentID."\" onclick=\"BlockUser('".$Comment->AuthUserID."', '".FlipBool($Comment->AuthBlocked)."', '".$CommentGrid->Context->GetDefinition("UnblockUser")."', '".$CommentGrid->Context->GetDefinition("UnblockUserTitle")."', '".$CommentGrid->Context->GetDefinition("BlockUser")."', '".$CommentGrid->Context->GetDefinition("BlockUserTitle")."', '".$CommentGrid->Context->GetDefinition("UnblockComment")."', '".$CommentGrid->Context->GetDefinition("UnblockCommentTitle")."', '".$CommentGrid->Context->GetDefinition("BlockComment")."', '".$CommentGrid->Context->GetDefinition("BlockCommentTitle")."'); return false;\" title=\"".$CommentGrid->Context->GetDefinition(GetBool(!$Comment->AuthBlocked,"BlockUserHtml","AllowUserHtml"))."\">".$CommentGrid->Context->GetDefinition(GetBool(!$Comment->AuthBlocked,"BlockUser","UnblockUser"))."</a>";
+            $CommentList .= "<a href=\"./\" id=\"BlockUser_".$Comment->AuthUserID."_Comment_".$Comment->CommentID."\" onclick=\"BlockUser('".$CommentGrid->Context->Configuration['WEB_ROOT']."extensions/CommentProtection/block.php', '".$Comment->AuthUserID."', '".FlipBool($Comment->AuthBlocked)."', '".$CommentGrid->Context->GetDefinition("UnblockUser")."', '".$CommentGrid->Context->GetDefinition("UnblockUserTitle")."', '".$CommentGrid->Context->GetDefinition("BlockUser")."', '".$CommentGrid->Context->GetDefinition("BlockUserTitle")."', '".$CommentGrid->Context->GetDefinition("UnblockComment")."', '".$CommentGrid->Context->GetDefinition("UnblockCommentTitle")."', '".$CommentGrid->Context->GetDefinition("BlockComment")."', '".$CommentGrid->Context->GetDefinition("BlockCommentTitle")."'); return false;\" title=\"".$CommentGrid->Context->GetDefinition(GetBool(!$Comment->AuthBlocked,"BlockUserHtml","AllowUserHtml"))."\">".$CommentGrid->Context->GetDefinition(GetBool(!$Comment->AuthBlocked,"BlockUser","UnblockUser"))."</a>";
          }
-         $CommentList .= "<a href=\"./\" id=\"BlockComment_".$Comment->CommentID."\" onclick=\"BlockComment('".$Comment->CommentID."', '".$ShowHtml."', 1, false, '".$CommentGrid->Context->GetDefinition("UnblockComment")."', '".$CommentGrid->Context->GetDefinition("UnblockCommentTitle")."', '".$CommentGrid->Context->GetDefinition("BlockComment")."', '".$CommentGrid->Context->GetDefinition("BlockCommentTitle")."'); return false;\" title=\"".$CommentGrid->Context->GetDefinition(GetBool($ShowHtml,"BlockHtml","AllowHtml"))."\">".$CommentGrid->Context->GetDefinition(GetBool($ShowHtml,"BlockComment","UnblockComment"))."</a>";
+         $CommentList .= "<a href=\"./\" id=\"BlockComment_".$Comment->CommentID."\" onclick=\"BlockComment('".$CommentGrid->Context->Configuration['WEB_ROOT']."extensions/CommentProtection/block.php', '".$Comment->CommentID."', '".$ShowHtml."', 1, false, '".$CommentGrid->Context->GetDefinition("UnblockComment")."', '".$CommentGrid->Context->GetDefinition("UnblockCommentTitle")."', '".$CommentGrid->Context->GetDefinition("BlockComment")."', '".$CommentGrid->Context->GetDefinition("BlockCommentTitle")."'); return false;\" title=\"".$CommentGrid->Context->GetDefinition(GetBool($ShowHtml,"BlockHtml","AllowHtml"))."\">".$CommentGrid->Context->GetDefinition(GetBool($ShowHtml,"BlockComment","UnblockComment"))."</a>";
 		}
 	}
 	

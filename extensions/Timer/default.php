@@ -43,6 +43,6 @@ if (in_array($Context->SelfUrl, array("index.php", "categories.php", "comments.p
    }
    $Timer = $Context->ObjectFactory->NewContextObject($Context, "Timer");
    $Page->AddControl("Page_Render", $Timer, $Configuration["CONTROL_POSITION_FOOT"]);
-   $Head->AddStyleSheet("./extensions/Timer/style.css");
+   $Head->AddStyleSheet($Configuration['WEB_ROOT'].'extensions/Timer/style.css');
 }
 ?>
