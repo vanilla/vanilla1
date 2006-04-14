@@ -1,16 +1,16 @@
 
 // Insert clipboard data
-function GetClipping(ClippingSelect) {
+function GetClipping(AjaxUrl, ClippingSelect) {
 	var ClippingID = ClippingSelect.options[ClippingSelect.selectedIndex].value;
 	ClippingSelect.selectedIndex = 0;
    ChangeLoaderText("Loading...");
    SwitchLoader(1);
-   var Url = "./extensions/Clipboard/getclipping.php";
+	
    var Parameters = "c="+ClippingID;
-   var DataManager = new Ajax.Request(
-      Url,
-      { method: 'get', parameters: Parameters, onComplete: InsertClipping }
-   );	
+   var dm = new DataManager();
+	dm.RequestCompleteEvent = InsertClipping;
+	dm.RequestFailedEvent = DoNothing;
+	dm.LoadData(AjaxUrl+"?"+Parameters);
 }
 
 

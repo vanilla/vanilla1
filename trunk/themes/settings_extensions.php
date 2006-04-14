@@ -20,7 +20,7 @@ echo '<div id="Form" class="Account Extensions">
 									'chk'.$ExtensionKey,
 									1,
 									$Extension->Enabled,
-									"SwitchExtension('".$ExtensionKey."');",
+									"SwitchExtension('".$this->Context->Configuration['WEB_ROOT']."ajax/switchextension.php', '".$ExtensionKey."');",
 									$Extension->Name).'
 								<span class="Version">'.$Extension->Version.'</span>
 								<span class="Author">'.FormatHyperlink($Extension->AuthorUrl,1,$Extension->Author).'</span>

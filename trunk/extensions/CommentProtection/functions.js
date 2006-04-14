@@ -1,4 +1,4 @@
-function BlockComment(CommentID, CurrentStatus, PermanentBlock, ForceStatus, UnblockInnerHtml, UnblockTitle, BlockInnerHtml, BlockTitle) {
+function BlockComment(AjaxUrl, CommentID, CurrentStatus, PermanentBlock, ForceStatus, UnblockInnerHtml, UnblockTitle, BlockInnerHtml, BlockTitle) {
 	var Anchor = document.getElementById("BlockComment_"+CommentID);
 	var Comment = document.getElementById("CommentBody_"+CommentID);
 	if (Anchor && Comment) {
@@ -23,10 +23,10 @@ function BlockComment(CommentID, CurrentStatus, PermanentBlock, ForceStatus, Unb
 		}
 	}
 	// Save the setting for this user
-	if (PermanentBlock) SaveCommentBlock(CommentID, HtmlStatus);
+	if (PermanentBlock) SaveCommentBlock(AjaxUrl, CommentID, HtmlStatus);
 }
 
-function BlockUser (AuthUserID, CurrentStatus, UnblockInnerHtml, UnblockTitle, BlockInnerHtml, BlockTitle, UnblockCommentInnerHtml, UnblockCommentTitle, BlockCommentInnerHtml, BlockCommentTitle) {
+function BlockUser (AjaxUrl, AuthUserID, CurrentStatus, UnblockInnerHtml, UnblockTitle, BlockInnerHtml, BlockTitle, UnblockCommentInnerHtml, UnblockCommentTitle, BlockCommentInnerHtml, BlockCommentTitle) {
 	// Retrieve & Loop through all relevant elements
 	var Comments = GetElements("div", "CommentBody_");
 	var CommentID = 0;
@@ -38,7 +38,7 @@ function BlockUser (AuthUserID, CurrentStatus, UnblockInnerHtml, UnblockTitle, B
 		if (Anchor) {
 			// If so, block the comment
 			if (HtmlStatus == -1) HtmlStatus = (Anchor.name == "")?CurrentStatus:Anchor.name;
-			BlockComment(CommentID, CurrentStatus, 0, HtmlStatus, UnblockCommentInnerHtml, UnblockCommentTitle, BlockCommentInnerHtml, BlockCommentTitle);
+			BlockComment(AjaxUrl, CommentID, CurrentStatus, 0, HtmlStatus, UnblockCommentInnerHtml, UnblockCommentTitle, BlockCommentInnerHtml, BlockCommentTitle);
 			// And flip the switch
 			if (HtmlStatus == "1") {
 				Anchor.name = 0;
@@ -52,7 +52,7 @@ function BlockUser (AuthUserID, CurrentStatus, UnblockInnerHtml, UnblockTitle, B
 		}
 	}
 	// Save the setting for this user
-	SaveUserBlock(AuthUserID, HtmlStatus);
+	SaveUserBlock(AjaxUrl, AuthUserID, HtmlStatus);
 }
 
 function BlockSaved(Request) {
@@ -87,25 +87,23 @@ function EncodeElement(Element) {
 }
 
 // Block a comment's html from view
-function SaveCommentBlock(BlockCommentID, BlockComment) {
+function SaveCommentBlock(AjaxUrl, BlockCommentID, BlockComment) {
 	ChangeLoaderText("Processing...");
 	SwitchLoader(1);
-   var Url = "./extensions/CommentProtection/block.php";
    var Parameters = "BlockCommentID="+BlockCommentID+"&Block="+BlockComment;
    var dm = new DataManager();
 	dm.RequestCompleteEvent = BlockSaved;
 	dm.RequestFailedEvent = HandleFailure;
-	dm.LoadData(Url+"?"+Parameters);
+	dm.LoadData(AjaxUrl+"?"+Parameters);
 }
 
 // Block a user's html from view
-function SaveUserBlock(BlockUserID, BlockUser) {
+function SaveUserBlock(AjaxUrl, BlockUserID, BlockUser) {
 	ChangeLoaderText("Processing...");
 	SwitchLoader(1);
-   var Url = "./extensions/CommentProtection/block.php";
    var Parameters = "BlockUserID="+BlockUserID+"&Block="+BlockUser;
    var dm = new DataManager();
 	dm.RequestCompleteEvent = BlockSaved;
 	dm.RequestFailedEvent = HandleFailure;
-	dm.LoadData(Url+"?"+Parameters);
+	dm.LoadData(AjaxUrl+"?"+Parameters);
 }

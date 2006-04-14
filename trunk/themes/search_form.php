@@ -52,7 +52,7 @@ echo '<div id="Form" class="Account Search">
 					<script type="text/javascript">
 						var DiscussionAutoComplete = new AutoComplete("DiscussionAuthUsername", false);
 						DiscussionAutoComplete.TableID = "DiscussionAutoCompleteResults";
-						DiscussionAutoComplete.KeywordSourceUrl = "./ajax/getusers.php?Search=";
+						DiscussionAutoComplete.KeywordSourceUrl = "'.$this->Context->Configuration['WEB_ROOT'].'ajax/getusers.php?Search=";
 					</script>
 				</li>
 				<li>
@@ -87,7 +87,7 @@ echo '<div id="Form" class="Account Search">
 					<script type="text/javascript">
 						var CommentAutoComplete = new AutoComplete("CommentAuthUsername", false);
 						CommentAutoComplete.TableID = "CommentAutoCompleteResults";
-						CommentAutoComplete.KeywordSourceUrl = "./ajax/getusers.php?Search=";
+						CommentAutoComplete.KeywordSourceUrl = "'.$this->Context->Configuration['WEB_ROOT'].'ajax/getusers.php?Search=";
 					</script>
 				</li>
 				<li>

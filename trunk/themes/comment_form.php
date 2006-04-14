@@ -20,7 +20,7 @@ echo '<div id="Form" class="AddComments">
 					<script type="text/javascript">
 						var WhisperAutoComplete = new AutoComplete("WhisperUsername", false);
 						WhisperAutoComplete.TableID = "WhisperAutoCompleteResults";
-						WhisperAutoComplete.KeywordSourceUrl = "./ajax/getusers.php?Search=";
+						WhisperAutoComplete.KeywordSourceUrl = "'.$this->Context->Configuration['WEB_ROOT'].'ajax/getusers.php?Search=";
 					</script>
 				</li>
 				';
@@ -31,7 +31,7 @@ echo '<div id="Form" class="AddComments">
       echo '<li>
          <label for="CommentBox">
             <a href="./" id="CommentBoxController" onclick="'
-               ."ToggleCommentBox('".$this->Context->GetDefinition('SmallInput')."', '".$this->Context->GetDefinition('BigInput')."'); return false;".'">'.$this->Context->GetDefinition($this->Context->Session->User->Preference('ShowLargeCommentBox')?'SmallInput':'BigInput').'</a>
+               ."ToggleCommentBox('".$this->Context->Configuration['WEB_ROOT']."ajax/switch.php', '".$this->Context->GetDefinition('SmallInput')."', '".$this->Context->GetDefinition('BigInput')."'); return false;".'">'.$this->Context->GetDefinition($this->Context->Session->User->Preference('ShowLargeCommentBox')?'SmallInput':'BigInput').'</a>
 				'.$this->Context->GetDefinition('EnterYourComments').'
          </label>
          <textarea name="Body" class="'

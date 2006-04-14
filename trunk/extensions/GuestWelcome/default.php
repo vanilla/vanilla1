@@ -30,7 +30,7 @@ if (in_array($Context->SelfUrl, array("account.php", "categories.php", "comments
    </div>', 10);
    
    // Add a stylesheet for this xhtml
-   $Head->AddStyleSheet("extensions/GuestWelcome/style.css");
+   $Head->AddStyleSheet($Configuration['WEB_ROOT'].'extensions/GuestWelcome/style.css');
 
 }
 

@@ -40,6 +40,11 @@ $Configuration['LIBRARY_PATH'] = '/path/to/your/library/';
 $Configuration['EXTENSIONS_PATH'] = '/path/to/your/extensions/'; 
 $Configuration['LANGUAGES_PATH'] = '/path/to/your/languages/';
 $Configuration['THEME_PATH'] = '/path/to/vanilla/themes/vanilla/';
+$Configuration['BASE_URL'] = 'http://your.base.url/to/vanilla/';
+$Configuration['DEFAULT_STYLE'] = '/vanilla/themes/vanilla/styles/default/'; 
+$Configuration['WEB_ROOT'] = '/vanilla/';
+$Configuration['SIGNIN_URL'] = './people.php';
+$Configuration['SIGNOUT_URL'] = './people.php?PostBackAction=SignOutNow';
 
 // People Settings
 $Configuration['AUTHENTICATION_MODULE'] = 'People/People.Class.Authenticator.php';
@@ -64,7 +69,6 @@ $Configuration['SMTP_USER'] = '';
 $Configuration['SMTP_PASSWORD'] = '';
 $Configuration['LANGUAGE'] = "English";
 $Configuration['URL_BUILDING_METHOD'] = 'Standard';  // Standard or mod_rewrite
-$Configuration['BASE_URL'] = 'http://your.base.url/to/vanilla/';
 $Configuration['CHARSET'] = 'utf-8';
 $Configuration['PAGE_EVENTS'] = array('Page_Init', 'Page_Render', 'Page_Unload');
 $Configuration['PAGELIST_NUMERIC_TEXT'] = '0';
@@ -72,10 +76,7 @@ $Configuration['LIBRARY_NAMESPACE_ARRAY'] = array('Framework', 'People', 'Vanill
 $Configuration['DEFAULT_FORMAT_TYPE'] = 'Text';
 $Configuration['FORMAT_TYPES'] = array('Text');
 $Configuration['APPLICATION_TITLE'] = 'Vanilla'; 
-$Configuration['BANNER_TITLE'] = 'Vanilla'; 
-$Configuration['DEFAULT_STYLE'] = './themes/vanilla/styles/default/'; 
-$Configuration['SIGNIN_URL'] = './people.php';
-$Configuration['SIGNOUT_URL'] = './people.php?PostBackAction=SignOutNow';
+$Configuration['BANNER_TITLE'] = 'Vanilla';
 
 // Vanilla Settings
 $Configuration['ENABLE_WHISPERS'] = '0';

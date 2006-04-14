@@ -56,6 +56,6 @@ function GetCategoryJumper(&$Context) {
 
 if (in_array($Context->SelfUrl, array('index.php','comments.php')) && $Configuration['USE_CATEGORIES']) {
    $Panel->AddString(GetCategoryJumper($Context), 5);
-   $Head->AddStyleSheet("extensions/CategoryJumper/style.css");
+   $Head->AddStyleSheet($Configuration['WEB_ROOT'].'extensions/CategoryJumper/style.css');
 }
 ?>

@@ -48,7 +48,7 @@ if (in_array($Context->SelfUrl, array("account.php", "comments.php", "post.php",
 
 // If looking at the account page, include and instantiate the clipboard form control
 if ($Context->SelfUrl == "account.php") {
-   $Head->AddStyleSheet("./extensions/Clipboard/style.css");
+   $Head->AddStyleSheet($Configuration['WEB_ROOT'].'extensions/Clipboard/style.css');
    
    $AccountUserID = ForceIncomingInt("u", $Context->Session->UserID);
    if ($AccountUserID == $Context->Session->UserID) {
@@ -60,8 +60,8 @@ if ($Context->SelfUrl == "account.php") {
 }
 
 if (in_array($Context->SelfUrl, array("comments.php", "post.php"))) {
-   $Head->AddStyleSheet("./extensions/Clipboard/style.css");
-   $Head->AddScript("./extensions/Clipboard/functions.js");
+   $Head->AddStyleSheet($Configuration['WEB_ROOT'].'extensions/Clipboard/style.css');
+   $Head->AddScript($Configuration['WEB_ROOT'].'extensions/Clipboard/functions.js');
    
    function CommentForm_AddClipboardDropDown(&$CommentForm) {
       $ClippingManager = $CommentForm->Context->ObjectFactory->NewContextObject($CommentForm->Context, "ClippingManager");
@@ -71,7 +71,7 @@ if (in_array($Context->SelfUrl, array("comments.php", "post.php"))) {
          $ClipboardSelect = $CommentForm->Context->ObjectFactory->NewObject($CommentForm->Context, "Select");
          $ClipboardSelect->Name = "ClippingID";
          $ClipboardSelect->CssClass = "ClipboardSelect";
-         $ClipboardSelect->Attributes = " onchange=\"GetClipping(this);\"";
+         $ClipboardSelect->Attributes = " onchange=\"GetClipping('".$CommentForm->Context->Configuration['WEB_ROOT']."extensions/Clipboard/getclipping.php', this);\"";
          $ClipboardSelect->AddOption("0", "...");
          $ClipboardSelect->AddOptionsFromDataSet($CommentForm->Context->Database, $Clippings, "ClippingID", "Label");
          echo("<dt class=\"ClipboardInputLabel\">".$CommentForm->Context->GetDefinition("CopyFromYourClipboard")."</dt>

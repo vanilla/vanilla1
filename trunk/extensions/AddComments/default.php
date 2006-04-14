@@ -55,7 +55,7 @@ if (in_array($Context->SelfUrl, array('comments.php', 'post.php'))) {
       }
       
    // 3. Make sure that the inputs are styled properly
-      $Head->AddStyleSheet('extensions/AddComments/style.css');
+      $Head->AddStyleSheet($Configuration['WEB_ROOT'].'extensions/AddComments/style.css');
       
    // 4. If the form has been posted back with the username and password,
    // make sure to validate the user before the comment is saved
