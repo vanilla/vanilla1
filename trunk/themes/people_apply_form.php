@@ -5,6 +5,7 @@ echo '<div class="About">
    '.$this->Context->GetDefinition('AboutMembership').'
          <p><a href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl).'">'.$this->Context->GetDefinition('BackToSignInForm').'</a></p>
       </div>
+		test
       <div id="Form" class="ApplyForm">
          <fieldset>
             <legend>'.$this->Context->GetDefinition('MembershipApplicationForm').'</legend>
