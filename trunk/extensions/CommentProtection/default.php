@@ -37,7 +37,7 @@ $Context->Dictionary['UnblockUserTitle'] = 'Allow HTML in all comments by this u
 
 if ($Context->SelfUrl == "comments.php") {
 	// Include required js for ajaxing of comment/user blocking
-   $Head->AddScript($Configuration['WEB_ROOT'].'extensions/CommentProtection/functions.js');	
+   $Head->AddScript('extensions/CommentProtection/functions.js');	
 	
 	// Add the options to the grid
 	function CommentGrid_BlockOptions(&$CommentGrid) {

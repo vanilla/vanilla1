@@ -29,13 +29,13 @@ if (in_array($Context->SelfUrl, array("account.php", "categories.php", "comments
       "Panel_AddHiderBeforeRender");
       
    if (@$Head) {
-      $Head->AddScript($Configuration['WEB_ROOT'].'extensions/PanelHider/functions.js');
+      $Head->AddScript('extensions/PanelHider/functions.js');
       if ($Context->Session->User->Preference("HidePanel")) {
-         $Head->AddStyleSheet($Configuration['WEB_ROOT'].'extensions/PanelHider/panelhider.hidden.css', "screen");
+         $Head->AddStyleSheet('extensions/PanelHider/panelhider.hidden.css', "screen");
       } else {
-         $Head->AddStyleSheet($Configuration['WEB_ROOT'].'extensions/PanelHider/panelhider.visible.css', "screen");
+         $Head->AddStyleSheet('extensions/PanelHider/panelhider.visible.css', "screen");
       }
-      $Head->AddStyleSheet($Configuration['WEB_ROOT'].'extensions/PanelHider/panelhider.handheld.css', "handheld");
+      $Head->AddStyleSheet('extensions/PanelHider/panelhider.handheld.css', "handheld");
    }
 }
 

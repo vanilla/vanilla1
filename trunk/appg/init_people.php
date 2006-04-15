@@ -67,7 +67,7 @@ if ($Configuration['PEOPLE_USE_EXTENSIONS']) include($Configuration['APPLICATION
 
 // BUILD THE PAGE HEAD
 // Every page will require some basic definitions for the header.
-$Head->AddScript($Configuration['WEB_ROOT'].'js/global.js');
-$Head->AddStyleSheet($Context->StyleUrl.'people.css', 'screen');
-$Head->AddStyleSheet($Context->StyleUrl.'people.handheld.css', 'handheld');
+$Head->AddScript('js/global.js');
+$Head->AddStyleSheet($Context->StyleUrl.'people.css', 'screen', 100, '');
+$Head->AddStyleSheet($Context->StyleUrl.'people.handheld.css', 'handheld', 101, '');
 ?>

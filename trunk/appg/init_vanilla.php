@@ -67,13 +67,13 @@ $PageEnd = $Context->ObjectFactory->CreateControl($Context, 'PageEnd');
 
 // BUILD THE PAGE HEAD
 // Every page will require some basic definitions for the header.
-$Head->AddScript($Configuration['WEB_ROOT'].'js/global.js');
-$Head->AddScript($Configuration['WEB_ROOT'].'js/vanilla.js');
-$Head->AddScript($Configuration['WEB_ROOT'].'js/ajax.js');
-$Head->AddScript($Configuration['WEB_ROOT'].'js/ac.js');
-$Head->AddStyleSheet($Context->StyleUrl.'vanilla.css', 'screen');
-$Head->AddStyleSheet($Context->StyleUrl.'vanilla.handheld.css', 'handheld');
-$Head->AddStyleSheet($Context->StyleUrl.'vanilla.print.css', 'print');
+$Head->AddScript('js/global.js');
+$Head->AddScript('js/vanilla.js');
+$Head->AddScript('js/ajax.js');
+$Head->AddScript('js/ac.js');
+$Head->AddStyleSheet($Context->StyleUrl.'vanilla.css', 'screen', 100, '');
+$Head->AddStyleSheet($Context->StyleUrl.'vanilla.handheld.css', 'handheld', 101, '');
+$Head->AddStyleSheet($Context->StyleUrl.'vanilla.print.css', 'print', 102, '');
 
 // BUILD THE MAIN MENU
 $Menu->AddTab($Context->GetDefinition('Discussions'), 'discussions', GetUrl($Configuration, './'), '', $Configuration['TAB_POSITION_DISCUSSIONS']);
@@ -121,4 +121,10 @@ $Menu->GetDelegatesFromContext();
 $Panel->GetDelegatesFromContext();
 $Foot->GetDelegatesFromContext();
 $PageEnd->GetDelegatesFromContext();
+
+// If the sign-in and sign-out urls have not been modified from their default
+// values, concatenate them with the web root so that they link correctly if
+// mod_rewrite is on.
+if ($Configuration['SIGNIN_URL'] == 'people.php') $Configuration['SIGNIN_URL'] = $Configuration['WEB_ROOT'].$Configuration['SIGNIN_URL'];
+if ($Configuration['SIGNOUT_URL'] == 'people.php?PostBackAction=SignOutNow') $Configuration['SIGNOUT_URL'] = $Configuration['WEB_ROOT'].$Configuration['SIGNOUT_URL'];
 ?>

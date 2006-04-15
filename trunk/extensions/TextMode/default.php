@@ -66,7 +66,7 @@ if (
 		200);
 		
 	// Add the stylesheet for these xhtml elements
-	$Head->AddStyleSheet($Configuration['WEB_ROOT'].'extensions/TextMode/style.css');
+	$Head->AddStyleSheet('extensions/TextMode/style.css');
 }
 
 // Make sure that a comment follows the user's preference and enables or disabled html where required

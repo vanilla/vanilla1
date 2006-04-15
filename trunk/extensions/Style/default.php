@@ -63,7 +63,7 @@ $Context->Dictionary["NewStyleSaved"] = "The style was added successfully";
 
 // Load the javascript if we're on a page that should allow changing of the style
 if (in_array($Context->SelfUrl, array("comments.php", "account.php"))) {
-	$Head->AddScript($Configuration['WEB_ROOT'].'extensions/Style/functions.js');
+	$Head->AddScript('extensions/Style/functions.js');
 }
 
 // Let it skip these classes if it doesn't need them
@@ -471,7 +471,7 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 	}
 	// Add the stylesheet to the account screen
    $PostBackAction = ForceIncomingString("PostBackAction", "");
-   if (in_array($PostBackAction, array("Styles", "Style", "ProcessStyle", "StyleRemove", "ProcessStyleRemove"))) $Head->AddStyleSheet($Configuration['WEB_ROOT'].'extensions/Style/style.css');
+   if (in_array($PostBackAction, array("Styles", "Style", "ProcessStyle", "StyleRemove", "ProcessStyleRemove"))) $Head->AddStyleSheet('extensions/Style/style.css');
 	
 } elseif ($Context->SelfUrl == "account.php" && $Context->Session->UserID > 0) {
 	$AccountUserID = ForceIncomingInt("u", $Context->Session->UserID);
@@ -567,6 +567,6 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 		$Context->AddToDelegate("Account", "AccountProperties", "AddStylePropertyToAccount");
 	}
 	// Add the stylesheet to the account screen
-   if (in_array($PostBackAction, array("Styles", "Style", "ProcessStyle", "StyleRemove", "ProcessStyleRemove"))) $Head->AddStyleSheet($Configuration['WEB_ROOT'].'extensions/Style/style.css');
+   if (in_array($PostBackAction, array("Styles", "Style", "ProcessStyle", "StyleRemove", "ProcessStyleRemove"))) $Head->AddStyleSheet('extensions/Style/style.css');
 }
 ?>
