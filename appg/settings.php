@@ -43,8 +43,8 @@ $Configuration['THEME_PATH'] = '/path/to/vanilla/themes/vanilla/';
 $Configuration['BASE_URL'] = 'http://your.base.url/to/vanilla/';
 $Configuration['DEFAULT_STYLE'] = '/vanilla/themes/vanilla/styles/default/'; 
 $Configuration['WEB_ROOT'] = '/vanilla/';
-$Configuration['SIGNIN_URL'] = './people.php';
-$Configuration['SIGNOUT_URL'] = './people.php?PostBackAction=SignOutNow';
+$Configuration['SIGNIN_URL'] = 'people.php';
+$Configuration['SIGNOUT_URL'] = 'people.php?PostBackAction=SignOutNow';
 
 // People Settings
 $Configuration['AUTHENTICATION_MODULE'] = 'People/People.Class.Authenticator.php';

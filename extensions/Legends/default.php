@@ -42,21 +42,21 @@ if ($Context->SelfUrl == "account.php" && ForceIncomingString("PostBackAction", 
 }
 
 if ($Context->SelfUrl == "index.php" && $Context->Session->UserID > 0 && $Context->Session->User->Preference("ShowAppendices")) {
-	$Head->AddStyleSheet($Configuration['WEB_ROOT'].'extensions/Legends/style.css');
+	$Head->AddStyleSheet('extensions/Legends/style.css');
 	$Panel->AddString("<h2>".$Context->GetDefinition("Legend")."</h2>
 		<ul id=\"Legend\">
 			<li class=\"Legend NewComments\">".$Context->GetDefinition("NewComments")."</li>
 			<li class=\"Legend NoNewComments\">".$Context->GetDefinition("NoNewComments")."</li>
 		</ul>", 100);
 } elseif ($Context->SelfUrl == "categories.php" && $Context->Session->UserID > 0 && $Context->Session->User->Preference("ShowAppendices")) {
-	$Head->AddStyleSheet($Configuration['WEB_ROOT'].'extensions/Legends/style.css');
+	$Head->AddStyleSheet('extensions/Legends/style.css');
 	$Panel->AddString("<h2>".$Context->GetDefinition("Legend")."</h2>
 		<ul id=\"Legend\">
 			<li class=\"Legend UnblockedCategory\">".$Context->GetDefinition("UnblockedCategory")."</li>
 			<li class=\"Legend BlockedCategory\">".$Context->GetDefinition("BlockedCategory")."</li>
    	</ul>", 100);
 } elseif ($Configuration["ENABLE_WHISPERS"] && $Context->SelfUrl == "comments.php" && $Context->Session->UserID > 0 && $Context->Session->User->Preference("ShowAppendices")) {
-	$Head->AddStyleSheet($Configuration['WEB_ROOT'].'extensions/Legends/style.css');
+	$Head->AddStyleSheet('extensions/Legends/style.css');
 	$Panel->AddString("<h2>".$Context->GetDefinition("Legend")."</h2>
       <ul id=\"Legend\">
          <li class=\"Legend WhisperFrom\">".$Context->GetDefinition("YouWhispered")."</li>
