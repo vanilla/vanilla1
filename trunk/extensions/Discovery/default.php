@@ -59,10 +59,10 @@ if ($Context->SelfUrl == "account.php") {
 if ($Context->SelfUrl == "people.php" && in_array(ForceIncomingString("PostBackAction", ""), array("ApplyForm", "Apply"))) {
 	
 	function ApplyForm_DiscoveryQuestion(&$FormControl) {
-		echo("<div class=\"InputBlock DiscoveryInput\">
-         <div class=\"InputLabel\">".$FormControl->Context->GetDefinition("HowDidYouFindUs")."</div>
-         <textarea name=\"Discovery\" class=\"ApplicationTextbox\" rows=\"2\" cols=\"40\">".$FormControl->Applicant->Discovery."</textarea>
-      </div>");
+		echo '<li id="DiscoveryInput">
+			<label for="txtDiscovery">'.$FormControl->Context->GetDefinition("HowDidYouFindUs").'</label>
+			<textarea id="txtDiscovery" name="Discovery" class="DiscoveryTextBox" rows="2" cols="40">'.$FormControl->Applicant->Discovery.'</textarea>
+      </li>';
 	}
 	
 	$Context->AddToDelegate("ApplyForm",
@@ -91,7 +91,9 @@ if ($Context->SelfUrl == "people.php" && in_array(ForceIncomingString("PostBackA
 	
 	$Context->AddToDelegate("UserManager",
 		"PreDataInsert",
-		"UserManager_SaveDiscoveryInfo");	
+		"UserManager_SaveDiscoveryInfo");
+		
+	$Head->AddStyleSheet('extensions/Discovery/style.css');
 
 }
 ?>

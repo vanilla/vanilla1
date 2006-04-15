@@ -36,10 +36,11 @@ $Context = new FauxContext();
 include($Configuration['LANGUAGES_PATH'].$Configuration['LANGUAGE'].'/definitions.php');
 include($Configuration['APPLICATION_PATH'].'conf/language.php');
 ?>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-ca">
 <head>
-<title><?php echo($Context->GetDefinition("TermsOfService")); ?></title>
-<style>
+<title><?php echo $Context->GetDefinition("TermsOfService"); ?></title>
+<style type="text/css">
 body { 
 	background: #ffffff; 
 	margin: 10px;

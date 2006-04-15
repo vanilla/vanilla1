@@ -5,35 +5,49 @@ echo '<div class="About">
    '.$this->Context->GetDefinition('AboutMembership').'
          <p><a href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl).'">'.$this->Context->GetDefinition('BackToSignInForm').'</a></p>
       </div>
-      <div class="Form">
-         <h1>'.$this->Context->GetDefinition('MembershipApplicationForm').'</h1>
-         <p>'.$this->Context->GetDefinition('AllFieldsRequired').'</p>';
+      <div id="Form" class="ApplyForm">
+         <fieldset>
+            <legend>'.$this->Context->GetDefinition('MembershipApplicationForm').'</legend>
+            <p>'.$this->Context->GetDefinition('AllFieldsRequired').'</p>';
+            
+			$this->CallDelegate('PreWarningsRender');
+			$this->Render_Warnings();
          
          $this->Render_PostBackForm($this->FormName);
-         echo '<dl class="InputBlock ApplyInputs">';
+         echo '<ul>';
 
          $this->CallDelegate('PreInputsRender');
 
-         echo '<dt>'.$this->Context->GetDefinition('EmailAddress').'</dt>
-         <dd><input type="text" name="Email" value="'.$this->Applicant->Email.'" class="Input" maxlength="160" /></dd>
-         <dt>'.$this->Context->GetDefinition('Username').'</dt>
-         <dd><input type="text" name="Name" value="'.$this->Applicant->Name.'" class="Input" maxlength="20" /></dd>
-         <dt>'.$this->Context->GetDefinition('Password').'</dt>
-         <dd><input type="password" name="NewPassword" value="'.$this->Applicant->NewPassword.'" class="Input" /></dd>
-         <dt>'.$this->Context->GetDefinition('PasswordAgain').'</dt>
-         <dd><input type="password" name="ConfirmPassword" value="'.$this->Applicant->ConfirmPassword.'" class="Input" /></dd>';
+         echo '<li>
+            <label for="txtEmail">'.$this->Context->GetDefinition('EmailAddress').'</label>
+            <input id="txtEmail" type="text" name="Email" value="'.$this->Applicant->Email.'" class="Input" maxlength="160" />
+         </li>
+         <li>
+            <label for="txtUsername">'.$this->Context->GetDefinition('Username').'</label>
+            <input id="txtUsername" type="text" name="Name" value="'.$this->Applicant->Name.'" class="Input" maxlength="20" />
+         </li>
+         <li>
+            <label for="txtNewPassword">'.$this->Context->GetDefinition('Password').'</label>
+            <input id="txtNewPassword" type="password" name="NewPassword" value="'.$this->Applicant->NewPassword.'" class="Input" />
+         </li>
+         <li>
+            <label for="txtConfirmPassword">'.$this->Context->GetDefinition('PasswordAgain').'</label>
+            <input id="txtConfirmPassword" type="password" name="ConfirmPassword" value="'.$this->Applicant->ConfirmPassword.'" class="Input" />
+         </li>';
 
-         $this->CallDelegate('PostInputsRender');
-
-      echo '</dl>';
+         $this->CallDelegate('PostInputsRender');      
+         $this->CallDelegate('PreTermsCheckRender');
+         
+         $TermsOfServiceUrl = $this->Context->Configuration['WEB_ROOT'].'termsofservice.php';
       
-      $this->CallDelegate('PreTermsCheckRender');
-      
-      echo'
-      <div class="InputBlock TermsOfServiceCheckbox">
-         <div class="CheckboxLabel">'.GetBasicCheckBox('AgreeToTerms', 1, $this->Applicant->AgreeToTerms,'').' '.$this->Context->GetDefinition('IHaveReadAndAgreeTo').' <a onclick="PopTermsOfService();">'.$this->Context->GetDefinition('TermsOfService').'</a>.</div>
-      </div>
-      <div class="FormButtons"><input type="submit" name="btnApply" value="'.$this->Context->GetDefinition('Proceed').'" class="Button" /></div>
-      </form>
+         echo '<li id="TermsOfServiceCheckBox">
+            '.GetBasicCheckBox('AgreeToTerms', 1, $this->Applicant->AgreeToTerms,'').' '.$this->Context->GetDefinition('IHaveReadAndAgreeTo').' <a href="'.$TermsOfServiceUrl.'" onclick="PopTermsOfService('."'".$TermsOfServiceUrl."'".'); return false;">'.$this->Context->GetDefinition('TermsOfService').'</a>.
+         </li>
+         </ul>
+         <div class="Submit">
+            <input type="submit" name="btnApply" value="'.$this->Context->GetDefinition('Proceed').'" class="Button" />
+         </div>
+         </form>
+         </fieldset>
    </div>';
 ?>

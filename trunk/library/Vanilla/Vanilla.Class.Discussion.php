@@ -207,7 +207,7 @@ class Discussion {
 		$this->AuthUsername = FormatStringForDisplay($this->AuthUsername);
 		$this->LastUsername = FormatStringForDisplay($this->LastUsername);
 		$this->Category = FormatStringForDisplay($this->Category);
-		$this->Name = FormatStringForDisplay($this->Name);
+		$this->Name = FormatStringForDisplay($this->Name, 0);
 	}
 }
 ?>

@@ -73,7 +73,7 @@ $Context->Dictionary['AssignToRole'] = 'Choose a New Role';
 $Context->Dictionary['AssignToRoleNotes'] = 'The role change will take place immediately. If the user is switched to a role that does not have sign-in access, they will be signed out upon their next page-load.';
 $Context->Dictionary['RoleChangeInfo'] = 'Role change notes';
 $Context->Dictionary['RoleChangeInfoNotes'] = 'Please provide some notes regarding this role change. These notes will be visible to all users in the role-history for this user.';
-$Context->Dictionary['AboutMembership'] = '<h1>About membership</h1>
+$Context->Dictionary['AboutMembership'] = '<h2>About membership</h2>
 	<p>This membership <strong>application</strong> form does not grant immediate access to the site. All membership applications are reviewed by an administrator before acceptance. You are <strong>not</strong> guaranteed access to the application by filling out this form.</p>
 	<p>Please do not enter invalid or incorrect information in this form or you will most likely not be granted access to the site.</p>
 	<p>All information entered in this form will be kept strictly confidential.</p>';
@@ -111,7 +111,7 @@ $Context->Dictionary['AboutYourPasswordNotes'] = 'When choosing a new password, 
 $Context->Dictionary['PasswordResetForm'] = 'Password reset form';
 $Context->Dictionary['ChooseANewPassword'] = 'Choose a new password and enter it below.';
 $Context->Dictionary['NewPassword'] = 'New password';
-$Context->Dictionary['ConfirmPassword'] = 'Confirm password';
+$Context->Dictionary['ConfirmPassword'] = 'Again';
 $Context->Dictionary['AllCategories'] = 'All categories';
 $Context->Dictionary['DateLastActive'] = 'Date last active';
 $Context->Dictionary['Topics'] = 'Topics';
