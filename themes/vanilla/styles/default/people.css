@@ -283,6 +283,7 @@ div.Apply {
 	}
 #TermsOfServiceCheckBox {
 	font-size: 12px;
+	color: #000;
 	}
 #TermsOfServiceCheckBox a {
 	text-decoration: underline;
