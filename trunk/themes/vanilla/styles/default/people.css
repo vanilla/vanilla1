@@ -268,6 +268,10 @@ div.Apply {
 #Form.ApplyForm .Submit {
 	padding-left: 104px;
 	}
+#Form.ApplyForm label {
+	width: 98px;
+	}
+	
 #Form.ApplyForm input {
 	width: 156px;
 	}
