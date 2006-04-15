@@ -2,7 +2,7 @@
 // Note: This file is included from the library/People/People.Control.PasswordRequestForm.php control.
 
 echo '<div class="FormComplete">
-   <h1>'.$this->Context->GetDefinition('RequestProcessed').'</h1>
+   <h2>'.$this->Context->GetDefinition('RequestProcessed').'</h2>
    <ul>
       <li>'.str_replace('//1',
          FormatStringForDisplay($this->EmailSentTo, 1),
