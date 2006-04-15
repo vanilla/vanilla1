@@ -278,6 +278,9 @@ div.Apply {
 	width: 156px;
 	background: pink;
 	}
+#Form.ApplyForm .Submit {
+	background: orange;
+	}
 #Form.ApplyForm .Submit input {
 	width:auto !important;
 	}
