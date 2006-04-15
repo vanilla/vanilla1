@@ -271,9 +271,12 @@ div.Apply {
 #Form.ApplyForm label {
 	width: 98px;
 	}
-	
+#Form.ApplyForm li {
+	background: yellow;
+	}
 #Form.ApplyForm input {
-	width: 126px;
+	width: 156px;
+	background: pink;
 	}
 #Form.ApplyForm .Submit input {
 	width:auto !important;
