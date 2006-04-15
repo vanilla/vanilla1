@@ -558,7 +558,7 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 			echo("<dt>".$AccountControl->Context->GetDefinition("Style")."</dt>
 			<dd>");
 			if ($AccountControl->Context->Session->UserID > 0 && $AccountControl->Context->Session->User->StyleID != $AccountControl->User->StyleID && $AccountControl->Context->Session->UserID != $AccountControl->User->UserID) {
-				echo("<a onclick=\"SetStyle('".$this->Context->Configuration['WEB_ROOT']."extensions/Style/setstyle.php', '".$AccountControl->User->StyleID."', '".($AccountControl->User->StyleID == 0?urlencode($AccountControl->User->CustomStyle):"")."');\">".$AccountControl->User->Style."</a>");
+				echo("<a onclick=\"SetStyle('".$AccountControl->Context->Configuration['WEB_ROOT']."extensions/Style/setstyle.php', '".$AccountControl->User->StyleID."', '".($AccountControl->User->StyleID == 0?urlencode($AccountControl->User->CustomStyle):"")."');\">".$AccountControl->User->Style."</a>");
 			} else {
 				echo($AccountControl->User->Style);
 			}
