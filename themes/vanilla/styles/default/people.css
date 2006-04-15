@@ -37,7 +37,7 @@ a:hover {
 	background: url(alert.gif) no-repeat top left #FFEDEF;
 	border-top: 1px solid #FFC2CA;
 	border-bottom: 1px solid #FFC2CA;
-	padding: 9px;
+	padding: 10px 9px 9px 9px;
 	color: #c00;
 	margin: 0px 6px 0px 6px;
 }
