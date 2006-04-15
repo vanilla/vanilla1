@@ -192,6 +192,7 @@ fieldset p {
 	}
 .ForgotPasswordLink {
 	position: absolute;
+	z-index:100;
 	}
 .ApplyForMembershipLink {
 	padding-left: 136px !important;
