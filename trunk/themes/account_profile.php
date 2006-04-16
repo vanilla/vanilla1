@@ -70,6 +70,6 @@ echo '<div id="AccountProfile">
       $this->CallDelegate('PostAttributesRender');
          
    echo '</ul>
-</div>';
-
+</div>
+<div id="AccountHistory">';
 ?>
