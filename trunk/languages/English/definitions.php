@@ -47,7 +47,7 @@ $Context->Dictionary['YourLastNameNotes'] = 'This should be your "real" last nam
 $Context->Dictionary['YourEmailAddressNotes'] = 'You must provide a valid email address so that you can retrieve your password should you lose it (the password retrieval form works over email).';
 $Context->Dictionary['CheckForVisibleEmail'] = 'Check here to make your email address visible to other members';
 $Context->Dictionary['AccountPictureNotes'] = 'You can enter any valid URL to an image here, such as: <strong>http://www.mywebsite.com/myaccountpicture.jpg</strong>
-	<br />Your account picture will appear on your account page. Your account picture will be automatically resized to 280 pixels wide by 200 pixels high.';
+	<br />Your account picture will appear on your account page. Your account picture will be automatically centered and cropped to 280 pixels wide by 200 pixels high.';
 $Context->Dictionary['IconNotes'] = 'You can enter any valid URL to an image here, such as: <strong>http://www.mywebsite.com/myicon.jpg</strong>
 	<br />Your icon will appear next to your name in discussion comments and on your account page. Your icon will be automatically trimmed to 32 pixels wide by 32 pixels high.';
 $Context->Dictionary['AddCustomInformation'] = '2. Add custom information';
