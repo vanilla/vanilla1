@@ -49,9 +49,9 @@ function CloseLoader() {
 	setTimeout("SwitchLoader(0)",600);	
 }
 
-function FocusOnField(FieldID) {
-	 var Field = document.getElementById(FieldID);
-	 if (Field) Field.focus();
+function Focus(ElementID) {
+	var el = document.getElementById(ElementID);
+	if (el) el.focus();
 }
 
 function GetElements(ElementName, ElementIDPrefix) {
