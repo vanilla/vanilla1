@@ -282,8 +282,13 @@ html>body div.Apply { /* ugly hack, but fixes display error in IE. */
 	}
 #Form.PasswordResetForm .Submit {
 	padding-left:100px;
-	
 	}  
+.PasswordReset .About {
+	width: 254px;
+	}
+#Form.PasswordResetForm {
+	padding: 0px 0px 8px 267px;
+	}
   
 /* Form Complete */
   
