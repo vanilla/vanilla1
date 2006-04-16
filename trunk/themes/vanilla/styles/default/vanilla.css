@@ -1259,6 +1259,13 @@ div.Extensions ul li p a:hover {
 	line-height:20px;
 	margin-bottom:10px;
 	}
+#AccountProfile .Picture {
+	width: 280px;
+	height: 200px;
+	overflow: hidden;
+	background: center center no-repeat;
+	margin-bottom: 6px;
+	}
 #AccountHistory {
 	margin-left:320px;
 	padding-top:20px;

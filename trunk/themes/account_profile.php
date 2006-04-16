@@ -16,7 +16,7 @@ echo '<div id="AccountProfile">
          <p>'.$this->User->Role.'</p>
       </li>';
       if ($this->User->RoleDescription != '') echo('<li class="Tagline">'.$this->User->RoleDescription.'</li>');
-      if ($this->User->Picture != "" && $this->User->Permission('PERMISSION_HTML_ALLOWED')) echo('<li class="Picture"><img src="'.$this->User->Picture.'" id="Picture" alt="'.$this->User->Name.'" /></li>');
+      if ($this->User->Picture != "" && $this->User->Permission('PERMISSION_HTML_ALLOWED')) echo "<li class=\"Picture\" style=\"background-image: url('".$this->User->Picture."');\">&nbsp;</li>";
       if ($this->Context->Configuration['USE_REAL_NAMES'] && ($this->User->ShowName || $this->Context->Session->User->Permission('PERMISSION_EDIT_USERS'))) {
          echo '<li>
             <h3>'.$this->Context->GetDefinition('RealName').'</h3>
