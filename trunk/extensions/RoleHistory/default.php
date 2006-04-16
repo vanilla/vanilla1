@@ -38,7 +38,7 @@ if ($Context->SelfUrl == "account.php") {
       
       function Render() {
          $this->CallDelegate("PreRender");
-         if ($this->Context->WarningCollector->Count() == 0 && $this->PostBackAction == "") {
+         if ($this->Context->WarningCollector->Count() == 0 && $this->PostBackAction == "" && $this->Context->Database->RowCount($this->History) > 0) {
                echo '<h2>'.$this->Context->GetDefinition("RoleHistory").'</h2>
 					<ul>';
                // Loop through the user's role history
