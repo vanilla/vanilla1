@@ -231,6 +231,12 @@ fieldset p {
 .PasswordRequestForm .ErrorContainer {
 	margin: 0px;
 	}
+.PasswordRequest .About {
+	width: 234px;
+	}
+.PasswordRequestForm {
+	padding: 0px 0px 8px 247px;
+	}
 	
 /* Apply Form */
 #Form.ApplyForm {
@@ -239,7 +245,6 @@ fieldset p {
 .ApplyForm .ErrorContainer {
 	margin: 0px;
 	}
-	
 div.Apply {
 	height: 348px;
 	}
@@ -247,7 +252,6 @@ html>body div.Apply { /* ugly hack, but fixes display error in IE. */
 	min-height: 332px;
 	height: auto;
 	}
-	
 #Form.ApplyForm .Submit {
 	padding-left: 104px;
 	}
