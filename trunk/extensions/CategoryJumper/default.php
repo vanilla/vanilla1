@@ -31,9 +31,9 @@ function GetCategoryJumper(&$Context) {
       $Select->Name = 'CategoryID';
       $Select->SelectedID = ForceIncomingInt('CategoryID', 0);
       if ($Context->Configuration['URL_BUILDING_METHOD'] == 'mod_rewrite') {
-         $Select->Attributes = "onchange=\"document.location='./'+(this.options[this.selectedIndex].value > 0 ? this.options[this.selectedIndex].value+'/' : 'discussions/');\"";
+         $Select->Attributes = "onchange=\"document.location='".$Context->Configuration['WEB_ROOT']."'+(this.options[this.selectedIndex].value > 0 ? this.options[this.selectedIndex].value+'/' : 'discussions/');\"";
       } else {
-         $Select->Attributes = "onchange=\"document.location='./'+(this.options[this.selectedIndex].value > 0 ? '?CategoryID='+this.options[this.selectedIndex].value : '');\"";
+         $Select->Attributes = "onchange=\"document.location='".$Context->Configuration['WEB_ROOT']."'+(this.options[this.selectedIndex].value > 0 ? '?CategoryID='+this.options[this.selectedIndex].value : '');\"";
       }
       $Select->Attributes .= " id='CategoryJumper'";
       
