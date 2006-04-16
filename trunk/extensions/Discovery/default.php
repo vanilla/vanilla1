@@ -42,7 +42,11 @@ if ($Context->SelfUrl == "account.php") {
 			if ($this->Context->WarningCollector->Count() == 0 && $this->PostBackAction == '') {
 				if ($this->User->RoleID == 0 && $this->User->Discovery != '' && $this->Context->Session->User->Permission('PERMISSION_APPROVE_APPLICANTS')) {
 					echo '<h2>'.$this->Context->GetDefinition('Discovery').'</h2>
-						<p class="Info">'.FormatHtmlStringInline($this->User->Discovery).'</p>';
+						<ul>
+							<li>
+								<p class="Info">'.FormatHtmlStringInline($this->User->Discovery).'</p>
+							</li>
+						</ul>';
 				}
 			}
 		}
