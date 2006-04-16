@@ -92,111 +92,6 @@ h1 strong {
 	font-weight: normal;
 	color: orange;
 }
-
-/* Forms */
-  
-fieldset {
-	border: 0px;
-	margin: 0px;
-	padding: 0px 6px 6px 6px;
-	}
-legend {
-	font-size:14px;
-	font-weight: bold;
-	color:#000;
-	}
-fieldset p {
-	margin: 0px;
-	padding: 0px 2px 8px 2px;
-	color: #000;
-	}
-#Form form {
-	background: #f3f3f3;
-	margin: 0px;
-	padding: 6px 0px 6px 6px;
-	}
-#Form ul,
-#Form ul li {
-	list-style: none;
-	margin: 0px;
-	padding: 0px;
-	}
-#Form ul li {
-	padding-bottom:6px;
-	}
-#Form label {
-	text-align: right;
-	display: block;
-	width: 35%;
-	float: left;
-	margin-right: 8px;
-	color: #000;
-	}
-#Form input {
-	width: 50%;
-	}
-#Form .Submit {
-	clear: left;
-	padding: 6px 0px 0px 88px;
-	text-align: left;
-	}
-#Form .Button {
-	width: auto;
-	cursor: pointer;
-	}
-	
-/* Sign-In Page */
-  
-#Form.SignInForm fieldset {
-	padding: 0px 6px 0px 6px;
-	}
-#Form.SignInForm .Submit {
-	padding: 6px 0px 0px 0px;
-	clear: left;
-	text-align: center;
-	}
-#Form #RememberMe label {
-	width: auto;
-	padding-left: 95px;
-	text-align: left;
-	font-size: 12px;
-	}
-#Form #RememberMe input {
-	width: auto;
-	}
-.MembershipOptionLinks {
-	margin: 4px 0px 0px 6px !important;
-	}
-.MembershipOptionLinks li {
-	width: 132px;
-	overflow: hidden;
-	white-space: nowrap;
-	padding: 0px;
-	margin: 0px;
-	}
-.MembershipOptionLinks a,
-.MembershipOptionLinks a:link,
-.MembershipOptionLinks a:visited {
-	display: block;
-	background: #ffd;
-	color:#c96;
-	text-decoration: none;
-	text-align: center;
-	padding: 3px 0px 3px 0px;
-	font-size:12px;
-	}
-.MembershipOptionLinks a:hover {
-	background:#ffc;
-	color:#c90;
-	text-decoration: none;
-	}
-.ForgotPasswordLink {
-	position: absolute;
-	z-index:100;
-	}
-.ApplyForMembershipLink {
-	padding-left: 136px !important;
-	}
 	
 /* About Paragraphs */
 
@@ -225,6 +120,7 @@ fieldset p {
 	text-decoration: underline;
 	}
 
+  
 /* Form Complete */
   
 .FormComplete {
@@ -251,60 +147,7 @@ fieldset p {
 	font-weight: normal;
 	color:#e00;
 	}
-	
-/* Password Request Form */
 
-.PasswordRequestForm .ErrorContainer {
-	margin: 0px;
-	}
-	
-/* Apply Form */
-.ApplyForm .ErrorContainer {
-	margin: 0px;
-	}
-div.Apply {
-	min-height: 330px;
-	}
-#Form.ApplyForm .Submit {
-	padding-left: 104px;
-	}
-#Form.ApplyForm label {
-	width: 98px;
-	}
-#Form.ApplyForm li {
-	background: yellow;
-	}
-#Form.ApplyForm input {
-	width: 156px;
-	background: pink;
-	}
-#Form.ApplyForm .Submit {
-	background: orange;
-	}
-#Form.ApplyForm .Submit input {
-	width:auto !important;
-	}
-#TermsOfServiceCheckBox input {
-	width: auto !important;
-	}
-#TermsOfServiceCheckBox {
-	font-size: 12px;
-	color: #000;
-	}
-#TermsOfServiceCheckBox a {
-	text-decoration: underline;
-	}
-	
-/* Password Reset Form */
-
-#Form.PasswordResetForm .ErrorContainer {
-	margin: 0px;
-	}
-#Form.PasswordResetForm .Submit {
-	padding-left:100px;
-	
-	}  
-  
 /* Foot */
 	
 .Foot {
