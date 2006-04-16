@@ -41,7 +41,7 @@ echo '<div class="About">
          $TermsOfServiceUrl = $this->Context->Configuration['WEB_ROOT'].'termsofservice.php';
       
          echo '<li id="TermsOfServiceCheckBox">
-            '.GetBasicCheckBox('AgreeToTerms', 1, $this->Applicant->AgreeToTerms,'').' '.$this->Context->GetDefinition('IHaveReadAndAgreeTo').' <a href="'.$TermsOfServiceUrl.'" onclick="PopTermsOfService('."'".$TermsOfServiceUrl."'".'); return false;">'.$this->Context->GetDefinition('TermsOfService').'</a>.
+            '.GetBasicCheckBox('AgreeToTerms', 1, $this->Applicant->AgreeToTerms,'').' '.str_replace('//1', ' <a href="'.$TermsOfServiceUrl.'" onclick="PopTermsOfService('."'".$TermsOfServiceUrl."'".'); return false;">'.$this->Context->GetDefinition('TermsOfService').'</a>', $this->Context->GetDefinition('IHaveReadAndAgreeTo')).'
          </li>
          </ul>
          <div class="Submit">
