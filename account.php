@@ -83,6 +83,7 @@ include("appg/init_vanilla.php");
 	
 	// Create the account profile
 	$AccountProfile = $Context->ObjectFactory->CreateControl($Context, "Account", $AccountUser);
+	$AccountProfileEnd = $Context->ObjectFactory->CreateControl($Context, 'Filler', 'account_profile_end.php');
 	
 	// Forms
 	$IdentityForm = $Context->ObjectFactory->CreateControl($Context, "IdentityForm", $UserManager, $AccountUser);
@@ -96,6 +97,7 @@ include("appg/init_vanilla.php");
 	$Page->AddRenderControl($Menu, $Configuration["CONTROL_POSITION_MENU"]);
 	$Page->AddRenderControl($Panel, $Configuration["CONTROL_POSITION_PANEL"]);
 	$Page->AddRenderControl($AccountProfile, $Configuration["CONTROL_POSITION_BODY_ITEM"]);
+	$Page->AddRenderControl($AccountProfileEnd, $Configuration["CONTROL_POSITION_BODY_ITEM"]+90);
 	$Page->AddRenderControl($IdentityForm, $Configuration["CONTROL_POSITION_BODY_ITEM"]);
 	if ($Configuration["ALLOW_PASSWORD_CHANGE"]) $Page->AddRenderControl($PasswordForm, $Configuration["CONTROL_POSITION_BODY_ITEM"]);
 	$Page->AddRenderControl($PreferencesForm, $Configuration["CONTROL_POSITION_BODY_ITEM"]);

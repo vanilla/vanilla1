@@ -39,9 +39,8 @@ if ($Context->SelfUrl == "account.php") {
       function Render() {
          $this->CallDelegate("PreRender");
          if ($this->Context->WarningCollector->Count() == 0 && $this->PostBackAction == "") {
-            echo('<div id="AccountHistory">
-               <h2>'.$this->Context->GetDefinition("RoleHistory").'</h2>
-					<ul>');
+               echo '<h2>'.$this->Context->GetDefinition("RoleHistory").'</h2>
+					<ul>';
                // Loop through the user's role history
                $UserHistory = $this->Context->ObjectFactory->NewObject($this->Context, "UserRoleHistory");
 					while ($Row = $this->Context->Database->GetRow($this->History)) {
@@ -49,7 +48,7 @@ if ($Context->SelfUrl == "account.php") {
 						$UserHistory->GetPropertiesFromDataSet($Row);
 						$UserHistory->FormatPropertiesForDisplay($this->Context);
 						
-						echo('<li>
+						echo '<li>
 							<h3>
 								'.$UserHistory->Role.' <small>('.TimeDiff($this->Context, $UserHistory->Date, mktime()).')</small>
 							</h3>
@@ -62,9 +61,9 @@ if ($Context->SelfUrl == "account.php") {
 							<p class="Note">
 								'.$UserHistory->Notes.'
 							</p>
-						</li>');						
+						</li>';						
 					}
-            echo("</ul>");
+            echo "</ul>";
          }
          $this->CallDelegate("PostRender");
       }
