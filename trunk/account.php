@@ -19,7 +19,11 @@ include("appg/init_vanilla.php");
 	// Ensure the user is allowed to view this page
 	$Context->Session->Check($Context);
 	
-	if (!@$UserManager) $UserManager = $Context->ObjectFactory->NewContextObject($Context, "UserManager");
+	// Make sure that any existing $UserManager object is destroyed so that
+   // extensions using delegation to perform actions on this page's $UserManager
+   // object work as they should.
+	if (!@$UserManager) unset($UserManager); 
+	$UserManager = $Context->ObjectFactory->NewContextObject($Context, "UserManager");
 	$AccountUserID = ForceIncomingInt("u", $Context->Session->UserID);
 	if (!@$AccountUser) $AccountUser = $UserManager->GetUserById($AccountUserID);
 	if ($Context->Session->User && $Context->Session->User->Permission("PERMISSION_EDIT_USERS")) {
