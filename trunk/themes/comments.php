@@ -13,7 +13,7 @@ if ($this->Context->WarningCollector->Count() > 0) {
    
    $CommentList .= '<div class="ContentInfo Top">
       <h1>';
-         if ($this->Context->Configuration['USE_CATEGORIES']) $CommentList .= '<a href="'.GetUrl($this->Context->Configuration, 'index.php', '', 'CategoryID', $this->Discussion->CategoryID).'">'.htmlspecialchars($this->Discussion->Category).'</a>: ';
+         if ($this->Context->Configuration['USE_CATEGORIES']) $CommentList .= '<a href="'.GetUrl($this->Context->Configuration, 'index.php', '', 'CategoryID', $this->Discussion->CategoryID).'">'.$this->Discussion->Category.'</a>: ';
         $CommentList .= DiscussionPrefix($this->Context->Configuration, $this->Discussion).' ';
          if ($this->Discussion->WhisperUserID > 0) {
             $CommentList .= $this->Discussion->WhisperUsername.': ';
