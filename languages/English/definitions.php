@@ -467,7 +467,7 @@ $Context->Dictionary['EnabledExtensions'] = 'Enabled Extensions';
 $Context->Dictionary['DisabledExtensions'] = 'Disabled Extensions';
 $Context->Dictionary['ErrExtensionNotFound'] = 'The specified extension could not be found.';
 $Context->Dictionary['UpdateCheck'] = 'Check for Updates';
-$Context->Dictionary['UpdateCheckNotes'] = 'Vanilla is constantly being updated by both its developers and its community. In order to make sure that your installation is up to date and secure, it is important that you check for updates to the codebase regularly.';
+$Context->Dictionary['UpdateCheckNotes'] = 'Vanilla is constantly being updated and upgraded as issues are discovered and features are added (or removed) by the community. In order to make sure that your installation is up to date and secure, it is important that you check for updates to the codebase regularly.';
 $Context->Dictionary['CheckForUpdates'] = 'Check for updates now';
 $Context->Dictionary['ErrUpdateCheckFailure'] = 'Failed to retrieve information from Lussumo about the latest version of Vanilla. Please try again later.';
 $Context->Dictionary['PleaseUpdateYourInstallation'] = '<strong>WARNING:</strong> Your installation of Vanilla is //1, but <span class="Highlight">the most recent version of Vanilla available is //2</span>. Please upgrade your installation immediately by downloading the latest version of Vanilla from <a href="http://getvanilla.com">http://getvanilla.com</a>.';
@@ -527,15 +527,24 @@ $Context->Dictionary['ConfirmUnSink'] = 'Are you sure you want to unsink this di
 $Context->Dictionary['ConfirmSink'] = 'Are you sure you want to sink this discussion?';
 $Context->Dictionary['ErrPermissionSinkDiscussions'] = 'You do not have permission to sink discussions';
 $Context->Dictionary['YourCommentsWillBeWhisperedToX'] = 'Your comments will be whispered to //1';
-
 $Context->Dictionary['SMTPHost'] = 'SMTP host';
 $Context->Dictionary['SMTPUser'] = 'SMTP user';
 $Context->Dictionary['SMTPPassword'] = 'SMTP password';
 $Context->Dictionary['SMTPSettingsNotes'] = 'Typically Vanilla will use the mail server that is set up on the server where Vanilla resides. If, for some reason, you want to use a separate SMTP mail server to send outgoing e-mails, you can configure it with these three options. If you do not want to use an SMTP server, leave these fields blank.';
-
 $Context->Dictionary['PagelistNextText'] = 'Next';
 $Context->Dictionary['PagelistPreviousText'] = 'Prev';
 $Context->Dictionary['EmailSettings'] = 'Email Settings';
+$Context->Dictionary['UpdateReminders'] = 'Update Reminders';
+$Context->Dictionary['UpdateReminderNotes'] = 'We are all forgetful, so Vanilla can be configured to remind you to check for updates. Anyone who has permission to check for updates will see this reminder, which will appear above the discussion list.';
+$Context->Dictionary['ReminderLabel'] = 'Check for updates';
+$Context->Dictionary['Never'] = 'Never';
+$Context->Dictionary['Weekly'] = 'Weekly';
+$Context->Dictionary['Monthly'] = 'Monthly';
+$Context->Dictionary['Quarterly'] = 'Quarterly (3 months)';
+$Context->Dictionary['ReminderChangesSaved'] = 'Your reminder settings were saved successfully.';
+$Context->Dictionary['NeverCheckedForUpdates'] = "You haven't checked for Vanilla updates yet.";
+$Context->Dictionary['XDaysSinceUpdateCheck'] = 'It has been //1 days since you checked for Vanilla updates.';
+$Context->Dictionary['CheckForUpdatesNow'] = 'Click here to check for updates now';
 
 /* Please do not remove or alter this definition */
 $Context->Dictionary['PanelFooter'] = '<p id="AboutVanilla"><a href="http://getvanilla.com">Vanilla '.APPLICATION_VERSION.'</a> is a product of <a href="http://lussumo.com">Lussumo</a>. More Information: <a href="http://lussumo.com/docs">Documentation</a>, <a href="http://lussumo.com/community">Community Support</a>.</p>';

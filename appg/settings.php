@@ -77,6 +77,8 @@ $Configuration['DEFAULT_FORMAT_TYPE'] = 'Text';
 $Configuration['FORMAT_TYPES'] = array('Text');
 $Configuration['APPLICATION_TITLE'] = 'Vanilla'; 
 $Configuration['BANNER_TITLE'] = 'Vanilla';
+$Configuration['UPDATE_REMINDER'] = 'Monthly';
+$Configuration['LAST_UPDATE'] = '';
 
 // Vanilla Settings
 $Configuration['ENABLE_WHISPERS'] = '0';
