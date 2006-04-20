@@ -36,7 +36,7 @@ echo '<div id="Form" class="AddComments">
 				$this->CallDelegate('CommentForm_PostCommentToggle');	
 					
 				echo $this->Context->GetDefinition('EnterYourComments').'
-         </label>
+			</label>
          <textarea name="Body" class="'
          .($this->Context->Session->User->Preference('ShowLargeCommentBox') ? 'LargeCommentBox' : 'SmallCommentBox')
          .'" id="CommentBox" rows="10" cols="85">'
