@@ -9,7 +9,7 @@ echo '<div id="Form" class="Account UpdateCheck">
       <p>'.$this->Context->GetDefinition('UpdateCheckNotes').'</p>
       <div class="Submit">
          <input type="submit" name="btnCheck" value="'.$this->Context->GetDefinition('CheckForUpdates').'" class="Button SubmitButton Update" />
-         <a href="'.GetUrl($this->Context->Configuration, 'settings.php', '', '', '', '', 'PostBackAction=Styles').'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>
+         <a href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl).'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>
       </div>
       </form>
    </fieldset>';
@@ -31,7 +31,7 @@ echo '<div id="Form" class="Account UpdateCheck">
       </ul>
       <div class="Submit">
          <input type="submit" name="btnCheck" value="'.$this->Context->GetDefinition('Save').'" class="Button SubmitButton UpdateReminder" />
-         <a href="'.GetUrl($this->Context->Configuration, 'settings.php', '', '', '', '', 'PostBackAction=Styles').'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>
+         <a href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl).'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>
       </div>
       </form>
    </fieldset>
