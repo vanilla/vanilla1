@@ -7,7 +7,7 @@ echo '<div class="ContentInfo Top">
 	</h1>
 	'.$this->PageJump.'
 	<div class="PageInfo">
-		<p>'.($PageDetails == 0 ? $this->Context->GetDefinition('NoDiscussionsFound') : $PageDetails).'</p>
+		<p>'.($PageDetails == '' ? $this->Context->GetDefinition('NoDiscussionsFound') : $PageDetails).'</p>
 		'.$PageList.'
 	</div>
 </div>
