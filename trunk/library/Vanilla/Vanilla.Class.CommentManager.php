@@ -11,13 +11,13 @@
 * Description: Discussion Comment Manager class
 */
 
-class CommentManager {
+class CommentManager extends Delegation {
 	var $Name;				// The name of this class
    var $Context;			// The context object that contains all global objects (database, error manager, warning collector, session, etc)
 	
 	function CommentManager(&$Context) {
 		$this->Name = 'CommentManager';
-		$this->Context = &$Context;
+		$this->Delegation($Context);
 	}
 	
 	// Returns a SqlBuilder object with all of the comment properties already defined in the select
