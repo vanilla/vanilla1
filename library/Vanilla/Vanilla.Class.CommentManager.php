@@ -118,6 +118,10 @@ class CommentManager {
 		}
 
 		$s->AddWhere('m', 'DiscussionID', '', $DiscussionID, '=');
+
+		$this->DelegateParameters['SqlBuilder'] = &$s;
+		$this->CallDelegate("CommentManager_GetCommentCount");		
+		
 		$result = $this->Context->Database->Select($s, $this->Name, 'GetCommentCount', 'An error occurred while retrieving comment information.');
 		while ($rows = $this->Context->Database->GetRow($result)) {
 			$TotalNumberOfRecords = $rows['Count'];
@@ -165,6 +169,9 @@ class CommentManager {
 		$s->AddWhere('m', 'DiscussionID', '', $DiscussionID, '=');
 		$s->AddOrderBy('DateCreated', 'm', 'asc');
 		if ($RowsPerPage > 0) $s->AddLimit($FirstRecord, $RowsPerPage);
+		
+		$this->DelegateParameters['SqlBuilder'] = &$s;
+		$this->CallDelegate("CommentManager_GetCommentList");
 
 		return $this->Context->Database->Select($s, $this->Name, 'GetCommentList', 'An error occurred while attempting to retrieve the requested comments.');
 	}
