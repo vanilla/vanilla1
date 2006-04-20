@@ -42,7 +42,7 @@ echo '<div id="Form" class="StartDiscussion">
          <a href="./" id="CommentBoxController" onclick="'
             ."ToggleCommentBox('".$this->Context->Configuration['WEB_ROOT']."ajax/switch.php', '".$this->Context->GetDefinition('SmallInput')."', '".$this->Context->GetDefinition('BigInput')."'); return false;".'">'.$this->Context->GetDefinition($this->Context->Session->User->Preference('ShowLargeCommentBox')?'SmallInput':'BigInput').'</a>';
 				
-				$this->CallDelegate('CommentForm_PostCommentToggle');	
+				$this->CallDelegate('DiscussionForm_PostCommentToggle');	
 					
 				echo $this->Context->GetDefinition('EnterYourComments').'
       </label>
