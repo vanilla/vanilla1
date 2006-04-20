@@ -27,12 +27,14 @@ include("appg/init_vanilla.php");
 
 // 2. BUILD PAGE CONTROLS
 	$DiscussionGrid = $Context->ObjectFactory->CreateControl($Context, 'DiscussionGrid');
+   $UpdateReminder = $Context->ObjectFactory->CreateControl($Context, 'Filler', 'update_reminder.php');
 
 // 3. ADD CONTROLS TO THE PAGE
 
 	$Page->AddRenderControl($Head, $Configuration['CONTROL_POSITION_HEAD']);
 	$Page->AddRenderControl($Menu, $Configuration['CONTROL_POSITION_MENU']);
 	$Page->AddRenderControl($Panel, $Configuration['CONTROL_POSITION_PANEL']);
+	$Page->AddRenderControl($UpdateReminder, $Configuration['CONTROL_POSITION_BODY_ITEM'] - 20);
 	$Page->AddRenderControl($DiscussionGrid, $Configuration['CONTROL_POSITION_BODY_ITEM']);
 	$Page->AddRenderControl($Foot, $Configuration['CONTROL_POSITION_FOOT']);
 	$Page->AddRenderControl($PageEnd, $Configuration['CONTROL_POSITION_PAGE_END']);
