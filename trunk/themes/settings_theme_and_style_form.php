@@ -12,13 +12,13 @@ if (!$this->Context->Session->User->Permission('PERMISSION_MANAGE_THEMES') && !$
          <legend>'.$this->Context->GetDefinition('ThemeAndStyleManagement').'</legend>
          '.$this->Get_Warnings().'
          '.$this->Get_PostBackForm('frmThemeChange').'
+         <p>'.$this->Context->GetDefinition('ThemeAndStyleNotes').'</p>
          <ul>';
    
    if ($this->Context->Session->User->Permission('PERMISSION_MANAGE_THEMES')) {
       $this->PostBackParams->Set('PostBackAction', 'ProcessThemeChange');
       if (ForceIncomingBool('Saved', 0)) echo '<div class="Success">'.$this->Context->GetDefinition('ThemeChangesSaved').'</div>';
       echo '<li>
-         <p class="Description">'.$this->Context->GetDefinition('ChangeThemeNotes').'</p>
          <label for="ddTheme">'.$this->Context->GetDefinition('ThemeLabel').'</label>
          '.$this->ThemeSelect->Get().'
       </li>';
@@ -26,7 +26,6 @@ if (!$this->Context->Session->User->Permission('PERMISSION_MANAGE_THEMES') && !$
    
    if ($this->Context->Session->User->Permission('PERMISSION_MANAGE_STYLES')) {
       echo '<li>
-         <p class="Description">'.$this->Context->GetDefinition('ChangeStyleNotes').'</p>
          <label for="ddStyle">'.$this->Context->GetDefinition('StyleLabel').'</label>
          '.$this->StyleSelect->Get().'
       </li>
