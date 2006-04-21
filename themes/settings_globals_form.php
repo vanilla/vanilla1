@@ -147,7 +147,7 @@ echo '<div id="Form" class="Account GlobalsForm">';
                $SecondsSelector2->Name = 'DISCUSSION_THRESHOLD_PUNISHMENT';
                $SecondsSelector2->SelectedID = $this->ConfigurationManager->GetSetting('DISCUSSION_THRESHOLD_PUNISHMENT');
                
-               echo '<br />'.str_replace(array('//1', '//2', '//3'),
+               echo '<br /><br />'.str_replace(array('//1', '//2', '//3'),
                   array($Selector->Get(), $SecondsSelector->Get(), $SecondsSelector2->Get()),
                   $this->Context->GetDefinition('XDiscussionsYSecondsZFreeze'));
                   
@@ -160,7 +160,7 @@ echo '<div id="Form" class="Account GlobalsForm">';
                $SecondsSelector2->Name = 'COMMENT_THRESHOLD_PUNISHMENT';
                $SecondsSelector2->SelectedID = $this->ConfigurationManager->GetSetting('COMMENT_THRESHOLD_PUNISHMENT');
                
-               echo '<br />'
+               echo '<br /><br />'
                   .str_replace(array('//1', '//2', '//3'),
                      array($Selector->Get(), $SecondsSelector->Get(), $SecondsSelector2->Get()),
                      $this->Context->GetDefinition('XCommentsYSecondsZFreeze'))

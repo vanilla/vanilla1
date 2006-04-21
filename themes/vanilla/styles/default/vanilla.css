@@ -966,9 +966,15 @@ li.User.Name span {
 	font-size:14px;
 	margin-bottom:10px;
 	}
+#Form.Account p {
+	padding-bottom: 10px;
+	}
+#Form.Account ul p {
+	padding: 0px;
+	}
 #Form.Account label {
 	display:block;
-	width:40%;
+	width:80%;
 	line-height:18px;
 	margin-bottom: 4px;
 	}
@@ -994,7 +1000,6 @@ li.User.Name span {
 	margin:3px 0px !important;
 	padding: 3px 0px 5px 0px !important;
 	font-weight:normal;
-	color:#a99861 !important;
 	}
 #Form.Account p span {
 	display:block;
@@ -1018,6 +1023,7 @@ li.User.Name span {
 /* Globals Form */
   
 #Form.GlobalsForm select.SmallSelect {
+	font-size: 11px;
 	width: 50px;
 	}
 #Form.GlobalsForm #ForumOptions p span label {
@@ -1048,14 +1054,10 @@ li.User.Name span {
 #Form.Extensions {
 	margin: 0px 0px 20px 0px !important;
 	}
-#Form.Extensions div.ExtensionsEnabled h2,
-#Form.Extensions div.ExtensionsDisabled h2 {
-	padding-top:20px;
-	}
 div.Extensions ul {
 	border:1px solid #ddd;
 	border-bottom:0px;
-	margin: 20px 0px 20px 0px !important;
+	margin: 10px 0px 20px 0px !important;
 	}
 div.Extensions ul {
 	background-color:#fffeec;

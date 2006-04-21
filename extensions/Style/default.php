@@ -2,7 +2,7 @@
 /*
 Extension Name: Custom Styles
 Extension Url: http://lussumo.com/docs/
-Description: Allows administrators to define and create multiple styles for Vanilla. Users can then change their style. This version of the style manager is only compatible with Vanilla 0.9.3 or greater.
+Description: Allows administrators to further define style definitions and allows users to individually select which style they would like applied to Vanilla. Everyone gets their own custom style.
 Version: 2.0
 Author: Mark O'Sullivan
 Author Url: http://www.markosullivan.ca/
@@ -32,7 +32,7 @@ $Context->Dictionary["StyleUrlNotes"] = "You can enter any valid URL to a web-ba
 	<br />The folder must contain all of the files relevant to styling the forum, such as: vanilla.css";
 $Context->Dictionary["PreviewImageFilename"] = "Preview image filename";
 $Context->Dictionary["PreviewImageFilenameNotes"] = "If there is a preview image in the style folder, enter the image name here. Preview images are automatically sized to 200 pixels high by 370 pixels wide.";
-$Context->Dictionary["StyleManagement"] = "Style Management";
+$Context->Dictionary["StyleManagement"] = "Style Definitions";
 $Context->Dictionary["SelectStyleToRemove"] = "1. Select the style you would like to remove";
 $Context->Dictionary["SelectAReplacementStyle"] = "2. Select a replacement style";
 $Context->Dictionary["ReplacementStyleNotes"] = "When you remove a style from the system, any users using that style will not be able to view the site properly. The replacement style will be assigned to all users who are currently assigned to the style you are removing.";
@@ -467,7 +467,7 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 	if ($Context->Session->User->Permission("PERMISSION_MANAGE_STYLES")) {
 		$AdministrativeOptions = $Context->GetDefinition("AdministrativeOptions");
 		$Panel->AddList($AdministrativeOptions, 10);
-		$Panel->AddListItem($AdministrativeOptions, $Context->GetDefinition("StyleManagement"), GetUrl($Configuration, "settings.php", "", "", "", "", "PostBackAction=Styles"), "", "", 70);
+		$Panel->AddListItem($AdministrativeOptions, $Context->GetDefinition("StyleManagement"), GetUrl($Configuration, "settings.php", "", "", "", "", "PostBackAction=Styles"), "", "", 71);
 	}
 	// Add the stylesheet to the account screen
    $PostBackAction = ForceIncomingString("PostBackAction", "");

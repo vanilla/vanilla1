@@ -135,9 +135,9 @@ $Context->Dictionary['NoResultsFound'] = 'No results found';
 $Context->Dictionary['DiscussionsCreated'] = 'Discussions Created';
 $Context->Dictionary['AdministrativeOptions'] = 'Administrative Options';
 $Context->Dictionary['ApplicationSettings'] = 'Application Settings';
-$Context->Dictionary['ManageExtensions'] = 'Manage Extensions';
-$Context->Dictionary['RoleManagement'] = 'Role Management';
-$Context->Dictionary['CategoryManagement'] = 'Category Management';
+$Context->Dictionary['ManageExtensions'] = 'Extensions';
+$Context->Dictionary['RoleManagement'] = 'Roles &amp; Permissions';
+$Context->Dictionary['CategoryManagement'] = 'Categories';
 $Context->Dictionary['MembershipApplicants'] = 'Membership Applicants';
 $Context->Dictionary['GlobalApplicationSettings'] = 'Global Application Settings';
 $Context->Dictionary['GlobalApplicationSettingsNotes'] = 'BE CAREFUL with the changes you make on this page. Erroneous information entered here could cause your forum to crash and may require you manually altering settings files to repair the problem.';
@@ -145,20 +145,22 @@ $Context->Dictionary['AboutSettings'] = 'About settings';
 $Context->Dictionary['AboutSettingsNotes'] = "<p class=\"Description\">Using this section you can manipulate all configurable settings for your Vanilla installation. Summarized below are the standard menu items and their functions. Depending on your permissions, you may or may not see all of the menu items listed:</p>
 	<dl><dt>Application Settings</dt>
 	<dd>This is the main configuration screen for Vanilla. It allows you to change the banner text, manipulate spam controls, define cookie settings, and change basic forum options like whispers, categories, etc.</dd>
-	<dt>Check for Updates</dt>
-	<dd>Make sure you have the latest updates for Vanilla by using this menu option often.</dd>
-	<dt>Manage Extensions</dt>
-	<dd>Extensions are the bread and butter of Vanilla. Vanilla is plain by default, but can do remarkable things when you add to it. Use this menu option to enable extensions and find new extensions from Lussumo.</dd>
-	<dt>Language Management</dt>
-	<dd>Use this menu option to switch the language dictionary that Vanilla uses.</dd>
-	<dt>Role Management</dt>
-	<dd>Use this menu option to add, edit, and organize roles and permissions.</dd>
-	<dt>Category Management</dt>
-	<dd>Use this menu option to add, edit, and organize categories.</dd>
-	<dt>Registration Management</dt>
-	<dd>Using this menu option you can define how new members are handled: which role they are assigned to, do they require administrative approval, etc.</dd>
+	<dt>Updates &amp; Reminders</dt>
+	<dd>Configure how often you should be reminded to check for updates. Ping back to Lussumo for the latest updates for Vanilla.</dd>
+	<dt>Roles &amp; Permissions</dt>
+	<dd>Add, edit, and organize roles and permissions.</dd>
+	<dt>Registration Settings</dt>
+	<dd>Define how new members are handled: which role they are assigned to, do they require administrative approval, etc.</dd>
+	<dt>Categories</dt>
+	<dd>Add, edit, and organize categories.</dd>
+	<dt>Extensions</dt>
+	<dd>Extensions add extra functionality into Vanilla. Use this menu option to enable extensions and find new extensions from Lussumo.</dd>
+	<dt>Themes &amp; Styles</dt>
+	<dd>Change the theme (xhtml templates) that Vanilla is built on, change the default style (css &amp; images), and apply it to all users in the system.</dd>
+	<dt>Languages</dt>
+	<dd>Switch the language dictionary that Vanilla uses.</dd>
 	<dt>Membership Applicants</dt>
-	<dd>Vanilla does not have a \"member list\" like many other popular web forums. Instead we use our search to find and manage members. This link will run a search that filters down to new (unapproved) members.</dd>
+	<dd>Vanilla does not have a \"member list\" like many other popular web forums. Instead we use our search to find and manage members. If approval is required for membership, this link will run a search that filters down to new (unapproved) members.</dd>
 	<dt>Other options</dt>
 	<dd>Depending on both your role's permissions and which extensions you have enabled, there may be more options in the menu(s) in this section. Welcome to the magic of Vanilla's extensions!</dd>
 </dl>";
@@ -312,7 +314,7 @@ $Context->Dictionary['ShowAll'] = 'Show all';
 $Context->Dictionary['DiscussionIndex'] = 'Discussion list options';
 $Context->Dictionary['JumpToLastReadComment'] = 'Jump to the last read comment when clicking on discussion topic';
 $Context->Dictionary['NoDiscussionsFound'] = 'No discussions found';
-$Context->Dictionary['RegistrationManagement'] = 'Registration Management';
+$Context->Dictionary['RegistrationManagement'] = 'Registration Settings';
 $Context->Dictionary['NewMemberRole'] = 'New member role';
 $Context->Dictionary['NewMemberRoleNotes'] = 'When new users apply for membership, this is the role to which they are assigned. If that role has Sign-in ability, they will be granted immediate access to the forum.';
 $Context->Dictionary['RegistrationChangesSaved'] = 'Your changes to registration have been saved successfully.';
@@ -325,10 +327,10 @@ $Context->Dictionary['ApplicationWillBeReviewed'] = 'Your membership application
 $Context->Dictionary['ApplicationComplete'] = 'Application complete!';
 $Context->Dictionary['AccountChangeNotification'] = 'Account Change Notification';
 $Context->Dictionary['PasswordResetRequest'] = 'Password Reset Request';
-$Context->Dictionary['LanguageManagement'] = 'Language Management';
+$Context->Dictionary['LanguageManagement'] = 'Languages';
 $Context->Dictionary['LanguageChangesSaved'] = 'The language has been changed successfully.';
 $Context->Dictionary['ChangeLanguage'] = 'Choose a language';
-$Context->Dictionary['ChangeLanguageNotes'] = 'If your language does not appear here, you can <a href="http://getvanilla.com/languages" target="_blank">download the latest language packs from Lussumo</a>.';
+$Context->Dictionary['ChangeLanguageNotes'] = 'If your language does not appear here, you can <a href="http://lussumo.com/addons/">download the latest languages from Lussumo</a>.';
 $Context->Dictionary['CloseThisDiscussion'] = 'Close this discussion';
 $Context->Dictionary['ReOpenThisDiscussion'] = 'Re-Open this discussion';
 $Context->Dictionary['MakeThisDiscussionUnsticky'] = 'Make this discussion UnSticky';
@@ -464,11 +466,11 @@ $Context->Dictionary['XSecondAgo'] = '//1 second ago';
 $Context->Dictionary['XSecondsAgo'] = '//1 seconds ago';
 $Context->Dictionary['nothing'] = 'nothing';
 $Context->Dictionary['EnableWhispers'] = 'Enable Whispers';
-$Context->Dictionary['ExtensionFormNotes'] = 'To enable an extension, check the box next to the extension name. <a href="http://getvanilla.com/extensions" target="_blank">Click here for more extensions from Lussumo</a>.';
+$Context->Dictionary['ExtensionFormNotes'] = 'Extensions are used to add new functionality into Vanilla. Listed below are all of the extensions you currently have installed. To enable an extension, check the box next to the extension name. <a href="http://lussumo.com/addons/">Click here for more extensions from Lussumo</a>.';
 $Context->Dictionary['EnabledExtensions'] = 'Enabled Extensions';
 $Context->Dictionary['DisabledExtensions'] = 'Disabled Extensions';
 $Context->Dictionary['ErrExtensionNotFound'] = 'The specified extension could not be found.';
-$Context->Dictionary['UpdateCheck'] = 'Check for Updates';
+$Context->Dictionary['UpdateCheck'] = 'Updates &amp; Reminders';
 $Context->Dictionary['UpdateCheckNotes'] = 'Vanilla is constantly being updated and upgraded as issues are discovered and features are added (or removed) by the community. In order to make sure that your installation is up to date and secure, it is important that you check for updates to the codebase regularly.';
 $Context->Dictionary['CheckForUpdates'] = 'Check for updates now';
 $Context->Dictionary['ErrUpdateCheckFailure'] = 'Failed to retrieve information from Lussumo about the latest version of Vanilla. Please try again later.';
@@ -508,7 +510,7 @@ $Context->Dictionary['PERMISSION_VIEW_HIDDEN_DISCUSSIONS'] = 'Hidden discussions
 $Context->Dictionary['PERMISSION_VIEW_HIDDEN_COMMENTS'] = 'Hidden comments visible';
 $Context->Dictionary['PERMISSION_VIEW_ALL_WHISPERS'] = 'All whispers visible';
 $Context->Dictionary['PERMISSION_CHANGE_APPLICATION_SETTINGS'] = 'Change application settings';
-$Context->Dictionary['PERMISSION_MANAGE_EXTENSIONS'] = 'Manage extensions';
+$Context->Dictionary['PERMISSION_MANAGE_EXTENSIONS'] = 'Extensions';
 $Context->Dictionary['PERMISSION_MANAGE_LANGUAGE'] = 'Change language';
 $Context->Dictionary['PERMISSION_MANAGE_STYLES'] = 'Manage styles';
 $Context->Dictionary['PERMISSION_MANAGE_THEMES'] = 'Manage themes';
@@ -548,12 +550,11 @@ $Context->Dictionary['ReminderChangesSaved'] = 'Your reminder settings were save
 $Context->Dictionary['NeverCheckedForUpdates'] = "You haven't checked for Vanilla updates yet.";
 $Context->Dictionary['XDaysSinceUpdateCheck'] = 'It has been //1 days since you checked for Vanilla updates.';
 $Context->Dictionary['CheckForUpdatesNow'] = 'Click here to check for updates now';
-$Context->Dictionary['ManageThemeAndStyle'] = 'Themes and Styles';
+$Context->Dictionary['ManageThemeAndStyle'] = 'Themes &amp; Styles';
 $Context->Dictionary['ThemeChangesSaved'] = 'Your changes have been saved successfully';
-$Context->Dictionary['ChangeThemeNotes'] = 'Theme notes go here ...';
-$Context->Dictionary['ThemeLabel'] = 'Available themes';
-$Context->Dictionary['ChangeStyleNotes'] = 'Style notes go here ...';
-$Context->Dictionary['StyleLabel'] = 'Available styles';
+$Context->Dictionary['ThemeAndStyleNotes'] =  "Themes and Styles are used to change Vanilla's structure and appearance respectively. For more themes and styles from Lussumo, or to find out how to create your own, <a href=\"http://lussumo.com/addons/\">check out the Vanilla Add-on Directory</a>.";
+$Context->Dictionary['ThemeLabel'] = 'Themes currently available in your installation of Vanilla';
+$Context->Dictionary['StyleLabel'] = 'Styles available for the selected theme';
 $Context->Dictionary['ApplyStyleToAllUsers'] = 'Apply this style to all users';
 $Context->Dictionary['ThemeAndStyleManagement'] = 'Themes and Styles';
 
