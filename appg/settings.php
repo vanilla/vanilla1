@@ -178,6 +178,7 @@ $Configuration['PERMISSION_CHECK_FOR_UPDATES'] = '0';
 $Configuration['PERMISSION_CHANGE_APPLICATION_SETTINGS'] = '0';
 $Configuration['PERMISSION_MANAGE_EXTENSIONS'] = '0';
 $Configuration['PERMISSION_MANAGE_LANGUAGE'] = '0';
+$Configuration['PERMISSION_MANAGE_THEMES'] = '0';
 $Configuration['PERMISSION_MANAGE_STYLES'] = '0';
 $Configuration['PERMISSION_ALLOW_DEBUG_INFO'] = '0';
 
