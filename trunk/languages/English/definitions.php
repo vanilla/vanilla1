@@ -338,6 +338,8 @@ $Context->Dictionary['UnhideThisDiscussion'] = 'Unhide this discussion';
 
 // Warnings
 $Context->Dictionary['ErrOpenDirectoryExtensions'] = 'Failed to open the extensions directory. Please ensure that PHP has read access to the //1 directory.';
+$Context->Dictionary['ErrOpenDirectoryThemes'] = 'Failed to open the themes directory. Please ensure that PHP has read access to the //1 directory.';
+$Context->Dictionary['ErrOpenDirectoryStyles'] = 'Failed to open the styles directory. Please ensure that PHP has read access to the //1 directory.';
 $Context->Dictionary['ErrReadExtensionDefinition'] = 'An error occurred while attempting to read the extension definition from';
 $Context->Dictionary['ErrReadFileExtensions'] = 'Failed to read the extensions file:';
 $Context->Dictionary['ErrOpenFile'] = 'The file could not be opened. Please make sure that PHP has write access to the //1 file.';
@@ -509,6 +511,7 @@ $Context->Dictionary['PERMISSION_CHANGE_APPLICATION_SETTINGS'] = 'Change applica
 $Context->Dictionary['PERMISSION_MANAGE_EXTENSIONS'] = 'Manage extensions';
 $Context->Dictionary['PERMISSION_MANAGE_LANGUAGE'] = 'Change language';
 $Context->Dictionary['PERMISSION_MANAGE_STYLES'] = 'Manage styles';
+$Context->Dictionary['PERMISSION_MANAGE_THEMES'] = 'Manage themes';
 $Context->Dictionary['PERMISSION_RECEIVE_APPLICATION_NOTIFICATION'] = 'Notify by email of new applicants';
 $Context->Dictionary['PERMISSION_ALLOW_DEBUG_INFO'] = 'Can view debug info';
 $Context->Dictionary['PERMISSION_DATABASE_CLEANUP'] = 'Allow use of the cleanup extension';
@@ -545,6 +548,14 @@ $Context->Dictionary['ReminderChangesSaved'] = 'Your reminder settings were save
 $Context->Dictionary['NeverCheckedForUpdates'] = "You haven't checked for Vanilla updates yet.";
 $Context->Dictionary['XDaysSinceUpdateCheck'] = 'It has been //1 days since you checked for Vanilla updates.';
 $Context->Dictionary['CheckForUpdatesNow'] = 'Click here to check for updates now';
+$Context->Dictionary['ManageThemeAndStyle'] = 'Themes and Styles';
+$Context->Dictionary['ThemeChangesSaved'] = 'Your changes have been saved successfully';
+$Context->Dictionary['ChangeThemeNotes'] = 'Theme notes go here ...';
+$Context->Dictionary['ThemeLabel'] = 'Available themes';
+$Context->Dictionary['ChangeStyleNotes'] = 'Style notes go here ...';
+$Context->Dictionary['StyleLabel'] = 'Available styles';
+$Context->Dictionary['ApplyStyleToAllUsers'] = 'Apply this style to all users';
+$Context->Dictionary['ThemeAndStyleManagement'] = 'Themes and Styles';
 
 /* Please do not remove or alter this definition */
 $Context->Dictionary['PanelFooter'] = '<p id="AboutVanilla"><a href="http://getvanilla.com">Vanilla '.APPLICATION_VERSION.'</a> is a product of <a href="http://lussumo.com">Lussumo</a>. More Information: <a href="http://lussumo.com/docs">Documentation</a>, <a href="http://lussumo.com/community">Community Support</a>.</p>';
