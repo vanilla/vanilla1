@@ -19,8 +19,8 @@ Contact Mark O'Sullivan at mark [at] lussumo [dot] com
 You should cut & paste these language definitions into your conf/your_language.php file
 (replace "your_language" with your chosen language, of course):
 */
-$Context->Dictionary['AllUnblockedCategories'] = 'All unblocked categories';
 
+$Context->Dictionary['AllUnblockedCategories'] = 'All unblocked categories';
 function GetCategoryJumper(&$Context) {
    $CategoryManager = $Context->ObjectFactory->NewContextObject($Context, 'CategoryManager');
    $CategoryData = $CategoryManager->GetCategories(0, 1);
@@ -58,4 +58,5 @@ if (in_array($Context->SelfUrl, array('index.php','comments.php')) && $Configura
    $Panel->AddString(GetCategoryJumper($Context), 5);
    $Head->AddStyleSheet('extensions/CategoryJumper/style.css');
 }
+
 ?>
