@@ -46,7 +46,6 @@ class CategoryManager {
 		$s->AddSelect(array('CategoryID', 'Name', 'Description'), 'c', '', '', '', 1);
 		
 		$BlockCategoriesByRole = 1;
-		
 		if ($this->Context->Session->User->Permission('PERMISSION_ADD_CATEGORIES')
 			|| $this->Context->Session->User->Permission('PERMISSION_EDIT_CATEGORIES')
 			|| $this->Context->Session->User->Permission('PERMISSION_REMOVE_CATEGORIES')) {
