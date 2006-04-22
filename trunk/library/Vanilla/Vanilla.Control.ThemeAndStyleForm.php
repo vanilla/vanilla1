@@ -84,7 +84,7 @@ class ThemeAndStyleForm extends PostBackControl {
 			if ($this->Context->Session->User->Permission("PERMISSION_MANAGE_THEMES")) {
 				$this->ThemeSelect = $this->Context->ObjectFactory->NewObject($Context, "Select");
 				$this->ThemeSelect->Name = "Theme";				
-				$this->ThemeSelect->Attributes = " id=\"ddTheme\" onchange=\"document.location='".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=ThemeChange&Theme=')."'+this.options[this.selectedIndex].value;\"";
+				$this->ThemeSelect->Attributes = " id=\"ddTheme\" onchange=\"document.location='".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=ThemeChange&amp;Theme=')."'+this.options[this.selectedIndex].value;\"";
 				for ($i = 0; $i < count($this->Themes); $i++) {
 					$this->ThemeSelect->AddOption($i, $this->Themes[$i]);
 					if ($this->Themes[$i] == $CurrentTheme) $this->ThemeSelect->SelectedID = $i;
