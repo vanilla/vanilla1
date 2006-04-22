@@ -3,8 +3,8 @@
 
 $CommentList = '';
 if ($this->Context->WarningCollector->Count() > 0) {
-   $CommentList .= '<div id="Errors">
-      <h2>'.$this->Context->GetDefinition('ErrorTitle').'</h2>'
+   $CommentList .= '<div class="ErrorContainer">
+      <div class="ErrorTitle">'.$this->Context->GetDefinition('ErrorTitle').'</div>>'
       .$this->Context->WarningCollector->GetMessages()
    .'</div>';
 } else {
