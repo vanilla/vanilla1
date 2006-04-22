@@ -4,7 +4,7 @@
 $CommentList = '';
 if ($this->Context->WarningCollector->Count() > 0) {
    $CommentList .= '<div class="ErrorContainer">
-      <div class="ErrorTitle">'.$this->Context->GetDefinition('ErrorTitle').'</div>>'
+      <div class="ErrorTitle">'.$this->Context->GetDefinition('ErrorTitle').'</div>'
       .$this->Context->WarningCollector->GetMessages()
    .'</div>';
 } else {
