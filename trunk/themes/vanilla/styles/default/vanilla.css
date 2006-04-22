@@ -450,13 +450,13 @@ html>body .ContentInfo h1 { width:80% !important; }
 	}
 #Categories li ul {
 	border-bottom:1px solid #ccc;
+	padding: 7px 6px 7px 6px;
+	list-style: none;
+	margin: 0px;
 	}
 #Categories li li {
 	height:auto;
 	border:0px;
-	}
-#Categories li ul {
-	padding: 7px 6px 7px 6px;
 	}
 #Categories ul span, #Categories ul span a, #Categories ul a {
 	color:#aaaaaa;
@@ -1048,6 +1048,18 @@ li.User.Name span {
 #Form.RoleEditForm li p span label {
 	font-weight: normal !important;
 	}
+
+/* Category List */
+#Form.CategoryList li.RoleBlocked {
+	background: url(disabled-tile.gif) #F4F4C2;
+	}
+	
+/* Category Form */
+#Form.CategoryForm li p span label {
+	font-weight: normal !important;
+	}
+  
+  
 
 /* Custom form for extensions management screen */
 

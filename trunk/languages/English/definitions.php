@@ -444,7 +444,7 @@ $Context->Dictionary['GlobalApplicationChangesSaved'] = 'Your changes have been 
 $Context->Dictionary['ApprovedMemberRole'] = 'Membership approval role';
 $Context->Dictionary['ApprovedMemberRoleNotes'] = 'When a user is approved for membership by an administrator (if membership approval is required), this is the role to which applicants will be assigned.';
 $Context->Dictionary['NewMemberWelcomeAboard'] = 'You have been granted membership access. Welcome aboard!';
-$Context->Dictionary['RoleCategoryNotes'] = 'Select the categories this role should have access to.';
+$Context->Dictionary['RoleCategoryNotes'] = 'Select the categories this role should have access to';
 $Context->Dictionary['DebugTitle'] = 'Vanilla Debugging';
 $Context->Dictionary['DebugDescription'] = 'If you have sufficient privileges, you can turn on debugging in Vanilla to have all queries run on any given page displayed after the page has finished executing. You will be the only person who can see this debugging data. Use this page to switch debugging on or off.';
 $Context->Dictionary['CurrentApplicationMode'] = 'Vanilla is currently in the following mode: ';
@@ -479,8 +479,8 @@ $Context->Dictionary['YourInstallationIsUpToDate'] = 'Your installation of Vanil
 $Context->Dictionary['ErrPermissionHideDiscussions'] = 'You do not have permission to hide discussions.';
 $Context->Dictionary['ErrPermissionCloseDiscussions'] = 'You do not have permission to close discussions.';
 $Context->Dictionary['ErrPermissionStickDiscussions'] = 'You do not have permission to make discussions sticky.';
-$Context->Dictionary['CategoryReorderNotes'] = 'Drag and drop the categories below to reorder them. Their new order will be saved automatically.';
-$Context->Dictionary['RoleReorderNotes'] = 'Drag and drop the roles below to reorder them. Their new order will be saved automatically.';
+$Context->Dictionary['CategoryReorderNotes'] = 'Drag and drop the categories below to reorder them. Their new order will be saved automatically. If a category appears greyed out, it means that the category has been blocked for your role.';
+$Context->Dictionary['RoleReorderNotes'] = 'Drag and drop the roles below to reorder them. Their new order will be saved automatically. The <i>Unauthenticated</i> role is a special role that is applied to users who are browsing Vanilla without an account, and it cannot be deleted';
 $Context->Dictionary['PERMISSION_CHECK_FOR_UPDATES'] = 'Check for updates';
 $Context->Dictionary['PERMISSION_SIGN_IN'] = 'Can sign-in';
 $Context->Dictionary['PERMISSION_ADD_COMMENTS'] = 'Add comments';
@@ -557,6 +557,9 @@ $Context->Dictionary['ThemeLabel'] = 'Themes currently available in your install
 $Context->Dictionary['StyleLabel'] = 'Styles available for the selected theme';
 $Context->Dictionary['ApplyStyleToAllUsers'] = 'Apply this style to all users';
 $Context->Dictionary['ThemeAndStyleManagement'] = 'Themes and Styles';
+$Context->Dictionary['Check'] = 'Check: ';
+$Context->Dictionary['All'] = 'All';
+$Context->Dictionary['None'] = 'None';
 
 /* Please do not remove or alter this definition */
 $Context->Dictionary['PanelFooter'] = '<p id="AboutVanilla"><a href="http://getvanilla.com">Vanilla '.APPLICATION_VERSION.'</a> is a product of <a href="http://lussumo.com">Lussumo</a>. More Information: <a href="http://lussumo.com/docs">Documentation</a>, <a href="http://lussumo.com/community">Community Support</a>.</p>';
