@@ -44,8 +44,8 @@ echo '<div id="Form" class="Account RoleEditForm">
             <strong>'.$this->Context->GetDefinition('RoleAbilities').'</strong>
             <br />'.$this->Context->GetDefinition('RoleAbilitiesNotes').'
          </p>
-      </li>';
-      
+      </li>
+      <li>         <p class="Description">         '.$this->Context->GetDefinition('Check')         ." <a href=\"./\" onclick=\"CheckAll('PERMISSION_'); return false;\">".$this->Context->GetDefinition('All').'</a>, '         ." <a href=\"./\" onclick=\"CheckNone('PERMISSION_'); return false;\">".$this->Context->GetDefinition('None').'</a>         </p>      </li>';      
       while (list($PermissionKey, $PermissionValue) = each($this->Role->Permissions)) {
          echo '<li>
             <p>
@@ -53,15 +53,15 @@ echo '<div id="Form" class="Account RoleEditForm">
             </p>
          </li>';
       }
-         
+
       // Add the option of specifying which categories this role can see if creating a new role
       if ($this->Role->RoleID == 0 && $this->CategoryData) {
          echo '<li>
             <p class="Description">
                <br /><strong>'.$this->Context->GetDefinition('RoleCategoryNotes').'</strong>
             </p>
-         </li>';
-         
+         </li>
+         <li>            <p class="Description">            '.$this->Context->GetDefinition('Check')            ." <a href=\"./\" onclick=\"CheckAll('AllowedCategoryID'); return false;\">".$this->Context->GetDefinition('All').'</a>, '            ." <a href=\"./\" onclick=\"CheckNone('AllowedCategoryID'); return false;\">".$this->Context->GetDefinition('None').'</a>            </p>         </li>';         
          while ($Row = $this->Context->Database->GetRow($this->CategoryData)) {
             echo '<li>
                <p>

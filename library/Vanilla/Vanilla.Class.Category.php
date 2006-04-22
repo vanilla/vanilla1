@@ -16,6 +16,7 @@ class Category {
 	var $Name;
 	var $Description;
 	var $Blocked;					// Is this category blocked by the viewing user
+   var $RoleBlocked;				// Is this category blocked to the role of the viewing user
    var $AllowedRoles;			// Contains the roles that are allowed to take part in this category
 	var $DiscussionCount;		// aggregate - display only
 	
@@ -30,6 +31,7 @@ class Category {
 		$this->Description = '';
 		$this->DiscussionCount = 0;
 		$this->Blocked = 0;
+		$this->RoleBlocked = 0;
 		$this->AllowedRoles = array();
 	}
 
@@ -49,6 +51,7 @@ class Category {
 		$this->Description = ForceString(@$DataSet['Description'], '');
 		$this->DiscussionCount = ForceInt(@$DataSet['DiscussionCount'], 0);
 		$this->Blocked = ForceBool(@$DataSet['Blocked'], 0);
+		$this->RoleBlocked = ForceBool(@$DataSet['RoleBlocked'], 0);
 	}	
 
 	function GetPropertiesFromForm(&$Context) {

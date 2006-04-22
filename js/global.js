@@ -36,9 +36,27 @@ function ChangeLoaderText(NewText) {
 	ChangeElementText("LoadStatus", NewText)
 }
 
-function CheckBox(BoxID) {
-	var Box = document.getElementById(BoxID);
-	if (Box) Box.checked = !Box.checked;
+function CheckAll(IdToMatch) {
+	var Ids = Explode(IdToMatch, ',');
+	for (j = 0; j < Ids.length; j++) {
+		CheckSwitch(Ids[j], true);
+	}
+}
+
+function CheckNone(IdToMatch) {
+	var Ids = Explode(IdToMatch, ',');
+	for (j = 0; j < Ids.length; j++) {
+		CheckSwitch(Ids[j], false);
+	}
+}
+
+function CheckSwitch(IdToMatch, Switch) {
+	var el = document.getElementsByTagName("input");
+	for (i = 0; i < el.length; i++) {
+		if (el[i].type == "checkbox" && el[i].id.indexOf(IdToMatch) == 0) {
+			el[i].checked = Switch;
+		}
+	}
 }
 
 function ClearContents(Container) {
@@ -47,6 +65,21 @@ function ClearContents(Container) {
 
 function CloseLoader() {
 	setTimeout("SwitchLoader(0)",600);	
+}
+
+function Explode(inString, Delimiter) {
+	aTmp = new Array(1);
+	var Count = 0;
+	var sTmp = new String(inString);
+
+	while (sTmp.indexOf(Delimiter) > 0) {
+		aTmp[Count] = sTmp.substr(0, sTmp.indexOf(Delimiter));
+		sTmp = sTmp.substr(sTmp.indexOf(Delimiter) + 1, sTmp.length - sTmp.indexOf(Delimiter) + 1); 
+		Count = Count + 1
+	}
+
+	aTmp[Count] = sTmp;
+	return aTmp;
 }
 
 function Focus(ElementID) {

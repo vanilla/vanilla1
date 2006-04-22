@@ -20,9 +20,9 @@ class CategoryManager {
 		$this->Context = &$Context;
 	}
 	
-	function GetCategories($IncludeCount = '0', $OrderByPreference = '0') {
+	function GetCategories($IncludeCount = '0', $OrderByPreference = '0', $ForceRoleBlock = '1') {
 		$OrderByPreference = ForceBool($OrderByPreference, 0);
-		$s = $this->GetCategoryBuilder($IncludeCount);
+		$s = $this->GetCategoryBuilder($IncludeCount, $ForceRoleBlock);
 		if ($OrderByPreference && $this->Context->Session->UserID > 0) {
 			// Order by the user's preference (unblocked categories first)
 			$s->AddOrderBy('Blocked', 'b', 'asc');
@@ -31,7 +31,8 @@ class CategoryManager {
 		return $this->Context->Database->Select($s, $this->Name, 'GetCategories', 'An error occurred while retrieving categories.');
 	}
 	
-	function GetCategoryBuilder($IncludeCount = '0') {
+	function GetCategoryBuilder($IncludeCount = '0', $ForceRoleBlock = '1') {
+		
 		$IncludeCount = ForceBool($IncludeCount, 0);
 		$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
 		$s->SetMainTable('Category', 'c');
@@ -49,24 +50,28 @@ class CategoryManager {
 		if ($this->Context->Session->User->Permission('PERMISSION_ADD_CATEGORIES')
 			|| $this->Context->Session->User->Permission('PERMISSION_EDIT_CATEGORIES')
 			|| $this->Context->Session->User->Permission('PERMISSION_REMOVE_CATEGORIES')) {
-				
-			$BlockCategoriesByRole = 0;
+				$BlockCategoriesByRole = 0;
 		}
-		
+		if ($ForceRoleBlock) $BlockCategoriesByRole = 1;
 		
 		if ($this->Context->Session->UserID > 0) {
-			if ($BlockCategoriesByRole) $s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID', 'c', 'CategoryID', 'left join', ' and crb.'.$this->Context->DatabaseColumns['CategoryRoleBlock']['RoleID'].' = '.$this->Context->Session->User->RoleID);
+			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID', 'c', 'CategoryID', 'left join', ' and crb.'.$this->Context->DatabaseColumns['CategoryRoleBlock']['RoleID'].' = '.$this->Context->Session->User->RoleID);
 			$s->AddJoin('CategoryBlock', 'b', 'CategoryID', 'c', 'CategoryID', 'left join', ' and b.'.$this->Context->DatabaseColumns['CategoryBlock']['UserID'].' = '.$this->Context->Session->UserID);
 			$s->AddSelect('Blocked', 'b', 'Blocked', 'coalesce', '0');
 		} else {
 			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID', 'c', 'CategoryID', 'left join', ' and crb.'.$this->Context->DatabaseColumns['CategoryRoleBlock']['RoleID'].' = 1');
 		}
 		
+		// Limit to categories that this user is allowed to see.
 		if ($BlockCategoriesByRole) {
 			$s->AddWhere('crb', 'Blocked', '', 0, '=', 'and', '', 1, 1);
 			$s->AddWhere('crb', 'Blocked', '', 0, '=', 'or', '', 0);
 			$s->AddWhere('crb', 'Blocked', '', 'null', 'is', 'or', '', 0);
 			$s->EndWhereGroup();
+		} else {
+			// Identify which of these categories is blocked by role
+         // (so administrators can easily see what they do and don't have access to)
+			$s->AddSelect('Blocked', 'crb', 'RoleBlocked', 'coalesce', '0');
 		}
 		
 		return $s;
@@ -74,7 +79,7 @@ class CategoryManager {
 
 	function GetCategoryById($CategoryID) {
 		$Category = $this->Context->ObjectFactory->NewObject($this->Context, 'Category');
-		$s = $this->GetCategoryBuilder();
+		$s = $this->GetCategoryBuilder(0, 0);
 		$s->AddWhere('c', 'CategoryID', '', $CategoryID, '=');
 		$ResultSet = $this->Context->Database->Select($s, $this->Name, 'GetCategoryById', 'An error occurred while attempting to retrieve the requested category.');
 		if ($this->Context->Database->RowCount($ResultSet) == 0) $this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrCategoryNotFound'));
