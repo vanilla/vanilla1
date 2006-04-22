@@ -20,7 +20,7 @@ conf/your_language.php file (replace "your_language" with your chosen language,
 of course):
 */
 $Context->Dictionary["GuestWelcomeTitle"] = "Welcome, Guest";
-$Context->Dictionary["GuestWelcomeBody"] = "<p>Want to take part in these discussions? If you have an account, <a href=\"".$Configuration["SIGNIN_URL"]."\">sign in now</a>.</p>
+$Context->Dictionary["GuestWelcomeBody"] = "<p>Want to take part in these discussions? If you have an account, <a href=\"".GetUrl($Configuration, "people.php")."\">sign in now</a>.</p>
    <p>If you don't have an account, <a href=\"".GetUrl($Configuration, "people.php", "", "", "", "", "PostBackAction=ApplyForm")."\">apply for one now</a>.</p>";
 
 if (in_array($Context->SelfUrl, array("account.php", "categories.php", "comments.php", "index.php", "search.php")) && $Context->Session->UserID == 0) {
