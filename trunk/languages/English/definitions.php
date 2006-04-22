@@ -141,7 +141,7 @@ $Context->Dictionary['CategoryManagement'] = 'Categories';
 $Context->Dictionary['MembershipApplicants'] = 'Membership Applicants';
 $Context->Dictionary['GlobalApplicationSettings'] = 'Global Application Settings';
 $Context->Dictionary['GlobalApplicationSettingsNotes'] = 'BE CAREFUL with the changes you make on this page. Erroneous information entered here could cause your forum to crash and may require you manually altering settings files to repair the problem.';
-$Context->Dictionary['AboutSettings'] = 'About settings';
+$Context->Dictionary['AboutSettings'] = 'About Settings';
 $Context->Dictionary['AboutSettingsNotes'] = "<p class=\"Description\">Using this section you can manipulate all configurable settings for your Vanilla installation. Summarized below are the standard menu items and their functions. Depending on your permissions, you may or may not see all of the menu items listed:</p>
 	<dl><dt>Application Settings</dt>
 	<dd>This is the main configuration screen for Vanilla. It allows you to change the banner text, manipulate spam controls, define cookie settings, and change basic forum options like whispers, categories, etc.</dd>
