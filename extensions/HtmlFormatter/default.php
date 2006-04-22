@@ -113,8 +113,8 @@ class HtmlFormatter extends StringFormatter
 	function RemoveEvilAttribs($String)
 	{
 		$P = array(
-			"/(\s+?)(href|src|background|url|dynsrc|lowsrc)\s*=(\W*)(.+?):([^\\3]+?)/ei", 
-			"/(\s+?)on([\w]+)\s*=(.+?)/i"
+			"/([^\w]+?)(href|src|background|url|dynsrc|lowsrc)\s*=(\W*)(.+?):([^\\3]+?)/ei", 
+			"/([^\w]+?)on([\w]+)\s*=(.+?)/i"
 		);
 		$R = array(
 			'$this->RemoveQuoteSlashes(\'\\1\\2=\\3\').(in_array(strtolower(\'\\4\'), $this->AllowedProtocols) ? \'\\4:\' : $this->DefaultProtocol).$this->RemoveQuoteSlashes(\'\\5\')', 
