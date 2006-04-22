@@ -2,5 +2,5 @@
    font-size: 11px;
    }
 #CategoryJumper option {
-   display: block;
+   display: block !important;
    }
