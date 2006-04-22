@@ -24,6 +24,8 @@ class CategoryForm extends PostBackControl {
 		$this->ValidActions = array('Categories', 'Category', 'ProcessCategory', 'CategoryRemove', 'ProcessCategoryRemove');
 		$this->Constructor($Context);
 		if ($this->IsPostBack) {
+			$this->Context->PageTitle = $this->Context->GetDefinition('CategoryManagement');
+			
 			// Add the javascript to the head for sorting categories
          if ($this->PostBackAction == "Categories") {
 				global $Head;

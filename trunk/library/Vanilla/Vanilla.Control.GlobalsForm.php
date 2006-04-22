@@ -22,6 +22,7 @@ class GlobalsForm extends PostBackControl {
 		if (!$this->Context->Session->User->Permission('PERMISSION_CHANGE_APPLICATION_SETTINGS')) {
 			$this->IsPostBack = 0;
 		} elseif ($this->IsPostBack) {
+			$this->Context->PageTitle = $this->Context->GetDefinition('ApplicationSettings');
 			
 			$SettingsFile = $this->Context->Configuration['APPLICATION_PATH'].'conf/settings.php';
 			

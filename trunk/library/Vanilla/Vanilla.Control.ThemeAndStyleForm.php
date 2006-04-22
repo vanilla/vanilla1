@@ -63,6 +63,7 @@ class ThemeAndStyleForm extends PostBackControl {
 			&& !$this->Context->Session->User->Permission("PERMISSION_MANAGE_STYLES")) {
 			$this->IsPostBack = 0;
 		} elseif ($this->IsPostBack) {
+			$this->Context->PageTitle = $this->Context->GetDefinition('ManageThemeAndStyle');
 			$this->DefineThemes();
 			
 			// Get the name of the current theme folder
