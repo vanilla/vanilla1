@@ -187,6 +187,8 @@ class CommentManager extends Delegation {
 			$FirstRecord = ($CurrentPage * $RowsPerPage) - $RowsPerPage;
 		}		
 		if ($RowsPerPage > 0) $s->AddLimit($FirstRecord, $RowsPerPage+1);
+		$s->AddOrderBy('DateCreated', 'c', 'desc');
+		
 		return $this->Context->Database->Select($s, $this->Name, 'GetCommentSearch', 'An error occurred while retrieving search results.');
 	}
 	

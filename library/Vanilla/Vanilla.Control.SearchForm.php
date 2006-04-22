@@ -94,13 +94,13 @@ class SearchForm extends PostBackControl {
             $this->Search->FormatPropertiesForDisplay();      
             
          } else if ($this->Search->Type == 'Topics') {
-            $tm = $this->Context->ObjectFactory->NewContextObject($this->Context, 'DiscussionManager');
-            $this->Data = $tm->GetDiscussionSearch($this->Context->Configuration['SEARCH_RESULTS_PER_PAGE'], $CurrentPage, $this->Search);
+            $dm = $this->Context->ObjectFactory->NewContextObject($this->Context, 'DiscussionManager');
+            $this->Data = $dm->GetDiscussionSearch($this->Context->Configuration['SEARCH_RESULTS_PER_PAGE'], $CurrentPage, $this->Search);
             $this->Search->FormatPropertiesForDisplay();
             
          } else if ($this->Search->Type == 'Comments') {
-            $mm = $this->Context->ObjectFactory->NewContextObject($this->Context, 'CommentManager');
-            $this->Data = $mm->GetCommentSearch($this->Context->Configuration['SEARCH_RESULTS_PER_PAGE'], $CurrentPage, $this->Search);
+            $cm = $this->Context->ObjectFactory->NewContextObject($this->Context, 'CommentManager');
+            $this->Data = $cm->GetCommentSearch($this->Context->Configuration['SEARCH_RESULTS_PER_PAGE'], $CurrentPage, $this->Search);
             $this->Search->FormatPropertiesForDisplay();
          }
          
