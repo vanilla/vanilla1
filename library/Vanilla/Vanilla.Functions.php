@@ -60,20 +60,22 @@ function GetUnreadQuerystring(&$Discussion, &$Configuration, $CurrentUserJumpToL
 }
 
 function HighlightTrimmedString($Haystack, $Needles, $TrimLength = '') {	
+   $Highlight = '<span class="Highlight">\1</span>';
+	$Pattern = '#(?!<.*?)(%s)(?![^<>]*?>)#i';
 	$TrimLength = ForceInt($TrimLength, 0);
-	if ($TrimLength > 0) {
-		$Haystack = SliceString($Haystack, $TrimLength);
-	}
+	if ($TrimLength > 0) $Haystack = SliceString($Haystack, $TrimLength);
 	$WordsToHighlight = count($Needles);
 	if ($WordsToHighlight > 0) {
 		$i = 0;
 		for ($i = 0; $i < $WordsToHighlight; $i++) {
-			$CurrentWord = quotemeta(ForceString($Needles[$i], ''));
-			if ($CurrentWord != '') $Haystack = eregi_replace($CurrentWord, '<span class="Highlight">'.$Needles[$i].'</span>', $Haystack);
+         $CurrentWord = preg_quote($Needles[$i]);
+         $Regex = sprintf($Pattern, $CurrentWord);
+         $Haystack = preg_replace($Regex, $Highlight, $Haystack);
 		}
 	}
 	return $Haystack;
 }
+
 
 function ParseQueryForHighlighting(&$Context, $Query) {
 	if ($Query != '') {
