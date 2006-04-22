@@ -47,7 +47,7 @@ if (!$Allowed) header('location:'.GetUrl($Configuration, 'index.php'));
    $Menu->CurrentTab = 'settings';
    $Panel->CssClass = 'SettingsPanel';
    $Panel->BodyCssClass = 'SettingsPageBody';
-   $Context->PageTitle = $Context->GetDefinition('AdministrativeSettings');
+   if ($Context->PageTitle == '') $Context->PageTitle = $Context->GetDefinition('AdministrativeSettings');
 
 // 2. BUILD PAGE CONTROLS
 
@@ -55,7 +55,7 @@ if (!$Allowed) header('location:'.GetUrl($Configuration, 'index.php'));
 	$AdminOptions = $Context->GetDefinition('AdministrativeOptions');
    $Panel->AddList($AdminOptions, 20);
 	if ($Context->Session->User->Permission('PERMISSION_CHANGE_APPLICATION_SETTINGS')) $Panel->AddListItem($AdminOptions, $Context->GetDefinition('ApplicationSettings'), GetUrl($Configuration, 'settings.php', '', '', '', '', 'PostBackAction=Globals'), '', '', 10);
-	if ($Context->Session->User->Permission('PERMISSION_CHECK_FOR_UPDATES')) $Panel->AddListItem($AdminOptions, $Context->GetDefinition('UpdateCheck'), GetUrl($Configuration, 'settings.php', '', '', '', '', 'PostBackAction=UpdateCheck'), '', '', 20);
+	if ($Context->Session->User->Permission('PERMISSION_CHECK_FOR_UPDATES')) $Panel->AddListItem($AdminOptions, $Context->GetDefinition('UpdatesAndReminders'), GetUrl($Configuration, 'settings.php', '', '', '', '', 'PostBackAction=UpdateCheck'), '', '', 20);
 	if ($Context->Session->User->Permission('PERMISSION_MANAGE_EXTENSIONS')) $Panel->AddListItem($AdminOptions, $Context->GetDefinition('ManageExtensions'), GetUrl($Configuration, 'settings.php', '', '', '', '', 'PostBackAction=Extensions'), '', '', 60);
 	if ($Context->Session->User->Permission('PERMISSION_MANAGE_THEMES')
 		|| $Context->Session->User->Permission('PERMISSION_MANAGE_STYLES')) $Panel->AddListItem($AdminOptions, $Context->GetDefinition('ManageThemeAndStyle'), GetUrl($Configuration, 'settings.php', '', '', '', '', 'PostBackAction=ThemeChange'), '', '', 70);

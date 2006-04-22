@@ -273,6 +273,7 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 			if (!$this->Context->Session->User->Permission("PERMISSION_MANAGE_STYLES")) {
 				$this->IsPostBack = 0;
 			} elseif ($this->IsPostBack) {
+				$this->Context->PageTitle = $this->Context->GetDefinition('StyleManagement');
 				$StyleID = ForceIncomingInt("StyleID", 0);
 				$ReplacementStyleID = ForceIncomingInt("ReplacementStyleID", 0);
 				$this->StyleManager = $this->Context->ObjectFactory->NewContextObject($this->Context, "StyleManager");

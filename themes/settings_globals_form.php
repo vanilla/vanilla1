@@ -235,11 +235,6 @@ echo '<div id="Form" class="Account GlobalsForm">';
       <h2>'.$this->Context->GetDefinition('ApplicationSettings').'</h2>
       <ul>
          <li>
-            <label for="txtDefaultStyleFolder">'.$this->Context->GetDefinition('DefaultStyleFolder').'</label>
-            <input type="text" name="DEFAULT_STYLE" value="'.$this->ConfigurationManager->GetSetting('DEFAULT_STYLE').'" maxlength="255" class="SmallInput" id="txtDefaultStyleFolder" />
-            <p class="Description">'.$this->Context->GetDefinition('DefaultStyleFolderNotes').'</p>
-         </li>
-         <li>
             <label for="txtWebPathtoVanilla">'.$this->Context->GetDefinition('WebPathToVanilla').'</label>
             <input type="text" name="BASE_URL" value="'.$this->ConfigurationManager->GetSetting('BASE_URL').'" maxlength="255" class="SmallInput" id="txtWebPathToVanilla" />
             <p class="Description">'.$this->Context->GetDefinition('WebPathNotes').'</p>
