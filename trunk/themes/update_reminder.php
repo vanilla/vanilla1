@@ -25,7 +25,7 @@ if ($this->Context->Configuration['UPDATE_REMINDER'] != '') {
             $Message = str_replace('//1', $Days, $this->Context->GetDefinition('XDaysSinceUpdateCheck'));
          }
          echo '<div class="SystemMessages">
-            <div>'.$Message.' <a href="'.GetUrl($this->Context->Configuration, 'settings.php', '', '', '', '', 'PostBackAction=ProcessUpdateCheck').'">'.$this->Context->GetDefinition('CheckForUpdatesNow').'</a></div>
+            <div>'.$Message.' <a href="'.GetUrl($this->Context->Configuration, 'settings.php', '', '', '', '', 'PostBackAction=UpdateCheck').'">'.$this->Context->GetDefinition('CheckForUpdatesNow').'</a></div>
          </div>';
             
       }
