@@ -990,6 +990,7 @@ li.User.Name span {
 	}
 #Form.Account input,
 #Form.Account select {
+	color:#000;
 	width:40%;
 	}
 #Form.GlobalsForm input,

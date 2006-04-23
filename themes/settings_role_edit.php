@@ -14,8 +14,10 @@ echo '<div id="Form" class="Account RoleEditForm">
             <li>
                <label for="sRoleSelect">'.$this->Context->GetDefinition('Roles').' <small>'.$this->Context->GetDefinition('Required').'</small></label>
                '.$this->RoleSelect->Get().'
-               <p class="Description">'.$this->Context->GetDefinition('ModifyRoleDefinition').'</p>
-            </li>';
+            </li>
+         </ul>
+         <h2>'.$this->Context->GetDefinition('ModifyRoleDefinition').'</h2>
+         <ul>';
    } else {
       echo $this->Get_Warnings()
          .$this->Get_PostBackForm('frmRole')

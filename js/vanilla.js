@@ -40,8 +40,8 @@ function AddLabelValuePair() {
 	}
 }
 
-function DiscussionSwitch(AjaxUrl, SwitchType, DiscussionID, SwitchValue) {
-	ChangeLoaderText("Processing...");
+function DiscussionSwitch(AjaxUrl, SwitchType, DiscussionID, SwitchValue, LoaderText) {
+	ChangeLoaderText(LoaderText);
 	SwitchLoader(1);
    var Parameters = "Type="+SwitchType+"&DiscussionID="+DiscussionID+"&Switch="+SwitchValue;
    var dm = new DataManager();
@@ -56,10 +56,10 @@ function HandleDiscussionSwitch(Request) {
 }
 
 // Delete or Undelete a comment
-function ManageComment(AjaxUrl, Switch, DiscussionID, CommentID, ShowText, HideText) {
+function ManageComment(AjaxUrl, Switch, DiscussionID, CommentID, ShowText, HideText, LoaderText) {
 	var ConfirmText = (Switch==1?HideText:ShowText);
 	if (confirm(ConfirmText)) {
-		ChangeLoaderText("Processing...");
+		ChangeLoaderText(LoaderText);
 		SwitchLoader(1);
 		var Parameters = "Type=Comment&Switch="+Switch+"&DiscussionID="+DiscussionID+"&CommentID="+CommentID;
 		var dm = new DataManager();
@@ -78,8 +78,8 @@ function DoNothing() {
 }
 
 // Apply or remove a bookmark
-function SetBookmark(AjaxUrl, CurrentSwitchVal, Identifier, BookmarkText, UnbookmarkText) {
-	SetSwitch(AjaxUrl, 'SetBookmark', CurrentSwitchVal, 'Bookmark', BookmarkText, UnbookmarkText, Identifier, "&DiscussionID="+Identifier);
+function SetBookmark(AjaxUrl, CurrentSwitchVal, Identifier, BookmarkText, UnbookmarkText, LoaderText) {
+	SetSwitch(AjaxUrl, 'SetBookmark', CurrentSwitchVal, 'Bookmark', BookmarkText, UnbookmarkText, Identifier, "&DiscussionID="+Identifier, LoaderText);
 	var Sender = document.getElementById('SetBookmark');
 	var BookmarkTitle = document.getElementById("BookmarkTitle");
 	var BookmarkList = document.getElementById("BookmarkList");
@@ -108,10 +108,10 @@ function SetBookmark(AjaxUrl, CurrentSwitchVal, Identifier, BookmarkText, Unbook
 }
 
 // Generic Switch
-function SetSwitch(AjaxUrl, SenderName, CurrentSwitchVal, SwitchType, CommentOn, CommentOff, Identifier, Attributes) {
+function SetSwitch(AjaxUrl, SenderName, CurrentSwitchVal, SwitchType, CommentOn, CommentOff, Identifier, Attributes, LoaderText) {
 	var Sender = document.getElementById(SenderName);
 	if (Sender) {
-      ChangeLoaderText("Processing...");
+      ChangeLoaderText(LoaderText);
 		SwitchLoader(1);
 		var Switch = Sender.name == '' ? CurrentSwitchVal : Sender.name;
 		var FlipSwitch = Switch == 1 ? 0 : 1;
@@ -154,8 +154,8 @@ function ShowSimpleSearch() {
 	}
 }
 
-function ToggleCategoryBlock(AjaxUrl, CategoryID, Block) {
-	ChangeLoaderText("Processing...");
+function ToggleCategoryBlock(AjaxUrl, CategoryID, Block, LoaderText) {
+	ChangeLoaderText(LoaderText);
 	SwitchLoader(1);
 	var Parameters = "BlockCategoryID="+CategoryID+"&Block="+Block;
    var dm = new DataManager();

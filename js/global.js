@@ -111,10 +111,10 @@ function HideElement(ElementID, ClearElement) {
 	}
 }
 
-function PanelSwitch(AjaxUrl, PanelItem, RefreshPageWhenComplete) {
+function PanelSwitch(AjaxUrl, PanelItem, RefreshPageWhenComplete, LoaderText) {
 	 var chkBox = document.getElementById(PanelItem+"ID");
 	 if (chkBox) {
-		  ChangeLoaderText("Processing...");
+		  ChangeLoaderText(LoaderText);
 		  SwitchLoader(1);
 		  var Parameters = "Type="+PanelItem+"&Switch="+chkBox.checked;
 		  var dm = new DataManager();

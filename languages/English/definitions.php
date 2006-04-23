@@ -97,7 +97,7 @@ $Context->Dictionary['TopOfPage'] = 'Top of Page';
 $Context->Dictionary['BackToDiscussions'] = 'Back to Discussions';
 $Context->Dictionary['SignOutSuccessful'] = 'You have been signed out successfully';
 $Context->Dictionary['SignInAgain'] = 'Click here to sign in again';
-$Context->Dictionary['Processing'] = 'processing...';
+$Context->Dictionary['Processing'] = 'PPPPPPProcessing...';
 $Context->Dictionary['RequestProcessed'] = 'Your request has been processed';
 $Context->Dictionary['MessageSentToXContainingPasswordInstructions'] = 'A message has been sent to <strong>//1</strong> containing password reset instructions.';
 $Context->Dictionary['AboutYourPassword'] = 'About your password';
@@ -559,6 +559,7 @@ $Context->Dictionary['ThemeAndStyleManagement'] = 'Themes and Styles';
 $Context->Dictionary['Check'] = 'Check: ';
 $Context->Dictionary['All'] = 'All';
 $Context->Dictionary['None'] = 'None';
+$Context->Dictionary['Simple'] = 'Simple';
 
 /* Please do not remove or alter this definition */
 $Context->Dictionary['PanelFooter'] = '<p id="AboutVanilla"><a href="http://getvanilla.com">Vanilla '.APPLICATION_VERSION.'</a> is a product of <a href="http://lussumo.com">Lussumo</a>. More Information: <a href="http://lussumo.com/docs">Documentation</a>, <a href="http://lussumo.com/community">Community Support</a>.</p>';
