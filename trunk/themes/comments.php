@@ -109,7 +109,7 @@ if ($this->Context->WarningCollector->Count() > 0) {
                      ';
                   }
                   if ($PERMISSION_HIDE_COMMENTS) $CommentList .= '<a href="./" onclick="'
-                  ."ManageComment('".$this->Context->Configuration['WEB_ROOT']."ajax/switch.php', '".($Comment->Deleted?"0":"1")."', '".$this->Discussion->DiscussionID."', '".$Comment->CommentID."', '".$this->Context->GetDefinition("ShowConfirm")."', '".$this->Context->GetDefinition("HideConfirm")."');"
+                  ."ManageComment('".$this->Context->Configuration['WEB_ROOT']."ajax/switch.php', '".($Comment->Deleted?"0":"1")."', '".$this->Discussion->DiscussionID."', '".$Comment->CommentID."', '".$this->Context->GetDefinition("ShowConfirm")."', '".$this->Context->GetDefinition("HideConfirm")."', '".$this->Context->GetDefinition('Processing')."');"
                   .' return false;">'.$this->Context->GetDefinition($Comment->Deleted?'Show':'Hide').'</a>
                   ';
 					}

@@ -1,46 +1,167 @@
 <?php
 // REPORT ALL ERRORS
 error_reporting(E_ALL);
+// DO NOT ALLOW PHP_SESS_ID TO BE PASSED IN THE QUERYSTRING
+ini_set('session.use_only_cookies', 1);
+// Track errors so explicit error messages can be reported should errors be encountered
+ini_set('track_errors', 1);
 
 // INCLUDE NECESSARY CLASSES & FUNCTIONS
-define("LIBRARY", "../GlobalLibrary/");
-include(LIBRARY."Utility.Functions.php");
-include(LIBRARY."Input.Select.class.php");
-include(LIBRARY."Utility.SqlBuilder.class.php");
-include(LIBRARY."Utility.MessageCollector.class.php");
-include(LIBRARY."Utility.ErrorManager.class.php");
-include(LIBRARY."Utility.Constant.class.php");
+include('../library/Framework/Framework.Functions.php');
+include('../library/Framework/Framework.Class.Select.php');
+include('../library/Framework/Framework.Class.SqlBuilder.php');
+include('../library/Framework/Framework.Class.MessageCollector.php');
+include('../library/Framework/Framework.Class.ErrorManager.php');
+include('../library/Framework/Framework.Class.ConfigurationManager.php');
 
-function GetLanguageSelect($FolderName, &$WarningCollector, $SelectedLanguage) {
-   $Select = false;
-   $FolderHandle = @opendir($FolderName);
-   if (!$FolderHandle) {
-      $WarningCollector->Add("We had a problem opening the languages folder");
-   } else {
-      $Languages = array();
-      $Key = 0;
-      
-      // Loop through each file
-      while (false !== ($Item = readdir($FolderHandle))) {
-         $RecordItem = true;
-         if ($Item == "." || $Item == ".." || is_dir($FolderName.$Item)) {
-            // do nothing
-         } else {
-            // Retrieve languages names
-            $FileParts = explode(".", $Item);
-            $Languages[] = $FileParts[0];
-            if ($FileParts[0] == $SelectedLanguage) $Key = count($Languages);
-         }
-      }
-      $Select = new Select();
-      $Select->Name = "Language";
-      for ($i = 0; $i < count($Languages); $i++) {
-         $Select->AddOption($Languages[$i], $Languages[$i]);
-      }
-      $Select->SelectedIndex = $Key;
-   }
-   return $Select;
-}
+// Define the new table structure
+// Table References:
+// Note that the User table does not implicitly use the TablePrefix that
+// is added to all other table names by the SqlBuilder object.
+$DatabaseTables['LUM_Category'] = 'LUM_Category';
+$DatabaseTables['LUM_CategoryBlock'] = 'LUM_CategoryBlock';
+$DatabaseTables['LUM_CategoryRoleBlock'] = 'LUM_CategoryRoleBlock';
+$DatabaseTables['LUM_Comment'] = 'LUM_Comment';
+$DatabaseTables['LUM_Discussion'] = 'LUM_Discussion';
+$DatabaseTables['LUM_DiscussionUserWhisperFrom'] = 'LUM_DiscussionUserWhisperFrom';
+$DatabaseTables['LUM_DiscussionUserWhisperTo'] = 'LUM_DiscussionUserWhisperTo';
+$DatabaseTables['LUM_IpHistory'] = 'LUM_IpHistory';
+$DatabaseTables['LUM_Role'] = 'LUM_Role';
+$DatabaseTables['LUM_Style'] = 'LUM_Style';
+$DatabaseTables['LUM_User'] = 'LUM_User';
+$DatabaseTables['LUM_UserBookmark'] = 'LUM_UserBookmark';
+$DatabaseTables['LUM_UserDiscussionWatch'] = 'LUM_UserDiscussionWatch';
+$DatabaseTables['LUM_UserRoleHistory'] = 'LUM_UserRoleHistory';
+
+// Column References:
+// The arrays represent: FieldName, DataType, Null, DefaultValue, IsPrimaryKey
+// LUM_Category Table
+$DatabaseColumns['LUM_Category']['CategoryID'] = array('CategoryID', 'int(2)', 'NO', '', '1');
+$DatabaseColumns['LUM_Category']['Name'] = array('Name', 'varchar(100)', 'NO', '', '0');
+$DatabaseColumns['LUM_Category']['Description'] = array('Description', 'text', 'NO', '', '0');
+$DatabaseColumns['LUM_Category']['Priority'] = array('Priority', 'int(8)', 'NO', '0', '0');
+// LUM_CategoryBlock Table
+$DatabaseColumns['LUM_CategoryBlock']['CategoryID'] = array('CategoryID', 'int(8)', 'NO', '0', '1');
+$DatabaseColumns['LUM_CategoryBlock']['UserID'] = array('UserID', 'int(8)', 'NO', '0', '1');
+$DatabaseColumns['LUM_CategoryBlock']['Blocked'] = array('Blocked', "enum('1','0')", 'NO', '1', '0');
+// LUM_CategoryRoleBlock Table
+$DatabaseColumns['LUM_CategoryRoleBlock']['CategoryID'] = array('CategoryID', 'int(8)', 'NO', '0', '0');
+$DatabaseColumns['LUM_CategoryRoleBlock']['RoleID'] = array('RoleID', 'int(8)', 'NO', '0', '0');
+$DatabaseColumns['LUM_CategoryRoleBlock']['Blocked'] = array('Blocked', "enum('1','0')", 'NO', '0', '0');
+// LUM_Comment Table
+$DatabaseColumns['LUM_Comment']['CommentID'] = array('CommentID', 'int(8)', 'NO', '', '1');
+$DatabaseColumns['LUM_Comment']['DiscussionID'] = array('DiscussionID', 'int(8)', 'NO', '0', '1');
+$DatabaseColumns['LUM_Comment']['AuthUserID'] = array('AuthUserID', 'int(8)', 'NO', '0', '0');
+$DatabaseColumns['LUM_Comment']['DateCreated'] = array('DateCreated', 'datetime', 'YES', '', '0');
+$DatabaseColumns['LUM_Comment']['EditUserID'] = array('EditUserID', 'int(8)', 'YES', '', '0');
+$DatabaseColumns['LUM_Comment']['DateEdited'] = array('DateEdited', 'datetime', 'YES', '', '0');
+$DatabaseColumns['LUM_Comment']['WhisperUserID'] = array('WhisperUserID', 'int(8)', 'YES', '', '0');
+$DatabaseColumns['LUM_Comment']['Body'] = array('Body', 'text', 'YES', '', '0');
+$DatabaseColumns['LUM_Comment']['FormatType'] = array('FormatType', 'varchar(20)', 'YES', '', '0');
+$DatabaseColumns['LUM_Comment']['Deleted'] = array('Deleted', "enum('1','0')", 'NO', '0', '0');
+$DatabaseColumns['LUM_Comment']['DateDeleted'] = array('DateDeleted', 'datetime', 'YES', '', '0');
+$DatabaseColumns['LUM_Comment']['DeleteUserID'] = array('DeleteUserID', 'int(8)', 'NO', '0', '0');
+$DatabaseColumns['LUM_Comment']['RemoteIp'] = array('RemoteIp', 'varchar(100)', 'YES', '', '0');
+// LUM_Discussion Table
+$DatabaseColumns['LUM_Discussion']['DiscussionID'] = array('DiscussionID', 'int(8)', 'NO', '', '1');
+$DatabaseColumns['LUM_Discussion']['AuthUserID'] = array('AuthUserID', 'int(8)', 'NO', '0', '0');
+$DatabaseColumns['LUM_Discussion']['WhisperUserID'] = array('WhisperUserID', 'int(8)', 'NO', '0', '0');
+$DatabaseColumns['LUM_Discussion']['FirstCommentID'] = array('FirstCommentID', 'int(8)', 'NO', '0', '0');
+$DatabaseColumns['LUM_Discussion']['LastUserID'] = array('LastUserID', 'int(8)', 'NO', '0', '0');
+$DatabaseColumns['LUM_Discussion']['Active'] = array('Active', "enum('1','0')", 'NO', '1', '0');
+$DatabaseColumns['LUM_Discussion']['Closed'] = array('Closed', "enum('1','0')", 'NO', '0', '0');
+$DatabaseColumns['LUM_Discussion']['Sticky'] = array('Sticky', "enum('1','0')", 'NO', '0', '0');
+$DatabaseColumns['LUM_Discussion']['Name'] = array('Name', 'varchar(100)', 'NO', '', '0');
+$DatabaseColumns['LUM_Discussion']['DateCreated'] = array('DateCreated', 'datetime', 'NO', '0000-00-00 00:00:00', '0');
+$DatabaseColumns['LUM_Discussion']['DateLastActive'] = array('DateLastActive', 'datetime', 'NO', '0000-00-00 00:00:00', '0');
+$DatabaseColumns['LUM_Discussion']['CountComments'] = array('CountComments', 'int(4)', 'NO', '1', '0');
+$DatabaseColumns['LUM_Discussion']['CategoryID'] = array('CategoryID', 'int(8)', 'YES', '', '0');
+$DatabaseColumns['LUM_Discussion']['WhisperToLastUserID'] = array('WhisperToLastUserID', 'int(8)', 'YES', '', '0');
+$DatabaseColumns['LUM_Discussion']['WhisperFromLastUserID'] = array('WhisperFromLastUserID', 'int(8)', 'YES', '', '0');
+$DatabaseColumns['LUM_Discussion']['DateLastWhisper'] = array('DateLastWhisper', 'datetime', 'YES', '', '0');
+$DatabaseColumns['LUM_Discussion']['TotalWhisperCount'] = array('TotalWhisperCount', 'int(8)', 'NO', '0', '0');
+$DatabaseColumns['LUM_Discussion']['Sink'] = array('Sink', "enum('1','0')", 'NO', '0', '0');
+// LUM_DiscussionUserWhisperFrom Table
+$DatabaseColumns['LUM_DiscussionUserWhisperFrom']['DiscussionID'] = array('DiscussionID', 'int(8)', 'NO', '0', '1');
+$DatabaseColumns['LUM_DiscussionUserWhisperFrom']['WhisperFromUserID'] = array('WhisperFromUserID', 'int(8)', 'NO', '0', '1');
+$DatabaseColumns['LUM_DiscussionUserWhisperFrom']['LastUserID'] = array('LastUserID', 'int(8)', 'NO', '0', '0');
+$DatabaseColumns['LUM_DiscussionUserWhisperFrom']['CountWhispers'] = array('CountWhispers', 'int(8)', 'NO', '0', '0');
+$DatabaseColumns['LUM_DiscussionUserWhisperFrom']['DateLastActive'] = array('DateLastActive', 'datetime', 'NO', '0000-00-00 00:00:00', '0');
+// LUM_DiscussionUserWhisperTo Table
+$DatabaseColumns['LUM_DiscussionUserWhisperTo']['DiscussionID'] = array('DiscussionID', 'int(8)', 'NO', '0', '1');
+$DatabaseColumns['LUM_DiscussionUserWhisperTo']['WhisperToUserID'] = array('WhisperToUserID', 'int(8)', 'NO', '0', '1');
+$DatabaseColumns['LUM_DiscussionUserWhisperTo']['LastUserID'] = array('LastUserID', 'int(8)', 'NO', '0', '0');
+$DatabaseColumns['LUM_DiscussionUserWhisperTo']['CountWhispers'] = array('CountWhispers', 'int(8)', 'NO', '0', '0');
+$DatabaseColumns['LUM_DiscussionUserWhisperTo']['DateLastActive'] = array('DateLastActive', 'datetime', 'NO', '0000-00-00 00:00:00', '0');
+// LUM_IpHistory Table
+$DatabaseColumns['LUM_IpHistory']['IpHistoryID'] = array('IpHistoryID', 'int(8)', 'NO', '', '1');
+$DatabaseColumns['LUM_IpHistory']['RemoteIp'] = array('RemoteIp', 'varchar(30)', 'NO', '', '0');
+$DatabaseColumns['LUM_IpHistory']['UserID'] = array('UserID', 'int(8)', 'NO', '0', '0');
+$DatabaseColumns['LUM_IpHistory']['DateLogged'] = array('DateLogged', 'datetime', 'NO', '0000-00-00 00:00:00', '0');
+// LUM_Role Table
+$DatabaseColumns['LUM_Role']['RoleID'] = array('RoleID', 'int(2)', 'NO', '', '1');
+$DatabaseColumns['LUM_Role']['Name'] = array('Name', 'varchar(100)', 'NO', '', '0');
+$DatabaseColumns['LUM_Role']['Icon'] = array('Icon', 'varchar(155)', 'NO', '', '0');
+$DatabaseColumns['LUM_Role']['Description'] = array('Description', 'varchar(200)', 'NO', '', '0');
+$DatabaseColumns['LUM_Role']['Active'] = array('Active', "enum('1','0')", 'NO', '1', '0');
+$DatabaseColumns['LUM_Role']['PERMISSION_SIGN_IN'] = array('PERMISSION_SIGN_IN', "enum('1','0')", 'NO', '0', '0');
+$DatabaseColumns['LUM_Role']['PERMISSION_HTML_ALLOWED'] = array('PERMISSION_HTML_ALLOWED', 'enum('0','1')', 'NO', '0', '0');
+$DatabaseColumns['LUM_Role']['PERMISSION_RECEIVE_APPLICATION_NOTIFICATION'] = array('PERMISSION_RECEIVE_APPLICATION_NOTIFICATION', "enum('1','0')", 'NO', '0', '0');
+$DatabaseColumns['LUM_Role']['Permissions'] = array('Permissions', 'text', 'NO', '', '0');
+$DatabaseColumns['LUM_Role']['Priority'] = array('Priority', 'int(8)', 'NO', '0', '0');
+$DatabaseColumns['LUM_Role']['UnAuthenticated'] = array('UnAuthenticated', "enum('1','0')", 'NO', '0', '0');
+// LUM_Style Table
+$DatabaseColumns['LUM_Style']['StyleID'] = array('StyleID', 'int(3)', 'NO', '', '1');
+$DatabaseColumns['LUM_Style']['AuthUserID'] = array('AuthUserID', 'int(8)', 'NO', '0', '0');
+$DatabaseColumns['LUM_Style']['Name'] = array('Name', 'varchar(50)', 'NO', '', '0');
+$DatabaseColumns['LUM_Style']['Url'] = array('Url', 'varchar(255)', 'NO', '', '0');
+$DatabaseColumns['LUM_Style']['PreviewImage'] = array('PreviewImage', 'varchar(20)', 'NO', '', '0');
+// LUM_User Table
+$DatabaseColumns['LUM_User']['UserID'] = array('UserID', 'int(8)', 'NO', '', '1');
+$DatabaseColumns['LUM_User']['RoleID'] = array('RoleID', 'int(2)', 'NO', '0', '0');
+$DatabaseColumns['LUM_User']['StyleID'] = array('StyleID', 'int(3)', 'NO', '1', '0');
+$DatabaseColumns['LUM_User']['CustomStyle'] = array('CustomStyle', 'varchar(255)', 'YES', '', '0');
+$DatabaseColumns['LUM_User']['FirstName'] = array('FirstName', 'varchar(50)', 'NO', '', '0');
+$DatabaseColumns['LUM_User']['LastName'] = array('LastName', 'varchar(50)', 'NO', '', '0');
+$DatabaseColumns['LUM_User']['Name'] = array('Name', 'varchar(20)', 'NO', '', '0');
+$DatabaseColumns['LUM_User']['Password'] = array('Password', 'varchar(32)', 'YES', '', '0');
+$DatabaseColumns['LUM_User']['VerificationKey'] = array('VerificationKey', 'varchar(50)', 'NO', '', '0');
+$DatabaseColumns['LUM_User']['EmailVerificationKey'] = array('EmailVerificationKey', 'varchar(50)', 'YES', '', '0');
+$DatabaseColumns['LUM_User']['Email'] = array('Email', 'varchar(200)', 'NO', '', '0');
+$DatabaseColumns['LUM_User']['UtilizeEmail'] = array('UtilizeEmail', "enum('1','0')", 'NO', '0', '0');
+$DatabaseColumns['LUM_User']['ShowName'] = array('ShowName', "enum('1','0')", 'NO', '1', '0');
+$DatabaseColumns['LUM_User']['Icon'] = array('Icon', 'varchar(255)', 'YES', '', '0');
+$DatabaseColumns['LUM_User']['Picture'] = array('Picture', 'varchar(255)', 'YES', '', '0');
+$DatabaseColumns['LUM_User']['Attributes'] = array('Attributes', 'text', 'NO', '', '0');
+$DatabaseColumns['LUM_User']['CountVisit'] = array('CountVisit', 'int(8)', 'NO', '0', '0');
+$DatabaseColumns['LUM_User']['CountDiscussions'] = array('CountDiscussions', 'int(8)', 'NO', '0', '0');
+$DatabaseColumns['LUM_User']['CountComments'] = array('CountComments', 'int(8)', 'NO', '0', '0');
+$DatabaseColumns['LUM_User']['DateFirstVisit'] = array('DateFirstVisit', 'datetime', 'NO', '0000-00-00 00:00:00', '0');
+$DatabaseColumns['LUM_User']['DateLastActive'] = array('DateLastActive', 'datetime', 'NO', '0000-00-00 00:00:00', '0');
+$DatabaseColumns['LUM_User']['RemoteIp'] = array('RemoteIp', 'varchar(100)', 'NO', '', '0');
+$DatabaseColumns['LUM_User']['LastDiscussionPost'] = array('LastDiscussionPost', 'datetime', 'YES', '', '0');
+$DatabaseColumns['LUM_User']['DiscussionSpamCheck'] = array('DiscussionSpamCheck', 'int(8)', 'NO', '0', '0');
+$DatabaseColumns['LUM_User']['LastCommentPost'] = array('LastCommentPost', 'datetime', 'YES', '', '0');
+$DatabaseColumns['LUM_User']['CommentSpamCheck'] = array('CommentSpamCheck', 'int(8)', 'NO', '0', '0');
+$DatabaseColumns['LUM_User']['UserBlocksCategories'] = array('UserBlocksCategories', "enum('1','0')", 'NO', '0', '0');
+$DatabaseColumns['LUM_User']['DefaultFormatType'] = array('DefaultFormatType', 'varchar(20)', 'YES', '', '0');
+$DatabaseColumns['LUM_User']['Preferences'] = array('Preferences', 'text', 'YES', '', '0');
+$DatabaseColumns['LUM_User']['SendNewApplicantNotifications'] = array('SendNewApplicantNotifications', "enum('1','0')", 'NO', '0', '0');
+// LUM_UserBookmark Table
+$DatabaseColumns['LUM_UserBookmark']['UserID'] = array('UserID', 'int(8)', 'NO', '0', '1');
+$DatabaseColumns['LUM_UserBookmark']['DiscussionID'] = array('DiscussionID', 'int(8)', 'NO', '0', '1');
+// LUM_UserDiscussionWatch Table
+$DatabaseColumns['LUM_UserDiscussionWatch']['UserID'] = array('UserID', 'int(8)', 'NO', '0', '1');
+$DatabaseColumns['LUM_UserDiscussionWatch']['DiscussionID'] = array('DiscussionID', 'int(8)', 'NO', '0', '1');
+$DatabaseColumns['LUM_UserDiscussionWatch']['CountComments'] = array('CountComments', 'int(8)', 'NO', '0', '0');
+$DatabaseColumns['LUM_UserDiscussionWatch']['LastViewed'] = array('LastViewed', 'datetime', 'NO', '0000-00-00 00:00:00', '0');
+// LUM_UserRoleHistory Table
+$DatabaseColumns['LUM_UserRoleHistory']['UserID'] = array('UserID', 'int(8)', 'NO', '0', '1');
+$DatabaseColumns['LUM_UserRoleHistory']['RoleID'] = array('RoleID', 'int(2)', 'NO', '0', '0');
+$DatabaseColumns['LUM_UserRoleHistory']['Date'] = array('Date', 'datetime', 'NO', '0000-00-00 00:00:00', '0');
+$DatabaseColumns['LUM_UserRoleHistory']['AdminUserID'] = array('AdminUserID', 'int(8)', 'NO', '0', '0');
+$DatabaseColumns['LUM_UserRoleHistory']['Notes'] = array('Notes', 'varchar(200)', 'YES', '', '0');
+$DatabaseColumns['LUM_UserRoleHistory']['RemoteIp'] = array('RemoteIp', 'varchar(100)', 'YES', '', '0');
 
 class FauxContext {
    var $WarningCollector;
@@ -56,110 +177,62 @@ $Context->WarningCollector = &$WarningCollector;
 $Context->ErrorManager = new ErrorManager();
 $Context->SqlCollector = new MessageCollector();
 
-$PostBackAction = ForceIncomingString("PostBackAction", "");
-$DBHost = ForceIncomingString("DBHost", "");
-$DBName = ForceIncomingString("DBName", "");
-$DBUser = ForceIncomingString("DBUser", "");
-$DBPass = ForceIncomingString("DBPass", "");
-$Username = ForceIncomingString("Username", "");
-$Password = ForceIncomingString("Password", "");
-$ConfirmPassword = ForceIncomingString("ConfirmPassword", "");
-$SupportEmail = ForceIncomingString("SupportEmail", "");
-$SupportName = ForceIncomingString("SupportName", "");
-$ApplicationTitle = ForceIncomingString("ApplicationTitle", "Vanilla");
-$CookieDomain = ForceIncomingString("CookieDomain", "");
+// Retrieve all postback parameters
+$PostBackAction = ForceIncomingString('PostBackAction', '');
+$DBHost = ForceIncomingString('DBHost', '');
+$DBName = ForceIncomingString('DBName', '');
+$DBUser = ForceIncomingString('DBUser', '');
+$DBPass = ForceIncomingString('DBPass', '');
+$Username = ForceIncomingString('Username', '');
+$Password = ForceIncomingString('Password', '');
+$ConfirmPassword = ForceIncomingString('ConfirmPassword', '');
+$SupportEmail = ForceIncomingString('SupportEmail', '');
+$SupportName = ForceIncomingString('SupportName', '');
+$ApplicationTitle = ForceIncomingString('ApplicationTitle', 'Vanilla');
+$CookieDomain = ForceIncomingString('CookieDomain', '');
 // Make the banner title the same as the application title
-$Language = ForceIncomingString("Language", "English");
-$ApplicationPath = ForceString(@$_SERVER['HTTP_HOST'], "").dirname(ForceString(@$_SERVER["PHP_SELF"], ""));
-$WorkingDirectory = getcwd()."/";
+$ApplicationPath = ForceString(@$_SERVER['HTTP_HOST'], '').dirname(ForceString(@$_SERVER['PHP_SELF'], ''));
+$WorkingDirectory = getcwd().'/';
 $CurrentStep = 1;
 
-// Step 1. Set up read/write permissions
+// Step 1. Check for correct PHP, MySQL, and permissions
 if ($PostBackAction == "Permissions") {
    
-   // First get the read/write permissions on application files
-   $Files = array();
-   $Files[] = "appg/settings.php";
-   $Files[] = "appg/language.php";
-   $Files[] = "appg/extensions.php";
-   $Files[] = "database.sql";
-   for ($i = 0; $i < count($Files); $i++) {
-      // Read the file first
-      $AbsoluteFile = $WorkingDirectory.$Files[$i];
-      $Lines = @file($AbsoluteFile);
-      if (!$Lines) $WarningCollector->Add("We couldn't read the \"".$AbsoluteFile."\" file.");
-      // Open the file for reading and writing
-      $FileHandle = @fopen($AbsoluteFile, "wb");
-      if (!$FileHandle) {
-         $WarningCollector->Add("We couldn't open the \"".$AbsoluteFile."\" file.");
-      } else {
-         $FileContents = implode("", $Lines);
-         if (!@fwrite($FileHandle, $FileContents)) $WarningCollector->Add("We couldn't write to the \"".$AbsoluteFile."\" file.");
-         @fclose($FileHandle);
-      }
-   }
-   
-   // Now attempt to create a file in the images directory
-   $AbsoluteFile = $WorkingDirectory."images/phpinfo.php";
-   $FileHandle = @fopen($AbsoluteFile, "wb");
-   if (!$FileHandle) {
-      $WarningCollector->Add("We couldn't create our test file \"".$AbsoluteFile."\" in the /images directory.");
-   } else {
-      $FileContents = "<?php phpinfo(); ?>";
-      if (!@fwrite($FileHandle, $FileContents)) $WarningCollector->Add("We couldn't write our test file \"".$AbsoluteFile."\" to the /images directory.");
-      @fclose($FileHandle);
-   }
-   
+   // Make sure we are running at least PHP 4.1.0
+   if (intval(str_replace('.', '', phpversion())) < 410) $WarningCollector->Add("It appears as though you are running PHP version ".phpversion().". Vanilla requires at least version 4.1.0 of PHP. You will need to upgrade your version of PHP before you can continue.");
+   // Make sure MySQL is available
+	if (!function_exists('mysql_connect')) $WarningCollector->Add("It appears as though you do not have MySQL enabled for PHP. You will need a working copy of MySQL and PHP's MySQL extensions enabled in order to run Vanilla.");   
+   // Make sure the conf folder is writeable
+   if (!is_writable('../conf/')) $WarningCollector->Add("Vanilla needs to have write permission enabled on the conf folder.");
+      
    if ($WarningCollector->Count() == 0) $CurrentStep = 2;
 } elseif ($PostBackAction == "Database") {
    $CurrentStep = 2;
    // Test the database params provided by the user
    $Connection = @mysql_connect($DBHost, $DBUser, $DBPass);
    if (!$Connection) {
-      $WarningCollector->Add("We couldn't connect to the server you provided (".$DBHost."). Are you sure you entered the right server, username and password?");
+      $WarningCollector->Add("We couldn't connect to the server you provided (".$DBHost."). The database responded with the following message:", $php_errormsg);
    } elseif (!mysql_select_db($DBName, $Connection)) {
       $WarningCollector->Add("We connected to the server, but we couldn't access the \"".$DBName."\" database. Are you sure it exists and that the specified user has access to it?");
    }
    
    // If the database connection worked, attempt to set up the database
    if ($WarningCollector->Count() == 0 && $Connection) {
-      // Open the database file & retrieve sql
-      $SqlLines = @file($WorkingDirectory."database.sql");
-      if (!$SqlLines) {
-         $WarningCollector->Add("We couldn't open the \"".$WorkingDirectory."database.sql\" file.");
+      // Retrieve a list of all tables in the database
+      $TableData = @mysql_query('show tables', $Connection);
+      if (!$TableData) {
+         $WarningCollector->Add("We had some problems identifying the tables already in your database: ". mysql_error($Connection));
       } else {
-         $CurrentQuery = "";
-         $CurrentLine = "";
-         for ($i = 0; $i < count($SqlLines); $i++) {
-            $CurrentLine = trim($SqlLines[$i]);
-            if ($CurrentLine == "") {
-               if ($CurrentQuery != "") {
-                  if (!@mysql_query($CurrentQuery, $Connection)) {
-                     if (eregi("Table 'LUM_([a-zA-Z]+)' already exists", mysql_error($Connection))) {
-                        $WarningCollector->Add("It looks like you're trying to overwrite an existing installation of the Vanilla database. Are you sure you want to do this? If so, you'll need to go and manually remove the existing tables yourself.");
-                     } else {
-                        $WarningCollector->Add("An error occurred while we were attempting to create the database tables. Mysql reported the following error: ".mysql_error($Connection));
-                     }
-                     $i = count($SqlLines)+1;
-                  }
-                  $CurrentQuery = "";
-               }
-            } else {
-               $CurrentQuery .= $CurrentLine;
-            }
+         
+      }
+      if (!@mysql_query($CurrentQuery, $Connection)) {
+         if (eregi("Table 'LUM_([a-zA-Z]+)' already exists", mysql_error($Connection))) {
+            $WarningCollector->Add("It looks like you're trying to overwrite an existing installation of the Vanilla database. Are you sure you want to do this? If so, you'll need to go and manually remove the existing tables yourself.");
+         } else {
+            $WarningCollector->Add("An error occurred while we were attempting to create the database tables. Mysql reported the following error: ".mysql_error($Connection));
          }
-         // Make sure to catch the last query
-         if ($CurrentQuery != "") {
-            if (!@mysql_query($CurrentQuery, $Connection)) {
-               if (eregi("Table 'LUM_([a-zA-Z]+)' already exists", mysql_error($Connection))) {
-                  $WarningCollector->Add("It looks like you're trying to overwrite an existing installation of the Vanilla database. Are you sure you want to do this? If so, you'll need to go and manually remove the existing tables yourself.");
-               } else {
-                  $WarningCollector->Add("An error occurred while we were attempting to create the database tables. Mysql reported the following error: ".mysql_error($Connection));
-               }
-               $i = count($SqlLines)+1;
-            }
-         }
-      }      
+         $i = count($SqlLines)+1;
+      }
       // Close the database connection
       @mysql_close($Connection);
    }
