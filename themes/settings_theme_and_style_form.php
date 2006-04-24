@@ -7,8 +7,9 @@ if (!$this->Context->Session->User->Permission('PERMISSION_MANAGE_THEMES') && !$
          '.$this->Get_Warnings().'
    </div>';
 } else {
-   echo '<div id="Form" class="Account Theme">
-      <fieldset>
+   echo '<div id="Form" class="Account Theme">';
+      if (ForceIncomingBool('Saved', 0)) echo '<div class="Success">'.$this->Context->GetDefinition('ThemeChangesSaved').'</div>';   
+      echo '<fieldset>
          <legend>'.$this->Context->GetDefinition('ThemeAndStyleManagement').'</legend>
          '.$this->Get_Warnings().'
          '.$this->Get_PostBackForm('frmThemeChange').'
@@ -17,7 +18,6 @@ if (!$this->Context->Session->User->Permission('PERMISSION_MANAGE_THEMES') && !$
    
    if ($this->Context->Session->User->Permission('PERMISSION_MANAGE_THEMES')) {
       $this->PostBackParams->Set('PostBackAction', 'ProcessThemeChange');
-      if (ForceIncomingBool('Saved', 0)) echo '<div class="Success">'.$this->Context->GetDefinition('ThemeChangesSaved').'</div>';
       echo '<li>
          <label for="ddTheme">'.$this->Context->GetDefinition('ThemeLabel').'</label>
          '.$this->ThemeSelect->Get().'
