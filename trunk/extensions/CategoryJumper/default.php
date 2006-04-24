@@ -29,7 +29,7 @@ function GetCategoryJumper(&$Context) {
    } else {
       $Select = $Context->ObjectFactory->NewObject($Context, 'Select');
       $Select->Name = 'CategoryID';
-      $Select->SelectedID = ForceIncomingInt('CategoryID', 0);
+      $Select->SelectedValue = ForceIncomingInt('CategoryID', 0);
       if ($Context->Configuration['URL_BUILDING_METHOD'] == 'mod_rewrite') {
          $Select->Attributes = "onchange=\"document.location='".$Context->Configuration['WEB_ROOT']."'+(this.options[this.selectedIndex].value > 0 ? this.options[this.selectedIndex].value+'/' : 'discussions/');\"";
       } else {

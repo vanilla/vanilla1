@@ -40,7 +40,7 @@ echo '<div id="Form" class="Account Search">
 				if ($this->Context->Configuration['USE_CATEGORIES']) {
 					$this->CategorySelect->Attributes = ' id="ddDiscussionCategories"';
 					$this->CategorySelect->CssClass = 'SearchSelect';
-					$this->CategorySelect->SelectedID = ($this->Search->Type == 'Topics' ? $this->Search->Categories : '');
+					$this->CategorySelect->SelectedValue = ($this->Search->Type == 'Topics' ? $this->Search->Categories : '');
 					echo '<li>
 						<label for="ddDiscussionCategories">'.$this->Context->GetDefinition('InTheCategory').'</label>'
 						.$this->CategorySelect->Get().'
@@ -75,7 +75,7 @@ echo '<div id="Form" class="Account Search">
 				if ($this->Context->Configuration['USE_CATEGORIES']) {
 					$this->CategorySelect->Attributes = ' id="ddCommentCategories"';
 					$this->CategorySelect->CssClass = 'SearchSelect';
-					$this->CategorySelect->SelectedID = ($this->Search->Type == 'Comments' ? $this->Search->Categories : '');
+					$this->CategorySelect->SelectedValue = ($this->Search->Type == 'Comments' ? $this->Search->Categories : '');
 					echo '<li>
 						<label for="ddCommentCategories">'.$this->Context->GetDefinition('InTheCategory').'</label>'
 						.$this->CategorySelect->Get().'

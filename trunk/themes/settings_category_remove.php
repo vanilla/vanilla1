@@ -16,9 +16,9 @@ echo '<div id="Form" class="Account CategoryRemoveForm">
       </ul>';
       if ($CategoryID > 0) {
          $this->CategorySelect->Attributes = ' id="sReplacementCategory"';
-         $this->CategorySelect->RemoveOption($this->CategorySelect->SelectedID);
+         $this->CategorySelect->RemoveOption($this->CategorySelect->SelectedValue);
          $this->CategorySelect->Name = 'ReplacementCategoryID';
-         $this->CategorySelect->SelectedID = ForceIncomingInt('ReplacementCategoryID', 0);
+         $this->CategorySelect->SelectedValue = ForceIncomingInt('ReplacementCategoryID', 0);
          echo '<h2>'.$this->Context->GetDefinition('SelectReplacementCategory').'</h2>
          <ul>
             <li>

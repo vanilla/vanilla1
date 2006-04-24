@@ -6,7 +6,7 @@ echo '<div id="Form" class="Account RoleEditForm">
       <legend>'.$this->Context->GetDefinition('RoleManagement').'</legend>';
    if ($RoleID > 0) {
       $this->RoleSelect->Attributes = "onchange=\"document.location='".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=Role')."&amp;RoleID='+this.options[this.selectedIndex].value;\" id=\"sRoleSelect\"";
-      $this->RoleSelect->SelectedID = $RoleID;
+      $this->RoleSelect->SelectedValue = $RoleID;
       echo $this->Get_Warnings()
          .$this->Get_PostBackForm('frmRole')
          .'<h2>'.$this->Context->GetDefinition('SelectRoleToEdit').'</h2>

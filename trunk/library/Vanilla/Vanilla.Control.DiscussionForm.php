@@ -180,7 +180,7 @@ class DiscussionForm extends PostBackControl {
 		$cs = $this->Context->ObjectFactory->NewObject($this->Context, 'Select');
 		$cs->Name = 'CategoryID';
 		$cs->CssClass = 'CategorySelect';
-		$cs->SelectedID = ForceIncomingInt('CategoryID', $Discussion->CategoryID);
+		$cs->SelectedValue = ForceIncomingInt('CategoryID', $Discussion->CategoryID);
 		$cat = $this->Context->ObjectFactory->NewObject($this->Context, 'Category');
 		$LastBlocked = -1;
 		while ($Row = $this->Context->Database->GetRow($CategoryData)) {
