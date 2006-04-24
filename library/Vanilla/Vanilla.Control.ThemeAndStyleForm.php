@@ -87,7 +87,7 @@ class ThemeAndStyleForm extends PostBackControl {
 				$this->ThemeSelect->Attributes = " id=\"ddTheme\" onchange=\"document.location='".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=ThemeChange&amp;Theme=')."'+this.options[this.selectedIndex].value;\"";
 				for ($i = 0; $i < count($this->Themes); $i++) {
 					$this->ThemeSelect->AddOption($i, $this->Themes[$i]);
-					if ($this->Themes[$i] == $CurrentTheme) $this->ThemeSelect->SelectedID = $i;
+					if ($this->Themes[$i] == $CurrentTheme) $this->ThemeSelect->SelectedValue = $i;
 				}				
 			}
 			
@@ -98,7 +98,7 @@ class ThemeAndStyleForm extends PostBackControl {
 				$this->StyleSelect->Attributes = ' id="ddStyle"';
 				for ($i = 0; $i < count($this->Styles); $i++) {
 					$this->StyleSelect->AddOption($i, $this->Styles[$i]);
-					if ($this->Context->Configuration['WEB_ROOT'].'themes/'.$CurrentTheme.'/styles/'.$this->Styles[$i].'/' == $this->Context->Configuration['DEFAULT_STYLE']) $this->StyleSelect->SelectedID = $i;
+					if ($this->Context->Configuration['WEB_ROOT'].'themes/'.$CurrentTheme.'/styles/'.$this->Styles[$i].'/' == $this->Context->Configuration['DEFAULT_STYLE']) $this->StyleSelect->SelectedValue = $i;
 				}				
 			}
 

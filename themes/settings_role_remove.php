@@ -16,9 +16,9 @@ echo '<div id="Form" class="Account RoleRemoveForm">
       </ul>';
       if ($RoleID > 0) {
          $this->RoleSelect->Attributes = ' id="sReplacementRole"';
-         $this->RoleSelect->RemoveOption($this->RoleSelect->SelectedID);
+         $this->RoleSelect->RemoveOption($this->RoleSelect->SelectedValue);
          $this->RoleSelect->Name = 'ReplacementRoleID';
-         $this->RoleSelect->SelectedID = ForceIncomingInt('ReplacementRoleID', 0);
+         $this->RoleSelect->SelectedValue = ForceIncomingInt('ReplacementRoleID', 0);
          
          echo '<h2>'.$this->Context->GetDefinition('SelectReplacementRole').'</h2>
          <ul>

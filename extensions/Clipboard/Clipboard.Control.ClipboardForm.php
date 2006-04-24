@@ -61,7 +61,7 @@ class ClipboardForm extends PostBackControl {
                <h1>".$this->Context->GetDefinition("ClipboardManagement")."</h1>");
                if ($ClippingID > 0) {
                   $this->ClippingSelect->Attributes = "onchange=\"document.location='?PostBackAction=Clipping&amp;ClippingID='+this.options[this.selectedIndex].value;\"";
-                  $this->ClippingSelect->SelectedID = $ClippingID;
+                  $this->ClippingSelect->SelectedValue = $ClippingID;
                   echo("<div class=\"Form\" id=\"Clippings\">
                      ".$this->Get_Warnings()."
                      ".$this->Get_PostBackForm("frmClipping")."

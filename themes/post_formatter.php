@@ -5,7 +5,7 @@ if ($this->Context->Session->User->Preference('ShowFormatSelector') && $FormatCo
    $f = $this->Context->ObjectFactory->NewObject($this->Context, 'Radio');
    $f->Name = 'FormatType';
    $f->CssClass = 'FormatTypeRadio';
-   $f->SelectedID = $SelectedFormatType;
+   $f->SelectedValue = $SelectedFormatType;
    while (list($Name, $Object) = each($this->Context->StringManipulator->Formatters)) {
       $f->AddOption($Name, $this->Context->GetDefinition($Name));
    }

@@ -328,7 +328,7 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 							<legend>'.$this->Context->GetDefinition("StyleManagement").'</legend>');
 							if ($StyleID > 0) {
 								$this->StyleSelect->Attributes = "onchange=\"document.location='?PostBackAction=Style&amp;StyleID='+this.options[this.selectedIndex].value;\"";
-								$this->StyleSelect->SelectedID = $StyleID;
+								$this->StyleSelect->SelectedValue = $StyleID;
 								echo $this->Get_Warnings().'
 									'.$this->Get_PostBackForm("frmStyle").'
 									<h2>'.$this->Context->GetDefinition("SelectStyleToEdit").'</h2>
@@ -381,7 +381,7 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 				} elseif ($this->PostBackAction == "StyleRemove") {
 					$this->PostBackParams->Set("PostBackAction", "ProcessStyleRemove");
 					$this->StyleSelect->Attributes = "onchange=\"document.location='".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=StyleRemove&amp;StyleID='+this.options[this.selectedIndex].value").";\"";
-					$this->StyleSelect->SelectedID = $StyleID;
+					$this->StyleSelect->SelectedValue = $StyleID;
 					echo '<div id="Form" class="Account Identity">
 						<fieldset>
 							<legend>'.$this->Context->GetDefinition('StyleManagement').'</legend>
@@ -397,9 +397,9 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 								
 							if ($StyleID > 0) {
 								$this->StyleSelect->Attributes = "";
-								$this->StyleSelect->RemoveOption($this->StyleSelect->SelectedID);
+								$this->StyleSelect->RemoveOption($this->StyleSelect->SelectedValue);
 								$this->StyleSelect->Name = "ReplacementStyleID";
-								$this->StyleSelect->SelectedID = ForceIncomingInt("ReplacementStyleID", 0);
+								$this->StyleSelect->SelectedValue = ForceIncomingInt("ReplacementStyleID", 0);
 								$this->StyleSelect->Attributes = ' id="ddReplacementStyleID"';
 								echo '<h2>'.$this->Context->GetDefinition('SelectAReplacementStyle').'</h2>
 								<ul>

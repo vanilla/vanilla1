@@ -51,7 +51,7 @@ class SearchForm extends PostBackControl {
       $this->CategorySelect->CssClass = 'SearchSelect';
       $this->CategorySelect->AddOption('', $this->Context->GetDefinition('AllCategories'));
       $this->CategorySelect->AddOptionsFromDataSet($this->Context->Database, $CategorySet, 'Name', 'Name');
-      $this->CategorySelect->SelectedID = $this->Search->Categories;
+      $this->CategorySelect->SelectedValue = $this->Search->Categories;
 
       // UserOrder
       $this->OrderSelect = $this->Context->ObjectFactory->NewObject($this->Context, 'Select');
@@ -60,7 +60,7 @@ class SearchForm extends PostBackControl {
       $this->OrderSelect->Attributes = " id=\"UserOrder\"";
       $this->OrderSelect->AddOption('', $this->Context->GetDefinition('Username'));
       $this->OrderSelect->AddOption('Date', $this->Context->GetDefinition('DateLastActive'));
-      $this->OrderSelect->SelectedID = $this->Search->UserOrder;
+      $this->OrderSelect->SelectedValue = $this->Search->UserOrder;
 
       // Type
       $this->TypeRadio = $this->Context->ObjectFactory->NewObject($this->Context, 'Radio');
@@ -69,7 +69,7 @@ class SearchForm extends PostBackControl {
       $this->TypeRadio->AddOption('Topics', $this->Context->GetDefinition('Topics'));
       $this->TypeRadio->AddOption('Comments', $this->Context->GetDefinition('Comments'));
       $this->TypeRadio->AddOption('Users', $this->Context->GetDefinition('Users'));
-      $this->TypeRadio->SelectedID = $this->Search->Type;
+      $this->TypeRadio->SelectedValue = $this->Search->Type;
       
       $rm = $this->Context->ObjectFactory->NewContextObject($this->Context, 'RoleManager');
       $RoleSet = $rm->GetRoles();
@@ -80,7 +80,7 @@ class SearchForm extends PostBackControl {
       $this->RoleSelect->AddOption('', $this->Context->GetDefinition('AllRoles'));
 		if ($this->Context->Session->User->Permission('PERMISSION_APPROVE_APPLICANTS')) $this->RoleSelect->AddOption('Applicant', $this->Context->GetDefinition('Applicant'));
       $this->RoleSelect->AddOptionsFromDataSet($this->Context->Database, $RoleSet, 'Name', 'Name');
-      $this->RoleSelect->SelectedID = $this->Search->Roles;
+      $this->RoleSelect->SelectedValue = $this->Search->Roles;
 		
 		$this->CallDelegate('PreSearchQuery');
 

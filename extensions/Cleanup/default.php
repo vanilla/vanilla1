@@ -421,7 +421,7 @@ if ($Context->SelfUrl == 'settings.php' && $Context->Session->User->Permission('
 						$DaySelect->AddOption($i, $i);
 						$i += 30;
 					}
-					$DaySelect->SelectedID = 30;
+					$DaySelect->SelectedValue = 30;
 					echo '<div id="Form" class="Account CleanupForm">
 						<fieldset>
 						<legend>'.$this->Context->GetDefinition('SystemCleanup').'</legend>

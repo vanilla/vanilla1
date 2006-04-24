@@ -49,7 +49,7 @@ echo '<div id="Form" class="Account GlobalsForm">';
                $Selector->AddOption($i, $i);
                $i += 10;
             }
-            $Selector->SelectedID = $this->ConfigurationManager->GetSetting('DISCUSSIONS_PER_PAGE');
+            $Selector->SelectedValue = $this->ConfigurationManager->GetSetting('DISCUSSIONS_PER_PAGE');
             echo $Selector->Get().'
          </li>
          <li>
@@ -57,7 +57,7 @@ echo '<div id="Form" class="Account GlobalsForm">';
             ';
             $Selector->Name = 'COMMENTS_PER_PAGE';
             $Selector->Attributes = ' id="ddCommentsPerPage"';
-            $Selector->SelectedID = $this->ConfigurationManager->GetSetting('COMMENTS_PER_PAGE');
+            $Selector->SelectedValue = $this->ConfigurationManager->GetSetting('COMMENTS_PER_PAGE');
             echo $Selector->Get().'
          </li>
          <li>
@@ -65,7 +65,7 @@ echo '<div id="Form" class="Account GlobalsForm">';
             ';
             $Selector->Name = 'SEARCH_RESULTS_PER_PAGE';
             $Selector->Attributes = ' id="ddSearchResultsPerPage"';
-            $Selector->SelectedID = $this->ConfigurationManager->GetSetting('SEARCH_RESULTS_PER_PAGE');
+            $Selector->SelectedValue = $this->ConfigurationManager->GetSetting('SEARCH_RESULTS_PER_PAGE');
             echo $Selector->Get().'
          </li>
          <li>
@@ -82,7 +82,7 @@ echo '<div id="Form" class="Account GlobalsForm">';
                $Selector->AddOption($i, $i);
                $i += 4;
             }
-            $Selector->SelectedID = $this->ConfigurationManager->GetSetting('PANEL_BOOKMARK_COUNT');
+            $Selector->SelectedValue = $this->ConfigurationManager->GetSetting('PANEL_BOOKMARK_COUNT');
             echo $Selector->Get().'
          </li>
          <li>
@@ -90,7 +90,7 @@ echo '<div id="Form" class="Account GlobalsForm">';
             ';
             $Selector->Name = 'PANEL_PRIVATE_COUNT';
             $Selector->Attributes = ' id="ddMaxPrivateInPanel"';
-            $Selector->SelectedID = $this->ConfigurationManager->GetSetting('PANEL_PRIVATE_COUNT');
+            $Selector->SelectedValue = $this->ConfigurationManager->GetSetting('PANEL_PRIVATE_COUNT');
             echo $Selector->Get().'
          </li>
          <li>
@@ -98,15 +98,15 @@ echo '<div id="Form" class="Account GlobalsForm">';
             ';
             $Selector->Name = 'PANEL_HISTORY_COUNT';
             $Selector->Attributes = ' id="ddMaxBrowsingHistoryInPanel"';
-            $Selector->SelectedID = $this->ConfigurationManager->GetSetting('PANEL_HISTORY_COUNT');
+            $Selector->SelectedValue = $this->ConfigurationManager->GetSetting('PANEL_HISTORY_COUNT');
             echo $Selector->Get().'
          </li>
          <li>
             <label for="ddMaxDiscussionsInPanel">'.$this->Context->GetDefinition('MaxDiscussionsInPanel').'</label>
             ';
-            $Selector->Name = 'PANEL_USERDISCUSSIONS_COUNT';
+            $Selector->Name = 'PANEL_USER_DISCUSSIONS_COUNT';
             $Selector->Attributes = ' id="ddMaxDiscussionsInPanel"';
-            $Selector->SelectedID = $this->ConfigurationManager->GetSetting('PANEL_USERDISCUSSIONS_COUNT');
+            $Selector->SelectedValue = $this->ConfigurationManager->GetSetting('PANEL_USER_DISCUSSIONS_COUNT');
             echo $Selector->Get().'
          </li>
          <li>
@@ -114,7 +114,7 @@ echo '<div id="Form" class="Account GlobalsForm">';
             ';
             $Selector->Name = 'PANEL_SEARCH_COUNT';
             $Selector->Attributes = ' id="ddMaxSavedSearchesInPanel"';
-            $Selector->SelectedID = $this->ConfigurationManager->GetSetting('PANEL_SEARCH_COUNT');
+            $Selector->SelectedValue = $this->ConfigurationManager->GetSetting('PANEL_SEARCH_COUNT');
             echo $Selector->Get().'
             <p class="Description">'.$this->Context->GetDefinition('CountsNotes').'</p>
          </li>
@@ -133,7 +133,7 @@ echo '<div id="Form" class="Account GlobalsForm">';
                   $Selector->AddOption($i, $i);
                }
                $Selector->Name = 'DISCUSSION_POST_THRESHOLD';
-               $Selector->SelectedID = $this->ConfigurationManager->GetSetting('DISCUSSION_POST_THRESHOLD');
+               $Selector->SelectedValue = $this->Context->Configuration['DISCUSSION_POST_THRESHOLD'];
                
                $SecondsSelector = $this->Context->ObjectFactory->NewObject($this->Context, 'Select');
                $SecondsSelector->CssClass = 'SmallSelect';
@@ -142,23 +142,23 @@ echo '<div id="Form" class="Account GlobalsForm">';
                   $i += 9;							
                }
                $SecondsSelector->Name = 'DISCUSSION_TIME_THRESHOLD';
-               $SecondsSelector->SelectedID = $this->ConfigurationManager->GetSetting('DISCUSSION_TIME_THRESHOLD');
+               $SecondsSelector->SelectedValue = $this->Context->Configuration['DISCUSSION_TIME_THRESHOLD'];
                $SecondsSelector2 = $SecondsSelector;
                $SecondsSelector2->Name = 'DISCUSSION_THRESHOLD_PUNISHMENT';
-               $SecondsSelector2->SelectedID = $this->ConfigurationManager->GetSetting('DISCUSSION_THRESHOLD_PUNISHMENT');
+               $SecondsSelector2->SelectedValue = $this->Context->Configuration['DISCUSSION_THRESHOLD_PUNISHMENT'];
                
                echo '<br /><br />'.str_replace(array('//1', '//2', '//3'),
                   array($Selector->Get(), $SecondsSelector->Get(), $SecondsSelector2->Get()),
                   $this->Context->GetDefinition('XDiscussionsYSecondsZFreeze'));
                   
                $Selector->Name = 'COMMENT_POST_THRESHOLD';
-               $Selector->SelectedID = $this->ConfigurationManager->GetSetting('COMMENT_POST_THRESHOLD');
+               $Selector->SelectedValue = $this->Context->Configuration['COMMENT_POST_THRESHOLD'];
                
                $SecondsSelector->Name = 'COMMENT_TIME_THRESHOLD';
-               $SecondsSelector->SelectedID = $this->ConfigurationManager->GetSetting('COMMENT_TIME_THRESHOLD');
+               $SecondsSelector->SelectedValue = $this->Context->Configuration['COMMENT_TIME_THRESHOLD'];
                
                $SecondsSelector2->Name = 'COMMENT_THRESHOLD_PUNISHMENT';
-               $SecondsSelector2->SelectedID = $this->ConfigurationManager->GetSetting('COMMENT_THRESHOLD_PUNISHMENT');
+               $SecondsSelector2->SelectedValue = $this->Context->Configuration['COMMENT_THRESHOLD_PUNISHMENT'];
                
                echo '<br /><br />'
                   .str_replace(array('//1', '//2', '//3'),
