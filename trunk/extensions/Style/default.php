@@ -433,7 +433,7 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 							'<form method="get" action="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl).'">
 							<input type="hidden" name="PostBackAction" value="Style" />
 
-							<ul class="SortList" id="SortStyles">';
+							<div class="SortList" id="SortStyles">';
 								if ($this->StyleData) {
 									$s = $this->Context->ObjectFactory->NewContextObject($this->Context, "Style");
 									
@@ -441,14 +441,16 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 										$s->Clear();
 										$s->GetPropertiesFromDataSet($Row);
 										$s->FormatPropertiesForDisplay();
-										echo '<li class="SortListItem">
-											<a class="SortEdit" href="'.GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=Style&amp;StyleID=".$s->StyleID).'">'.$this->Context->GetDefinition("Edit").'</a>
-											<a class="SortRemove" href="'.GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=StyleRemove&amp;StyleID=".$s->StyleID).'">&nbsp;</a>
-											'.$s->Name.'
-										</li>';
+										echo '
+										<div class="SortListItem">
+											<div class="SortListOptions">'
+											.'<a class="SortEdit" href="'.GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=Style&amp;StyleID=".$s->StyleID).'">'.$this->Context->GetDefinition("Edit").'</a>'
+											.'<a class="SortRemove" href="'.GetUrl($this->Context->Configuration, "settings.php", "", "", "", "", "PostBackAction=StyleRemove&amp;StyleID=".$s->StyleID).'">&nbsp;</a>'
+											.'</div>'.$s->Name.'
+										</div>';
 									}
 								}
-							echo '</ul>
+							echo '</div>
 							<div class="Submit">
 								<input type="submit" name="btnSave" value="'.$this->Context->GetDefinition('CreateANewStyle').'" class="Button SubmitButton NewStyleButton" />
 								<a href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl).'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>

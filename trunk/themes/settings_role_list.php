@@ -29,7 +29,13 @@ echo '<div id="Form" class="Account Roles">';
                echo '<div class="SortListItem'.($this->Context->Session->User->Permission('PERMISSION_SORT_ROLES') ? ' MovableSortListItem' : '').'" id="item_'.$r->RoleID.'">
                   <div class="SortListOptions">';
                   if ($this->Context->Session->User->Permission('PERMISSION_EDIT_ROLES')) echo '<a class="SortEdit" href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=Role&amp;RoleID='.$r->RoleID).'">'.$this->Context->GetDefinition('Edit').'</a>';
-                  if ($this->Context->Session->User->Permission('PERMISSION_REMOVE_ROLES') && !$r->Unauthenticated) echo '<a class="SortRemove" href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=RoleRemove&amp;RoleID='.$r->RoleID).'">&nbsp;</a>';
+                  if ($this->Context->Session->User->Permission('PERMISSION_REMOVE_ROLES')) {
+                     if (!$r->Unauthenticated) {
+                        echo '<a class="SortRemove" href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=RoleRemove&amp;RoleID='.$r->RoleID).'">&nbsp;</a>';
+                     } else {
+                        echo '<span class="SortNoRemove">&nbsp;</span>';
+                     }
+                  }
                   echo '</div>'
                   .$r->RoleName
                .'</div>';
