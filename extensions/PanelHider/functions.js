@@ -13,9 +13,13 @@ function HidePanel(AjaxUrl) {
    
    var Parameters = "Type=HidePanel&Switch=1";
    var dm = new DataManager();
-	dm.RequestCompleteEvent = HandleSwitch;
-	dm.RequestFailedEvent = DoNothing;
+	dm.RequestCompleteEvent = PanelComplete;
+	dm.RequestFailedEvent = HandleFailure;
 	dm.LoadData(AjaxUrl+"?"+Parameters);
+}
+
+function PanelComplete(Request) {
+	// Don't do anything
 }
 
 function RevealPanel(AjaxUrl) {
@@ -33,7 +37,7 @@ function RevealPanel(AjaxUrl) {
    
    var Parameters = "Type=HidePanel&Switch=0";
    var dm = new DataManager();
-	dm.RequestCompleteEvent = HandleSwitch;
-	dm.RequestFailedEvent = DoNothing;
+	dm.RequestCompleteEvent = PanelComplete;
+	dm.RequestFailedEvent = HandleFailure;
 	dm.LoadData(AjaxUrl+"?"+Parameters);
 }

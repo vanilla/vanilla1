@@ -24,7 +24,7 @@ if ($this->Context->Session->UserID != $this->User->UserID && !$this->Context->S
                   if ($Preference['IsUserProperty']) $PrefVal = $this->Context->Session->User->$Preference['Name'];
                   echo '<li>
                      <p>
-                        <span>'.GetDynamicCheckBox($Preference['Name'], $PreferenceDefault, $PrefVal, "PanelSwitch('".$this->Context->Configuration['WEB_ROOT']."ajax/switch.php', '".$Preference['Name']."', ".ForceBool($Preference['RefreshPageAfterSetting'], 0).", '".$this->Context->GetDefinition('Processing')."');", $this->Context->GetDefinition($Preference['LanguageCode'])).'</span>
+                        <span id="'.$Preference['Name'].'">'.GetDynamicCheckBox($Preference['Name'], $PreferenceDefault, $PrefVal, "SwitchPreference('".$this->Context->Configuration['WEB_ROOT']."ajax/switch.php', '".$Preference['Name']."', ".ForceBool($Preference['RefreshPageAfterSetting'], 0).");", $this->Context->GetDefinition($Preference['LanguageCode'])).'</span>
                      </p>
                   </li>';									
                }

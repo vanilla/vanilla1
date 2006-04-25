@@ -16,7 +16,7 @@ echo '<div id="Form" class="Account CategoryList">';
       .'<form method="get" action="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl).'">
       <input type="hidden" name="PostBackAction" value="Category" />
       <p>'.$this->Context->GetDefinition('CategoryReorderNotes').'</p>
-      <ul class="SortList" id="SortCategories">
+      <div class="SortList" id="SortCategories">
       ';
          if ($this->CategoryData) {
             $c = $this->Context->ObjectFactory->NewObject($this->Context, 'Category');
@@ -24,21 +24,22 @@ echo '<div id="Form" class="Account CategoryList">';
                $c->Clear();
                $c->GetPropertiesFromDataSet($Row);
                $c->FormatPropertiesForDisplay();
-               echo '<li class="SortListItem'.($c->RoleBlocked?' RoleBlocked':'').($this->Context->Session->User->Permission('PERMISSION_SORT_CATEGORIES') ? ' MovableSortListItem':'').'" id="item_'.$c->CategoryID.'">';
+               echo '<div class="SortListItem'.($c->RoleBlocked?' RoleBlocked':'').($this->Context->Session->User->Permission('PERMISSION_SORT_CATEGORIES') ? ' MovableSortListItem':'').'" id="item_'.$c->CategoryID.'">';
                   if ($this->Context->Session->User->Permission('PERMISSION_EDIT_CATEGORIES')) echo '<a class="SortEdit" href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=Category&amp;CategoryID='.$c->CategoryID).'">'.$this->Context->GetDefinition('Edit').'</a>';
                   if ($this->Context->Session->User->Permission('PERMISSION_REMOVE_CATEGORIES')) echo '<a class="SortRemove" href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=CategoryRemove&amp;CategoryID='.$c->CategoryID).'">&nbsp;</a>';
-                  echo $c->Name.'</li>
+                  echo $c->Name.'
+               </div>
                ';
             }
          }
-      echo '</ul>
+      echo '</div>
       <div id="SortResult" style="display: none;"></div>';
       
       if ($this->Context->Session->User->Permission('PERMISSION_SORT_CATEGORIES')) {
          echo "
          <script type=\"text/javascript\" language=\"javascript\">
          // <![CDATA[
-            Sortable.create('SortCategories', {dropOnEmpty:true, tag:'li', constraint: 'vertical', ghosting: false, onUpdate: function() {new Ajax.Updater('SortResult', '".$this->Context->Configuration['WEB_ROOT']."ajax/sortcategories.php', {onComplete: function(request) { new Effect.Highlight('SortCategories',{startcolor:'#ffff99'});}, parameters:Sortable.serialize('SortCategories', {tag:'li', name:'CategoryID'}), evalScripts:true, asynchronous:true})}});
+            Sortable.create('SortCategories', {dropOnEmpty:true, tag:'div', constraint: 'vertical', ghosting: false, onUpdate: function() {new Ajax.Updater('SortResult', '".$this->Context->Configuration['WEB_ROOT']."ajax/sortcategories.php', {onComplete: function(request) { new Effect.Highlight('SortCategories',{startcolor:'#ffff99'});}, parameters:Sortable.serialize('SortCategories', {tag:'li', name:'CategoryID'}), evalScripts:true, asynchronous:true})}});
          // ]]>
          </script>";
       }

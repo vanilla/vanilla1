@@ -7,7 +7,7 @@ function RemoveSearch(AjaxUrl, SearchID) {
          var Parameters = "SearchID="+SearchID;
 			var dm = new DataManager();
 			dm.RequestFailedEvent = HandleFailure;
-			dm.RequestCompleteEvent = RefreshPage;
+			dm.RequestCompleteEvent = RefreshPageWhenAjaxComplete;
 			dm.LoadData(AjaxUrl+"?"+Parameters);		
 		}
 	}

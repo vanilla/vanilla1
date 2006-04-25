@@ -56,8 +56,7 @@ function BlockUser (AjaxUrl, AuthUserID, CurrentStatus, UnblockInnerHtml, Unbloc
 }
 
 function BlockSaved(Request) {
-	ChangeLoaderText("Complete");
-	CloseLoader();
+	// Don't do anything
 }
 
 function DecodeElement(Element) {
@@ -88,8 +87,6 @@ function EncodeElement(Element) {
 
 // Block a comment's html from view
 function SaveCommentBlock(AjaxUrl, BlockCommentID, BlockComment) {
-	ChangeLoaderText("Processing...");
-	SwitchLoader(1);
    var Parameters = "BlockCommentID="+BlockCommentID+"&Block="+BlockComment;
    var dm = new DataManager();
 	dm.RequestCompleteEvent = BlockSaved;
@@ -99,8 +96,6 @@ function SaveCommentBlock(AjaxUrl, BlockCommentID, BlockComment) {
 
 // Block a user's html from view
 function SaveUserBlock(AjaxUrl, BlockUserID, BlockUser) {
-	ChangeLoaderText("Processing...");
-	SwitchLoader(1);
    var Parameters = "BlockUserID="+BlockUserID+"&Block="+BlockUser;
    var dm = new DataManager();
 	dm.RequestCompleteEvent = BlockSaved;
