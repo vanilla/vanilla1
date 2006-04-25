@@ -5,6 +5,13 @@ function DataManager() {
 	this.RequestCompleteEvent = self.RequestCompleteEvent;
 	self.RequestFailedEvent = null;
 	this.RequestFailedEvent = self.RequestFailedEvent;
+	// Param is a property where you can store information which you may require
+	// once the datahandler is complete. For example, the translation of the
+	// word "complete" for alerting that something is finished. It can be
+	// referenced from within the RequestCompleteEvent or RequestFailedEvent
+	// events with this.Param.
+	self.Param = null;
+	this.Param = self.Param;
 	
 	// Methods
 	this.CreateDataHandler = function(Request) {
@@ -20,6 +27,7 @@ function DataManager() {
 		DataHandler.Request = Request;
 		DataHandler.RequestCompleteEvent = self.RequestCompleteEvent;
 		DataHandler.RequestFailedEvent = self.RequestFailedEvent;
+		DataHandler.Param = self.Param;
 		return DataHandler;
 	}
 	this.InitiateXmlHttpRequest = function() {
@@ -53,6 +61,5 @@ function DataManager() {
 	}
 }
 function HandleFailure(Request) {
-	ChangeLoaderText("Failed: ("+Request.status+") "+Request.statusText);
-	CloseLoader();
+	alert("Failed: ("+Request.status+") "+Request.statusText);
 }

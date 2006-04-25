@@ -127,9 +127,14 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 		_RangeD = j-1;
 		_Display = true;
 		if (_Pos <= 0) _Pos = 1;
-		
+
 		// Fix ie display bugs
-		if (document.body.insertAdjacentHTML) {
+		// 2006-04-24: Normally I would NEVER do a useragent sniff, but Opera
+		// seems to have the unique ability among new browsers to use this
+		// insertAdjacentHTML method, but NOT allow iframes to have other elements
+		// appear on top of them. So, I don't want opera to use this iframe code
+		// since, after all, this is an IE fix.
+		if (document.body.insertAdjacentHTML && navigator.userAgent.indexOf('Opera') == -1) {
 			document.body.insertAdjacentHTML('beforeEnd', '<iframe '
 				+'id="'+a.id+'_iefix" '
 				+'style="position:absolute;'

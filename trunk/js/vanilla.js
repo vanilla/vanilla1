@@ -40,47 +40,46 @@ function AddLabelValuePair() {
 	}
 }
 
-function DiscussionSwitch(AjaxUrl, SwitchType, DiscussionID, SwitchValue, LoaderText) {
-	ChangeLoaderText(LoaderText);
-	SwitchLoader(1);
-   var Parameters = "Type="+SwitchType+"&DiscussionID="+DiscussionID+"&Switch="+SwitchValue;
-   var dm = new DataManager();
-	dm.RequestCompleteEvent = HandleDiscussionSwitch;
+function DiscussionSwitch(AjaxUrl, SwitchType, DiscussionID, SwitchValue, SenderID) {
+	var Sender = document.getElementById(SenderID);
+	if (Sender) Sender.className = 'Progress';
+	var Parameters = "Type="+SwitchType+"&DiscussionID="+DiscussionID+"&Switch="+SwitchValue;
+	var dm = new DataManager();
+	dm.RequestCompleteEvent = RefreshPageWhenAjaxComplete;
 	dm.RequestFailedEvent = HandleFailure;
 	dm.LoadData(AjaxUrl+"?"+Parameters);
 }
 
-function HandleDiscussionSwitch(Request) {
-	ChangeLoaderText("Refreshing...");
-	setTimeout("document.location.reload();",600);
-}
-
-// Delete or Undelete a comment
-function ManageComment(AjaxUrl, Switch, DiscussionID, CommentID, ShowText, HideText, LoaderText) {
+function HideComment(AjaxUrl, Switch, DiscussionID, CommentID, ShowText, HideText, SenderID) {
 	var ConfirmText = (Switch==1?HideText:ShowText);
 	if (confirm(ConfirmText)) {
-		ChangeLoaderText(LoaderText);
-		SwitchLoader(1);
-		var Parameters = "Type=Comment&Switch="+Switch+"&DiscussionID="+DiscussionID+"&CommentID="+CommentID;
+		var Sender = document.getElementById(SenderID);
+		if (Sender) {
+			Sender.innerHTML = '&nbsp;';
+			Sender.className = 'HideProgress';
+		}
 		var dm = new DataManager();
-		dm.RequestCompleteEvent = ProcessComment;
+		dm.RequestCompleteEvent = RefreshPageWhenAjaxComplete;
 		dm.RequestFailedEvent = HandleFailure;
-		dm.LoadData(AjaxUrl+"?"+Parameters);
+		dm.LoadData(AjaxUrl+"?Type=Comment&Switch="+Switch+"&DiscussionID="+DiscussionID+"&CommentID="+CommentID);
 	}
 }
 
-function ProcessComment(Request) {
-	ChangeLoaderText("Refreshing...");
-	setTimeout("document.location.reload();",600);
-}
-
-function DoNothing() {
-}
-
 // Apply or remove a bookmark
-function SetBookmark(AjaxUrl, CurrentSwitchVal, Identifier, BookmarkText, UnbookmarkText, LoaderText) {
-	SetSwitch(AjaxUrl, 'SetBookmark', CurrentSwitchVal, 'Bookmark', BookmarkText, UnbookmarkText, Identifier, "&DiscussionID="+Identifier, LoaderText);
+function SetBookmark(AjaxUrl, CurrentSwitchVal, Identifier, BookmarkText, UnbookmarkText) {
 	var Sender = document.getElementById('SetBookmark');
+	if (Sender) {
+		Sender.className = 'Progress';
+		var Switch = Sender.name == '' ? CurrentSwitchVal : Sender.name;
+		var FlipSwitch = Switch == 1 ? 0 : 1;
+		Sender.name = FlipSwitch;
+		var dm = new DataManager();
+		dm.Param = (FlipSwitch == 0 ? BookmarkText : UnbookmarkText);
+		dm.RequestCompleteEvent = BookmarkComplete;
+		dm.RequestFailedEvent = BookmarkFailed;
+		dm.LoadData(AjaxUrl+"?Type=Bookmark&Switch="+FlipSwitch+"&DiscussionID="+Identifier);
+	}
+
 	var BookmarkTitle = document.getElementById("BookmarkTitle");
 	var BookmarkList = document.getElementById("BookmarkList");
 	var Bookmark = document.getElementById("Bookmark_"+Identifier);
@@ -106,27 +105,23 @@ function SetBookmark(AjaxUrl, CurrentSwitchVal, Identifier, BookmarkText, Unbook
 		}
 	}
 }
-
-// Generic Switch
-function SetSwitch(AjaxUrl, SenderName, CurrentSwitchVal, SwitchType, CommentOn, CommentOff, Identifier, Attributes, LoaderText) {
-	var Sender = document.getElementById(SenderName);
-	if (Sender) {
-      ChangeLoaderText(LoaderText);
-		SwitchLoader(1);
-		var Switch = Sender.name == '' ? CurrentSwitchVal : Sender.name;
-		var FlipSwitch = Switch == 1 ? 0 : 1;
-		Sender.innerHTML = (FlipSwitch==0?CommentOn:CommentOff);
-		Sender.name = FlipSwitch;
-		
-		var Parameters = "Type="+SwitchType+"&Switch="+FlipSwitch+Attributes;
-		
-		var dm = new DataManager();
-		dm.RequestCompleteEvent = HandleSwitch;
-		dm.RequestFailedEvent = HandleFailure;
-		dm.LoadData(AjaxUrl+"?"+Parameters);
+function ApplyBookmark(Element, ClassName, Text) {
+	var Button = document.getElementById(Element);
+	if (Button) {
+		Button.className = ClassName;
+		Button.innerHTML = Text;
+	}	
+}
+function BookmarkComplete(Request) {
+	setTimeout("ApplyBookmark('SetBookmark', 'Complete', '"+this.Param+"');", 400);
+}
+function BookmarkFailed(Request) {
+	var Button = document.getElementById('SetBookmark');
+	if (Button) {
+		Button.className = 'Complete';
+		alert("Failed: ("+Request.status+") "+Request.statusText);
 	}
 }
-
 function ShowAdvancedSearch() {
 	var SearchSimple = document.getElementById("SearchSimpleFields");
 	var SearchDiscussions = document.getElementById("SearchDiscussionFields");
@@ -154,12 +149,15 @@ function ShowSimpleSearch() {
 	}
 }
 
-function ToggleCategoryBlock(AjaxUrl, CategoryID, Block, LoaderText) {
-	ChangeLoaderText(LoaderText);
-	SwitchLoader(1);
+function ToggleCategoryBlock(AjaxUrl, CategoryID, Block, SenderID) {
+	var Sender = document.getElementById(SenderID);
+	if (Sender) {
+		Sender.innerHTML = '&nbsp;';
+		Sender.className = 'HideProgress';
+	}
 	var Parameters = "BlockCategoryID="+CategoryID+"&Block="+Block;
    var dm = new DataManager();
-	dm.RequestCompleteEvent = RefreshPage;
+	dm.RequestCompleteEvent = RefreshPageWhenAjaxComplete;
 	dm.RequestFailedEvent = HandleFailure;
 	dm.LoadData(AjaxUrl+"?"+Parameters);
 }
@@ -173,7 +171,7 @@ function ToggleCommentBox(AjaxUrl, SmallText, BigText) {
 		
 		var Parameters = "Type=ShowLargeCommentBox&Switch="+SwitchVal;
 		var dm = new DataManager();
-		dm.RequestCompleteEvent = DoNothing;
+		dm.RequestCompleteEvent = HandleFailure;
 		dm.RequestFailedEvent = HandleFailure;
 		dm.LoadData(AjaxUrl+"?"+Parameters);		
 	}

@@ -28,9 +28,9 @@ while ($Row = $this->Context->Database->GetRow($this->Data)) {
                <li class="CategoryOptions">
                   <span>'.$this->Context->GetDefinition('Options').'</span> ';
                   if ($Category->Blocked) {
-                     $CategoryList .= '<a onclick="ToggleCategoryBlock('."'".$this->Context->Configuration['WEB_ROOT']."ajax/blockcategory.php', ".$Category->CategoryID.", 0, '".$this->Context->GetDefinition("Processing")."');\">".$this->Context->GetDefinition('UnblockCategory').'</a>';
+                     $CategoryList .= '<a id="BlockCategory'.$Category->CategoryID.'" onclick="ToggleCategoryBlock('."'".$this->Context->Configuration['WEB_ROOT']."ajax/blockcategory.php', ".$Category->CategoryID.", 0, 'BlockCategory".$Category->CategoryID."');\">".$this->Context->GetDefinition('UnblockCategory').'</a>';
                   } else {
-                     $CategoryList .= '<a onclick="ToggleCategoryBlock('."'".$this->Context->Configuration['WEB_ROOT']."ajax/blockcategory.php', ".$Category->CategoryID.", 1, '".$this->Context->GetDefinition("Processing")."');\">".$this->Context->GetDefinition('BlockCategory').'</a>';
+                     $CategoryList .= '<a id="BlockCategory'.$Category->CategoryID.'" onclick="ToggleCategoryBlock('."'".$this->Context->Configuration['WEB_ROOT']."ajax/blockcategory.php', ".$Category->CategoryID.", 1, 'BlockCategory".$Category->CategoryID."');\">".$this->Context->GetDefinition('BlockCategory').'</a>';
                   }
                $CategoryList .= '</li>
             ';

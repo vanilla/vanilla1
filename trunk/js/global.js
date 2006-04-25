@@ -26,16 +26,6 @@ function BlockSubmit(evt, Handler) {
 	 }
 }
 
-function ChangeElementText(ElementID, NewText) {
-	var Element = document.getElementById(ElementID);
-	if (Element) Element.innerHTML = NewText;
-}
-
-// A status indicator to keep the user informed
-function ChangeLoaderText(NewText) {
-	ChangeElementText("LoadStatus", NewText)
-}
-
 function CheckAll(IdToMatch) {
 	var Ids = Explode(IdToMatch, ',');
 	for (j = 0; j < Ids.length; j++) {
@@ -61,10 +51,6 @@ function CheckSwitch(IdToMatch, Switch) {
 
 function ClearContents(Container) {
 	if (Container) Container.innerHTML = "";
-}
-
-function CloseLoader() {
-	setTimeout("SwitchLoader(0)",600);	
 }
 
 function Explode(inString, Delimiter) {
@@ -98,11 +84,6 @@ function GetElements(ElementName, ElementIDPrefix) {
 	return objects;
 }
 
-function HandleSwitch(Request) {
-	ChangeLoaderText("Complete");
-	CloseLoader();
-}
-
 function HideElement(ElementID, ClearElement) {
 	var Element = document.getElementById(ElementID);
 	if (Element) {
@@ -111,29 +92,42 @@ function HideElement(ElementID, ClearElement) {
 	}
 }
 
-function PanelSwitch(AjaxUrl, PanelItem, RefreshPageWhenComplete, LoaderText) {
-	 var chkBox = document.getElementById(PanelItem+"ID");
-	 if (chkBox) {
-		  ChangeLoaderText(LoaderText);
-		  SwitchLoader(1);
-		  var Parameters = "Type="+PanelItem+"&Switch="+chkBox.checked;
+function SwitchPreference(AjaxUrl, PreferenceName, RefreshPageWhenComplete) {
+	 var Container = document.getElementById(PreferenceName);
+	 var CheckBox  = document.getElementById(PreferenceName+'ID');
+	 if (CheckBox && Container) {
+		  Container.className = 'PreferenceProgress';
 		  var dm = new DataManager();
+		  dm.Param = PreferenceName;
 		  dm.RequestFailedEvent = HandleFailure;
 		  if (RefreshPageWhenComplete == 1) {
-	 		  dm.RequestCompleteEvent = RefreshPage;
+	 		  dm.RequestCompleteEvent = RefreshPageWhenAjaxComplete;
 		  } else {
-	 		  dm.RequestCompleteEvent = HandleSwitch;
-		  }	
-		  dm.LoadData(AjaxUrl+"?"+Parameters);		
+	 		  dm.RequestCompleteEvent = PreferenceSet;
+		  }
+		  dm.LoadData(AjaxUrl+"?Type="+PreferenceName+"&Switch="+CheckBox.checked);		
 	 }
+}
+
+function PreferenceSet(Request) {
+	setTimeout("CompletePreferenceSet('"+this.Param+"');", 400);
+}
+function CompletePreferenceSet(PreferenceName) {
+	 var Container = document.getElementById(PreferenceName);
+	 if (Container) Container.className = 'PreferenceComplete';
 }
 
 function PopTermsOfService(Url) {
 	window.open(Url, "TermsOfService", "toolbar=no,status=yes,location=no,menubar=no,resizable=yes,height=600,width=400,scrollbars=yes");
 }
 
-function RefreshPage() {
-	document.location.reload();
+function RefreshPage(Timeout) {
+	 if (!Timeout) Timeout = 400;
+	 setTimeout("document.location.reload();", Timeout);
+}
+
+function RefreshPageWhenAjaxComplete(Request) {
+	 RefreshPage();	 
 }
 
 function SubmitForm(FormName, Sender, WaitText) {
@@ -168,7 +162,7 @@ function SwitchExtension(AjaxUrl, ExtensionKey) {
 function SwitchExtensionResult(Request) {
     var Item = document.getElementById(Request.responseText);
     if (Item) {
-        setTimeout("SwitchExtensionItemClass('"+Request.responseText+"')",600);
+        setTimeout("SwitchExtensionItemClass('"+Request.responseText+"')",400);
     } else {
         alert("Failed to modify extension.");
     }
@@ -178,11 +172,6 @@ function SwitchExtensionItemClass(ItemID) {
     var Item = document.getElementById(ItemID);
     var chk = document.getElementById('chk'+ItemID+'ID');
     if (Item && chk) Item.className = chk.checked ? 'Enabled' : 'Disabled';
-}
-
-function SwitchLoader(ShowLoader) {
-	var Loader = document.getElementById("LoadStatus");
-	if (Loader) Loader.style.display = (ShowLoader == 1)?"block":"none";
 }
 
 function Wait(Sender, WaitText) {

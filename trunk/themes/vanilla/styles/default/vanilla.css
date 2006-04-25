@@ -55,26 +55,7 @@ a:hover {
 	padding: 8px 8px 8px 26px;
 	color: #D57D00;
 	}
-  
-/* LoadStatus.. */
-  
-#LoadStatus {
-	position: fixed;
-	_position:absolute;
-	top: 0px;
-	_top:expression(eval(document.body.scrollTop));
-	right: 0px;
-	background: #c00;
-	padding-top: 4px;
-	padding-bottom: 4px;
-	padding-left: 8px;
-	padding-right: 8px;
-	color: #fff;
-	font-size: 11px;
-	display: none;
-	z-index:200;
-	}
-
+	
 /* Session.. */
 
 #Session {
@@ -1148,12 +1129,10 @@ div.Extensions ul li p a:hover {
 	}
 
 /* Custom form for sortable list */
+
   
 .SortList {
-	color: #000;
-	background: rgb(254,254,204);
-	margin-top: 10px !important;
-	padding: 0px;
+	background-color: #ffc;
 	border: 1px solid #ddd;
 	border-top: 0px;
 	}
@@ -1167,25 +1146,24 @@ div.Extensions ul li p a:hover {
 	}
 .SortEdit {
 	position: absolute;
-	margin-left: 364px !important;
+	width: 40px;
+	margin-left: 360px !important;
 	}
 .SortEdit, .SortEdit:link, .SortEdit:active, .SortEdit:visited {
-	font-weight: normal;
-	color: #1EB136 !important;
-	text-decoration: none;
+	color: #1eb136 !important;
+	font-weight: normal !important;
+	text-decoration: none !important;
 	}
 .SortEdit:hover {
-	font-weight: normal;
-	color: #393 !important;
+	color: #393;
 	text-decoration: underline;
 	}
 .SortRemove {
-	display: block;
 	position: absolute;
-	margin-left: 394px !important;
-	height: 20px;
-	width: 20px;
-	background: url(btn.remove.gif) no-repeat top right;
+	display: block;
+	margin-left: 398px !important;
+	width: 16px;
+	background: url(btn.remove.gif) no-repeat center right;
 	text-decoration: none;
 	}
 
@@ -1400,7 +1378,34 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
 .AutoCompleteHoverRow td {
 	background: #335EA8;
 	color: #fff;
-	}  
+	}
+	
+/* Ajax progress */
+.HideProgress {
+	background: url(hprogress.gif) center center no-repeat;
+	text-decoration: none !important;
+	padding-left: 15px;
+	padding-right: 15px;
+	}
+.Progress {
+	background: url(hprogress.gif) left center no-repeat;
+	padding-left: 22px !important;
+	}
+.PreferenceProgress {
+	background: url(hprogress.gif) left center no-repeat;
+	padding-left: 16px !important;
+	}
+.Complete,
+.PreferenceComplete {
+	background: none;
+	padding-left: 0px;
+	}
+.PreferenceProgress input {
+	display: none;
+	}
+.PreferenceComplete input {
+	display: inline;
+	}
 
 /* Thank you positioniseverything.com*/
 
