@@ -24,10 +24,12 @@ echo '<div id="Form" class="Account CategoryList">';
                $c->Clear();
                $c->GetPropertiesFromDataSet($Row);
                $c->FormatPropertiesForDisplay();
-               echo '<div class="SortListItem'.($c->RoleBlocked?' RoleBlocked':'').($this->Context->Session->User->Permission('PERMISSION_SORT_CATEGORIES') ? ' MovableSortListItem':'').'" id="item_'.$c->CategoryID.'">';
+               echo '<div class="SortListItem'.($c->RoleBlocked?' RoleBlocked':'').($this->Context->Session->User->Permission('PERMISSION_SORT_CATEGORIES') ? ' MovableSortListItem':'').'" id="item_'.$c->CategoryID.'">
+                  <div class="SortListOptions">';
                   if ($this->Context->Session->User->Permission('PERMISSION_EDIT_CATEGORIES')) echo '<a class="SortEdit" href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=Category&amp;CategoryID='.$c->CategoryID).'">'.$this->Context->GetDefinition('Edit').'</a>';
                   if ($this->Context->Session->User->Permission('PERMISSION_REMOVE_CATEGORIES')) echo '<a class="SortRemove" href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=CategoryRemove&amp;CategoryID='.$c->CategoryID).'">&nbsp;</a>';
-                  echo $c->Name.'
+                  echo '</div>'
+                  .$c->Name.'
                </div>
                ';
             }
