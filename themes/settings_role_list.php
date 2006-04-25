@@ -45,7 +45,7 @@ echo '<div id="Form" class="Account Roles">';
       if ($this->Context->Session->User->Permission('PERMISSION_SORT_ROLES')) {
          echo "<script type=\"text/javascript\" language=\"javascript\">
          // <![CDATA[
-            Sortable.create('SortRoles', {dropOnEmpty:true, tag:'div', constraint: 'vertical', ghosting: false, onUpdate: function() {new Ajax.Updater('SortResult', '".$this->Context->Configuration['WEB_ROOT']."ajax/sortroles.php', {onComplete: function(request) { new Effect.Highlight('SortRoles',{startcolor:'#ffff99'});}, parameters:Sortable.serialize('SortRoles', {tag:'li', name:'RoleID'}), evalScripts:true, asynchronous:true})}});
+            Sortable.create('SortRoles', {dropOnEmpty:true, tag:'div', constraint: 'vertical', ghosting: false, onUpdate: function() {new Ajax.Updater('SortResult', '".$this->Context->Configuration['WEB_ROOT']."ajax/sortroles.php', {onComplete: function(request) { new Effect.Highlight('SortRoles',{startcolor:'#ffff99'});}, parameters:Sortable.serialize('SortRoles', {tag:'div', name:'RoleID'}), evalScripts:true, asynchronous:true})}});
          // ]]>
          </script>";
          // Debug

@@ -1143,6 +1143,7 @@ div.Extensions ul li p a:hover {
 	border-top: 1px solid #ddd;
 	padding: 6px !important;
 	margin: 0px !important;
+	position: relative;    /* set item to relative for IE6 */
 	}
 .SortListOptions {
     float: right !important;       /* float for modern browsers - no need to clear this float */
