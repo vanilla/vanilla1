@@ -1146,13 +1146,13 @@ div.Extensions ul li p a:hover {
 	position: relative;    /* set item to relative for IE6 */
 	}
 .SortListOptions {
-    float: right !important;       /* float for modern browsers - no need to clear this float */
-    float: none;                   /* no float for IE6 */
-    position: relative !important; /* realtive positioning for modern browsers */
-    position: absolute;            /* absolute positioning for IE6 */
-    left: auto !important;         /* no left positioning for modern browsers */
-    left: 360px;                   /* left positioning for IE6 */
-    }
+	float: right !important;       /* float for modern browsers - no need to clear this float */
+	float: none;                   /* no float for IE6 */
+	position: relative !important; /* realtive positioning for modern browsers */
+	position: absolute;            /* absolute positioning for IE6 */
+	right: auto !important;         /* no right positioning for modern browsers */
+	right: 20px;                   /* right positioning for IE6 */
+	}
 .SortEdit, .SortEdit:link, .SortEdit:active, .SortEdit:visited {
 	color: #1eb136 !important;
 	font-weight: normal !important;
