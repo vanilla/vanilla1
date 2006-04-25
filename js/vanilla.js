@@ -171,10 +171,13 @@ function ToggleCommentBox(AjaxUrl, SmallText, BigText) {
 		
 		var Parameters = "Type=ShowLargeCommentBox&Switch="+SwitchVal;
 		var dm = new DataManager();
-		dm.RequestCompleteEvent = HandleFailure;
+		dm.RequestCompleteEvent = ToggleCommentBoxComplete;
 		dm.RequestFailedEvent = HandleFailure;
 		dm.LoadData(AjaxUrl+"?"+Parameters);		
 	}
+}
+function ToggleCommentBoxComplete(Request) {
+	// Don't do anything.
 }
 
 function WhisperBack(DiscussionID, WhisperTo) {
