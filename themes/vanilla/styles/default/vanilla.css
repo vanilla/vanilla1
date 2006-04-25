@@ -1144,9 +1144,8 @@ div.Extensions ul li p a:hover {
 	padding: 6px !important;
 	margin: 0px !important;
 	}
-.SortEdit {
-	position: absolute;
-	width: 40px;
+.SortListOptions {
+	position: absolute !important;
 	margin-left: 360px !important;
 	}
 .SortEdit, .SortEdit:link, .SortEdit:active, .SortEdit:visited {
@@ -1159,12 +1158,10 @@ div.Extensions ul li p a:hover {
 	text-decoration: underline;
 	}
 .SortRemove {
-	position: absolute;
-	display: block;
-	margin-left: 398px !important;
-	width: 16px;
 	background: url(btn.remove.gif) no-repeat center right;
 	text-decoration: none;
+	margin-left: 10px !important;
+	padding-left: 15px !important;
 	}
 
 /* */
