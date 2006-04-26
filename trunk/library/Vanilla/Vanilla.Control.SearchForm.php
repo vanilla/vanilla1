@@ -69,7 +69,7 @@ class SearchForm extends PostBackControl {
       $this->TypeRadio->AddOption('Topics', $this->Context->GetDefinition('Topics'));
       $this->TypeRadio->AddOption('Comments', $this->Context->GetDefinition('Comments'));
       $this->TypeRadio->AddOption('Users', $this->Context->GetDefinition('Users'));
-      $this->TypeRadio->SelectedValue = $this->Search->Type;
+      $this->TypeRadio->SelectedID = $this->Search->Type;
       
       $rm = $this->Context->ObjectFactory->NewContextObject($this->Context, 'RoleManager');
       $RoleSet = $rm->GetRoles();
