@@ -140,7 +140,6 @@ $DatabaseColumns['User']['LastDiscussionPost'] = 'LastDiscussionPost';
 $DatabaseColumns['User']['DiscussionSpamCheck'] = 'DiscussionSpamCheck';
 $DatabaseColumns['User']['LastCommentPost'] = 'LastCommentPost';
 $DatabaseColumns['User']['CommentSpamCheck'] = 'CommentSpamCheck';
-$DatabaseColumns['User']['UseQuickKeys'] = 'UseQuickKeys';
 $DatabaseColumns['User']['UserBlocksCategories'] = 'UserBlocksCategories';
 $DatabaseColumns['User']['DefaultFormatType'] = 'DefaultFormatType';
 $DatabaseColumns['User']['Discovery'] = 'Discovery';
