@@ -33,9 +33,6 @@ $Context->Dictionary['BlockUserTitle'] = 'Block HTML in all comments by this use
 $Context->Dictionary['UnblockUser'] = 'unblock user';
 $Context->Dictionary['UnblockUserTitle'] = 'Allow HTML in all comments by this user on the forum';
 
-// Include the database structure for this extension
-include('database.php');
-
 // Check to see if this extension has been configured
 if (!array_key_exists('COMMENT_PROTECTION_SETUP', $Configuration)) {
 	$Errors = 0;
@@ -56,6 +53,21 @@ if (!array_key_exists('COMMENT_PROTECTION_SETUP', $Configuration)) {
 		`Blocked` enum('1','0') NOT NULL default '1'
 	);";
 	if (!@mysql_query($SQL, $Context->Database->Connection)) $Errors = 1;
+	
+	if ($Errors == 0) {
+		// Add the db structure to the database configuration file
+		$Structure = "// Comment Protection Table Structure
+\$DatabaseTables['CommentBlock'] = 'CommentBlock';
+\$DatabaseTables['UserBlock'] = 'UserBlock';
+\$DatabaseColumns['CommentBlock']['BlockingUserID'] = 'BlockingUserID';
+\$DatabaseColumns['CommentBlock']['BlockedCommentID'] = 'BlockedCommentID';
+\$DatabaseColumns['CommentBlock']['Blocked'] = 'Blocked';
+\$DatabaseColumns['UserBlock']['BlockingUserID'] = 'BlockingUserID';
+\$DatabaseColumns['UserBlock']['BlockedUserID'] = 'BlockedUserID';
+\$DatabaseColumns['UserBlock']['Blocked'] = 'Blocked';
+";
+		if (!AppendToConfigurationFile($Configuration['APPLICATION_PATH'].'conf/database.php', $Structure)) $Errors = 1;
+	}	
 	
 	if ($Errors == 0) {
 		// Mark this extension as enabled using a convenience method.

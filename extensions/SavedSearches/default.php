@@ -21,14 +21,11 @@ $Context->Dictionary['NoSavedSearches'] = 'You have no saved searches.';
 $Context->Dictionary['SaveSearch'] = 'Save Search';
 $Context->Dictionary['DisplaySavedSearches'] = 'Display your saved searches in the control panel';
 
-// Include the db structure for this extension
-include('database.php');
-
 // Check to see if this extension has been configured
 if (!array_key_exists('SAVED_SEARCHES_SETUP', $Configuration)) {
 	$Errors = 0;
 	// Create the CommentBlock table
-   $SQL = "CREATE `TABLE LUM_UserSearch` (
+   $SQL = "CREATE TABLE `LUM_UserSearch` (
 		`SearchID` int(11) not null auto_increment,
 		`Label` varchar(30) not null default '',
 		`UserID` int(11) not null default '0',
@@ -36,8 +33,21 @@ if (!array_key_exists('SAVED_SEARCHES_SETUP', $Configuration)) {
 		`Type` enum('Users','Topics', 'Comments') not null default 'Topics',
 		primary key (`SearchID`)
 	);";
-	if (!@mysql_query($SQL, $Context->Database->Connection)) $Errors = 1;
-   
+	if (!mysql_query($SQL, $Context->Database->Connection)) $Errors = 1;
+	
+	if ($Errors == 0) {
+		// Add the db structure to the database configuration file
+		$Structure = "// Saved Searches Table Structure
+\$DatabaseTables['UserSearch'] = 'UserSearch';
+\$DatabaseColumns['UserSearch']['SearchID'] = 'SearchID';
+\$DatabaseColumns['UserSearch']['Label'] = 'Label';
+\$DatabaseColumns['UserSearch']['UserID'] = 'UserID';
+\$DatabaseColumns['UserSearch']['Keywords'] = 'Keywords';
+\$DatabaseColumns['UserSearch']['Type'] = 'Type';
+";
+		if (!AppendToConfigurationFile($Configuration['APPLICATION_PATH'].'conf/database.php', $Structure)) $Errors = 1;
+	}
+	   
 	if ($Errors == 0) {
 		// Mark this extension as enabled using a convenience method.
       AddConfigurationSetting($Context, 'SAVED_SEARCHES_SETUP');

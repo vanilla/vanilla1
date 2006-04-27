@@ -14,7 +14,6 @@
 include('../../appg/settings.php');
 include('../../conf/settings.php');
 include('../../appg/init_ajax.php');
-include('database.php');
 
 $Block = ForceIncomingBool('Block', 0);
 $BlockUserID = ForceIncomingInt('BlockUserID', 0);
