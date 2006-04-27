@@ -24,117 +24,137 @@ $Context->Dictionary['DisplaySavedSearches'] = 'Display your saved searches in t
 // Include the db structure for this extension
 include('database.php');
 
-// Write the saved searches to the screen
-if (
-		in_array($Context->SelfUrl, array('index.php', 'search.php', 'comments.php'))
-		&& $Context->Session->UserID > 0
-		&& $Context->Session->User->Preference('ShowSavedSearches')
-	) {
-
-	$AllowEdit = $Context->SelfUrl == 'search.php';
-   $SearchManager = $Context->ObjectFactory->NewContextObject($Context, 'SearchManager');
-   $Data = $SearchManager->GetSearchList($Configuration['PANEL_SEARCH_COUNT'], $Context->Session->UserID);
-	$SearchCount = 0;
-	$String = '<ul>
-		<li>
-			<h2>'.$Context->GetDefinition('Searches').'</h2>';
-	if ($Data) $SearchCount = $Context->Database->RowCount($Data);
-	if ($SearchCount > 0) {
-		if ($AllowEdit) $String .= '<div class="Hidden"><input type="hidden" id="SavedSearchCount" value="'.$SearchCount.'" /></div>';
-
+// Check to see if this extension has been configured
+if (!array_key_exists('SAVED_SEARCHES_SETUP', $Configuration)) {
+	$Errors = 0;
+	// Create the CommentBlock table
+   $SQL = "CREATE `TABLE LUM_UserSearch` (
+		`SearchID` int(11) not null auto_increment,
+		`Label` varchar(30) not null default '',
+		`UserID` int(11) not null default '0',
+		`Keywords` varchar(100) not null default '',
+		`Type` enum('Users','Topics', 'Comments') not null default 'Topics',
+		primary key (`SearchID`)
+	);";
+	if (!@mysql_query($SQL, $Context->Database->Connection)) $Errors = 1;
+   
+	if ($Errors == 0) {
+		// Mark this extension as enabled using a convenience method.
+      AddConfigurationSetting($Context, 'SAVED_SEARCHES_SETUP');
+	}
+} else {
+	// Write the saved searches to the screen
+	if (
+			in_array($Context->SelfUrl, array('index.php', 'search.php', 'comments.php'))
+			&& $Context->Session->UserID > 0
+			&& $Context->Session->User->Preference('ShowSavedSearches')
+		) {
+	
+		$AllowEdit = $Context->SelfUrl == 'search.php';
+		$SearchManager = $Context->ObjectFactory->NewContextObject($Context, 'SearchManager');
+		$Data = $SearchManager->GetSearchList($Configuration['PANEL_SEARCH_COUNT'], $Context->Session->UserID);
+		$SearchCount = 0;
+		$String = '<ul>
+			<li>
+				<h2>'.$Context->GetDefinition('Searches').'</h2>';
+		if ($Data) $SearchCount = $Context->Database->RowCount($Data);
 		if ($SearchCount > 0) {
-			$String .= '<ul class="SavedSearches">';
-				$s = $Context->ObjectFactory->NewObject($Context, "Search");
-				while ($Row = $Context->Database->GetRow($Data)) {
-					$s->Clear();
-					$s->GetPropertiesFromDataSet($Row);
-					$s->FormatPropertiesForDisplay();
-					$String .= '<li id="SavedSearch_'.$s->SearchID.'"><a href="'.GetUrl($Configuration, 'search.php', 'saved/', 'SearchID', $s->SearchID).'">'.$s->Label.'</a>';
-					if ($AllowEdit) $String .= ' <span>(<a href="./" onclick="RemoveSearch('."'".$Configuration['WEB_ROOT']."extensions/SavedSearches/removesearch.php', ".$s->SearchID.'); return false;">'.$Context->GetDefinition('RemoveLower').'</a>)</span>';
-					$String .= '</li>';
-				}
-			$String .= '</ul>';
-		}
-	}
-	$String .= '</li>
-	</ul>
-	<p id="SearchSavingHelp" '.(($SearchCount > 0) ? 'style="display: none;"':'').'>'.$Context->GetDefinition('NoSavedSearches').'</p>';
-	$Panel->AddString($String, 20);
-}
-
-if ($Context->SelfUrl == "search.php") {
-	// Add the savedsearch js to the page
-   $Head->AddScript('extensions/SavedSearches/functions.js');
-	$Head->AddStyleSheet('extensions/SavedSearches/style.css');
+			if ($AllowEdit) $String .= '<div class="Hidden"><input type="hidden" id="SavedSearchCount" value="'.$SearchCount.'" /></div>';
 	
-	// Write the "save your search" form to the screen
-	function SearchForm_WriteSaveSearchForm(&$SearchForm) {
-		// Set up the "save search" form
-		$SearchForm->PostBackParams->Clear();
-		$SearchForm->PostBackParams->Add("Type", $SearchForm->Search->Type);
-		$SearchForm->PostBackParams->Add("Keywords", $SearchForm->Search->Keywords, 0);
-		$SearchForm->PostBackParams->Add("SearchID", $SearchForm->Search->SearchID);
-		$SearchForm->PostBackParams->Add("PostBackAction", "SaveSearch");
-		echo("<div class=\"SearchLabelForm\">");
-
-		if ($SearchForm->Context->Session->UserID > 0) {
-			$SearchForm->Render_PostBackForm("frmLabelSearch", "post");
-			echo("<fieldset>
-				<input type=\"text\" name=\"Label\" class=\"SearchLabelInput\" value=\"".$SearchForm->Search->Label."\" maxlength=\"30\" />
-				<input type=\"submit\" name=\"btnLabel\" value=\"".$SearchForm->Context->GetDefinition("SaveSearch")."\" class=\"SearchLabelButton\" />
-				</fieldset>
-				</form>");
-		} else {
-			echo("&nbsp;");
+			if ($SearchCount > 0) {
+				$String .= '<ul class="SavedSearches">';
+					$s = $Context->ObjectFactory->NewObject($Context, "Search");
+					while ($Row = $Context->Database->GetRow($Data)) {
+						$s->Clear();
+						$s->GetPropertiesFromDataSet($Row);
+						$s->FormatPropertiesForDisplay();
+						$String .= '<li id="SavedSearch_'.$s->SearchID.'"><a href="'.GetUrl($Configuration, 'search.php', 'saved/', 'SearchID', $s->SearchID).'">'.$s->Label.'</a>';
+						if ($AllowEdit) $String .= ' <span>(<a href="./" onclick="RemoveSearch('."'".$Configuration['WEB_ROOT']."extensions/SavedSearches/removesearch.php', ".$s->SearchID.'); return false;">'.$Context->GetDefinition('RemoveLower').'</a>)</span>';
+						$String .= '</li>';
+					}
+				$String .= '</ul>';
+			}
 		}
-		echo("</div>");
+		$String .= '</li>
+		</ul>
+		<p id="SearchSavingHelp" '.(($SearchCount > 0) ? 'style="display: none;"':'').'>'.$Context->GetDefinition('NoSavedSearches').'</p>';
+		$Panel->AddString($String, 20);
 	}
-	$Context->AddToDelegate("SearchForm",
-      "PreSearchResultsRender",
-      "SearchForm_WriteSaveSearchForm");
+	
+	if ($Context->SelfUrl == "search.php") {
+		// Add the savedsearch js to the page
+		$Head->AddScript('extensions/SavedSearches/functions.js');
+		$Head->AddStyleSheet('extensions/SavedSearches/style.css');
 		
-	// Make sure that the search is saved on postback
-   function SearchForm_SaveSearchLabel(&$SearchForm) {
-      // Handle saving
-      if ($SearchForm->PostBackAction == "SaveSearch") {
-			$SearchManager = $SearchForm->Context->ObjectFactory->NewContextObject($SearchForm->Context, "SearchManager");
-         $SearchManager->SaveSearch($SearchForm->Search);
+		// Write the "save your search" form to the screen
+		function SearchForm_WriteSaveSearchForm(&$SearchForm) {
+			// Set up the "save search" form
+			$SearchForm->PostBackParams->Clear();
+			$SearchForm->PostBackParams->Add("Type", $SearchForm->Search->Type);
+			$SearchForm->PostBackParams->Add("Keywords", $SearchForm->Search->Keywords, 0);
+			$SearchForm->PostBackParams->Add("SearchID", $SearchForm->Search->SearchID);
+			$SearchForm->PostBackParams->Add("PostBackAction", "SaveSearch");
+			echo("<div class=\"SearchLabelForm\">");
+	
+			if ($SearchForm->Context->Session->UserID > 0) {
+				$SearchForm->Render_PostBackForm("frmLabelSearch", "post");
+				echo("<fieldset>
+					<input type=\"text\" name=\"Label\" class=\"SearchLabelInput\" value=\"".$SearchForm->Search->Label."\" maxlength=\"30\" />
+					<input type=\"submit\" name=\"btnLabel\" value=\"".$SearchForm->Context->GetDefinition("SaveSearch")."\" class=\"SearchLabelButton\" />
+					</fieldset>
+					</form>");
+			} else {
+				echo("&nbsp;");
+			}
+			echo("</div>");
+		}
+		$Context->AddToDelegate("SearchForm",
+			"PreSearchResultsRender",
+			"SearchForm_WriteSaveSearchForm");
 			
-			// Post back to the page again so that the new search is loaded in the panel
-         header("location:".GetUrl($SearchForm->Context->Configuration, "search.php", "saved/", "SearchID", $SearchForm->Search->SearchID));
-			die();
-      }
+		// Make sure that the search is saved on postback
+		function SearchForm_SaveSearchLabel(&$SearchForm) {
+			// Handle saving
+			if ($SearchForm->PostBackAction == "SaveSearch") {
+				$SearchManager = $SearchForm->Context->ObjectFactory->NewContextObject($SearchForm->Context, "SearchManager");
+				$SearchManager->SaveSearch($SearchForm->Search);
+				
+				// Post back to the page again so that the new search is loaded in the panel
+				header("location:".GetUrl($SearchForm->Context->Configuration, "search.php", "saved/", "SearchID", $SearchForm->Search->SearchID));
+				die();
+			}
+		}
+		$Context->AddToDelegate("SearchForm",
+			"PreSearchQuery",
+			"SearchForm_SaveSearchLabel");
+		
+		
+		// Load any clicked saved searches   
+		function SearchForm_LoadSavedSearch(&$SearchForm) {
+			if ($SearchForm->SearchID > 0 && $SearchForm->PostBackAction != "SaveSearch") {
+				$SearchForm->Search->Clear();
+				$SearchManager = $SearchForm->Context->ObjectFactory->NewContextObject($SearchForm->Context, "SearchManager");
+				$SearchForm->Search = $SearchManager->GetSearchById($SearchForm->SearchID);
+				if (!$SearchForm->Search) {
+					$SearchForm->Search = $SearchForm->Context->ObjectFactory->NewObject($SearchForm->Context, "Search");
+				} else {
+					$SearchForm->PostBackAction = "Search";
+				}
+			}
+		}
+		$Context->AddToDelegate("SearchForm",
+			"PostDefineSearchFromForm",
+			"SearchForm_LoadSavedSearch");	
 	}
-	$Context->AddToDelegate("SearchForm",
-      "PreSearchQuery",
-      "SearchForm_SaveSearchLabel");
 	
-	
-	// Load any clicked saved searches   
-	function SearchForm_LoadSavedSearch(&$SearchForm) {
-      if ($SearchForm->SearchID > 0 && $SearchForm->PostBackAction != "SaveSearch") {
-			$SearchForm->Search->Clear();
-			$SearchManager = $SearchForm->Context->ObjectFactory->NewContextObject($SearchForm->Context, "SearchManager");
-         $SearchForm->Search = $SearchManager->GetSearchById($SearchForm->SearchID);
-         if (!$SearchForm->Search) {
-            $SearchForm->Search = $SearchForm->Context->ObjectFactory->NewObject($SearchForm->Context, "Search");
-         } else {
-            $SearchForm->PostBackAction = "Search";
-         }
-      }
+	// Add the switch to the preferences form
+	if ($Context->SelfUrl == "account.php" && ForceIncomingString("PostBackAction", "") == "Functionality") {
+		function PreferencesForm_AddSavedSearchSwitch(&$PreferencesForm) {
+			$PreferencesForm->AddPreference("ControlPanel", "DisplaySavedSearches", "ShowSavedSearches");
+		}
+		$Context->AddToDelegate("PreferencesForm",
+			"Constructor",
+			"PreferencesForm_AddSavedSearchSwitch");
 	}
-	$Context->AddToDelegate("SearchForm",
-      "PostDefineSearchFromForm",
-      "SearchForm_LoadSavedSearch");	
-}
-
-// Add the switch to the preferences form
-if ($Context->SelfUrl == "account.php" && ForceIncomingString("PostBackAction", "") == "Functionality") {
-	function PreferencesForm_AddSavedSearchSwitch(&$PreferencesForm) {
-		$PreferencesForm->AddPreference("ControlPanel", "DisplaySavedSearches", "ShowSavedSearches");
-	}
-	$Context->AddToDelegate("PreferencesForm",
-		"Constructor",
-		"PreferencesForm_AddSavedSearchSwitch");
 }
 ?>
