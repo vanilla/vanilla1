@@ -521,7 +521,7 @@ if ($PostBackAction == "Permissions") {
 				echo "<p>Vanilla stores configuration settings in PHP files. In order for you to be able to edit these options in Vanilla, you will need to make sure that PHP has read and write access to these configuration files.</p>
 				<p>The recommended way to do this is to make the apache (or IIS) user and group the owner of the conf directory. If you are running a Linux/Unix/Mac server and you have command line access, you can achieve these permissions by navigating to the Vanilla folder and executing the following:</p>
 				<p><strong>Note:</strong> This assumes that your apache user and group are www-data and www-data respectively. Depending on your operating system, this could be different. Other standard apache users are <em>apache</em> and <em>nobody</em>.</p>
-				<code>chown www-data:www-data ./conf</code>
+				<code>chown --recursive www-data:www-data ./conf</code>
 				
 				<p>If you don't know what your apache user is, you can also grant full access to the configuration folder for all users. This is not recommended because it is not as secure as the previous method, but it can be accomplished from the root Vanilla folder by executing the following:</p>
 				<code>chmod 666 ./conf</code>
