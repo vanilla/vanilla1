@@ -514,7 +514,7 @@ if ($PostBackAction == "Permissions") {
 				echo  '<h2>Vanilla Installation Wizard (Step 1 of 3)</h2>';
 				if ($Context->WarningCollector->Count() > 0) {
 					echo "<div class=\"Warnings\">
-						<strong>Oops. We came across some problems while checking your permissions...</strong>
+						<strong>We came across some problems while checking your permissions...</strong>
 						".$Context->WarningCollector->GetMessages()."
 					</div>";
 				}
@@ -537,7 +537,7 @@ if ($PostBackAction == "Permissions") {
 					echo "<h2>Vanilla Installation Wizard (Step 2 of 3)</h2>";
 					if ($Context->WarningCollector->Count() > 0) {
 						echo "<div class=\"Warnings\">
-							<strong>Oops. We came across some problems while setting up Vanilla...</strong>
+							<strong>We came across some problems while setting up Vanilla...</strong>
 							".$Context->WarningCollector->GetMessages()."
 						</div>";
 					}
@@ -574,7 +574,7 @@ if ($PostBackAction == "Permissions") {
 					echo "<h2>Vanilla Installation Wizard (Step 3 of 3)</h2>";
 					if ($Context->WarningCollector->Count() > 0) {
 						echo "<div class=\"Warnings\">
-							<strong>Oops. We came across some problems while setting up Vanilla...</strong>
+							<strong>We came across some problems while setting up Vanilla...</strong>
 							".$Context->WarningCollector->GetMessages()."
 						</div>";
 					}
