@@ -155,8 +155,8 @@ if ($PostBackAction == "Permissions") {
 		$SettingsManager->DefineSetting('LIBRARY_PATH', $RootDirectory . 'library/', 1);
 		$SettingsManager->DefineSetting('EXTENSIONS_PATH', $RootDirectory . 'extensions/', 1);
 		$SettingsManager->DefineSetting('LANGUAGES_PATH', $RootDirectory . 'languages/', 1);
-		$SettingsManager->DefineSetting('THEME_PATH', $RootDirectory . 'themes/Vanilla/', 1);
-		$SettingsManager->DefineSetting("DEFAULT_STYLE", $ThemeDirectory.'Vanilla/styles/default/', 1);
+		$SettingsManager->DefineSetting('THEME_PATH', $RootDirectory . 'themes/vanilla/', 1);
+		$SettingsManager->DefineSetting("DEFAULT_STYLE", $ThemeDirectory.'vanilla/styles/default/', 1);
 		$SettingsManager->DefineSetting("WEB_ROOT", $WebRoot, 1);
       $SettingsManager->DefineSetting("BASE_URL", $BaseUrl, 1);
 		$SettingsManager->DefineSetting("FORWARD_VALIDATED_USER_URL", $BaseUrl, 1);
@@ -326,7 +326,7 @@ if ($PostBackAction == "Permissions") {
 		$s->Clear();
 		$s->SetMainTable('Style', 's');
 		$s->AddFieldNameValue('Name', 'Vanilla');
-		$s->AddFieldNameValue('Url', $ThemeDirectory.'Vanilla/styles/default/');
+		$s->AddFieldNameValue('Url', $ThemeDirectory.'vanilla/styles/default/');
 		@mysql_query($s->GetInsert(), $Connection);
    }
    
