@@ -5,9 +5,7 @@
 $DatabaseTables['Category'] = 'Category';
 $DatabaseTables['CategoryBlock'] = 'CategoryBlock';
 $DatabaseTables['CategoryRoleBlock'] = 'CategoryRoleBlock';
-$DatabaseTables['Clipping'] = 'Clipping';
 $DatabaseTables['Comment'] = 'Comment';
-$DatabaseTables['CommentBlock'] = 'CommentBlock';
 $DatabaseTables['Discussion'] = 'Discussion';
 $DatabaseTables['DiscussionUserWhisperFrom'] = 'DiscussionUserWhisperFrom';
 $DatabaseTables['DiscussionUserWhisperTo'] = 'DiscussionUserWhisperTo';
@@ -15,11 +13,9 @@ $DatabaseTables['IpHistory'] = 'IpHistory';
 $DatabaseTables['Role'] = 'Role';
 $DatabaseTables['Style'] = 'Style';
 $DatabaseTables['User'] = 'LUM_User';
-$DatabaseTables['UserBlock'] = 'UserBlock';
 $DatabaseTables['UserBookmark'] = 'UserBookmark';
 $DatabaseTables['UserDiscussionWatch'] = 'UserDiscussionWatch';
 $DatabaseTables['UserRoleHistory'] = 'UserRoleHistory';
-$DatabaseTables['UserSearch'] = 'UserSearch';
 
 // Column References:
 
@@ -36,11 +32,6 @@ $DatabaseColumns['CategoryBlock']['Blocked'] = 'Blocked';
 $DatabaseColumns['CategoryRoleBlock']['CategoryID'] = 'CategoryID';
 $DatabaseColumns['CategoryRoleBlock']['RoleID'] = 'RoleID';
 $DatabaseColumns['CategoryRoleBlock']['Blocked'] = 'Blocked';
-// Clipping Table
-$DatabaseColumns['Clipping']['ClippingID'] = 'ClippingID';
-$DatabaseColumns['Clipping']['UserID'] = 'UserID';
-$DatabaseColumns['Clipping']['Label'] = 'Label';
-$DatabaseColumns['Clipping']['Contents'] = 'Contents';
 // Comment Table
 $DatabaseColumns['Comment']['CommentID'] = 'CommentID';
 $DatabaseColumns['Comment']['DiscussionID'] = 'DiscussionID';
@@ -55,10 +46,6 @@ $DatabaseColumns['Comment']['Deleted'] = 'Deleted';
 $DatabaseColumns['Comment']['DateDeleted'] = 'DateDeleted';
 $DatabaseColumns['Comment']['DeleteUserID'] = 'DeleteUserID';
 $DatabaseColumns['Comment']['RemoteIp'] = 'RemoteIp';
-// CommentBlock Table
-$DatabaseColumns['CommentBlock']['BlockingUserID'] = 'BlockingUserID';
-$DatabaseColumns['CommentBlock']['BlockedCommentID'] = 'BlockedCommentID';
-$DatabaseColumns['CommentBlock']['Blocked'] = 'Blocked';
 // Discussion Table
 $DatabaseColumns['Discussion']['DiscussionID'] = 'DiscussionID';
 $DatabaseColumns['Discussion']['AuthUserID'] = 'AuthUserID';
@@ -145,11 +132,6 @@ $DatabaseColumns['User']['DefaultFormatType'] = 'DefaultFormatType';
 $DatabaseColumns['User']['Discovery'] = 'Discovery';
 $DatabaseColumns['User']['Preferences'] = 'Preferences';
 $DatabaseColumns['User']['SendNewApplicantNotifications'] = 'SendNewApplicantNotifications';
-$DatabaseColumns['User']['CountBlogs'] = 'CountBlogs';
-// UserBlock Table
-$DatabaseColumns['UserBlock']['BlockingUserID'] = 'BlockingUserID';
-$DatabaseColumns['UserBlock']['BlockedUserID'] = 'BlockedUserID';
-$DatabaseColumns['UserBlock']['Blocked'] = 'Blocked';
 // UserBookmark Table
 $DatabaseColumns['UserBookmark']['UserID'] = 'UserID';
 $DatabaseColumns['UserBookmark']['DiscussionID'] = 'DiscussionID';
@@ -165,10 +147,4 @@ $DatabaseColumns['UserRoleHistory']['Date'] = 'Date';
 $DatabaseColumns['UserRoleHistory']['AdminUserID'] = 'AdminUserID';
 $DatabaseColumns['UserRoleHistory']['Notes'] = 'Notes';
 $DatabaseColumns['UserRoleHistory']['RemoteIp'] = 'RemoteIp';
-// UserSearch Table
-$DatabaseColumns['UserSearch']['SearchID'] = 'SearchID';
-$DatabaseColumns['UserSearch']['Label'] = 'Label';
-$DatabaseColumns['UserSearch']['UserID'] = 'UserID';
-$DatabaseColumns['UserSearch']['Keywords'] = 'Keywords';
-$DatabaseColumns['UserSearch']['Type'] = 'Type';
 ?>

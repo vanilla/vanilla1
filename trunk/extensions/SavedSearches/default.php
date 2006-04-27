@@ -21,6 +21,9 @@ $Context->Dictionary['NoSavedSearches'] = 'You have no saved searches.';
 $Context->Dictionary['SaveSearch'] = 'Save Search';
 $Context->Dictionary['DisplaySavedSearches'] = 'Display your saved searches in the control panel';
 
+// Include the db structure for this extension
+include('database.php');
+
 // Write the saved searches to the screen
 if (
 		in_array($Context->SelfUrl, array('index.php', 'search.php', 'comments.php'))
