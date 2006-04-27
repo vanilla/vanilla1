@@ -4,7 +4,6 @@
 include('../../appg/settings.php');
 include('../../conf/settings.php');
 include('../../appg/init_ajax.php');
-include('database.php');
 
 $SearchID = ForceIncomingInt('SearchID', 0);
 if ($SearchID > 0) {
