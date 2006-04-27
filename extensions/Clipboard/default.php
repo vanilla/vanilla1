@@ -38,6 +38,13 @@ $Context->Dictionary["CopyFromYourClipboard"] = "Copy from your clipboard <small
 $Context->Dictionary["ErrClippingLabelRequired"] = "You must supply a label for your clipping.";
 $Context->Dictionary["ErrClippingContents"] = "You must supply a value for the \"clipboard item contents\" field.";
  
+// Database structure for this extension's tables
+// Clipping Table
+$Context->DatabaseTables['Clipping'] = 'Clipping';
+$Context->DatabaseColumns['Clipping']['ClippingID'] = 'ClippingID';
+$Context->DatabaseColumns['Clipping']['UserID'] = 'UserID';
+$Context->DatabaseColumns['Clipping']['Label'] = 'Label';
+$Context->DatabaseColumns['Clipping']['Contents'] = 'Contents';
 
 
 // Let it skip over these classes if it doesn't need them

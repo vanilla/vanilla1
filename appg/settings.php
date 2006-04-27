@@ -57,7 +57,7 @@ $Configuration['SUPPORT_EMAIL'] = 'support@domain.com';
 $Configuration['SUPPORT_NAME'] = 'Support'; 
 $Configuration['LOG_ALL_IPS'] = '0';
 $Configuration['FORWARD_VALIDATED_USER_URL'] = './';
-$Configuration['DEFAULT_ROLE'] = '0'; 
+$Configuration['DEFAULT_ROLE'] = '3'; 
 $Configuration['ALLOW_IMMEDIATE_ACCESS'] = '0'; 
 $Configuration['APPROVAL_ROLE'] = '4'; 
 $Configuration['SAFE_REDIRECT'] = 'people.php?PageAction=SignOutNow';

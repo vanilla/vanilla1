@@ -33,28 +33,56 @@ $Context->Dictionary['BlockUserTitle'] = 'Block HTML in all comments by this use
 $Context->Dictionary['UnblockUser'] = 'unblock user';
 $Context->Dictionary['UnblockUserTitle'] = 'Allow HTML in all comments by this user on the forum';
 
+// Include the database structure for this extension
+include('database.php');
 
-
-if ($Context->SelfUrl == "comments.php") {
-	// Include required js for ajaxing of comment/user blocking
-   $Head->AddScript('extensions/CommentProtection/functions.js');	
+// Check to see if this extension has been configured
+if (!array_key_exists('COMMENT_PROTECTION_SETUP', $Configuration)) {
+	$Errors = 0;
+	// Create the CommentBlock table
+   $SQL = "CREATE TABLE `LUM_CommentBlock` (
+		`BlockingUserID` int(11) NOT NULL default '0',
+		`BlockedCommentID` int(11) NOT NULL default '0',
+		`Blocked` enum('1','0') NOT NULL default '1',
+		KEY `comment_block_user` (`BlockingUserID`),
+		KEY `comment_block_comment` (`BlockedCommentID`)
+	);";
+	if (!@mysql_query($SQL, $Context->Database->Connection)) $Errors = 1;
+   
+	// Create the UserBlock table
+   $SQL = "CREATE TABLE `LUM_UserBlock` (
+		`BlockingUserID` int(11) NOT NULL default '0',
+		`BlockedUserID` int(11) NOT NULL default '0',
+		`Blocked` enum('1','0') NOT NULL default '1'
+	);";
+	if (!@mysql_query($SQL, $Context->Database->Connection)) $Errors = 1;
 	
-	// Add the options to the grid
-	function CommentGrid_BlockOptions(&$CommentGrid) {
-      if ($CommentGrid->Context->Session->UserID > 0) {
-         $Comment = $CommentGrid->DelegateParameters["Comment"];
-         $ShowHtml = $CommentGrid->DelegateParameters["ShowHtml"];
-			$CommentList = &$CommentGrid->DelegateParameters["CommentList"];
-         if ($CommentGrid->Context->Session->User->Preference("HtmlOn") && !$Comment->Deleted) {
-            $CommentList .= "<a href=\"./\" id=\"BlockUser_".$Comment->AuthUserID."_Comment_".$Comment->CommentID."\" onclick=\"BlockUser('".$CommentGrid->Context->Configuration['WEB_ROOT']."extensions/CommentProtection/block.php', '".$Comment->AuthUserID."', '".FlipBool($Comment->AuthBlocked)."', '".$CommentGrid->Context->GetDefinition("UnblockUser")."', '".$CommentGrid->Context->GetDefinition("UnblockUserTitle")."', '".$CommentGrid->Context->GetDefinition("BlockUser")."', '".$CommentGrid->Context->GetDefinition("BlockUserTitle")."', '".$CommentGrid->Context->GetDefinition("UnblockComment")."', '".$CommentGrid->Context->GetDefinition("UnblockCommentTitle")."', '".$CommentGrid->Context->GetDefinition("BlockComment")."', '".$CommentGrid->Context->GetDefinition("BlockCommentTitle")."'); return false;\" title=\"".$CommentGrid->Context->GetDefinition(GetBool(!$Comment->AuthBlocked,"BlockUserHtml","AllowUserHtml"))."\">".$CommentGrid->Context->GetDefinition(GetBool(!$Comment->AuthBlocked,"BlockUser","UnblockUser"))."</a>";
-         }
-         $CommentList .= "<a href=\"./\" id=\"BlockComment_".$Comment->CommentID."\" onclick=\"BlockComment('".$CommentGrid->Context->Configuration['WEB_ROOT']."extensions/CommentProtection/block.php', '".$Comment->CommentID."', '".$ShowHtml."', 1, false, '".$CommentGrid->Context->GetDefinition("UnblockComment")."', '".$CommentGrid->Context->GetDefinition("UnblockCommentTitle")."', '".$CommentGrid->Context->GetDefinition("BlockComment")."', '".$CommentGrid->Context->GetDefinition("BlockCommentTitle")."'); return false;\" title=\"".$CommentGrid->Context->GetDefinition(GetBool($ShowHtml,"BlockHtml","AllowHtml"))."\">".$CommentGrid->Context->GetDefinition(GetBool($ShowHtml,"BlockComment","UnblockComment"))."</a>";
-		}
+	if ($Errors == 0) {
+		// Mark this extension as enabled using a convenience method.
+      AddConfigurationSetting($Context, 'COMMENT_PROTECTION_SETUP');
 	}
-	
-	$Context->AddToDelegate("CommentGrid",
-		"PostCommentOptionsRender",
-		"CommentGrid_BlockOptions");
-      
+   
+} else {	
+	if ($Context->SelfUrl == "comments.php") {
+		// Include required js for ajaxing of comment/user blocking
+		$Head->AddScript('extensions/CommentProtection/functions.js');	
+		
+		// Add the options to the grid
+		function CommentGrid_BlockOptions(&$CommentGrid) {
+			if ($CommentGrid->Context->Session->UserID > 0) {
+				$Comment = $CommentGrid->DelegateParameters["Comment"];
+				$ShowHtml = $CommentGrid->DelegateParameters["ShowHtml"];
+				$CommentList = &$CommentGrid->DelegateParameters["CommentList"];
+				if ($CommentGrid->Context->Session->User->Preference("HtmlOn") && !$Comment->Deleted) {
+					$CommentList .= "<a href=\"./\" id=\"BlockUser_".$Comment->AuthUserID."_Comment_".$Comment->CommentID."\" onclick=\"BlockUser('".$CommentGrid->Context->Configuration['WEB_ROOT']."extensions/CommentProtection/block.php', '".$Comment->AuthUserID."', '".FlipBool($Comment->AuthBlocked)."', '".$CommentGrid->Context->GetDefinition("UnblockUser")."', '".$CommentGrid->Context->GetDefinition("UnblockUserTitle")."', '".$CommentGrid->Context->GetDefinition("BlockUser")."', '".$CommentGrid->Context->GetDefinition("BlockUserTitle")."', '".$CommentGrid->Context->GetDefinition("UnblockComment")."', '".$CommentGrid->Context->GetDefinition("UnblockCommentTitle")."', '".$CommentGrid->Context->GetDefinition("BlockComment")."', '".$CommentGrid->Context->GetDefinition("BlockCommentTitle")."'); return false;\" title=\"".$CommentGrid->Context->GetDefinition(GetBool(!$Comment->AuthBlocked,"BlockUserHtml","AllowUserHtml"))."\">".$CommentGrid->Context->GetDefinition(GetBool(!$Comment->AuthBlocked,"BlockUser","UnblockUser"))."</a>";
+				}
+				$CommentList .= "<a href=\"./\" id=\"BlockComment_".$Comment->CommentID."\" onclick=\"BlockComment('".$CommentGrid->Context->Configuration['WEB_ROOT']."extensions/CommentProtection/block.php', '".$Comment->CommentID."', '".$ShowHtml."', 1, false, '".$CommentGrid->Context->GetDefinition("UnblockComment")."', '".$CommentGrid->Context->GetDefinition("UnblockCommentTitle")."', '".$CommentGrid->Context->GetDefinition("BlockComment")."', '".$CommentGrid->Context->GetDefinition("BlockCommentTitle")."'); return false;\" title=\"".$CommentGrid->Context->GetDefinition(GetBool($ShowHtml,"BlockHtml","AllowHtml"))."\">".$CommentGrid->Context->GetDefinition(GetBool($ShowHtml,"BlockComment","UnblockComment"))."</a>";
+			}
+		}
+		
+		$Context->AddToDelegate("CommentGrid",
+			"PostCommentOptionsRender",
+			"CommentGrid_BlockOptions");
+	}      
 }
 ?>
