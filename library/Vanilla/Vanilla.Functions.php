@@ -59,7 +59,7 @@ function GetUnreadQuerystring(&$Discussion, &$Configuration, $CurrentUserJumpToL
 	}
 }
 
-function HighlightTrimmedString($Haystack, $Needles, $TrimLength = '') {	
+function HighlightTrimmedString($Haystack, $Needles, $TrimLength = '') {
    $Highlight = '<span class="Highlight">\1</span>';
 	$Pattern = '#(?!<.*?)(%s)(?![^<>]*?>)#i';
 	$TrimLength = ForceInt($TrimLength, 0);
@@ -68,9 +68,11 @@ function HighlightTrimmedString($Haystack, $Needles, $TrimLength = '') {
 	if ($WordsToHighlight > 0) {
 		$i = 0;
 		for ($i = 0; $i < $WordsToHighlight; $i++) {
-         $CurrentWord = preg_quote($Needles[$i]);
-         $Regex = sprintf($Pattern, $CurrentWord);
-         $Haystack = preg_replace($Regex, $Highlight, $Haystack);
+			if (strlen($Needles[$i]) > 2) {
+				$CurrentWord = preg_quote($Needles[$i]);
+				$Regex = sprintf($Pattern, $CurrentWord);
+				$Haystack = preg_replace($Regex, $Highlight, $Haystack);
+			}
 		}
 	}
 	return $Haystack;
@@ -79,6 +81,7 @@ function HighlightTrimmedString($Haystack, $Needles, $TrimLength = '') {
 
 function ParseQueryForHighlighting(&$Context, $Query) {
 	if ($Query != '') {
+		$Query = DecodeHtmlEntities($Query);
 		$Query = eregi_replace('"', '', $Query);
 		$Query = eregi_replace(' '.$Context->GetDefinition('And').' ', ' ', $Query);
 		$Query = eregi_replace(' '.$Context->GetDefinition('Or').' ', ' ', $Query);

@@ -87,20 +87,33 @@ class SearchForm extends PostBackControl {
       // Handle Searching
       if ($this->PostBackAction == 'Search') {
          $this->Data = false;
+			// Because of PHP's new handling of objects in PHP 5, when I passed
+			// in $this->Search directly, it passed by reference instead of
+			// byval. I DO NOT want this because the keywords get formatted for
+			// db input in the search query and it makes them display
+			// incorrectly on the screen later down the page. Hence this kludge:
+         $OriginalKeywords = $this->Search->Keywords;
+			$OriginalQuery = $this->Search->Query;
          // Handle searches
          if ($this->Search->Type == 'Users') {
             $um = $this->Context->ObjectFactory->NewContextObject($this->Context, 'UserManager');
             $this->Data = $um->GetUserSearch($this->Search, $this->Context->Configuration['SEARCH_RESULTS_PER_PAGE'], $CurrentPage);
+				$this->Search->Keywords = $OriginalKeywords;
+				$this->Search->Query = $OriginalQuery;
             $this->Search->FormatPropertiesForDisplay();      
             
          } else if ($this->Search->Type == 'Topics') {
             $dm = $this->Context->ObjectFactory->NewContextObject($this->Context, 'DiscussionManager');
             $this->Data = $dm->GetDiscussionSearch($this->Context->Configuration['SEARCH_RESULTS_PER_PAGE'], $CurrentPage, $this->Search);
+				$this->Search->Keywords = $OriginalKeywords;
+				$this->Search->Query = $OriginalQuery;
             $this->Search->FormatPropertiesForDisplay();
             
          } else if ($this->Search->Type == 'Comments') {
             $cm = $this->Context->ObjectFactory->NewContextObject($this->Context, 'CommentManager');
             $this->Data = $cm->GetCommentSearch($this->Context->Configuration['SEARCH_RESULTS_PER_PAGE'], $CurrentPage, $this->Search);
+				$this->Search->Keywords = $OriginalKeywords;
+				$this->Search->Query = $OriginalQuery;
             $this->Search->FormatPropertiesForDisplay();
          }
          
