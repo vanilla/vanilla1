@@ -24,8 +24,11 @@ $Context->Dictionary['DisplaySavedSearches'] = 'Display your saved searches in t
 // Check to see if this extension has been configured
 if (!array_key_exists('SAVED_SEARCHES_SETUP', $Configuration)) {
 	$Errors = 0;
+	// Drop the CommentBlock table if it already exists
+   $UserSearchDrop = "drop table if exists `LUM_UserSearch`";
+	if (!mysql_query($UserSearchDrop, $Context->Database->Connection)) $Errors = 1;
 	// Create the CommentBlock table
-   $SQL = "CREATE TABLE `LUM_UserSearch` (
+   $UserSearchCreate = "CREATE TABLE `LUM_UserSearch` (
 		`SearchID` int(11) not null auto_increment,
 		`Label` varchar(30) not null default '',
 		`UserID` int(11) not null default '0',
@@ -33,7 +36,7 @@ if (!array_key_exists('SAVED_SEARCHES_SETUP', $Configuration)) {
 		`Type` enum('Users','Topics', 'Comments') not null default 'Topics',
 		primary key (`SearchID`)
 	);";
-	if (!mysql_query($SQL, $Context->Database->Connection)) $Errors = 1;
+	if (!mysql_query($UserSearchCreate, $Context->Database->Connection)) $Errors = 1;
 	
 	if ($Errors == 0) {
 		// Add the db structure to the database configuration file

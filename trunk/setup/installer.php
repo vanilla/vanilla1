@@ -40,6 +40,8 @@ $Configuration['SUPPORT_NAME'] = '';
 $Configuration['FORWARD_VALIDATED_USER_URL'] = '';
 $Configuration['CHARSET'] = 'utf-8';
 $Configuration['DATABASE_TABLE_PREFIX'] = 'LUM_';
+$Configuration['SETUP_COMPLETE'] = '0';
+$Configuration['SETUP_TEST'] = '0';
 
 class FauxContext {
    var $WarningCollector;
@@ -105,9 +107,11 @@ $AllowNext = 0;
 
 function CreateFile($File, $Contents, &$Context) {
 	if (!file_exists($File)) {
-		$Handle = fopen($File, 'wb');
+		$Handle = @fopen($File, 'wb');
 		if (!$Handle) {
-			$Context->WarningCollector->Add("Failed to create the '".$File."' configuration file.");
+			$Error = $php_errormsg;
+			if ($Error != '') $Error = 'The system reported the following message:<code>'.$Error.'</code>';
+			$Context->WarningCollector->Add("Failed to create the '".$File."' configuration file. ".$Error);
 		} else {
 			if (fwrite($Handle, $Contents) === FALSE) {
 				$Context->WarningCollector->Add("Failed to write to the '".$File."' file. Make sure that PHP has write access to the file.");
@@ -146,25 +150,15 @@ if ($PostBackAction == "Permissions") {
 		CreateFile($RootDirectory.'conf/settings.php', $Contents, $Context);
 	}
 
-   // Save general settings
+   // Save a test configuration option to the conf/settings.php file (This is inconsequential and is only done to make sure we have read access).
 	if ($Context->WarningCollector->Count() == 0) {
       $SettingsFile = $RootDirectory . 'conf/settings.php';
       $SettingsManager = new ConfigurationManager($Context);
-      $SettingsManager->DefineSetting('APPLICATION_PATH', $RootDirectory, 1);
-		$SettingsManager->DefineSetting('DATABASE_PATH', $RootDirectory . 'conf/database.php', 1);
-		$SettingsManager->DefineSetting('LIBRARY_PATH', $RootDirectory . 'library/', 1);
-		$SettingsManager->DefineSetting('EXTENSIONS_PATH', $RootDirectory . 'extensions/', 1);
-		$SettingsManager->DefineSetting('LANGUAGES_PATH', $RootDirectory . 'languages/', 1);
-		$SettingsManager->DefineSetting('THEME_PATH', $RootDirectory . 'themes/vanilla/', 1);
-		$SettingsManager->DefineSetting("DEFAULT_STYLE", $ThemeDirectory.'vanilla/styles/default/', 1);
-		$SettingsManager->DefineSetting("WEB_ROOT", $WebRoot, 1);
-      $SettingsManager->DefineSetting("BASE_URL", $BaseUrl, 1);
-		$SettingsManager->DefineSetting("FORWARD_VALIDATED_USER_URL", $BaseUrl, 1);
+      $SettingsManager->DefineSetting('SETUP_TEST', '1', 1);
       if (!$SettingsManager->SaveSettingsToFile($SettingsFile)) {
          // $Context->WarningCollector->Clear();
-         $Context->WarningCollector->Add("For some reason we couldn't save your general settings to the '".$SettingsFile."' file.");
+         // $Context->WarningCollector->Add("For some reason we couldn't save your general settings to the '".$SettingsFile."' file.");
       }
-		$Context->WarningCollector->Write();
 	}
       
    if ($Context->WarningCollector->Count() == 0) {
@@ -245,8 +239,27 @@ if ($PostBackAction == "Permissions") {
       $DBManager->DefineSetting("DATABASE_USER", $DBUser, 1);
       $DBManager->DefineSetting("DATABASE_PASSWORD", $DBPass, 1);
       if (!$DBManager->SaveSettingsToFile($DBFile)) {
-         $Context->WarningCollector->Clear();
-         $Context->WarningCollector->Add("For some reason we couldn't save your database settings to the '.$DBFile.' file.");
+         // $Context->WarningCollector->Clear();
+         // $Context->WarningCollector->Add("For some reason we couldn't save your database settings to the '.$DBFile.' file.");
+      }
+		
+		// Save the general settings as well (now that we know this person is authenticated to
+      // a degree - knowing the database access params).
+      $SettingsFile = $RootDirectory . 'conf/settings.php';
+      $SettingsManager = new ConfigurationManager($Context);
+      $SettingsManager->DefineSetting('APPLICATION_PATH', $RootDirectory, 1);
+		$SettingsManager->DefineSetting('DATABASE_PATH', $RootDirectory . 'conf/database.php', 1);
+		$SettingsManager->DefineSetting('LIBRARY_PATH', $RootDirectory . 'library/', 1);
+		$SettingsManager->DefineSetting('EXTENSIONS_PATH', $RootDirectory . 'extensions/', 1);
+		$SettingsManager->DefineSetting('LANGUAGES_PATH', $RootDirectory . 'languages/', 1);
+		$SettingsManager->DefineSetting('THEME_PATH', $RootDirectory . 'themes/vanilla/', 1);
+		$SettingsManager->DefineSetting("DEFAULT_STYLE", $ThemeDirectory.'vanilla/styles/default/', 1);
+		$SettingsManager->DefineSetting("WEB_ROOT", $WebRoot, 1);
+      $SettingsManager->DefineSetting("BASE_URL", $BaseUrl, 1);
+		$SettingsManager->DefineSetting("FORWARD_VALIDATED_USER_URL", $BaseUrl, 1);
+      if (!$SettingsManager->SaveSettingsToFile($SettingsFile)) {
+         // $Context->WarningCollector->Clear();
+         // $Context->WarningCollector->Add("For some reason we couldn't save your general settings to the '".$SettingsFile."' file.");
       }
    }
    if ($Context->WarningCollector->Count() == 0) {
@@ -260,11 +273,11 @@ if ($PostBackAction == "Permissions") {
    if (strip_tags($Username) != $Username) $Context->WarningCollector->Add("You really shouldn't have any html into your username.");
    if (strlen($Username) > 20) $Context->WarningCollector->Add("Your username is too long");
    if ($Password != $ConfirmPassword) $Context->WarningCollector->Add("The passwords you entered didn't match.");
-   if (!eregi("(.+)@(.+)\.(.+)", $SupportEmail)) $Context->WarningCollector->Add("The email address you entered doesn't appear to be valid.");
    if (strip_tags($ApplicationTitle) != $ApplicationTitle) $Context->WarningCollector->Add("You can't have any html in your forum name.");
    if ($Username == "") $Context->WarningCollector->Add("You must provide a username.");
    if ($Password == "") $Context->WarningCollector->Add("You must provide a password.");
    if ($SupportName == "") $Context->WarningCollector->Add("You must provide a support contact name.");
+   if (!eregi("(.+)@(.+)\.(.+)", $SupportEmail)) $Context->WarningCollector->Add("The email address you entered doesn't appear to be valid.");
    if ($ApplicationTitle == "") $Context->WarningCollector->Add("You must provide an application title.");
    
 	// Include the db settings defined in the previous step
@@ -342,9 +355,10 @@ if ($PostBackAction == "Permissions") {
       $SettingsManager->DefineSetting("APPLICATION_TITLE", $ApplicationTitle, 1);
       $SettingsManager->DefineSetting("BANNER_TITLE", $ApplicationTitle, 1);
       $SettingsManager->DefineSetting("COOKIE_DOMAIN", $CookieDomain, 1);
+		$SettingsManager->DefineSetting("SETUP_COMPLETE", '1', 1);
       if (!$SettingsManager->SaveSettingsToFile($SettingsFile)) {
-         $Context->WarningCollector->Clear();
-         $Context->WarningCollector->Add("For some reason we couldn't save your general settings to the '.$SettingsFile.' file.");
+         //$Context->WarningCollector->Clear();
+         //$Context->WarningCollector->Add("For some reason we couldn't save your general settings to the '.$SettingsFile.' file.");
       }
    }
    
@@ -361,147 +375,7 @@ if ($PostBackAction == "Permissions") {
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-ca">
    <head>
       <title>Vanilla 1 Installer</title>
-      <style type="text/css">
-         body {
-            background: #fff;
-            margin: 0px;
-            padding: 0px;
-				text-align: center;
-         }
-			body, div, p, blockquote, h1, h2, input {
-            font-family: Trebuchet MS, Arial, Verdana;
-			}
-         body, div, p, blockquote {
-            font-size: 13px;
-            line-height: 170%;
-         }
-         a, a:link, a:visited {
-            text-decoration: underline;
-            color: #f60;
-         }
-         a:hover {
-            text-decoration: underline;
-            color: #c30;
-         }
-			h1 {
-				background: #F1F3FF;
-				border-bottom: 1px solid #ACBEDF;
-				margin: 0px;
-				padding: 0px;
-			}
-			h1 span {
-				background: url(leaf.gif) no-repeat center left;
-				color: #ACBEDF;
-				display: block;
-				width: 500px;
-				margin-left: auto;
-				margin-right: auto;
-				font-size: 36px;
-				padding: 20px 0px 20px 0px;
-				text-align: left;
-			}
-			h1 span strong {
-				padding-left: 80px;
-				color: #758ebc;
-			}
-			.Container {
-				background: url(fade.jpg) top left repeat-x;
-			}
-			.Content {
-				margin-left: auto;
-				margin-right: auto;
-				text-align: left;
-				width: 500px;
-				padding: 20px 0px 0px 0px;
-			}
-			h2 {
-				margin: 0px;
-				padding: 0px;
-			}
-			code {
-				background: #FEFECC;
-				margin: 10px 0px 10px 0px;
-				padding: 10px;
-				border-left: 4px solid #FCEEAA;
-				color: #960;
-				font-family: courier;
-				font-size: 12px;
-				display: block;
-			}
-			fieldset {
-				border: 0px;
-				margin: 0px;
-				padding: 0px;
-			}
-			fieldset ul {
-				list-style: none;
-				margin: 0px;
-				padding: 8px 8px 2px 8px;
-				background: #efefef;
-			}
-			fieldset label {
-				float: left;
-				margin: 0px 0px 6px 0px;
-				width:30%;
-			}
-			fieldset ul li input {
-				margin-bottom: 6px;
-				width: 50%;
-			}
-			.Button {
-				padding: 10px 0px 20px 0px;
-			}
-			.Button input {
-				font-size: 14px;
-				font-weight: bold;
-				border: 0px;
-				margin: 0px;
-				padding: 0px;
-				background: none;
-				cursor: pointer;
-				color: #64AE18;
-			}
-			.Button a {
-				font-size: 14px;
-				font-weight: bold;
-				color: #64AE18;			
-			}
-         .Warnings {
-				background: url(../themes/vanilla/styles/default/alert.gif) left top no-repeat #FFFECC;
-            padding: 8px;
-				margin: 10px 0px 0px 0px;
-				border-top: 1px solid #FAEBB1;
-				border-bottom: 1px solid #FAEBB1;
-				color: #D57D00;
-         }
-         .Warnings,
-         .Warnings div {
-            color: #D57D00;
-         }
-         .Warnings strong {
-				color: #c00;
-            display: block;
-            padding: 0px 0px 4px 22px;
-         }
-			.Warnings div a,
-			.Warnings div a:link,
-			.Warnings div a:visited {
-				color: #B16800;
-			}
-			.Warnings div a:hover {
-				color: #c00;
-			}
-			.Warnings div code {
-				background: none;
-				margin: 10px 0px 10px 0px;
-				padding: 0px;
-				border: 0px;
-				color: #960;
-				font-family: courier;
-				font-size: 12px;
-				display: block;
-			}
-      </style>
+		<link rel="stylesheet" type="text/css" href="./style.css" />
    </head>
    <body>
       <h1>
