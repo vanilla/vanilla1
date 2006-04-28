@@ -7,31 +7,30 @@
    <body>
       <h1>
          <span><strong>Vanilla 1</strong> Setup</span>
-
       </h1>
 		<div class="Container">
 			<div class="Content">
-            <h2>Upgrading or Installing Fresh?</h2>
-            <p>If you are attempting to install a new version of Vanilla, you've come to the right place...</p>
-            <form id="frmFreshInstall" method="get" action="installer.php">
-               <div class="Button"><input type="submit" value="Click here to install a completely fresh version of Vanilla" /></div>
-            </form>
+            <h2>Before you begin</h2>
+            <p>If you are creating a fresh installation of Vanilla, all you need to do is upload all of these files to your server.</p>
+            <div class="Button"><a href="installer.php">Click here to install a completely fresh version of Vanilla</a></div>
             
-            <p>If you are attempting to upgrade your existing version of Vanilla, there are a few things you will need to do before you continue:</p>
+            <p>If you are upgrading from an existing version of Vanilla, here are a few things you should do first:</p>
             <ul>
                <li>
-                  <strong>BACK UP YOUR DATABASE</strong>
+                  <strong>Back up your Database</strong>
                   <p>I cannot stress how important this step is. The upgrader will be performing structural changes on your database and you will <strong>not</strong> be able to just use the old Vanilla code with your database after you are finished upgrading. If something goes wrong with this upgrade procedure, you *must* be able to fall back to your old installation.</p>
                </li>
                <li>
+                  <strong>Back up your old Vanilla</strong>
+                  <p>Download and save your old Vanilla files to your local machine.</p>
+               </li>
+               <li>
                   <strong>Save your appg/settings.php file</strong>
-                  <p>You will need a backup of this file available so we can import your old configuration settings into the new system.</p>
-                  <p>If you have already removed this file, do not panic. You will have the ability to reconfigure these settings during the upgrade.</p>
+                  <p>You will need a backup of this file available so we can import your old configuration settings into the new system. If you have already removed this file, do not panic. You will have the ability to reconfigure these settings during the upgrade.</p>
                </li>
             </ul>
-            <form id="frmUpgrade" method="get" action="upgrader.php">
-               <div class="Button"><input type="submit" value="Click here to upgrade your old version of Vanilla" /></div>
-            </form>
+            
+            <div class="Button"><a href="upgrader.php">Click here to upgrade your old version of Vanilla</a></div>
          </div>
 		</div>
    </body>
