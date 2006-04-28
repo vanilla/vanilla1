@@ -398,7 +398,7 @@ if ($PostBackAction == "Permissions") {
 				<code>chown --recursive www-data:www-data ./conf</code>
 				
 				<p>If you don't know what your apache user is, you can also grant full access to the configuration folder for all users. This is not recommended because it is not as secure as the previous method, but it can be accomplished from the root Vanilla folder by executing the following:</p>
-				<code>chmod 666 ./conf</code>
+				<code>chmod --recursive 666 ./conf</code>
 				
 				<p>Next, you need to make sure that Vanilla has read access to the setup directory so it can retrieve the database setup script for installation. You can do this by executing the following from the root folder of Vanilla:</p>
 				<code>chmod 666 ./setup/mysql.sql</code>
