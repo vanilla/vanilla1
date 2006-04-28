@@ -176,8 +176,6 @@ class CommentManager extends Delegation {
 	
 	function GetCommentSearch($RowsPerPage, $CurrentPage, $Search) {
 		$s = $this->GetSearchBuilder($Search);
-		// Caused the query to be 10 times slower
-		// $s->AddOrderBy('DateCreated', 'c', 'desc');
 		if ($RowsPerPage > 0) {
 			$CurrentPage = ForceInt($CurrentPage, 1);
 			if ($CurrentPage < 1) $CurrentPage == 1;
