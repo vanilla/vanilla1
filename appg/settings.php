@@ -198,6 +198,9 @@ $Configuration['PREFERENCE_ShowFormatSelector'] = '1';
 $Configuration['PREFERENCE_ShowDeletedDiscussions'] = '0';
 $Configuration['PREFERENCE_ShowDeletedComments'] = '0';
 
+// Has Vanilla been installed (this will be set to true in conf/settings.php when setup completes)
+$Configuration['SETUP_COMPLETE'] = '0';
+
 // Application versions
 define('APPLICATION', 'Vanilla');
 define('PEOPLE_VERSION', '0.0.1');
@@ -216,4 +219,7 @@ define('MAGIC_QUOTES_ON', get_magic_quotes_gpc());
 
 // Include custom settings
 include(dirname(__FILE__) . '/../conf/settings.php');
+if ($Configuration['SETUP_COMPLETE'] == '0') {
+   header('location: ./setup/index.html');
+}
 ?>

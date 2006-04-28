@@ -36,23 +36,29 @@ $Context->Dictionary['UnblockUserTitle'] = 'Allow HTML in all comments by this u
 // Check to see if this extension has been configured
 if (!array_key_exists('COMMENT_PROTECTION_SETUP', $Configuration)) {
 	$Errors = 0;
+	// Drop the comment block table if it is already in the db
+   $CommentBlockDrop = "drop table if exists `LUM_CommentBlock`";
+	if (!@mysql_query($CommentBlockDrop, $Context->Database->Connection)) $Errors = 1;
 	// Create the CommentBlock table
-   $SQL = "CREATE TABLE `LUM_CommentBlock` (
+   $CommentBlockCreate = "CREATE TABLE `LUM_CommentBlock` (
 		`BlockingUserID` int(11) NOT NULL default '0',
 		`BlockedCommentID` int(11) NOT NULL default '0',
 		`Blocked` enum('1','0') NOT NULL default '1',
 		KEY `comment_block_user` (`BlockingUserID`),
 		KEY `comment_block_comment` (`BlockedCommentID`)
 	);";
-	if (!@mysql_query($SQL, $Context->Database->Connection)) $Errors = 1;
+	if (!@mysql_query($CommentBlockCreate, $Context->Database->Connection)) $Errors = 1;
    
+	// Drop the UserBlock table if it is already in the db
+   $UserBlockDrop = "drop table if exists `LUM_UserBlock`";
+	if (!@mysql_query($UserBlockDrop, $Context->Database->Connection)) $Errors = 1;
 	// Create the UserBlock table
-   $SQL = "CREATE TABLE `LUM_UserBlock` (
+   $UserBlockCreate = "CREATE TABLE `LUM_UserBlock` (
 		`BlockingUserID` int(11) NOT NULL default '0',
 		`BlockedUserID` int(11) NOT NULL default '0',
 		`Blocked` enum('1','0') NOT NULL default '1'
 	);";
-	if (!@mysql_query($SQL, $Context->Database->Connection)) $Errors = 1;
+	if (!@mysql_query($UserBlockCreate, $Context->Database->Connection)) $Errors = 1;
 	
 	if ($Errors == 0) {
 		// Add the db structure to the database configuration file
@@ -77,7 +83,21 @@ if (!array_key_exists('COMMENT_PROTECTION_SETUP', $Configuration)) {
 } else {	
 	if ($Context->SelfUrl == "comments.php") {
 		// Include required js for ajaxing of comment/user blocking
-		$Head->AddScript('extensions/CommentProtection/functions.js');	
+		$Head->AddScript('extensions/CommentProtection/functions.js');
+		
+		// Fix up the comment grid query
+      function CommentManager_ApplyProtectionBlocks(&$CommentManager) {
+			$s = &$CommentManager->DelegateParameters['SqlBuilder'];
+			$s->AddJoin('UserBlock', 'ab', 'BlockedUserID', 'm', 'AuthUserID', 'left join', ' and ab.'.$CommentManager->Context->DatabaseColumns['UserBlock']['BlockingUserID'].' = '.$CommentManager->Context->Session->UserID);
+			$s->AddJoin('CommentBlock', 'cb', 'BlockedCommentID', 'm', 'CommentID', 'left join', ' and cb.'.$CommentManager->Context->DatabaseColumns['CommentBlock']['BlockingUserID'].' = '.$CommentManager->Context->Session->UserID);
+			$s->AddSelect('Blocked', 'ab', 'AuthBlocked', 'coalesce', '0');
+			$s->AddSelect('Blocked', 'cb', 'CommentBlocked', 'coalesce', '0');
+		}
+		
+		$Context->AddToDelegate("CommentManager",
+			"CommentBuilder_PreSelect",
+			"CommentManager_ApplyProtectionBlocks");
+		
 		
 		// Add the options to the grid
 		function CommentGrid_BlockOptions(&$CommentGrid) {

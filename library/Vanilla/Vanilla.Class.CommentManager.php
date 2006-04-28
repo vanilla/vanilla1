@@ -29,13 +29,8 @@ class CommentManager extends Delegation {
 		$s->AddJoin('Role', 'r', 'RoleID', 'a', 'RoleID', 'left join');
 		$s->AddJoin('User', 'e', 'UserID', 'm', 'EditUserID', 'left join');
 		$s->AddJoin('User', 'd', 'UserID', 'm', 'DeleteUserID', 'left join');
-		$s->AddJoin('UserBlock', 'ab', 'BlockedUserID', 'm', 'AuthUserID', 'left join', ' and ab.'.$this->Context->DatabaseColumns['UserBlock']['BlockingUserID'].' = '.$this->Context->Session->UserID);
-		$s->AddJoin('CommentBlock', 'cb', 'BlockedCommentID', 'm', 'CommentID', 'left join', ' and cb.'.$this->Context->DatabaseColumns['CommentBlock']['BlockingUserID'].' = '.$this->Context->Session->UserID);
 		$s->AddJoin('Discussion', 't', 'DiscussionID', 'm', 'DiscussionID', 'inner join');
       $s->AddJoin('User', 'w', 'UserID', 'm', 'WhisperUserID', 'left join');
-		
-		// $s->AddGroupBy('CommentID', 'm');
-		
 		
 		// Limit to roles with access to this category
       if ($this->Context->Session->UserID > 0) {
@@ -44,6 +39,9 @@ class CommentManager extends Delegation {
 			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID', 't', 'CategoryID', 'left join', ' and crb.'.$this->Context->DatabaseColumns['CategoryRoleBlock']['RoleID'].' = 1');
 		}
 		
+		$this->DelegateParameters['SqlBuilder'] = &$s;
+		$this->CallDelegate("CommentBuilder_PreSelect");
+				
 		$s->AddSelect(array('CommentID', 'DiscussionID', 'Body', 'FormatType', 'DateCreated', 'DateEdited', 'DateDeleted', 'Deleted', 'AuthUserID', 'EditUserID', 'DeleteUserID', 'WhisperUserID', 'RemoteIp'), 'm');
 		$s->AddSelect('Name', 'a', 'AuthUsername');
 		$s->AddSelect('Icon', 'a', 'AuthIcon');
@@ -54,11 +52,11 @@ class CommentManager extends Delegation {
 		$s->AddSelect('PERMISSION_HTML_ALLOWED', 'r', 'AuthCanPostHtml');
 		$s->AddSelect('Name', 'e', 'EditUsername');
 		$s->AddSelect('Name', 'd', 'DeleteUsername');
-		$s->AddSelect('Blocked', 'ab', 'AuthBlocked', 'coalesce', '0');
-		$s->AddSelect('Blocked', 'cb', 'CommentBlocked', 'coalesce', '0');
       $s->AddSelect('WhisperUserID', 't', 'DiscussionWhisperUserID');
       $s->AddSelect('Name', 'w', 'WhisperUsername');
 		
+		
+		$this->CallDelegate("CommentBuilder_PreWhere");
 		
 		$s->AddWhere('crb', 'Blocked', '', 0, '=', 'and', '', 1, 1);
 		$s->AddWhere('crb', 'Blocked', '', 0, '=', 'or', '', 0);

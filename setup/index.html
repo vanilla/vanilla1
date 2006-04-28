@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-ca">
+   <head>
+      <title>Vanilla 1 Setup</title>
+		<link rel="stylesheet" type="text/css" href="./style.css" />
+   </head>
+   <body>
+      <h1>
+         <span><strong>Vanilla 1</strong> Setup</span>
+
+      </h1>
+		<div class="Container">
+			<div class="Content">
+            <h2>Upgrading or Installing Fresh?</h2>
+            <p>If you are attempting to install a new version of Vanilla, you've come to the right place...</p>
+            <form id="frmFreshInstall" method="get" action="installer.php">
+               <div class="Button"><input type="submit" value="Click here to install a completely fresh version of Vanilla" /></div>
+            </form>
+            
+            <p>If you are attempting to upgrade your existing version of Vanilla, there are a few things you will need to do before you continue:</p>
+            <ul>
+               <li>
+                  <strong>BACK UP YOUR DATABASE</strong>
+                  <p>I cannot stress how important this step is. The upgrader will be performing structural changes on your database and you will <strong>not</strong> be able to just use the old Vanilla code with your database after you are finished upgrading. If something goes wrong with this upgrade procedure, you *must* be able to fall back to your old installation.</p>
+               </li>
+               <li>
+                  <strong>Save your appg/settings.php file</strong>
+                  <p>You will need a backup of this file available so we can import your old configuration settings into the new system.</p>
+                  <p>If you have already removed this file, do not panic. You will have the ability to reconfigure these settings during the upgrade.</p>
+               </li>
+            </ul>
+            <form id="frmUpgrade" method="get" action="upgrader.php">
+               <div class="Button"><input type="submit" value="Click here to upgrade your old version of Vanilla" /></div>
+            </form>
+         </div>
+		</div>
+   </body>
+</html>
