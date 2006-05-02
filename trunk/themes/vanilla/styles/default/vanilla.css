@@ -22,9 +22,7 @@ a:hover {
 .ErrorContainer {
 	background: url(alert.gif) no-repeat top left #FFEDEF;
 	border-top: 1px solid #FFC2CA;
-	border-bottom: 1px solid #FFC2CA;
 	padding: 10px 10px 10px 27px !important;
-	margin-bottom: 10px !important;
 	}
 .ErrorTitle {
 	font-weight: bold;
@@ -55,6 +53,7 @@ a:hover {
 	padding: 8px 8px 8px 26px;
 	color: #D57D00;
 	}
+.Invisible { display: none; }
 	
 /* Session.. */
 
@@ -498,6 +497,9 @@ html>body .ContentInfo h1 { width:80% !important; }
 	padding:10px 0px;
 	border-bottom:1px solid #ccc;
 	}
+#Comments li.Hidden {
+	background: url(hidden-tile.gif) top left repeat-x #fafafa;
+	}
 #Comments .CommentHeader {
 	padding-left: 8px;
 	padding-right: 8px;
@@ -540,6 +542,11 @@ html>body .ContentInfo h1 { width:80% !important; }
 	}
 #Comments .CommentHeader em {
 	color:#ccc;
+	font-style:normal;
+	}
+#Comments li.Hidden .CommentHeader i {
+	padding-left: 8px;
+	color:#c00;
 	font-style:normal;
 	}
 #Comments .CommentHeader a {
@@ -862,8 +869,15 @@ li.User.Name span {
 #WhisperAutoCompleteResults {
 	width: 200px;
 	}
+#Form textarea,
+#Form input,
+#Form select {
+	font-family:'Trebuchet MS', 'Verdana', 'Tahoma', 'Arial', sans-serif;
+	font-size:13px;
+	font-weight: normal;
+	}	
 #Form textarea {
-	width:100%;
+	width:99.5%;
 	height:150px;
 	}
 #Form textarea.SmallCommentBox {
@@ -883,7 +897,10 @@ li.User.Name span {
 /* Add Comment & Start Discussion Forms */
 
 #Form.StartDiscussion legend {
-	padding-top: 20px;
+	padding-top: 0px;
+	}
+#PostPage #Form.AddComments legend {
+	padding-top: 0px;
 	}
 .AddComments {
 	width: 99%;
@@ -913,9 +930,12 @@ li.User.Name span {
 	margin: 0px 0px 4px 0px;
 	padding: 4px 0px 0px 0px;
 	}
+#PostPage #Form.AddComments {
+	padding: 0px;
+	}
 .DiscussionBox {
 	width: 400px;
-	}
+	}	
 #Form .Button {
 	width: auto !important;
 	}
@@ -929,6 +949,10 @@ li.User.Name span {
 #Form.StartDiscussion #CommentFormats label,
 #Form.AddComments #CommentFormats label {
 	font-weight: normal;
+	}
+/* Pad fatal errors on post page */
+#PostPage #Content {
+	padding-top: 20px !important;
 	}
 
 /* Account Section Forms.. */

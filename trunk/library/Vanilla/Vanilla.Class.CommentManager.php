@@ -477,43 +477,228 @@ class CommentManager extends Delegation {
 		if (!$this->Context->Session->User->Permission('PERMISSION_HIDE_COMMENTS')) $this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrPermissionComments'));
 		
 		if ($this->Context->WarningCollector->Count() == 0) {
-			// Get some information about the comment being manipulated
+			// 1. Get some information about the comment being manipulated
 			$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
 			$s->SetMainTable('Comment', 'm');
-			$s->AddSelect(array('AuthUserID', 'WhisperUserID'), 'm');
+			$s->AddSelect(array('AuthUserID', 'WhisperUserID', 'DiscussionID'), 'm');
 			$s->AddWhere('m', 'CommentID', '', $CommentID, '=');
 			// Don't touch comments that are already switched to the selected status
 			$s->AddWhere('m', 'Deleted', '', $Switch, '<>');
 			$CommentData = $this->Context->Database->Select($s, $this->Name, 'SwitchCommentProperty', 'An error occurred while retrieving information about the comment.');
-			$WhisperToUserID = 0;
-			$WhisperFromUserID = 0;
-			while ($Row = $this->Context->Database->GetRow($CommentData)) {
-				$WhisperToUserID = ForceInt($Row['WhisperUserID'], 0);
-				$WhisperFromUserID = ForceInt($Row['AuthUserID'], 0);
-			}
-			$MathOperator = ($Switch == 0?'+':'-');
-			if ($WhisperToUserID > 0) {
-				// If this was a whisper, update the whisper count tables
-				// Update the discussion table (holds the whisper count for admins)
-				$this->UpdateWhisperCount($DiscussionID, $WhisperFromUserID, $WhisperToUserID, $MathOperator);
+			if ($this->Context->Database->RowCount($CommentData) > 0) {
+				$WhisperToUserID = 0;
+				$WhisperFromUserID = 0;
+				while ($Row = $this->Context->Database->GetRow($CommentData)) {
+					$WhisperToUserID = ForceInt($Row['WhisperUserID'], 0);
+					$WhisperFromUserID = ForceInt($Row['AuthUserID'], 0);
+					$DiscussionID = ForceInt($Row['DiscussionID'], 0);
+				}
 				
-			} elseif ($WhisperFromUserID > 0) {
-				// If this was not a whisper, update the discussion table comment count
-				$this->UpdateCommentCount($DiscussionID, $MathOperator);
-			 
+				// 2. Hide or Unhide the comment (This is done now so that comment count updates are easier below)
+				$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
+				$s->SetMainTable('Comment', 'm');
+				$s->AddFieldNameValue('Deleted', $Switch);
+				if ($Switch == 1) {
+					$s->AddFieldNameValue('DeleteUserID', $this->Context->Session->UserID);
+					$s->AddFieldNameValue('DateDeleted', MysqlDateTime());
+				}
+				$s->AddWhere('m', 'CommentID', '', $CommentID, '=');
+				$this->Context->Database->Update($s, $this->Name, 'SwitchCommentProperty', 'An error occurred while marking the comment as inactive.');
+				
+				// 3. If this was a whisper, update the whisper count tables
+				if ($WhisperToUserID > 0) {
+					// echo '<div>was a whisper</div>';
+					// (a) First update the total whisper count for this discussion by
+					// getting the # of undeleted whispers & updating it
+					$s->Clear();
+					$s->SetMainTable('Comment', 'c');
+					$s->AddSelect('CommentID', 'c');
+					$s->AddWhere('c', 'DiscussionID', '', $DiscussionID, '=');
+					$s->AddWhere('c', 'WhisperUserID', '', 0, '>');
+					$s->AddWhere('c', 'Deleted', '', 0, '=');
+					$CountData = $this->Context->Database->Select($s, $this->Name, 'SwitchCommentProperty', 'An error occurred while retrieving a summary of undeleted whispers.');
+					$WhisperCount = $this->Context->Database->RowCount($CountData);
+					
+					// Update the total whisper count
+					$s->Clear();
+					$s->SetMainTable('Discussion', 'd');
+					$s->AddFieldNameValue('TotalWhisperCount', $WhisperCount);
+					$s->AddWhere('d', 'DiscussionID', '', $DiscussionID, '=');
+					$this->Context->Database->Update($s, $this->Name, 'SwitchCommentProperty', 'An error occurred while updating the total whisper count.');
+					
+					// echo '<div>set total whisper count to '.$WhisperCount.'</div>';
+	
+					
+					// (b) Retrieve information about the last undeleted whisper to the $WhisperToUserID
+					$s->Clear();
+					$s->SetMainTable('Comment', 'c');
+					$s->AddSelect(array('CommentID', 'AuthUserID', 'WhisperUserID', 'DateCreated'), 'c');
+					$s->AddWhere('c', 'WhisperUserID', '', $WhisperToUserID, '=');
+					$s->AddWhere('c', 'DiscussionID', '', $DiscussionID, '=');
+					$s->AddWhere('c', 'Deleted', '', '0', '=');
+					$s->AddOrderBy('DateCreated', 'c', 'desc');
+					$WhisperToData = $this->Context->Database->Select($s, $this->Name, 'SwitchCommentProperty', 'An error occurred while retrieving whisper data.');
+					
+					// If there are no other whispers, delete the whisperto record entirely
+					$WhisperToCount = $this->Context->Database->RowCount($WhisperToData);
+					if ($WhisperToCount == 0) {
+						// echo '<div>There were no other whispers, deleting the whisperto record entirely</div>';
+						$s->Clear();
+						$s->SetMainTable('DiscussionUserWhisperTo', 'duwt');
+						$s->AddWhere('duwt', 'DiscussionID', '', $DiscussionID, '=');
+						$s->AddWhere('duwt', 'WhisperToUserID', '', $WhisperToUserID, '=');
+						$this->Context->Database->Delete($s, $this->Name, 'SwitchCommentProperty', 'An error occurred while removing discussion whisper data.');
+					} else {
+						// If there are other records, update the DUWT table with the
+						// LastUserID, whisper count, and date last active
+						$LastUserID = 0;
+						$DateLastActive = '';
+						
+						while ($Row = $this->Context->Database->GetRow($WhisperToData)) {
+							$LastUserID = $Row['AuthUserID'];
+							$DateLastActive = $Row['DateCreated'];
+							break; // You only need the first record
+						}
+						
+						// Now update the table
+						$s->Clear();
+						$s->SetMainTable('DiscussionUserWhisperTo', 'duwt');
+						$s->AddFieldNameValue('LastUserID', $LastUserID);
+						$s->AddFieldNameValue('CountWhispers', $WhisperToCount);
+						$s->AddFieldNameValue('DateLastActive', $DateLastActive);
+						$s->AddWhere('duwt', 'DiscussionID', '', $DiscussionID, '=');
+						$s->AddWhere('duwt', 'WhisperToUserID', '', $WhisperToUserID, '=');
+						// If no rows were affected, make sure to insert the data
+						if ($this->Context->Database->Update($s, $this->Name, 'SwitchCommentProperty', 'An error occurred while updating discussion whisper data.') == 0) {
+							$s->Clear();
+							$s->SetMainTable('DiscussionUserWhisperTo', 'duwt');
+							$s->AddFieldNameValue('CountWhispers', $WhisperToCount);
+							$s->AddFieldNameValue('DateLastActive', $DateLastActive);
+							$s->AddFieldNameValue('DiscussionID', $DiscussionID);
+							$s->AddFieldNameValue('WhisperToUserID', $WhisperToUserID);
+							$s->AddFieldNameValue('LastUserID', $LastUserID);
+							$this->Context->Database->Insert($s, $this->Name, 'SwitchCommentProperty', "An error occurred while updating the discussion's comment summary.");
+						}
+						
+						// echo '<div>There were other whispers, set the whisperto count to '.$WhisperToCount.', LastUserID to '.$LastUserID.', and DateLastActive to '.$DateLastActive.'</div>';
+					}
+					
+					// (c) Retrieve information about the last undeleted whisper from $WhisperFromUserID
+					$s->Clear();
+					$s->SetMainTable('Comment', 'c');
+					$s->AddSelect(array('CommentID', 'AuthUserID', 'WhisperUserID', 'DateCreated'), 'c');
+					$s->AddWhere('c', 'AuthUserID', '', $WhisperFromUserID, '=');
+					$s->AddWhere('c', 'DiscussionID', '', $DiscussionID, '=');
+					$s->AddWhere('c', 'Deleted', '', '0', '=');
+					$s->AddWhere('c', 'WhisperUserID', '', '0', '>');
+					$s->AddOrderBy('DateCreated', 'c', 'desc');
+					$WhisperFromData = $this->Context->Database->Select($s, $this->Name, 'SwitchCommentProperty', 'An error occurred while retrieving whisper data.');
+					
+					// If there are no other whispers, delete the whisperfrom record entirely
+					$WhisperFromCount = $this->Context->Database->RowCount($WhisperFromData);
+					if ($WhisperFromCount == 0) {
+						// echo '<div>There were no other whispers from this person, deleting whisperfrom record</div>';
+						$s->Clear();
+						$s->SetMainTable('DiscussionUserWhisperFrom', 'duwf');
+						$s->AddWhere('duwf', 'DiscussionID', '', $DiscussionID, '=');
+						$s->AddWhere('duwf', 'WhisperFromUserID', '', $WhisperFromUserID, '=');
+						$this->Context->Database->Delete($s, $this->Name, 'SwitchCommentProperty', 'An error occurred while removing discussion whisper data.');
+					} else {
+						// If there are other records, update the DUWF table with the
+						// whisper count, and date last active
+						$DateLastActive = '';
+						
+						while ($Row = $this->Context->Database->GetRow($WhisperFromData)) {
+							$DateLastActive = $Row['DateCreated'];
+							break; // You only need the first record
+						}
+						
+						// Now update the table
+						$s->Clear();
+						$s->SetMainTable('DiscussionUserWhisperFrom', 'duwf');
+						$s->AddFieldNameValue('CountWhispers', $WhisperFromCount);
+						$s->AddFieldNameValue('DateLastActive', $DateLastActive);
+						$s->AddWhere('duwf', 'DiscussionID', '', $DiscussionID, '=');
+						$s->AddWhere('duwf', 'WhisperFromUserID', '', $WhisperFromUserID, '=');
+						// If no rows were affected, make sure to insert the data
+						if ($this->Context->Database->Update($s, $this->Name, 'SwitchCommentProperty', 'An error occurred while updating discussion whisper data.') == 0) {
+							$s->Clear();
+							$s->SetMainTable('DiscussionUserWhisperFrom', 'duwf');
+							$s->AddFieldNameValue('CountWhispers', $WhisperFromCount);
+							$s->AddFieldNameValue('DateLastActive', $DateLastActive);
+							$s->AddFieldNameValue('DiscussionID', $DiscussionID);
+							$s->AddFieldNameValue('WhisperFromUserID', $WhisperFromUserID);
+							$s->AddFieldNameValue('LastUserID', $WhisperFromUserID);
+							$this->Context->Database->Insert($s, $this->Name, 'SwitchCommentProperty', "An error occurred while updating the discussion's comment summary.");
+						}
+						// echo '<div>There were other whispers from this person, setting the whisperfrom count to '.$WhisperFromCount.', and DateLastACtive to '.$DateLastActive.'</div>';
+					}
+				} else {
+					// echo '<div>this was not a whisper, so just resumming basic comment counts & such on discussion table.</div>';
+					// If this wasn't a whisper, update the discussion table's last
+					// commenter & date commented fields. So, get the last two comments
+					// That weren't whispers and weren't deleted.
+					$s->Clear();
+					$s->SetMainTable('Comment', 'c');
+					$s->AddSelect(array('CommentID', 'AuthUserID', 'DateCreated'), 'c');
+					$s->AddWhere('c', 'DiscussionID', '', $DiscussionID, '=');
+					$s->AddWhere('c', 'WhisperUserID', '', 0, '=', 'and', '', 1, 1);
+					$s->AddWhere('c', 'Deleted', '', 0, '=', 'and');
+					$s->AddWhere('c', 'CommentID', '', $CommentID, '=', 'or');
+					$s->EndWhereGroup();
+					$s->AddOrderBy('CommentID', 'c', 'desc');
+					$s->AddLimit(0, 2);
+					$LastComments = array();
+					$LastCommentData = $this->Context->Database->Select($s, $this->Name, 'SwitchCommentProperty', 'An error occurred while retrieving discussion data');
+					while ($Row = $this->Context->Database->GetRow($LastCommentData)) {
+						$LastComments[] = array('CommentID' => ForceInt($Row['CommentID'], 0),
+							'AuthUserID' => ForceInt($Row['AuthUserID'], 0),
+							'DateCreated' => $Row['DateCreated']);
+					}
+	
+					// If there were enough comments to worry about manipulating
+					if (count($LastComments) > 1) {
+						// If this comment was the last one
+						if ($LastComments[0]['CommentID'] == $CommentID) {
+							$s->Clear();
+							$s->SetMainTable('Discussion', 'd');
+							// If the comment is being deleted, mark the previous one as the last one.
+							if ($Switch == 1) {
+								$s->AddFieldNameValue('LastUserID', $LastComments[1]['AuthUserID']);
+								$s->AddFieldNameValue('DateLastActive', $LastComments[1]['DateCreated']);
+							} else {
+								// Otherwise mark this one as the last one
+								$s->AddFieldNameValue('LastUserID', $LastComments[0]['AuthUserID']);
+								$s->AddFieldNameValue('DateLastActive', $LastComments[0]['DateCreated']);
+							}
+							$s->AddWhere('d', 'DiscussionID', '', $DiscussionID, '=');
+							$this->Context->Database->Update($s, $this->Name, 'SwitchCommentProperty', 'An error occurred while updating discussion data.');
+						}
+					}
+					// Update the comment count on the discussion table
+					$this->ReCountComments($DiscussionID);
+				}
 			}
-			// And finally, mark the comment as deleted
-			$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
-			$s->SetMainTable('Comment', 'm');
-			$s->AddFieldNameValue('Deleted', $Switch);
-			if ($Switch == 1) {
-				$s->AddFieldNameValue('DeleteUserID', $this->Context->Session->UserID);
-				$s->AddFieldNameValue('DateDeleted', MysqlDateTime());
-			}
-			$s->AddWhere('m', 'CommentID', '', $CommentID, '=');
-			$this->Context->Database->Update($s, $this->Name, 'SwitchCommentProperty', 'An error occurred while marking the comment as inactive.');
 		}
 		return $this->Context->WarningCollector->Iif();
+	}
+	
+	function ReCountComments($DiscussionID) {
+		// Count the number of visible, non-whispered comments
+		$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
+		$s->SetMainTable('Comment', 'c');
+		$s->AddSelect('CommentID', 'c');
+		$s->AddWhere('c', 'DiscussionID', '', $DiscussionID, '=');
+		$s->AddWhere('c', 'Deleted', '', 0, '=', 'and');
+		$s->AddWhere('c', 'WhisperUserID', '', 0, '=', 'and');
+		$CountData = $this->Context->Database->Select($s, $this->Name, 'ReCountComments', 'An error occurred while retrieving comment summary data.');
+      $CommentCount = $this->Context->Database->RowCount($CountData);
+		
+		$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
+		$s->SetMainTable('Discussion', 'd');
+		$s->AddFieldNameValue('CountComments', $CommentCount, 0);
+		$s->AddWhere('d', 'DiscussionID', '', $DiscussionID, '=');
+		$this->Context->Database->Update($s, $this->Name, 'ReCountComments', 'An error occurred while manipulating the comment count for the discussion.');
 	}
 	
 	// Handles manipulating the count value for a discussion when adding, hiding, or deleting a comment
