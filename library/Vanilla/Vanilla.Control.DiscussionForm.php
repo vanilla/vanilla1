@@ -110,7 +110,14 @@ class DiscussionForm extends PostBackControl {
 			$this->Comment->GetPropertiesFromForm();
 			$this->Comment->DiscussionID = $this->DiscussionID;
 			$this->Discussion = $dm->GetDiscussionById($this->Comment->DiscussionID);
-			$ResultComment = $cm->SaveComment($this->Comment);
+			// Make sure to prevent saving comments if the discussion is closed and
+         // the user doesn't have permission to manage closed discussions
+			if ($this->Discussion->Closed && !$this->Context->Session->User->Permission('PERMISSION_CLOSE_DISCUSSIONS')) {
+				$ResultComment = false;
+				$this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrPermissionInsufficient'));
+			} else {
+				$ResultComment = $cm->SaveComment($this->Comment);
+			}
 			
 			$this->DelegateParameters['ResultComment'] = &$ResultComment;
 			$this->CallDelegate('PostSaveComment');

@@ -4,8 +4,8 @@
 echo '<div id="Form" class="StartDiscussion">
    <fieldset>
 		<legend>'.$this->Title.'</legend>'
-      .$this->Get_PostBackForm('frmPostDiscussion', 'post', 'post.php')
       .$this->Get_Warnings()
+      .$this->Get_PostBackForm('frmPostDiscussion', 'post', 'post.php')
       .'<ul>';
    if ($this->Context->Configuration['USE_CATEGORIES']) {
       $this->CallDelegate('DiscussionForm_PreCategoryRender');
@@ -51,9 +51,9 @@ echo '<div id="Form" class="StartDiscussion">
       .'" id="CommentBox" rows="10" cols="85">'
       .$Discussion->Comment->Body
       .'</textarea>
-   </li>
-   </ul>'
-   .$this->GetPostFormatting($Discussion->Comment->FormatType);
+   </li>'
+   .$this->GetPostFormatting($Discussion->Comment->FormatType)
+   .'</ul>';
    
    $this->CallDelegate('DiscussionForm_PreButtonsRender');
    

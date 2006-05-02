@@ -288,7 +288,7 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 	}
 
 	function GetItems(kc){
-		if (kc == 38 || kc == 40 || kc == 13) return;
+		if (kc == 38 || kc == 40 || kc == 13 || kc == 9) return;
 		var i;
 		if (_Display){ 
 			var word = 0;

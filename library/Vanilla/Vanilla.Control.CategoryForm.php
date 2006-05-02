@@ -62,7 +62,7 @@ class CategoryForm extends PostBackControl {
 			if (in_array($this->PostBackAction, array('CategoryRemove', 'Categories', 'Category', 'ProcessCategory', 'ProcessCategoryRemove'))) {
 				$this->CategoryData = $this->CategoryManager->GetCategories(1, 0, 0);
 			}
-			if (in_array($this->PostBackAction, array('CategoryRemove', 'Category', 'ProcessCategoryRemove'))) {
+			if (in_array($this->PostBackAction, array('CategoryRemove', 'Category', 'ProcessCategoryRemove', 'ProcessCategory'))) {
 				$this->CategorySelect = $this->Context->ObjectFactory->NewObject($this->Context, 'Select');
 				$this->CategorySelect->Name = 'CategoryID';
 				$this->CategorySelect->CssClass = 'SmallInput';

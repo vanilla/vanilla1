@@ -4,8 +4,8 @@
 echo '<div id="Form" class="AddComments">
    <fieldset>
 		<legend>'.$this->Title.'</legend>'
-		.$this->Get_PostBackForm('frmPostComment', 'post', 'post.php')
       .$this->Get_Warnings()
+		.$this->Get_PostBackForm('frmPostComment', 'post', 'post.php')
    .'<ul>';
    
       $this->CallDelegate('CommentForm_PreWhisperInputRender');

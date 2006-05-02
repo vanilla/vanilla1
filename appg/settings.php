@@ -10,11 +10,23 @@
 *
 * Description: Global application constants
 * 
-* !DO NOT CHANGE ANYTHING IN THIS FILE!
+*
+*
+*
+*
+*
+*
+* ATTENTION: !DO NOT CHANGE ANYTHING IN THIS FILE!
+*
+*
+*
+*
+*
+*
 * 
 * If you wish to override any configuration setting, do it in the
-* conf/settings.php file (they will override any settings made
-* here).
+* conf/settings.php file. This file will be overwritten when you apply upgrades
+* to Vanilla. The conf/settings.php file will NOT be overwritten.
 */
 
 ob_start();
