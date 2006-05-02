@@ -31,12 +31,12 @@ if ($Context->SelfUrl == 'people.php' && in_array(ForceIncomingString('PostBackA
 	// Add the Real name inputs to the application form
 	function ApplicationForm_AddRealNameInputs($ApplyForm) {
 		echo '<li>
-			<label for="FirstName">'.$ApplyForm->Context->GetDefinition('FirstName').'</label>
-			<input type="text" name="FirstName" value="'.$ApplyForm->Applicant->FirstName.'" class="Input" maxlength="40" />
+			<label for="txtFirstName">'.$ApplyForm->Context->GetDefinition('FirstName').'</label>
+			<input id="txtFirstName" type="text" name="FirstName" value="'.$ApplyForm->Applicant->FirstName.'" class="Input" maxlength="40" />
 		</li>
 		<li>
 			<label for="LastName">'.$ApplyForm->Context->GetDefinition('LastName').'</label>
-			<input type="text" name="LastName" value="'.$ApplyForm->Applicant->LastName.'" class="Input" maxlength="40" />
+			<input id="txtLastName" type="text" name="txtLastName" value="'.$ApplyForm->Applicant->LastName.'" class="Input" maxlength="40" />
 		</li>';
 	}
    
