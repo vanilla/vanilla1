@@ -28,13 +28,17 @@ $Context->Dictionary["ErrReadTOS"] = "You must READ the terms of service.";
 
 if ($Context->SelfUrl == 'people.php' && in_array(ForceIncomingString('PostBackAction', ''), array('ApplyForm', 'Apply'))) {
    
-   // Add the Real name inputs to the application form
-   function ApplicationForm_AddRealNameInputs($ApplyForm) {
-      echo '<dt>'.$ApplyForm->Context->GetDefinition('FirstName').'</dt>
-      <dd><input type="text" name="FirstName" value="'.$ApplyForm->Applicant->FirstName.'" class="Input" maxlength="40" /></dd>
-      <dt>'.$ApplyForm->Context->GetDefinition('LastName').'</dt>
-      <dd><input type="text" name="LastName" value="'.$ApplyForm->Applicant->LastName.'" class="Input" maxlength="40" /></dd>';
-   }
+	// Add the Real name inputs to the application form
+	function ApplicationForm_AddRealNameInputs($ApplyForm) {
+		echo '<li>
+			<label for="FirstName">'.$ApplyForm->Context->GetDefinition('FirstName').'</label>
+			<input type="text" name="FirstName" value="'.$ApplyForm->Applicant->FirstName.'" class="Input" maxlength="40" />
+		</li>
+		<li>
+			<label for="LastName">'.$ApplyForm->Context->GetDefinition('LastName').'</label>
+			<input type="text" name="LastName" value="'.$ApplyForm->Applicant->LastName.'" class="Input" maxlength="40" />
+		</li>';
+	}
    
    $Context->AddToDelegate('ApplyForm',
       'PreInputsRender',
