@@ -231,7 +231,7 @@ a:hover {
 	white-space:nowrap;
 	overflow: hidden;
 	}
-#DiscussionsPage .ContentInfo.Bottom {
+#DiscussionsPage .Bottom {
 	margin: -6px 0px 8px 0px;
 	}
 .ContentInfo * {
@@ -1438,6 +1438,10 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
 .PreferenceComplete input {
 	display: inline;
 	}
+
+/* IE Rendering Fix */
+  
+#Body {height: 0px;}
 
 /* Thank you positioniseverything.com*/
 
