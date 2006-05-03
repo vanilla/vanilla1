@@ -12,9 +12,9 @@
 */
 
 // GLOBAL INCLUDES
-include($Configuration['DATABASE_PATH']);
 include($Configuration['APPLICATION_PATH'].'appg/headers.php');
 include($Configuration['APPLICATION_PATH'].'appg/database.php');
+include($Configuration['DATABASE_PATH']);
 include($Configuration['LIBRARY_PATH'].'Framework/Framework.Functions.php');
 include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Database.php');
 include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.'.$Configuration['DATABASE_SERVER'].'.php');
