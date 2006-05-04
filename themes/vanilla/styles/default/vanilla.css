@@ -1442,7 +1442,9 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
 /* IE Rendering Fix */
   
 #Body {height: 0px;}
-
+html>body #Body { 
+	height: auto;
+	}
 /* Thank you positioniseverything.com*/
 
 .clearfix:after {
