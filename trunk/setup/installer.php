@@ -355,11 +355,9 @@ if ($PostBackAction == "Permissions") {
       $SettingsManager->DefineSetting("APPLICATION_TITLE", $ApplicationTitle, 1);
       $SettingsManager->DefineSetting("BANNER_TITLE", $ApplicationTitle, 1);
       $SettingsManager->DefineSetting("COOKIE_DOMAIN", $CookieDomain, 1);
+      $SettingsManager->DefineSetting("COOKIE_PATH", $CookiePath, 1);
 		$SettingsManager->DefineSetting("SETUP_COMPLETE", '1', 1);
-      if (!$SettingsManager->SaveSettingsToFile($SettingsFile)) {
-         //$Context->WarningCollector->Clear();
-         //$Context->WarningCollector->Add("For some reason we couldn't save your general settings to the '.$SettingsFile.' file.");
-      }
+      $SettingsManager->SaveSettingsToFile($SettingsFile);
    }
    
    if ($Context->WarningCollector->Count() == 0) {
@@ -392,16 +390,34 @@ if ($PostBackAction == "Permissions") {
 						".$Context->WarningCollector->GetMessages()."
 					</div>";
 				}
-				echo "<p>Vanilla stores configuration settings in PHP files. In order for you to be able to edit these options in Vanilla, you will need to make sure that PHP has read and write access to these configuration files.</p>
-				<p>The recommended way to do this is to make the apache (or IIS) user and group the owner of the conf directory. If you are running a Linux/Unix/Mac server and you have command line access, you can achieve these permissions by navigating to the Vanilla folder and executing the following:</p>
-				<p><strong>Note:</strong> This assumes that your apache user and group are www-data and www-data respectively. Depending on your operating system, this could be different. Other standard apache users are <em>apache</em> and <em>nobody</em>.</p>
-				<code>chown --recursive www-data:www-data ./conf</code>
+				echo "<p>Navigate the filesystem of your server to the Vanilla folder. Vanilla will need read AND write access to the following folders:</p>
+				<ul>
+				<li>conf</li>
+				<li>extensions</li>
+				<li>languages</li>
+				<li>themes</li>
+				<li>setup</li>
+				</ul>
 				
-				<p>If you don't know what your apache user is, you can also grant full access to the configuration folder for all users. This is not recommended because it is not as secure as the previous method, but it can be accomplished from the root Vanilla folder by executing the following:</p>
-				<code>chmod --recursive 666 ./conf</code>
+				<p>You can achieve these permissions by making the Apache user the owner of the folders/files, like so:</p>
 				
-				<p>Next, you need to make sure that Vanilla has read access to the setup directory so it can retrieve the database setup script for installation. You can do this by executing the following from the root folder of Vanilla:</p>
-				<code>chmod 666 ./setup/mysql.sql</code>
+				<code>chown --recursive apache-user:apache-group ./conf
+				<br />chown --recursive apache-user:apache-group ./extensions
+				<br />chown --recursive apache-user:apache-group ./languages
+				<br />chown --recursive apache-user:apache-group ./themes
+				<br />chown --recursive apache-user:apache-group ./setup</code>
+				
+				<p>Of course, you will need to change \"apache-user\" and \"apache-group\" to the apache user and group on your specific system. On Debian, for example, the apache user and group are www-data and www-data respectively.</p>
+				
+				<p>If you don't know what your apache user/group are, you can alternately gain the require permissions by executing the following:</p>
+				
+				<code>chmod --recursive 666 ./conf
+				<br />chmod --recursive 666 ./extensions
+				<br />chmod --recursive 666 ./languages
+				<br />chmod --recursive 666 ./themes
+				<br />chmod --recursive 666 ./setup</code>
+				
+				<p>These modifications should allow any user or group complete access to the specified folders.</p>
 				
 				<form id=\"frmPermissions\" method=\"post\" action=\"installer.php\">
 				<input type=\"hidden\" name=\"PostBackAction\" value=\"Permissions\" />
@@ -415,7 +431,7 @@ if ($PostBackAction == "Permissions") {
 							".$Context->WarningCollector->GetMessages()."
 						</div>";
 					}
-					echo "<p>Below you can provide the connection parameters for the mysql server where you want to install Vanilla. If you haven't done it yet, now would be a good time to create the database where you want Vanilla installed.</p>
+					echo "<p>Create your new Vanilla database, and specify the MySQL connection parameters below:</p>
 					<fieldset>
 						<form id=\"frmDatabase\" method=\"post\" action=\"installer.php\">
 						<input type=\"hidden\" name=\"PostBackAction\" value=\"Database\" />
@@ -456,7 +472,7 @@ if ($PostBackAction == "Permissions") {
 						<fieldset>"
 						.'<form name="frmUser" method="post" action="installer.php">
 						<input type="hidden" name="PostBackAction" value="User" />
-						<ul
+						<ul>
 							<li>
 								<label for="tUsername">Username</label>
 								<input id="tUsername" type="text" name="Username" value="'.FormatStringForDisplay($Username, 1).'" />
