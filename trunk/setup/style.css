@@ -80,6 +80,9 @@ fieldset label {
    margin: 0px 0px 6px 0px;
    width:30%;
 }
+fieldset ul li {
+   clear: left;
+}
 fieldset ul li input {
    margin-bottom: 6px;
    width: 50%;
