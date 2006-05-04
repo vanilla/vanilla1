@@ -1439,12 +1439,10 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
 	display: inline;
 	}
 
-/* IE Rendering Fix */
+/* IE Rendering Fixes */
   
-#Body {height: 0px;}
-html>body #Body { 
-	height: auto;
-	}
+#Body, #Form h2, #Form p {height: 1%;}
+
 /* Thank you positioniseverything.com*/
 
 .clearfix:after {
