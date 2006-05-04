@@ -40,6 +40,8 @@ $Configuration['SUPPORT_NAME'] = '';
 $Configuration['FORWARD_VALIDATED_USER_URL'] = '';
 $Configuration['CHARSET'] = 'utf-8';
 $Configuration['DATABASE_TABLE_PREFIX'] = 'LUM_';
+$Configuration['APPLICATION_TITLE'] = '';
+$Configuration['BANNER_TITLE'] = '';
 $Configuration['SETUP_COMPLETE'] = '0';
 $Configuration['SETUP_TEST'] = '0';
 
