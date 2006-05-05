@@ -1,7 +1,7 @@
 CREATE TABLE `LUM_Category` (
   `CategoryID` int(2) NOT NULL auto_increment,
   `Name` varchar(100) NOT NULL default '',
-  `Description` text NOT NULL,
+  `Description` text NULL,
   `Priority` int(11) NOT NULL default '0',
   PRIMARY KEY  (`CategoryID`)
 );
@@ -111,7 +111,7 @@ CREATE TABLE `LUM_Role` (
   `PERMISSION_SIGN_IN` enum('1','0') NOT NULL default '0',
   `PERMISSION_HTML_ALLOWED` enum('0','1') NOT NULL default '0',
   `PERMISSION_RECEIVE_APPLICATION_NOTIFICATION` enum('1','0') NOT NULL default '0',
-  `Permissions` text NOT NULL,
+  `Permissions` text NULL,
   `Priority` int(11) NOT NULL default '0',
   `UnAuthenticated` enum('1','0') NOT NULL default '0',
   PRIMARY KEY  (`RoleID`)
@@ -149,7 +149,7 @@ CREATE TABLE `LUM_User` (
   `ShowName` enum('1','0') NOT NULL default '1',
   `Icon` varchar(255) default NULL,
   `Picture` varchar(255) default NULL,
-  `Attributes` text NOT NULL,
+  `Attributes` text NULL,
   `CountVisit` int(8) NOT NULL default '0',
   `CountDiscussions` int(8) NOT NULL default '0',
   `CountComments` int(8) NOT NULL default '0',

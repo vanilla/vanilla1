@@ -25,5 +25,5 @@ error_reporting(E_ALL);
 // DO NOT ALLOW PHP_SESS_ID TO BE PASSED IN THE QUERYSTRING
 ini_set('session.use_only_cookies', 1);
 // Track errors so explicit error messages can be reported should errors be encountered
-ini_set('track_errors', 1);
+@ini_set('track_errors', 1);
 ?>
