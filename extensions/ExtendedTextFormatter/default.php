@@ -31,12 +31,11 @@ if (in_array($Context->SelfUrl, array("comments.php", "post.php"))) {
       function AutoLink($String) {
          $String = str_replace(array("&quot;","&amp;"),array('"','&'),$String);
          $String = preg_replace(
-            "/((f|ht)tps?|news|mailto)\:(\/\/)?[\@a-z0-9\x21\x23-\x2e\/;\x3f-\x7e]+/i",
-            "<a href=\"$0\" target=\"_blank\">$0</a>",
+            "/((f|ht)tps?|news|mailto)\:(\/\/)?[\@a-z0-9\x21\x23-\x2e\/;\x3f-\x7e\x3d]+/i",
+            "<a href=\"$0\" target=\"_blank\" rel=\"nofollow\">$0</a>",
             $String);
          return $String;
       }
-   
       function GetAccountLink($Object) {
          if ($Object->AuthUserID != "" && $Object->AuthUsername != "") {
             return '<a href="'.GetUrl($Object->Context->Configuration, 'account.php', '', 'u', $Object->AuthUserID).'">'.$Object->AuthUsername.'</a>';
