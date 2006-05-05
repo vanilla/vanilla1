@@ -154,24 +154,31 @@ function SwitchExtension(AjaxUrl, ExtensionKey) {
     if (Item) Item.className = "Processing";
     var Parameters = "ExtensionKey="+ExtensionKey;
     var dm = new DataManager();
+	 dm.Param = ExtensionKey;
     dm.RequestFailedEvent = SwitchExtensionResult;
     dm.RequestCompleteEvent = SwitchExtensionResult;
     dm.LoadData(AjaxUrl+"?"+Parameters);
 }
 
 function SwitchExtensionResult(Request) {
-    var Item = document.getElementById(Request.responseText);
+    var Item = document.getElementById(Trim(Request.responseText));
     if (Item) {
-        setTimeout("SwitchExtensionItemClass('"+Request.responseText+"')",400);
-    } else {
-        alert("Failed to modify extension.");
-    }
+		  setTimeout("SwitchExtensionItemClass('"+Trim(Request.responseText)+"')",400);
+	 } else {
+		  alert("param: '"+this.Param+"'");
+		  alert("response: '"+Trim(Request.responseText)+"'");
+		  alert("Failed to modify extension.");
+	 }
 }
 
 function SwitchExtensionItemClass(ItemID) {
     var Item = document.getElementById(ItemID);
     var chk = document.getElementById('chk'+ItemID+'ID');
     if (Item && chk) Item.className = chk.checked ? 'Enabled' : 'Disabled';
+}
+
+function Trim(String) {
+   return String.replace(/^\s*|\s*$/g,"");
 }
 
 function Wait(Sender, WaitText) {

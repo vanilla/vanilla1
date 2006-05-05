@@ -142,6 +142,7 @@ $WebRoot = substr($WebRoot, 0, strlen($WebRoot) - 5); // strips the "setup" off 
 $BaseUrl = 'http://'.ForceString(@$_SERVER['HTTP_HOST'], '').$WebRoot;
 $ThemeDirectory = $WebRoot . 'themes/';
 $AllowNext = 0;
+$NewConfiguration = array();
 
 // Assign some default values to the postback parameters
 $DBHost = '';
