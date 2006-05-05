@@ -9,6 +9,11 @@
 * Contact Mark O'Sullivan at mark [at] lussumo [dot] com
 *
 * Description: English language dictionary
+*
+* 
+* !!!!!DO NOT ALTER THIS FILE!!!!!
+* If you need to make changes to these definitions, add the new definitions to
+* your conf/language.php file. Definitions made there will override these.
 */
 
 // Define all dictionary codes in English
