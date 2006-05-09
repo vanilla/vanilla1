@@ -36,7 +36,7 @@ if ($Context->SelfUrl == 'people.php' && in_array(ForceIncomingString('PostBackA
 		</li>
 		<li>
 			<label for="LastName">'.$ApplyForm->Context->GetDefinition('LastName').'</label>
-			<input id="txtLastName" type="text" name="txtLastName" value="'.$ApplyForm->Applicant->LastName.'" class="Input" maxlength="40" />
+			<input id="txtLastName" type="text" name="LastName" value="'.$ApplyForm->Applicant->LastName.'" class="Input" maxlength="40" />
 		</li>';
 	}
    
