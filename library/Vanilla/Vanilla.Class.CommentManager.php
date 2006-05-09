@@ -322,6 +322,9 @@ class CommentManager extends Delegation {
 						$UserManager->UpdateUserCommentCount($this->Context->Session->UserID);
 					}
 					
+					$this->DelegateParameters['Comment'] = &$SaveComment;
+					$this->CallDelegate('SaveNewComment');
+					
 					// Format the values for db input
 					$SaveComment->FormatPropertiesForDatabaseInput();
 			
