@@ -136,14 +136,16 @@ echo '<div id="Form" class="Account GlobalsForm">';
                $Selector->SelectedValue = $this->Context->Configuration['DISCUSSION_POST_THRESHOLD'];
                
                $SecondsSelector = $this->Context->ObjectFactory->NewObject($this->Context, 'Select');
+               $SecondsSelector2 = $this->Context->ObjectFactory->NewObject($this->Context, 'Select');
                $SecondsSelector->CssClass = 'SmallSelect';
+               $SecondsSelector2->CssClass = 'SmallSelect';
                for ($i = 10; $i < 601; $i++) {
                   $SecondsSelector->AddOption($i, $i);
+                  $SecondsSelector2->AddOption($i, $i);
                   $i += 9;							
                }
                $SecondsSelector->Name = 'DISCUSSION_TIME_THRESHOLD';
                $SecondsSelector->SelectedValue = $this->Context->Configuration['DISCUSSION_TIME_THRESHOLD'];
-               $SecondsSelector2 = $SecondsSelector;
                $SecondsSelector2->Name = 'DISCUSSION_THRESHOLD_PUNISHMENT';
                $SecondsSelector2->SelectedValue = $this->Context->Configuration['DISCUSSION_THRESHOLD_PUNISHMENT'];
                

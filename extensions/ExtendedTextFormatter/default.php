@@ -23,19 +23,24 @@ if (in_array($Context->SelfUrl, array("comments.php", "post.php"))) {
          $sReturn = $String;
          // Only format plain text strings if they are being displayed (save in database as is)
          if ($FormatPurpose == FORMAT_STRING_FOR_DISPLAY) {
-            $sReturn = preg_replace("/\/\bme\b/", $this->GetAccountLink($Object), $sReturn);
             $sReturn = $this->AutoLink($sReturn);
+            $sReturn = preg_replace("/\/\bme\b/", $this->GetAccountLink($Object), $sReturn);
          }
          return $sReturn;
       }
+
       function AutoLink($String) {
-         $String = str_replace(array("&quot;","&amp;"),array('"','&'),$String);
-         $String = preg_replace(
-            "/((f|ht)tps?|news|mailto)\:(\/\/)?[\@a-z0-9\x21\x23-\x2e\/;\x3f-\x7e\x3d]+/i",
+        $String = str_replace(array("&quot;","&amp;"),array('"','&'),$String);
+        $String = preg_replace(
+            "/
+            (((f|ht)tps?|news|file):(\/\/)|mailto\:(\/\/)?)
+            ([\@a-z0-9\x21\x23-\x27\x2a-\x2e\/;\x3f-\x7a\x7f\x3d]+)
+            /msxi",
             "<a href=\"$0\" target=\"_blank\" rel=\"nofollow\">$0</a>",
             $String);
-         return $String;
+        return $String;
       }
+
       function GetAccountLink($Object) {
          if ($Object->AuthUserID != "" && $Object->AuthUsername != "") {
             return '<a href="'.GetUrl($Object->Context->Configuration, 'account.php', '', 'u', $Object->AuthUserID).'">'.$Object->AuthUsername.'</a>';

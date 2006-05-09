@@ -13,7 +13,7 @@
 
 class GlobalsForm extends PostBackControl {
 	
-	var $ConstantManager;
+	var $ConfigurationManager;
 
 	function GlobalsForm(&$Context) {
 		$this->Name = 'GlobalsForm';
