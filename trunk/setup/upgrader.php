@@ -713,11 +713,11 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 				
 				<p>If you don't know what your apache user/group are, you can alternately gain the require permissions by executing the following:</p>
 				
-				<code>chmod --recursive 666 ./conf
-				<br />chmod --recursive 666 ./extensions
-				<br />chmod --recursive 666 ./languages
-				<br />chmod --recursive 666 ./themes
-				<br />chmod --recursive 666 ./setup</code>
+				<code>chmod --recursive 777 ./conf
+				<br />chmod --recursive 777 ./extensions
+				<br />chmod --recursive 777 ./languages
+				<br />chmod --recursive 777 ./themes
+				<br />chmod --recursive 777 ./setup</code>
 				
 				<p>These modifications should allow any user or group complete access to the specified folders.</p>
 				
