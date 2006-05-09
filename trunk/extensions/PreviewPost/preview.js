@@ -60,7 +60,8 @@ function ShowPreview(file)
 	var text, type, i, f;
 	var frm = GetPostForm();
 	if (frm) {	
-		text = escape(frm.Body.value);
+		text = (encodeURIComponent) ? encodeURIComponent(document[FormName].Body.value) : 
+			escape(document[FormName].Body.value.replace(/\+/g, '%2B'));
 		if(!frm.FormatType.length) type = frm.FormatType.value;
 		else
 		{
