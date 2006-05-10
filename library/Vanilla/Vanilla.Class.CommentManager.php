@@ -323,13 +323,15 @@ class CommentManager extends Delegation {
 					}
 					
 					$this->DelegateParameters['Comment'] = &$SaveComment;
-					$this->CallDelegate('SaveNewComment');
 					
 					// Format the values for db input
 					$SaveComment->FormatPropertiesForDatabaseInput();
 			
 					// Proceed with the save if there are no warnings
 					if ($this->Context->WarningCollector->Count() == 0) {
+						
+						$this->CallDelegate('PreSaveNewComment');
+						
 						$Comment = $SaveComment;
 						$s->SetMainTable('Comment', 'm');
 						$s->AddFieldNameValue('Body', $Comment->Body);
@@ -341,6 +343,8 @@ class CommentManager extends Delegation {
 						$s->AddFieldNameValue('WhisperUserID', $Comment->WhisperUserID);
 						
 						$Comment->CommentID = $this->Context->Database->Insert($s, $this->Name, 'SaveComment', 'An error occurred while creating a new discussion comment.');
+						
+						$this->CallDelegate('PostSaveNewComment');
 					
 						// If there were no errors, update the discussion count & time
 						if ($Comment->WhisperUserID) {
