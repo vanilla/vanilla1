@@ -212,6 +212,16 @@ class DiscussionForm extends PostBackControl {
 	
 	function GetPostFormatting($SelectedFormatType) {
 		$FormatCount = count($this->Context->StringManipulator->Formatters);
+		$f = $this->Context->ObjectFactory->NewObject($this->Context, 'Radio');
+		$f->Name = 'FormatType';
+		$f->CssClass = 'FormatTypeRadio';
+		$f->SelectedID = $SelectedFormatType;
+		while (list($Name, $Object) = each($this->Context->StringManipulator->Formatters)) {
+			$f->AddOption($Name, $this->Context->GetDefinition($Name));
+		}
+		$this->DelegateParameters['FormatRadio'] = &$f;
+		$this->CallDelegate('PreFormatRadioRender');
+		
 		$sReturn = '';
 		include(ThemeFilePath($this->Context->Configuration, 'post_formatter.php'));
 		return $sReturn;
