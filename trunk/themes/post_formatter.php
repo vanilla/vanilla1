@@ -1,15 +1,7 @@
 <?php
 // Note: This file is included from the library/Vanilla/Vanilla.Control.DiscussionForm.php class.
 
-if ($this->Context->Session->User->Preference('ShowFormatSelector') && $FormatCount > 1) {
-   $f = $this->Context->ObjectFactory->NewObject($this->Context, 'Radio');
-   $f->Name = 'FormatType';
-   $f->CssClass = 'FormatTypeRadio';
-   $f->SelectedID = $SelectedFormatType;
-   while (list($Name, $Object) = each($this->Context->StringManipulator->Formatters)) {
-      $f->AddOption($Name, $this->Context->GetDefinition($Name));
-   }
-   
+if ($this->Context->Session->User->Preference('ShowFormatSelector') && $FormatCount > 1) {   
    $sReturn .= '<li id="CommentFormats">'
       .$this->Context->GetDefinition('FormatCommentsAs')
       .$f->Get()
