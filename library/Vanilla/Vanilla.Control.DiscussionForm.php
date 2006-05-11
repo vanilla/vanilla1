@@ -41,7 +41,7 @@ class DiscussionForm extends PostBackControl {
 		}
 
 		$this->Comment = $this->Context->ObjectFactory->NewContextObject($this->Context, 'Comment');
-		$this->Discussion = $this->Context->ObjectFactory->NewObject($this->Context, 'Discussion');
+		$this->Discussion = $this->Context->ObjectFactory->NewContextObject($this->Context, 'Discussion');
 		
 		$cm = $this->Context->ObjectFactory->NewContextObject($this->Context, 'CommentManager');
 		$dm = $this->Context->ObjectFactory->NewContextObject($this->Context, 'DiscussionManager');

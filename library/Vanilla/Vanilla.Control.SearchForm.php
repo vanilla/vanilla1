@@ -159,7 +159,7 @@ class SearchForm extends PostBackControl {
 				$FirstRow = 1;
 				$Counter = 0;
 				if ($this->Search->Type == 'Topics') {
-					$Discussion = $this->Context->ObjectFactory->NewObject($this->Context, 'Discussion');
+					$Discussion = $this->Context->ObjectFactory->NewContextObject($this->Context, 'Discussion');
 					$CurrentUserJumpToLastCommentPref = $this->Context->Session->User->Preference('JumpToLastReadComment');
 					$DiscussionList = '';
 					$ThemeFilePath = ThemeFilePath($this->Context->Configuration, 'discussion.php');

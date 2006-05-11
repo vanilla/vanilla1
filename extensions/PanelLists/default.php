@@ -52,7 +52,7 @@ if (in_array($Context->SelfUrl, array("index.php", "comments.php"))) {
 			$OtherBookmarksExist = 0;
 			$ThisDiscussionIsBookmarked = 0;
 			if ($Count > 0) {
-				$Discussion = $Context->ObjectFactory->NewObject($Context, "Discussion");
+				$Discussion = $Context->ObjectFactory->NewContextObject($Context, "Discussion");
 				while ($Row = $Context->Database->GetRow($UserBookmarks)) {
 					$Discussion->Clear();
 					$Discussion->GetPropertiesFromDataSet($Row, $Context->Configuration);
@@ -86,7 +86,7 @@ if (in_array($Context->SelfUrl, array("index.php", "comments.php"))) {
          $ActualRecords = $Context->Database->RowCount($Data);
          if ($ActualRecords > 0) {
 				$Panel->AddList($ListTitle, 21);
-            $Discussion = $Context->ObjectFactory->NewObject($Context, "Discussion");
+            $Discussion = $Context->ObjectFactory->NewContextObject($Context, "Discussion");
             while ($Row = $Context->Database->GetRow($Data)) {
                $Discussion->Clear();
                $Discussion->GetPropertiesFromDataSet($Row, $Context->Configuration);

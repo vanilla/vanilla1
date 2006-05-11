@@ -14,7 +14,7 @@ echo '<div class="ContentInfo Top">
 <div id="ContentBody">
 	<ol id="Discussions">';
 
-$Discussion = $this->Context->ObjectFactory->NewObject($this->Context, 'Discussion');
+$Discussion = $this->Context->ObjectFactory->NewContextObject($this->Context, 'Discussion');
 $FirstRow = 1;
 $CurrentUserJumpToLastCommentPref = $this->Context->Session->User->Preference('JumpToLastReadComment');
 $DiscussionList = '';

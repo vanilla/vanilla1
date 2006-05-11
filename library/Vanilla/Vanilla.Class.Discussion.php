@@ -11,7 +11,7 @@
 * Description: Discussion class
 */
 
-class Discussion {
+class Discussion extends Delegation {
 	var $DiscussionID;
 	var $FirstCommentID;
 	var $CategoryID;
@@ -77,7 +77,9 @@ class Discussion {
 		$this->CountWhispersFrom = 0;
 	}
 	
-	function Discussion() {
+	function Discussion(&$Context) {
+		$this->Name = 'Discussion';
+		$this->Delegation($Context);
 		$this->Clear();
 	}
 
@@ -199,6 +201,8 @@ class Discussion {
 		} else {
 			$sReturn .= ' NoNewComments';
 		}
+		$this->DelegateParameters['StatusString'] = &$sReturn;
+		$this->CallDelegate('GetStatus');
 		return $sReturn;
 	}
 	
