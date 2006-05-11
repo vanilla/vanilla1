@@ -128,7 +128,7 @@ class DiscussionManager extends Delegation {
 	
 	function GetDiscussionById($DiscussionID, $RecordDiscussionView = '0') {
 		$RecordDiscussionView = ForceBool($RecordDiscussionView, 0);
-		$Discussion = $this->Context->ObjectFactory->NewObject($this->Context, 'Discussion');
+		$Discussion = $this->Context->ObjectFactory->NewContextObject($this->Context, 'Discussion');
 		$s = $this->GetDiscussionBuilder();
 		$s->AddWhere('t', 'DiscussionID', '', $DiscussionID, '=');
 		$this->GetDiscussionWhisperFilter($s);
