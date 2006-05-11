@@ -563,6 +563,8 @@ $Context->Dictionary['Check'] = 'Check: ';
 $Context->Dictionary['All'] = 'All';
 $Context->Dictionary['None'] = 'None';
 $Context->Dictionary['Simple'] = 'Simple';
+$Context->Dictionary['ErrorFopen'] = "An error occurred while attempting to contact lussumo.com for updates on Vanilla. This will typically happen if your server has PHP's 'allow_url_fopen' configuration set to 'off'.";
+$Context->Dictionary['ErrorFromPHP'] = " Here is the message reported by PHP: \\1";
 
 /* Please do not remove or alter this definition */
 $Context->Dictionary['PanelFooter'] = '<p id="AboutVanilla"><a href="http://getvanilla.com">Vanilla '.APPLICATION_VERSION.'</a> is a product of <a href="http://lussumo.com">Lussumo</a>. More Information: <a href="http://lussumo.com/docs">Documentation</a>, <a href="http://lussumo.com/community">Community Support</a>.</p>';
