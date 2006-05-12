@@ -6,8 +6,5 @@
 .CredentialsInput input {
    margin-right: 20px !important;
    margin-bottom: 10px !important;
-   width: 100px !important;
+   width: 120px !important;
 }
-.CredentialsInput in{
-   margin-bottom: 30px !important;
-   }

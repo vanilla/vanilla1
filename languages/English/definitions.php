@@ -16,6 +16,9 @@
 * your conf/language.php file. Definitions made there will override these.
 */
 
+// Define the xml:lang attribute for the html tag
+$Context->Dictionary['XMLLang'] = 'en-ca';
+
 // Define all dictionary codes in English
 $Context->Dictionary['NoDiscussionsNotSignedIn'] = 'You cannot take part in the discussions because you are not signed in.';
 $Context->Dictionary['SelectDiscussionCategory'] = 'Select the category for this discussion';
