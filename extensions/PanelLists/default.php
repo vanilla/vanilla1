@@ -110,5 +110,14 @@ if (in_array($Context->SelfUrl, array("index.php", "comments.php"))) {
 	
 }
 
+if ($Context->SelfUrl == "comments.php") {
+	if ($Context->Session->User->Preference("ShowBookmarks")) {
+		// Include the js required to remove/add the discussions to the panel when
+		// items are un/bookmarked
+		$Head->AddScript('extensions/PanelLists/functions.js');
+		$Context->PassThruVars['SetBookmarkOnClick'] .= ' SetBookmarkList('.ForceIncomingInt('DiscussionID', 0).');';
+	}
+}
+
    
 ?>

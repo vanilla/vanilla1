@@ -51,7 +51,7 @@ $Context->PageTitle = $CommentGrid->Discussion->Name;
 			$BookmarkText,
 			"./",
 			"",
-			"id=\"SetBookmark\" onclick=\"SetBookmark('".$Configuration['WEB_ROOT']."ajax/switch.php', ".$CommentGrid->Discussion->Bookmarked.", '".$CommentGrid->Discussion->DiscussionID."', '".$Context->GetDefinition("BookmarkText")."', '".$Context->GetDefinition("UnbookmarkThisDiscussion")."'); return false;\"");
+			"id=\"SetBookmark\" onclick=\"SetBookmark('".$Configuration['WEB_ROOT']."ajax/switch.php', ".$CommentGrid->Discussion->Bookmarked.", '".$CommentGrid->Discussion->DiscussionID."', '".$Context->GetDefinition("BookmarkText")."', '".$Context->GetDefinition("UnbookmarkThisDiscussion")."'); ".$Context->PassThruVars['SetBookmarkOnClick']."return false;\"");
 
 		if ($Context->Session->User->Permission("PERMISSION_HIDE_DISCUSSIONS")) {
 			$HideText = $Context->GetDefinition(($CommentGrid->Discussion->Active?"Hide":"Unhide")."ThisDiscussion");

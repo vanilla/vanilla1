@@ -110,6 +110,9 @@ if ($Context->Session->UserID > 0) {
 	$Menu->AddTab($Context->GetDefinition('Account'), 'account', GetUrl($Configuration, 'account.php'), '', $Configuration['TAB_POSITION_ACCOUNT']);
 }
 
+// Define the context object's passthru variables
+$Context->PassThruVars['SetBookmarkOnClick'] = '';
+
 // INCLUDE EXTENSIONS
 include($Configuration['APPLICATION_PATH'].'conf/extensions.php');
 
