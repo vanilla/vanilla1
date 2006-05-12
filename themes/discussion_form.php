@@ -48,7 +48,7 @@ echo '<div id="Form" class="StartDiscussion">
       </label>
       <textarea name="Body" class="'
       .($this->Context->Session->User->Preference('ShowLargeCommentBox') ? 'LargeCommentBox' : 'SmallCommentBox')
-      .'" id="CommentBox" rows="10" cols="85">'
+      .'" id="CommentBox" rows="10" cols="85"'.$this->DiscussionFormAttributes.'>'
       .$Discussion->Comment->Body
       .'</textarea>
    </li>'
