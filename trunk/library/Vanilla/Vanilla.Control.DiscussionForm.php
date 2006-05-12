@@ -21,9 +21,13 @@ class DiscussionForm extends PostBackControl {
 	var $CommentID;
 	var $Form;
 	var $Title;				// The title of the form
+   var $CommentFormAttributes; // Attributes added to the comment form's textarea input
+   var $DiscussionFormAttributes; // Attributes added to the discussion form's textarea input
 	
 	function DiscussionForm(&$Context) {
 		$this->Name = 'DiscussionForm';
+		$this->CommentFormAttributes = '';
+		$this->DiscussionFormAttributes = '';
 		$this->Constructor($Context);
 		$this->FatalError = 0;
 		$this->EditDiscussionID = 0;
