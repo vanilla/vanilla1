@@ -78,7 +78,6 @@ if (in_array($Context->SelfUrl, array('comments.php', 'post.php'))) {
                   $DiscussionForm->Comment->DiscussionID = $DiscussionForm->DiscussionID;
                   $dm = $DiscussionForm->DelegateParameters['DiscussionManager'];
                   $DiscussionForm->Discussion = $dm->GetDiscussionById($DiscussionForm->Comment->DiscussionID);
-                  $DiscussionForm->Comment->FormatPropertiesForDisplay(1);
                }
             }
          }
