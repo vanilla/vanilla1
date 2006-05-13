@@ -11,8 +11,8 @@ if ($this->Context->Configuration['ADDON_NOTICE']) {
       } else {
          echo '<div class="SystemMessages">
             <div>
+               <span><a href="'.GetUrl($this->Context->Configuration, 'index.php', '', '', '', '', 'TurnOffAddonNotice=1').'">'.$this->Context->GetDefinition('RemoveThisNotice').'</a></span>
                '.$this->Context->GetDefinition('WelcomeToVanillaGetSomeAddons').'
-               <br /><a href="'.GetUrl($this->Context->Configuration, 'index.php', '', '', '', '', 'TurnOffAddonNotice=1').'">'.$this->Context->GetDefinition('RemoveThisNotice').'</a>
             </div>
          </div>';
             

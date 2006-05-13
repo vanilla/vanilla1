@@ -571,7 +571,7 @@ $Context->Dictionary['ErrorFromPHP'] = " Here is the message reported by PHP: \\
 $Context->Dictionary['InvalidHostName'] = 'The supplied host name was invalid.';
 $Context->Dictionary['WelcomeToVanillaGetSomeAddons'] = '<strong>Welcome to Vanilla!</strong>
 <br />You will quickly notice that it is very ... vanilla. You should definitely spice things up with some <a href="http://lussumo.com/addons/">add-ons</a>.';
-$Context->Dictionary['RemoveThisNotice'] = 'Click here to remove this message';
+$Context->Dictionary['RemoveThisNotice'] = 'Remove this message';
 
 
 /* Please do not remove or alter this definition */
