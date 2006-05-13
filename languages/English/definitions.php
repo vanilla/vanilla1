@@ -569,6 +569,10 @@ $Context->Dictionary['Simple'] = 'Simple';
 $Context->Dictionary['ErrorFopen'] = "An error occurred while attempting to contact lussumo.com for updates on Vanilla.";
 $Context->Dictionary['ErrorFromPHP'] = " Here is the message reported by PHP: \\1";
 $Context->Dictionary['InvalidHostName'] = 'The supplied host name was invalid.';
+$Context->Dictionary['WelcomeToVanillaGetSomeAddons'] = '<strong>Welcome to Vanilla!</strong>
+<br />You will quickly notice that it is very ... vanilla. You should definitely spice things up with some <a href="http://lussumo.com/addons/">add-ons</a>.';
+$Context->Dictionary['RemoveThisNotice'] = 'Click here to remove this message';
+
 
 /* Please do not remove or alter this definition */
 $Context->Dictionary['PanelFooter'] = '<p id="AboutVanilla"><a href="http://getvanilla.com">Vanilla '.APPLICATION_VERSION.'</a> is a product of <a href="http://lussumo.com">Lussumo</a>. More Information: <a href="http://lussumo.com/docs">Documentation</a>, <a href="http://lussumo.com/community">Community Support</a>.</p>';

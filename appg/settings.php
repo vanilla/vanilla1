@@ -210,8 +210,10 @@ $Configuration['PREFERENCE_ShowFormatSelector'] = '1';
 $Configuration['PREFERENCE_ShowDeletedDiscussions'] = '0';
 $Configuration['PREFERENCE_ShowDeletedComments'] = '0';
 
+// Newbie settings
 // Has Vanilla been installed (this will be set to true in conf/settings.php when setup completes)
 $Configuration['SETUP_COMPLETE'] = '0';
+$Configuration['ADDON_NOTICE'] = '1';
 
 // Application versions
 define('APPLICATION', 'Vanilla');
