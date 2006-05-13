@@ -549,7 +549,7 @@ html>body .ContentInfo h1 { width:80% !important; }
 #Comments .CommentHeader a {
 	text-decoration:none;
 	font-weight:bold;
-	font-size:13px;
+	font-size:14px;
 	color:#3354aa;
 	}
 #Comments .CommentHeader span {
@@ -584,6 +584,8 @@ html>body .ContentInfo h1 { width:80% !important; }
 	display:block;
 	margin: 10px;
 	color:#000;
+	font-size: 13px;
+	line-height: 150%;
 	}
 #Comments .CommentBody ul li,
 #Comments .CommentBody ol li {
