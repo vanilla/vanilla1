@@ -51,6 +51,19 @@ a:hover {
 	font-size:13px;
 	padding: 8px 8px 8px 26px;
 	color: #D57D00;
+	line-height: 150%;
+	}
+/* Remove System Message Button */
+.SystemMessages span {
+	float:right;
+	display: block;
+	font-size: 11px;
+	}
+.SystemMessages span a,
+.SystemMessages span a:link,
+.SystemMessages span a:visited,
+.SystemMessages span a:hover {
+	color: #f60;
 	}
 .Invisible { display: none; }
 	
