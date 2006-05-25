@@ -16,7 +16,7 @@ echo '<div id="Form" class="Account UpdateCheck">
    
    $this->PostBackParams->Set('PostBackAction', 'ProcessUpdateReminder');
    
-   if (ForceIncomingBool('Saved', 0)) echo '<div class="Success">'.$this->Context->GetDefinition('ReminderChangesSaved').'</div>';
+   if (ForceIncomingBool('Saved', 0)) echo '<div id="Success">'.$this->Context->GetDefinition('ReminderChangesSaved').'</div>';
    
    echo '
    <fieldset>

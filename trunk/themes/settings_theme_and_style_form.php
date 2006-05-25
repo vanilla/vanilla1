@@ -8,7 +8,7 @@ if (!$this->Context->Session->User->Permission('PERMISSION_MANAGE_THEMES') && !$
    </div>';
 } else {
    echo '<div id="Form" class="Account Theme">';
-      if (ForceIncomingBool('Saved', 0)) echo '<div class="Success">'.$this->Context->GetDefinition('ThemeChangesSaved').'</div>';   
+      if (ForceIncomingBool('Saved', 0)) echo '<div id="Success">'.$this->Context->GetDefinition('ThemeChangesSaved').'</div>';   
       echo '<fieldset>
          <legend>'.$this->Context->GetDefinition('ThemeAndStyleManagement').'</legend>
          '.$this->Get_Warnings().'

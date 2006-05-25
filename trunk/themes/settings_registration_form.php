@@ -9,7 +9,7 @@ if (!$this->Context->Session->User->Permission('PERMISSION_MANAGE_REGISTRATION')
 } else {				
    $this->PostBackParams->Set('PostBackAction', 'ProcessRegistrationChange');
    echo '<div id="Form" class="Account Identity">';
-   if ($this->PostBackValidated) echo '<div class="Success">'.$this->Context->GetDefinition('RegistrationChangesSaved').'</div>';
+   if ($this->PostBackValidated) echo '<div id="Success">'.$this->Context->GetDefinition('RegistrationChangesSaved').'</div>';
       echo '<fieldset>
          <legend>'.$this->Context->GetDefinition('RegistrationManagement').'</legend>
          '.$this->Get_Warnings().'

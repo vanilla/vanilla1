@@ -23,6 +23,7 @@ a:hover {
 	background: url(alert.gif) no-repeat top left #FFEDEF;
 	border-top: 1px solid #FFC2CA;
 	padding: 10px 10px 10px 27px !important;
+	overflow: hidden;
 	}
 .ErrorTitle {
 	font-weight: bold;
@@ -31,13 +32,13 @@ a:hover {
 .Error {
 	color: #c00 !important;
 	}
-.Success {
+#Success {
 	border-top: 1px solid #9C9;
 	border-bottom: 1px solid #9C9;
 	background: #E2F9E3;
 	color: #060 !important;
 	display: block;
-	padding: 6px !important;
+	line-height: 200%;
 	text-align: center;
 	font-size: 13px;
 	margin-bottom: 10px !important;
@@ -1235,9 +1236,13 @@ div.Extensions ul li p a:hover {
 
 /* Profile Page.. */
 
-#AccountProfile .Success,
+#AccountProfile #Success,
 #AccountProfile .ErrorContainer {
 	margin-right: 18px;
+	}
+#AccountProfile .ErrorContainer {
+	margin-bottom: 10px;
+	border-bottom: 1px solid #FFC2CA;
 	}
 #AccountProfile {
 	float:left;

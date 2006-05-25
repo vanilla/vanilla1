@@ -20,6 +20,7 @@ $HeadString = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://
             <script type="text/javascript" src="'.$this->Scripts[$i].'"></script>';
          }
       }
+      
       if (is_array($this->Strings)) {
          $StringCount = count($this->Strings);
          $i = 0;

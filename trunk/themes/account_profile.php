@@ -1,11 +1,12 @@
 <?php
 // Note: This file is included from the library/Vanilla/Vanilla.Control.Account.php class.
 
-echo '<div id="AccountProfile">
-   <ul>';
+echo '<div id="AccountProfile">';
 
-      if (ForceIncomingBool('Success',0)) echo '<div class="Success">'.$this->Context->GetDefinition('ChangesSaved').'</div>';
+      if (ForceIncomingBool('Success',0)) echo '<div id="Success">'.$this->Context->GetDefinition('ChangesSaved').'</div>';
       $this->Render_Warnings();
+      
+   echo '<ul>';
 
       $this->CallDelegate('PreUsernameRender');
       
