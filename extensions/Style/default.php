@@ -421,11 +421,11 @@ if (($Context->SelfUrl == "settings.php") && $Context->Session->User->Permission
 					echo '<div id="Form" class="Account SettingsForm">';
 						$Action = ForceIncomingString("Action", "");
 						if ($Action == 'Removed') {
-							echo '<div class="Success">'.$this->Context->GetDefinition('StyleRemoved').'</div>';
+							echo '<div id="Success">'.$this->Context->GetDefinition('StyleRemoved').'</div>';
 						} else if ($Action == 'Saved') {
-							echo '<div class="Success">'.$this->Context->GetDefinition('StyleSaved').'</div>';
+							echo '<div id="Success">'.$this->Context->GetDefinition('StyleSaved').'</div>';
 						} else if ($Action == 'SavedNew') {
-							echo '<div class="Success">'.$this->Context->GetDefinition('NewStyleSaved').'</div>';
+							echo '<div id="Success">'.$this->Context->GetDefinition('NewStyleSaved').'</div>';
 						}
 						echo '<fieldset>
 							<legend>'.$this->Context->GetDefinition("StyleManagement").'</legend>'

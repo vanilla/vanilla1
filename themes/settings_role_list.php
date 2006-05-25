@@ -4,11 +4,11 @@
 echo '<div id="Form" class="Account Roles">';
    $Action = ForceIncomingString("Action", "");
    if ($Action == 'Removed') {
-      echo '<div class="Success">'.$this->Context->GetDefinition('RoleRemoved').'</div>';
+      echo '<div id="Success">'.$this->Context->GetDefinition('RoleRemoved').'</div>';
    } else if ($Action == 'Saved') {
-      echo '<div class="Success">'.$this->Context->GetDefinition('RoleSaved').'</div>';
+      echo '<div id="Success">'.$this->Context->GetDefinition('RoleSaved').'</div>';
    } else if ($Action == 'SavedNew') {
-      echo '<div class="Success">'.$this->Context->GetDefinition('NewRoleSaved').'</div>';
+      echo '<div id="Success">'.$this->Context->GetDefinition('NewRoleSaved').'</div>';
    }
 
    echo '<fieldset>

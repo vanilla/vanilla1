@@ -1,7 +1,7 @@
 <?php
 // Note: This file is included from the library/Vanilla/Vanilla.Control.GlobalsForm.php control.
 echo '<div id="Form" class="Account GlobalsForm">';
-   if (ForceIncomingBool('Success',0)) echo '<div class="Success">'.$this->Context->GetDefinition('GlobalApplicationChangesSaved').'</div>';
+   if (ForceIncomingBool('Success',0)) echo '<div id="Success">'.$this->Context->GetDefinition('GlobalApplicationChangesSaved').'</div>';
    echo '<fieldset>
       <legend>'.$this->Context->GetDefinition('GlobalApplicationSettings').'</legend>
       '.$this->Get_Warnings().'

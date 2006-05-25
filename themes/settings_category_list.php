@@ -4,11 +4,11 @@
 echo '<div id="Form" class="Account CategoryList">';
    $Action = ForceIncomingString("Action", "");
    if ($Action == 'Removed') {
-      echo '<div class="Success">'.$this->Context->GetDefinition('CategoryRemoved').'</div>';
+      echo '<div id="Success">'.$this->Context->GetDefinition('CategoryRemoved').'</div>';
    } else if ($Action == 'Saved') {
-      echo '<div class="Success">'.$this->Context->GetDefinition('CategorySaved').'</div>';
+      echo '<div id="Success">'.$this->Context->GetDefinition('CategorySaved').'</div>';
    } else if ($Action == 'SavedNew') {
-      echo '<div class="Success">'.$this->Context->GetDefinition('NewCategorySaved').'</div>';
+      echo '<div id="Success">'.$this->Context->GetDefinition('NewCategorySaved').'</div>';
    }
    echo '<fieldset>
       <legend>'.$this->Context->GetDefinition('CategoryManagement').'</legend>'

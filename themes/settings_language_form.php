@@ -9,7 +9,7 @@ if (!$this->Context->Session->User->Permission('PERMISSION_MANAGE_LANGUAGE')) {
 } else {
    $this->PostBackParams->Set('PostBackAction', 'ProcessLanguageChange');
    echo '<div id="Form" class="Account Identity">';
-   if ($this->PostBackValidated) echo '<div class="Success">'.$this->Context->GetDefinition('LanguageChangesSaved').'</div>';
+   if ($this->PostBackValidated) echo '<div id="Success">'.$this->Context->GetDefinition('LanguageChangesSaved').'</div>';
       echo '<fieldset>
          <legend>'.$this->Context->GetDefinition('LanguageManagement').'</legend>
          '.$this->Get_Warnings().'
