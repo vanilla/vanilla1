@@ -78,7 +78,7 @@ class SearchForm extends PostBackControl {
       $this->RoleSelect->CssClass = 'SearchSelect';
       $this->RoleSelect->Attributes = " id=\"RoleFilter\"";
       $this->RoleSelect->AddOption('', $this->Context->GetDefinition('AllRoles'));
-		if ($this->Context->Session->User->Permission('PERMISSION_APPROVE_APPLICANTS')) $this->RoleSelect->AddOption('Applicant', $this->Context->GetDefinition('Applicant'));
+		if ($this->Context->Session->User->Permission('PERMISSION_APPROVE_APPLICANTS')) $this->RoleSelect->AddOption($this->Context->GetDefinition('Applicant'), $this->Context->GetDefinition('Applicant'));
       $this->RoleSelect->AddOptionsFromDataSet($this->Context->Database, $RoleSet, 'Name', 'Name');
       $this->RoleSelect->SelectedValue = $this->Search->Roles;
 		

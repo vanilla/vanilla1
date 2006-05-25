@@ -78,6 +78,26 @@ if ($this->Context->Session->UserID != $this->User->UserID && !$this->Context->S
             </li>
          </ul>';
          
+         // Add the extension customization settings
+         $Customizations = '';
+         while (list($Key, $Value) = each($this->Context->Configuration)) {
+            if (strpos($Key, 'CUSTOMIZATION_') !== false) {
+               $Description = $this->Context->GetDefinition($Key.'_DESCRIPTION');
+               $Customizations .= '<li>
+                  <label for="'.$Key.'">'.$this->Context->GetDefinition($Key).'</label>
+                  <input id="'.$Key.'" type="text" name="'.$Key.'" value="'.ForceIncomingString($Key, $this->User->Customization($Key)).'" maxlength="255" class="SmallInput" />
+                  '.($Description != $Key.'_DESCRIPTION' ? '<p class="Description">'.$Description.'</p>' : '').'
+               </li>';
+            }
+         }
+         // If some customizations were found, write them out now
+         if ($Customizations != '') {
+            echo '<h2>'.$this->Context->GetDefinition('OtherSettings').'</h2>
+            <ul>'
+               .$Customizations
+            .'</ul>';
+         }
+         
          $this->CallDelegate('PreCustomInputsRender');      
          
          echo '<h2>'.$this->Context->GetDefinition('AddCustomInformation').'</h2>

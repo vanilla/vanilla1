@@ -318,7 +318,7 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 			}
 			if (delim_split == '') delim_split = '##void##';
 			delim_split = delim_split.addslashes();
-			delim_split_rx = new RegExp("(["+delim_split+"])");
+			delim_split_rx = new RegExp("("+delim_split+")");
 			c = 0;
 			_DelimWords = new Array();
 			_DelimWords[0] = '';

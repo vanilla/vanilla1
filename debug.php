@@ -24,7 +24,6 @@ include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.ObjectFactory.
 include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.StringManipulator.php");
 include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.Context.php");
 include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.Page.php");
-include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.Writer.php");
 include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.Delegation.php");
 include($Configuration["LIBRARY_PATH"]."Framework/Framework.Class.Control.php");
 include($Configuration["LIBRARY_PATH"]."Vanilla/Vanilla.Functions.php");

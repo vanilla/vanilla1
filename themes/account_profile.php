@@ -4,6 +4,9 @@
 echo '<div id="AccountProfile">
    <ul>';
 
+      if (ForceIncomingBool('Success',0)) echo '<div class="Success">'.$this->Context->GetDefinition('ChangesSaved').'</div>';
+      $this->Render_Warnings();
+
       $this->CallDelegate('PreUsernameRender');
       
       if ($this->User->DisplayIcon != '') {
@@ -72,4 +75,7 @@ echo '<div id="AccountProfile">
    echo '</ul>
 </div>
 <div id="AccountHistory">';
+
+$this->CallDelegate('PostProfileRender');
+
 ?>
