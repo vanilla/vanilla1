@@ -47,7 +47,7 @@ $Context->Dictionary['CommentsAdded'] = 'Comments Added';
 $Context->Dictionary['LastKnownIp'] = 'Last Known Ip';
 $Context->Dictionary['PermissionError'] = 'You do not have permission to perform the requested action.';
 $Context->Dictionary['ChangePersonalInfo'] = 'Personal Information';
-$Context->Dictionary['DefineYourAccountProfile'] = '1. Define your account profile';
+$Context->Dictionary['DefineYourAccountProfile'] = 'Define your account profile';
 $Context->Dictionary['YourUsername'] = 'Your username';
 $Context->Dictionary['YourUsernameNotes'] = 'Your username will appear next to your discussions and comments.';
 $Context->Dictionary['YourFirstNameNotes'] = 'This should be your "real" first name. This will only be visible from the account page.';
@@ -58,7 +58,7 @@ $Context->Dictionary['AccountPictureNotes'] = 'You can enter any valid URL to an
 	<br />Your account picture will appear on your account page. Your account picture will be automatically centered and cropped to 280 pixels wide by 200 pixels high.';
 $Context->Dictionary['IconNotes'] = 'You can enter any valid URL to an image here, such as: <strong>http://www.mywebsite.com/myicon.jpg</strong>
 	<br />Your icon will appear next to your name in discussion comments and on your account page. Your icon will be automatically centered and cropped to 32 pixels wide by 32 pixels high.';
-$Context->Dictionary['AddCustomInformation'] = '2. Add custom information';
+$Context->Dictionary['AddCustomInformation'] = 'Add custom information';
 $Context->Dictionary['AddCustomInformationNotes'] = 'Using the following inputs, you can add custom information to your account profile as label &amp; value combinations (ie. <i>"Birthday"</i> and <i>"September 16th"</i>, or <i>"Favourite Band"</i> and <i>"The Velvet Underground"</i>). Values prefixed with a protocol like http://, mailto:, ftp://, aim:, etc will be automatically hyperlinked. You can add as many of these label/value combinations as you like.';
 $Context->Dictionary['Label'] = 'Label';
 $Context->Dictionary['Value'] = 'Value';
@@ -566,12 +566,14 @@ $Context->Dictionary['Check'] = 'Check: ';
 $Context->Dictionary['All'] = 'All';
 $Context->Dictionary['None'] = 'None';
 $Context->Dictionary['Simple'] = 'Simple';
-$Context->Dictionary['ErrorFopen'] = "An error occurred while attempting to contact lussumo.com for updates on Vanilla.";
+$Context->Dictionary['ErrorFopen'] = "An error occurred while attempting to retrieve information from an external data source (\\1).";
 $Context->Dictionary['ErrorFromPHP'] = " Here is the message reported by PHP: \\1";
 $Context->Dictionary['InvalidHostName'] = 'The supplied host name was invalid.';
 $Context->Dictionary['WelcomeToVanillaGetSomeAddons'] = '<strong>Welcome to Vanilla!</strong>
 <br />You will quickly notice that it is very ... vanilla. You should definitely spice things up with some <a href="http://lussumo.com/addons/">add-ons</a>.';
 $Context->Dictionary['RemoveThisNotice'] = 'Remove this message';
+$Context->Dictionary['OtherSettings'] = 'Other settings';
+$Context->Dictionary['ChangesSaved'] = 'Your changes were saved successfully';
 
 
 /* Please do not remove or alter this definition */

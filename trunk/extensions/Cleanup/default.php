@@ -103,7 +103,7 @@ if ($Context->SelfUrl == 'settings.php' && $Context->Session->User->Permission('
                   $s->Clear();
 						$s->SetMainTable('Style', 's');
 						$s->AddFieldNameValue('AuthUserID', '0');
-						$s->AddWhere('s', 'AuthUserID', '', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
+						$s->AddUpdateWhere('s', 'AuthUserID', '', '('.implode(',',$InactiveUsers).')', 'in', 'and', '', 0);
 						$this->Context->Database->Update($s, $this->Name, 'Constructor', 'An error occurred while attempting to remove user style relations.');
 						
 						// Wipe out any user blocks

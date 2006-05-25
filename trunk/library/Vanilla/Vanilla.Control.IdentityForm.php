@@ -27,7 +27,7 @@ class IdentityForm extends PostBackControl {
 				$this->User->Clear();
 				$this->User->GetPropertiesFromForm();
 				$this->CallDelegate('PreSaveIdentity');
-				if ($this->UserManager->SaveIdentity($this->User)) header('location: '.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', 'u', ($this->Context->Session->UserID == 0 ? '' : $this->User->UserID)));
+				if ($this->UserManager->SaveIdentity($this->User) && $this->UserManager->SaveUserCustomizationsFromForm($this->User)) header('location: '.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', 'u', ($this->Context->Session->UserID == 0 ? '' : $this->User->UserID), '', 'Success=1'));
 			}
 		}
 		$this->CallDelegate('Constructor');

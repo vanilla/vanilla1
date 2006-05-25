@@ -1235,6 +1235,10 @@ div.Extensions ul li p a:hover {
 
 /* Profile Page.. */
 
+#AccountProfile .Success,
+#AccountProfile .ErrorContainer {
+	margin-right: 18px;
+	}
 #AccountProfile {
 	float:left;
 	width:300px;
