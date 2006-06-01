@@ -72,7 +72,7 @@ include("appg/init_vanilla.php");
 					$Panel->AddListItem($ApplicantOptions, $Context->GetDefinition("ApproveForMembership"), GetUrl($Context->Configuration, $Context->SelfUrl, "", "u", $AccountUser->UserID, "", "PostBackAction=ApproveUser"), "", "", 10);
 					$Panel->AddListItem($ApplicantOptions, $Context->GetDefinition("DeclineForMembership"), GetUrl($Context->Configuration, $Context->SelfUrl, "", "u", $AccountUser->UserID, "", "PostBackAction=DeclineUser"), "", "", 20);
 				}
-				$Panel->AddListItem($ApplicantOptions, $Context->GetDefinition("NewApplicantSearch"), GetUrl($Context->Configuration, "search.php", "", "", "", "", "PostBackAction=Search&amp;Keywords=roles:Applicant;sort:Date;&amp;Type=Users"), "", "", 30);
+				$Panel->AddListItem($ApplicantOptions, $Context->GetDefinition("NewApplicantSearch"), GetUrl($Context->Configuration, "search.php", "", "", "", "", "PostBackAction=Search&amp;Keywords=roles:".$Context->GetDefinition("Applicant").";sort:Date;&amp;Type=Users"), "", "", 30);
 			}
 			if ($Context->Session->User->Permission("PERMISSION_CHANGE_USER_ROLE")) {
 				if ($AccountUser->RoleID > 0) {

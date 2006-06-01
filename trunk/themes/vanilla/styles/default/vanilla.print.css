@@ -649,6 +649,10 @@ li.User.Name span {
 
 /* Account Section Forms.. */
 
+#AccountProfile .Picture,
+#AccountProfile .ProfileIcon {
+	display: none;
+	}
 .Account {
 	padding-top:18px;
 	margin: 0px !important;

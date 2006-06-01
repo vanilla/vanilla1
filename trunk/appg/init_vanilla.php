@@ -72,8 +72,7 @@ $Head->AddScript('js/vanilla.js');
 $Head->AddScript('js/ajax.js');
 $Head->AddScript('js/ac.js');
 $Head->AddStyleSheet($Context->StyleUrl.'vanilla.css', 'screen', 100, '');
-$Head->AddStyleSheet($Context->StyleUrl.'vanilla.handheld.css', 'handheld', 101, '');
-$Head->AddStyleSheet($Context->StyleUrl.'vanilla.print.css', 'print', 102, '');
+$Head->AddStyleSheet($Context->StyleUrl.'vanilla.print.css', 'print', 101, '');
 
 // BUILD THE MAIN MENU
 $Menu->AddTab($Context->GetDefinition('Discussions'), 'discussions', GetUrl($Configuration, './'), '', $Configuration['TAB_POSITION_DISCUSSIONS']);
