@@ -77,6 +77,7 @@ class DiscussionManager extends Delegation {
             $s->AddJoin('User', 'wluf', 'UserID', 'tuwf', 'LastUserID', 'left join');
             $s->AddSelect('LastUserID', 'tuwf', 'WhisperFromLastUserID');
             $s->AddSelect('DateLastActive', 'tuwf', 'WhisperFromDateLastActive');
+				
             // Get the total whisper from count
             $s->AddSelect('CountWhispers', 'tuwf', 'CountWhispersFrom');
             
@@ -86,6 +87,7 @@ class DiscussionManager extends Delegation {
             $s->AddJoin('User', 'wlut', 'UserID', 'tuwt', 'LastUserID', 'left join');
             $s->AddSelect('LastUserID', 'tuwt', 'WhisperToLastUserID');
             $s->AddSelect('DateLastActive', 'tuwt', 'WhisperToDateLastActive');
+
             // Count the whispers to
             $s->AddSelect('CountWhispers', 'tuwt', 'CountWhispersTo');
          }
@@ -246,7 +248,22 @@ class DiscussionManager extends Delegation {
 
 		$s->AddOrderBy('Sticky', 't');
 		if ($this->Context->Configuration['ENABLE_WHISPERS']) {
-			$s->AddOrderBy(array('DateLastWhisper', 'DateLastActive'), array('t', 't'), 'desc', 'greatest', 'coalesce', ', 0');
+			// If the user viewing doesn't have permission to view all whispers, make sure to sort by dates that the user viewing is allowed to see
+         if ($this->Context->Session->User && $this->Context->Session->User->Permission('PERMISSION_VIEW_ALL_WHISPERS')) {
+				$s->AddOrderBy(array('DateLastWhisper', 'DateLastActive'), array('t', 't'), 'desc', 'greatest', 'coalesce', ', 0');
+			} else {
+				// so, make sure that you only sort by the datelastwhisper field if the user viewing was involved in the whisper.
+				$WhisperToLastUserIDColumnName = $this->Context->DatabaseColumns[$s->TableMap['t']]['WhisperToLastUserID'];
+				$WhisperFromLastUserIDColumnName = $this->Context->DatabaseColumns[$s->TableMap['t']]['WhisperFromLastUserID'];
+				$DateLastWhisperColumnName = $this->Context->DatabaseColumns[$s->TableMap['t']]['DateLastWhisper'];
+				$s->AddOrderBy(
+					array('case t.'.$WhisperToLastUserIDColumnName.' WHEN '.$this->Context->Session->UserID.' THEN t.'.$DateLastWhisperColumnName.' ELSE 0 END',
+						'case t.'.$WhisperFromLastUserIDColumnName.' WHEN '.$this->Context->Session->UserID.' THEN t.'.$DateLastWhisperColumnName.' ELSE 0 END',
+						'DateLastActive'),
+					array('', '', 't'),
+					'desc',
+					'greatest');
+			}
 		} else {
 			$s->AddOrderBy('DateLastActive', 't', 'desc');
 		}
