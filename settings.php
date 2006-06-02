@@ -77,7 +77,7 @@ if (!$Allowed) header('location:'.GetUrl($Configuration, 'index.php'));
 	if ($Context->Session->User->Permission('PERMISSION_APPROVE_APPLICANTS') && !$Configuration['ALLOW_IMMEDIATE_ACCESS']) {
 		$UserManager = $Context->ObjectFactory->NewContextObject($Context, 'UserManager');
 		$ApplicantCount = $UserManager->GetApplicantCount();
-		$Panel->AddListItem($AdminOptions, $Context->GetDefinition('MembershipApplicants'), GetUrl($Configuration, 'search.php', '', '', '', '', 'PostBackAction=Search&amp;Type=Users&amp;Keywords=roles:'.$this->Context->GetDefinition('Applicant').';sort:Date;'), $ApplicantCount.' '.$Context->GetDefinition('New'), '', 100);
+		$Panel->AddListItem($AdminOptions, $Context->GetDefinition('MembershipApplicants'), GetUrl($Configuration, 'search.php', '', '', '', '', 'PostBackAction=Search&amp;Type=Users&amp;Keywords=roles:'.$Context->GetDefinition('Applicant').';sort:Date;'), $ApplicantCount.' '.$Context->GetDefinition('New'), '', 100);
 	}
    
    // Create the default view
