@@ -48,5 +48,5 @@ $Page = $Context->ObjectFactory->NewContextObject($Context, 'Page', $Configurati
 $Page->FireEvent('Page_Init');
 
 // INCLUDE EXTENSIONS
-include($Configuration['APPLICATION_PATH'].'conf/extensions.php');
+// include($Configuration['APPLICATION_PATH'].'conf/extensions.php');
 ?>
