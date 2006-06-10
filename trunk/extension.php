@@ -29,6 +29,7 @@ include('appg/init_vanilla.php');
 	$Page->AddRenderControl($Head, $Configuration['CONTROL_POSITION_HEAD']);
 	$Page->AddRenderControl($Menu, $Configuration['CONTROL_POSITION_MENU']);
 	$Page->AddRenderControl($Panel, $Configuration['CONTROL_POSITION_PANEL']);
+	$Page->AddRenderControl($NoticeCollector, $Configuration['CONTROL_POSITION_NOTICES']);
 	$Page->AddRenderControl($ExtensionPage, $Configuration['CONTROL_POSITION_BODY_ITEM']);
 	$Page->AddRenderControl($Foot, $Configuration['CONTROL_POSITION_FOOT']);
 	$Page->AddRenderControl($PageEnd, $Configuration['CONTROL_POSITION_PAGE_END']);

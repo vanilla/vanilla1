@@ -62,6 +62,7 @@ $Page->FireEvent('Page_Init');
 $Head = $Context->ObjectFactory->CreateControl($Context, 'Head');
 $Menu = $Context->ObjectFactory->CreateControl($Context, 'Menu');
 $Panel = $Context->ObjectFactory->CreateControl($Context, 'Panel');
+$NoticeCollector = $Context->ObjectFactory->CreateControl($Context, 'NoticeCollector');
 $Foot = $Context->ObjectFactory->CreateControl($Context, 'Filler', 'foot.php');
 $PageEnd = $Context->ObjectFactory->CreateControl($Context, 'PageEnd');
 
@@ -122,6 +123,7 @@ $Panel->AddString($Context->GetDefinition('PanelFooter'), 500);
 $Head->GetDelegatesFromContext();
 $Menu->GetDelegatesFromContext();
 $Panel->GetDelegatesFromContext();
+$NoticeCollector->GetDelegatesFromContext();
 $Foot->GetDelegatesFromContext();
 $PageEnd->GetDelegatesFromContext();
 

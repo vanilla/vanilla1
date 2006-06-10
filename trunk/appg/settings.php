@@ -131,9 +131,10 @@ $Configuration['CONTROL_POSITION_HEAD'] = '100';
 $Configuration['CONTROL_POSITION_MENU'] = '200';
 $Configuration['CONTROL_POSITION_BANNER'] = '200';
 $Configuration['CONTROL_POSITION_PANEL'] = '300';
-$Configuration['CONTROL_POSITION_BODY_ITEM'] = '400';
-$Configuration['CONTROL_POSITION_FOOT'] = '500';
-$Configuration['CONTROL_POSITION_PAGE_END'] = '600';
+$Configuration['CONTROL_POSITION_NOTICES'] = '400';
+$Configuration['CONTROL_POSITION_BODY_ITEM'] = '500';
+$Configuration['CONTROL_POSITION_FOOT'] = '600';
+$Configuration['CONTROL_POSITION_PAGE_END'] = '700';
 
 // Vanilla Tab Positions
 $Configuration['TAB_POSITION_DISCUSSIONS'] = '10';

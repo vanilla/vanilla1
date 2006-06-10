@@ -27,16 +27,58 @@ include("appg/init_vanilla.php");
 
 // 2. BUILD PAGE CONTROLS
 	$DiscussionGrid = $Context->ObjectFactory->CreateControl($Context, 'DiscussionGrid');
-   $UpdateReminder = $Context->ObjectFactory->CreateControl($Context, 'Filler', 'update_reminder.php');
-   if ($Configuration['ADDON_NOTICE']) $AddOnNotice = $Context->ObjectFactory->CreateControl($Context, 'Filler', 'addon_notice.php');
+	// Add an update reminder if necessary
+	if ($Configuration['UPDATE_REMINDER'] != '') {
+		if ($Context->Session->User && $Context->Session->User->Permission('PERMISSION_CHECK_FOR_UPDATES')) {
+			$ShowUpdateMessage = 0;
+			$LastUpdate = $Configuration['LAST_UPDATE'];
+			if ($LastUpdate == '') $LastUpdate = time();
+			$Difference = time() - $LastUpdate;
+			$Days = floor($Difference/60/60/24);
+			if ($Configuration['LAST_UPDATE'] == '') {
+				$ShowUpdateMessage = 1;
+			} elseif ($Configuration['UPDATE_REMINDER'] == 'Weekly') {
+				if ($Days > 7) $ShowUpdateMessage = 1;
+			} elseif ($Configuration['UPDATE_REMINDER'] == 'Monthly') {
+				if ($Days > 30) $ShowUpdateMessage = 1;
+			} elseif ($Configuration['UPDATE_REMINDER'] == 'Quarterly') {
+				if ($Days > 90) $ShowUpdateMessage = 1;
+			}
+			
+			if ($ShowUpdateMessage) {
+				$Message = '';
+				if ($Days == 0) {
+					$Message = $Context->GetDefinition('NeverCheckedForUpdates');
+				} else {
+					$Message = str_replace('//1', $Days, $Context->GetDefinition('XDaysSinceUpdateCheck'));
+				}
+				$NoticeCollector->AddNotice($Message.' <a href="'.GetUrl($Configuration, 'settings.php', '', '', '', '', 'PostBackAction=UpdateCheck').'">'.$Context->GetDefinition('CheckForUpdatesNow').'</a>');
+			}
+		}
+	}
+   
+	// Remind them to get addons if this is a new install
+   if ($Configuration['ADDON_NOTICE']) {
+		if ($Context->Session->User && $Context->Session->User->Permission('PERMISSION_MANAGE_EXTENSIONS')) {
+			$HideNotice = ForceIncomingBool('TurnOffAddonNotice', 0);
+			if ($HideNotice) {
+				$SettingsFile = $Configuration['APPLICATION_PATH'].'conf/settings.php';
+				$SettingsManager = $Context->ObjectFactory->NewContextObject($Context, 'ConfigurationManager');
+				$SettingsManager->DefineSetting("ADDON_NOTICE", '0', 1);
+				$SettingsManager->SaveSettingsToFile($SettingsFile);
+			} else {
+				$NoticeCollector->AddNotice('<span><a href="'.GetUrl($Configuration, 'index.php', '', '', '', '', 'TurnOffAddonNotice=1').'">'.$Context->GetDefinition('RemoveThisNotice').'</a></span>
+					'.$Context->GetDefinition('WelcomeToVanillaGetSomeAddons'));
+			}
+		}
+	}
 
 // 3. ADD CONTROLS TO THE PAGE
 
 	$Page->AddRenderControl($Head, $Configuration['CONTROL_POSITION_HEAD']);
 	$Page->AddRenderControl($Menu, $Configuration['CONTROL_POSITION_MENU']);
 	$Page->AddRenderControl($Panel, $Configuration['CONTROL_POSITION_PANEL']);
-	if ($Configuration['ADDON_NOTICE']) $Page->AddRenderControl($AddOnNotice, $Configuration['CONTROL_POSITION_BODY_ITEM'] - 21);
-	$Page->AddRenderControl($UpdateReminder, $Configuration['CONTROL_POSITION_BODY_ITEM'] - 20);
+	$Page->AddRenderControl($NoticeCollector, $Configuration['CONTROL_POSITION_NOTICES']);
 	$Page->AddRenderControl($DiscussionGrid, $Configuration['CONTROL_POSITION_BODY_ITEM']);
 	$Page->AddRenderControl($Foot, $Configuration['CONTROL_POSITION_FOOT']);
 	$Page->AddRenderControl($PageEnd, $Configuration['CONTROL_POSITION_PAGE_END']);
