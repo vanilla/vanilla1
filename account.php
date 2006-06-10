@@ -26,6 +26,7 @@ include("appg/init_vanilla.php");
 	$UserManager = $Context->ObjectFactory->NewContextObject($Context, "UserManager");
 	$AccountUserID = ForceIncomingInt("u", $Context->Session->UserID);
 	if (!@$AccountUser) $AccountUser = $UserManager->GetUserById($AccountUserID);
+	if (!$AccountUser) $Context->WarningCollector->Add($Context->GetDefinition('ErrUserNotFound'));
 	if ($Context->Session->User && $Context->Session->User->Permission("PERMISSION_EDIT_USERS")) {
 		// Allow anything
 	} else {

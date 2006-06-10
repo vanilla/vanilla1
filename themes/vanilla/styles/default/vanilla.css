@@ -240,9 +240,14 @@ a:hover {
 	text-align:right;
 	}
 .ContentInfo.Top {
-	padding-top:20px;
 	white-space:nowrap;
 	overflow: hidden;
+	}
+#AccountPage #Content,
+#CommentsPage #Content,
+#DiscussionsPage #Content,
+#CategoryPage #Content {
+	padding-top: 20px;
 	}
 #DiscussionsPage .Bottom {
 	margin: -6px 0px 8px 0px;
@@ -1247,7 +1252,6 @@ div.Extensions ul li p a:hover {
 #AccountProfile {
 	float:left;
 	width:300px;
-	margin-top:20px;
 	border-right:1px solid #ccc;
 	}
 #AccountProfile * {
@@ -1325,7 +1329,6 @@ div.Extensions ul li p a:hover {
 	}
 #AccountHistory {
 	margin-left:320px;
-	padding-top:20px;
 	}
 html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
 	margin-left:300px !important;
