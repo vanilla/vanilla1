@@ -15,10 +15,10 @@ class Category {
 	var $CategoryID;
 	var $Name;
 	var $Description;
-	var $Blocked;					// Is this category blocked by the viewing user
-   var $RoleBlocked;				// Is this category blocked to the role of the viewing user
-   var $AllowedRoles;			// Contains the roles that are allowed to take part in this category
-	var $DiscussionCount;		// aggregate - display only
+	var $Blocked; // Is this category blocked by the viewing user
+	var $RoleBlocked; // Is this category blocked to the role of the viewing user
+	var $AllowedRoles; // Contains the roles that are allowed to take part in this category
+	var $DiscussionCount; // aggregate - display only
 	
 	function Category() {
 		$this->Clear();
