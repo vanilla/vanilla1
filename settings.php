@@ -98,6 +98,7 @@ if (!$Allowed) header('location:'.GetUrl($Configuration, 'index.php'));
 	$Page->AddRenderControl($Head, $Configuration['CONTROL_POSITION_HEAD']);
 	$Page->AddRenderControl($Menu, $Configuration['CONTROL_POSITION_MENU']);
 	$Page->AddRenderControl($Panel, $Configuration['CONTROL_POSITION_PANEL']);
+	$Page->AddRenderControl($NoticeCollector, $Configuration['CONTROL_POSITION_NOTICES']);
 	$Page->AddRenderControl($SettingsHelp, $Configuration['CONTROL_POSITION_BODY_ITEM']);
 	$Page->AddRenderControl($CategoryForm, $Configuration['CONTROL_POSITION_BODY_ITEM'] + 10);
 	$Page->AddRenderControl($RoleForm, $Configuration['CONTROL_POSITION_BODY_ITEM'] + 20);

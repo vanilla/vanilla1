@@ -95,6 +95,7 @@ $Context->PageTitle = $CommentGrid->Discussion->Name;
 	$Page->AddRenderControl($Head, $Configuration["CONTROL_POSITION_HEAD"]);
 	$Page->AddRenderControl($Menu, $Configuration["CONTROL_POSITION_MENU"]);
 	$Page->AddRenderControl($Panel, $Configuration["CONTROL_POSITION_PANEL"]);
+	$Page->AddRenderControl($NoticeCollector, $Configuration['CONTROL_POSITION_NOTICES']);
 	$Page->AddRenderControl($CommentGrid, $Configuration["CONTROL_POSITION_BODY_ITEM"]);
 	if ($CommentGrid->ShowForm) {
 		$Page->AddRenderControl($CommentForm, $Configuration["CONTROL_POSITION_BODY_ITEM"] + 10);
