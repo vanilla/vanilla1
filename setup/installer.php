@@ -130,10 +130,17 @@ if ($PostBackAction == "Permissions") {
    if (intval(str_replace('.', '', phpversion())) < 410) $Context->WarningCollector->Add("It appears as though you are running PHP version ".phpversion().". Vanilla requires at least version 4.1.0 of PHP. You will need to upgrade your version of PHP before you can continue.");
    // Make sure MySQL is available
    if (!function_exists('mysql_connect')) $Context->WarningCollector->Add("It appears as though you do not have MySQL enabled for PHP. You will need a working copy of MySQL and PHP's MySQL extensions enabled in order to run Vanilla.");   
-   // Make sure the conf folder is read
+   // Make sure the conf folder is readable
    if (!is_readable('../conf/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the conf folder.");
    // Make sure the conf folder is writeable
    if (!is_writable('../conf/')) $Context->WarningCollector->Add("Vanilla needs to have write permission enabled on the conf folder.");
+   
+   // Make sure other folders are readable
+   if (!is_readable('../extensions/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the extensions folder.");
+   if (!is_readable('../languages/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the languages folder.");
+   if (!is_readable('../themes/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the themes folder.");
+   if (!is_readable('../setup/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the setup folder.");
+   
 	
    if ($Context->WarningCollector->Count() == 0) {
       $Contents = '<?php
@@ -394,34 +401,18 @@ if ($PostBackAction == "Permissions") {
 						".$Context->WarningCollector->GetMessages()."
 					</div>";
 				}
-				echo "<p>Navigate the filesystem of your server to the Vanilla folder. Vanilla will need read AND write access to the following folders:</p>
-				<ul>
-				<li>conf</li>
-				<li>extensions</li>
-				<li>languages</li>
-				<li>themes</li>
-				<li>setup</li>
-				</ul>
+				echo "<p>Navigate the filesystem of your server to the Vanilla folder. Vanilla will need read AND write access to the <strong>conf</strong> folder.</p>
 				
-				<p>You can achieve these permissions by making the Apache user the owner of the folders/files, like so:</p>
+				<p>There are many ways to set these permissions. One way is to execute the following from the root Vanilla folder:</p>
 				
-				<code>chown --recursive apache-user:apache-group ./conf
-				<br />chown --recursive apache-user:apache-group ./extensions
-				<br />chown --recursive apache-user:apache-group ./languages
-				<br />chown --recursive apache-user:apache-group ./themes
-				<br />chown --recursive apache-user:apache-group ./setup</code>
+				<code>chmod 777 ./conf</code>
 				
-				<p>Of course, you will need to change \"apache-user\" and \"apache-group\" to the apache user and group on your specific system. On Debian, for example, the apache user and group are www-data and www-data respectively.</p>
-				
-				<p>If you don't know what your apache user/group are, you can alternately gain the require permissions by executing the following:</p>
-				
-				<code>chmod --recursive 777 ./conf
-				<br />chmod --recursive 777 ./extensions
-				<br />chmod --recursive 777 ./languages
-				<br />chmod --recursive 777 ./themes
-				<br />chmod --recursive 777 ./setup</code>
-				
-				<p>These modifications should allow any user or group complete access to the specified folders.</p>
+				<p>You will also need to grant read access to the extensions, languages, setup, and themes folders. Typically these permissions are granted by default, but if not you can achieve them with the following commands:</p>
+                                
+                                <code>chmod --recursive 755 ./extensions
+                                <br />chmod 755 --recursive ./languages
+                                <br />chmod 755 --recursive ./setup
+                                <br />chmod 755 --recursive ./themes</code>
 				
 				<form id=\"frmPermissions\" method=\"post\" action=\"installer.php\">
 				<input type=\"hidden\" name=\"PostBackAction\" value=\"Permissions\" />
