@@ -108,19 +108,19 @@ $ThemeDirectory = $WebRoot . 'themes/';
 $AllowNext = 0;
 
 function CreateFile($File, $Contents, &$Context) {
-	if (!file_exists($File)) {
-		$Handle = @fopen($File, 'wb');
-		if (!$Handle) {
-			$Error = $php_errormsg;
-			if ($Error != '') $Error = 'The system reported the following message:<code>'.$Error.'</code>';
-			$Context->WarningCollector->Add("Failed to create the '".$File."' configuration file. ".$Error);
-		} else {
-			if (fwrite($Handle, $Contents) === FALSE) {
-				$Context->WarningCollector->Add("Failed to write to the '".$File."' file. Make sure that PHP has write access to the file.");
-			}
-			fclose($Handle);
-		}
-	}
+   if (!file_exists($File)) {
+      $Handle = @fopen($File, 'wb');
+      if (!$Handle) {
+         $Error = $php_errormsg;
+         if ($Error != '') $Error = 'The system reported the following message:<code>'.$Error.'</code>';
+         $Context->WarningCollector->Add("Failed to create the '".$File."' configuration file. ".$Error);
+      } else {
+         if (fwrite($Handle, $Contents) === FALSE) {
+            $Context->WarningCollector->Add("Failed to write to the '".$File."' file. Make sure that PHP has write access to the file.");
+         }
+         fclose($Handle);
+      }
+   }
 }
 
 // Step 1. Check for correct PHP, MySQL, and permissions
@@ -129,9 +129,9 @@ if ($PostBackAction == "Permissions") {
    // Make sure we are running at least PHP 4.1.0
    if (intval(str_replace('.', '', phpversion())) < 410) $Context->WarningCollector->Add("It appears as though you are running PHP version ".phpversion().". Vanilla requires at least version 4.1.0 of PHP. You will need to upgrade your version of PHP before you can continue.");
    // Make sure MySQL is available
-	if (!function_exists('mysql_connect')) $Context->WarningCollector->Add("It appears as though you do not have MySQL enabled for PHP. You will need a working copy of MySQL and PHP's MySQL extensions enabled in order to run Vanilla.");   
+   if (!function_exists('mysql_connect')) $Context->WarningCollector->Add("It appears as though you do not have MySQL enabled for PHP. You will need a working copy of MySQL and PHP's MySQL extensions enabled in order to run Vanilla.");   
    // Make sure the conf folder is writeable
-   if (!is_writable('../conf/')) $Context->WarningCollector->Add("Vanilla needs to have write permission enabled on the conf folder.");
+   if (!is_writable('../conf/') && !chmod('../conf/', 0666)) $Context->WarningCollector->Add("Vanilla needs to have write permission enabled on the conf folder.");
 	
 	if ($Context->WarningCollector->Count() == 0) {
 		$Contents = '<?php
