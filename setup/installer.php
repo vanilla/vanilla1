@@ -130,51 +130,53 @@ if ($PostBackAction == "Permissions") {
    if (intval(str_replace('.', '', phpversion())) < 410) $Context->WarningCollector->Add("It appears as though you are running PHP version ".phpversion().". Vanilla requires at least version 4.1.0 of PHP. You will need to upgrade your version of PHP before you can continue.");
    // Make sure MySQL is available
    if (!function_exists('mysql_connect')) $Context->WarningCollector->Add("It appears as though you do not have MySQL enabled for PHP. You will need a working copy of MySQL and PHP's MySQL extensions enabled in order to run Vanilla.");   
+   // Make sure the conf folder is read
+   if (!is_readable('../conf/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the conf folder.");
    // Make sure the conf folder is writeable
-   if (!is_writable('../conf/') && !chmod('../conf/', 0666)) $Context->WarningCollector->Add("Vanilla needs to have write permission enabled on the conf folder.");
+   if (!is_writable('../conf/')) $Context->WarningCollector->Add("Vanilla needs to have write permission enabled on the conf folder.");
 	
-	if ($Context->WarningCollector->Count() == 0) {
-		$Contents = '<?php
+   if ($Context->WarningCollector->Count() == 0) {
+      $Contents = '<?php
 // Database Configuration Settings
 ?>';
-		CreateFile($RootDirectory.'conf/database.php', $Contents, $Context);
-		$Contents = '<?php
+      CreateFile($RootDirectory.'conf/database.php', $Contents, $Context);
+      $Contents = '<?php
 // Enabled Extensions
 ?>';
-		CreateFile($RootDirectory.'conf/extensions.php', $Contents, $Context);
-		$Contents = '<?php
+      CreateFile($RootDirectory.'conf/extensions.php', $Contents, $Context);
+      $Contents = '<?php
 // Custom Language Definitions
 ?>';
-		CreateFile($RootDirectory.'conf/language.php', $Contents, $Context);
-		$Contents = '<?php
+      CreateFile($RootDirectory.'conf/language.php', $Contents, $Context);
+      $Contents = '<?php
 // Application Settings
 ?>';
-		CreateFile($RootDirectory.'conf/settings.php', $Contents, $Context);
-	}
+      CreateFile($RootDirectory.'conf/settings.php', $Contents, $Context);
+   }
 
    // Save a test configuration option to the conf/settings.php file (This is inconsequential and is only done to make sure we have read access).
-	if ($Context->WarningCollector->Count() == 0) {
+   if ($Context->WarningCollector->Count() == 0) {
       $SettingsFile = $RootDirectory . 'conf/settings.php';
       $SettingsManager = new ConfigurationManager($Context);
       $SettingsManager->DefineSetting('SETUP_TEST', '1', 1);
       if (!$SettingsManager->SaveSettingsToFile($SettingsFile)) {
-         // $Context->WarningCollector->Clear();
-         // $Context->WarningCollector->Add("For some reason we couldn't save your general settings to the '".$SettingsFile."' file.");
+         $Context->WarningCollector->Clear();
+         $Context->WarningCollector->Add("For some reason we couldn't save your general settings to the '".$SettingsFile."' file.");
       }
-	}
+   }
       
    if ($Context->WarningCollector->Count() == 0) {
-		// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
+      // Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
       header('location: '.$WebRoot.'setup/installer.php?Step=2');
-		die();
-	}
+      die();
+   }
 } elseif ($PostBackAction == "Database") {
-	$CurrentStep = 2;
+   $CurrentStep = 2;
    // Test the database params provided by the user
    $Connection = @mysql_connect($DBHost, $DBUser, $DBPass);
    if (!$Connection) {
-		$Response = '';
-		if ($php_errormsg != '') $Response = ' The database responded with the following message: '.$php_errormsg;
+      $Response = '';
+      if ($php_errormsg != '') $Response = ' The database responded with the following message: '.$php_errormsg;
       $Context->WarningCollector->Add("We couldn't connect to the server you provided (".$DBHost.").".$Response);
    } elseif (!mysql_select_db($DBName, $Connection)) {
       $Context->WarningCollector->Add("We connected to the server, but we couldn't access the \"".$DBName."\" database. Are you sure it exists and that the specified user has access to it?");
@@ -188,10 +190,10 @@ if ($PostBackAction == "Permissions") {
          $Context->WarningCollector->Add("We had some problems identifying the tables already in your database: ". mysql_error($Connection));
       } else {
          $TableConflicts = array();
-			$TableToCompare = '';
+         $TableToCompare = '';
          while ($Row = mysql_fetch_array($TableData)) {
-				$TableToCompare = $Row[0];
-				$TableToCompare = str_replace('LUM_', '', $TableToCompare);
+            $TableToCompare = $Row[0];
+            $TableToCompare = str_replace('LUM_', '', $TableToCompare);
             if (array_key_exists($TableToCompare, $DatabaseTables)) {
                $TableConflicts[] = $Row[0];
             }
