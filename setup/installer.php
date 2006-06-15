@@ -410,9 +410,9 @@ if ($PostBackAction == "Permissions") {
 				<p>You will also need to grant read access to the extensions, languages, setup, and themes folders. Typically these permissions are granted by default, but if not you can achieve them with the following commands:</p>
                                 
                                 <code>chmod --recursive 755 ./extensions
-                                <br />chmod 755 --recursive ./languages
-                                <br />chmod 755 --recursive ./setup
-                                <br />chmod 755 --recursive ./themes</code>
+                                <br />chmod --recursive 755 ./languages
+                                <br />chmod --recursive 755 ./setup
+                                <br />chmod --recursive 755 ./themes</code>
 				
 				<form id=\"frmPermissions\" method=\"post\" action=\"installer.php\">
 				<input type=\"hidden\" name=\"PostBackAction\" value=\"Permissions\" />
