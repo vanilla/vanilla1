@@ -73,6 +73,9 @@ echo '<div id="Form" class="Account RoleEditForm">
          }
       }
    }
+   
+   $this->CallDelegate('PreSubmitButton');
+   
    echo '</ul>
    <div class="Submit">
          <input type="submit" name="btnSave" value="'.$this->Context->GetDefinition('Save').'" class="Button SubmitButton" />
