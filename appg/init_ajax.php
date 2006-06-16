@@ -48,5 +48,6 @@ $Page = $Context->ObjectFactory->NewContextObject($Context, 'Page', $Configurati
 $Page->FireEvent('Page_Init');
 
 // INCLUDE EXTENSIONS
+// 2006-06-16 - Extensions are no long included here because bad extensions were causing standard ajax features to break.
 // include($Configuration['APPLICATION_PATH'].'conf/extensions.php');
 ?>
