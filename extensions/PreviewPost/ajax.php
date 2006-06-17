@@ -1,6 +1,7 @@
 <?php
 include('../../appg/settings.php');
 include('../../appg/init_ajax.php');
+include('../../conf/extensions.php');
 
 $Text = ForceIncomingString('Data', '');
 $Type = ForceIncomingString('Type', '');
