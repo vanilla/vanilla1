@@ -121,7 +121,7 @@ $Configuration['TEXT_STICKY'] = 'Sticky';
 $Configuration['TEXT_CLOSED'] = 'Closed'; 
 $Configuration['TEXT_HIDDEN'] = 'Hidden';
 $Configuration['TEXT_SINK'] = 'Sink';
-$Configuration['TEXT_BOOKMARKED'] = ''; 
+$Configuration['TEXT_BOOKMARKED'] = 'Bookmarked'; 
 $Configuration['TEXT_PREFIX'] = '['; 
 $Configuration['TEXT_SUFFIX'] = ']';
 $Configuration['UPDATE_URL'] = 'http://lussumo.com/updatecheck/vanilla.php';
@@ -219,7 +219,7 @@ $Configuration['ADDON_NOTICE'] = '1';
 // Application versions
 define('APPLICATION', 'Vanilla');
 define('PEOPLE_VERSION', '0.0.1');
-define('APPLICATION_VERSION', '1');
+define('APPLICATION_VERSION', '1.0');
 
 // Application Mode Constants
 define('MODE_DEBUG', 'DEBUG'); 
