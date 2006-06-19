@@ -22,7 +22,10 @@ include('appg/init_vanilla.php');
    $Head->BodyId = 'ExtensionPage';
 	
 // 2. BUILD PAGE CONTROLS
-	$ExtensionPage = $Context->ObjectFactory->CreateControl($Context, 'Filler', 'extension_page.php');
+	$PostBackAction = ForceIncomingString('PostBackAction', '');
+	if ($PostBackAction == '') {
+		$NoticeCollector->AddNotice($Context->GetDefinition('AboutExtensionPage'));
+	}
 
 // 3. ADD CONTROLS TO THE PAGE
 
@@ -30,7 +33,6 @@ include('appg/init_vanilla.php');
 	$Page->AddRenderControl($Menu, $Configuration['CONTROL_POSITION_MENU']);
 	$Page->AddRenderControl($Panel, $Configuration['CONTROL_POSITION_PANEL']);
 	$Page->AddRenderControl($NoticeCollector, $Configuration['CONTROL_POSITION_NOTICES']);
-	$Page->AddRenderControl($ExtensionPage, $Configuration['CONTROL_POSITION_BODY_ITEM']);
 	$Page->AddRenderControl($Foot, $Configuration['CONTROL_POSITION_FOOT']);
 	$Page->AddRenderControl($PageEnd, $Configuration['CONTROL_POSITION_PAGE_END']);
 
