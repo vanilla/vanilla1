@@ -245,7 +245,8 @@ a:hover {
 #AccountPage #Content,
 #CommentsPage #Content,
 #DiscussionsPage #Content,
-#CategoryPage #Content {
+#CategoryPage #Content,
+#ExtensionPage #Content {
 	padding-top: 20px;
 	}
 #DiscussionsPage .Bottom {
