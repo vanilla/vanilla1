@@ -699,7 +699,9 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 						".$Context->WarningCollector->GetMessages()."
 					</div>";
 				}
-				echo "<p>Navigate the filesystem of your server to the Vanilla folder. Vanilla will need read AND write access to the <strong>conf</strong> folder.</p>
+				echo "<p>Navigate the filesystem of your server to the Vanilla folder. If you have your old appg/settings.php file from your previous installation of Vanilla, rename it <strong>old_settings.php</strong> and upload it to the /conf folder of your new Vanilla installation.</p>
+				
+				<p>Vanilla will need read AND write access to the <strong>conf</strong> folder.</p>
 				
 				<p>There are many ways to set these permissions. One way is to execute the following from the root Vanilla folder:</p>
 				

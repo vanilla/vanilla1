@@ -12,6 +12,7 @@
 */
 
 include("appg/settings.php");
+$Configuration['SELF_URL'] = 'categories.php';
 include("appg/init_vanilla.php");
 
 // 1. DEFINE VARIABLES AND PROPERTIES SPECIFIC TO THIS PAGE
