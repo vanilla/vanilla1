@@ -232,6 +232,9 @@ define('FORMAT_STRING_FOR_DATABASE', 'DATABASE');
 // PHP Settings
 define('MAGIC_QUOTES_ON', get_magic_quotes_gpc());
 
+// Self Url (should be hard-coded by each page - this is here just in case it was forgotten)
+$Configuration['SELF_URL'] = @$_SERVER['PHP_SELF'];
+
 // Include custom settings
 include(dirname(__FILE__) . '/../conf/settings.php');
 if ($Configuration['SETUP_COMPLETE'] == '0') {

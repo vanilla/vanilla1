@@ -12,6 +12,7 @@
 */
 
 include('appg/settings.php');
+$Configuration['SELF_URL'] = 'settings.php';
 include('appg/init_vanilla.php');
 
 // Ensure the user is allowed to view this page (they must have at least one of the following permissions)

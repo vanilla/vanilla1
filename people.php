@@ -12,6 +12,7 @@
 */
 
 include("appg/settings.php");
+$Configuration['SELF_URL'] = 'people.php';
 include("appg/init_people.php");
 
 // Define properties of the page controls that are specific to this page

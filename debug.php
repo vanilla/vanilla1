@@ -11,6 +11,7 @@
 * Description: Uses cookies to turn debugging information on and off
 */
 include("appg/settings.php");
+$Configuration['SELF_URL'] = 'debug.php';
 include($Configuration["DATABASE_PATH"]);
 include($Configuration["APPLICATION_PATH"]."appg/headers.php");
 include($Configuration["APPLICATION_PATH"]."appg/database.php");
