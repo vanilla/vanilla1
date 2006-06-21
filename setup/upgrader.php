@@ -265,6 +265,9 @@ if ($PostBackAction == "Permissions") {
    if (!is_readable('../themes/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the themes folder.");
    if (!is_readable('../setup/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the setup folder.");
 	
+	// Make sure the files don't exist already (ie. the site is already up and running);
+   if (file_exists('../conf/settings.php')) $Context->WarningCollector->Add("Vanilla seems to have been upgraded already. You will need to remove the conf/settings.php and conf/database.php files to run the upgrade utility again.");
+	
    if ($Context->WarningCollector->Count() == 0) {
       $Contents = '<?php
 // Database Configuration Settings
@@ -546,27 +549,33 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
       // Save database settings
       $DBFile = $RootDirectory . 'conf/database.php';
       $DBManager = new ConfigurationManager($Context);
-      $DBManager->DefineSetting("DATABASE_HOST", $DBHost, 1);
-      $DBManager->DefineSetting("DATABASE_NAME", $DBName, 1);
-      $DBManager->DefineSetting("DATABASE_USER", $DBUser, 1);
-      $DBManager->DefineSetting("DATABASE_PASSWORD", $DBPass, 1);
-      $DBManager->SaveSettingsToFile($DBFile);
+		$DBManager->GetSettingsFromFile($DBFile);
+		// Only make these changes if the settings haven't been defined already
+      if ($DBManager->GetSetting('DATABASE_HOST') == '') {
+			$DBManager->DefineSetting("DATABASE_HOST", $DBHost, 1);
+			$DBManager->DefineSetting("DATABASE_NAME", $DBName, 1);
+			$DBManager->DefineSetting("DATABASE_USER", $DBUser, 1);
+			$DBManager->DefineSetting("DATABASE_PASSWORD", $DBPass, 1);
+			$DBManager->SaveSettingsToFile($DBFile);
 		
-		// Save the general settings as well (now that we know this person is authenticated to
-      // a degree - knowing the database access params).
-      $SettingsFile = $RootDirectory . 'conf/settings.php';
-      $SettingsManager = new ConfigurationManager($Context);
-      $SettingsManager->DefineSetting('APPLICATION_PATH', $RootDirectory, 1);
-		$SettingsManager->DefineSetting('DATABASE_PATH', $RootDirectory . 'conf/database.php', 1);
-		$SettingsManager->DefineSetting('LIBRARY_PATH', $RootDirectory . 'library/', 1);
-		$SettingsManager->DefineSetting('EXTENSIONS_PATH', $RootDirectory . 'extensions/', 1);
-		$SettingsManager->DefineSetting('LANGUAGES_PATH', $RootDirectory . 'languages/', 1);
-		$SettingsManager->DefineSetting('THEME_PATH', $RootDirectory . 'themes/vanilla/', 1);
-		$SettingsManager->DefineSetting("DEFAULT_STYLE", $ThemeDirectory.'vanilla/styles/default/', 1);
-		$SettingsManager->DefineSetting("WEB_ROOT", $WebRoot, 1);
-      $SettingsManager->DefineSetting("BASE_URL", $BaseUrl, 1);
-		$SettingsManager->DefineSetting("FORWARD_VALIDATED_USER_URL", $BaseUrl, 1);
-      $SettingsManager->SaveSettingsToFile($SettingsFile);
+			// Save the general settings as well (now that we know this person is authenticated to
+	      // a degree - knowing the database access params).
+			$SettingsFile = $RootDirectory . 'conf/settings.php';
+			$SettingsManager = new ConfigurationManager($Context);
+			$SettingsManager->DefineSetting('APPLICATION_PATH', $RootDirectory, 1);
+			$SettingsManager->DefineSetting('DATABASE_PATH', $RootDirectory . 'conf/database.php', 1);
+			$SettingsManager->DefineSetting('LIBRARY_PATH', $RootDirectory . 'library/', 1);
+			$SettingsManager->DefineSetting('EXTENSIONS_PATH', $RootDirectory . 'extensions/', 1);
+			$SettingsManager->DefineSetting('LANGUAGES_PATH', $RootDirectory . 'languages/', 1);
+			$SettingsManager->DefineSetting('THEME_PATH', $RootDirectory . 'themes/vanilla/', 1);
+			$SettingsManager->DefineSetting("DEFAULT_STYLE", $ThemeDirectory.'vanilla/styles/default/', 1);
+			$SettingsManager->DefineSetting("WEB_ROOT", $WebRoot, 1);
+			$SettingsManager->DefineSetting("BASE_URL", $BaseUrl, 1);
+			$SettingsManager->DefineSetting("FORWARD_VALIDATED_USER_URL", $BaseUrl, 1);
+			$SettingsManager->SaveSettingsToFile($SettingsFile);
+		} else {
+			$Context->WarningCollector->Add("Vanilla seems to have been upgraded already. You will need to remove the conf/settings.php and conf/database.php files to run the upgrade utility again.");
+		}
    }
    if ($Context->WarningCollector->Count() == 0) {
 		// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
@@ -580,94 +589,99 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
    if ($SupportName == "") $Context->WarningCollector->Add("You must provide a support contact name.");
    if (!eregi("(.+)@(.+)\.(.+)", $SupportEmail)) $Context->WarningCollector->Add("The email address you entered doesn't appear to be valid.");
    if ($ApplicationTitle == "") $Context->WarningCollector->Add("You must provide an application title.");
-   
-	// Include the db settings defined in the previous step
-   include($RootDirectory.'conf/database.php');
 	
-   // Open the database connection
-   $Connection = false;
-   if ($Context->WarningCollector->Count() == 0) {
-		$DBHost = $Configuration['DATABASE_HOST'];
-		$DBName = $Configuration['DATABASE_NAME'];
-		$DBUser = $Configuration['DATABASE_USER'];
-		$DBPass = $Configuration['DATABASE_PASSWORD'];
-      $Connection = @mysql_connect($DBHost, $DBUser, $DBPass);
-      if (!$Connection) {
-         $Context->WarningCollector->Add("We couldn't connect to the server you provided (".$DBHost."). Are you sure you entered the right server, username and password?");
-      } elseif (!mysql_select_db($DBName, $Connection)) {
-         $Context->WarningCollector->Add("We connected to the server, but we couldn't access the \"".$DBName."\" database. Are you sure it exists and that the specified user has access to it?");
-      }
-   }
-   
-   // Insert the new Style and assign to all users
-   if ($Context->WarningCollector->Count() == 0 && $Connection) {
-		// Truncate all old styles (They can't work with the new Vanilla)
-      if (!@mysql_query('truncate table LUM_Style', $Connection)) {
-			$Context->WarningCollector->Add('Failed to clean out LUM_Style table. MySQL reported the following error: <code>'.mysql_error($Connection).'</code>');
-		} else {
-			// Insert the new style
-			if (!@mysql_query("insert into LUM_Style (Name, Url) values ('Vanilla', '".$ThemeDirectory."vanilla/styles/default/')", $Connection)) {
-				$Context->WarningCollector->Add("Failed to insert new default Vanilla style into LUM_Style table. MySQL reported the following error: <code>".mysql_error($Connection)."</code>");
+   $SettingsFile = $RootDirectory . 'conf/settings.php';
+   $SettingsManager = new ConfigurationManager($Context);
+	$SettingsManager->GetSettingsFromFile($SettingsFile);
+	if ($SettingsManager->GetSetting('SETUP_COMPLETE') == '') {
+		// Include the db settings defined in the previous step
+		include($RootDirectory.'conf/database.php');
+		
+		// Open the database connection
+		$Connection = false;
+		if ($Context->WarningCollector->Count() == 0) {
+			$DBHost = $Configuration['DATABASE_HOST'];
+			$DBName = $Configuration['DATABASE_NAME'];
+			$DBUser = $Configuration['DATABASE_USER'];
+			$DBPass = $Configuration['DATABASE_PASSWORD'];
+			$Connection = @mysql_connect($DBHost, $DBUser, $DBPass);
+			if (!$Connection) {
+				$Context->WarningCollector->Add("We couldn't connect to the server you provided (".$DBHost."). Are you sure you entered the right server, username and password?");
+			} elseif (!mysql_select_db($DBName, $Connection)) {
+				$Context->WarningCollector->Add("We connected to the server, but we couldn't access the \"".$DBName."\" database. Are you sure it exists and that the specified user has access to it?");
+			}
+		}
+		
+		// Insert the new Style and assign to all users
+		if ($Context->WarningCollector->Count() == 0 && $Connection) {
+			// Truncate all old styles (They can't work with the new Vanilla)
+			if (!@mysql_query('truncate table LUM_Style', $Connection)) {
+				$Context->WarningCollector->Add('Failed to clean out LUM_Style table. MySQL reported the following error: <code>'.mysql_error($Connection).'</code>');
 			} else {
-				// Assign the new style to everyone
-            if (!@mysql_query("update LUM_User set StyleID = 1", $Connection)) {
-					$Context->WarningCollector->Add("Failed to assign new style to all users. MySQL reported the following error: <code>".mysql_error($Connection)."</code>");
+				// Insert the new style
+				if (!@mysql_query("insert into LUM_Style (Name, Url) values ('Vanilla', '".$ThemeDirectory."vanilla/styles/default/')", $Connection)) {
+					$Context->WarningCollector->Add("Failed to insert new default Vanilla style into LUM_Style table. MySQL reported the following error: <code>".mysql_error($Connection)."</code>");
+				} else {
+					// Assign the new style to everyone
+					if (!@mysql_query("update LUM_User set StyleID = 1", $Connection)) {
+						$Context->WarningCollector->Add("Failed to assign new style to all users. MySQL reported the following error: <code>".mysql_error($Connection)."</code>");
+					}
 				}
 			}
 		}
-   }
-   
-   // Close the database connection
-   @mysql_close($Connection);
-   
-   // Save the application constants
-   if ($Context->WarningCollector->Count() == 0) {
-      $SettingsFile = $RootDirectory . 'conf/settings.php';
-      $SettingsManager = new ConfigurationManager($Context);
-      $SettingsManager->DefineSetting("SUPPORT_EMAIL", $SupportEmail, 1);
-      $SettingsManager->DefineSetting("SUPPORT_NAME", $SupportName, 1);
-      $SettingsManager->DefineSetting("APPLICATION_TITLE", $ApplicationTitle, 1);
-      $SettingsManager->DefineSetting("COOKIE_DOMAIN", $CookieDomain, 1);
-      $SettingsManager->DefineSetting("COOKIE_PATH", $CookiePath, 1);
-		if (array_key_exists('BANNER_TITLE', $NewConfiguration)) {
-			$SettingsManager->DefineSetting("BANNER_TITLE", $NewConfiguration['BANNER_TITLE'], 1);
-		} else {
-			$SettingsManager->DefineSetting("BANNER_TITLE", $ApplicationTitle, 1);
-		}
 		
-		// Apply old settings if they were provided
-		ApplySetting($SettingsManager, $NewConfiguration, 'DISCUSSIONS_PER_PAGE');
-		ApplySetting($SettingsManager, $NewConfiguration, 'COMMENTS_PER_PAGE');
-		ApplySetting($SettingsManager, $NewConfiguration, 'SEARCH_RESULTS_PER_PAGE');
-		ApplySetting($SettingsManager, $NewConfiguration, 'ALLOW_NAME_CHANGE');
-		ApplySetting($SettingsManager, $NewConfiguration, 'PUBLIC_BROWSING');
-		ApplySetting($SettingsManager, $NewConfiguration, 'USE_CATEGORIES');
-		ApplySetting($SettingsManager, $NewConfiguration, 'LOG_ALL_IPS');
-		ApplySetting($SettingsManager, $NewConfiguration, 'PANEL_BOOKMARK_COUNT');
-		ApplySetting($SettingsManager, $NewConfiguration, 'PANEL_PRIVATE_COUNT');
-		ApplySetting($SettingsManager, $NewConfiguration, 'PANEL_HISTORY_COUNT');
-		ApplySetting($SettingsManager, $NewConfiguration, 'PANEL_USERDISCUSSIONS_COUNT');
-		ApplySetting($SettingsManager, $NewConfiguration, 'PANEL_SEARCH_COUNT');
-		ApplySetting($SettingsManager, $NewConfiguration, 'MAX_COMMENT_LENGTH');
-		ApplySetting($SettingsManager, $NewConfiguration, 'DISCUSSION_POST_THRESHOLD');
-		ApplySetting($SettingsManager, $NewConfiguration, 'DISCUSSION_TIME_THRESHOLD');
-		ApplySetting($SettingsManager, $NewConfiguration, 'DISCUSSION_THRESHOLD_PUNISHMENT');
-		ApplySetting($SettingsManager, $NewConfiguration, 'COMMENT_POST_THRESHOLD');
-		ApplySetting($SettingsManager, $NewConfiguration, 'COMMENT_TIME_THRESHOLD');
-		ApplySetting($SettingsManager, $NewConfiguration, 'COMMENT_THRESHOLD_PUNISHMENT');
-		ApplySetting($SettingsManager, $NewConfiguration, 'TEXT_WHISPERED');
-		ApplySetting($SettingsManager, $NewConfiguration, 'TEXT_STICKY');
-		ApplySetting($SettingsManager, $NewConfiguration, 'TEXT_CLOSED');
-		ApplySetting($SettingsManager, $NewConfiguration, 'TEXT_HIDDEN');
-		ApplySetting($SettingsManager, $NewConfiguration, 'TEXT_BOOKMARKED');
-		ApplySetting($SettingsManager, $NewConfiguration, 'TEXT_PREFIX');
-		ApplySetting($SettingsManager, $NewConfiguration, 'TEXT_SUFFIX');
-		ApplySetting($SettingsManager, $NewConfiguration, 'DEFAULT_ROLE');
-		ApplySetting($SettingsManager, $NewConfiguration, 'ALLOW_IMMEDIATE_ACCESS');
-		ApplySetting($SettingsManager, $NewConfiguration, 'APPROVAL_ROLE');
-		$SettingsManager->DefineSetting("SETUP_COMPLETE", '1', 1);
-      $SettingsManager->SaveSettingsToFile($SettingsFile);
-   }
+		// Close the database connection
+		@mysql_close($Connection);
+		
+		// Save the application constants
+		if ($Context->WarningCollector->Count() == 0) {
+			$SettingsManager->DefineSetting("SUPPORT_EMAIL", $SupportEmail, 1);
+			$SettingsManager->DefineSetting("SUPPORT_NAME", $SupportName, 1);
+			$SettingsManager->DefineSetting("APPLICATION_TITLE", $ApplicationTitle, 1);
+			$SettingsManager->DefineSetting("COOKIE_DOMAIN", $CookieDomain, 1);
+			$SettingsManager->DefineSetting("COOKIE_PATH", $CookiePath, 1);
+			if (array_key_exists('BANNER_TITLE', $NewConfiguration)) {
+				$SettingsManager->DefineSetting("BANNER_TITLE", $NewConfiguration['BANNER_TITLE'], 1);
+			} else {
+				$SettingsManager->DefineSetting("BANNER_TITLE", $ApplicationTitle, 1);
+			}
+			
+			// Apply old settings if they were provided
+			ApplySetting($SettingsManager, $NewConfiguration, 'DISCUSSIONS_PER_PAGE');
+			ApplySetting($SettingsManager, $NewConfiguration, 'COMMENTS_PER_PAGE');
+			ApplySetting($SettingsManager, $NewConfiguration, 'SEARCH_RESULTS_PER_PAGE');
+			ApplySetting($SettingsManager, $NewConfiguration, 'ALLOW_NAME_CHANGE');
+			ApplySetting($SettingsManager, $NewConfiguration, 'PUBLIC_BROWSING');
+			ApplySetting($SettingsManager, $NewConfiguration, 'USE_CATEGORIES');
+			ApplySetting($SettingsManager, $NewConfiguration, 'LOG_ALL_IPS');
+			ApplySetting($SettingsManager, $NewConfiguration, 'PANEL_BOOKMARK_COUNT');
+			ApplySetting($SettingsManager, $NewConfiguration, 'PANEL_PRIVATE_COUNT');
+			ApplySetting($SettingsManager, $NewConfiguration, 'PANEL_HISTORY_COUNT');
+			ApplySetting($SettingsManager, $NewConfiguration, 'PANEL_USERDISCUSSIONS_COUNT');
+			ApplySetting($SettingsManager, $NewConfiguration, 'PANEL_SEARCH_COUNT');
+			ApplySetting($SettingsManager, $NewConfiguration, 'MAX_COMMENT_LENGTH');
+			ApplySetting($SettingsManager, $NewConfiguration, 'DISCUSSION_POST_THRESHOLD');
+			ApplySetting($SettingsManager, $NewConfiguration, 'DISCUSSION_TIME_THRESHOLD');
+			ApplySetting($SettingsManager, $NewConfiguration, 'DISCUSSION_THRESHOLD_PUNISHMENT');
+			ApplySetting($SettingsManager, $NewConfiguration, 'COMMENT_POST_THRESHOLD');
+			ApplySetting($SettingsManager, $NewConfiguration, 'COMMENT_TIME_THRESHOLD');
+			ApplySetting($SettingsManager, $NewConfiguration, 'COMMENT_THRESHOLD_PUNISHMENT');
+			ApplySetting($SettingsManager, $NewConfiguration, 'TEXT_WHISPERED');
+			ApplySetting($SettingsManager, $NewConfiguration, 'TEXT_STICKY');
+			ApplySetting($SettingsManager, $NewConfiguration, 'TEXT_CLOSED');
+			ApplySetting($SettingsManager, $NewConfiguration, 'TEXT_HIDDEN');
+			ApplySetting($SettingsManager, $NewConfiguration, 'TEXT_BOOKMARKED');
+			ApplySetting($SettingsManager, $NewConfiguration, 'TEXT_PREFIX');
+			ApplySetting($SettingsManager, $NewConfiguration, 'TEXT_SUFFIX');
+			ApplySetting($SettingsManager, $NewConfiguration, 'DEFAULT_ROLE');
+			ApplySetting($SettingsManager, $NewConfiguration, 'ALLOW_IMMEDIATE_ACCESS');
+			ApplySetting($SettingsManager, $NewConfiguration, 'APPROVAL_ROLE');
+			$SettingsManager->DefineSetting("SETUP_COMPLETE", '1', 1);
+			$SettingsManager->SaveSettingsToFile($SettingsFile);
+		}
+	} else {
+		$Context->WarningCollector->Add("Vanilla seems to have been upgraded already. You will need to remove the conf/settings.php and conf/database.php files to run the upgrade utility again.");
+	}
    
    if ($Context->WarningCollector->Count() == 0) {
 		// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
