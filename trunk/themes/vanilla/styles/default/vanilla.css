@@ -112,9 +112,8 @@ a:hover {
 #Header ul li {
 	display:inline;
 	margin:0px 1px;
-	padding: 1px 0px 0px 0px;
+	padding: 0px;
 	border-bottom:1px solid #acbedf;
-	background:#5d709f;
 	}
 #Header ul li.TabOn {
 	background-color:#fff;
@@ -128,6 +127,7 @@ a:hover {
 	font-size:12px;
 	text-decoration:none;
 	color:#fff;
+	background:#5d709f;
 	}
 #Header ul li a:hover {
 	background-color:#919ebe;
