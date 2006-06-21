@@ -141,6 +141,8 @@ if ($PostBackAction == "Permissions") {
    if (!is_readable('../themes/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the themes folder.");
    if (!is_readable('../setup/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the setup folder.");
    
+	// Make sure the files don't exist already (ie. the site is already up and running);
+   if (file_exists('../conf/settings.php')) $Context->WarningCollector->Add("Vanilla seems to have been installed already. You will need to remove the conf/settings.php, conf/database.php files, and all database tables in order to run the installer utility again.");	
 	
    if ($Context->WarningCollector->Count() == 0) {
       $Contents = '<?php
@@ -179,197 +181,211 @@ if ($PostBackAction == "Permissions") {
    }
 } elseif ($PostBackAction == "Database") {
    $CurrentStep = 2;
-   // Test the database params provided by the user
-   $Connection = @mysql_connect($DBHost, $DBUser, $DBPass);
-   if (!$Connection) {
-      $Response = '';
-      if ($php_errormsg != '') $Response = ' The database responded with the following message: '.$php_errormsg;
-      $Context->WarningCollector->Add("We couldn't connect to the server you provided (".$DBHost.").".$Response);
-   } elseif (!mysql_select_db($DBName, $Connection)) {
-      $Context->WarningCollector->Add("We connected to the server, but we couldn't access the \"".$DBName."\" database. Are you sure it exists and that the specified user has access to it?");
-   }
-   
-   // If the database connection worked, attempt to set up the database
-   if ($Context->WarningCollector->Count() == 0 && $Connection) {
-      // Make sure there are no conflicting tables in the database
-      $TableData = @mysql_query('show tables', $Connection);
-      if (!$TableData) {
-         $Context->WarningCollector->Add("We had some problems identifying the tables already in your database: ". mysql_error($Connection));
-      } else {
-         $TableConflicts = array();
-         $TableToCompare = '';
-         while ($Row = mysql_fetch_array($TableData)) {
-            $TableToCompare = $Row[0];
-            $TableToCompare = str_replace('LUM_', '', $TableToCompare);
-            if (array_key_exists($TableToCompare, $DatabaseTables)) {
-               $TableConflicts[] = $Row[0];
-            }
-         }
-         if (count($TableConflicts) == count($DatabaseTables)) {
-            $Context->WarningCollector->Add("It appears as though you've already got Vanilla installed. If you are attempting to upgrade your existing installation of Vanilla, you should be using the <a href=\"upgrader.php\">upgrade script</a>.");
-            $AllowNext = 1;
-         } elseif (count($TableConflicts) > 0) {
-            $Context->WarningCollector->Add("There appear to be some tables already in your database that conflict with the tables Vanilla would need to insert. Those tables are: <code>".implode(', ', $TableConflicts)."</code>If you are attempting to upgrade your existing installation of Vanilla, you should be using the <a href=\"upgrader.php\">upgrade script</a>.");
-         } else {
-            // Go ahead and install the database tables
-            // Open the database file & retrieve sql
-            $SqlLines = @file($WorkingDirectory."mysql.sql");
-            if (!$SqlLines) {
-               $Context->WarningCollector->Add("We couldn't open the \"".$WorkingDirectory."mysql.sql\" file.");
-            } else {
-               $CurrentQuery = "";
-               $CurrentLine = "";
-               for ($i = 0; $i < count($SqlLines); $i++) {
-                  $CurrentLine = trim($SqlLines[$i]);
-                  if ($CurrentLine == "") {
-                     if ($CurrentQuery != "") {
-                        if (!@mysql_query($CurrentQuery, $Connection)) {
-                           $Context->WarningCollector->Add("An error occurred while we were attempting to create the database tables. MySQL reported the following error: <code>".mysql_error($Connection).'</code><code>QUERY: '.$CurrentQuery.'</code>');
-                           $i = count($SqlLines)+1;
-                        }
-                        $CurrentQuery = "";
-                     }
-                  } else {
-                     $CurrentQuery .= $CurrentLine;
-                  }
-               }
-            }
-         }      
-      }
-      // Close the database connection
-      @mysql_close($Connection);
-   }
-   
-   // If the database was created successfully, save all parameters to the conf/database.php file
-   if ($Context->WarningCollector->Count() == 0) {
-      // Save database settings
-      $DBFile = $RootDirectory . 'conf/database.php';
-      $DBManager = new ConfigurationManager($Context);
-      $DBManager->DefineSetting("DATABASE_HOST", $DBHost, 1);
-      $DBManager->DefineSetting("DATABASE_NAME", $DBName, 1);
-      $DBManager->DefineSetting("DATABASE_USER", $DBUser, 1);
-      $DBManager->DefineSetting("DATABASE_PASSWORD", $DBPass, 1);
-      if (!$DBManager->SaveSettingsToFile($DBFile)) {
-         // $Context->WarningCollector->Clear();
-         // $Context->WarningCollector->Add("For some reason we couldn't save your database settings to the '.$DBFile.' file.");
-      }
+
+	// Make sure the database settings haven't already been committed
+	$DBFile = $RootDirectory . 'conf/database.php';
+	$DBManager = new ConfigurationManager($Context);
+	$DBManager->GetSettingsFromFile($DBFile);
+	// Make sure the database file doesn't already contain data
+	if ($DBManager->GetSetting('DATABASE_NAME') != '') {
+		$Context->WarningCollector->Add("Vanilla seems to have been installed already. You will need to remove the conf/settings.php, conf/database.php files, and all database tables in order to run the installer utility again.");
+	} else {
+		// Test the database params provided by the user
+		$Connection = @mysql_connect($DBHost, $DBUser, $DBPass);
+		if (!$Connection) {
+			$Response = '';
+			if ($php_errormsg != '') $Response = ' The database responded with the following message: '.$php_errormsg;
+			$Context->WarningCollector->Add("We couldn't connect to the server you provided (".$DBHost.").".$Response);
+		} elseif (!mysql_select_db($DBName, $Connection)) {
+			$Context->WarningCollector->Add("We connected to the server, but we couldn't access the \"".$DBName."\" database. Are you sure it exists and that the specified user has access to it?");
+		}
 		
-		// Save the general settings as well (now that we know this person is authenticated to
-      // a degree - knowing the database access params).
-      $SettingsFile = $RootDirectory . 'conf/settings.php';
-      $SettingsManager = new ConfigurationManager($Context);
-      $SettingsManager->DefineSetting('APPLICATION_PATH', $RootDirectory, 1);
-		$SettingsManager->DefineSetting('DATABASE_PATH', $RootDirectory . 'conf/database.php', 1);
-		$SettingsManager->DefineSetting('LIBRARY_PATH', $RootDirectory . 'library/', 1);
-		$SettingsManager->DefineSetting('EXTENSIONS_PATH', $RootDirectory . 'extensions/', 1);
-		$SettingsManager->DefineSetting('LANGUAGES_PATH', $RootDirectory . 'languages/', 1);
-		$SettingsManager->DefineSetting('THEME_PATH', $RootDirectory . 'themes/vanilla/', 1);
-		$SettingsManager->DefineSetting("DEFAULT_STYLE", $ThemeDirectory.'vanilla/styles/default/', 1);
-		$SettingsManager->DefineSetting("WEB_ROOT", $WebRoot, 1);
-      $SettingsManager->DefineSetting("BASE_URL", $BaseUrl, 1);
-		$SettingsManager->DefineSetting("FORWARD_VALIDATED_USER_URL", $BaseUrl, 1);
-      if (!$SettingsManager->SaveSettingsToFile($SettingsFile)) {
-         // $Context->WarningCollector->Clear();
-         // $Context->WarningCollector->Add("For some reason we couldn't save your general settings to the '".$SettingsFile."' file.");
-      }
-   }
+		// If the database connection worked, attempt to set up the database
+		if ($Context->WarningCollector->Count() == 0 && $Connection) {
+			// Make sure there are no conflicting tables in the database
+			$TableData = @mysql_query('show tables', $Connection);
+			if (!$TableData) {
+				$Context->WarningCollector->Add("We had some problems identifying the tables already in your database: ". mysql_error($Connection));
+			} else {
+				$TableConflicts = array();
+				$TableToCompare = '';
+				while ($Row = mysql_fetch_array($TableData)) {
+					$TableToCompare = $Row[0];
+					$TableToCompare = str_replace('LUM_', '', $TableToCompare);
+					if (array_key_exists($TableToCompare, $DatabaseTables)) {
+						$TableConflicts[] = $Row[0];
+					}
+				}
+				if (count($TableConflicts) == count($DatabaseTables)) {
+					$Context->WarningCollector->Add("It appears as though you've already got Vanilla installed. If you are attempting to upgrade your existing installation of Vanilla, you should be using the <a href=\"upgrader.php\">upgrade script</a>.");
+					$AllowNext = 1;
+				} elseif (count($TableConflicts) > 0) {
+					$Context->WarningCollector->Add("There appear to be some tables already in your database that conflict with the tables Vanilla would need to insert. Those tables are: <code>".implode(', ', $TableConflicts)."</code>If you are attempting to upgrade your existing installation of Vanilla, you should be using the <a href=\"upgrader.php\">upgrade script</a>.");
+				} else {
+					// Go ahead and install the database tables
+					// Open the database file & retrieve sql
+					$SqlLines = @file($WorkingDirectory."mysql.sql");
+					if (!$SqlLines) {
+						$Context->WarningCollector->Add("We couldn't open the \"".$WorkingDirectory."mysql.sql\" file.");
+					} else {
+						$CurrentQuery = "";
+						$CurrentLine = "";
+						for ($i = 0; $i < count($SqlLines); $i++) {
+							$CurrentLine = trim($SqlLines[$i]);
+							if ($CurrentLine == "") {
+								if ($CurrentQuery != "") {
+									if (!@mysql_query($CurrentQuery, $Connection)) {
+										$Context->WarningCollector->Add("An error occurred while we were attempting to create the database tables. MySQL reported the following error: <code>".mysql_error($Connection).'</code><code>QUERY: '.$CurrentQuery.'</code>');
+										$i = count($SqlLines)+1;
+									}
+									$CurrentQuery = "";
+								}
+							} else {
+								$CurrentQuery .= $CurrentLine;
+							}
+						}
+					}
+				}      
+			}
+			// Close the database connection
+			@mysql_close($Connection);
+		}
+		
+		// If the database was created successfully, save all parameters to the conf/database.php file
+		if ($Context->WarningCollector->Count() == 0) {
+			$DBManager->DefineSetting("DATABASE_HOST", $DBHost, 1);
+			$DBManager->DefineSetting("DATABASE_NAME", $DBName, 1);
+			$DBManager->DefineSetting("DATABASE_USER", $DBUser, 1);
+			$DBManager->DefineSetting("DATABASE_PASSWORD", $DBPass, 1);
+			if (!$DBManager->SaveSettingsToFile($DBFile)) {
+				// $Context->WarningCollector->Clear();
+				// $Context->WarningCollector->Add("For some reason we couldn't save your database settings to the '.$DBFile.' file.");
+			}
+		
+			// Save the general settings as well (now that we know this person is authenticated to
+			// a degree - knowing the database access params).
+			$SettingsFile = $RootDirectory . 'conf/settings.php';
+			$SettingsManager = new ConfigurationManager($Context);
+			$SettingsManager->DefineSetting('APPLICATION_PATH', $RootDirectory, 1);
+			$SettingsManager->DefineSetting('DATABASE_PATH', $RootDirectory . 'conf/database.php', 1);
+			$SettingsManager->DefineSetting('LIBRARY_PATH', $RootDirectory . 'library/', 1);
+			$SettingsManager->DefineSetting('EXTENSIONS_PATH', $RootDirectory . 'extensions/', 1);
+			$SettingsManager->DefineSetting('LANGUAGES_PATH', $RootDirectory . 'languages/', 1);
+			$SettingsManager->DefineSetting('THEME_PATH', $RootDirectory . 'themes/vanilla/', 1);
+			$SettingsManager->DefineSetting("DEFAULT_STYLE", $ThemeDirectory.'vanilla/styles/default/', 1);
+			$SettingsManager->DefineSetting("WEB_ROOT", $WebRoot, 1);
+			$SettingsManager->DefineSetting("BASE_URL", $BaseUrl, 1);
+			$SettingsManager->DefineSetting("FORWARD_VALIDATED_USER_URL", $BaseUrl, 1);
+			if (!$SettingsManager->SaveSettingsToFile($SettingsFile)) {
+				// $Context->WarningCollector->Clear();
+				// $Context->WarningCollector->Add("For some reason we couldn't save your general settings to the '".$SettingsFile."' file.");
+			}
+		}
+	}
+	
    if ($Context->WarningCollector->Count() == 0) {
 		// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
       header('location: '.$WebRoot.'setup/installer.php?Step=3');
 		die();
    }
 } elseif ($PostBackAction == "User") {
-	$CurrentStep = 3;	
-   // Validate user inputs
-   if (strip_tags($Username) != $Username) $Context->WarningCollector->Add("You really shouldn't have any html into your username.");
-   if (strlen($Username) > 20) $Context->WarningCollector->Add("Your username is too long");
-   if ($Password != $ConfirmPassword) $Context->WarningCollector->Add("The passwords you entered didn't match.");
-   if (strip_tags($ApplicationTitle) != $ApplicationTitle) $Context->WarningCollector->Add("You can't have any html in your forum name.");
-   if ($Username == "") $Context->WarningCollector->Add("You must provide a username.");
-   if ($Password == "") $Context->WarningCollector->Add("You must provide a password.");
-   if ($SupportName == "") $Context->WarningCollector->Add("You must provide a support contact name.");
-   if (!eregi("(.+)@(.+)\.(.+)", $SupportEmail)) $Context->WarningCollector->Add("The email address you entered doesn't appear to be valid.");
-   if ($ApplicationTitle == "") $Context->WarningCollector->Add("You must provide an application title.");
-   
-	// Include the db settings defined in the previous step
-   include($RootDirectory.'conf/database.php');
+	$CurrentStep = 3;
 	
-   // Open the database connection
-   $Connection = false;
-   if ($Context->WarningCollector->Count() == 0) {
-		$DBHost = $Configuration['DATABASE_HOST'];
-		$DBName = $Configuration['DATABASE_NAME'];
-		$DBUser = $Configuration['DATABASE_USER'];
-		$DBPass = $Configuration['DATABASE_PASSWORD'];
-      $Connection = @mysql_connect($DBHost, $DBUser, $DBPass);
-      if (!$Connection) {
-         $Context->WarningCollector->Add("We couldn't connect to the server you provided (".$DBHost."). Are you sure you entered the right server, username and password?");
-      } elseif (!mysql_select_db($DBName, $Connection)) {
-         $Context->WarningCollector->Add("We connected to the server, but we couldn't access the \"".$DBName."\" database. Are you sure it exists and that the specified user has access to it?");
-      }
-   }
-   
-   // Create the administrative user
-   if ($Context->WarningCollector->Count() == 0 && $Connection) {
-      $Username = FormatStringForDatabaseInput($Username);
-      $Password = FormatStringForDatabaseInput($Password);
-      
-      $s = new SqlBuilder($Context);
-      $s->SetMainTable('User', 'u');
-      $s->AddFieldNameValue('FirstName', 'Administrative');
-      $s->AddFieldNameValue('LastName', 'User');
-      $s->AddFieldNameValue('Email', FormatStringForDatabaseInput($SupportEmail));
-      $s->AddFieldNameValue('Name', $Username);
-      $s->AddFieldNameValue('Password', $Password, 1, 'md5');
-		$s->AddFieldNameValue('DateFirstVisit', MysqlDateTime());
-		$s->AddFieldNameValue('DateLastActive', MysqlDateTime());
-		$s->AddFieldNameValue('CountVisit', 0);
-		$s->AddFieldNameValue('CountDiscussions', 0);
-		$s->AddFieldNameValue('CountComments', 0);
-		$s->AddFieldNameValue('RoleID', 4);
-		$s->AddFieldNameValue('StyleID', 1);
-		$s->AddFieldNameValue('UtilizeEmail', 0);
-		$s->AddFieldNameValue('RemoteIp', GetRemoteIp(1));
-		if (!@mysql_query($s->GetInsert(), $Connection)) {
-         $Context->WarningCollector->Add("Something bad happened when we were trying to create your administrative user account. Mysql said: ".mysql_error($Connection));
-      } else {
-         // Now insert the role history assignment
-			$NewUserID = mysql_insert_id($Connection);
-			$s->Clear();
-			$s->SetMainTable('UserRoleHistory', 'h');
-			$s->AddFieldNameValue('UserID', $NewUserID);
+	$SettingsFile = $RootDirectory . 'conf/settings.php';
+	$SettingsManager = new ConfigurationManager($Context);
+	$SettingsManager->GetSettingsFromFile($SettingsFile);
+	if ($SettingsManager->GetSetting('SETUP_COMPLETE') != '') {
+		$Context->WarningCollector->Add("Vanilla seems to have been installed already. You will need to remove the conf/settings.php, conf/database.php files, and all database tables in order to run the installer utility again.");
+	} else {
+		// Validate user inputs
+		if (strip_tags($Username) != $Username) $Context->WarningCollector->Add("You really shouldn't have any html into your username.");
+		if (strlen($Username) > 20) $Context->WarningCollector->Add("Your username is too long");
+		if ($Password != $ConfirmPassword) $Context->WarningCollector->Add("The passwords you entered didn't match.");
+		if (strip_tags($ApplicationTitle) != $ApplicationTitle) $Context->WarningCollector->Add("You can't have any html in your forum name.");
+		if ($Username == "") $Context->WarningCollector->Add("You must provide a username.");
+		if ($Password == "") $Context->WarningCollector->Add("You must provide a password.");
+		if ($SupportName == "") $Context->WarningCollector->Add("You must provide a support contact name.");
+		if (!eregi("(.+)@(.+)\.(.+)", $SupportEmail)) $Context->WarningCollector->Add("The email address you entered doesn't appear to be valid.");
+		if ($ApplicationTitle == "") $Context->WarningCollector->Add("You must provide an application title.");
+		
+		// Include the db settings defined in the previous step
+		include($RootDirectory.'conf/database.php');
+		
+		// Open the database connection
+		$Connection = false;
+		if ($Context->WarningCollector->Count() == 0) {
+			$DBHost = $Configuration['DATABASE_HOST'];
+			$DBName = $Configuration['DATABASE_NAME'];
+			$DBUser = $Configuration['DATABASE_USER'];
+			$DBPass = $Configuration['DATABASE_PASSWORD'];
+			$Connection = @mysql_connect($DBHost, $DBUser, $DBPass);
+			if (!$Connection) {
+				$Context->WarningCollector->Add("We couldn't connect to the server you provided (".$DBHost."). Are you sure you entered the right server, username and password?");
+			} elseif (!mysql_select_db($DBName, $Connection)) {
+				$Context->WarningCollector->Add("We connected to the server, but we couldn't access the \"".$DBName."\" database. Are you sure it exists and that the specified user has access to it?");
+			}
+		}
+		
+		// Create the administrative user
+		if ($Context->WarningCollector->Count() == 0 && $Connection) {
+			$Username = FormatStringForDatabaseInput($Username);
+			$Password = FormatStringForDatabaseInput($Password);
+			
+			$s = new SqlBuilder($Context);
+			$s->SetMainTable('User', 'u');
+			$s->AddFieldNameValue('FirstName', 'Administrative');
+			$s->AddFieldNameValue('LastName', 'User');
+			$s->AddFieldNameValue('Email', FormatStringForDatabaseInput($SupportEmail));
+			$s->AddFieldNameValue('Name', $Username);
+			$s->AddFieldNameValue('Password', $Password, 1, 'md5');
+			$s->AddFieldNameValue('DateFirstVisit', MysqlDateTime());
+			$s->AddFieldNameValue('DateLastActive', MysqlDateTime());
+			$s->AddFieldNameValue('CountVisit', 0);
+			$s->AddFieldNameValue('CountDiscussions', 0);
+			$s->AddFieldNameValue('CountComments', 0);
 			$s->AddFieldNameValue('RoleID', 4);
-			$s->AddFieldNameValue('Date', MysqlDateTime());
-			$s->AddFieldNameValue('AdminUserID', $NewUserID);
-			$s->AddFieldNameValue('Notes', 'Initial administrative account created');
+			$s->AddFieldNameValue('StyleID', 1);
+			$s->AddFieldNameValue('UtilizeEmail', 0);
 			$s->AddFieldNameValue('RemoteIp', GetRemoteIp(1));
-         // Fail silently on this one
-         @mysql_query($s->GetInsert(), $Connection);
-      }
-		// Create the default Vanilla style entry in the db
-		$s->Clear();
-		$s->SetMainTable('Style', 's');
-		$s->AddFieldNameValue('Name', 'Vanilla');
-		$s->AddFieldNameValue('Url', $ThemeDirectory.'vanilla/styles/default/');
-		@mysql_query($s->GetInsert(), $Connection);
-   }
-   
-   // Close the database connection
-   @mysql_close($Connection);
-   
-   // Save the application constants
-   if ($Context->WarningCollector->Count() == 0) {
-      $SettingsFile = $RootDirectory . 'conf/settings.php';
-      $SettingsManager = new ConfigurationManager($Context);
-      $SettingsManager->DefineSetting("SUPPORT_EMAIL", $SupportEmail, 1);
-      $SettingsManager->DefineSetting("SUPPORT_NAME", $SupportName, 1);
-      $SettingsManager->DefineSetting("APPLICATION_TITLE", $ApplicationTitle, 1);
-      $SettingsManager->DefineSetting("BANNER_TITLE", $ApplicationTitle, 1);
-      $SettingsManager->DefineSetting("COOKIE_DOMAIN", $CookieDomain, 1);
-      $SettingsManager->DefineSetting("COOKIE_PATH", $CookiePath, 1);
-		$SettingsManager->DefineSetting("SETUP_COMPLETE", '1', 1);
-      $SettingsManager->SaveSettingsToFile($SettingsFile);
-   }
+			if (!@mysql_query($s->GetInsert(), $Connection)) {
+				$Context->WarningCollector->Add("Something bad happened when we were trying to create your administrative user account. Mysql said: ".mysql_error($Connection));
+			} else {
+				// Now insert the role history assignment
+				$NewUserID = mysql_insert_id($Connection);
+				$s->Clear();
+				$s->SetMainTable('UserRoleHistory', 'h');
+				$s->AddFieldNameValue('UserID', $NewUserID);
+				$s->AddFieldNameValue('RoleID', 4);
+				$s->AddFieldNameValue('Date', MysqlDateTime());
+				$s->AddFieldNameValue('AdminUserID', $NewUserID);
+				$s->AddFieldNameValue('Notes', 'Initial administrative account created');
+				$s->AddFieldNameValue('RemoteIp', GetRemoteIp(1));
+				// Fail silently on this one
+				@mysql_query($s->GetInsert(), $Connection);
+			}
+			// Create the default Vanilla style entry in the db
+			$s->Clear();
+			$s->SetMainTable('Style', 's');
+			$s->AddFieldNameValue('Name', 'Vanilla');
+			$s->AddFieldNameValue('Url', $ThemeDirectory.'vanilla/styles/default/');
+			@mysql_query($s->GetInsert(), $Connection);
+		}
+		
+		// Close the database connection
+		@mysql_close($Connection);
+		
+		// Save the application constants
+		if ($Context->WarningCollector->Count() == 0) {
+			$SettingsManager->DefineSetting("SUPPORT_EMAIL", $SupportEmail, 1);
+			$SettingsManager->DefineSetting("SUPPORT_NAME", $SupportName, 1);
+			$SettingsManager->DefineSetting("APPLICATION_TITLE", $ApplicationTitle, 1);
+			$SettingsManager->DefineSetting("BANNER_TITLE", $ApplicationTitle, 1);
+			$SettingsManager->DefineSetting("COOKIE_DOMAIN", $CookieDomain, 1);
+			$SettingsManager->DefineSetting("COOKIE_PATH", $CookiePath, 1);
+			$SettingsManager->DefineSetting("SETUP_COMPLETE", '1', 1);
+			$SettingsManager->SaveSettingsToFile($SettingsFile);
+		}
+	}
    
    if ($Context->WarningCollector->Count() == 0) {
 		// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
