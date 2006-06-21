@@ -470,6 +470,9 @@ class CommentManager extends Delegation {
 					$s->AddFieldNameValue('DateEdited', MysqlDateTime());
 					$s->AddWhere('m', 'CommentID', '', $Comment->CommentID, '=');
 					$this->Context->Database->Update($s, $this->Name, 'SaveComment', 'An error occurred while attempting to update the discussion comment.');
+					
+					// Make sure that the discussion reflects this user's comment (if someone turned a non-whisper into a whisper or vice versa).
+					$this->UpdateLastCommenter($Comment->DiscussionID);
 				}
 			}
 		}
@@ -720,6 +723,41 @@ class CommentManager extends Delegation {
 		$this->Context->Database->Update($s, $this->Name, 'UpdateCommentCount', 'An error occurred while manipulating the comment count for the discussion.');
 	}
 	
+	// Updates the discussion with the Appropriate LastUserID and DateLastActive
+	function UpdateLastCommenter($DiscussionID) {
+		$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
+		$s->SetMainTable('Comment', 'c');
+		$s->AddSelect(array('CommentID', 'AuthUserID', 'DateCreated'), 'c');
+		$s->StartWhereGroup();
+		$s->AddWhere('c', 'WhisperUserID', '', 'null', 'is', 'or', '', 0);
+		$s->AddWhere('c', 'WhisperUserID', '', '0', '=', 'or', '', 0);
+		$s->AddWhere('c', 'WhisperUserID', '', '0', '=', 'or', '', 1);
+		$s->EndWhereGroup();
+		$s->AddWhere('c', 'DiscussionID', '', $DiscussionID, '=');
+		$s->AddOrderBy('DateCreated', 'c', 'desc');
+		$s->AddLimit(0,1);
+		
+		$last_user_id = 0;
+		$date_last_active = '';
+		
+		$Result = $this->Context->Database->Select($s, $this->Name, 'UpdateLastCommenter', 'An error occurred while attempting to update the discussion history data.');
+		while ($Row = $this->Context->Database->GetRow($Result)) {
+			print_r($Row);
+			$last_user_id = ForceInt($Row['AuthUserID'], 0);
+			$date_last_active = $Row['DateCreated'];
+		}
+		
+		// If a record was found, update the discussion
+      if ($last_user_id > 0) {
+			$s->Clear();
+			$s->SetMainTable('Discussion', 'd');
+			$s->AddFieldNameValue('LastUserID', $last_user_id);
+			$s->AddFieldNameValue('DateLastActive', $date_last_active);
+			$s->AddWhere('d', 'DiscussionID', '', $DiscussionID, '=');
+ 			$this->Context->Database->Update($s, $this->Name, 'UpdateLastCommenter', "An error occurred while updating the discussion's history data.");
+		}
+	}
+		
 	// Handles manipulating the count values for a discussion when adding, hiding, or removing a whispered comment
 	function UpdateWhisperCount($DiscussionID, $WhisperFromUserID, $WhisperToUserID, $MathOperator) {
 		$Math = '+';

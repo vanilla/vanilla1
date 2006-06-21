@@ -20,7 +20,7 @@ if ($this->Context->WarningCollector->Count() > 0) {
          }
          $CommentList .= $this->Discussion->Name
       .'</h1>
-		<a href="'.GetRequestUri().'#pgbottom">'.$this->Context->GetDefinition('BottomOfPage').'</a>
+		<a href="#pgbottom">'.$this->Context->GetDefinition('BottomOfPage').'</a>
       <div class="PageInfo">
          <p>'.$PageDetails.'</p>
          '.$PageList.'

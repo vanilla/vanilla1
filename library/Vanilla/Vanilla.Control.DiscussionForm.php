@@ -144,17 +144,17 @@ class DiscussionForm extends PostBackControl {
 			if (!$this->Discussion->Comment) $this->Discussion->Comment = $this->Context->ObjectFactory->NewContextObject($this->Context, 'Comment');
 			
 			$this->Discussion->Comment->FormatType = $this->Context->Session->User->DefaultFormatType;
-			$this->Comment->FormatType = $this->Context->Session->User->DefaultFormatType;
+			if ($this->Comment) $this->Comment->FormatType = $this->Context->Session->User->DefaultFormatType;
 		}
-			
-		$this->PostBackParams->Set('CommentID', $this->Comment->CommentID);
+
+		if ($this->Comment) $this->PostBackParams->Set('CommentID', $this->Comment->CommentID);
 		$this->PostBackParams->Set('DiscussionID', $this->DiscussionID);
 		$this->Title = $this->Context->GetDefinition('StartANewDiscussion');
 		if ($this->EditDiscussionID > 0 || ($this->CommentID == 0 && $this->DiscussionID == 0)) {
 			$this->Form = 'DiscussionForm';
 		} else {
 			$this->Form = 'CommentForm';
-			if ($this->Comment->CommentID > 0) {
+			if ($this->Comment && $this->Comment->CommentID > 0) {
 				$this->Title = $this->Context->GetDefinition('EditYourComments');
 			} else {
 				$this->Title = $this->Context->GetDefinition('AddYourComments');
