@@ -1075,7 +1075,7 @@ li.User.Name span {
 	}
 
 /* Category List */
-#Form.CategoryList li.RoleBlocked {
+#Form.CategoryList .RoleBlocked {
 	background: url(disabled-tile.gif) #F4F4C2;
 	}
 	
