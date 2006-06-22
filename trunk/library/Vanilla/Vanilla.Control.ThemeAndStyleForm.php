@@ -31,7 +31,8 @@ class ThemeAndStyleForm extends PostBackControl {
             // Retrieve theme names (folders which are not system folders or hidden folders
             if (!in_array($Item, array('.', '..'))
 					&& is_dir($ThemeRoot.$Item)
-					&& substr($Item, 0, 1) != '_') $this->Themes[] = $Item;
+					&& substr($Item, 0, 1) != '_'
+					&& substr($Item, 0, 1) != '.') $this->Themes[] = $Item;
          }
       }
    }
@@ -49,7 +50,8 @@ class ThemeAndStyleForm extends PostBackControl {
             // Retrieve style names (folders which are not system folders or hidden folders
             if (!in_array($Item, array('.', '..'))
 					&& is_dir($StyleRoot.$Item)
-					&& substr($Item, 0, 1) != '_') $this->Styles[] = $Item;
+					&& substr($Item, 0, 1) != '_'
+					&& substr($Item, 0, 1) != '.') $this->Styles[] = $Item;
          }
       }
 	}
