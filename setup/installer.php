@@ -294,7 +294,7 @@ if ($PostBackAction == "Permissions") {
 	$SettingsFile = $RootDirectory . 'conf/settings.php';
 	$SettingsManager = new ConfigurationManager($Context);
 	$SettingsManager->GetSettingsFromFile($SettingsFile);
-	if ($SettingsManager->GetSetting('SETUP_COMPLETE') != '') {
+	if ($SettingsManager->GetSetting('SETUP_COMPLETE') != '0') {
 		$Context->WarningCollector->Add("Vanilla seems to have been installed already. You will need to remove the conf/settings.php, conf/database.php files, and all database tables in order to run the installer utility again.");
 	} else {
 		// Validate user inputs

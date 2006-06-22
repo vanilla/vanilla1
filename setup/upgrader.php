@@ -593,7 +593,7 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
    $SettingsFile = $RootDirectory . 'conf/settings.php';
    $SettingsManager = new ConfigurationManager($Context);
 	$SettingsManager->GetSettingsFromFile($SettingsFile);
-	if ($SettingsManager->GetSetting('SETUP_COMPLETE') == '') {
+	if ($SettingsManager->GetSetting('SETUP_COMPLETE') != '1') {
 		// Include the db settings defined in the previous step
 		include($RootDirectory.'conf/database.php');
 		
