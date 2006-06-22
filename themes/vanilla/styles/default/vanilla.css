@@ -112,7 +112,6 @@ a:hover {
 #Header ul li {
 	display:inline;
 	margin:0px 1px;
-	padding: 0px;
 	border-bottom:1px solid #acbedf;
 	}
 #Header ul li.TabOn {
@@ -120,14 +119,13 @@ a:hover {
 	border:1px solid #acbedf;
 	border-bottom:1px solid #fff;
 	font-weight:bold;
-	padding: 2px 0px 0px 0px;
 	}
 #Header ul li a {
-	padding: 1px 6px 0px 6px;
-	font-size:12px;
+	padding:1px 5px;
+	font-size:11px;
 	text-decoration:none;
+	background-color:#5d709f;
 	color:#fff;
-	background:#5d709f;
 	}
 #Header ul li a:hover {
 	background-color:#919ebe;
@@ -217,7 +215,7 @@ a:hover {
 	background-color:#f9f9f9;
 	padding: 3px 0px 3px 0px;
 	text-align:center;
-	color:#ddd !important;
+	color:#bbb !important;
 	width:180px;
 	}
 #AboutVanilla a {
