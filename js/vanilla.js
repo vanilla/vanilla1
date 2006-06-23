@@ -158,7 +158,7 @@ function ToggleCommentBoxComplete(Request) {
 function WhisperBack(DiscussionID, WhisperTo, BaseUrl) {
 	var frm = document.getElementById("frmPostComment");
 	if (!frm) {
-		document.location = BaseUrl + "post.php?PageAction=Reply&DiscussionID="+DiscussionID+"&WhisperUsername="+escape(WhisperTo);
+		document.location = BaseUrl + "post.php?PostBackAction=Reply&DiscussionID="+DiscussionID+"&WhisperUsername="+escape(WhisperTo);
 	} else {
 		frm.WhisperUsername.value = WhisperTo;
 		frm.Body.focus();

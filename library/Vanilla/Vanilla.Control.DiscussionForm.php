@@ -141,7 +141,7 @@ class DiscussionForm extends PostBackControl {
 				header('location:'.$Url);
 				die();
 			}
-		} else {
+		} elseif ($this->PostBackAction == 'Reply') {
 			if ($this->Comment) $this->Comment->GetPropertiesFromForm();
 		}
 		if (!$this->IsPostBack && $this->Comment->DiscussionID == 0 && $this->Comment->CommentID == 0) {
