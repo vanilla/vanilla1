@@ -127,6 +127,8 @@ class DiscussionForm extends PostBackControl {
 			$this->CallDelegate('PostSaveComment');
 			
 			if ($ResultComment) {
+				// Reload the discussion so the "lastpage" property is recalculated with the new comment in the math.
+				$this->Discussion = $dm->GetDiscussionById($this->Comment->DiscussionID);
 				// Saved successfully, so send back to the discussion
             // print_r($this->Discussion);
             $Suffix = CleanupString($this->Discussion->Name).'/';
@@ -139,6 +141,8 @@ class DiscussionForm extends PostBackControl {
 				header('location:'.$Url);
 				die();
 			}
+		} else {
+			if ($this->Comment) $this->Comment->GetPropertiesFromForm();
 		}
 		if (!$this->IsPostBack && $this->Comment->DiscussionID == 0 && $this->Comment->CommentID == 0) {
 			if (!$this->Discussion->Comment) $this->Discussion->Comment = $this->Context->ObjectFactory->NewContextObject($this->Context, 'Comment');

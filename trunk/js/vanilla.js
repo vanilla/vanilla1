@@ -155,10 +155,10 @@ function ToggleCommentBoxComplete(Request) {
 	// Don't do anything.
 }
 
-function WhisperBack(DiscussionID, WhisperTo) {
+function WhisperBack(DiscussionID, WhisperTo, BaseUrl) {
 	var frm = document.getElementById("frmPostComment");
 	if (!frm) {
-		document.location = "post.php?PageAction=Reply&DiscussionID="+DiscussionID+"&WhisperUsername="+WhisperTo;
+		document.location = BaseUrl + "post.php?PageAction=Reply&DiscussionID="+DiscussionID+"&WhisperUsername="+escape(WhisperTo);
 	} else {
 		frm.WhisperUsername.value = WhisperTo;
 		frm.Body.focus();
