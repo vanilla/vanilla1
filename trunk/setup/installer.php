@@ -176,7 +176,7 @@ if ($PostBackAction == "Permissions") {
       
    if ($Context->WarningCollector->Count() == 0) {
       // Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
-      header('location: '.$WebRoot.'setup/installer.php?Step=2');
+      header('location: '.$WebRoot.'setup/installer.php?Step=2&PostBackAction=None');
       die();
    }
 } elseif ($PostBackAction == "Database") {
@@ -285,7 +285,7 @@ if ($PostBackAction == "Permissions") {
 	
    if ($Context->WarningCollector->Count() == 0) {
 		// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
-      header('location: '.$WebRoot.'setup/installer.php?Step=3');
+      header('location: '.$WebRoot.'setup/installer.php?Step=3&PostBackAction=None');
 		die();
    }
 } elseif ($PostBackAction == "User") {
@@ -389,7 +389,7 @@ if ($PostBackAction == "Permissions") {
    
    if ($Context->WarningCollector->Count() == 0) {
 		// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
-      header('location: '.$WebRoot.'setup/installer.php?Step=4');
+      header('location: '.$WebRoot.'setup/installer.php?Step=4&PostBackAction=None');
 		die();
 	}
 } 

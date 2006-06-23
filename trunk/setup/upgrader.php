@@ -300,7 +300,7 @@ if ($PostBackAction == "Permissions") {
       
    if ($Context->WarningCollector->Count() == 0) {
 		// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
-      header('location: '.$WebRoot.'setup/upgrader.php?Step=2');
+      header('location: '.$WebRoot.'setup/upgrader.php?Step=2&PostBackAction=None');
 		die();
 	}
 } elseif ($PostBackAction == "Database") {
@@ -579,7 +579,7 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
    }
    if ($Context->WarningCollector->Count() == 0) {
 		// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
-      header('location: '.$WebRoot.'setup/upgrader.php?Step=3');
+      header('location: '.$WebRoot.'setup/upgrader.php?Step=3&PostBackAction=None');
 		die();
    }
 } elseif ($PostBackAction == "User") {
@@ -685,7 +685,7 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
    
    if ($Context->WarningCollector->Count() == 0) {
 		// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
-      header('location: '.$WebRoot.'setup/upgrader.php?Step=4');
+      header('location: '.$WebRoot.'setup/upgrader.php?Step=4&PostBackAction=None');
 		die();
 	}
 } 
