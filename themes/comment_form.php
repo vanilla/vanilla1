@@ -16,7 +16,7 @@ echo '<div id="Form" class="AddComments">
 			} else {
 				echo '<li>
 					<label for="WhisperUsername">'.$this->Context->GetDefinition('WhisperYourCommentsTo').'</label>
-					<input id="WhisperUsername" name="WhisperUsername" type="text" value="'.FormatStringForDisplay($Comment->WhisperUsername, 0).'" class="Whisper AutoCompleteInput" maxlength="20" />
+					<input id="WhisperUsername" name="WhisperUsername" type="text" value="'.$Comment->WhisperUsername.'" class="Whisper AutoCompleteInput" maxlength="20" />
 					<script type="text/javascript">
 						var WhisperAutoComplete = new AutoComplete("WhisperUsername", false);
 						WhisperAutoComplete.TableID = "WhisperAutoCompleteResults";
