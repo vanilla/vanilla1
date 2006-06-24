@@ -2,7 +2,7 @@
 // Note: This file is included from the library/Vanilla/Vanilla.Control.Foot.php class.
 
 echo '</div>
-<a name="pgbottom"></a>
+<a id="pgbottom" name="pgbottom">&nbsp;</a>
 </div>';
 
 $AllowDebugInfo = 0;
