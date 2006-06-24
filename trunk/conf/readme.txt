@@ -28,8 +28,8 @@ this conf folder should contain four files:
    
 3. language.php
 
-   This file is not edited by Vanilla in any way. It's purpose is a place where
-   you can re-define language definitions made in
+   This file is not edited by Vanilla in any way. It's purpose is to allow you 
+   to re-define language definitions made in 
    /languages/yourlanguage/definitions.php. You should NEVER edit the files in
    your /languages folder. You should always copy the definition you want to
    change into this file and edit it here.

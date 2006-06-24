@@ -324,41 +324,51 @@ if ($PostBackAction == "Permissions") {
       } else {
          $TableMatches = array();
 			$TableToCompare = '';
+			$MissingTables = '';
          while ($Row = mysql_fetch_array($TableData)) {
 				$TableToCompare = $Row[0];
-				$TableToCompare = str_replace('LUM_', '', $TableToCompare);
-            if (array_key_exists($TableToCompare, $DatabaseTables)) {
-               $TableMatches[] = $Row[0];
-            }
+				$TableToCompare = str_replace('lum_', '', strtolower($TableToCompare));
+				// Make sure that the required tables exist
+				while (list($TableKey, $TableName) = each($DatabaseTables)) {
+					if (strtolower($TableKey) == $TableToCompare) {
+						// Make sure to update the DatabaseTables array with the actual table names (case-corrected for buggy windows machines)
+						$DatabaseTables[$TableKey] = $Row[0];
+						$TableMatches[$TableToCompare] = $Row[0];
+					}
+				}
+				reset($DatabaseTables);
          }
          if (count($TableMatches) != count($DatabaseTables)) {
 				$MissingTables = '';
-				for ($i = 0; $i < count($DatabaseTables); $i++) {
-					if (!in_array($DatabaseTables[$i], $TableMatches)) {
-						if ($MissingTables != '') $MissingTables .= ', ';
-						$MissingTables .= $DatabaseTables[$i];
+				while (list($TableKey, $TableName) = each($DatabaseTables)) {
+					$Found = 0;
+					while (list ($MatchKey, $MatchName) = each ($TableMatches)) {
+						if (strtolower($TableName) != $MatchKey) $Found = 1;
 					}
-					
+					if (!$Found) {
+						if ($MissingTables != '') $MissingTables .= ', ';
+						$MissingTables .= $TableName;
+					}
 				}
             $Context->WarningCollector->Add("It appears as though your Vanilla installation is missing some tables: <code>".$MissingTables."</code>");
          } else {
 				// 1. Upgrade Role Table (The hard part first)
             
 				// Check for current columns in the table
-            $RoleData = @mysql_query('show columns from LUM_Role', $Connection);
-				$RoleColumns = GetColumns($Connection, 'LUM_Role');
+            $RoleData = @mysql_query('show columns from '.$DatabaseTables['Role'], $Connection);
+				$RoleColumns = GetColumns($Connection, $DatabaseTables['Role']);
 				
             // 1a. Rename columns
 				if ($Context->WarningCollector->Count() == 0) {
 					if (in_array('CanLogin', $RoleColumns) && !in_array('PERMISSION_SIGN_IN', $RoleColumns)) {
-						$AlterSQL = "alter table LUM_Role change CanLogin PERMISSION_SIGN_IN enum('1','0') not null default '0'";
+						$AlterSQL = "alter table ".$DatabaseTables['Role']." change CanLogin PERMISSION_SIGN_IN enum('1','0') not null default '0'";
 						if (!@mysql_query($AlterSQL, $Connection)) $Context->WarningCollector->Add("An error occurred renaming LUM_Role.CanLogin to LUM_Role.PERMISSION_SIGN_IN. MySQL reported the following error: <code>".mysql_error($Connection).'</code>');
 					}
 				}
 				
 				if ($Context->WarningCollector->Count() == 0) {
 					if (in_array('CanPostHTML', $RoleColumns) && !in_array('PERMISSION_HTML_ALLOWED', $RoleColumns)) {
-						$AlterSQL = "alter table LUM_Role change CanPostHTML PERMISSION_HTML_ALLOWED enum('1','0') not null default '0'";
+						$AlterSQL = "alter table ".$DatabaseTables['Role']." change CanPostHTML PERMISSION_HTML_ALLOWED enum('1','0') not null default '0'";
 						if (!@mysql_query($AlterSQL, $Connection)) $Context->WarningCollector->Add("An error occurred renaming LUM_Role.CanPostHTML to LUM_Role.PERMISSION_HTML_ALLOWED. MySQL reported the following error: <code>".mysql_error($Connection).'</code>');
 					}
 				}
@@ -366,26 +376,26 @@ if ($PostBackAction == "Permissions") {
 				// 1b. Add new columns
 				if ($Context->WarningCollector->Count() == 0) {
 					if (!in_array('PERMISSION_RECEIVE_APPLICATION_NOTIFICATION', $RoleColumns)) {
-						$AlterSQL = "alter table LUM_Role add PERMISSION_RECEIVE_APPLICATION_NOTIFICATION enum('1','0') not null default '0'";
+						$AlterSQL = "alter table ".$DatabaseTables['Role']." add PERMISSION_RECEIVE_APPLICATION_NOTIFICATION enum('1','0') not null default '0'";
 						if (!@mysql_query($AlterSQL, $Connection)) $Context->WarningCollector->Add("An error occurred while adding LUM_Role.PERMISSION_RECEIVE_APPLICATION_NOTIFICATION. MySQL reported the following error: <code>".mysql_error($Connection).'</code>');
 					}
 				}
 				
 				if ($Context->WarningCollector->Count() == 0) {
 					if (!in_array('Permissions', $RoleColumns)) {
-						$AlterSQL = "alter table LUM_Role add Permissions text";
+						$AlterSQL = "alter table ".$DatabaseTables['Role']." add Permissions text";
 						if (!@mysql_query($AlterSQL, $Connection)) $Context->WarningCollector->Add("An error occurred while adding LUM_Role.Permissions. MySQL reported the following error: <code>".mysql_error($Connection).'</code>');
 					}
 				}
 				if ($Context->WarningCollector->Count() == 0) {
 					if (!in_array('Priority', $RoleColumns)) {
-						$AlterSQL = "alter table LUM_Role add Priority int not null default '0'";
+						$AlterSQL = "alter table ".$DatabaseTables['Role']." add Priority int not null default '0'";
 						if (!@mysql_query($AlterSQL, $Connection)) $Context->WarningCollector->Add("An error occurred while adding LUM_Role.Priority. MySQL reported the following error: <code>".mysql_error($Connection).'</code>');
 					}
 				}
 				if ($Context->WarningCollector->Count() == 0) {
 					if (!in_array('UnAuthenticated', $RoleColumns)) {
-						$AlterSQL = "alter table LUM_Role add UnAuthenticated enum('1','0') not null default '0'";
+						$AlterSQL = "alter table ".$DatabaseTables['Role']." add UnAuthenticated enum('1','0') not null default '0'";
 						if (!@mysql_query($AlterSQL, $Connection)) $Context->WarningCollector->Add("An error occurred while adding LUM_Role.UnAuthenticated. MySQL reported the following error: <code>".mysql_error($Connection).'</code>');
 					}
 				}
@@ -393,8 +403,8 @@ if ($PostBackAction == "Permissions") {
 				// 1c. Retrieve current permissions, serialize, and resave as long as the MasterAdmin column was present
             if (in_array('MasterAdmin', $RoleColumns)) {
 					// Get an updated version of the columns in the database (Because some were changed above)
-               $RoleColumns = GetColumns($Connection, 'LUM_Role');
-					$SelectSQL = "select ".implode(',', $RoleColumns)." from LUM_Role";
+               $RoleColumns = GetColumns($Connection, $DatabaseTables['Role']);
+					$SelectSQL = "select ".implode(',', $RoleColumns)." from ".$DatabaseTables['Role'];
 					$RoleData = @mysql_query($SelectSQL, $Connection);
 					if (!$RoleData) {
 						$Context->WarningCollector->Add("An error occurred while retrieving existing role data. MySQL reported the following error: <code>".mysql_error($Connection)."</code>");
@@ -441,7 +451,7 @@ if ($PostBackAction == "Permissions") {
 							$Permissions['PERMISSION_ALLOW_DEBUG_INFO'] = ForceBool(@$Row['MasterAdmin'], 0);
 							
 							
-							$UpdateSQL = "update LUM_Role set Permissions = '".SerializeArray($Permissions)."' where RoleID = ".$RoleID;
+							$UpdateSQL = "update ".$DatabaseTables['Role']." set Permissions = '".SerializeArray($Permissions)."' where RoleID = ".$RoleID;
 							if (!@mysql_query($UpdateSQL, $Connection)) {
 								$Context->WarningCollector->Add("An error occurred while updating LUM_Role data. MySQL reported the following error: <code>".mysql_error($Connection).'</code>');
 								break;
@@ -457,45 +467,45 @@ if ($PostBackAction == "Permissions") {
 					// Silently drop these columns. If any errors occur, it doesn't
                // really slow anything down to leave them behind. It's just clutter.
                if (in_array('CanPostDiscussion', $RoleColumns)) {
-						$AlterSQL = "alter table LUM_Role drop column CanPostDiscussion";
+						$AlterSQL = "alter table ".$DatabaseTables['Role']." drop column CanPostDiscussion";
 						@mysql_query($AlterSQL, $Connection);
 					}
                if (in_array('CanPostComment', $RoleColumns)) {
-						$AlterSQL = "alter table LUM_Role drop column CanPostComment";
+						$AlterSQL = "alter table ".$DatabaseTables['Role']." drop column CanPostComment";
 						@mysql_query($AlterSQL, $Connection);
 					}
                if (in_array('AdminUsers', $RoleColumns)) {
-						$AlterSQL = "alter table LUM_Role drop column AdminUsers";
+						$AlterSQL = "alter table ".$DatabaseTables['Role']." drop column AdminUsers";
 						@mysql_query($AlterSQL, $Connection);
 					}
                if (in_array('AdminCategories', $RoleColumns)) {
-						$AlterSQL = "alter table LUM_Role drop column AdminCategories";
+						$AlterSQL = "alter table ".$DatabaseTables['Role']." drop column AdminCategories";
 						@mysql_query($AlterSQL, $Connection);
 					}
                if (in_array('ShowAllWhispers', $RoleColumns)) {
-						$AlterSQL = "alter table LUM_Role drop column ShowAllWhispers";
+						$AlterSQL = "alter table ".$DatabaseTables['Role']." drop column ShowAllWhispers";
 						@mysql_query($AlterSQL, $Connection);
 					}
                if (in_array('MasterAdmin', $RoleColumns)) {
-						$AlterSQL = "alter table LUM_Role drop column MasterAdmin";
+						$AlterSQL = "alter table ".$DatabaseTables['Role']." drop column MasterAdmin";
 						@mysql_query($AlterSQL, $Connection);
 					}
                if (in_array('CanViewIps', $RoleColumns)) {
-						$AlterSQL = "alter table LUM_Role drop column CanViewIps";
+						$AlterSQL = "alter table ".$DatabaseTables['Role']." drop column CanViewIps";
 						@mysql_query($AlterSQL, $Connection);
 					}
 				}
 				
 				// 1e. Make sure that there is an unauthenticated role.
             if ($Context->WarningCollector->Count() == 0) {
-					$SelectSQL = "select RoleID from LUM_Role where UnAuthenticated = '1'";
+					$SelectSQL = "select RoleID from ".$DatabaseTables['Role']." where UnAuthenticated = '1'";
 					$RoleData = @mysql_query($SelectSQL, $Connection);
 					if (!$RoleData) {
 						$Context->WarningCollector->Add("An error occurred while querying for an unauthenticated role. MySQL returned the following error message: <code>".mysql_error($Context)."</code>");
 					} else {
 						if (mysql_num_rows($RoleData) == 0) {
 							// Insert a new unauthenticated role
-                     $InsertSQL = "insert into `LUM_Role`
+                     $InsertSQL = "insert into ".$DatabaseTables['Role']."
 (`Name`, `Active`, `PERMISSION_SIGN_IN`, `PERMISSION_HTML_ALLOWED`, `PERMISSION_RECEIVE_APPLICATION_NOTIFICATION`, `Permissions`, `Priority`, `UnAuthenticated`)
 VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\";N;s:27:\"PERMISSION_START_DISCUSSION\";N;s:28:\"PERMISSION_STICK_DISCUSSIONS\";N;s:27:\"PERMISSION_HIDE_DISCUSSIONS\";N;s:28:\"PERMISSION_CLOSE_DISCUSSIONS\";N;s:27:\"PERMISSION_EDIT_DISCUSSIONS\";N;s:34:\"PERMISSION_VIEW_HIDDEN_DISCUSSIONS\";N;s:24:\"PERMISSION_EDIT_COMMENTS\";N;s:24:\"PERMISSION_HIDE_COMMENTS\";N;s:31:\"PERMISSION_VIEW_HIDDEN_COMMENTS\";N;s:44:\"PERMISSION_ADD_COMMENTS_TO_CLOSED_DISCUSSION\";N;s:25:\"PERMISSION_ADD_CATEGORIES\";N;s:26:\"PERMISSION_EDIT_CATEGORIES\";N;s:28:\"PERMISSION_REMOVE_CATEGORIES\";N;s:26:\"PERMISSION_SORT_CATEGORIES\";N;s:28:\"PERMISSION_VIEW_ALL_WHISPERS\";N;s:29:\"PERMISSION_APPROVE_APPLICANTS\";N;s:27:\"PERMISSION_CHANGE_USER_ROLE\";N;s:21:\"PERMISSION_EDIT_USERS\";N;s:31:\"PERMISSION_IP_ADDRESSES_VISIBLE\";N;s:30:\"PERMISSION_MANAGE_REGISTRATION\";N;s:21:\"PERMISSION_SORT_ROLES\";N;s:20:\"PERMISSION_ADD_ROLES\";N;s:21:\"PERMISSION_EDIT_ROLES\";N;s:23:\"PERMISSION_REMOVE_ROLES\";N;s:28:\"PERMISSION_CHECK_FOR_UPDATES\";N;s:38:\"PERMISSION_CHANGE_APPLICATION_SETTINGS\";N;s:28:\"PERMISSION_MANAGE_EXTENSIONS\";N;s:26:\"PERMISSION_MANAGE_LANGUAGE\";N;s:24:\"PERMISSION_MANAGE_STYLES\";N;s:27:\"PERMISSION_ALLOW_DEBUG_INFO\";N;s:27:\"PERMISSION_DATABASE_CLEANUP\";N;}',0,'1')";
 							if (!@mysql_query($InsertSQL, $Connection)) {
@@ -507,34 +517,34 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 				
 				if ($Context->WarningCollector->Count() == 0) {
 					// Retrieve Category Columns
-               $CategoryColumns = GetColumns($Connection, 'LUM_Category');
-					$DiscussionColumns = GetColumns($Connection, 'LUM_Discussion');
-					$UserColumns = GetColumns($Connection, 'LUM_User');
+               $CategoryColumns = GetColumns($Connection, $DatabaseTables['Category']);
+					$DiscussionColumns = GetColumns($Connection, $DatabaseTables['Discussion']);
+					$UserColumns = GetColumns($Connection, $DatabaseTables['User']);
 					
 					// Make remaining table alterations
                if (in_array('Order', $CategoryColumns) && !in_array('Priority', $CategoryColumns)) {
-						$AlterSQL = "alter table LUM_Category change `Order` Priority int not null default '0'";
+						$AlterSQL = "alter table ".$DatabaseTables['Category']." change `Order` Priority int not null default '0'";
 						if (!@mysql_query($AlterSQL, $Connection)) $Context->WarningCollector->Add("An error occurred renaming LUM_Category.Order to LUM_Category.Priority. MySQL reported the following error: <code>".mysql_error($Connection).'</code>');
 					}
 
 					if ($Context->WarningCollector->Count() == 0) {
 						if (in_array('Settings', $UserColumns) && !in_array('Preferences', $UserColumns)) {
-							$AlterSQL = "alter table LUM_User change Settings Preferences text";
+							$AlterSQL = "alter table ".$DatabaseTables['User']." change Settings Preferences text";
 							if (!@mysql_query($AlterSQL, $Connection)) $Context->WarningCollector->Add("An error occurred renaming LUM_User.Settings to LUM_User.Preferences. MySQL reported the following error: <code>".mysql_error($Connection).'</code>');
 						}
 					}
 					if ($Context->WarningCollector->Count() == 0) {
 						if (!in_array('Sink', $DiscussionColumns)) {
-							$AlterSQL = "alter table LUM_Discussion add Sink enum('1','0') not null default '0'";
+							$AlterSQL = "alter table ".$DatabaseTables['Discussion']." add Sink enum('1','0') not null default '0'";
 							if (!@mysql_query($AlterSQL, $Connection)) $Context->WarningCollector->Add("An error occurred adding LUM_Discussion.Sink. MySQL reported the following error: <code>".mysql_error($Connection).'</code>');
 						}
 					}
 					if (in_array('ToolsOn', $UserColumns)) {
-						$AlterSQL = "alter table LUM_User drop column ToolsOn";
+						$AlterSQL = "alter table ".$DatabaseTables['User']." drop column ToolsOn";
 						@mysql_query($AlterSQL, $Connection);
 					}
 					if (in_array('UseQuickKeys', $UserColumns)) {
-						$AlterSQL = "alter table LUM_User drop column UseQuickKeys";
+						$AlterSQL = "alter table ".$DatabaseTables['User']." drop column UseQuickKeys";
 						@mysql_query($AlterSQL, $Connection);
 					}
 				}
@@ -615,15 +625,22 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 		// Insert the new Style and assign to all users
 		if ($Context->WarningCollector->Count() == 0 && $Connection) {
 			// Truncate all old styles (They can't work with the new Vanilla)
+         $LowerCaseTableNames = 0;
 			if (!@mysql_query('truncate table LUM_Style', $Connection)) {
-				$Context->WarningCollector->Add('Failed to clean out LUM_Style table. MySQL reported the following error: <code>'.mysql_error($Connection).'</code>');
-			} else {
+				// Try doing it with a lowercase table name before erroring out
+            if (!@mysql_query('truncate table lum_style', $Connection)) {
+					$Context->WarningCollector->Add('Failed to clean out LUM_Style table. MySQL reported the following error: <code>'.mysql_error($Connection).'</code>');
+				} else {
+					$LowerCaseTableNames = 1;
+				}
+			}
+			if ($Context->WarningCollector->Count() == 0) {
 				// Insert the new style
-				if (!@mysql_query("insert into LUM_Style (Name, Url) values ('Vanilla', '".$ThemeDirectory."vanilla/styles/default/')", $Connection)) {
+				if (!@mysql_query("insert into ".($LowerCaseTableNames ? "lum_style" : "LUM_Style")." (Name, Url) values ('Vanilla', '".$ThemeDirectory."vanilla/styles/default/')", $Connection)) {
 					$Context->WarningCollector->Add("Failed to insert new default Vanilla style into LUM_Style table. MySQL reported the following error: <code>".mysql_error($Connection)."</code>");
 				} else {
 					// Assign the new style to everyone
-					if (!@mysql_query("update LUM_User set StyleID = 1", $Connection)) {
+					if (!@mysql_query("update ".($LowerCaseTableNames ? "lum_user" : "LUM_User")." set StyleID = 1", $Connection)) {
 						$Context->WarningCollector->Add("Failed to assign new style to all users. MySQL reported the following error: <code>".mysql_error($Connection)."</code>");
 					}
 				}
@@ -689,7 +706,7 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 		die();
 	}
 } 
-   
+
 // Write the page
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
