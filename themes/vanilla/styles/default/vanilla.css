@@ -17,6 +17,12 @@ a:hover {
 	color: #4B6DB7;
 	text-decoration: none;
 	}
+#pgbottom {
+	text-decoration: none !important;
+	height: 1px;
+	width: 1px;
+	font-size: 1px;
+	}
 	
 /* Errors & Success */
 .ErrorContainer {
@@ -537,7 +543,7 @@ html>body .ContentInfo h1 { width:80% !important; }
 	border-bottom:0px;
 	}
 #Comments .CommentHeader li div.CommentIcon {
-	padding:8px 0px 8px 30px;
+	padding:9px 0px 9px 30px;
 	margin-right: 6px;
 	background-repeat:no-repeat;
 	display: inline;
@@ -818,7 +824,7 @@ li.User.Name {
 	font-size: 11px;
 	}
 li.User.Name .UserIcon {
-	padding:8px 0px 8px 30px !important;
+	padding:9px 0px 9px 30px !important;
 	margin-right: 6px !important;
 	background-repeat:no-repeat !important;
 	display: inline !important;
@@ -1302,7 +1308,7 @@ div.Extensions ul li p a:hover {
 	width: auto;
 	}
 .ProfileTitle.WithIcon .ProfileIcon {
-	padding:8px 0px 8px 30px;
+	padding:9px 0px 9px 30px;
 	background: #fff no-repeat center center;
 	margin-right: 6px;
 	display: inline;
