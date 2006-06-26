@@ -124,7 +124,7 @@ $Configuration['TEXT_SINK'] = 'Sink';
 $Configuration['TEXT_BOOKMARKED'] = 'Bookmarked'; 
 $Configuration['TEXT_PREFIX'] = '['; 
 $Configuration['TEXT_SUFFIX'] = ']';
-$Configuration['UPDATE_URL'] = 'http://lussumo.com/updatecheck/vanilla.php';
+$Configuration['UPDATE_URL'] = 'http://lussumo.com/updatecheck/default.php';
 
 // Vanilla Control Positions
 $Configuration['CONTROL_POSITION_HEAD'] = '100';
