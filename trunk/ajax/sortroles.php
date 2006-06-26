@@ -12,7 +12,6 @@
 */
 
 include('../appg/settings.php');
-include('../conf/settings.php');
 include('../appg/init_ajax.php');
 
 $Sql = 'update '.$Configuration["DATABASE_TABLE_PREFIX"]."Role set Priority = '//1' where RoleID = '//2';";

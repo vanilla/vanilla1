@@ -12,7 +12,6 @@
 */
 
 include('../appg/settings.php');
-include('../conf/settings.php');
 include('../appg/init_ajax.php');
 
 $Type = ForceIncomingString('Type', '');
