@@ -168,6 +168,11 @@ a:hover {
 	color:#c00;
 	font-size:14px;
 	}
+#Panel h1 a em {
+	font-style: normal;
+	text-decoration: underline;
+	color:#a00;
+	}
 #Panel h1 a:hover {
 	color:#f00;
 	}
@@ -334,9 +339,10 @@ html>body .ContentInfo h1 { width:80% !important; }
 /* Discussion Index */
   
 #PageJump {
-	margin-top: 9px;
+	margin: 9px 0px 0px 20px;
 	float: right;
 }
+
 #Discussions {
 	margin-top:-5px !important;
 	float: left;

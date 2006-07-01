@@ -137,12 +137,14 @@ class DiscussionManager extends Delegation {
 
 		$result = $this->Context->Database->Select($s, $this->Name, 'GetDiscussionById', 'An error occurred while attempting to retrieve the requested discussion.');
 		if ($this->Context->Database->RowCount($result) == 0) {
+			echo 'zero';
 			$this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrDiscussionNotFound'));
 			$Discussion = false;
 		}
 		while ($rows = $this->Context->Database->GetRow($result)) {
 			$Discussion->GetPropertiesFromDataSet($rows, $this->Context->Configuration);
 		}
+		
 		if ($Discussion && $RecordDiscussionView) {
 			$s->Clear();
 			$s->SetMainTable('UserDiscussionWatch', 'utw');
@@ -162,7 +164,8 @@ class DiscussionManager extends Delegation {
             $this->Context->Database->Update($s, $this->Name, 'GetDiscussionById', 'An error occurred while recording this discussion viewing.', 0);
 			}
 		}
-		return $this->Context->WarningCollector->Iif($Discussion, false);
+		
+		return $Discussion;
 	}
 	
 	function GetDiscussionCount($CategoryID) {
