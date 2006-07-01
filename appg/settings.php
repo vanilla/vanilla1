@@ -103,11 +103,6 @@ $Configuration['ALLOW_PASSWORD_CHANGE'] = '1';
 $Configuration['USE_REAL_NAMES'] = '1';
 $Configuration['PUBLIC_BROWSING'] = '1'; 
 $Configuration['USE_CATEGORIES'] = '1'; 
-$Configuration['PANEL_BOOKMARK_COUNT'] = '10'; 
-$Configuration['PANEL_PRIVATE_COUNT'] = '5'; 
-$Configuration['PANEL_HISTORY_COUNT'] = '5'; 
-$Configuration['PANEL_USER_DISCUSSIONS_COUNT'] = '5'; 
-$Configuration['PANEL_SEARCH_COUNT'] = '10';
 $Configuration['MAX_COMMENT_LENGTH'] = '5000'; 
 $Configuration['MAX_TOPIC_WORD_LENGTH'] = '45'; 
 $Configuration['DISCUSSION_POST_THRESHOLD'] = '3'; 
@@ -219,7 +214,7 @@ $Configuration['ADDON_NOTICE'] = '1';
 // Application versions
 define('APPLICATION', 'Vanilla');
 define('PEOPLE_VERSION', '1.0');
-define('APPLICATION_VERSION', '1.pre3');
+define('APPLICATION_VERSION', '1.0');
 
 // Application Mode Constants
 define('MODE_DEBUG', 'DEBUG'); 

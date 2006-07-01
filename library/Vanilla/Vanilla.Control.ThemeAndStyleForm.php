@@ -145,6 +145,7 @@ class ThemeAndStyleForm extends PostBackControl {
 						$s->SetMainTable('Style', 's');
 						$s->AddFieldNameValue('Name', $NewStyleName);
 						$s->AddFieldNameValue('Url', $NewStylePath);
+						$s->AddFieldNameValue('PreviewImage', 'preview.gif');
 						
 						$StyleID = $this->Context->Database->Insert($s, $this->Name, 'Constructor', 'An error occurred while adding the style to the database.');
 					}

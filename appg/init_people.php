@@ -62,11 +62,11 @@ $Banner = $Context->ObjectFactory->CreateControl($Context, 'Filler', 'people_ban
 $Foot = $Context->ObjectFactory->CreateControl($Context, 'PeopleFoot');
 $PageEnd = $Context->ObjectFactory->CreateControl($Context, 'PageEnd');
 
-// INCLUDE EXTENSIONS
-if ($Configuration['PEOPLE_USE_EXTENSIONS']) include($Configuration['APPLICATION_PATH'].'conf/extensions.php');
-
 // BUILD THE PAGE HEAD
 // Every page will require some basic definitions for the header.
 $Head->AddScript('js/global.js');
 $Head->AddStyleSheet($Context->StyleUrl.'people.css', 'screen', 100, '');
+
+// INCLUDE EXTENSIONS
+if ($Configuration['PEOPLE_USE_EXTENSIONS']) include($Configuration['APPLICATION_PATH'].'conf/extensions.php');
 ?>

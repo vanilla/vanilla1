@@ -67,58 +67,11 @@ echo '<div id="Form" class="Account GlobalsForm">';
             $Selector->Attributes = ' id="ddSearchResultsPerPage"';
             $Selector->SelectedValue = $this->ConfigurationManager->GetSetting('SEARCH_RESULTS_PER_PAGE');
             echo $Selector->Get().'
-         </li>
-         <li>
-            <label for="ddMaxBookmarksInPanel">'.$this->Context->GetDefinition('MaxBookmarksInPanel').'</label>
-            ';
-            $Selector->Clear();
-            $Selector->CssClass = 'SmallSelect';
-            $Selector->Attributes = ' id="ddMaxBookmarksInPanel"';
-            $Selector->Name = 'PANEL_BOOKMARK_COUNT';
-            for ($i = 3; $i < 11; $i++) {
-               $Selector->AddOption($i, $i);
-            }
-            for ($i = 15; $i < 51; $i++) {
-               $Selector->AddOption($i, $i);
-               $i += 4;
-            }
-            $Selector->SelectedValue = $this->ConfigurationManager->GetSetting('PANEL_BOOKMARK_COUNT');
-            echo $Selector->Get().'
-         </li>
-         <li>
-            <label for="ddMaxPrivateInPanel">'.$this->Context->GetDefinition('MaxPrivateInPanel').'</label>
-            ';
-            $Selector->Name = 'PANEL_PRIVATE_COUNT';
-            $Selector->Attributes = ' id="ddMaxPrivateInPanel"';
-            $Selector->SelectedValue = $this->ConfigurationManager->GetSetting('PANEL_PRIVATE_COUNT');
-            echo $Selector->Get().'
-         </li>
-         <li>
-            <label for="ddMaxBrowsingHistoryInPanel">'.$this->Context->GetDefinition('MaxBrowsingHistoryInPanel').'</label>
-            ';
-            $Selector->Name = 'PANEL_HISTORY_COUNT';
-            $Selector->Attributes = ' id="ddMaxBrowsingHistoryInPanel"';
-            $Selector->SelectedValue = $this->ConfigurationManager->GetSetting('PANEL_HISTORY_COUNT');
-            echo $Selector->Get().'
-         </li>
-         <li>
-            <label for="ddMaxDiscussionsInPanel">'.$this->Context->GetDefinition('MaxDiscussionsInPanel').'</label>
-            ';
-            $Selector->Name = 'PANEL_USER_DISCUSSIONS_COUNT';
-            $Selector->Attributes = ' id="ddMaxDiscussionsInPanel"';
-            $Selector->SelectedValue = $this->ConfigurationManager->GetSetting('PANEL_USER_DISCUSSIONS_COUNT');
-            echo $Selector->Get().'
-         </li>
-         <li>
-            <label for="ddMaxSavedSearchesInPanel">'.$this->Context->GetDefinition('MaxSavedSearchesInPanel').'</label>
-            ';
-            $Selector->Name = 'PANEL_SEARCH_COUNT';
-            $Selector->Attributes = ' id="ddMaxSavedSearchesInPanel"';
-            $Selector->SelectedValue = $this->ConfigurationManager->GetSetting('PANEL_SEARCH_COUNT');
-            echo $Selector->Get().'
-            <p class="Description">'.$this->Context->GetDefinition('CountsNotes').'</p>
-         </li>
-      </ul>
+         </li>';
+         
+         $this->CallDelegate('PostCounts');
+         
+      echo '</ul>
 
       <h2>'.$this->Context->GetDefinition('SpamProtectionTitle').'</h2>
       <ul>
