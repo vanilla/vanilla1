@@ -147,6 +147,7 @@ $Configuration['REWRITE_account.php'] = 'account/';
 $Configuration['REWRITE_settings.php'] = 'settings/';
 $Configuration['REWRITE_post.php'] = 'post/';
 $Configuration['REWRITE_people.php'] = 'people/';
+$Configuration['REWRITE_extension.php'] = 'extension/';
 
 // Default values for role permissions
 // Standard Permissions
