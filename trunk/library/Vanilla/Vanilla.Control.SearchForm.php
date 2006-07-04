@@ -190,7 +190,7 @@ class SearchForm extends PostBackControl {
 						$Counter++;
 					}
 					echo($CommentList);
-				} else {
+				} elseif ($this->Search->Type == 'Users') {
 					$u = $this->Context->ObjectFactory->NewContextObject($this->Context, 'User');
 					$UserList = '';
 					$ThemeFilePath = ThemeFilePath($this->Context->Configuration, 'search_results_users.php');
@@ -207,6 +207,8 @@ class SearchForm extends PostBackControl {
 						$Counter++;
 					}
 					echo($UserList);
+				} else {
+					$this->CallDelegate('MidSearchResultsRender');
 				}
 			}
 			if ($this->DataCount > 0) {
