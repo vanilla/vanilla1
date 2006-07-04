@@ -137,7 +137,6 @@ class DiscussionManager extends Delegation {
 
 		$result = $this->Context->Database->Select($s, $this->Name, 'GetDiscussionById', 'An error occurred while attempting to retrieve the requested discussion.');
 		if ($this->Context->Database->RowCount($result) == 0) {
-			echo 'zero';
 			$this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrDiscussionNotFound'));
 			$Discussion = false;
 		}
