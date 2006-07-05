@@ -49,6 +49,7 @@ if ($this->Context->WarningCollector->Count() > 0) {
       $ShowIcon = $Comment->AuthIcon != '' ? 1 : 0;
       $this->DelegateParameters['ShowHtml'] = &$ShowHtml;
       $this->DelegateParameters['ShowIcon'] = &$ShowIcon;
+      $this->DelegateParameters['RowNumber'] = &$RowNumber;
 		
 		$CommentClass = '';
 		if ($Comment->WhisperUserID > 0) {
