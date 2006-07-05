@@ -512,6 +512,10 @@ class DiscussionManager extends Delegation {
 			}	
 			if ($this->Context->Database->Update($s, $this->Name, 'SwitchDiscussionProperty', 'An error occurred while manipulating the '.$PropertyName.' property of the discussion.', 0) <= 0) $this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrPermissionDiscussionEdit'));
 		}
+		$this->DelegateParameters['DiscussionID'] = $DiscussionID;
+		$this->DelegateParameters['PropertyName'] = $PropertyName;
+		$this->DelegateParameters['Switch'] = $Switch;
+		$this->CallDelegate('PostDiscussionSwitch');
 		return $this->Context->WarningCollector->Iif();
 	}
 }

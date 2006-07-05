@@ -690,6 +690,10 @@ class CommentManager extends Delegation {
 				}
 			}
 		}
+		$this->DelegateParameters['CommentID'] = $CommentID;
+		$this->DelegateParameters['DiscussionID'] = $DiscussionID;
+		$this->DelegateParameters['Switch'] = $Switch;
+		$this->CallDelegate('PostCommentSwitch');
 		return $this->Context->WarningCollector->Iif();
 	}
 	
