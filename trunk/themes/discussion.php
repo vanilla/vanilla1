@@ -37,12 +37,17 @@ $DiscussionList .= '
          <span><a href="'.$LastUrl.'">'.$this->Context->GetDefinition('LastActive').'</a> </span>'.TimeDiff($this->Context, $Discussion->DateLastActive,mktime()).'
       </li>';
       if ($this->Context->Session->UserID > 0) {
-         $DiscussionList .= '
-      <li class="DiscussionNew">
-         <a href="'.$NewUrl.'"><span>'.$this->Context->GetDefinition('NewCaps').' </span>'.$Discussion->NewComments.'</a>
-      </li>
-      ';
+            $DiscussionList .= '
+         <li class="DiscussionNew">
+            <a href="'.$NewUrl.'"><span>'.$this->Context->GetDefinition('NewCaps').' </span>'.$Discussion->NewComments.'</a>
+         </li>
+         ';
       }
-   $DiscussionList .= '</ul>
+   $this->DelegateParameters['Discussion'] = &$Discussion;
+   $this->DelegateParameters['DiscussionList'] = &$DiscussionList;
+   
+   $this->CallDelegate('PostDiscussionOptionsRender');
+   
+$DiscussionList .= '</ul>
 </li>';   
 ?>

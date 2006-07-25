@@ -193,11 +193,6 @@ $Configuration['PERMISSION_ALLOW_DEBUG_INFO'] = '0';
 
 // Default values for User Preferences
 $Configuration['PREFERENCE_HtmlOn'] = '1';
-$Configuration['PREFERENCE_ShowBookmarks'] = '0';
-$Configuration['PREFERENCE_ShowRecentDiscussions'] = '0';
-$Configuration['PREFERENCE_ShowPrivateDiscussions'] = '0';
-$Configuration['PREFERENCE_ShowRecentDiscussions'] = '0';
-$Configuration['PREFERENCE_ShowBrowsingHistory'] = '0';
 $Configuration['PREFERENCE_ShowAppendices'] = '1';
 $Configuration['PREFERENCE_ShowSavedSearches'] = '1';
 $Configuration['PREFERENCE_ShowTextToggle'] = '1';
