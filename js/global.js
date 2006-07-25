@@ -53,19 +53,8 @@ function ClearContents(Container) {
 	if (Container) Container.innerHTML = "";
 }
 
-function Explode(inString, Delimiter) {
-	aTmp = new Array(1);
-	var Count = 0;
-	var sTmp = new String(inString);
-
-	while (sTmp.indexOf(Delimiter) > 0) {
-		aTmp[Count] = sTmp.substr(0, sTmp.indexOf(Delimiter));
-		sTmp = sTmp.substr(sTmp.indexOf(Delimiter) + 1, sTmp.length - sTmp.indexOf(Delimiter) + 1); 
-		Count = Count + 1
-	}
-
-	aTmp[Count] = sTmp;
-	return aTmp;
+function Explode(inString, Delimiter) {	 
+	 return inString.split(Delimiter);
 }
 
 function Focus(ElementID) {
