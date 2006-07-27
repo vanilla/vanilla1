@@ -224,10 +224,16 @@ class DiscussionForm extends PostBackControl {
 		$f->Name = 'FormatType';
 		$f->CssClass = 'FormatTypeRadio';
 		$f->SelectedID = $SelectedFormatType;
-		while (list($Name, $Object) = each($this->Context->StringManipulator->Formatters)) {
-			$f->AddOption($Name, $this->Context->GetDefinition($Name));
-		}
+		
 		$this->DelegateParameters['FormatRadio'] = &$f;
+		$ItemAppend = '';
+		while (list($Name, $Object) = each($this->Context->StringManipulator->Formatters)) {
+			$this->DelegateParameters['RadioItemName'] = &$Name;
+			$this->DelegateParameters['RadioItemAppend'] = &$ItemAppend;
+			$this->CallDelegate('PreFormatRadioItemAdd');
+			$f->AddOption($Name, $this->Context->GetDefinition($Name), $ItemAppend);
+			$ItemAppend = '';
+		}
 		$this->CallDelegate('PreFormatRadioRender');
 		
 		$sReturn = '';
