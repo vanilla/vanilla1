@@ -97,6 +97,9 @@ class DiscussionForm extends PostBackControl {
 			// will make sure we save the proper discussion topic & message
 			$this->Discussion->DiscussionID = $this->EditDiscussionID;
 			
+			$this->DelegateParameters['SaveDiscussion'] = &$this->Discussion;
+			$this->CallDelegate('PreSaveDiscussion');
+
 			$ResultDiscussion = $dm->SaveDiscussion($this->Discussion);
 			
 			$this->DelegateParameters['ResultDiscussion'] = &$ResultDiscussion;
@@ -120,6 +123,9 @@ class DiscussionForm extends PostBackControl {
 				$ResultComment = false;
 				$this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrPermissionInsufficient'));
 			} else {
+				$this->DelegateParameters['SaveComment'] = &$this->Comment;
+				$this->CallDelegate('PreSaveComment');
+				
 				$ResultComment = $cm->SaveComment($this->Comment);
 			}
 			
