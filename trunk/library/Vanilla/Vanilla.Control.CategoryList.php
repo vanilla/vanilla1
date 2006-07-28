@@ -19,6 +19,7 @@ class CategoryList extends Control {
 		$this->Control($Context);
 		$CategoryManager = $this->Context->ObjectFactory->NewContextObject($this->Context, 'CategoryManager');
 		$this->Data = $CategoryManager->GetCategories(1);
+		$this->CallDelegate('Constructor');
 	}
 	
 	function Render() {
