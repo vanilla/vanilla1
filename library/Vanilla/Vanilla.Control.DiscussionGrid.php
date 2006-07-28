@@ -17,10 +17,12 @@ class DiscussionGrid extends Control {
 	var $CurrentPage;
 	var $DiscussionData;
 	var $DiscussionDataCount;
+	var $Category;	// The category that this discussion grid belongs to (if viewing one category)
 	
 	function DiscussionGrid(&$Context) {
 		$this->Name = "DiscussionGrid";
 		$this->Control($Context);
+		$this->Category = false;
 
 
 		$DiscussionManager = $this->Context->ObjectFactory->NewContextObject($this->Context, "DiscussionManager");
@@ -30,24 +32,21 @@ class DiscussionGrid extends Control {
 		
 		
 		// Get the category if filtered
-		$Category = false;
 		$CategoryID = ForceIncomingInt("CategoryID", 0);
 		if ($CategoryID > 0) {
 			$cm = $this->Context->ObjectFactory->NewContextObject($this->Context, "CategoryManager");
-			$Category = $cm->GetCategoryById($CategoryID);
+			$this->Category = $cm->GetCategoryById($CategoryID);
 		}
 		$this->PageJump = '<a id="PageJump" href="'.GetUrl($this->Context->Configuration, 'index.php').'">'.$this->Context->GetDefinition('ShowAll').'</a>';
 
-		$this->DelegateParameters['CategoryID'] = &$CategoryID;
-		$this->DelegateParameters['Category'] = &$Category;
 		$this->DelegateParameters['DiscussionManager'] = &$DiscussionManager;
 		$this->CallDelegate('PreDataLoad');
 		
 		if (!$this->DiscussionData) {
 			$this->DiscussionData = $DiscussionManager->GetDiscussionList($this->Context->Configuration['DISCUSSIONS_PER_PAGE'], $this->CurrentPage, $CategoryID);
 			$this->DiscussionDataCount = $DiscussionManager->GetDiscussionCount($CategoryID);		
-			if ($Category) {
-				if ($this->Context->PageTitle == '') $this->Context->PageTitle = htmlspecialchars($Category->Name);
+			if ($this->Category) {
+				if ($this->Context->PageTitle == '') $this->Context->PageTitle = htmlspecialchars($this->Category->Name);
 			} else {
 				if ($this->Context->PageTitle == '') $this->PageJump = '';
 				if ($this->Context->Session->User->BlocksCategories) {
