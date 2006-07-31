@@ -74,6 +74,7 @@ $Configuration['DEFAULT_ROLE'] = '0';
 $Configuration['APPROVAL_ROLE'] = '3'; 
 $Configuration['SAFE_REDIRECT'] = 'people.php?PageAction=SignOutNow';
 $Configuration['PEOPLE_USE_EXTENSIONS'] = '1';
+$Configuration['DEFAULT_EMAIL_VISIBLE'] = '0';
 
 // Framework Settings
 $Configuration['SMTP_HOST'] = '';
