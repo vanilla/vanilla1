@@ -212,6 +212,7 @@ class Discussion extends Delegation {
 		$this->LastUsername = FormatStringForDisplay($this->LastUsername);
 		$this->Category = FormatStringForDisplay($this->Category);
 		$this->Name = FormatStringForDisplay($this->Name, 0);
+		$this->CallDelegate('PostFormatPropertiesForDisplay');
 	}
 }
 ?>
