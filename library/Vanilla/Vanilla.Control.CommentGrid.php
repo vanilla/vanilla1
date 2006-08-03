@@ -43,8 +43,28 @@ class CommentGrid extends Control {
 		} else {
 			// Load the data
 			$CommentManager = $Context->ObjectFactory->NewContextObject($Context, 'CommentManager');
-			$this->CommentData = $CommentManager->GetCommentList($this->Context->Configuration['COMMENTS_PER_PAGE'], $this->CurrentPage, $DiscussionID);
 			$this->CommentDataCount = $CommentManager->GetCommentCount($DiscussionID);
+
+			// If trying to focus on a particular comment, make sure to look at the correct page
+			$Focus = ForceIncomingInt('Focus', 0);
+			$PageCount = CalculateNumberOfPages($this->CommentDataCount, $this->Context->Configuration['COMMENTS_PER_PAGE']);
+			if ($Focus > 0 && $PageCount > 1) {
+				$this->CurrentPage = 1;
+				$FoundComment = 0;
+				while ($this->CurrentPage <= $PageCount && !$FoundComment) {
+					$this->CommentData = $CommentManager->GetCommentList($this->Context->Configuration['COMMENTS_PER_PAGE'], $this->CurrentPage, $DiscussionID);
+				   while ($Row = $this->Context->Database->GetRow($this->CommentData)) {
+						if (ForceInt($Row['CommentID'], 0) == $Focus) {
+							$FoundComment = 1;
+							break;
+						}
+					}
+					$this->CurrentPage++;
+				}
+				$this->Context->Database->RewindDataSet($this->CommentData);
+			} else {
+				$this->CommentData = $CommentManager->GetCommentList($this->Context->Configuration['COMMENTS_PER_PAGE'], $this->CurrentPage, $DiscussionID);			
+			}			
 		}
 		
 		// Set up the pagelist
@@ -58,8 +78,7 @@ class CommentGrid extends Control {
 		$this->pl->PagesToDisplay = 10;
 		$this->pl->PageParameterName = 'page';
 		$this->pl->DefineProperties();
-
-
+		
 		$this->ShowForm = 0;
 		if ($this->Context->Session->UserID > 0
 			&& ($this->pl->PageCount == 1 || $this->pl->PageCount == $this->CurrentPage)
