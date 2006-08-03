@@ -211,9 +211,7 @@ class SearchForm extends PostBackControl {
 					$this->CallDelegate('MidSearchResultsRender');
 				}
 			}
-			if ($this->DataCount > 0) {
-				include(ThemeFilePath($this->Context->Configuration, 'search_results_bottom.php'));
-			}
+			include(ThemeFilePath($this->Context->Configuration, 'search_results_bottom.php'));
 		}
 	}
 
