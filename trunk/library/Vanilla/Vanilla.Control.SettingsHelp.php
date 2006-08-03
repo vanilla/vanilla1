@@ -14,9 +14,10 @@
 // Default help text when the page is loaded
 class SettingsHelp extends Control {
 	
-	function AdminOptions(&$Context) {
+	function SettingsHelp(&$Context) {
       $this->Name = 'SettingsHelp';
       $this->Control($Context);
+		$this->CallDelegate('Constructor');
 	}
 	
 	function Render() {
