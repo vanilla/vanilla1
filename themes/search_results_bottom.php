@@ -3,7 +3,7 @@
 
 echo '</ol>
 </div>';
-if ($this->PageList != '') {
+if ($this->DataCount > 0) {
    echo '<div class="ContentInfo Bottom">
       <div class="PageInfo">
          <p>'.$this->PageDetails.'</p>

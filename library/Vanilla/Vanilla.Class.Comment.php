@@ -132,6 +132,7 @@ class Comment extends Delegation {
 		$this->Category = FormatStringForDisplay($this->Category);
 		$this->Body = FormatHtmlStringInline($this->Body, 0, 1);
 		$this->AuthIcon = FormatStringForDisplay($this->AuthIcon, 1, 0);
+		$this->CallDelegate('PostFormatPropertiesForSafeDisplay');
 	}
 
 	// Retrieve a properties from current DataRowSet
