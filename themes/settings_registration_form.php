@@ -1,5 +1,5 @@
 <?php
-// Note: This file is included from the library/Vanilla/Vanilla.Control.RegistrationForm.php control.
+// Note: This file is included from the library/People/People.Control.RegistrationForm.php control.
 
 if (!$this->Context->Session->User->Permission('PERMISSION_MANAGE_REGISTRATION')) {
    $this->Context->WarningCollector->Add($this->Context->GetDefinition('PermissionError'));
@@ -24,8 +24,9 @@ if (!$this->Context->Session->User->Permission('PERMISSION_MANAGE_REGISTRATION')
                <label for="ddApprovedRoleID">'.$this->Context->GetDefinition('ApprovedMemberRole').'</label>
                '.$this->ApprovedRoleSelect->Get().'
                <p class="Description">'.$this->Context->GetDefinition('ApprovedMemberRoleNotes').'</p>
-            </li>
-         </ul>
+            </li>';
+            $this->CallDelegate('PostRegistrationOptions');
+         echo '</ul>
          <div class="Submit">
             <input type="submit" name="btnSave" value="'.$this->Context->GetDefinition('Save').'" class="Button SubmitButton" />
             <a href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl).'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>
