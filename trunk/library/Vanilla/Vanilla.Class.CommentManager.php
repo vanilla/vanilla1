@@ -746,7 +746,6 @@ class CommentManager extends Delegation {
 		
 		$Result = $this->Context->Database->Select($s, $this->Name, 'UpdateLastCommenter', 'An error occurred while attempting to update the discussion history data.');
 		while ($Row = $this->Context->Database->GetRow($Result)) {
-			print_r($Row);
 			$last_user_id = ForceInt($Row['AuthUserID'], 0);
 			$date_last_active = $Row['DateCreated'];
 		}
