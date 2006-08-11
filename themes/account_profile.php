@@ -6,7 +6,7 @@ echo '<div id="AccountProfile">';
       if (ForceIncomingBool('Success',0)) echo '<div id="Success">'.$this->Context->GetDefinition('ChangesSaved').'</div>';
       $this->Render_Warnings();
       
-   echo '<ul>';
+   echo '<ul class="vcard">';
 
       $this->CallDelegate('PreUsernameRender');
       
@@ -24,12 +24,12 @@ echo '<div id="AccountProfile">';
       if ($this->Context->Configuration['USE_REAL_NAMES'] && ($this->User->ShowName || $this->Context->Session->User->Permission('PERMISSION_EDIT_USERS'))) {
          echo '<li>
             <h3>'.$this->Context->GetDefinition('RealName').'</h3>
-            <p>'.ReturnNonEmpty($this->User->FullName).'</p>
+            <p class="fn">'.ReturnNonEmpty($this->User->FullName).'</p>
          </li>';
       }
       echo '<li>
          <h3>'.$this->Context->GetDefinition('Email').'</h3>
-         <p>'.(($this->Context->Session->UserID > 0 && $this->User->UtilizeEmail) ? GetEmail($this->User->Email) : $this->Context->GetDefinition('NA')).'</p>
+         <p class="email">'.(($this->Context->Session->UserID > 0 && $this->User->UtilizeEmail) ? GetEmail($this->User->Email) : $this->Context->GetDefinition('NA')).'</p>
       </li>
       <li>
          <h3>'.$this->Context->GetDefinition('AccountCreated').'</h3>
@@ -64,9 +64,10 @@ echo '<div id="AccountProfile">';
       if (count($this->User->Attributes) > 0) {
          $AttributeCount = count($this->User->Attributes);
          for ($i = 0; $i < $AttributeCount; $i++) {
+            $CssClass = (strpos($this->User->Attributes[$i]['Value'], 'http://') == 0 && strpos($this->User->Attributes[$i]['Value'], 'http://') !== false) ? 'url' : '';
             echo '<li>
                <h3>'.htmlspecialchars($this->User->Attributes[$i]['Label']).'</h3>
-               <p>'.FormatHyperlink(htmlspecialchars($this->User->Attributes[$i]['Value'])).'</p>
+               <p>'.FormatHyperlink(htmlspecialchars($this->User->Attributes[$i]['Value']), 1, '', $CssClass).'</p>
             </li>';
          }
       }
