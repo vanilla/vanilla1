@@ -317,6 +317,9 @@ if ($PostBackAction == "Permissions") {
    
    // If the database connection worked...
    if ($Context->WarningCollector->Count() == 0 && $Connection) {
+		// On MySQL 4.1 and later, force UTF-8
+		if (version_compare(mysql_get_server_info(), '4.1.0', '>=')) mysql_query('SET NAMES "utf8"', $Connection);
+					
       // Make sure all of the required tables are there for upgrading
       $TableData = @mysql_query('show tables', $Connection);
       if (!$TableData) {
