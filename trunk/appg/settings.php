@@ -210,7 +210,8 @@ $Configuration['ADDON_NOTICE'] = '1';
 
 // Application versions
 define('APPLICATION', 'Vanilla');
-define('PEOPLE_VERSION', '1.0');
+define('FRAMEWORK_VERSION', '1.0.1');
+define('PEOPLE_VERSION', '1.0.1');
 define('APPLICATION_VERSION', '1.0.1');
 
 // Application Mode Constants
