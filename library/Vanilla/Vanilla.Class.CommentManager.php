@@ -731,7 +731,9 @@ class CommentManager extends Delegation {
 	function UpdateLastCommenter($DiscussionID) {
 		$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
 		$s->SetMainTable('Comment', 'c');
+		$s->AddJoin('Discussion', 'd', 'DiscussionID', 'c', 'DiscussionID', 'inner join');
 		$s->AddSelect(array('CommentID', 'AuthUserID', 'DateCreated'), 'c');
+		$s->AddSelect('Sink', 'd');
 		$s->StartWhereGroup();
 		$s->AddWhere('c', 'WhisperUserID', '', 'null', 'is', 'or', '', 0);
 		$s->AddWhere('c', 'WhisperUserID', '', '0', '=', 'or', '', 0);
@@ -743,11 +745,13 @@ class CommentManager extends Delegation {
 		
 		$last_user_id = 0;
 		$date_last_active = '';
+		$sink = 0;
 		
 		$Result = $this->Context->Database->Select($s, $this->Name, 'UpdateLastCommenter', 'An error occurred while attempting to update the discussion history data.');
 		while ($Row = $this->Context->Database->GetRow($Result)) {
 			$last_user_id = ForceInt($Row['AuthUserID'], 0);
 			$date_last_active = $Row['DateCreated'];
+			$sink = ForceBool($Row['Sink'], 0);
 		}
 		
 		// If a record was found, update the discussion
@@ -755,7 +759,7 @@ class CommentManager extends Delegation {
 			$s->Clear();
 			$s->SetMainTable('Discussion', 'd');
 			$s->AddFieldNameValue('LastUserID', $last_user_id);
-			$s->AddFieldNameValue('DateLastActive', $date_last_active);
+			if (!$sink) $s->AddFieldNameValue('DateLastActive', $date_last_active);
 			$s->AddWhere('d', 'DiscussionID', '', $DiscussionID, '=');
  			$this->Context->Database->Update($s, $this->Name, 'UpdateLastCommenter', "An error occurred while updating the discussion's history data.");
 		}
