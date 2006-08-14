@@ -155,7 +155,7 @@ class SearchForm extends PostBackControl {
 			include(ThemeFilePath($this->Context->Configuration, 'search_results_top.php'));
 			
 			if ($this->DataCount > 0) {
-				$Switch = 0;
+				$Alternate = 0;
 				$FirstRow = 1;
 				$Counter = 0;
 				if ($this->Search->Type == 'Topics') {
@@ -172,6 +172,7 @@ class SearchForm extends PostBackControl {
 						}
 						$FirstRow = 0;
 						$Counter++;
+						$Alternate = FlipBool($Alternate);
 					}
 					echo($DiscussionList);
 				} elseif ($this->Search->Type == 'Comments') {
@@ -188,6 +189,7 @@ class SearchForm extends PostBackControl {
 						}
 						$FirstRow = 0;
 						$Counter++;
+						$Alternate = FlipBool($Alternate);
 					}
 					echo($CommentList);
 				} elseif ($this->Search->Type == 'Users') {
@@ -195,7 +197,6 @@ class SearchForm extends PostBackControl {
 					$UserList = '';
 					$ThemeFilePath = ThemeFilePath($this->Context->Configuration, 'search_results_users.php');
 					while ($Row = $this->Context->Database->GetRow($this->Data)) {
-						$Switch = ($Switch == 1?0:1);
 						$u->Clear();
 						$u->GetPropertiesFromDataSet($Row);
 						$u->FormatPropertiesForDisplay();
@@ -205,6 +206,7 @@ class SearchForm extends PostBackControl {
 						}
 						$FirstRow = 0;
 						$Counter++;
+						$Alternate = FlipBool($Alternate);
 					}
 					echo($UserList);
 				} else {

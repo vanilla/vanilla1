@@ -19,6 +19,7 @@ $FirstRow = 1;
 $CurrentUserJumpToLastCommentPref = $this->Context->Session->User->Preference('JumpToLastReadComment');
 $DiscussionList = '';
 $ThemeFilePath = ThemeFilePath($this->Context->Configuration, 'discussion.php');
+$Alternate = 0;
 while ($Row = $this->Context->Database->GetRow($this->DiscussionData)) {
    $Discussion->Clear();
    $Discussion->GetPropertiesFromDataSet($Row, $this->Context->Configuration);
@@ -32,6 +33,7 @@ while ($Row = $this->Context->Database->GetRow($this->DiscussionData)) {
 	include($ThemeFilePath);
 	
    $FirstRow = 0;
+	$Alternate = FlipBool($Alternate);
 }
 echo $DiscussionList.'
 	</ol>

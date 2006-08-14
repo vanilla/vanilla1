@@ -8,7 +8,7 @@ $NewUrl = GetUnreadQuerystring($Discussion, $this->Context->Configuration, 1);
 $LastUrl = GetLastCommentQuerystring($Discussion, $this->Context->Configuration, $CurrentUserJumpToLastCommentPref);
 
 $DiscussionList .= '
-<li id="Discussion_'.$Discussion->DiscussionID.'" class="Discussion'.$Discussion->Status.($Discussion->CountComments == 1?' NoReplies':'').($this->Context->Configuration['USE_CATEGORIES'] ? ' Category_'.$Discussion->CategoryID:'').'">
+<li id="Discussion_'.$Discussion->DiscussionID.'" class="Discussion'.$Discussion->Status.($Discussion->CountComments == 1?' NoReplies':'').($this->Context->Configuration['USE_CATEGORIES'] ? ' Category_'.$Discussion->CategoryID:'').($Alternate ? ' Alternate' : '').'">
    <ul>
       <li class="DiscussionType">
          <span>'.$this->Context->GetDefinition('DiscussionType').'</span>'.DiscussionPrefix($this->Context->Configuration, $Discussion).'

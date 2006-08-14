@@ -32,7 +32,8 @@ if ($this->Context->WarningCollector->Count() > 0) {
    $Comment = $this->Context->ObjectFactory->NewContextObject($this->Context, 'Comment');
    $RowNumber = 0;
    $CommentID = 0;
-   
+   $Alternate = 0;
+	
    // Define the current user's permissions and preferences
    // (small optimization so they don't have to be checked every loop):
    $PERMISSION_EDIT_COMMENTS = $this->Context->Session->User->Permission('PERMISSION_EDIT_COMMENTS');
@@ -66,6 +67,8 @@ if ($this->Context->WarningCollector->Count() > 0) {
 		}
 		
 		if ($Comment->Deleted) $CommentClass .= ' Hidden';
+		if ($Alternate) $CommentClass .= ' Alternate';
+		$CommentClass = trim($CommentClass);
 
       $CommentList .= '<li id="Comment_'.$Comment->CommentID.'"'.($CommentClass == ''?'':' class="'.$CommentClass.'"').'>
          <a name="Item_'.$RowNumber.'"></a>
@@ -127,6 +130,7 @@ if ($this->Context->WarningCollector->Count() > 0) {
             $CommentList .= $Comment->Body.'
          </div>
       </li>';
+		$Alternate = FlipBool($Alternate);
    }
    
    $CommentList .= '</ol>
