@@ -22,10 +22,11 @@ class IdentityForm extends PostBackControl {
 		$this->Constructor($Context);
 		if ($this->IsPostBack) {
 			$this->UserManager = &$UserManager;
-			$this->User = &$User;
+			$this->User = clone ($User);
 			if ($this->PostBackAction == 'ProcessIdentity') {
 				$this->User->Clear();
 				$this->User->GetPropertiesFromForm();
+				$this->User->Preferences = $User->Preferences;
 				$this->CallDelegate('PreSaveIdentity');
 				if ($this->UserManager->SaveIdentity($this->User) && $this->UserManager->SaveUserCustomizationsFromForm($this->User)) header('location: '.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', 'u', ($this->Context->Session->UserID == 0 ? '' : $this->User->UserID), '', 'Success=1'));
 			}
