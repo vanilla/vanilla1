@@ -2,7 +2,7 @@
 // Note: This file is included from the library/Vanilla/Vanilla.Control.SearchForm.php class.
 
 $ShowIcon = ($u->DisplayIcon != '' && $this->Context->Session->User->Preference('HtmlOn'));
-$UserList .= '<li class="UserAccount'.($Switch == 1?'':' Alternate').($FirstRow?' FirstUser':'').'">
+$UserList .= '<li class="UserAccount'.($Alternate ? ' Alternate' : '').($FirstRow?' FirstUser':'').'">
    <ul>
       <li class="User Name'.($ShowIcon?' WithIcon':'').'">';
          if ($ShowIcon) $UserList .= '<div class="UserIcon" style="'."background-image:url('".$u->DisplayIcon."');\">&nbsp;</div>";

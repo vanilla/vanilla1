@@ -1,7 +1,7 @@
 <?php
 // Note: This file is included from the library/Vanilla/Vanilla.Control.SearchForm.php class.
 
-$CommentList .= '<li class="SearchComment">
+$CommentList .= '<li class="SearchComment'.($Alternate ? ' Alternate' : '').'">
    <ul>
       <li class="DiscussionTopic">
          <span>'.$this->Context->GetDefinition('DiscussionTopic').'</span>

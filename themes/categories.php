@@ -8,11 +8,12 @@ $CategoryList = '<div class="ContentInfo Top">
 	<ol id="Categories">';
 $Category = $this->Context->ObjectFactory->NewObject($this->Context, 'Category');
 $FirstRow = 1;
+$Alternate = 0;
 while ($Row = $this->Context->Database->GetRow($this->Data)) {
    $Category->Clear();
    $Category->GetPropertiesFromDataSet($Row);
    $Category->FormatPropertiesForDisplay();
-   $CategoryList .= '<li id="Category_'.$Category->CategoryID.'" class="Category'.($Category->Blocked?' BlockedCategory':' UnblockedCategory').($FirstRow?' FirstCategory':'').' Category_'.$Category->CategoryID.'">
+   $CategoryList .= '<li id="Category_'.$Category->CategoryID.'" class="Category'.($Category->Blocked?' BlockedCategory':' UnblockedCategory').($FirstRow?' FirstCategory':'').' Category_'.$Category->CategoryID.($Alternate ? ' Alternate' : '').'">
       <ul>
          <li class="CategoryName">
             <span>'.$this->Context->GetDefinition('Category').'</span> <a href="'.GetUrl($this->Context->Configuration, 'index.php', '', 'CategoryID', $Category->CategoryID).'">'.$Category->Name.'</a>
@@ -38,6 +39,7 @@ while ($Row = $this->Context->Database->GetRow($this->Data)) {
       $CategoryList .= '</ul>
    </li>';
    $FirstRow = 0;
+	$Alternate = FlipBool($Alternate);
 }
 echo $CategoryList
    .'</ol>
