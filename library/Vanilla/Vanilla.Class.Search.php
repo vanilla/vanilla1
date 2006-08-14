@@ -111,7 +111,8 @@ class Search {
          $ColonPos = strpos($this->Query, ':');
 			if ($ColonPos !== false && $ColonPos != 0) {
 				// If a colon was found, check to see that it didn't occur before any quotes
-            $QuotePos = strpos($this->Query, '\'');
+            $QuotePos = strpos($this->Query, '"');
+				
 				if ($QuotePos === false || $QuotePos > $ColonPos) {
 					$this->AuthUsername = substr($this->Query, 0, $ColonPos);
 					$this->Query = substr($this->Query, $ColonPos+1);
