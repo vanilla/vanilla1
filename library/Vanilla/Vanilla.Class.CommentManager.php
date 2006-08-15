@@ -353,7 +353,7 @@ class CommentManager extends Delegation {
 								// Only record the whisper to if the user is not whispering to him/herself - this is to make sure that the counts come out correctly when counting replies for a discussion
 								$s->Clear();
 								$s->SetMainTable('DiscussionUserWhisperTo', 'tuwt');
-								$s->AddFieldNameValue('CountWhispers', 'CountWhispers+1', '0');
+								$s->AddFieldNameValue('CountWhispers', $this->Context->DatabaseColumns['DiscussionUserWhisperTo']['CountWhispers'].'+1', '0');
 								$s->AddFieldNameValue('DateLastActive', MysqlDateTime());
 								$s->AddFieldNameValue('LastUserID', $this->Context->Session->UserID);
 								$s->AddWhere('tuwt', 'DiscussionID', '', $Comment->DiscussionID, '=');
@@ -373,7 +373,7 @@ class CommentManager extends Delegation {
 							// Whisper-from table
 							$s->Clear();
 							$s->SetMainTable('DiscussionUserWhisperFrom', 'tuwf');
-							$s->AddFieldNameValue('CountWhispers', 'CountWhispers+1', '0');
+							$s->AddFieldNameValue('CountWhispers', $this->Context->DatabaseColumns['DiscussionUserWhisperFrom']['CountWhispers'].'+1', '0');
 							$s->AddFieldNameValue('DateLastActive', MysqlDateTime());
 							$s->AddFieldNameValue('LastUserID', $this->Context->Session->UserID);
 							$s->AddWhere('tuwf', 'DiscussionID', '', $Comment->DiscussionID, '=');
@@ -395,14 +395,14 @@ class CommentManager extends Delegation {
 							$s->AddFieldNameValue('DateLastWhisper', MysqlDateTime());
 							$s->AddFieldNameValue('WhisperToLastUserID', $Comment->WhisperUserID);
 							$s->AddFieldNameValue('WhisperFromLastUserID', $this->Context->Session->UserID);
-							$s->AddFieldNameValue('TotalWhisperCount', 'TotalWhisperCount+1', 0);
+							$s->AddFieldNameValue('TotalWhisperCount', $this->Context->DatabaseColumns['Discussion']['TotalWhisperCount'].'+1', 0);
 							$s->AddWhere('t', 'DiscussionID', '', $Comment->DiscussionID, '=');
 							$this->Context->Database->Update($s, $this->Name, 'SaveComment', "An error occurred while updating the discussion's whisper summary.");
 						} else {
 							// First update the counts & last user
 							$s->Clear();
 							$s->SetMainTable('Discussion', 't');
-							$s->AddFieldNameValue('CountComments', 'CountComments+1', '0');
+							$s->AddFieldNameValue('CountComments', $this->Context->DatabaseColumns['Discussion']['CountComments'].'+1', '0');
 							$s->AddFieldNameValue('LastUserID', $this->Context->Session->UserID);
 							$s->AddWhere('t', 'DiscussionID', '', $Comment->DiscussionID, '=');
 							$this->Context->Database->Update($s, $this->Name, 'SaveComment', "An error occurred while updating the discussion's comment summary.");
