@@ -175,6 +175,7 @@ class DiscussionForm extends PostBackControl {
 	}
 	
 	function GetCommentForm($Comment) {
+		$this->DelegateParameters['Comment'] = &$Comment;
 		$this->CallDelegate('CommentForm_PreRender');
 		
 		// Encode everything properly
@@ -190,6 +191,7 @@ class DiscussionForm extends PostBackControl {
 	}
 	
 	function GetDiscussionForm($Discussion) {
+		$this->DelegateParameters['Discussion'] = &$Discussion;
 		$this->CallDelegate('DiscussionForm_PreRender');
 		
 		if (!$this->DiscussionFormattedForDisplay) $Discussion->FormatPropertiesForDisplay();
