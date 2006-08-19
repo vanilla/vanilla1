@@ -48,8 +48,9 @@ class Menu extends Control {
 		$this->CallDelegate('PostRender');
    }
 	
-	function TabClass($CurrentTab, $ComparisonTab) {
-		return ($CurrentTab == $ComparisonTab) ? ' class="TabOn"' : '';
+	function TabClass($CurrentTab, $ComparisonTab, $CssClass = '') {
+		if ($CssClass == '') $CssClass = 'TabOn';
+		return ($CurrentTab == $ComparisonTab) ? ' class="'.$CssClass.'"' : '';
 	}	
 }
 ?>
