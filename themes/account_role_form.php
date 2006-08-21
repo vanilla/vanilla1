@@ -12,7 +12,7 @@ if (!$this->Context->Session->User->Permission('PERMISSION_CHANGE_USER_ROLE')) {
    $Required = $this->Context->GetDefinition('Required');
    echo '<div id="Form" class="Account Role">
       <fieldset>
-         <legend>'.$this->Context->GetDefinition('ChangeRole').'</legend>
+         <legend>'.$this->Context->GetDefinition('ChangeRole').': '.$this->User->Name.'</legend>
          '.$this->Get_Warnings().'
          '.$this->Get_PostBackForm('frmRole').'
          <ul>
