@@ -21,6 +21,9 @@ echo '<div id="AccountProfile">';
       </li>';
       if ($this->User->RoleDescription != '') echo('<li class="Tagline">'.$this->User->RoleDescription.'</li>');
       if ($this->User->Picture != "" && $this->User->Permission('PERMISSION_HTML_ALLOWED')) echo "<li class=\"Picture\" style=\"background-image: url('".$this->User->Picture."');\">&nbsp;</li>";
+      
+      $this->CallDelegate('PostPictureRender');
+      
       if ($this->Context->Configuration['USE_REAL_NAMES'] && ($this->User->ShowName || $this->Context->Session->User->Permission('PERMISSION_EDIT_USERS'))) {
          echo '<li>
             <h3>'.$this->Context->GetDefinition('RealName').'</h3>
