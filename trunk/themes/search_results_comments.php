@@ -13,7 +13,7 @@ $CommentList .= '<li class="SearchComment'.($Alternate ? ' Alternate' : '').'">
       </li>
       <li class="DiscussionCategory">
          <span>'.$this->Context->GetDefinition('Category').'</span>
-         <a href="'.GetUrl($this->Context->Configuration, 'index.php', 'category/', 'CategoryID', $Comment->CategoryID).'">'.$Comment->Category.'</a>
+         <a href="'.GetUrl($this->Context->Configuration, 'index.php', '', 'CategoryID', $Comment->CategoryID).'">'.$Comment->Category.'</a>
       </li>
       <li class="CommentAuthor">
          <span>'.$this->Context->GetDefinition('WrittenBy').'</span>
