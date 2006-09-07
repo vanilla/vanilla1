@@ -62,8 +62,6 @@ class DiscussionForm extends PostBackControl {
 				if (!$this->Discussion) {
 					$this->FatalError = 1;
 				} else {
-					// if ($this->Discussion->WhisperUserID > 0) $this->IsPrivateDiscussion = 1;
-				
 					// if editing a discussion
 					if (($this->Context->Session->UserID == $this->Discussion->AuthUserID || $this->Context->Session->User->Permission('PERMISSION_EDIT_DISCUSSIONS')) && $this->Discussion->FirstCommentID == $this->CommentID) {
 						$this->EditDiscussionID = $this->Discussion->DiscussionID;
@@ -91,8 +89,13 @@ class DiscussionForm extends PostBackControl {
 		
 		// If saving a discussion
 		if ($this->PostBackAction == 'SaveDiscussion') {
+			$FirstCommentID = $this->Discussion->FirstCommentID;
+			$AuthUserID = $this->Discussion->AuthUserID;
 			$this->Discussion->Clear();
 			$this->Discussion->GetPropertiesFromForm($this->Context);
+			$this->Discussion->FirstCommentID = $FirstCommentID;
+			$this->Discussion->AuthUserID = $AuthUserID;
+
 			// If we are editing a discussion, the following line
 			// will make sure we save the proper discussion topic & message
 			$this->Discussion->DiscussionID = $this->EditDiscussionID;
