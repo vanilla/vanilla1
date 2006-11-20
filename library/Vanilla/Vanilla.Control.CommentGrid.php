@@ -78,6 +78,7 @@ class CommentGrid extends Control {
 		$this->pl->PagesToDisplay = 10;
 		$this->pl->PageParameterName = 'page';
 		$this->pl->DefineProperties();
+		$this->pl->QueryStringParams->Remove('Focus');
 		
 		$this->ShowForm = 0;
 		if ($this->Context->Session->UserID > 0
