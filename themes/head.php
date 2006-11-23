@@ -6,6 +6,12 @@ $HeadString = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://
    <head>
       <title>'.$this->Context->Configuration['APPLICATION_TITLE'].' - '.$this->Context->PageTitle.'</title>
       <link rel="shortcut icon" href="'.$this->Context->StyleUrl.'favicon.ico" />';
+      
+      while (list($Name, $Content) = each($this->Meta)) {
+         $HeadString .= '
+         <meta name="'.$Name.'" content="'.$Content.'" />';
+      }
+      
       if (is_array($this->StyleSheets)) {
          while (list($Key, $StyleSheet) = each($this->StyleSheets)) {
             $HeadString .= '
