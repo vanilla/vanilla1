@@ -31,12 +31,9 @@ class Menu extends Control {
 	}
 	
 	function RemoveTab($TabUrl) {
-		$TabKey = 0;
       while (list($Key, $Tab) = each($this->Tabs)) {
-			if ($Tab['Url'] == $TabUrl) $TabKey = $Key;
+			if ($Tab['Url'] == $TabUrl) unset ($this->Tabs[$Key]);
       }
-		
-		if ($TabKey !== false) array_splice($this->Tabs, $TabKey, 1);
 	}
 	
    function Render() {
