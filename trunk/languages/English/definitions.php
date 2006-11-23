@@ -568,6 +568,7 @@ $Context->Dictionary['WelcomeToVanillaGetSomeAddons'] = '<strong>Welcome to Vani
 $Context->Dictionary['RemoveThisNotice'] = 'Remove this message';
 $Context->Dictionary['OtherSettings'] = 'Other settings';
 $Context->Dictionary['ChangesSaved'] = 'Your changes were saved successfully';
+$Context->Dictionary['DiscussionType'] = 'Discussion Type';
 
 
 /* Please do not remove or alter this definition */
