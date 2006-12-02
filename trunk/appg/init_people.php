@@ -10,6 +10,8 @@
 *
 * Description: Constants and objects specific to external to the forum (ie. sign in, apply, password retrieval).
 */
+// Make sure this file was not accessed directly and prevent register_globals configuration array attack
+if (!defined('IN_VANILLA')) exit();
 
 // GLOBAL INCLUDES
 include($Configuration['APPLICATION_PATH'].'appg/headers.php');
