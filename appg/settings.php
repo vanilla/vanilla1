@@ -233,4 +233,7 @@ include(dirname(__FILE__) . '/../conf/settings.php');
 if ($Configuration['SETUP_COMPLETE'] == '0') {
    header('location: ./setup/index.html');
 }
+
+// Define a constant to prevent a register_globals attack on the configuration paths
+define('IN_VANILLA', '1');
 ?>

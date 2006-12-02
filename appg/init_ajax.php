@@ -10,6 +10,9 @@
 *
 * Description: Constants and objects specific to forum pages.
 */
+// Make sure this file was not accessed directly and prevent register_globals configuration array attack
+if (!defined('IN_VANILLA')) exit();
+
 include($Configuration['APPLICATION_PATH'].'appg/headers.php');
 include($Configuration['APPLICATION_PATH'].'appg/database.php');
 include($Configuration['DATABASE_PATH']);
