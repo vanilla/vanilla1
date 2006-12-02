@@ -212,7 +212,7 @@ $Configuration['ADDON_NOTICE'] = '1';
 define('APPLICATION', 'Vanilla');
 define('FRAMEWORK_VERSION', '1.0.1');
 define('PEOPLE_VERSION', '1.0.1');
-define('APPLICATION_VERSION', '1.0.1');
+define('APPLICATION_VERSION', '1.0.3');
 
 // Application Mode Constants
 define('MODE_DEBUG', 'DEBUG'); 
