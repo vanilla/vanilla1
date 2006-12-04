@@ -153,9 +153,11 @@ if ($PostBackAction == "Permissions") {
 // Enabled Extensions
 ?>';
       CreateFile($RootDirectory.'conf/extensions.php', $Contents, $Context);
-      $Contents = '<?php
+      $Contents = "<?php
+// Make sure this file was not accessed directly and prevent register_globals configuration array attack
+if (!defined('IN_VANILLA')) exit();		
 // Custom Language Definitions
-?>';
+?>";
       CreateFile($RootDirectory.'conf/language.php', $Contents, $Context);
       $Contents = '<?php
 // Application Settings
@@ -403,12 +405,12 @@ if ($PostBackAction == "Permissions") {
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-ca">
    <head>
-      <title>Vanilla 1.0.1 Installer</title>
+      <title>Vanilla 1.0.3 Installer</title>
 		<link rel="stylesheet" type="text/css" href="./style.css" />
    </head>
    <body>
       <h1>
-         <span><strong>Vanilla 1.0.1</strong> Installer</span>
+         <span><strong>Vanilla 1.0.3</strong> Installer</span>
       </h1>
 		<div class="Container">
 			<div class="Content">
