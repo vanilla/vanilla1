@@ -277,9 +277,11 @@ if ($PostBackAction == "Permissions") {
 // Enabled Extensions
 ?>';
       CreateFile($RootDirectory.'conf/extensions.php', $Contents, $Context);
-      $Contents = '<?php
+      $Contents = "<?php
+// Make sure this file was not accessed directly and prevent register_globals configuration array attack
+if (!defined('IN_VANILLA')) exit();		
 // Custom Language Definitions
-?>';
+?>";
       CreateFile($RootDirectory.'conf/language.php', $Contents, $Context);
       $Contents = '<?php
 // Application Settings
@@ -715,12 +717,12 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-ca">
    <head>
-      <title>Vanilla 1.0.1 Upgrader</title>
+      <title>Vanilla 1.0.3 Upgrader</title>
 		<link rel="stylesheet" type="text/css" href="./style.css" />
    </head>
    <body>
       <h1>
-         <span><strong>Vanilla 1.0.1</strong> Upgrader</span>
+         <span><strong>Vanilla 1.0.3</strong> Upgrader</span>
       </h1>
 		<div class="Container">
 			<div class="Content">
