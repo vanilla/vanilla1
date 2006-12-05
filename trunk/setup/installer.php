@@ -149,13 +149,13 @@ if ($PostBackAction == "Permissions") {
 // Database Configuration Settings
 ?>';
       CreateFile($RootDirectory.'conf/database.php', $Contents, $Context);
-      $Contents = '<?php
-// Enabled Extensions
-?>';
-      CreateFile($RootDirectory.'conf/extensions.php', $Contents, $Context);
       $Contents = "<?php
 // Make sure this file was not accessed directly and prevent register_globals configuration array attack
 if (!defined('IN_VANILLA')) exit();		
+// Enabled Extensions
+?>";
+      CreateFile($RootDirectory.'conf/extensions.php', $Contents, $Context);
+      $Contents = "<?php
 // Custom Language Definitions
 ?>";
       CreateFile($RootDirectory.'conf/language.php', $Contents, $Context);
