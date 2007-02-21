@@ -354,8 +354,8 @@ class DiscussionManager extends Delegation {
 		$s->SearchFields = array('t.Name');
 		$s->DefineSearch();
 		
-		// If the current user is not admin only show active Discussions
-		if (!$this->Context->Session->User->Permission('PERMISSION_HIDE_DISCUSSIONS')) $s->AddWhere('t', 'Active', '', '1', '=');
+		// If the current user is not allowed, only show active Discussions
+		if (!$this->Context->Session->User->Permission('PERMISSION_VIEW_HIDDEN_DISCUSSIONS')) $s->AddWhere('t', 'Active', '', '1', '=');
 		if ($Search->Categories != '') {
 			$Cats = explode(',',$Search->Categories);
 			$CatCount = count($Cats);

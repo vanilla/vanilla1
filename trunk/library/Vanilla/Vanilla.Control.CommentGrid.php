@@ -31,7 +31,7 @@ class CommentGrid extends Control {
       $this->Discussion = $DiscussionManager->GetDiscussionById($DiscussionID, $RecordDiscussionView);
 		if ($this->Discussion) {
 			$this->Discussion->FormatPropertiesForDisplay();
-			if (!$this->Discussion->Active && !$this->Context->Session->User->Permission('PERMISSION_HIDE_DISCUSSIONS')) {
+			if (!$this->Discussion->Active && !$this->Context->Session->User->Permission('PERMISSION_VIEW_HIDDEN_DISCUSSIONS')) {
 				$this->Discussion = false;
 				$this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrDiscussionNotFound'));
 			}
