@@ -572,7 +572,15 @@ $Context->Dictionary['DiscussionType'] = 'Discussion Type';
 // Added for Vanilla 1.1 on 2007-02-20
 $Context->Dictionary['ErrPostBackKeyInvalid'] = 'There was a problem authenticating your post information.';
 $Context->Dictionary['ErrPostBackActionInvalid'] = 'Your post information was not be defined properly.';
-
+// Moved from settings.php
+$Context->Dictionary['TextWhispered'] = 'Private'; 
+$Context->Dictionary['TextSticky'] = 'Sticky'; 
+$Context->Dictionary['TextClosed'] = 'Closed'; 
+$Context->Dictionary['TextHidden'] = 'Deleted';
+$Context->Dictionary['TextSink'] = 'Sink';
+$Context->Dictionary['TextBookmarked'] = 'Bookmarked'; 
+$Context->Dictionary['TextPrefix'] = '['; 
+$Context->Dictionary['TextSuffix'] = ']';
 
 /* Please do not remove or alter this definition */
 $Context->Dictionary['PanelFooter'] = '<p id="AboutVanilla"><a href="http://getvanilla.com">Vanilla '.APPLICATION_VERSION.'</a> is a product of <a href="http://lussumo.com">Lussumo</a>. More Information: <a href="http://lussumo.com/docs">Documentation</a>, <a href="http://lussumo.com/community">Community Support</a>.</p>';

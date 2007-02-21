@@ -11,7 +11,7 @@ $DiscussionList .= '
 <li id="Discussion_'.$Discussion->DiscussionID.'" class="Discussion'.$Discussion->Status.($Discussion->CountComments == 1?' NoReplies':'').($this->Context->Configuration['USE_CATEGORIES'] ? ' Category_'.$Discussion->CategoryID:'').($Alternate ? ' Alternate' : '').'">
    <ul>
       <li class="DiscussionType">
-         <span>'.$this->Context->GetDefinition('DiscussionType').'</span>'.DiscussionPrefix($this->Context->Configuration, $Discussion).'
+         <span>'.$this->Context->GetDefinition('DiscussionType').'</span>'.DiscussionPrefix($this->Context, $Discussion).'
       </li>
       <li class="DiscussionTopic">
          <span>'.$this->Context->GetDefinition('DiscussionTopic').'</span><a href="'.$UnreadUrl.'">'.$Discussion->Name.'</a>

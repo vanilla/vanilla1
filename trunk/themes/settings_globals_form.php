@@ -148,45 +148,6 @@ echo '<div id="Form" class="Account GlobalsForm">';
          </li>
       </ul>
       
-      <h2>'.$this->Context->GetDefinition('DiscussionLabelsTitle').'</h2>
-      <ul>
-         <li>
-            <label for="txtLabelPrefix">'.$this->Context->GetDefinition('LabelPrefix').'</label>
-            <input type="text" name="TEXT_PREFIX" value="'.$this->ConfigurationManager->GetSetting('TEXT_PREFIX').'" maxlength="20" class="SmallInput" id="txtLabelPrefix" />
-         </li>
-         <li>
-            <label for="txtLabelSuffix">'.$this->Context->GetDefinition('LabelSuffix').'</label>
-            <input type="text" name="TEXT_SUFFIX" value="'.$this->ConfigurationManager->GetSetting('TEXT_SUFFIX').'" maxlength="20" class="SmallInput" id="txtLabelSuffix" />
-         </li>
-         <li>
-            <label for="txtWhisperLabel">'.$this->Context->GetDefinition('WhisperLabel').'</label>
-            <input type="text" name="TEXT_WHISPERED" value="'.$this->ConfigurationManager->GetSetting('TEXT_WHISPERED').'" maxlength="30" class="SmallInput" id="txtWhisperLabel" />
-         </li>
-         <li>
-            <label for="txtStickyLabel">'.$this->Context->GetDefinition('StickyLabel').'</label>
-            <input type="text" name="TEXT_STICKY" value="'.$this->ConfigurationManager->GetSetting('TEXT_STICKY').'" maxlength="30" class="SmallInput" id="txtStickyLabel" />
-         </li>
-         <li>
-            <label for="txtSinkLabel">'.$this->Context->GetDefinition('SinkLabel').'</label>
-            <input type="text" name="TEXT_SINK" value="'.$this->ConfigurationManager->GetSetting('TEXT_SINK').'" maxlength="30" class="SmallInput" id="txtSinkLabel" />
-         </li>
-         <li>
-            <label for="txtClosedLabel">'.$this->Context->GetDefinition('ClosedLabel').'</label>
-            <input type="text" name="TEXT_CLOSED" value="'.$this->ConfigurationManager->GetSetting('TEXT_CLOSED').'" maxlength="30" class="SmallInput" id="txtClosedLabel" />
-         </li>
-         <li>
-            <label for="txtHiddenLabel">'.$this->Context->GetDefinition('HiddenLabel').'</label>
-            <input type="text" name="TEXT_HIDDEN" value="'.$this->ConfigurationManager->GetSetting('TEXT_HIDDEN').'" maxlength="30" class="SmallInput" id="txtHiddenLabel" />
-         </li>
-         <li>
-            <label for="txtBookmarkedLabel">'.$this->Context->GetDefinition('BookmarkedLabel').'</label>
-            <input type="text" name="TEXT_BOOKMARKED" value="'.$this->ConfigurationManager->GetSetting('TEXT_BOOKMARKED').'" maxlength="30" class="SmallInput" id="txtBookmarkedLabel" />
-            <p class="Description">
-               '.$this->Context->GetDefinition('DiscussionLabelsNotes').'
-            </p>
-         </li>
-      </ul>      
-      
       <h2>'.$this->Context->GetDefinition('ApplicationSettings').'</h2>
       <ul>
          <li>

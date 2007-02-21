@@ -113,14 +113,6 @@ $Configuration['DISCUSSION_THRESHOLD_PUNISHMENT'] = '120';
 $Configuration['COMMENT_POST_THRESHOLD'] = '5'; 
 $Configuration['COMMENT_TIME_THRESHOLD'] = '60'; 
 $Configuration['COMMENT_THRESHOLD_PUNISHMENT'] = '120'; 
-$Configuration['TEXT_WHISPERED'] = 'Private'; 
-$Configuration['TEXT_STICKY'] = 'Sticky'; 
-$Configuration['TEXT_CLOSED'] = 'Closed'; 
-$Configuration['TEXT_HIDDEN'] = 'Deleted';
-$Configuration['TEXT_SINK'] = 'Sink';
-$Configuration['TEXT_BOOKMARKED'] = 'Bookmarked'; 
-$Configuration['TEXT_PREFIX'] = '['; 
-$Configuration['TEXT_SUFFIX'] = ']';
 $Configuration['UPDATE_URL'] = 'http://lussumo.com/updatecheck/default.php';
 
 // Vanilla Control Positions
