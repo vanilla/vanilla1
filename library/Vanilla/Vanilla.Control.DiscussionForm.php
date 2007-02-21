@@ -34,6 +34,7 @@ class DiscussionForm extends PostBackControl {
 		$this->CommentID = ForceIncomingInt('CommentID', 0);
 		$this->DiscussionID = ForceIncomingInt('DiscussionID', 0);
 		$this->DiscussionFormattedForDisplay = 0;
+		$this->ValidActions = array('SaveDiscussion', 'SaveComment', 'Reply');
 
 		$this->CallDelegate('PreLoadData');
 		
@@ -88,7 +89,7 @@ class DiscussionForm extends PostBackControl {
 		$this->CallDelegate('PostLoadData');
 		
 		// If saving a discussion
-		if ($this->PostBackAction == 'SaveDiscussion') {
+		if ($this->PostBackAction == 'SaveDiscussion' && $this->IsValidFormPostBack()) {
 			$FirstCommentID = $this->Discussion->FirstCommentID;
 			$AuthUserID = $this->Discussion->AuthUserID;
 			$this->Discussion->Clear();
@@ -115,7 +116,7 @@ class DiscussionForm extends PostBackControl {
 				die();
 			}
 		// If saving a comment
-		} elseif ($this->PostBackAction == 'SaveComment') {
+		} elseif ($this->PostBackAction == 'SaveComment' && $this->IsValidFormPostBack()) {
 			$this->Comment->Clear();
 			$this->Comment->GetPropertiesFromForm();
 			$this->Comment->DiscussionID = $this->DiscussionID;
@@ -153,6 +154,7 @@ class DiscussionForm extends PostBackControl {
 		} elseif ($this->PostBackAction == 'Reply') {
 			if ($this->Comment) $this->Comment->GetPropertiesFromForm();
 		}
+		
 		if (!$this->IsPostBack && $this->Comment->DiscussionID == 0 && $this->Comment->CommentID == 0) {
 			if (!$this->Discussion->Comment) $this->Discussion->Comment = $this->Context->ObjectFactory->NewContextObject($this->Context, 'Comment');
 			

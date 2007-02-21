@@ -106,7 +106,7 @@ class ThemeAndStyleForm extends PostBackControl {
 
 			$SettingsFile = $this->Context->Configuration['APPLICATION_PATH'].'conf/settings.php';
 			
-			if ($this->PostBackAction == "ProcessThemeChange") {
+			if ($this->PostBackAction == "ProcessThemeChange" && $this->IsValidFormPostBack()) {
 				$Theme = $this->Themes[ForceIncomingInt('Theme', 0)];
 				
 				// Set the theme configuration option

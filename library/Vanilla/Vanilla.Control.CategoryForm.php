@@ -37,7 +37,7 @@ class CategoryForm extends PostBackControl {
 			$ReplacementCategoryID = ForceIncomingInt('ReplacementCategoryID', 0);
 			$this->CategoryManager = $this->Context->ObjectFactory->NewContextObject($this->Context, 'CategoryManager');
 			
-			if ($this->PostBackAction == 'ProcessCategory') {
+			if ($this->PostBackAction == 'ProcessCategory' && $this->IsValidFormPostBack()) {
 				$this->Category = $this->Context->ObjectFactory->NewObject($this->Context, 'Category');
 				$this->Category->GetPropertiesFromForm($this->Context);
 				$Action = ($this->Category->CategoryID == 0) ? "SavedNew" : "Saved";
@@ -49,7 +49,7 @@ class CategoryForm extends PostBackControl {
 				} else {
 					$this->IsPostBack = 0;
 				}
-			} elseif ($this->PostBackAction == 'ProcessCategoryRemove') {
+			} elseif ($this->PostBackAction == 'ProcessCategoryRemove' && $this->IsValidFormPostBack()) {
 				if ($this->Context->Session->User->Permission('PERMISSION_REMOVE_CATEGORIES')) {
 					if ($this->CategoryManager->RemoveCategory($CategoryID, $ReplacementCategoryID)) {
 						header('location: '.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=Categories&Action=Removed'));

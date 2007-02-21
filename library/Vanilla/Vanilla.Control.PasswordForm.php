@@ -24,7 +24,7 @@ class PasswordForm extends PostBackControl {
 			$this->User = $this->Context->ObjectFactory->NewContextObject($Context, 'User');
 			$this->User->GetPropertiesFromForm();
 			$this->User->UserID = $UserID;
-			if ($this->PostBackAction == 'ProcessPassword') {
+			if ($this->PostBackAction == 'ProcessPassword' && $this->IsValidFormPostBack()) {
 				if ($this->UserManager->ChangePassword($this->User)) header('location: '.GetUrl($this->Context->Configuration, $this->Context->SelfUrl));
 			}
 		}

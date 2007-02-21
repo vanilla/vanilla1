@@ -23,7 +23,7 @@ class IdentityForm extends PostBackControl {
 		if ($this->IsPostBack) {
 			$this->UserManager = &$UserManager;
 			$this->User = clone ($User);
-			if ($this->PostBackAction == 'ProcessIdentity') {
+			if ($this->PostBackAction == 'ProcessIdentity' && $this->IsValidFormPostBack()) {
 				$this->User->Clear();
 				$this->User->GetPropertiesFromForm();
 				$this->User->Preferences = $User->Preferences;

@@ -27,7 +27,7 @@ class GlobalsForm extends PostBackControl {
 			$SettingsFile = $this->Context->Configuration['APPLICATION_PATH'].'conf/settings.php';
 			
 			$this->ConfigurationManager = $this->Context->ObjectFactory->NewContextObject($this->Context, 'ConfigurationManager');
-			if ($this->PostBackAction == 'ProcessGlobals') {
+			if ($this->PostBackAction == 'ProcessGlobals' && $this->IsValidFormPostBack()) {
 				$this->ConfigurationManager->GetSettingsFromForm($SettingsFile);
 				// Checkboxes aren't posted back if unchecked, so make sure that they are saved properly
             $this->ConfigurationManager->DefineSetting('ENABLE_WHISPERS', ForceIncomingBool('ENABLE_WHISPERS', 0), 0);
