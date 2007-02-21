@@ -138,10 +138,10 @@ function SwitchElementClass(ElementToChangeID, SenderID, StyleA, StyleB, Comment
 	 }
 }
 
-function SwitchExtension(AjaxUrl, ExtensionKey) {
+function SwitchExtension(AjaxUrl, ExtensionKey, PostBackKey) {
     var Item = document.getElementById(ExtensionKey);
     if (Item) Item.className = "Processing";
-    var Parameters = "ExtensionKey="+ExtensionKey;
+    var Parameters = "ExtensionKey="+ExtensionKey+"&PostBackKey="+PostBackKey;
     var dm = new DataManager();
 	 dm.Param = ExtensionKey;
     dm.RequestFailedEvent = SwitchExtensionResult;
@@ -154,8 +154,8 @@ function SwitchExtensionResult(Request) {
     if (Item) {
 		  setTimeout("SwitchExtensionItemClass('"+Trim(Request.responseText)+"')",400);
 	 } else {
-		  alert("param: '"+this.Param+"'");
-		  alert("response: '"+Trim(Request.responseText)+"'");
+		  // alert("param: '"+this.Param+"'");
+		  alert(Trim(Request.responseText));
 		  alert("Failed to modify extension.");
 	 }
 }

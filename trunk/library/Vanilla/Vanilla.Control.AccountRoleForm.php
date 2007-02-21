@@ -22,12 +22,13 @@ class AccountRoleForm extends PostBackControl {
 		if ($this->IsPostBack) {
 			$this->User = &$User;
 			$Redirect = 0;
-			if ($this->PostBackAction == 'ProcessRole' && $this->Context->Session->UserID != $User->UserID && $this->Context->Session->User->Permission('PERMISSION_CHANGE_USER_ROLE')) {
+			if ($this->PostBackAction == 'ProcessRole' && $this->IsValidFormPostBack() && $this->Context->Session->UserID != $User->UserID && $this->Context->Session->User->Permission('PERMISSION_CHANGE_USER_ROLE')) {
 				$urh = $this->Context->ObjectFactory->NewObject($this->Context, 'UserRoleHistory');
 				$urh->GetPropertiesFromForm();
 				if ($UserManager->AssignRole($urh)) $Redirect = 1;
 			}
 			if (($this->PostBackAction == 'ApproveUser' || $this->PostBackAction == 'DeclineUser')
+				&& $this->IsValidFormPostBack()
 				&& $this->Context->Session->User->Permission('PERMISSION_APPROVE_APPLICANTS')) {
 				if ($this->PostBackAction == 'ApproveUser') {
 					$UserManager = $this->Context->ObjectFactory->NewContextObject($this->Context, 'UserManager');

@@ -569,6 +569,9 @@ $Context->Dictionary['RemoveThisNotice'] = 'Remove this message';
 $Context->Dictionary['OtherSettings'] = 'Other settings';
 $Context->Dictionary['ChangesSaved'] = 'Your changes were saved successfully';
 $Context->Dictionary['DiscussionType'] = 'Discussion Type';
+// Added for Vanilla 1.1 on 2007-02-20
+$Context->Dictionary['ErrPostBackKeyInvalid'] = 'There was a problem authenticating your post information.';
+$Context->Dictionary['ErrPostBackActionInvalid'] = 'Your post information was not be defined properly.';
 
 
 /* Please do not remove or alter this definition */

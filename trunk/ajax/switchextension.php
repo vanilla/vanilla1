@@ -14,12 +14,17 @@
 include('../appg/settings.php');
 include('../appg/init_ajax.php');
 
-$ExtensionKey = ForceIncomingString("ExtensionKey", "");
-$ExtensionForm = $Context->ObjectFactory->CreateControl($Context, "ExtensionForm");
-if ($ExtensionForm->SwitchExtension($ExtensionKey)) {
-   echo $ExtensionKey;
+$PostBackKey = ForceIncomingString('PostBackKey', '');
+$ExtensionKey = ForceIncomingString('ExtensionKey', '');
+if ($PostBackKey != '' && $PostBackKey == $Context->Session->GetVariable('SessionPostBackKey', 'string')) {
+   $ExtensionForm = $Context->ObjectFactory->CreateControl($Context, 'ExtensionForm');
+   if ($ExtensionForm->SwitchExtension($ExtensionKey)) {
+      echo $ExtensionKey;
+   } else {
+      $Context->WarningCollector->Write();
+   }
 } else {
-   $Context->WarningCollector->Write();
+   echo $Context->GetDefinition('ErrPostBackKeyInvalid');
 }
 $Context->Unload();
 ?>
