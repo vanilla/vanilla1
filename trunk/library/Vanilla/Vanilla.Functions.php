@@ -11,26 +11,26 @@
 * Description: Utility functions specific to Vanilla
 */
 
-function DiscussionPrefix(&$Configuration, &$Discussion) {
+function DiscussionPrefix(&$Context, &$Discussion) {
 	$Prefix = '';
-	if (!$Discussion->Active && $Configuration['TEXT_HIDDEN'] != '') $Prefix = $Configuration['TEXT_HIDDEN'];
+	if (!$Discussion->Active) $Prefix = $Context->GetDefinition('TextHidden');
 
-	if ($Discussion->Sticky && $Configuration['TEXT_STICKY'] != '' && $Prefix != '') $Prefix .= ', ';
-	if ($Discussion->Sticky && $Configuration['TEXT_STICKY'] != '') $Prefix .= $Configuration['TEXT_STICKY'];
+	if ($Discussion->Sticky && $Context->GetDefinition('TextSticky') != '' && $Prefix != '') $Prefix .= ', ';
+	if ($Discussion->Sticky) $Prefix .= $Context->GetDefinition('TextSticky');
 	
-	if ($Discussion->Closed && $Configuration['TEXT_CLOSED'] != '' && $Prefix != '') $Prefix .= ', ';
-	if ($Discussion->Closed && $Configuration['TEXT_CLOSED'] != '') $Prefix .= $Configuration['TEXT_CLOSED'];
+	if ($Discussion->Closed && $Context->GetDefinition('TextClosed') != '' && $Prefix != '') $Prefix .= ', ';
+	if ($Discussion->Closed) $Prefix .= $Context->GetDefinition('TextClosed');
 
-	if ($Discussion->Bookmarked && $Configuration['TEXT_BOOKMARKED'] != '' && $Prefix != '') $Prefix .= ', ';
-	if ($Discussion->Bookmarked && $Configuration['TEXT_BOOKMARKED'] != '') $Prefix .= $Configuration['TEXT_BOOKMARKED'];
+	if ($Discussion->Bookmarked && $Context->GetDefinition('TextBookmarked') != '' && $Prefix != '') $Prefix .= ', ';
+	if ($Discussion->Bookmarked) $Prefix .= $Context->GetDefinition('TextBookmarked');
 
-	if ($Discussion->Sink && $Configuration['TEXT_SINK'] != '' && $Prefix != '') $Prefix .= ', ';
-	if ($Discussion->Sink && $Configuration['TEXT_SINK'] != '') $Prefix .= $Configuration['TEXT_SINK'];
+	if ($Discussion->Sink && $Context->GetDefinition('TextSink') != '' && $Prefix != '') $Prefix .= ', ';
+	if ($Discussion->Sink) $Prefix .= $Context->GetDefinition('TextSink');
 
-	if ($Discussion->WhisperUserID > 0 && $Configuration['TEXT_WHISPERED'] != '' && $Prefix != '') $Prefix .= ', ';
-	if ($Discussion->WhisperUserID > 0 && $Configuration['TEXT_WHISPERED'] != '') $Prefix .= $Configuration['TEXT_WHISPERED'];
+	if ($Discussion->WhisperUserID > 0 && $Context->GetDefinition('TextWhispered') != '' && $Prefix != '') $Prefix .= ', ';
+	if ($Discussion->WhisperUserID > 0) $Prefix .= $Context->GetDefinition('TextWhispered');
 
-	if ($Prefix != '') return $Configuration['TEXT_PREFIX'].$Prefix.$Configuration['TEXT_SUFFIX'].' ';
+	if ($Prefix != '') return $Context->GetDefinition('TextPrefix').$Prefix.$Context->GetDefinition('TextSuffix').' ';
 }
 
 function GetLastCommentQuerystring(&$Discussion, &$Configuration) {
