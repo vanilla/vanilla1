@@ -92,6 +92,7 @@ $Configuration['APPLICATION_TITLE'] = 'Vanilla';
 $Configuration['BANNER_TITLE'] = 'Vanilla';
 $Configuration['UPDATE_REMINDER'] = 'Monthly';
 $Configuration['LAST_UPDATE'] = '';
+$Configuration['HTTP_METHOD'] = 'http'; // Could alternately be https
 
 // Vanilla Settings
 $Configuration['ENABLE_WHISPERS'] = '0';
