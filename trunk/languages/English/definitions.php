@@ -581,6 +581,12 @@ $Context->Dictionary['TextSink'] = 'Sink';
 $Context->Dictionary['TextBookmarked'] = 'Bookmarked'; 
 $Context->Dictionary['TextPrefix'] = '['; 
 $Context->Dictionary['TextSuffix'] = ']';
+// Added for new update checker
+$Context->Dictionary['CheckingForUpdates'] = 'Checking for updates...';
+$Context->Dictionary['ApplicationStatusGood'] = 'Vanilla is up to date.';
+$Context->Dictionary['ExtensionStatusGood'] = 'This extension is up to date.';
+$Context->Dictionary['ExtensionStatusUnknown'] = 'Extension not found. <a href="http://lussumo.com/docs/doku.php?id=vanilla:administrators:updatecheck">Find out why</a>';
+$Context->Dictionary['NewVersionAvailable'] = 'Version \\1 is available. <a href="\\2">Download</a>';
 
 /* Please do not remove or alter this definition */
 $Context->Dictionary['PanelFooter'] = '<p id="AboutVanilla"><a href="http://getvanilla.com">Vanilla '.APPLICATION_VERSION.'</a> is a product of <a href="http://lussumo.com">Lussumo</a>. More Information: <a href="http://lussumo.com/docs">Documentation</a>, <a href="http://lussumo.com/community">Community Support</a>.</p>';

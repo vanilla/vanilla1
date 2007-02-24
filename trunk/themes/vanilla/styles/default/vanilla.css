@@ -72,6 +72,7 @@ a:hover {
 	color: #f60;
 	}
 .Invisible { display: none; }
+.Visible { display: block; }
 	
 /* Session.. */
 
@@ -1074,11 +1075,43 @@ li.User.Name span {
 	}
 	
 /* Update Check form */
-  
-#Form.UpdateCheck p.Description {
-	padding: 0px !important;
-	margin: 0px 0px 10px 0px !important;
-	}  
+.UpdateOld .Name,
+.UpdateGood .Name,
+.UpdateUnknown .Name,
+.UpdateChecking .Name {
+	padding: 0px 0px 4px 23px !important;
+	}
+.UpdateOld .Details,
+.UpdateGood .Details,
+.UpdateUnknown .Details,
+.UpdateChecking .Details {
+	font-weight: normal;
+	}
+.UpdateOld {
+	background: #FFE0E0;
+	}
+.UpdateGood {
+	background: #FFFB97;
+	}
+.UpdateUnknown {
+	background: #FFFFCC;
+	}
+.UpdateChecking {
+	background: #FFFEEC;
+	}
+.UpdateOld .Name {
+	background: url(ico.alert.gif) no-repeat top left;
+}
+.UpdateGood .Name {
+	background: url(ico.check.gif) no-repeat top left;
+}
+.UpdateUnknown .Name {
+	background: url(ico.unknown.gif) no-repeat top left;
+}
+.UpdateChecking .Name {
+	background: url(progress.gif) no-repeat center left;
+}
+
   
 /* RoleEdit Form */
   
