@@ -146,6 +146,7 @@ function SwitchExtension(AjaxUrl, ExtensionKey, PostBackKey) {
 	 dm.Param = ExtensionKey;
     dm.RequestFailedEvent = SwitchExtensionResult;
     dm.RequestCompleteEvent = SwitchExtensionResult;
+	 // document.location = AjaxUrl+"?"+Parameters;
     dm.LoadData(AjaxUrl+"?"+Parameters);
 }
 
@@ -156,7 +157,7 @@ function SwitchExtensionResult(Request) {
 	 } else {
 		  // alert("param: '"+this.Param+"'");
 		  alert(Trim(Request.responseText));
-		  alert("Failed to modify extension.");
+		  // alert("Failed to modify extension.");
 	 }
 }
 
@@ -168,6 +169,52 @@ function SwitchExtensionItemClass(ItemID) {
 
 function Trim(String) {
    return String.replace(/^\s*|\s*$/g,"");
+}
+
+function UpdateCheck(AjaxUrl, RequestName, PostBackKey) {
+	var dm = new DataManager();
+	dm.RequestCompleteEvent = UpdateCheckStatus;
+	dm.RequestFailedEvent = UpdateCheckStatus;
+   dm.Param = AjaxUrl;
+	dm.LoadData(AjaxUrl+"?RequestName="+RequestName+"&PostBackKey="+PostBackKey);
+}
+
+function UpdateCheckStatus(Request) {
+	if (Request.responseText == "COMPLETE") return;
+
+	var ItemName = Request.responseText.substring(0, Request.responseText.indexOf("|"));
+	if (ItemName == "First") {
+		var Item = document.getElementById('Core');
+		var ItemDetails = document.getElementById("CoreDetails");
+	} else {
+		var Item = document.getElementById(ItemName);
+		var ItemDetails = document.getElementById(ItemName+"Details");
+	}
+	var Message = Request.responseText.slice(Request.responseText.indexOf("|")+1);
+	var FormPostBackKey = document.getElementById("FormPostBackKey");
+	var PostBackKey = (FormPostBackKey) ? FormPostBackKey.value : '';
+
+	if (Item && ItemDetails) {
+		if (Message.indexOf("ERROR]") == 1) {
+			Item.className = "UpdateError";
+			ItemDetails.innerHTML = Message.replace(/\[ERROR\]/g,"");
+		} else {
+			// Change the class of the item
+			if (Message.indexOf("OLD]") == 1) {
+				Item.className = "UpdateOld";
+			} else if (Message.indexOf("UNKNOWN]") == 1) {
+				Item.className = "UpdateUnknown";
+			} else {
+				Item.className = "UpdateGood";
+			}
+			// Report the status of the returned extension
+			ItemDetails.innerHTML = Message.replace(/\[OLD\]/g,"").replace(/\[UNKNOWN\]/g, "").replace(/\[GOOD\]/g, "");
+			// Request the next extension
+			setTimeout("UpdateCheck('"+this.Param+"', '"+ItemName+"', '"+PostBackKey+"');", 300);
+		}
+	} else {
+		alert('Error: '+Request.responseText);
+	}
 }
 
 function Wait(Sender, WaitText) {

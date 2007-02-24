@@ -27,25 +27,9 @@ class AccountRoleForm extends PostBackControl {
 				$urh->GetPropertiesFromForm();
 				if ($UserManager->AssignRole($urh)) $Redirect = 1;
 			}
-			if (($this->PostBackAction == 'ApproveUser' || $this->PostBackAction == 'DeclineUser')
-				&& $this->IsValidFormPostBack()
-				&& $this->Context->Session->User->Permission('PERMISSION_APPROVE_APPLICANTS')) {
-				if ($this->PostBackAction == 'ApproveUser') {
-					$UserManager = $this->Context->ObjectFactory->NewContextObject($this->Context, 'UserManager');
-					if ($UserManager->ApproveApplicant($User->UserID)) $Redirect = 1;
-				} elseif ($this->PostBackAction == 'DeclineUser') {
-					$UserManager = $this->Context->ObjectFactory->NewContextObject($this->Context, 'UserManager');
-					if ($UserManager->RemoveApplicant($User->UserID)) $Redirect = 1;
-				}
-			}
 			
 			if ($Redirect) {
-				if ($this->PostBackAction == 'DeclineUser') {
-					// Send back to the applicants
-					header('location: '.GetUrl($this->Context->Configuration, 'search.php', '', '', '', '', 'PostBackAction=Search&Keywords=roles:'.$this->Context->GetDefinition('Applicant').';sort:Date;&Type=Users'));
-				} else {
-					header('location: '.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', 'u', $User->UserID));
-				}
+				header('location: '.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', 'u', $User->UserID));
 				die();
 			} else {
 				$this->PostBackAction = str_replace('Process', '', $this->PostBackAction);

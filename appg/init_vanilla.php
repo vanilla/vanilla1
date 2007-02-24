@@ -51,6 +51,11 @@ $Context->StartSession();
 // DEFINE THE LANGUAGE DICTIONARY
 include($Configuration['LANGUAGES_PATH'].$Configuration['LANGUAGE'].'/definitions.php');
 include($Configuration['APPLICATION_PATH'].'conf/language.php');
+// By cleaning the output buffer and restarting, it makes downloading work
+// properly with utf-8 encoding (this was a bug in previous versions).
+// http://lussumo.com/community/discussion/4442/
+ob_end_clean();
+ob_start();
 
 // INSTANTIATE THE PAGE OBJECT
 // The page object handles collecting all page controls
