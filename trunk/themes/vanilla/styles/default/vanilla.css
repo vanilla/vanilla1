@@ -259,7 +259,8 @@ a:hover {
 #DiscussionsPage #Content,
 #CategoryPage #Content,
 #ExtensionPage #Content,
-#SettingsPage #Content {
+#SettingsPage #Content,
+#SearchPage #Content {
 	padding-top: 20px;
 	}
 #DiscussionsPage .Bottom {
@@ -645,7 +646,7 @@ html>body .ContentInfo h1 { width:80% !important; }
 
 #Form.Search {
 	width: 99% !important;
-	padding: 20px 0px 0px 0px !important;
+	padding: 0px !important;
 	}
 html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
 	width: 100% !important;
@@ -686,10 +687,10 @@ html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
 	}
 .SearchSwitch {
 	display: block;
-	position: absolute;
-	top: 86px;
-	right: 20px;
 	color: #f60 !important;
+	position: relative;
+	top: -20px;
+	float: right;	
 	}
 
 /* Advanced Search Form */
@@ -830,6 +831,7 @@ li.User span {
 li.User.Name {
 	display:block;
 	font-size: 11px;
+	overflow: visible;
 	}
 li.User.Name .UserIcon {
 	padding:9px 0px 9px 30px !important;
@@ -1087,14 +1089,12 @@ li.User.Name span {
 .UpdateChecking .Details {
 	font-weight: normal;
 	}
-.UpdateOld {
-	background: #FFE0E0;
+.UpdateOld,
+.UpdateUnknown {
+	background: #FFFFCC;
 	}
 .UpdateGood {
 	background: #FFFB97;
-	}
-.UpdateUnknown {
-	background: #FFFFCC;
 	}
 .UpdateChecking {
 	background: #FFFEEC;
@@ -1128,8 +1128,6 @@ li.User.Name span {
 #Form.CategoryForm li p span label {
 	font-weight: normal !important;
 	}
-  
-  
 
 /* Custom form for extensions management screen */
 
@@ -1216,8 +1214,25 @@ div.Extensions ul li p a:hover {
 	text-decoration: underline;
 	}
 
-/* Custom form for sortable list */
+/* Custom form for applicant management screen */
+div.Applicants ul li.CheckController p {
+	padding-left: 4px !important;
+	}
+div.Applicants ul li.NoApplicants p {
+	padding-left: 4px !important;
+	color: #84733D !important;
+	}
+div.Applicants .Approve {
+	padding: 0px 0px 10px 0px !important;
+	}
+div.Applicants .Approve input {
+	font-size: 11px !important;
+	}
+div.Applicants ul {
+	margin: 10px 0px 10px 0px !important;
+	}
 
+/* Custom form for sortable list */
   
 .SortList {
 	background-color: #ffc;
@@ -1532,3 +1547,12 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
 	}
 	
 /* End hide from IE-mac */
+  
+/* IE 7 Fixes - thanks WallPhone */
+  
+#Content .ContentInfo.Bottom .PageInfo p {
+	min-width: 20px;
+	}
+html>body #Content .ContentInfo.Bottom .PageInfo {
+	border-top: 1px solid #fff;
+	} 

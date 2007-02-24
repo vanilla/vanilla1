@@ -74,13 +74,7 @@ if (!$Allowed) header('location:'.GetUrl($Configuration, 'index.php'));
 		) $Panel->AddListItem($AdminOptions, $Context->GetDefinition('CategoryManagement'), GetUrl($Configuration, 'settings.php', '', '', '', '', 'PostBackAction=Categories'), '', '', 50);
 		
 	if ($Context->Session->User->Permission('PERMISSION_MANAGE_REGISTRATION')) $Panel->AddListItem($AdminOptions, $Context->GetDefinition('RegistrationManagement'), GetUrl($Configuration, 'settings.php', '', '', '', '', 'PostBackAction=RegistrationChange'), '', '', 40);
-	
-	if ($Context->Session->User->Permission('PERMISSION_APPROVE_APPLICANTS') && !$Configuration['ALLOW_IMMEDIATE_ACCESS']) {
-		$UserManager = $Context->ObjectFactory->NewContextObject($Context, 'UserManager');
-		$ApplicantCount = $UserManager->GetApplicantCount();
-		$Panel->AddListItem($AdminOptions, $Context->GetDefinition('MembershipApplicants'), GetUrl($Configuration, 'search.php', '', '', '', '', 'PostBackAction=Search&amp;Type=Users&amp;Keywords=roles:'.$Context->GetDefinition('Applicant').';sort:Date;'), $ApplicantCount.' '.$Context->GetDefinition('New'), '', 100);
-	}
-   
+	   
    // Create the default view
    $SettingsHelp = $Context->ObjectFactory->CreateControl($Context, 'SettingsHelp');
 
@@ -93,6 +87,15 @@ if (!$Allowed) header('location:'.GetUrl($Configuration, 'index.php'));
    $ThemeAndStyleForm = $Context->ObjectFactory->CreateControl($Context, 'ThemeAndStyleForm');
    $RegistrationForm = $Context->ObjectFactory->CreateControl($Context, 'RegistrationForm');
    $LanguageForm = $Context->ObjectFactory->CreateControl($Context, 'LanguageForm');
+	$ApplicantsForm = $Context->ObjectFactory->CreateControl($Context, 'ApplicantsForm');
+	$ApplicantData = false;
+	if ($Context->Session->User->Permission('PERMISSION_APPROVE_APPLICANTS') && !$Configuration['ALLOW_IMMEDIATE_ACCESS']) {
+		$UserManager = $Context->ObjectFactory->NewContextObject($Context, 'UserManager');
+		$ApplicantData = $UserManager->GetUsersByRoleID(0);
+		$ApplicantCount = $Context->Database->RowCount($ApplicantData);
+		$ApplicantsForm->ApplicantData = $ApplicantData;
+		$Panel->AddListItem($AdminOptions, $Context->GetDefinition('MembershipApplicants'), GetUrl($Configuration, 'settings.php', '', '', '', '', 'PostBackAction=Applicants'), $ApplicantCount.' '.$Context->GetDefinition('New'), '', 100);
+	}
 
 // 3. ADD CONTROLS TO THE PAGE
 
@@ -109,6 +112,7 @@ if (!$Allowed) header('location:'.GetUrl($Configuration, 'index.php'));
 	$Page->AddRenderControl($ThemeAndStyleForm, $Configuration['CONTROL_POSITION_BODY_ITEM'] + 60);
 	$Page->AddRenderControl($RegistrationForm, $Configuration['CONTROL_POSITION_BODY_ITEM'] + 70);
 	$Page->AddRenderControl($LanguageForm, $Configuration['CONTROL_POSITION_BODY_ITEM'] + 80);
+	$Page->AddRenderControl($ApplicantsForm, $Configuration['CONTROL_POSITION_BODY_ITEM'] + 90);
 	$Page->AddRenderControl($Foot, $Configuration['CONTROL_POSITION_FOOT']);
 	$Page->AddRenderControl($PageEnd, $Configuration['CONTROL_POSITION_PAGE_END']);
    

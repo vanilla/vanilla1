@@ -11,8 +11,6 @@ echo '<div id="Form" class="Account Extensions">
 			<ul>';
 				if (is_array($this->Extensions)) {
 					$ExtensionList = '';
-					ksort($this->Extensions);
-					$FirstExtension = 1;
 					while (list($ExtensionKey, $Extension) = each($this->Extensions)) {
 						$ExtensionList .= '<li id="'.$ExtensionKey.'" class="'.($Extension->Enabled ? 'Enabled' : 'Disabled').'">
 							<h3>

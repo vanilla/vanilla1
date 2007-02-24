@@ -424,7 +424,7 @@ class CommentManager extends Delegation {
 					
 					// Get information about the comment being edited
 					$s->SetMainTable('Comment', 'm');
-					$s->AddSelect(array('AuthUserID', 'WhisperUserID'), 'm');
+					$s->AddSelect(array('AuthUserID', 'WhisperUserID', 'DeleteUserID'), 'm');
 					$s->AddWhere('m', 'CommentID', '', $Comment->CommentID, '=');
 					$CommentData = $this->Context->Database->Select($s, $this->Name, 'SaveComment', 'An error occurred while retrieving information about the comment.');
 					$WhisperToUserID = 0;
@@ -432,31 +432,34 @@ class CommentManager extends Delegation {
 					while ($Row = $this->Context->Database->GetRow($CommentData)) {
 						$WhisperToUserID = ForceInt($Row['WhisperUserID'], 0);
 						$WhisperFromUserID = ForceInt($Row['AuthUserID'], 0);
+						$DeleteUserID = ForceInt($Row['DeleteUserID'], 0);
 					}
-					if ($WhisperToUserID > 0 && $Comment->WhisperUserID == 0) {
-						// If the original comment was whispered and the new one isn't
-						// 1. Update the whisper count for this discussion
-						$this->UpdateWhisperCount($Comment->DiscussionID, $WhisperFromUserID, $WhisperToUserID, '-');
-						// 2. Update the comment count for this discussion
-						$this->UpdateCommentCount($Comment->DiscussionID, '+');
-						
-					} elseif ($WhisperToUserID == 0 && $Comment->WhisperUserID > 0){                  
-						// If the original comment was not whispered and the new one is
-						// 1. Update the comment count for this discussion
-						$this->UpdateCommentCount($Comment->DiscussionID, '-');					
-						// 2. Update the whisper count for this discussion
-						$this->UpdateWhisperCount($Comment->DiscussionID, $WhisperFromUserID, $Comment->WhisperUserID, '+');
-						
-					} elseif ($WhisperToUserID > 0 && $Comment->WhisperUserID > 0 && $WhisperToUserID != $Comment->WhisperUserID) {
-						// If the original comment was whispered to a different person
-						// 1. Remove traces of the old whisper
-						$this->UpdateWhisperCount($Comment->DiscussionID, $WhisperFromUserID, $WhisperToUserID, '-');
-						
-						// 2. Update the whisper count for this new whisper
-						$this->UpdateWhisperCount($Comment->DiscussionID, $WhisperFromUserID, $Comment->WhisperUserID, '+');
-						
-					} else {
-						// Otherwise, the counts do not need to be manipulated
+					if ($DeleteUserID == 0) {
+						if ($WhisperToUserID > 0 && $Comment->WhisperUserID == 0) {
+							// If the original comment was whispered and the new one isn't
+							// 1. Update the whisper count for this discussion
+							$this->UpdateWhisperCount($Comment->DiscussionID, $WhisperFromUserID, $WhisperToUserID, '-');
+							// 2. Update the comment count for this discussion
+							$this->UpdateCommentCount($Comment->DiscussionID, '+');
+							
+						} elseif ($WhisperToUserID == 0 && $Comment->WhisperUserID > 0){                  
+							// If the original comment was not whispered and the new one is
+							// 1. Update the comment count for this discussion
+							$this->UpdateCommentCount($Comment->DiscussionID, '-');					
+							// 2. Update the whisper count for this discussion
+							$this->UpdateWhisperCount($Comment->DiscussionID, $WhisperFromUserID, $Comment->WhisperUserID, '+');
+							
+						} elseif ($WhisperToUserID > 0 && $Comment->WhisperUserID > 0 && $WhisperToUserID != $Comment->WhisperUserID) {
+							// If the original comment was whispered to a different person
+							// 1. Remove traces of the old whisper
+							$this->UpdateWhisperCount($Comment->DiscussionID, $WhisperFromUserID, $WhisperToUserID, '-');
+							
+							// 2. Update the whisper count for this new whisper
+							$this->UpdateWhisperCount($Comment->DiscussionID, $WhisperFromUserID, $Comment->WhisperUserID, '+');
+							
+						} else {
+							// Otherwise, the counts do not need to be manipulated
+						}
 					}
 			
 					// Finally, update the comment

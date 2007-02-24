@@ -69,13 +69,6 @@ include("appg/init_vanilla.php");
 			} elseif ($AccountUser->UserID != $Context->Session->UserID && $Context->Session->User->Permission("PERMISSION_EDIT_USERS") && $AccountUser) {
 				$Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangePersonalInformation"), GetUrl($Context->Configuration, $Context->SelfUrl, "", "u", $AccountUser->UserID, "", "PostBackAction=Identity"), "", "", 10);
 			}
-			if ($Context->Session->User->Permission("PERMISSION_APPROVE_APPLICANTS")) {
-				if ($AccountUser->RoleID == 0) {
-					$Panel->AddListItem($ApplicantOptions, $Context->GetDefinition("ApproveForMembership"), GetUrl($Context->Configuration, $Context->SelfUrl, "", "u", $AccountUser->UserID, "", "PostBackAction=ApproveUser"), "", "", 10);
-					$Panel->AddListItem($ApplicantOptions, $Context->GetDefinition("DeclineForMembership"), GetUrl($Context->Configuration, $Context->SelfUrl, "", "u", $AccountUser->UserID, "", "PostBackAction=DeclineUser"), "", "", 20);
-				}
-				$Panel->AddListItem($ApplicantOptions, $Context->GetDefinition("NewApplicantSearch"), GetUrl($Context->Configuration, "search.php", "", "", "", "", "PostBackAction=Search&amp;Keywords=roles:".$Context->GetDefinition("Applicant").";sort:Date;&amp;Type=Users"), "", "", 30);
-			}
 			if ($Context->Session->User->Permission("PERMISSION_CHANGE_USER_ROLE")) {
 				if ($AccountUser->RoleID > 0) {
 					$Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangeRole"), GetUrl($Context->Configuration, $Context->SelfUrl, "", "u", $AccountUser->UserID, "", "PostBackAction=Role"), "", "", 40);
