@@ -166,6 +166,9 @@ class Discussion extends Delegation {
 		} else {
 			$this->LastPage = 1;
 		}
+		
+		$this->DelegateParameters['DataSet'] = &$DataSet;
+		$this->CallDelegate('PostGetPropertiesFromDataSet');
 	}	
 
 	// Retrieve a properties from incoming form variables
