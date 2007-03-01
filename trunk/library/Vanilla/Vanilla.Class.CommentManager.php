@@ -127,7 +127,7 @@ class CommentManager extends Delegation {
 		return $TotalNumberOfRecords;
 	}
 	
-	function GetCommentList($RowsPerPage, $CurrentPage, $DiscussionID) {
+	function GetCommentList($RowsPerPage, $CurrentPage, $DiscussionID, $FirstRecord = "0") {
 		$RowsPerPage = ForceInt($RowsPerPage, 50);
 		$CurrentPage = ForceInt($CurrentPage, 1);
 		$DiscussionID = ForceInt($DiscussionID, 0);
@@ -136,7 +136,7 @@ class CommentManager extends Delegation {
 			$CurrentPage = ForceInt($CurrentPage, 1);
 			if ($CurrentPage < 1) $CurrentPage == 1;
 			$RowsPerPage = ForceInt($RowsPerPage, 50);
-			$FirstRecord = ($CurrentPage * $RowsPerPage) - $RowsPerPage;
+			if ($FirstRecord == "0") $FirstRecord = ($CurrentPage * $RowsPerPage) - $RowsPerPage;
 		}
 		
 		$s = $this->GetCommentBuilder();
