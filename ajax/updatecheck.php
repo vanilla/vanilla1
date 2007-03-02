@@ -52,7 +52,7 @@ if ($PostBackKey != $Context->Session->GetVariable('SessionPostBackKey', 'string
    $Extensions = DefineExtensions($Context);
    if (!is_array($Extensions)) {
       echo $RequestName.'|[ERROR]'.$Context->WarningCollector->GetPlainMessages();
-   } else {
+   } elseif (count($Extensions) > 0) {
       // All of the extensions were loaded successfully.
       // Ping the Lussumo server with the next extension
       $CheckExtension = '';
@@ -101,6 +101,8 @@ if ($PostBackKey != $Context->Session->GetVariable('SessionPostBackKey', 'string
             echo 'Failed to get extension name from ajax call.';
          }
       }
+   } else {
+      echo 'COMPLETE';
    }
 }
 $Context->Unload();
