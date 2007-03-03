@@ -89,7 +89,7 @@ class DiscussionForm extends PostBackControl {
 		$this->CallDelegate('PostLoadData');
 		
 		// If saving a discussion
-		if ($this->PostBackAction == 'SaveDiscussion' && $this->IsValidFormPostBack()) {
+		if ($this->PostBackAction == 'SaveDiscussion') {
 			$FirstCommentID = $this->Discussion->FirstCommentID;
 			$AuthUserID = $this->Discussion->AuthUserID;
 			$this->Discussion->Clear();
@@ -101,55 +101,60 @@ class DiscussionForm extends PostBackControl {
 			// will make sure we save the proper discussion topic & message
 			$this->Discussion->DiscussionID = $this->EditDiscussionID;
 			
-			$this->DelegateParameters['SaveDiscussion'] = &$this->Discussion;
-			$this->CallDelegate('PreSaveDiscussion');
-
-			$ResultDiscussion = $dm->SaveDiscussion($this->Discussion);
+			if ($this->IsValidFormPostBack()) {
+				$this->DelegateParameters['SaveDiscussion'] = &$this->Discussion;
+				$this->CallDelegate('PreSaveDiscussion');
+	
+				$ResultDiscussion = $dm->SaveDiscussion($this->Discussion);
+				
+				$this->DelegateParameters['ResultDiscussion'] = &$ResultDiscussion;
+				$this->CallDelegate('PostSaveDiscussion');
 			
-			$this->DelegateParameters['ResultDiscussion'] = &$ResultDiscussion;
-			$this->CallDelegate('PostSaveDiscussion');
-			
-			if ($ResultDiscussion) {
-				// Saved successfully, so send back to the discussion
-            $Suffix = CleanupString($this->Discussion->Name).'/';
-				header('location:'.GetUrl($this->Context->Configuration, 'comments.php', '', 'DiscussionID', $ResultDiscussion->DiscussionID, '', '', $Suffix));
-				die();
+				if ($ResultDiscussion) {
+					// Saved successfully, so send back to the discussion
+					$Suffix = CleanupString($this->Discussion->Name).'/';
+					header('location:'.GetUrl($this->Context->Configuration, 'comments.php', '', 'DiscussionID', $ResultDiscussion->DiscussionID, '', '', $Suffix));
+					die();
+				}
 			}
 		// If saving a comment
-		} elseif ($this->PostBackAction == 'SaveComment' && $this->IsValidFormPostBack()) {
+		} elseif ($this->PostBackAction == 'SaveComment') {
 			$this->Comment->Clear();
 			$this->Comment->GetPropertiesFromForm();
 			$this->Comment->DiscussionID = $this->DiscussionID;
 			$this->Discussion = $dm->GetDiscussionById($this->Comment->DiscussionID);
-			// Make sure to prevent saving comments if the discussion is closed and
-         // the user doesn't have permission to manage closed discussions
-			if ($this->Discussion->Closed && !$this->Context->Session->User->Permission('PERMISSION_CLOSE_DISCUSSIONS')) {
-				$ResultComment = false;
-				$this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrPermissionInsufficient'));
-			} else {
-				$this->DelegateParameters['SaveComment'] = &$this->Comment;
-				$this->CallDelegate('PreSaveComment');
+			
+			if ($this->IsValidFormPostBack()) {
+				// Make sure to prevent saving comments if the discussion is closed and
+				// the user doesn't have permission to manage closed discussions
+				if ($this->Discussion->Closed && !$this->Context->Session->User->Permission('PERMISSION_CLOSE_DISCUSSIONS')) {
+					$ResultComment = false;
+					$this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrPermissionInsufficient'));
+				} else {
+					$this->DelegateParameters['SaveComment'] = &$this->Comment;
+					$this->CallDelegate('PreSaveComment');
+					
+					$ResultComment = $cm->SaveComment($this->Comment);
+				}
 				
-				$ResultComment = $cm->SaveComment($this->Comment);
-			}
-			
-			$this->DelegateParameters['ResultComment'] = &$ResultComment;
-			$this->CallDelegate('PostSaveComment');
-			
-			if ($ResultComment) {
-				// Reload the discussion so the "lastpage" property is recalculated with the new comment in the math.
-				$this->Discussion = $dm->GetDiscussionById($this->Comment->DiscussionID);
-				// Saved successfully, so send back to the discussion
-            // print_r($this->Discussion);
-            $Suffix = CleanupString($this->Discussion->Name).'/';
-				$Url = GetUrl($this->Context->Configuration, 'comments.php', '', 'DiscussionID', $ResultComment->DiscussionID, $this->Discussion->LastPage, ($ResultComment->CommentID > 0 ? '#Comment_'.$ResultComment->CommentID:'#pgbottom'), $Suffix);
-				$UrlParts = explode("?", $Url);
-				$QS = "";
-				if (array_key_exists(1, $UrlParts)) $QS = str_replace("&amp;", "&", $UrlParts[1]);
-				$Url = $UrlParts[0];
-				if ($QS != "") $Url .= "?".str_replace("&amp;", "&", $UrlParts[1]);
-				header('location:'.$Url);
-				die();
+				$this->DelegateParameters['ResultComment'] = &$ResultComment;
+				$this->CallDelegate('PostSaveComment');
+				
+				if ($ResultComment) {
+					// Reload the discussion so the "lastpage" property is recalculated with the new comment in the math.
+					$this->Discussion = $dm->GetDiscussionById($this->Comment->DiscussionID);
+					// Saved successfully, so send back to the discussion
+					// print_r($this->Discussion);
+					$Suffix = CleanupString($this->Discussion->Name).'/';
+					$Url = GetUrl($this->Context->Configuration, 'comments.php', '', 'DiscussionID', $ResultComment->DiscussionID, $this->Discussion->LastPage, ($ResultComment->CommentID > 0 ? '#Comment_'.$ResultComment->CommentID:'#pgbottom'), $Suffix);
+					$UrlParts = explode("?", $Url);
+					$QS = "";
+					if (array_key_exists(1, $UrlParts)) $QS = str_replace("&amp;", "&", $UrlParts[1]);
+					$Url = $UrlParts[0];
+					if ($QS != "") $Url .= "?".str_replace("&amp;", "&", $UrlParts[1]);
+					header('location:'.$Url);
+					die();
+				}
 			}
 		} elseif ($this->PostBackAction == 'Reply') {
 			if ($this->Comment) $this->Comment->GetPropertiesFromForm();
