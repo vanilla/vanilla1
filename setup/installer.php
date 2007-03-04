@@ -206,7 +206,7 @@ if (!defined('IN_VANILLA')) exit();
 		// If the database connection worked, attempt to set up the database
 		if ($Context->WarningCollector->Count() == 0 && $Connection) {
 			// On MySQL 4.1 and later, force UTF-8
-			if (version_compare(mysql_get_server_info(), '4.1.0', '>=')) {
+			if (version_compare(mysql_get_server_info($Connection), '4.1.0', '>=')) {
 				mysql_query('SET NAMES "utf8"', $Connection);
 				$DatabaseCharacterEncoding = 'utf8';
 			}
@@ -338,7 +338,7 @@ if (!defined('IN_VANILLA')) exit();
 				$Context->WarningCollector->Add("We couldn't connect to the server you provided (".$DBHost."). Are you sure you entered the right server, username and password?");
 			} elseif (!mysql_select_db($DBName, $Connection)) {
 				$Context->WarningCollector->Add("We connected to the server, but we couldn't access the \"".$DBName."\" database. Are you sure it exists and that the specified user has access to it?");
-			} elseif (version_compare(mysql_get_server_info(), '4.1.0', '>=')) {
+			} elseif (version_compare(mysql_get_server_info($Connection), '4.1.0', '>=')) {
 				/* On MySQL 4.1 and later, force UTF-8 */
 				mysql_query('SET NAMES "utf8"', $Connection);
 			}
