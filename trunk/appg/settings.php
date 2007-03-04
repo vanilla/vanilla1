@@ -43,7 +43,8 @@ $Configuration['DATABASE_PASSWORD'] = 'your_vanilla_database_password';
 $Configuration['FARM_DATABASE_HOST'] = ''; 
 $Configuration['FARM_DATABASE_NAME'] = 'your_farm_database_name'; 
 $Configuration['FARM_DATABASE_USER'] = 'your_farm_database_user_name'; 
-$Configuration['FARM_DATABASE_PASSWORD'] = 'your_farm_database_password'; 
+$Configuration['FARM_DATABASE_PASSWORD'] = 'your_farm_database_password';
+$Configuration['DATABASE_CHARACTER_ENCODING'] = '';
 
 // Path Settings
 $Configuration['APPLICATION_PATH'] = '/path/to/vanilla/';
