@@ -24,7 +24,6 @@ $Configuration['DATABASE_HOST'] = '';
 $Configuration['DATABASE_NAME'] = ''; 
 $Configuration['DATABASE_USER'] = ''; 
 $Configuration['DATABASE_PASSWORD'] = '';
-$Configuration['DATABASE_CHARACTER_ENCODING'] = ''; 
 $Configuration['APPLICATION_PATH'] = '';
 $Configuration['DATABASE_PATH'] = ''; 
 $Configuration['LIBRARY_PATH'] = ''; 
@@ -294,7 +293,6 @@ if (!defined('IN_VANILLA')) exit();
 	}
 } elseif ($PostBackAction == "Database") {
 	$CurrentStep = 2;
-	$DatabaseCharacterEncoding = '';
    // Test the database params provided by the user
    $Connection = @mysql_connect($DBHost, $DBUser, $DBPass);
    if (!$Connection) {
@@ -307,11 +305,6 @@ if (!defined('IN_VANILLA')) exit();
    
    // If the database connection worked...
    if ($Context->WarningCollector->Count() == 0 && $Connection) {
-		// On MySQL 4.1 and later, force UTF-8
-		if (version_compare(mysql_get_server_info($Connection), '4.1.0', '>=')) {
-			$DatabaseCharacterEncoding = 'utf8';
-			mysql_query('SET NAMES "utf8"', $Connection);
-		}
 					
       // Make sure all of the required tables are there for upgrading
       $TableData = @mysql_query('show tables', $Connection);
@@ -562,7 +555,6 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 			$DBManager->DefineSetting("DATABASE_NAME", $DBName, 1);
 			$DBManager->DefineSetting("DATABASE_USER", $DBUser, 1);
 			$DBManager->DefineSetting("DATABASE_PASSWORD", $DBPass, 1);
-			$DBManager->DefineSetting("DATABASE_CHARACTER_ENCODING", $DatabaseCharacterEncoding, 1);
 			$DBManager->SaveSettingsToFile($DBFile);
 		
 			// Save the general settings as well (now that we know this person is authenticated to
@@ -616,9 +608,6 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 				$Context->WarningCollector->Add("We couldn't connect to the server you provided (".$DBHost."). Are you sure you entered the right server, username and password?");
 			} elseif (!mysql_select_db($DBName, $Connection)) {
 				$Context->WarningCollector->Add("We connected to the server, but we couldn't access the \"".$DBName."\" database. Are you sure it exists and that the specified user has access to it?");
-			} elseif (version_compare(mysql_get_server_info($Connection), '4.1.0', '>=')) {
-				/* On MySQL 4.1 and later, force UTF-8 */
-				mysql_query('SET NAMES "utf8"', $Connection);
 			}
 		}
 		
