@@ -142,6 +142,9 @@ class SearchForm extends PostBackControl {
 			}
       }
 		$this->CallDelegate('PostLoadData');
+		// Make sure to remove the FormPostBackKey from the form so that it isn't
+      // present in the querystring
+      $this->PostBackParams->Remove('FormPostBackKey');
 	}
 	
 	function Render_NoPostBack() {
