@@ -40,17 +40,17 @@ function AddLabelValuePair() {
 	}
 }
 
-function DiscussionSwitch(AjaxUrl, SwitchType, DiscussionID, SwitchValue, SenderID) {
+function DiscussionSwitch(AjaxUrl, SwitchType, DiscussionID, SwitchValue, SenderID, PostBackKey) {
 	var Sender = document.getElementById(SenderID);
 	if (Sender) Sender.className = 'Progress';
-	var Parameters = "Type="+SwitchType+"&DiscussionID="+DiscussionID+"&Switch="+SwitchValue;
+	var Parameters = "Type="+SwitchType+"&DiscussionID="+DiscussionID+"&Switch="+SwitchValue+"&PostBackKey="+PostBackKey;
 	var dm = new DataManager();
 	dm.RequestCompleteEvent = RefreshPageWhenAjaxComplete;
 	dm.RequestFailedEvent = HandleFailure;
 	dm.LoadData(AjaxUrl+"?"+Parameters);
 }
 
-function HideComment(AjaxUrl, Switch, DiscussionID, CommentID, ShowText, HideText, SenderID) {
+function HideComment(AjaxUrl, Switch, DiscussionID, CommentID, ShowText, HideText, SenderID, PostBackKey) {
 	var ConfirmText = (Switch==1?HideText:ShowText);
 	if (confirm(ConfirmText)) {
 		var Sender = document.getElementById(SenderID);
@@ -61,12 +61,12 @@ function HideComment(AjaxUrl, Switch, DiscussionID, CommentID, ShowText, HideTex
 		var dm = new DataManager();
 		dm.RequestCompleteEvent = RefreshPageWhenAjaxComplete;
 		dm.RequestFailedEvent = HandleFailure;
-		dm.LoadData(AjaxUrl+"?Type=Comment&Switch="+Switch+"&DiscussionID="+DiscussionID+"&CommentID="+CommentID);
+		dm.LoadData(AjaxUrl+"?Type=Comment&Switch="+Switch+"&DiscussionID="+DiscussionID+"&CommentID="+CommentID+"&PostBackKey="+PostBackKey);
 	}
 }
 
 // Apply or remove a bookmark
-function SetBookmark(AjaxUrl, CurrentSwitchVal, Identifier, BookmarkText, UnbookmarkText) {
+function SetBookmark(AjaxUrl, CurrentSwitchVal, Identifier, BookmarkText, UnbookmarkText, PostBackKey) {
 	var Sender = document.getElementById('SetBookmark');
 	if (Sender) {
 		Sender.className = 'Progress';
@@ -77,7 +77,7 @@ function SetBookmark(AjaxUrl, CurrentSwitchVal, Identifier, BookmarkText, Unbook
 		dm.Param = (FlipSwitch == 0 ? BookmarkText : UnbookmarkText);
 		dm.RequestCompleteEvent = BookmarkComplete;
 		dm.RequestFailedEvent = BookmarkFailed;
-		dm.LoadData(AjaxUrl+"?Type=Bookmark&Switch="+FlipSwitch+"&DiscussionID="+Identifier);
+		dm.LoadData(AjaxUrl+"?Type=Bookmark&Switch="+FlipSwitch+"&DiscussionID="+Identifier+"&PostBackKey="+PostBackKey);
 	}
 }
 function ApplyBookmark(Element, ClassName, Text) {
@@ -124,13 +124,13 @@ function ShowSimpleSearch() {
 	}
 }
 
-function ToggleCategoryBlock(AjaxUrl, CategoryID, Block, SenderID) {
+function ToggleCategoryBlock(AjaxUrl, CategoryID, Block, SenderID, PostBackKey) {
 	var Sender = document.getElementById(SenderID);
 	if (Sender) {
 		Sender.innerHTML = '&nbsp;';
 		Sender.className = 'HideProgress';
 	}
-	var Parameters = "BlockCategoryID="+CategoryID+"&Block="+Block;
+	var Parameters = "BlockCategoryID="+CategoryID+"&Block="+Block+'&PostBackKey='+PostBackKey;
    var dm = new DataManager();
 	dm.RequestCompleteEvent = RefreshPageWhenAjaxComplete;
 	dm.RequestFailedEvent = HandleFailure;

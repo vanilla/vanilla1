@@ -21,9 +21,7 @@ if ($PostBackKey != '' && $PostBackKey == $Context->Session->GetVariable('Sessio
    if ($ExtensionForm->SwitchExtension($ExtensionKey)) {
       echo $ExtensionKey;
    } else {
-      echo 'before';
       $Context->WarningCollector->WritePlain();
-      echo 'after';
    }
 } else {
    echo $Context->GetDefinition('ErrPostBackKeyInvalid');

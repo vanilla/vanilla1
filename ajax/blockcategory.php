@@ -13,20 +13,25 @@
 
 include('../appg/settings.php');
 include('../appg/init_ajax.php');
-
-$Block = ForceIncomingBool('Block', 0);
-$BlockCategoryID = ForceIncomingInt('BlockCategoryID', 0);
-
-if ($BlockCategoryID > 0) {
-	$um = $Context->ObjectFactory->NewContextObject($Context, 'UserManager');
-   if ($Block) {
-      $um->AddCategoryBlock($BlockCategoryID);
-   } else {
-      $um->RemoveCategoryBlock($BlockCategoryID);
-   }
+$PostBackKey = ForceIncomingString('PostBackKey', '');
+$ExtensionKey = ForceIncomingString('ExtensionKey', '');
+if ($PostBackKey != '' && $PostBackKey == $Context->Session->GetVariable('SessionPostBackKey', 'string')) {
+	$Block = ForceIncomingBool('Block', 0);
+	$BlockCategoryID = ForceIncomingInt('BlockCategoryID', 0);
+	
+	if ($BlockCategoryID > 0) {
+		$um = $Context->ObjectFactory->NewContextObject($Context, 'UserManager');
+		if ($Block) {
+			$um->AddCategoryBlock($BlockCategoryID);
+		} else {
+			$um->RemoveCategoryBlock($BlockCategoryID);
+		}
+	}
+	
+	// Report success
+	echo 'Complete';
+} else {
+	echo $Context->GetDefinition('ErrPostBackKeyInvalid');
 }
-
-// Report success
-echo 'Complete';
 $Context->Unload();
 ?>

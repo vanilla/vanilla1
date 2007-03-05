@@ -10,6 +10,7 @@ if ($this->Context->WarningCollector->Count() > 0) {
 } else {
    $PageDetails = $this->pl->GetPageDetails($this->Context);
    $PageList = $this->pl->GetNumericList();
+	$SessionPostBackKey = $this->Context->Session->GetVariable('SessionPostBackKey', 'string');
    
    $CommentList .= '<div class="ContentInfo Top">
       <h1>';
@@ -115,7 +116,7 @@ if ($this->Context->WarningCollector->Count() > 0) {
                      ';
                   }
                   if ($PERMISSION_HIDE_COMMENTS) $CommentList .= '<a id="HideComment'.$Comment->CommentID.'" href="./" onclick="'
-                  ."HideComment('".$this->Context->Configuration['WEB_ROOT']."ajax/switch.php', '".($Comment->Deleted?"0":"1")."', '".$this->Discussion->DiscussionID."', '".$Comment->CommentID."', '".$this->Context->GetDefinition("ShowConfirm")."', '".$this->Context->GetDefinition("HideConfirm")."', 'HideComment".$Comment->CommentID."');"
+                  ."HideComment('".$this->Context->Configuration['WEB_ROOT']."ajax/switch.php', '".($Comment->Deleted?"0":"1")."', '".$this->Discussion->DiscussionID."', '".$Comment->CommentID."', '".$this->Context->GetDefinition("ShowConfirm")."', '".$this->Context->GetDefinition("HideConfirm")."', 'HideComment".$Comment->CommentID."', '".$SessionPostBackKey."');"
                   .' return false;">'.$this->Context->GetDefinition($Comment->Deleted?'Show':'Hide').'</a>
                   ';
 					}
