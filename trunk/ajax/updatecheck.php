@@ -75,8 +75,8 @@ if ($PostBackKey != $Context->Session->GetVariable('SessionPostBackKey', 'string
          $Extension = $Extensions[$CheckExtension];
          // Ping the Lussumo server with extension version information
          $VersionStatus = OpenUrl($Context->Configuration['UPDATE_URL']
-            .'?Extension='.$Extension->Name
-            .'&Version='.$Extension->Version,
+            .'?Extension='.unhtmlspecialchars($Extension->Name)
+            .'&Version='.unhtmlspecialchars($Extension->Version),
             $Context);
          if ($VersionStatus == "GOOD") {
             echo $CheckExtension.'|[GOOD]'.$Context->GetDefinition('ExtensionStatusGood');
@@ -98,7 +98,7 @@ if ($PostBackKey != $Context->Session->GetVariable('SessionPostBackKey', 'string
          if ($RequestName == '[NEXT]') {
             echo 'COMPLETE';
          } else {
-            echo 'Failed to get extension name from ajax call.';
+            echo $RequestName.'Failed to get extension name from ajax call.';
          }
       }
    } else {
