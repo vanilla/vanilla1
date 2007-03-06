@@ -81,7 +81,7 @@ function HideElement(ElementID, ClearElement) {
 	}
 }
 
-function SwitchPreference(AjaxUrl, PreferenceName, RefreshPageWhenComplete) {
+function SwitchPreference(AjaxUrl, PreferenceName, RefreshPageWhenComplete, PostBackKey) {
 	 var Container = document.getElementById(PreferenceName);
 	 var CheckBox  = document.getElementById(PreferenceName+'ID');
 	 if (CheckBox && Container) {
@@ -94,7 +94,7 @@ function SwitchPreference(AjaxUrl, PreferenceName, RefreshPageWhenComplete) {
 		  } else {
 	 		  dm.RequestCompleteEvent = PreferenceSet;
 		  }
-		  dm.LoadData(AjaxUrl+"?Type="+PreferenceName+"&Switch="+CheckBox.checked);		
+		  dm.LoadData(AjaxUrl+"?Type="+PreferenceName+"&PostBackKey="+PostBackKey+"&Switch="+CheckBox.checked);		
 	 }
 }
 
