@@ -40,7 +40,7 @@ echo '<div id="Form" class="StartDiscussion">
    echo '<li>
       <label for="CommentBox">
          <a href="./" id="CommentBoxController" onclick="'
-            ."ToggleCommentBox('".$this->Context->Configuration['WEB_ROOT']."ajax/switch.php', '".$this->Context->GetDefinition('SmallInput')."', '".$this->Context->GetDefinition('BigInput')."'); return false;".'">'.$this->Context->GetDefinition($this->Context->Session->User->Preference('ShowLargeCommentBox')?'SmallInput':'BigInput').'</a>';
+            ."ToggleCommentBox('".$this->Context->Configuration['WEB_ROOT']."ajax/switch.php', '".$this->Context->GetDefinition('SmallInput')."', '".$this->Context->GetDefinition('BigInput')."', '". $this->Context->Session->GetVariable('SessionPostBackKey', 'string')."'); return false;".'">'.$this->Context->GetDefinition($this->Context->Session->User->Preference('ShowLargeCommentBox')?'SmallInput':'BigInput').'</a>';
 				
 				$this->CallDelegate('DiscussionForm_PostCommentToggle');	
 					

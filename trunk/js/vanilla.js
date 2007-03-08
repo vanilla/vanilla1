@@ -137,14 +137,14 @@ function ToggleCategoryBlock(AjaxUrl, CategoryID, Block, SenderID, PostBackKey) 
 	dm.LoadData(AjaxUrl+"?"+Parameters);
 }
 
-function ToggleCommentBox(AjaxUrl, SmallText, BigText) {
+function ToggleCommentBox(AjaxUrl, SmallText, BigText, PostBackKey) {
    SwitchElementClass('CommentBox', 'CommentBoxController', 'SmallCommentBox', 'LargeCommentBox', BigText, SmallText);
 	var SwitchVal = 0;
 	var CommentBox = document.getElementById("CommentBox");
 	if (CommentBox) {
 		if (CommentBox.className == "LargeCommentBox") SwitchVal = 1;
 		
-		var Parameters = "Type=ShowLargeCommentBox&Switch="+SwitchVal;
+		var Parameters = "Type=ShowLargeCommentBox&Switch="+SwitchVal+"&PostBackKey="+PostBackKey;
 		var dm = new DataManager();
 		dm.RequestCompleteEvent = ToggleCommentBoxComplete;
 		dm.RequestFailedEvent = HandleFailure;
