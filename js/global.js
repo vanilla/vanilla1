@@ -53,6 +53,11 @@ function ClearContents(Container) {
 	if (Container) Container.innerHTML = "";
 }
 
+function CompletePreferenceSet(PreferenceName) {
+	 var Container = document.getElementById(PreferenceName);
+	 if (Container) Container.className = 'PreferenceComplete';
+}
+
 function Explode(inString, Delimiter) {	 
 	 return inString.split(Delimiter);
 }
@@ -81,33 +86,41 @@ function HideElement(ElementID, ClearElement) {
 	}
 }
 
-function SwitchPreference(AjaxUrl, PreferenceName, RefreshPageWhenComplete, PostBackKey) {
-	 var Container = document.getElementById(PreferenceName);
-	 var CheckBox  = document.getElementById(PreferenceName+'ID');
-	 if (CheckBox && Container) {
-		  Container.className = 'PreferenceProgress';
-		  var dm = new DataManager();
-		  dm.Param = PreferenceName;
-		  dm.RequestFailedEvent = HandleFailure;
-		  if (RefreshPageWhenComplete == 1) {
-	 		  dm.RequestCompleteEvent = RefreshPageWhenAjaxComplete;
-		  } else {
-	 		  dm.RequestCompleteEvent = PreferenceSet;
+function PathFinder(){
+	 this.params = new function(){
+		  this.url = document.URL;
+		  this.domain = document.domain;
+		  this.httpMethod = this.url.replace(/^(http|https)(:\/\/).*$/, "$1$2");
+		  return this;
+	 };
+	 this.getRootPath = function(tag, attr, path) {
+		  var Tags = document.getElementsByTagName(tag);
+		  var src = '';
+		  var root = '';
+		  for(var i=0;i<Tags.length;i++) {
+				src = '';
+				if(Tags[i].getAttribute && Tags[i].getAttribute(attr)){
+					src = Tags[i].getAttribute(attr);
+				} else if (eval("Tags["+i+"]."+attr)) {
+					src = eval("Tags["+i+"]."+attr);
+				}
+				if(src.match(path)){
+					 root = src.replace(path, '');
+					 root = root.replace(/^http(s)?:\/\/[^\/]+/, ''); //because the src attr could have been a partial or complete url
+					 break;
+				}
 		  }
-		  dm.LoadData(AjaxUrl+"?Type="+PreferenceName+"&PostBackKey="+PostBackKey+"&Switch="+CheckBox.checked);		
-	 }
+		  return root || false;
+	 }	
+	 return this;
+};
+
+function PopTermsOfService(Url) {
+	window.open(Url, "TermsOfService", "toolbar=no,status=yes,location=no,menubar=no,resizable=yes,height=600,width=400,scrollbars=yes");
 }
 
 function PreferenceSet(Request) {
 	setTimeout("CompletePreferenceSet('"+this.Param+"');", 400);
-}
-function CompletePreferenceSet(PreferenceName) {
-	 var Container = document.getElementById(PreferenceName);
-	 if (Container) Container.className = 'PreferenceComplete';
-}
-
-function PopTermsOfService(Url) {
-	window.open(Url, "TermsOfService", "toolbar=no,status=yes,location=no,menubar=no,resizable=yes,height=600,width=400,scrollbars=yes");
 }
 
 function RefreshPage(Timeout) {
@@ -146,7 +159,6 @@ function SwitchExtension(AjaxUrl, ExtensionKey, PostBackKey) {
 	 dm.Param = ExtensionKey;
     dm.RequestFailedEvent = SwitchExtensionResult;
     dm.RequestCompleteEvent = SwitchExtensionResult;
-	 // document.location = AjaxUrl+"?"+Parameters;
     dm.LoadData(AjaxUrl+"?"+Parameters);
 }
 
@@ -155,9 +167,7 @@ function SwitchExtensionResult(Request) {
     if (Item) {
 		  setTimeout("SwitchExtensionItemClass('"+Trim(Request.responseText)+"')",400);
 	 } else {
-		  // alert("param: '"+this.Param+"'");
 		  alert(Trim(Request.responseText));
-		  // alert("Failed to modify extension.");
 	 }
 }
 
@@ -165,6 +175,23 @@ function SwitchExtensionItemClass(ItemID) {
     var Item = document.getElementById(ItemID);
     var chk = document.getElementById('chk'+ItemID+'ID');
     if (Item && chk) Item.className = chk.checked ? 'Enabled' : 'Disabled';
+}
+
+function SwitchPreference(AjaxUrl, PreferenceName, RefreshPageWhenComplete, PostBackKey) {
+	 var Container = document.getElementById(PreferenceName);
+	 var CheckBox  = document.getElementById(PreferenceName+'ID');
+	 if (CheckBox && Container) {
+		  Container.className = 'PreferenceProgress';
+		  var dm = new DataManager();
+		  dm.Param = PreferenceName;
+		  dm.RequestFailedEvent = HandleFailure;
+		  if (RefreshPageWhenComplete == 1) {
+	 		  dm.RequestCompleteEvent = RefreshPageWhenAjaxComplete;
+		  } else {
+	 		  dm.RequestCompleteEvent = PreferenceSet;
+		  }
+		  dm.LoadData(AjaxUrl+"?Type="+PreferenceName+"&PostBackKey="+PostBackKey+"&Switch="+CheckBox.checked);		
+	 }
 }
 
 function Trim(String) {
