@@ -33,6 +33,7 @@ echo '<div id="Form" class="Account Extensions Applicants">';
                      <span class="Applied"><a href="'.GetUrl($this->Context->Configuration, 'account.php', '', 'u', $Applicant->UserID).'">'.TimeDiff($this->Context, $Applicant->DateFirstVisit, mktime()).'</a></span>
                      <span class="EmailAddress">'.FormatHyperlink('mailto:'.$Applicant->Email).'</span>';
                      
+                     $this->DelegateParameters['Applicant'] = &$Applicant;
                      $this->DelegateParameters['ApplicantList'] = &$ApplicantList;
                      $this->CallDelegate('PostEmailAddress');
                      
