@@ -20,7 +20,10 @@ $CurrentUserJumpToLastCommentPref = $this->Context->Session->User->Preference('J
 $DiscussionList = '';
 $ThemeFilePath = ThemeFilePath($this->Context->Configuration, 'discussion.php');
 $Alternate = 0;
+$RowNumber = 0;
 while ($Row = $this->Context->Database->GetRow($this->DiscussionData)) {
+	$RowNumber++;
+	$this->DelegateParameters['RowNumber'] = &$RowNumber;
    $Discussion->Clear();
    $Discussion->GetPropertiesFromDataSet($Row, $this->Context->Configuration);
    $Discussion->FormatPropertiesForDisplay();
