@@ -44,6 +44,7 @@ class CategoryForm extends PostBackControl {
 				if (($this->Category->CategoryID > 0 && $this->Context->Session->User->Permission('PERMISSION_EDIT_CATEGORIES'))
 					|| ($this->Category->CategoryID == 0 && $this->Context->Session->User->Permission('PERMISSION_ADD_CATEGORIES'))) {
 					if ($this->CategoryManager->SaveCategory($this->Category)) {
+						$this->CallDelegate('PostSaveCategory');
 						header('location: '.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=Categories&Action='.$Action));
 					}
 				} else {

@@ -31,8 +31,9 @@ echo '<div id="Form" class="Account CategoryForm">
       <label for="txtCategoryDescription">'.$this->Context->GetDefinition('CategoryDescription').'</label>
       <textarea name="Description" id="txtCategoryDescription" class="LargeTextbox">'.$this->Category->Description.'</textarea>
       <p class="Description">'.$this->Context->GetDefinition('CategoryDescriptionNotes').'</p>
-   </li>
-   <li>
+   </li>';
+   $this->CallDelegate('PreRolesRender');
+   echo '<li>
       <p class="Description">
          <strong>'.$this->Context->GetDefinition('Roles').'</strong>
          <br />'.$this->Context->GetDefinition('RolesInCategory')
@@ -62,8 +63,9 @@ echo '<div id="Form" class="Account CategoryForm">
          </p>
       </li>';
    }
-   echo $sRoles
-   .'</ul>
+   echo $sRoles;
+   $this->CallDelegate('PostRolesRender');
+   echo '</ul>
    <div class="Submit">
       <input type="submit" name="btnSave" value="'.$this->Context->GetDefinition('Save').'" class="Button SubmitButton EditCategoryButton" />
       <a href="'.GetUrl($this->Context->Configuration, 'settings.php', '', '', '', '', 'PostBackAction=Categories').'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>
