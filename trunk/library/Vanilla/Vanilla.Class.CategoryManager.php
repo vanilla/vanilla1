@@ -11,13 +11,13 @@
 * Description: Category management class
 */
 
-class CategoryManager {
+class CategoryManager extends Delegation {
 	var $Name;				// The name of this class
    var $Context;			// The context object that contains all global objects (database, error manager, warning collector, session, etc)
 	
 	function CategoryManager(&$Context) {
 		$this->Name = 'CategoryManager';
-		$this->Context = &$Context;
+		$this->Delegation($Context);
 	}
 	
 	function GetCategories($IncludeCount = '0', $OrderByPreference = '0', $ForceRoleBlock = '1') {
@@ -73,6 +73,9 @@ class CategoryManager {
          // (so administrators can easily see what they do and don't have access to)
 			$s->AddSelect('Blocked', 'crb', 'RoleBlocked', 'coalesce', '0');
 		}
+		
+		$this->DelegateParameters['SqlBuilder'] = &$s;
+		$this->CallDelegate('PostGetCategoryBuilder');
 		
 		return $s;
 	}
