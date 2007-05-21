@@ -399,21 +399,27 @@ class CommentManager extends Delegation {
 							$s->AddWhere('t', 'DiscussionID', '', $Comment->DiscussionID, '=');
 							$this->Context->Database->Update($s, $this->Name, 'SaveComment', "An error occurred while updating the discussion's whisper summary.");
 						} else {
-							// First update the counts & last user
-							$s->Clear();
-							$s->SetMainTable('Discussion', 't');
-							$s->AddFieldNameValue('CountComments', $this->Context->DatabaseColumns['Discussion']['CountComments'].'+1', '0');
-							$s->AddFieldNameValue('LastUserID', $this->Context->Session->UserID);
-							$s->AddWhere('t', 'DiscussionID', '', $Comment->DiscussionID, '=');
-							$this->Context->Database->Update($s, $this->Name, 'SaveComment', "An error occurred while updating the discussion's comment summary.");
+							$UpdateDiscussion = 1;
+							$this->DelegateParameters['UpdateDiscussion'] = &$UpdateDiscussion;
+							$this->CallDelegate('PreUpdateDiscussion');
 							
-							// Now only update the DateLastActive if the discussion isn't set to Sink
-							$s->Clear();
-							$s->SetMainTable('Discussion', 't');
-							$s->AddFieldNameValue('DateLastActive', MysqlDateTime());
-							$s->AddWhere('t', 'DiscussionID', '', $Comment->DiscussionID, '=');
-							$s->AddWhere('t', 'Sink', '', '1', '<>', 'and');
-							$this->Context->Database->Update($s, $this->Name, 'SaveComment', "An error occurred while updating the discussion's last active date.");
+							if ($UpdateDiscussion) {
+								// First update the counts & last user
+								$s->Clear();
+								$s->SetMainTable('Discussion', 't');
+								$s->AddFieldNameValue('CountComments', $this->Context->DatabaseColumns['Discussion']['CountComments'].'+1', '0');
+								$s->AddFieldNameValue('LastUserID', $this->Context->Session->UserID);
+								$s->AddWhere('t', 'DiscussionID', '', $Comment->DiscussionID, '=');
+								$this->Context->Database->Update($s, $this->Name, 'SaveComment', "An error occurred while updating the discussion's comment summary.");
+								
+								// Now only update the DateLastActive if the discussion isn't set to Sink
+								$s->Clear();
+								$s->SetMainTable('Discussion', 't');
+								$s->AddFieldNameValue('DateLastActive', MysqlDateTime());
+								$s->AddWhere('t', 'DiscussionID', '', $Comment->DiscussionID, '=');
+								$s->AddWhere('t', 'Sink', '', '1', '<>', 'and');
+								$this->Context->Database->Update($s, $this->Name, 'SaveComment', "An error occurred while updating the discussion's last active date.");
+							}
 						}
 					}
 				} else {
