@@ -270,6 +270,8 @@ class CommentManager extends Delegation {
 			$s->AddWhere('d', 'WhisperUserID', '', 'null', 'is', 'or', '', 0);
 			$s->EndWhereGroup();
 		}
+		$this->DelegateParameters['SqlBuilder'] = &$s;
+		$this->CallDelegate('SearchBuilder_PostWhere');
 		return $s;
 	}
 	
