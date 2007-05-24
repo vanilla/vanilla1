@@ -74,6 +74,8 @@ class CategoryManager extends Delegation {
 			$s->AddSelect('Blocked', 'crb', 'RoleBlocked', 'coalesce', '0');
 		}
 		
+		$this->DelegateParameters['IncludeCount'] = $IncludeCount;
+		$this->DelegateParameters['ForceRoleBlock'] = $ForceRoleBlock;
 		$this->DelegateParameters['SqlBuilder'] = &$s;
 		$this->CallDelegate('PostGetCategoryBuilder');
 		
