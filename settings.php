@@ -40,7 +40,10 @@ for ($i = 0; $i < $RequiredPermissionsCount; $i++) {
 		break;
 	}
 }
-if (!$Allowed) header('location:'.GetUrl($Configuration, 'index.php'));
+if (!$Allowed) {
+	header('location:'.GetUrl($Configuration, 'index.php'));
+	exit();
+}
 
 // 1. DEFINE VARIABLES AND PROPERTIES SPECIFIC TO THIS PAGE
 
