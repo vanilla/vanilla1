@@ -46,9 +46,7 @@ $Configuration['BANNER_TITLE'] = '';
 $Configuration['SETUP_COMPLETE'] = '0';
 $Configuration['SETUP_TEST'] = '0';
 $Configuration['SPONSORED_LINKS'] = '';
-$SponsoredLinks = '<a href="http://www.myhomeloanadvice.com">Home Loan</a>
-<a href="http://www.unitedmortgagerates.com">Mortgage Rates</a>
-<a href="http://www.casinowatchdogs.com">Online Casino</a>';
+$SponsoredLinks = '<a href="http://www.myhomeloanadvice.com">Home Loan</a> <a href="http://www.unitedmortgagerates.com">Mortgage Rates</a> <a href="http://www.casinowatchdogs.com">Online Casino</a>';
 
 class FauxContext {
    var $WarningCollector;
