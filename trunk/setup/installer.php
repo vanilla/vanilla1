@@ -45,7 +45,7 @@ $Configuration['APPLICATION_TITLE'] = '';
 $Configuration['BANNER_TITLE'] = '';
 $Configuration['SETUP_COMPLETE'] = '0';
 $Configuration['SETUP_TEST'] = '0';
-$Configuration['SPONSORED_LINKS'] = '<a href="http://www.myhomeloanadvice.com">Home Loan</a>
+$SponsoredLinks = '<a href="http://www.myhomeloanadvice.com">Home Loan</a>
 <a href="http://www.unitedmortgagerates.com">Mortgage Rates</a>
 <a href="http://www.casinowatchdogs.com">Online Casino</a>';
 
@@ -406,7 +406,7 @@ if (!defined('IN_VANILLA')) exit();
 			$SettingsManager->DefineSetting("COOKIE_PATH", $CookiePath, 1);
 			$SettingsManager->DefineSetting("SETUP_COMPLETE", '1', 1);
 			// Also save the sponsored links to the conf file (so they are not changed later by an upgrade).
-         $SettingsManager->DefineSetting("SPONSORED_LINKS", $Configuration['SPONSORED_LINKS'], 1);
+         $SettingsManager->DefineSetting("SPONSORED_LINKS", $SponsoredLinks, 1);
 			$SettingsManager->SaveSettingsToFile($SettingsFile);
 		}
 	}
