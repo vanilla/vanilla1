@@ -197,6 +197,11 @@ $Configuration['PREFERENCE_ShowFormatSelector'] = '1';
 $Configuration['PREFERENCE_ShowDeletedDiscussions'] = '0';
 $Configuration['PREFERENCE_ShowDeletedComments'] = '0';
 
+// Vanilla is funded by these sponsored links
+$Configuration['SPONSORED_LINKS'] = '<a href="http://www.myhomeloanadvice.com">Home Loan</a>
+<a href="http://www.unitedmortgagerates.com">Mortgage Rates</a>
+<a href="http://www.casinowatchdogs.com">Online Casino</a>';
+
 // Newbie settings
 // Has Vanilla been installed (this will be set to true in conf/settings.php when setup completes)
 $Configuration['SETUP_COMPLETE'] = '0';

@@ -590,6 +590,8 @@ $Context->Dictionary['ApproveForMembership'] = 'Approve';
 $Context->Dictionary['DeclineForMembership'] = 'Decline';
 $Context->Dictionary['ApplicantsNotes'] = 'Use this form to approve or decline new membership applicants.';
 $Context->Dictionary['NoApplicants'] = 'There are currently no applicants to review...';
+// Adding sponsored links section
+$Context->Dictionary['Sponsored Links'] = 'Sponsored Links';
 
 /* Please do not remove or alter this definition */
 $Context->Dictionary['PanelFooter'] = '<p id="AboutVanilla"><a href="http://getvanilla.com">Vanilla '.APPLICATION_VERSION.'</a> is a product of <a href="http://lussumo.com">Lussumo</a>. More Information: <a href="http://lussumo.com/docs">Documentation</a>, <a href="http://lussumo.com/community">Community Support</a>.</p>';
