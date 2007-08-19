@@ -20,23 +20,23 @@ include('../library/Framework/Framework.Class.ConfigurationManager.php');
 include('../appg/database.php');
 
 // Set up some configuration defaults to override
-$Configuration['DATABASE_HOST'] = ''; 
-$Configuration['DATABASE_NAME'] = ''; 
-$Configuration['DATABASE_USER'] = ''; 
+$Configuration['DATABASE_HOST'] = '';
+$Configuration['DATABASE_NAME'] = '';
+$Configuration['DATABASE_USER'] = '';
 $Configuration['DATABASE_PASSWORD'] = '';
 $Configuration['APPLICATION_PATH'] = '';
-$Configuration['DATABASE_PATH'] = ''; 
-$Configuration['LIBRARY_PATH'] = ''; 
-$Configuration['EXTENSIONS_PATH'] = ''; 
+$Configuration['DATABASE_PATH'] = '';
+$Configuration['LIBRARY_PATH'] = '';
+$Configuration['EXTENSIONS_PATH'] = '';
 $Configuration['LANGUAGES_PATH'] = '';
 $Configuration['THEME_PATH'] = '';
 $Configuration['BASE_URL'] = '';
-$Configuration['DEFAULT_STYLE'] = ''; 
+$Configuration['DEFAULT_STYLE'] = '';
 $Configuration['WEB_ROOT'] = '';
-$Configuration['COOKIE_DOMAIN'] = ''; 
-$Configuration['COOKIE_PATH'] = ''; 
-$Configuration['SUPPORT_EMAIL'] = ''; 
-$Configuration['SUPPORT_NAME'] = ''; 
+$Configuration['COOKIE_DOMAIN'] = '';
+$Configuration['COOKIE_PATH'] = '';
+$Configuration['SUPPORT_EMAIL'] = '';
+$Configuration['SUPPORT_NAME'] = '';
 $Configuration['FORWARD_VALIDATED_USER_URL'] = '';
 $Configuration['CHARSET'] = 'utf-8';
 $Configuration['DATABASE_TABLE_PREFIX'] = 'LUM_';
@@ -101,7 +101,7 @@ function GetColumns(&$Connection, $Table) {
 	} else {
 		while ($Row = mysql_fetch_array($Data)) {
 			$FoundColumns[] = $Row[0];
-		}					
+		}
 	}
 	return $FoundColumns;
 }
@@ -149,7 +149,7 @@ $ApplicationTitle = '';
 // Include the old settings file if it is present (it just contains constants)
 if (file_exists($RootDirectory.'conf/old_settings.php')) {
    include($RootDirectory.'conf/old_settings.php');
-   
+
    // Now re-assign the default configuration settings to the ones defined as constants in the old version
    if (defined('dbHOST')) {
 		$NewConfiguration['DATABASE_HOST'] = dbHOST;
@@ -166,7 +166,7 @@ if (file_exists($RootDirectory.'conf/old_settings.php')) {
    if (defined('dbPASSWORD')) {
 		$NewConfiguration['DATABASE_PASSWORD'] = dbPASSWORD;
 		$DBPass = dbPASSWORD;
-	}   
+	}
    if (defined('agAPPLICATION_TITLE')) {
 		$NewConfiguration['APPLICATION_TITLE'] = agAPPLICATION_TITLE;
 		$ApplicationTitle = agAPPLICATION_TITLE;
@@ -201,7 +201,7 @@ if (file_exists($RootDirectory.'conf/old_settings.php')) {
    if (defined('agCOMMENT_THRESHOLD_PUNISHMENT')) $NewConfiguration['COMMENT_THRESHOLD_PUNISHMENT'] = agCOMMENT_THRESHOLD_PUNISHMENT;
    if (defined('agDEFAULT_ROLE')) $NewConfiguration['DEFAULT_ROLE'] = agDEFAULT_ROLE;
    if (defined('agALLOW_IMMEDIATE_ACCESS')) $NewConfiguration['ALLOW_IMMEDIATE_ACCESS'] = agALLOW_IMMEDIATE_ACCESS;
-   if (defined('agAPPROVAL_ROLE')) $NewConfiguration['APPROVAL_ROLE'] = agAPPROVAL_ROLE;   
+   if (defined('agAPPROVAL_ROLE')) $NewConfiguration['APPROVAL_ROLE'] = agAPPROVAL_ROLE;
 }
 
 // Retrieve all postback parameters
@@ -215,6 +215,7 @@ $SupportEmail = ForceIncomingString('SupportEmail', $SupportEmail);
 $SupportName = ForceIncomingString('SupportName', $SupportName);
 $ApplicationTitle = ForceIncomingString('ApplicationTitle', $ApplicationTitle);
 $CookieDomain = ForceIncomingString('CookieDomain', '');
+$CookieDomain = FormatCookieDomain($CookieDomain);
 $CookiePath = ForceIncomingString('CookiePath', '');
 
 function CreateFile($File, $Contents, &$Context) {
@@ -235,25 +236,25 @@ function CreateFile($File, $Contents, &$Context) {
 
 // Step 1. Check for correct PHP, MySQL, and permissions
 if ($PostBackAction == "Permissions") {
-   
+
    // Make sure we are running at least PHP 4.1.0
    if (intval(str_replace('.', '', phpversion())) < 410) $Context->WarningCollector->Add("It appears as though you are running PHP version ".phpversion().". Vanilla requires at least version 4.1.0 of PHP. You will need to upgrade your version of PHP before you can continue.");
    // Make sure MySQL is available
-   if (!function_exists('mysql_connect')) $Context->WarningCollector->Add("It appears as though you do not have MySQL enabled for PHP. You will need a working copy of MySQL and PHP's MySQL extensions enabled in order to run Vanilla.");   
+   if (!function_exists('mysql_connect')) $Context->WarningCollector->Add("It appears as though you do not have MySQL enabled for PHP. You will need a working copy of MySQL and PHP's MySQL extensions enabled in order to run Vanilla.");
    // Make sure the conf folder is readable
    if (!is_readable('../conf/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the conf folder.");
    // Make sure the conf folder is writeable
    if (!is_writable('../conf/')) $Context->WarningCollector->Add("Vanilla needs to have write permission enabled on the conf folder.");
-   
+
    // Make sure other folders are readable
    if (!is_readable('../extensions/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the extensions folder.");
    if (!is_readable('../languages/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the languages folder.");
    if (!is_readable('../themes/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the themes folder.");
    if (!is_readable('../setup/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the setup folder.");
-	
+
 	// Make sure the files don't exist already (ie. the site is already up and running);
    if (file_exists('../conf/settings.php')) $Context->WarningCollector->Add("Vanilla seems to have been upgraded already. You will need to remove the conf/settings.php and conf/database.php files to run the upgrade utility again.");
-	
+
    if ($Context->WarningCollector->Count() == 0) {
       $Contents = '<?php
 // Database Configuration Settings
@@ -261,7 +262,7 @@ if ($PostBackAction == "Permissions") {
       CreateFile($RootDirectory.'conf/database.php', $Contents, $Context);
       $Contents = "<?php
 // Make sure this file was not accessed directly and prevent register_globals configuration array attack
-if (!defined('IN_VANILLA')) exit();		
+if (!defined('IN_VANILLA')) exit();
 // Enabled Extensions
 ?>";
       CreateFile($RootDirectory.'conf/extensions.php', $Contents, $Context);
@@ -285,7 +286,7 @@ if (!defined('IN_VANILLA')) exit();
          $Context->WarningCollector->Add("For some reason we couldn't save your general settings to the '".$SettingsFile."' file.");
       }
    }
-      
+
    if ($Context->WarningCollector->Count() == 0) {
 		// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
       header('location: '.$WebRoot.'setup/upgrader.php?Step=2&PostBackAction=None');
@@ -302,10 +303,10 @@ if (!defined('IN_VANILLA')) exit();
    } elseif (!mysql_select_db($DBName, $Connection)) {
       $Context->WarningCollector->Add("We connected to the server, but we couldn't access the \"".$DBName."\" database. Are you sure it exists and that the specified user has access to it?");
    }
-   
+
    // If the database connection worked...
    if ($Context->WarningCollector->Count() == 0 && $Connection) {
-					
+
       // Make sure all of the required tables are there for upgrading
       $TableData = @mysql_query('show tables', $Connection);
       if (!$TableData) {
@@ -342,11 +343,11 @@ if (!defined('IN_VANILLA')) exit();
             $Context->WarningCollector->Add("It appears as though your Vanilla installation is missing some tables: <code>".$MissingTables."</code>");
          } else {
 				// 1. Upgrade Role Table (The hard part first)
-            
+
 				// Check for current columns in the table
             $RoleData = @mysql_query('show columns from '.$DatabaseTables['Role'], $Connection);
 				$RoleColumns = GetColumns($Connection, $DatabaseTables['Role']);
-				
+
             // 1a. Rename columns
 				if ($Context->WarningCollector->Count() == 0) {
 					if (in_array('CanLogin', $RoleColumns) && !in_array('PERMISSION_SIGN_IN', $RoleColumns)) {
@@ -354,14 +355,14 @@ if (!defined('IN_VANILLA')) exit();
 						if (!@mysql_query($AlterSQL, $Connection)) $Context->WarningCollector->Add("An error occurred renaming LUM_Role.CanLogin to LUM_Role.PERMISSION_SIGN_IN. MySQL reported the following error: <code>".mysql_error($Connection).'</code>');
 					}
 				}
-				
+
 				if ($Context->WarningCollector->Count() == 0) {
 					if (in_array('CanPostHTML', $RoleColumns) && !in_array('PERMISSION_HTML_ALLOWED', $RoleColumns)) {
 						$AlterSQL = "alter table ".$DatabaseTables['Role']." change CanPostHTML PERMISSION_HTML_ALLOWED enum('1','0') not null default '0'";
 						if (!@mysql_query($AlterSQL, $Connection)) $Context->WarningCollector->Add("An error occurred renaming LUM_Role.CanPostHTML to LUM_Role.PERMISSION_HTML_ALLOWED. MySQL reported the following error: <code>".mysql_error($Connection).'</code>');
 					}
 				}
-				
+
 				// 1b. Add new columns
 				if ($Context->WarningCollector->Count() == 0) {
 					if (!in_array('PERMISSION_RECEIVE_APPLICATION_NOTIFICATION', $RoleColumns)) {
@@ -369,7 +370,7 @@ if (!defined('IN_VANILLA')) exit();
 						if (!@mysql_query($AlterSQL, $Connection)) $Context->WarningCollector->Add("An error occurred while adding LUM_Role.PERMISSION_RECEIVE_APPLICATION_NOTIFICATION. MySQL reported the following error: <code>".mysql_error($Connection).'</code>');
 					}
 				}
-				
+
 				if ($Context->WarningCollector->Count() == 0) {
 					if (!in_array('Permissions', $RoleColumns)) {
 						$AlterSQL = "alter table ".$DatabaseTables['Role']." add Permissions text";
@@ -388,7 +389,7 @@ if (!defined('IN_VANILLA')) exit();
 						if (!@mysql_query($AlterSQL, $Connection)) $Context->WarningCollector->Add("An error occurred while adding LUM_Role.UnAuthenticated. MySQL reported the following error: <code>".mysql_error($Connection).'</code>');
 					}
 				}
-				
+
 				// 1c. Retrieve current permissions, serialize, and resave as long as the MasterAdmin column was present
             if (in_array('MasterAdmin', $RoleColumns)) {
 					// Get an updated version of the columns in the database (Because some were changed above)
@@ -438,8 +439,8 @@ if (!defined('IN_VANILLA')) exit();
 							$Permissions['PERMISSION_MANAGE_THEMES'] = ForceBool(@$Row['MasterAdmin'], 0);
 							$Permissions['PERMISSION_MANAGE_STYLES'] = ForceBool(@$Row['MasterAdmin'], 0);
 							$Permissions['PERMISSION_ALLOW_DEBUG_INFO'] = ForceBool(@$Row['MasterAdmin'], 0);
-							
-							
+
+
 							$UpdateSQL = "update ".$DatabaseTables['Role']." set Permissions = '".SerializeArray($Permissions)."' where RoleID = ".$RoleID;
 							if (!@mysql_query($UpdateSQL, $Connection)) {
 								$Context->WarningCollector->Add("An error occurred while updating LUM_Role data. MySQL reported the following error: <code>".mysql_error($Connection).'</code>');
@@ -450,7 +451,7 @@ if (!defined('IN_VANILLA')) exit();
 						}
 					}
 				}
-            
+
 				// 1d. Remove old permission columns
             if ($Context->WarningCollector->Count() == 0) {
 					// Silently drop these columns. If any errors occur, it doesn't
@@ -484,7 +485,7 @@ if (!defined('IN_VANILLA')) exit();
 						@mysql_query($AlterSQL, $Connection);
 					}
 				}
-				
+
 				// 1e. Make sure that there is an unauthenticated role.
             if ($Context->WarningCollector->Count() == 0) {
 					$SelectSQL = "select RoleID from ".$DatabaseTables['Role']." where UnAuthenticated = '1'";
@@ -503,13 +504,13 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 						}
 					}
 				}
-				
+
 				if ($Context->WarningCollector->Count() == 0) {
 					// Retrieve Category Columns
                $CategoryColumns = GetColumns($Connection, $DatabaseTables['Category']);
 					$DiscussionColumns = GetColumns($Connection, $DatabaseTables['Discussion']);
 					$UserColumns = GetColumns($Connection, $DatabaseTables['User']);
-					
+
 					// Make remaining table alterations
                if (in_array('Order', $CategoryColumns) && !in_array('Priority', $CategoryColumns)) {
 						$AlterSQL = "alter table ".$DatabaseTables['Category']." change `Order` Priority int not null default '0'";
@@ -537,12 +538,12 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 						@mysql_query($AlterSQL, $Connection);
 					}
 				}
-         }      
+         }
       }
       // Close the database connection
       @mysql_close($Connection);
    }
-   
+
    // If the database was upgraded successfully, save all parameters to the conf/database.php file
    if ($Context->WarningCollector->Count() == 0) {
       // Save database settings
@@ -556,7 +557,7 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 			$DBManager->DefineSetting("DATABASE_USER", $DBUser, 1);
 			$DBManager->DefineSetting("DATABASE_PASSWORD", $DBPass, 1);
 			$DBManager->SaveSettingsToFile($DBFile);
-		
+
 			// Save the general settings as well (now that we know this person is authenticated to
 	      // a degree - knowing the database access params).
 			$SettingsFile = $RootDirectory . 'conf/settings.php';
@@ -582,20 +583,20 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 		die();
    }
 } elseif ($PostBackAction == "User") {
-	$CurrentStep = 3;	
+	$CurrentStep = 3;
    // Validate user inputs
    if (strip_tags($ApplicationTitle) != $ApplicationTitle) $Context->WarningCollector->Add("You can't have any html in your forum name.");
    if ($SupportName == "") $Context->WarningCollector->Add("You must provide a support contact name.");
    if (!eregi("(.+)@(.+)\.(.+)", $SupportEmail)) $Context->WarningCollector->Add("The email address you entered doesn't appear to be valid.");
    if ($ApplicationTitle == "") $Context->WarningCollector->Add("You must provide an application title.");
-	
+
    $SettingsFile = $RootDirectory . 'conf/settings.php';
    $SettingsManager = new ConfigurationManager($Context);
 	$SettingsManager->GetSettingsFromFile($SettingsFile);
 	if ($SettingsManager->GetSetting('SETUP_COMPLETE') != '1') {
 		// Include the db settings defined in the previous step
 		include($RootDirectory.'conf/database.php');
-		
+
 		// Open the database connection
 		$Connection = false;
 		if ($Context->WarningCollector->Count() == 0) {
@@ -610,7 +611,7 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 				$Context->WarningCollector->Add("We connected to the server, but we couldn't access the \"".$DBName."\" database. Are you sure it exists and that the specified user has access to it?");
 			}
 		}
-		
+
 		// Insert the new Style and assign to all users
 		if ($Context->WarningCollector->Count() == 0 && $Connection) {
 			// Truncate all old styles (They can't work with the new Vanilla)
@@ -635,10 +636,10 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 				}
 			}
 		}
-		
+
 		// Close the database connection
 		@mysql_close($Connection);
-		
+
 		// Save the application constants
 		if ($Context->WarningCollector->Count() == 0) {
 			$SettingsManager->DefineSetting("SUPPORT_EMAIL", $SupportEmail, 1);
@@ -651,7 +652,7 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 			} else {
 				$SettingsManager->DefineSetting("BANNER_TITLE", $ApplicationTitle, 1);
 			}
-			
+
 			// Apply old settings if they were provided
 			ApplySetting($SettingsManager, $NewConfiguration, 'DISCUSSIONS_PER_PAGE');
 			ApplySetting($SettingsManager, $NewConfiguration, 'COMMENTS_PER_PAGE');
@@ -681,13 +682,13 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 	} else {
 		$Context->WarningCollector->Add("Vanilla seems to have been upgraded already. You will need to remove the conf/settings.php and conf/database.php files to run the upgrade utility again.");
 	}
-   
+
    if ($Context->WarningCollector->Count() == 0) {
 		// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
       header('location: '.$WebRoot.'setup/upgrader.php?Step=4&PostBackAction=None');
 		die();
 	}
-} 
+}
 
 // Write the page
 ?>
@@ -706,9 +707,9 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 			<?php
 			if ($CurrentStep < 2 || $CurrentStep > 4) {
 				echo  '<h2>Vanilla Upgrade Wizard (Step 1 of 3)</h2>
-				
+
 				<p><strong>Only use this upgrader if you are upgrading from Vanilla 0.9.2.x</strong></p>';
-				
+
 				if ($Context->WarningCollector->Count() > 0) {
 					echo "<div class=\"Warnings\">
 						<strong>We came across some problems while checking your permissions...</strong>
@@ -716,20 +717,20 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 					</div>";
 				}
 				echo "<p>Navigate the filesystem of your server to the Vanilla folder. If you have your old appg/settings.php file from your previous installation of Vanilla, rename it <strong>old_settings.php</strong> and upload it to the /conf folder of your new Vanilla installation.</p>
-				
+
 				<p>Vanilla will need read AND write access to the <strong>conf</strong> folder.</p>
-				
+
 				<p>There are many ways to set these permissions. One way is to execute the following from the root Vanilla folder:</p>
-				
+
 				<code>chmod 777 ./conf</code>
-				
+
 				<p>You will also need to grant read access to the extensions, languages, setup, and themes folders. Typically these permissions are granted by default, but if not you can achieve them with the following commands:</p>
-                                
+
                                 <code>chmod --recursive 755 ./extensions
                                 <br />chmod --recursive 755 ./languages
                                 <br />chmod --recursive 755 ./setup
                                 <br />chmod --recursive 755 ./themes</code>
-				
+
 				<form id=\"frmPermissions\" method=\"post\" action=\"upgrader.php\">
 				<input type=\"hidden\" name=\"PostBackAction\" value=\"Permissions\" />
 				<div class=\"Button\"><input type=\"submit\" value=\"Click here to check your permissions and proceed to the next step\" /></div>
@@ -770,6 +771,7 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 				} elseif ($CurrentStep == 3) {
 					if ($PostBackAction != "User") {
 						$CookieDomain = ForceString(@$_SERVER['HTTP_HOST'], "");
+						$CookieDomain = FormatCookieDomain($CookieDomain);
 						$CookiePath = $WebRoot;
 					}
 					echo "<h2>Vanilla Upgrade Wizard (Step 3 of 3)</h2>";
@@ -782,7 +784,7 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 					echo "<p>Now we've got to set up the support contact information for your forum. This is what people will see when emails go out from the system for things like password retrieval and role changes.</p>
 						<fieldset>"
 						.'<form name="frmUser" method="post" action="upgrader.php">
-						<input type="hidden" name="PostBackAction" value="User" />					
+						<input type="hidden" name="PostBackAction" value="User" />
 						<ul>
 							<li>
 								<label for="tSupportName">Support Contact Name</label>
@@ -823,7 +825,7 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 						<li>Public &amp; Private browsing on the Registration Management Form</li>
 						<li>On public forums, make sure that the unauthenticated role has access to all public discussion categories</li>
 					</ul>
-					
+
 					<p>If you find that there was some unforseen problem with the upgrade procedure, visit <a href=\"http://lussumo.com/community/\" target=\"Lussumo\">Lussumo Community Forum</a> for help.</p>
 					<div class=\"Button\"><a href=\"../people.php\">Go sign in and have some fun!</a></div>";
 				}
