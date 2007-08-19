@@ -37,5 +37,6 @@ $HeadString = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://
 $BodyId = "";
 if ($this->BodyId != "") $BodyId = ' id="'.$this->BodyId.'"';
 echo $HeadString . '</head>
-   <body'.$BodyId.' '.$this->Context->BodyAttributes.'>';
+   <body'.$BodyId.' '.$this->Context->BodyAttributes.'>
+   <div id="SiteContainer">';
 ?>
