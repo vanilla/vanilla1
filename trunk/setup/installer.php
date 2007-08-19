@@ -20,24 +20,24 @@ include('../library/Framework/Framework.Class.ConfigurationManager.php');
 include('../appg/database.php');
 
 // Set up some configuration defaults to override
-$Configuration['DATABASE_HOST'] = ''; 
-$Configuration['DATABASE_NAME'] = ''; 
-$Configuration['DATABASE_USER'] = ''; 
+$Configuration['DATABASE_HOST'] = '';
+$Configuration['DATABASE_NAME'] = '';
+$Configuration['DATABASE_USER'] = '';
 $Configuration['DATABASE_PASSWORD'] = '';
-$Configuration['DATABASE_CHARACTER_ENCODING'] = ''; 
+$Configuration['DATABASE_CHARACTER_ENCODING'] = '';
 $Configuration['APPLICATION_PATH'] = '';
-$Configuration['DATABASE_PATH'] = ''; 
-$Configuration['LIBRARY_PATH'] = ''; 
-$Configuration['EXTENSIONS_PATH'] = ''; 
+$Configuration['DATABASE_PATH'] = '';
+$Configuration['LIBRARY_PATH'] = '';
+$Configuration['EXTENSIONS_PATH'] = '';
 $Configuration['LANGUAGES_PATH'] = '';
 $Configuration['THEME_PATH'] = '';
 $Configuration['BASE_URL'] = '';
-$Configuration['DEFAULT_STYLE'] = ''; 
+$Configuration['DEFAULT_STYLE'] = '';
 $Configuration['WEB_ROOT'] = '';
-$Configuration['COOKIE_DOMAIN'] = '-'; 
-$Configuration['COOKIE_PATH'] = '-'; 
-$Configuration['SUPPORT_EMAIL'] = ''; 
-$Configuration['SUPPORT_NAME'] = ''; 
+$Configuration['COOKIE_DOMAIN'] = '-';
+$Configuration['COOKIE_PATH'] = '-';
+$Configuration['SUPPORT_EMAIL'] = '';
+$Configuration['SUPPORT_NAME'] = '';
 $Configuration['FORWARD_VALIDATED_USER_URL'] = '';
 $Configuration['CHARSET'] = 'utf-8';
 $Configuration['DATABASE_TABLE_PREFIX'] = 'LUM_';
@@ -100,6 +100,7 @@ $SupportEmail = ForceIncomingString('SupportEmail', '');
 $SupportName = ForceIncomingString('SupportName', '');
 $ApplicationTitle = ForceIncomingString('ApplicationTitle', 'Vanilla');
 $CookieDomain = ForceIncomingString('CookieDomain', '');
+$CookieDomain = FormatCookieDomain($CookieDomain);
 $CookiePath = ForceIncomingString('CookiePath', '');
 // Make the banner title the same as the application title
 $WorkingDirectory = str_replace('\\', '/', getcwd()).'/';
@@ -128,25 +129,25 @@ function CreateFile($File, $Contents, &$Context) {
 
 // Step 1. Check for correct PHP, MySQL, and permissions
 if ($PostBackAction == "Permissions") {
-   
+
    // Make sure we are running at least PHP 4.1.0
    if (intval(str_replace('.', '', phpversion())) < 410) $Context->WarningCollector->Add("It appears as though you are running PHP version ".phpversion().". Vanilla requires at least version 4.1.0 of PHP. You will need to upgrade your version of PHP before you can continue.");
    // Make sure MySQL is available
-   if (!function_exists('mysql_connect')) $Context->WarningCollector->Add("It appears as though you do not have MySQL enabled for PHP. You will need a working copy of MySQL and PHP's MySQL extensions enabled in order to run Vanilla.");   
+   if (!function_exists('mysql_connect')) $Context->WarningCollector->Add("It appears as though you do not have MySQL enabled for PHP. You will need a working copy of MySQL and PHP's MySQL extensions enabled in order to run Vanilla.");
    // Make sure the conf folder is readable
    if (!is_readable('../conf/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the conf folder.");
    // Make sure the conf folder is writeable
    if (!is_writable('../conf/')) $Context->WarningCollector->Add("Vanilla needs to have write permission enabled on the conf folder.");
-   
+
    // Make sure other folders are readable
    if (!is_readable('../extensions/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the extensions folder.");
    if (!is_readable('../languages/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the languages folder.");
    if (!is_readable('../themes/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the themes folder.");
    if (!is_readable('../setup/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the setup folder.");
-   
+
 	// Make sure the files don't exist already (ie. the site is already up and running);
-   if (file_exists('../conf/settings.php')) $Context->WarningCollector->Add("Vanilla seems to have been installed already. You will need to remove the conf/settings.php, conf/database.php files, and all database tables in order to run the installer utility again.");	
-	
+   if (file_exists('../conf/settings.php')) $Context->WarningCollector->Add("Vanilla seems to have been installed already. You will need to remove the conf/settings.php, conf/database.php files, and all database tables in order to run the installer utility again.");
+
    if ($Context->WarningCollector->Count() == 0) {
       $Contents = '<?php
 // Database Configuration Settings
@@ -154,7 +155,7 @@ if ($PostBackAction == "Permissions") {
       CreateFile($RootDirectory.'conf/database.php', $Contents, $Context);
       $Contents = "<?php
 // Make sure this file was not accessed directly and prevent register_globals configuration array attack
-if (!defined('IN_VANILLA')) exit();		
+if (!defined('IN_VANILLA')) exit();
 // Enabled Extensions
 ?>";
       CreateFile($RootDirectory.'conf/extensions.php', $Contents, $Context);
@@ -178,7 +179,7 @@ if (!defined('IN_VANILLA')) exit();
          $Context->WarningCollector->Add("For some reason we couldn't save your general settings to the '".$SettingsFile."' file.");
       }
    }
-      
+
    if ($Context->WarningCollector->Count() == 0) {
       // Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
       header('location: '.$WebRoot.'setup/installer.php?Step=2&PostBackAction=None');
@@ -205,7 +206,7 @@ if (!defined('IN_VANILLA')) exit();
 		} elseif (!mysql_select_db($DBName, $Connection)) {
 			$Context->WarningCollector->Add("We connected to the server, but we couldn't access the \"".$DBName."\" database. Are you sure it exists and that the specified user has access to it?");
 		}
-		
+
 		// If the database connection worked, attempt to set up the database
 		if ($Context->WarningCollector->Count() == 0 && $Connection) {
 			// On MySQL 4.1 and later, force UTF-8
@@ -213,7 +214,7 @@ if (!defined('IN_VANILLA')) exit();
 				mysql_query('SET NAMES "utf8"', $Connection);
 				$DatabaseCharacterEncoding = 'utf8';
 			}
-			
+
 			// Make sure there are no conflicting tables in the database
 			$TableData = @mysql_query('show tables', $Connection);
 			if (!$TableData) {
@@ -262,12 +263,12 @@ if (!defined('IN_VANILLA')) exit();
 							}
 						}
 					}
-				}      
+				}
 			}
 			// Close the database connection
 			@mysql_close($Connection);
 		}
-		
+
 		// If the database was created successfully, save all parameters to the conf/database.php file
 		if ($Context->WarningCollector->Count() == 0) {
 			$DBManager->DefineSetting("DATABASE_HOST", $DBHost, 1);
@@ -279,7 +280,7 @@ if (!defined('IN_VANILLA')) exit();
 				// $Context->WarningCollector->Clear();
 				// $Context->WarningCollector->Add("For some reason we couldn't save your database settings to the '.$DBFile.' file.");
 			}
-		
+
 			// Save the general settings as well (now that we know this person is authenticated to
 			// a degree - knowing the database access params).
 			$SettingsFile = $RootDirectory . 'conf/settings.php';
@@ -300,7 +301,7 @@ if (!defined('IN_VANILLA')) exit();
 			}
 		}
 	}
-	
+
    if ($Context->WarningCollector->Count() == 0) {
 		// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
       header('location: '.$WebRoot.'setup/installer.php?Step=3&PostBackAction=None');
@@ -308,7 +309,7 @@ if (!defined('IN_VANILLA')) exit();
    }
 } elseif ($PostBackAction == "User") {
 	$CurrentStep = 3;
-	
+
 	$SettingsFile = $RootDirectory . 'conf/settings.php';
 	$SettingsManager = new ConfigurationManager($Context);
 	$SettingsManager->GetSettingsFromFile($SettingsFile);
@@ -325,10 +326,10 @@ if (!defined('IN_VANILLA')) exit();
 		if ($SupportName == "") $Context->WarningCollector->Add("You must provide a support contact name.");
 		if (!eregi("(.+)@(.+)\.(.+)", $SupportEmail)) $Context->WarningCollector->Add("The email address you entered doesn't appear to be valid.");
 		if ($ApplicationTitle == "") $Context->WarningCollector->Add("You must provide an application title.");
-		
+
 		// Include the db settings defined in the previous step
 		include($RootDirectory.'conf/database.php');
-		
+
 		// Open the database connection
 		$Connection = false;
 		if ($Context->WarningCollector->Count() == 0) {
@@ -346,12 +347,12 @@ if (!defined('IN_VANILLA')) exit();
 				mysql_query('SET NAMES "utf8"', $Connection);
 			}
 		}
-		
+
 		// Create the administrative user
 		if ($Context->WarningCollector->Count() == 0 && $Connection) {
 			$Username = FormatStringForDatabaseInput($Username);
 			$Password = FormatStringForDatabaseInput($Password);
-			
+
 			$s = new SqlBuilder($Context);
 			$s->SetMainTable('User', 'u');
 			$s->AddFieldNameValue('FirstName', 'Administrative');
@@ -391,10 +392,10 @@ if (!defined('IN_VANILLA')) exit();
 			$s->AddFieldNameValue('Url', $ThemeDirectory.'vanilla/styles/default/');
 			@mysql_query($s->GetInsert(), $Connection);
 		}
-		
+
 		// Close the database connection
 		@mysql_close($Connection);
-		
+
 		// Save the application constants
 		if ($Context->WarningCollector->Count() == 0) {
 			$SettingsManager->DefineSetting("SUPPORT_EMAIL", $SupportEmail, 1);
@@ -409,14 +410,14 @@ if (!defined('IN_VANILLA')) exit();
 			$SettingsManager->SaveSettingsToFile($SettingsFile);
 		}
 	}
-   
+
    if ($Context->WarningCollector->Count() == 0) {
 		// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
       header('location: '.$WebRoot.'setup/installer.php?Step=4&PostBackAction=None');
 		die();
 	}
-} 
-   
+}
+
 // Write the page
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -441,18 +442,18 @@ if (!defined('IN_VANILLA')) exit();
 					</div>";
 				}
 				echo "<p>Navigate the filesystem of your server to the Vanilla folder. Vanilla will need read AND write access to the <strong>conf</strong> folder.</p>
-				
+
 				<p>There are many ways to set these permissions. One way is to execute the following from the root Vanilla folder:</p>
-				
+
 				<code>chmod 777 ./conf</code>
-				
+
 				<p>You will also need to grant read access to the extensions, languages, setup, and themes folders. Typically these permissions are granted by default, but if not you can achieve them with the following commands:</p>
-                                
+
                                 <code>chmod --recursive 755 ./extensions
                                 <br />chmod --recursive 755 ./languages
                                 <br />chmod --recursive 755 ./setup
                                 <br />chmod --recursive 755 ./themes</code>
-				
+
 				<form id=\"frmPermissions\" method=\"post\" action=\"installer.php\">
 				<input type=\"hidden\" name=\"PostBackAction\" value=\"Permissions\" />
 				<div class=\"Button\"><input type=\"submit\" value=\"Click here to check your permissions and proceed to the next step\" /></div>
@@ -493,6 +494,7 @@ if (!defined('IN_VANILLA')) exit();
 				} elseif ($CurrentStep == 3) {
 					if ($PostBackAction != "User") {
 						$CookieDomain = ForceString(@$_SERVER['HTTP_HOST'], "");
+						$CookieDomain = FormatCookieDomain($CookieDomain);
 						$CookiePath = $WebRoot;
 					}
 					echo "<h2>Vanilla Installation Wizard (Step 3 of 3)</h2>";
@@ -571,7 +573,7 @@ if (!defined('IN_VANILLA')) exit();
 						<li>Create new categories, and even limit which roles get to access them</li>
 					</ul>
 					<p>All of these configuration options (and many more) are available in the settings tab of your Vanilla forum.</p>
-					
+
 					<p>If you need some help getting started with administering your new Vanilla forum, you can <a href=\"http://lussumo.com/docs\" target=\"Lussumo\">read the complete documentation</a> or ask for help on the <a href=\"http://lussumo.com/community/\" target=\"Lussumo\">Lussumo Community Forum</a>. Enough talking...</p>
 					<div class=\"Button\"><a href=\"../people.php\">Go sign in and have some fun!</a></div>";
 				}

@@ -12,7 +12,7 @@
 */
 
 class GlobalsForm extends PostBackControl {
-	
+
 	var $ConfigurationManager;
 
 	function GlobalsForm(&$Context) {
@@ -23,9 +23,9 @@ class GlobalsForm extends PostBackControl {
 			$this->IsPostBack = 0;
 		} elseif ($this->IsPostBack) {
 			$this->Context->PageTitle = $this->Context->GetDefinition('ApplicationSettings');
-			
+
 			$SettingsFile = $this->Context->Configuration['APPLICATION_PATH'].'conf/settings.php';
-			
+
 			$this->ConfigurationManager = $this->Context->ObjectFactory->NewContextObject($this->Context, 'ConfigurationManager');
 			if ($this->PostBackAction == 'ProcessGlobals' && $this->IsValidFormPostBack()) {
 				$this->ConfigurationManager->GetSettingsFromForm($SettingsFile);
@@ -35,6 +35,17 @@ class GlobalsForm extends PostBackControl {
             $this->ConfigurationManager->DefineSetting('PUBLIC_BROWSING', ForceIncomingBool('PUBLIC_BROWSING', 0), 0);
             $this->ConfigurationManager->DefineSetting('USE_CATEGORIES', ForceIncomingBool('USE_CATEGORIES', 0), 0);
             $this->ConfigurationManager->DefineSetting('LOG_ALL_IPS', ForceIncomingBool('LOG_ALL_IPS', 0), 0);
+            	//Validate cookie domain.
+				//The pattern is loose; eg, It won't stop  "domain.tld" or ".co.uk" to be saved
+				//(the "domain.tld" can be set by the browser, the 2nd won't).
+				Validate(
+					$this->Context->GetDefinition('CookieDomain'),
+					0,
+					ForceIncomingString('COOKIE_DOMAIN', ''),
+					255,
+					'^[\.-_~a-zA-Z0-9]*\.?[-_~a-zA-Z0-9]+\.[-_~a-zA-Z0-9]+$',
+					$this->Context
+				);
 				// And save everything
 				if ($this->ConfigurationManager->SaveSettingsToFile($SettingsFile)) {
 					header('location: '.GetUrl($this->Context->Configuration, 'settings.php', '', '', '', '', 'PostBackAction=Globals&Success=1'));
@@ -45,7 +56,7 @@ class GlobalsForm extends PostBackControl {
 		}
       $this->CallDelegate('Constructor');
 	}
-	
+
 	function Render() {
 		if ($this->IsPostBack) {
          $this->CallDelegate('PreRender');
