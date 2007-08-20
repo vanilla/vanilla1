@@ -198,9 +198,7 @@ $Configuration['PREFERENCE_ShowDeletedDiscussions'] = '0';
 $Configuration['PREFERENCE_ShowDeletedComments'] = '0';
 
 // Vanilla is funded by these sponsored links.
-$Configuration['SPONSORED_LINKS'] = '<a href="http://www.myhomeloanadvice.com">Home Loan</a>
-<a href="http://www.unitedmortgagerates.com">Mortgage Rates</a>
-<a href="http://www.casinowatchdogs.com">Online Casino</a>';
+$Configuration['SPONSORED_LINKS'] = '<a href="http://www.myhomeloanadvice.com">Home Loan</a> <a href="http://www.unitedmortgagerates.com">Mortgage Rates</a> <a href="http://www.casinowatchdogs.com">Online Casino</a>';
 
 // By leaving the sponsored links in your installation of Vanilla, you are
 // helping to keep all projects by Lussumo alive. That being said, if you need
