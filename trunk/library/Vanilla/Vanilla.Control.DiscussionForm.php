@@ -23,7 +23,7 @@ class DiscussionForm extends PostBackControl {
 	var $Title;				// The title of the form
    var $CommentFormAttributes; // Attributes added to the comment form's textarea input
    var $DiscussionFormAttributes; // Attributes added to the discussion form's textarea input
-	
+
 	function DiscussionForm(&$Context) {
 		$this->Name = 'DiscussionForm';
 		$this->CommentFormAttributes = '';
@@ -37,7 +37,7 @@ class DiscussionForm extends PostBackControl {
 		$this->ValidActions = array('SaveDiscussion', 'SaveComment', 'Reply');
 
 		$this->CallDelegate('PreLoadData');
-		
+
 		// Check permissions and make sure that the user can add comments/discussions
       // Make sure user can post
 		if ($this->DiscussionID == 0 && $this->Context->Session->UserID == 0) {
@@ -47,7 +47,7 @@ class DiscussionForm extends PostBackControl {
 
 		$this->Comment = $this->Context->ObjectFactory->NewContextObject($this->Context, 'Comment');
 		$this->Discussion = $this->Context->ObjectFactory->NewContextObject($this->Context, 'Discussion');
-		
+
 		$cm = $this->Context->ObjectFactory->NewContextObject($this->Context, 'CommentManager');
 		$dm = $this->Context->ObjectFactory->NewContextObject($this->Context, 'DiscussionManager');
 		$this->DelegateParameters['CommentManager'] = &$cm;
@@ -80,14 +80,14 @@ class DiscussionForm extends PostBackControl {
 				&& !$this->Context->Session->User->Permission('PERMISSION_EDIT_COMMENTS')
 				&& $this->Context->Session->UserID != $this->Comment->AuthUserID
 				&& !($this->Discussion->FirstCommentID == $this->CommentID && $this->Context->Session->User->Permission('PERMISSION_EDIT_DISCUSSIONS'))) {
-					
+
 				$this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrPermissionCommentEdit'));
 				$this->FatalError = 1;
 			}
 		}
 
 		$this->CallDelegate('PostLoadData');
-		
+
 		// If saving a discussion
 		if ($this->PostBackAction == 'SaveDiscussion') {
 			$FirstCommentID = $this->Discussion->FirstCommentID;
@@ -100,20 +100,20 @@ class DiscussionForm extends PostBackControl {
 			// If we are editing a discussion, the following line
 			// will make sure we save the proper discussion topic & message
 			$this->Discussion->DiscussionID = $this->EditDiscussionID;
-			
+
 			if ($this->IsValidFormPostBack()) {
 				$this->DelegateParameters['SaveDiscussion'] = &$this->Discussion;
 				$this->CallDelegate('PreSaveDiscussion');
-	
+
 				$ResultDiscussion = $dm->SaveDiscussion($this->Discussion);
-				
+
 				$this->DelegateParameters['ResultDiscussion'] = &$ResultDiscussion;
 				$this->CallDelegate('PostSaveDiscussion');
-			
+
 				if ($ResultDiscussion) {
 					// Saved successfully, so send back to the discussion
 					$Suffix = CleanupString($this->Discussion->Name).'/';
-					header('location:'.GetUrl($this->Context->Configuration, 'comments.php', '', 'DiscussionID', $ResultDiscussion->DiscussionID, '', '', $Suffix));
+					header('Location: '.GetUrl($this->Context->Configuration, 'comments.php', '', 'DiscussionID', $ResultDiscussion->DiscussionID, '', '', $Suffix));
 					die();
 				}
 			}
@@ -123,7 +123,7 @@ class DiscussionForm extends PostBackControl {
 			$this->Comment->GetPropertiesFromForm();
 			$this->Comment->DiscussionID = $this->DiscussionID;
 			$this->Discussion = $dm->GetDiscussionById($this->Comment->DiscussionID);
-			
+
 			if ($this->IsValidFormPostBack()) {
 				// Make sure to prevent saving comments if the discussion is closed and
 				// the user doesn't have permission to manage closed discussions
@@ -133,13 +133,13 @@ class DiscussionForm extends PostBackControl {
 				} else {
 					$this->DelegateParameters['SaveComment'] = &$this->Comment;
 					$this->CallDelegate('PreSaveComment');
-					
+
 					$ResultComment = $cm->SaveComment($this->Comment);
 				}
-				
+
 				$this->DelegateParameters['ResultComment'] = &$ResultComment;
 				$this->CallDelegate('PostSaveComment');
-				
+
 				if ($ResultComment) {
 					// Reload the discussion so the "lastpage" property is recalculated with the new comment in the math.
 					$this->Discussion = $dm->GetDiscussionById($this->Comment->DiscussionID);
@@ -152,17 +152,17 @@ class DiscussionForm extends PostBackControl {
 					if (array_key_exists(1, $UrlParts)) $QS = str_replace("&amp;", "&", $UrlParts[1]);
 					$Url = $UrlParts[0];
 					if ($QS != "") $Url .= "?".str_replace("&amp;", "&", $UrlParts[1]);
-					header('location:'.$Url);
+					header('Location: '.$Url);
 					die();
 				}
 			}
 		} elseif ($this->PostBackAction == 'Reply') {
 			if ($this->Comment) $this->Comment->GetPropertiesFromForm();
 		}
-		
+
 		if (!$this->IsPostBack && $this->Comment->DiscussionID == 0 && $this->Comment->CommentID == 0) {
 			if (!$this->Discussion->Comment) $this->Discussion->Comment = $this->Context->ObjectFactory->NewContextObject($this->Context, 'Comment');
-			
+
 			$this->Discussion->Comment->FormatType = $this->Context->Session->User->DefaultFormatType;
 			if ($this->Comment) $this->Comment->FormatType = $this->Context->Session->User->DefaultFormatType;
 		}
@@ -183,30 +183,30 @@ class DiscussionForm extends PostBackControl {
 		$this->Context->PageTitle = $this->Title;
 		$this->CallDelegate('PostSaveData');
 	}
-	
+
 	function GetCommentForm($Comment) {
 		$this->DelegateParameters['Comment'] = &$Comment;
 		$this->CallDelegate('CommentForm_PreRender');
-		
+
 		// Encode everything properly
       $Comment->FormatPropertiesForDisplay(1);
-		
+
 		$this->PostBackParams->Set('PostBackAction', 'SaveComment');
 		$this->PostBackParams->Set('UserCommentCount', $this->Context->Session->User->CountComments);
 		$this->PostBackParams->Set('AuthUserID', $Comment->AuthUserID);
 
 		include(ThemeFilePath($this->Context->Configuration, 'comment_form.php'));
-		
+
 		$this->CallDelegate('CommentForm_PostRender');
 	}
-	
+
 	function GetDiscussionForm($Discussion) {
 		$this->DelegateParameters['Discussion'] = &$Discussion;
 		$this->CallDelegate('DiscussionForm_PreRender');
-		
+
 		if (!$this->DiscussionFormattedForDisplay) $Discussion->FormatPropertiesForDisplay();
 		$Discussion->Comment->FormatPropertiesForDisplay(1);
-		
+
 		// Load the category selector
 		$cm = $this->Context->ObjectFactory->NewContextObject($this->Context, 'CategoryManager');
 		$CategoryData = $cm->GetCategories(0, 1);
@@ -225,24 +225,24 @@ class DiscussionForm extends PostBackControl {
 			$cs->AddOption($cat->CategoryID, $cat->Name);
 			$LastBlocked = $cat->Blocked;
 		}
-		
+
 		$this->PostBackParams->Set('CommentID', $Discussion->FirstCommentID);
 		$this->PostBackParams->Set('AuthUserID', $Discussion->AuthUserID);
 		$this->PostBackParams->Set('UserDiscussionCount', $this->Context->Session->User->CountDiscussions);
 		$this->PostBackParams->Set('PostBackAction', 'SaveDiscussion');
-		
+
 		include(ThemeFilePath($this->Context->Configuration, 'discussion_form.php'));
-		
+
 		$this->CallDelegate('DiscussionForm_PostRender');
 	}
-	
+
 	function GetPostFormatting($SelectedFormatType) {
 		$FormatCount = count($this->Context->StringManipulator->Formatters);
 		$f = $this->Context->ObjectFactory->NewObject($this->Context, 'Radio');
 		$f->Name = 'FormatType';
 		$f->CssClass = 'FormatTypeRadio';
 		$f->SelectedID = $SelectedFormatType;
-		
+
 		$this->DelegateParameters['FormatRadio'] = &$f;
 		$ItemAppend = '';
 		while (list($Name, $Object) = each($this->Context->StringManipulator->Formatters)) {
@@ -253,12 +253,12 @@ class DiscussionForm extends PostBackControl {
 			$ItemAppend = '';
 		}
 		$this->CallDelegate('PreFormatRadioRender');
-		
+
 		$sReturn = '';
 		include(ThemeFilePath($this->Context->Configuration, 'post_formatter.php'));
 		return $sReturn;
 	}
-	
+
 	function Render() {
 		if ($this->FatalError) {
 			$this->Render_Warnings();

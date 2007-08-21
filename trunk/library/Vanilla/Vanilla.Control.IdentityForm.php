@@ -15,7 +15,7 @@
 class IdentityForm extends PostBackControl {
 	var $UserManager;
 	var $User;
-	
+
 	function IdentityForm (&$Context, &$UserManager, &$User) {
 		$this->Name = 'IdentityForm';
 		$this->ValidActions = array('ProcessIdentity', 'Identity');
@@ -28,12 +28,12 @@ class IdentityForm extends PostBackControl {
 				$this->User->GetPropertiesFromForm();
 				$this->User->Preferences = $User->Preferences;
 				$this->CallDelegate('PreSaveIdentity');
-				if ($this->UserManager->SaveIdentity($this->User) && $this->UserManager->SaveUserCustomizationsFromForm($this->User)) header('location: '.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', 'u', ($this->Context->Session->UserID == 0 ? '' : $this->User->UserID), '', 'Success=1'));
+				if ($this->UserManager->SaveIdentity($this->User) && $this->UserManager->SaveUserCustomizationsFromForm($this->User)) header('Location: '.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', 'u', ($this->Context->Session->UserID == 0 ? '' : $this->User->UserID), '', 'Success=1'));
 			}
 		}
 		$this->CallDelegate('Constructor');
 	}
-	
+
 	function Render() {
 		if ($this->IsPostBack) {
 			$this->CallDelegate('PreRender');

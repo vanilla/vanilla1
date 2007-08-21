@@ -182,7 +182,7 @@ if (!defined('IN_VANILLA')) exit();
 
    if ($Context->WarningCollector->Count() == 0) {
       // Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
-      header('location: '.$WebRoot.'setup/installer.php?Step=2&PostBackAction=None');
+      header('Location: '.$WebRoot.'setup/installer.php?Step=2&PostBackAction=None');
       die();
    }
 } elseif ($PostBackAction == "Database") {
@@ -304,7 +304,7 @@ if (!defined('IN_VANILLA')) exit();
 
    if ($Context->WarningCollector->Count() == 0) {
 		// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
-      header('location: '.$WebRoot.'setup/installer.php?Step=3&PostBackAction=None');
+      header('Location: '.$WebRoot.'setup/installer.php?Step=3&PostBackAction=None');
 		die();
    }
 } elseif ($PostBackAction == "User") {
@@ -413,7 +413,7 @@ if (!defined('IN_VANILLA')) exit();
 
    if ($Context->WarningCollector->Count() == 0) {
 		// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
-      header('location: '.$WebRoot.'setup/installer.php?Step=4&PostBackAction=None');
+      header('Location: '.$WebRoot.'setup/installer.php?Step=4&PostBackAction=None');
 		die();
 	}
 }

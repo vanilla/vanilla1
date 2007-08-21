@@ -14,7 +14,7 @@
 class PasswordForm extends PostBackControl {
 	var $UserManager;
 	var $User;
-	
+
 	function PasswordForm (&$Context, &$UserManager, $UserID) {
 		$this->Name = 'PasswordForm';
 		if ($Context->Configuration['ALLOW_PASSWORD_CHANGE']) $this->ValidActions = array('ProcessPassword', 'Password');
@@ -25,12 +25,12 @@ class PasswordForm extends PostBackControl {
 			$this->User->GetPropertiesFromForm();
 			$this->User->UserID = $UserID;
 			if ($this->PostBackAction == 'ProcessPassword' && $this->IsValidFormPostBack()) {
-				if ($this->UserManager->ChangePassword($this->User)) header('location: '.GetUrl($this->Context->Configuration, $this->Context->SelfUrl));
+				if ($this->UserManager->ChangePassword($this->User)) header('Location: '.GetUrl($this->Context->Configuration, $this->Context->SelfUrl));
 			}
 		}
 		$this->CallDelegate('Constructor');
 	}
-	
+
 	function Render() {
 		if ($this->IsPostBack) {
 			$this->CallDelegate('PreRender');

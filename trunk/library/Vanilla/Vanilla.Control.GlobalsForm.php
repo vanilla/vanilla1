@@ -48,7 +48,7 @@ class GlobalsForm extends PostBackControl {
 				);
 				// And save everything
 				if ($this->ConfigurationManager->SaveSettingsToFile($SettingsFile)) {
-					header('location: '.GetUrl($this->Context->Configuration, 'settings.php', '', '', '', '', 'PostBackAction=Globals&Success=1'));
+					header('Location: '.GetUrl($this->Context->Configuration, 'settings.php', '', '', '', '', 'PostBackAction=Globals&Success=1'));
 				} else {
 					$this->PostBackAction = 'Globals';
 				}

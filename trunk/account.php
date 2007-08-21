@@ -19,11 +19,11 @@ include("appg/init_vanilla.php");
 
 	// Ensure the user is allowed to view this page
 	$Context->Session->Check($Context);
-	
+
 	// Make sure that any existing $UserManager object is destroyed so that
    // extensions using delegation to perform actions on this page's $UserManager
    // object work as they should.
-	if (!@$UserManager) unset($UserManager); 
+	if (!@$UserManager) unset($UserManager);
 	$UserManager = $Context->ObjectFactory->NewContextObject($Context, "UserManager");
 	$AccountUserID = ForceIncomingInt("u", $Context->Session->UserID);
 	if (!@$AccountUser) $AccountUser = $UserManager->GetUserById($AccountUserID);
@@ -36,13 +36,13 @@ include("appg/init_vanilla.php");
 			$AccountUser = false;
 		}
 	}
-	
+
 	// If a user id was not supplied, assume that this user doesn't have an active account and kick them back to the index
 	if ($AccountUserID == 0) {
-		header("location: ".GetUrl($Configuration, "index.php"));
+		header("Location: ".GetUrl($Configuration, "index.php"));
 		die();
 	}
-	
+
 	// Define properties of the page controls that are specific to this page
    $Head->BodyId = 'AccountPage';
 	$Menu->CurrentTab = "account";
@@ -65,7 +65,7 @@ include("appg/init_vanilla.php");
 		if ($AccountUser && $Context->Session->User) {
 			if ($AccountUser->UserID == $Context->Session->UserID) {
 				$Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangeYourPersonalInformation"), GetUrl($Configuration, $Context->SelfUrl, "", "", "", "", "PostBackAction=Identity"), "", "", 10);
-				if ($Configuration["ALLOW_PASSWORD_CHANGE"]) $Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangeYourPassword"), GetUrl($Context->Configuration, $Context->SelfUrl, "", "", "", "", "PostBackAction=Password"), "", "", 20);				
+				if ($Configuration["ALLOW_PASSWORD_CHANGE"]) $Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangeYourPassword"), GetUrl($Context->Configuration, $Context->SelfUrl, "", "", "", "", "PostBackAction=Password"), "", "", 20);
 			} elseif ($AccountUser->UserID != $Context->Session->UserID && $Context->Session->User->Permission("PERMISSION_EDIT_USERS") && $AccountUser) {
 				$Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangePersonalInformation"), GetUrl($Context->Configuration, $Context->SelfUrl, "", "u", $AccountUser->UserID, "", "PostBackAction=Identity"), "", "", 10);
 			}
@@ -77,13 +77,13 @@ include("appg/init_vanilla.php");
 		}
 		if ($AccountUser->UserID == $Context->Session->UserID) {
 			$Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangeForumFunctionality"), GetUrl($Context->Configuration, $Context->SelfUrl, "", "", "", "", "PostBackAction=Functionality"), "", "", 40);
-		}		
+		}
 	}
-	
+
 	// Create the account profile
 	$AccountProfile = $Context->ObjectFactory->CreateControl($Context, "Account", $AccountUser);
 	$AccountProfileEnd = $Context->ObjectFactory->CreateControl($Context, 'Filler', 'account_profile_end.php');
-	
+
 	// Forms
 	$IdentityForm = $Context->ObjectFactory->CreateControl($Context, "IdentityForm", $UserManager, $AccountUser);
 	if ($Configuration["ALLOW_PASSWORD_CHANGE"]) $PasswordForm = $Context->ObjectFactory->CreateControl($Context, "PasswordForm", $UserManager, $AccountUserID);
