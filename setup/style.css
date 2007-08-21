@@ -80,6 +80,12 @@ fieldset label {
    margin: 0px 0px 6px 0px;
    width:30%;
 }
+fieldset label.CheckBox {
+   float: none;
+   }
+fieldset label.CheckBox input {
+   width: auto !important;
+   }
 fieldset ul li {
    clear: left;
 }

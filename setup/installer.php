@@ -317,6 +317,8 @@ if (!defined('IN_VANILLA')) exit();
 	if ($SettingsManager->GetSetting('SETUP_COMPLETE') != '0') {
 		$Context->WarningCollector->Add("Vanilla seems to have been installed already. You will need to remove the conf/settings.php, conf/database.php files, and all database tables in order to run the installer utility again.");
 	} else {
+		$DoSponsoredLinks = ForceIncomingBool('DoSponsoredLinks', 0);
+		
 		// Validate user inputs
 		if (strip_tags($Username) != $Username) $Context->WarningCollector->Add("You really shouldn't have any html into your username.");
 		if (strlen($Username) > 20) $Context->WarningCollector->Add("Your username is too long");
@@ -399,7 +401,6 @@ if (!defined('IN_VANILLA')) exit();
 
 		// Save the application constants
 		if ($Context->WarningCollector->Count() == 0) {
-			$DoSponsoredLinks = ForceIncomingBool('DoSponsoredLinks', 0);
 			$SettingsManager->DefineSetting("SUPPORT_EMAIL", $SupportEmail, 1);
 			$SettingsManager->DefineSetting("SUPPORT_NAME", $SupportName, 1);
 			$SettingsManager->DefineSetting("APPLICATION_TITLE", $ApplicationTitle, 1);
@@ -408,7 +409,7 @@ if (!defined('IN_VANILLA')) exit();
 			$SettingsManager->DefineSetting("COOKIE_PATH", $CookiePath, 1);
 			$SettingsManager->DefineSetting("SETUP_COMPLETE", '1', 1);
 			// Also save the sponsored links to the conf file (so they are not changed later by an upgrade).
-         if (!$DoSponsoredLinks) $SponsoredLinks = '';
+         if ($DoSponsoredLinks == 0) $SponsoredLinks = '';
 			$SettingsManager->DefineSetting("SPONSORED_LINKS", $SponsoredLinks, 1);
 			$SettingsManager->SaveSettingsToFile($SettingsFile);
 		}
@@ -554,11 +555,10 @@ if (!defined('IN_VANILLA')) exit();
 								<input id="tCookiePath" type="text" name="CookiePath" value="'.FormatStringForDisplay($CookiePath, 1).'" />
 							</li>
 						</ul>
-						<p>Help Support Vanilla by allowing three unobtrusive text-links in the side-panel of your forum.</p>
+						<p>You can help to keep Vanilla free by allowing three unobtrusive text-links in the side-panel of your forum.</p>
 						<ul>
 							<li>
-								<label for="tApplicationTitle">Sponsored Links</label>
-								<input id="cSponsoredLinks" type="checkbox" name="DoSponsoredLinks" checked="'.$DoSponsoredLinks ? 'true' : 'false' .'" />
+								<label for="cSponsoredLinks" class="CheckBox"><input id="cSponsoredLinks" type="checkbox" name="DoSponsoredLinks" value="1"'.($DoSponsoredLinks == 0 ? '' : ' checked="checked"') .'" /> Help Keep Vanilla Free</label>
 							</li>
 						</ul>
 						<div class="Button"><input type="submit" value="Click here to complete the setup process!" /></div>
