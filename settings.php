@@ -41,7 +41,7 @@ for ($i = 0; $i < $RequiredPermissionsCount; $i++) {
 	}
 }
 if (!$Allowed) {
-	header('location:'.GetUrl($Configuration, 'index.php'));
+	header('Location:'.GetUrl($Configuration, 'index.php'));
 	exit();
 }
 
@@ -67,7 +67,7 @@ if (!$Allowed) {
 	if ($Context->Session->User->Permission('PERMISSION_ADD_ROLES')
 		|| $Context->Session->User->Permission('PERMISSION_EDIT_ROLES')
 		|| $Context->Session->User->Permission('PERMISSION_REMOVE_ROLES')) $Panel->AddListItem($AdminOptions, $Context->GetDefinition('RoleManagement'), GetUrl($Configuration, 'settings.php', '', '', '', '', 'PostBackAction=Roles'), '', '', 30);
-		
+
 	if ($Context->Configuration['USE_CATEGORIES']
 		&& ($Context->Session->User->Permission('PERMISSION_ADD_CATEGORIES')
 			|| $Context->Session->User->Permission('PERMISSION_EDIT_CATEGORIES')
@@ -75,9 +75,9 @@ if (!$Allowed) {
 			|| $Context->Session->User->Permission('PERMISSION_SORT_CATEGORIES')
 			)
 		) $Panel->AddListItem($AdminOptions, $Context->GetDefinition('CategoryManagement'), GetUrl($Configuration, 'settings.php', '', '', '', '', 'PostBackAction=Categories'), '', '', 50);
-		
+
 	if ($Context->Session->User->Permission('PERMISSION_MANAGE_REGISTRATION')) $Panel->AddListItem($AdminOptions, $Context->GetDefinition('RegistrationManagement'), GetUrl($Configuration, 'settings.php', '', '', '', '', 'PostBackAction=RegistrationChange'), '', '', 40);
-	   
+
    // Create the default view
    $SettingsHelp = $Context->ObjectFactory->CreateControl($Context, 'SettingsHelp');
 
@@ -118,10 +118,10 @@ if (!$Allowed) {
 	$Page->AddRenderControl($ApplicantsForm, $Configuration['CONTROL_POSITION_BODY_ITEM'] + 90);
 	$Page->AddRenderControl($Foot, $Configuration['CONTROL_POSITION_FOOT']);
 	$Page->AddRenderControl($PageEnd, $Configuration['CONTROL_POSITION_PAGE_END']);
-   
+
 
 // 4. FIRE PAGE EVENTS
 
    $Page->FireEvents();
-   
+
 ?>

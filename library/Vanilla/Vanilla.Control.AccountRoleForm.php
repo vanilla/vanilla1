@@ -14,7 +14,7 @@
 class AccountRoleForm extends PostBackControl {
 	var $User;
 	var $RoleSelect;
-	
+
 	function AccountRoleForm (&$Context, &$UserManager, $User) {
 		$this->Name = 'AccountRoleForm';
 		$this->ValidActions = array('ApproveUser', 'DeclineUser', 'Role', 'ProcessRole');
@@ -27,14 +27,14 @@ class AccountRoleForm extends PostBackControl {
 				$urh->GetPropertiesFromForm();
 				if ($UserManager->AssignRole($urh)) $Redirect = 1;
 			}
-			
+
 			if ($Redirect) {
-				header('location: '.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', 'u', $User->UserID));
+				header('Location: '.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', 'u', $User->UserID));
 				die();
 			} else {
 				$this->PostBackAction = str_replace('Process', '', $this->PostBackAction);
 			}
-			
+
 			if ($this->PostBackAction == 'Role') {
 				$RoleManager = $this->Context->ObjectFactory->NewContextObject($this->Context, 'RoleManager');
 				$RoleData = $RoleManager->GetRoles();
@@ -49,7 +49,7 @@ class AccountRoleForm extends PostBackControl {
 		}
 		$this->CallDelegate('Constructor');
 	}
-	
+
 	function Render() {
 		if ($this->PostBackAction == 'Role') {
 			$this->CallDelegate('PreRender');

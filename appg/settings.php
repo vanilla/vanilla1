@@ -9,7 +9,7 @@
 * Contact Mark O'Sullivan at mark [at] lussumo [dot] com
 *
 * Description: Global application constants
-* 
+*
 *
 *
 *
@@ -23,7 +23,7 @@
 *
 *
 *
-* 
+*
 * If you wish to override any configuration setting, do it in the
 * conf/settings.php file. This file will be overwritten when you apply upgrades
 * to Vanilla. The conf/settings.php file will NOT be overwritten.
@@ -36,25 +36,25 @@ $Configuration = array();
 // Database Settings
 $Configuration['DATABASE_SERVER'] = 'MySQL';
 $Configuration['DATABASE_TABLE_PREFIX'] = 'LUM_';
-$Configuration['DATABASE_HOST'] = 'localhost'; 
-$Configuration['DATABASE_NAME'] = 'your_vanilla_database_name'; 
-$Configuration['DATABASE_USER'] = 'your_vanilla_database_user_name'; 
-$Configuration['DATABASE_PASSWORD'] = 'your_vanilla_database_password'; 
-$Configuration['FARM_DATABASE_HOST'] = ''; 
-$Configuration['FARM_DATABASE_NAME'] = 'your_farm_database_name'; 
-$Configuration['FARM_DATABASE_USER'] = 'your_farm_database_user_name'; 
+$Configuration['DATABASE_HOST'] = 'localhost';
+$Configuration['DATABASE_NAME'] = 'your_vanilla_database_name';
+$Configuration['DATABASE_USER'] = 'your_vanilla_database_user_name';
+$Configuration['DATABASE_PASSWORD'] = 'your_vanilla_database_password';
+$Configuration['FARM_DATABASE_HOST'] = '';
+$Configuration['FARM_DATABASE_NAME'] = 'your_farm_database_name';
+$Configuration['FARM_DATABASE_USER'] = 'your_farm_database_user_name';
 $Configuration['FARM_DATABASE_PASSWORD'] = 'your_farm_database_password';
 $Configuration['DATABASE_CHARACTER_ENCODING'] = '';
 
 // Path Settings
 $Configuration['APPLICATION_PATH'] = '/path/to/vanilla/';
-$Configuration['DATABASE_PATH'] = '/path/to/your/database/file.php'; 
-$Configuration['LIBRARY_PATH'] = '/path/to/your/library/'; 
-$Configuration['EXTENSIONS_PATH'] = '/path/to/your/extensions/'; 
+$Configuration['DATABASE_PATH'] = '/path/to/your/database/file.php';
+$Configuration['LIBRARY_PATH'] = '/path/to/your/library/';
+$Configuration['EXTENSIONS_PATH'] = '/path/to/your/extensions/';
 $Configuration['LANGUAGES_PATH'] = '/path/to/your/languages/';
 $Configuration['THEME_PATH'] = '/path/to/vanilla/themes/vanilla/';
 $Configuration['BASE_URL'] = 'http://your.base.url/to/vanilla/';
-$Configuration['DEFAULT_STYLE'] = '/vanilla/themes/vanilla/styles/default/'; 
+$Configuration['DEFAULT_STYLE'] = '/vanilla/themes/vanilla/styles/default/';
 $Configuration['WEB_ROOT'] = '/vanilla/';
 $Configuration['SIGNIN_URL'] = 'people.php';
 $Configuration['SIGNOUT_URL'] = 'people.php?PostBackAction=SignOutNow';
@@ -64,15 +64,15 @@ $Configuration['AUTHENTICATION_MODULE'] = 'People/People.Class.Authenticator.php
 $Configuration['COOKIE_USER_KEY'] = 'lussumocookieone';
 $Configuration['COOKIE_VERIFICATION_KEY'] = 'lussumocookietwo';
 $Configuration['SESSION_USER_IDENTIFIER'] = 'LussumoUserID';
-$Configuration['COOKIE_DOMAIN'] = '.domain.com'; 
-$Configuration['COOKIE_PATH'] = '/'; 
-$Configuration['SUPPORT_EMAIL'] = 'support@domain.com'; 
-$Configuration['SUPPORT_NAME'] = 'Support'; 
+$Configuration['COOKIE_DOMAIN'] = '.domain.com';
+$Configuration['COOKIE_PATH'] = '/';
+$Configuration['SUPPORT_EMAIL'] = 'support@domain.com';
+$Configuration['SUPPORT_NAME'] = 'Support';
 $Configuration['LOG_ALL_IPS'] = '0';
 $Configuration['FORWARD_VALIDATED_USER_URL'] = './';
-$Configuration['ALLOW_IMMEDIATE_ACCESS'] = '0'; 
-$Configuration['DEFAULT_ROLE'] = '0'; 
-$Configuration['APPROVAL_ROLE'] = '3'; 
+$Configuration['ALLOW_IMMEDIATE_ACCESS'] = '0';
+$Configuration['DEFAULT_ROLE'] = '0';
+$Configuration['APPROVAL_ROLE'] = '3';
 $Configuration['SAFE_REDIRECT'] = 'people.php?PageAction=SignOutNow';
 $Configuration['PEOPLE_USE_EXTENSIONS'] = '1';
 $Configuration['DEFAULT_EMAIL_VISIBLE'] = '0';
@@ -89,7 +89,7 @@ $Configuration['PAGELIST_NUMERIC_TEXT'] = '0';
 $Configuration['LIBRARY_NAMESPACE_ARRAY'] = array('Framework', 'People', 'Vanilla');
 $Configuration['DEFAULT_FORMAT_TYPE'] = 'Text';
 $Configuration['FORMAT_TYPES'] = array('Text');
-$Configuration['APPLICATION_TITLE'] = 'Vanilla'; 
+$Configuration['APPLICATION_TITLE'] = 'Vanilla';
 $Configuration['BANNER_TITLE'] = 'Vanilla';
 $Configuration['UPDATE_REMINDER'] = 'Monthly';
 $Configuration['LAST_UPDATE'] = '';
@@ -97,23 +97,23 @@ $Configuration['HTTP_METHOD'] = 'http'; // Could alternately be https
 
 // Vanilla Settings
 $Configuration['ENABLE_WHISPERS'] = '0';
-$Configuration['DISCUSSIONS_PER_PAGE'] = '30'; 
-$Configuration['COMMENTS_PER_PAGE'] = '50'; 
-$Configuration['SEARCH_RESULTS_PER_PAGE'] = '30'; 
+$Configuration['DISCUSSIONS_PER_PAGE'] = '30';
+$Configuration['COMMENTS_PER_PAGE'] = '50';
+$Configuration['SEARCH_RESULTS_PER_PAGE'] = '30';
 $Configuration['ALLOW_NAME_CHANGE'] = '1';
 $Configuration['ALLOW_EMAIL_CHANGE'] = '1';
 $Configuration['ALLOW_PASSWORD_CHANGE'] = '1';
 $Configuration['USE_REAL_NAMES'] = '1';
-$Configuration['PUBLIC_BROWSING'] = '1'; 
-$Configuration['USE_CATEGORIES'] = '1'; 
-$Configuration['MAX_COMMENT_LENGTH'] = '5000'; 
-$Configuration['MAX_TOPIC_WORD_LENGTH'] = '45'; 
-$Configuration['DISCUSSION_POST_THRESHOLD'] = '3'; 
-$Configuration['DISCUSSION_TIME_THRESHOLD'] = '60'; 
-$Configuration['DISCUSSION_THRESHOLD_PUNISHMENT'] = '120'; 
-$Configuration['COMMENT_POST_THRESHOLD'] = '5'; 
-$Configuration['COMMENT_TIME_THRESHOLD'] = '60'; 
-$Configuration['COMMENT_THRESHOLD_PUNISHMENT'] = '120'; 
+$Configuration['PUBLIC_BROWSING'] = '1';
+$Configuration['USE_CATEGORIES'] = '1';
+$Configuration['MAX_COMMENT_LENGTH'] = '5000';
+$Configuration['MAX_TOPIC_WORD_LENGTH'] = '45';
+$Configuration['DISCUSSION_POST_THRESHOLD'] = '3';
+$Configuration['DISCUSSION_TIME_THRESHOLD'] = '60';
+$Configuration['DISCUSSION_THRESHOLD_PUNISHMENT'] = '120';
+$Configuration['COMMENT_POST_THRESHOLD'] = '5';
+$Configuration['COMMENT_TIME_THRESHOLD'] = '60';
+$Configuration['COMMENT_THRESHOLD_PUNISHMENT'] = '120';
 $Configuration['UPDATE_URL'] = 'http://lussumo.com/updatecheck/default.php';
 
 // Vanilla Control Positions
@@ -218,11 +218,11 @@ define('PEOPLE_VERSION', '1.1.1');
 define('APPLICATION_VERSION', '1.1.2');
 
 // Application Mode Constants
-define('MODE_DEBUG', 'DEBUG'); 
-define('MODE_RELEASE', 'RELEASE'); 
+define('MODE_DEBUG', 'DEBUG');
+define('MODE_RELEASE', 'RELEASE');
 
 // Format type definitions
-define('FORMAT_STRING_FOR_DISPLAY', 'DISPLAY'); 
+define('FORMAT_STRING_FOR_DISPLAY', 'DISPLAY');
 define('FORMAT_STRING_FOR_DATABASE', 'DATABASE');
 
 // PHP Settings
@@ -234,7 +234,7 @@ $Configuration['SELF_URL'] = @$_SERVER['PHP_SELF'];
 // Include custom settings
 include(dirname(__FILE__) . '/../conf/settings.php');
 if ($Configuration['SETUP_COMPLETE'] == '0') {
-   header('location: ./setup/index.html');
+   header('Location: ./setup/index.html');
 }
 
 // Define a constant to prevent a register_globals attack on the configuration paths

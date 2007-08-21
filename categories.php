@@ -19,8 +19,8 @@ include("appg/init_vanilla.php");
 
 	// Ensure the user is allowed to view this page
 	$Context->Session->Check($Context);
-	if (!$Configuration["USE_CATEGORIES"]) header("location:".GetUrl($Configuration, "index.php"));
-	
+	if (!$Configuration["USE_CATEGORIES"]) header("Location: ".GetUrl($Configuration, "index.php"));
+
 	// Define properties of the page controls that are specific to this page
    $Head->BodyId = 'CategoryPage';
 	$Menu->CurrentTab = "categories";
@@ -32,7 +32,7 @@ include("appg/init_vanilla.php");
 
 	// Add the category list to the body
 	$CategoryList = $Context->ObjectFactory->CreateControl($Context, "CategoryList");
-	
+
 // 3. ADD CONTROLS TO THE PAGE
 
 	$Page->AddRenderControl($Head, $Configuration["CONTROL_POSITION_HEAD"]);
@@ -46,5 +46,5 @@ include("appg/init_vanilla.php");
 // 4. FIRE PAGE EVENTS
 
 	$Page->FireEvents();
-	
+
 ?>
