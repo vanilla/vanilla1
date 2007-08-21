@@ -560,8 +560,7 @@ if (!defined('IN_VANILLA')) exit();
 								<label for="tApplicationTitle">Sponsored Links</label>
 								<input id="cSponsoredLinks" type="checkbox" name="DoSponsoredLinks" checked="'.$DoSponsoredLinks ? 'true' : 'false' .'" />
 							</li>
-						</ul>'
-
+						</ul>
 						<div class="Button"><input type="submit" value="Click here to complete the setup process!" /></div>
 						</form>
 					</fieldset>';
