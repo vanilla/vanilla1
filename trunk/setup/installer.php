@@ -45,7 +45,7 @@ $Configuration['APPLICATION_TITLE'] = '';
 $Configuration['BANNER_TITLE'] = '';
 $Configuration['SETUP_COMPLETE'] = '0';
 $Configuration['SETUP_TEST'] = '0';
-$Configuration['SPONSORED_LINKS'] = '';
+$Configuration['SPONSORED_LINKS'] = 'Blank';
 $SponsoredLinks = '<a href="http://www.myhomeloanadvice.com">Home Loan</a> <a href="http://www.unitedmortgagerates.com">Mortgage Rates</a> <a href="http://www.casinowatchdogs.com">Online Casino</a>';
 
 class FauxContext {
@@ -110,6 +110,7 @@ $WebRoot = substr($WebRoot, 0, strlen($WebRoot) - 5); // strips the "setup" off 
 $BaseUrl = 'http://'.ForceString(@$_SERVER['HTTP_HOST'], '').$WebRoot;
 $ThemeDirectory = $WebRoot . 'themes/';
 $AllowNext = 0;
+$DoSponsoredLinks = true;
 
 function CreateFile($File, $Contents, &$Context) {
    if (!file_exists($File)) {
@@ -398,6 +399,7 @@ if (!defined('IN_VANILLA')) exit();
 
 		// Save the application constants
 		if ($Context->WarningCollector->Count() == 0) {
+			$DoSponsoredLinks = ForceIncomingBool('DoSponsoredLinks', 0);
 			$SettingsManager->DefineSetting("SUPPORT_EMAIL", $SupportEmail, 1);
 			$SettingsManager->DefineSetting("SUPPORT_NAME", $SupportName, 1);
 			$SettingsManager->DefineSetting("APPLICATION_TITLE", $ApplicationTitle, 1);
@@ -406,7 +408,8 @@ if (!defined('IN_VANILLA')) exit();
 			$SettingsManager->DefineSetting("COOKIE_PATH", $CookiePath, 1);
 			$SettingsManager->DefineSetting("SETUP_COMPLETE", '1', 1);
 			// Also save the sponsored links to the conf file (so they are not changed later by an upgrade).
-         $SettingsManager->DefineSetting("SPONSORED_LINKS", $SponsoredLinks, 1);
+         if (!$DoSponsoredLinks) $SponsoredLinks = '';
+			$SettingsManager->DefineSetting("SPONSORED_LINKS", $SponsoredLinks, 1);
 			$SettingsManager->SaveSettingsToFile($SettingsFile);
 		}
 	}
@@ -551,6 +554,14 @@ if (!defined('IN_VANILLA')) exit();
 								<input id="tCookiePath" type="text" name="CookiePath" value="'.FormatStringForDisplay($CookiePath, 1).'" />
 							</li>
 						</ul>
+						<p>Help Support Vanilla by allowing three unobtrusive text-links in the side-panel of your forum.</p>
+						<ul>
+							<li>
+								<label for="tApplicationTitle">Sponsored Links</label>
+								<input id="cSponsoredLinks" type="checkbox" name="DoSponsoredLinks" checked="'.$DoSponsoredLinks ? 'true' : 'false' .'" />
+							</li>
+						</ul>'
+
 						<div class="Button"><input type="submit" value="Click here to complete the setup process!" /></div>
 						</form>
 					</fieldset>';
