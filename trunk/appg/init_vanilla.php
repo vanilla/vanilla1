@@ -127,6 +127,7 @@ $Panel->AddString($Context->GetDefinition('PanelFooter'), 500);
 // Vanilla is funded by these sponsored links. By leaving them in your installation
 // of Vanilla, you are helping to keep all projects by Lussumo alive.
 if ($Configuration['USE_SPONSORED_LINKS'] == '1'
+	&& $Configuration['SPONSORED_LINKS'] != ''
 	&& $Configuration['PUBLIC_BROWSING'] == '1'
 	&& $Configuration['SELF_URL'] == 'index.php'
 	&& ForceIncomingInt('page', 1) == 1) {
