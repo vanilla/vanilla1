@@ -126,8 +126,11 @@ include($Configuration['APPLICATION_PATH'].'conf/extensions.php');
 $Panel->AddString($Context->GetDefinition('PanelFooter'), 500);
 // Vanilla is funded by these sponsored links. By leaving them in your installation
 // of Vanilla, you are helping to keep all projects by Lussumo alive.
-if ($Configuration['SPONSORED_LINKS'] != '') {
-	$Panel->AddString('<p id="SponsoredLinks">'.$Context->GetDefinition('Sponsored Links').'<br />'.$Configuration['SPONSORED_LINKS'].'</p>', 510);
+if ($Configuration['USE_SPONSORED_LINKS'] == '1'
+	&& $Configuration['PUBLIC_BROWSING'] == '1'
+	&& $Configuration['SELF_URL'] == 'index.php'
+	&& ForceIncomingInt('page', 1) == 1) {
+	$Panel->AddString('<p id="SponsoredLinks">'.$Configuration['SPONSORED_LINKS'].'</p>', 510);
 }
 
 // Make sure to get all delegates from the extensions into objects which were

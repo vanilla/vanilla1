@@ -45,7 +45,8 @@ $Configuration['APPLICATION_TITLE'] = '';
 $Configuration['BANNER_TITLE'] = '';
 $Configuration['SETUP_COMPLETE'] = '0';
 $Configuration['SETUP_TEST'] = '0';
-$Configuration['SPONSORED_LINKS'] = 'Blank';
+$Configuration['SPONSORED_LINKS'] = '';
+$Configuration['USE_SPONSORED_LINKS'] = '1';
 $SponsoredLinks = '<a href="http://www.myhomeloanadvice.com">Home Loan</a> <a href="http://www.unitedmortgagerates.com">Mortgage Rates</a> <a href="http://www.casinowatchdogs.com">Online Casino</a>';
 
 class FauxContext {
@@ -409,8 +410,8 @@ if (!defined('IN_VANILLA')) exit();
 			$SettingsManager->DefineSetting("COOKIE_PATH", $CookiePath, 1);
 			$SettingsManager->DefineSetting("SETUP_COMPLETE", '1', 1);
 			// Also save the sponsored links to the conf file (so they are not changed later by an upgrade).
-         if ($DoSponsoredLinks == 0) $SponsoredLinks = '';
 			$SettingsManager->DefineSetting("SPONSORED_LINKS", $SponsoredLinks, 1);
+			$SettingsManager->DefineSetting("USE_SPONSORED_LINKS", $DoSponsoredLinks, 1);			
 			$SettingsManager->SaveSettingsToFile($SettingsFile);
 		}
 	}
@@ -555,7 +556,7 @@ if (!defined('IN_VANILLA')) exit();
 								<input id="tCookiePath" type="text" name="CookiePath" value="'.FormatStringForDisplay($CookiePath, 1).'" />
 							</li>
 						</ul>
-						<p>You can help to keep Vanilla free by allowing three unobtrusive text-links in the side-panel of your forum.</p>
+						<p>You can help to keep Vanilla free by allowing three unobtrusive text-links in the side-panel on the main page of your forum.</p>
 						<ul>
 							<li>
 								<label for="cSponsoredLinks" class="CheckBox"><input id="cSponsoredLinks" type="checkbox" name="DoSponsoredLinks" value="1"'.($DoSponsoredLinks == 0 ? '' : ' checked="checked"') .'" /> Help Keep Vanilla Free</label>

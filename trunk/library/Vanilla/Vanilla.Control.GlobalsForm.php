@@ -35,6 +35,8 @@ class GlobalsForm extends PostBackControl {
             $this->ConfigurationManager->DefineSetting('PUBLIC_BROWSING', ForceIncomingBool('PUBLIC_BROWSING', 0), 0);
             $this->ConfigurationManager->DefineSetting('USE_CATEGORIES', ForceIncomingBool('USE_CATEGORIES', 0), 0);
             $this->ConfigurationManager->DefineSetting('LOG_ALL_IPS', ForceIncomingBool('LOG_ALL_IPS', 0), 0);
+            $this->ConfigurationManager->DefineSetting('USE_SPONSORED_LINKS', ForceIncomingBool('USE_SPONSORED_LINKS', 0), 0);
+				
             	//Validate cookie domain.
 				//The pattern is loose; eg, It won't stop  "domain.tld" or ".co.uk" to be saved
 				//(the "domain.tld" can be set by the browser, the 2nd won't).
