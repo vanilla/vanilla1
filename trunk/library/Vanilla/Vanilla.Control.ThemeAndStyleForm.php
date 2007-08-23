@@ -17,7 +17,7 @@ class ThemeAndStyleForm extends PostBackControl {
 	var $Styles;
 	var $ThemeSelect;
 	var $StyleSelect;
-	
+
 	function DefineThemes() {
 		$ThemeRoot = $this->Context->Configuration['APPLICATION_PATH'].'themes/';
       $FolderHandle = @opendir($ThemeRoot);
@@ -25,7 +25,7 @@ class ThemeAndStyleForm extends PostBackControl {
          $this->Context->WarningCollector->Add(str_replace("//1", $ThemeRoot, $this->Context->GetDefinition("ErrOpenDirectoryThemes")));
       } else {
 			$this->Themes = array();
-         
+
          // Loop through each file
          while (false !== ($Item = readdir($FolderHandle))) {
             // Retrieve theme names (folders which are not system folders or hidden folders
@@ -36,7 +36,7 @@ class ThemeAndStyleForm extends PostBackControl {
          }
       }
    }
-	
+
 	function DefineStyles($ThemePath) {
 		$StyleRoot = $ThemePath.'styles/';
       $FolderHandle = @opendir($StyleRoot);
@@ -44,7 +44,7 @@ class ThemeAndStyleForm extends PostBackControl {
          $this->Context->WarningCollector->Add(str_replace("//1", $StyleRoot, $this->Context->GetDefinition("ErrOpenDirectoryStyles")));
       } else {
 			$this->Styles = array();
-         
+
          // Loop through each file
          while (false !== ($Item = readdir($FolderHandle))) {
             // Retrieve style names (folders which are not system folders or hidden folders
@@ -55,19 +55,19 @@ class ThemeAndStyleForm extends PostBackControl {
          }
       }
 	}
-	
+
 	function ThemeAndStyleForm(&$Context) {
 		$this->Name = 'ThemeAndStyleForm';
 		$this->ValidActions = array('ThemeChange', 'ProcessThemeChange', 'ProcessStyleChange');
 		$this->Constructor($Context);
-		
+
 		if (!$this->Context->Session->User->Permission("PERMISSION_MANAGE_THEMES")
 			&& !$this->Context->Session->User->Permission("PERMISSION_MANAGE_STYLES")) {
 			$this->IsPostBack = 0;
 		} elseif ($this->IsPostBack) {
 			$this->Context->PageTitle = $this->Context->GetDefinition('ManageThemeAndStyle');
 			$this->DefineThemes();
-			
+
 			// Get the name of the current theme folder
          $CurrentThemeKey = ForceIncomingString('Theme', '');
 			if ($CurrentThemeKey != '') {
@@ -79,20 +79,20 @@ class ThemeAndStyleForm extends PostBackControl {
 				$CurrentThemeParts = explode('/', $CurrentThemePath);
 				$CurrentTheme = $CurrentThemeParts[count($CurrentThemeParts)-1];
 			}
-			
+
 			$this->DefineStyles($this->Context->Configuration['APPLICATION_PATH'].'themes/'.$CurrentTheme.'/');
-			
+
 			// Create the theme dropdown
 			if ($this->Context->Session->User->Permission("PERMISSION_MANAGE_THEMES")) {
 				$this->ThemeSelect = $this->Context->ObjectFactory->NewObject($Context, "Select");
-				$this->ThemeSelect->Name = "Theme";				
+				$this->ThemeSelect->Name = "Theme";
 				$this->ThemeSelect->Attributes = " id=\"ddTheme\" onchange=\"document.location='".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=ThemeChange&amp;Theme=')."'+this.options[this.selectedIndex].value;\"";
 				for ($i = 0; $i < count($this->Themes); $i++) {
 					$this->ThemeSelect->AddOption($i, $this->Themes[$i]);
 					if ($this->Themes[$i] == $CurrentTheme) $this->ThemeSelect->SelectedValue = $i;
-				}				
+				}
 			}
-			
+
 			// Create the style dropdown
 			if ($this->Context->Session->User->Permission("PERMISSION_MANAGE_STYLES")) {
 				$this->StyleSelect = $this->Context->ObjectFactory->NewObject($Context, "Select");
@@ -101,44 +101,44 @@ class ThemeAndStyleForm extends PostBackControl {
 				for ($i = 0; $i < count($this->Styles); $i++) {
 					$this->StyleSelect->AddOption($i, $this->Styles[$i]);
 					if ($this->Context->Configuration['WEB_ROOT'].'themes/'.$CurrentTheme.'/styles/'.$this->Styles[$i].'/' == $this->Context->Configuration['DEFAULT_STYLE']) $this->StyleSelect->SelectedValue = $i;
-				}				
+				}
 			}
 
 			$SettingsFile = $this->Context->Configuration['APPLICATION_PATH'].'conf/settings.php';
-			
+
 			if ($this->PostBackAction == "ProcessThemeChange" && $this->IsValidFormPostBack()) {
 				$Theme = $this->Themes[ForceIncomingInt('Theme', 0)];
-				
+
 				// Set the theme configuration option
 				if ($this->Context->Session->User->Permission("PERMISSION_MANAGE_THEMES")) {
 					$ConfigurationManager = $this->Context->ObjectFactory->NewContextObject($this->Context, "ConfigurationManager");
 					$ConfigurationManager->DefineSetting('THEME_PATH', $this->Context->Configuration['APPLICATION_PATH'].'themes/'.$Theme.'/', 1);
 					$ConfigurationManager->SaveSettingsToFile($SettingsFile);
 				}
-				
+
 
 				if ($this->Context->Session->User->Permission("PERMISSION_MANAGE_STYLES")) {
 					// Set the style configuration option
 					$StyleKey = ForceIncomingString("Style", '');
 					$NewStyleName = $this->Styles[$StyleKey];
 					$NewStylePath = $this->Context->Configuration['WEB_ROOT'].'themes/'.$CurrentTheme.'/styles/'.$NewStyleName.'/';
-					
+
 					$ConfigurationManager = $this->Context->ObjectFactory->NewContextObject($this->Context, "ConfigurationManager");
 					$ConfigurationManager->DefineSetting('DEFAULT_STYLE', $NewStylePath, 1);
 					$ConfigurationManager->SaveSettingsToFile($SettingsFile);
-					
+
 					// See if this style exists in the database yet
                $s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
 					$s->SetMainTable('Style', 's');
 					$s->AddSelect('StyleID', 's');
 					$s->AddWhere('s', 'Url', '', $NewStylePath, '=');
-					
+
 					$StyleData = $this->Context->Database->Select($s, $this->Name, 'Constructor', 'An error occurred while attempting to retrieve information from the database about the selected style.');
 					$StyleID = 0;
 					while ($rows = $this->Context->Database->GetRow($StyleData)) {
 						$StyleID = ForceInt($rows['StyleID'], 0);
 					}
-					
+
 					// If the style doesn't exist yet, add it
                if ($StyleID == 0) {
 						$s->Clear();
@@ -146,10 +146,10 @@ class ThemeAndStyleForm extends PostBackControl {
 						$s->AddFieldNameValue('Name', $NewStyleName);
 						$s->AddFieldNameValue('Url', $NewStylePath);
 						$s->AddFieldNameValue('PreviewImage', 'preview.gif');
-						
+
 						$StyleID = $this->Context->Database->Insert($s, $this->Name, 'Constructor', 'An error occurred while adding the style to the database.');
 					}
-					
+
 					// Now that the style has been properly defined, apply it to all users if required
                if ($StyleID > 0 && ForceIncomingBool('ApplyStyleToUsers', 0)) {
 						$s->Clear();
@@ -162,8 +162,10 @@ class ThemeAndStyleForm extends PostBackControl {
 				if ($this->Context->WarningCollector->Count() == 0) {
 					// If everything was successful, mark the postback as validated
 					if ($this->Context->WarningCollector->Iif()) {
-						header("Location:".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "", "PostBackAction=ThemeChange&Saved=1"));
-						die();
+						$Url = GetUrl(
+							$this->Context->Configuration, $this->Context->SelfUrl, "", "", "", "",
+							"PostBackAction=ThemeChange&Saved=1");
+						Redirect($Url);
 					}
 				}
 			}
@@ -172,7 +174,7 @@ class ThemeAndStyleForm extends PostBackControl {
 		$this->CallDelegate("Constructor");
 	}
 
-	
+
 	function Render() {
 		if ($this->IsPostBack) {
 			$this->PostBackParams->Set('PostBackAction', 'ProcessThemeChange');

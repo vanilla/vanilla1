@@ -113,8 +113,10 @@ class DiscussionForm extends PostBackControl {
 				if ($ResultDiscussion) {
 					// Saved successfully, so send back to the discussion
 					$Suffix = CleanupString($this->Discussion->Name).'/';
-					header('Location: '.GetUrl($this->Context->Configuration, 'comments.php', '', 'DiscussionID', $ResultDiscussion->DiscussionID, '', '', $Suffix));
-					die();
+					$Redirect = GetUrl(
+						$this->Context->Configuration, 'comments.php', '', 'DiscussionID',
+						$ResultDiscussion->DiscussionID, '', '', $Suffix);
+					Redirect($Redirect);
 				}
 			}
 		// If saving a comment
@@ -152,8 +154,7 @@ class DiscussionForm extends PostBackControl {
 					if (array_key_exists(1, $UrlParts)) $QS = str_replace("&amp;", "&", $UrlParts[1]);
 					$Url = $UrlParts[0];
 					if ($QS != "") $Url .= "?".str_replace("&amp;", "&", $UrlParts[1]);
-					header('Location: '.$Url);
-					die();
+					Redirect($Url);
 				}
 			}
 		} elseif ($this->PostBackAction == 'Reply') {
