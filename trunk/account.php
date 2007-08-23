@@ -39,7 +39,7 @@ include("appg/init_vanilla.php");
 
 	// If a user id was not supplied, assume that this user doesn't have an active account and kick them back to the index
 	if ($AccountUserID == 0) {
-		header("Location: ".GetUrl($Configuration, "index.php"));
+		Redirect(GetUrl($Configuration, "index.php"));
 		die();
 	}
 
