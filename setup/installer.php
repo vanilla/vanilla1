@@ -184,8 +184,7 @@ if (!defined('IN_VANILLA')) exit();
 
    if ($Context->WarningCollector->Count() == 0) {
       // Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
-      header('Location: '.$WebRoot.'setup/installer.php?Step=2&PostBackAction=None');
-      die();
+      Redirect($WebRoot.'setup/installer.php?Step=2&PostBackAction=None');
    }
 } elseif ($PostBackAction == "Database") {
    $CurrentStep = 2;
@@ -306,8 +305,7 @@ if (!defined('IN_VANILLA')) exit();
 
    if ($Context->WarningCollector->Count() == 0) {
 		// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
-      header('Location: '.$WebRoot.'setup/installer.php?Step=3&PostBackAction=None');
-		die();
+		Redirect($WebRoot.'setup/installer.php?Step=3&PostBackAction=None');
    }
 } elseif ($PostBackAction == "User") {
 	$CurrentStep = 3;
@@ -319,7 +317,7 @@ if (!defined('IN_VANILLA')) exit();
 		$Context->WarningCollector->Add("Vanilla seems to have been installed already. You will need to remove the conf/settings.php, conf/database.php files, and all database tables in order to run the installer utility again.");
 	} else {
 		$DoSponsoredLinks = ForceIncomingBool('DoSponsoredLinks', 0);
-		
+
 		// Validate user inputs
 		if (strip_tags($Username) != $Username) $Context->WarningCollector->Add("You really shouldn't have any html into your username.");
 		if (strlen($Username) > 20) $Context->WarningCollector->Add("Your username is too long");
@@ -418,8 +416,7 @@ if (!defined('IN_VANILLA')) exit();
 
    if ($Context->WarningCollector->Count() == 0) {
 		// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
-      header('Location: '.$WebRoot.'setup/installer.php?Step=4&PostBackAction=None');
-		die();
+		Redirect($WebRoot.'setup/installer.php?Step=4&PostBackAction=None');
 	}
 }
 
