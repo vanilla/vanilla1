@@ -29,8 +29,10 @@ class AccountRoleForm extends PostBackControl {
 			}
 
 			if ($Redirect) {
-				header('Location: '.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', 'u', $User->UserID));
-				die();
+				$Url = GetUrl(
+					$this->Context->Configuration, $this->Context->SelfUrl, '',
+					'u', $User->UserID);
+				Redirect($Url);
 			} else {
 				$this->PostBackAction = str_replace('Process', '', $this->PostBackAction);
 			}
