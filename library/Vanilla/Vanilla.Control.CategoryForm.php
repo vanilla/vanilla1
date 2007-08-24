@@ -20,14 +20,15 @@ class CategoryForm extends PostBackControl {
 	var $Category;
 
 	function CategoryForm(&$Context) {
-      $this->Name = 'CategoryForm';
+		$this->Name = 'CategoryForm';
 		$this->ValidActions = array('Categories', 'Category', 'ProcessCategory', 'CategoryRemove', 'ProcessCategoryRemove');
 		$this->Constructor($Context);
 		if ($this->IsPostBack) {
+			$RedirectUrl = '';
 			$this->Context->PageTitle = $this->Context->GetDefinition('CategoryManagement');
 
 			// Add the javascript to the head for sorting categories
-         if ($this->PostBackAction == "Categories") {
+			if ($this->PostBackAction == "Categories") {
 				global $Head;
 				$Head->AddScript('js/prototype.js');
 				$Head->AddScript('js/scriptaculous.js');
@@ -45,7 +46,9 @@ class CategoryForm extends PostBackControl {
 					|| ($this->Category->CategoryID == 0 && $this->Context->Session->User->Permission('PERMISSION_ADD_CATEGORIES'))) {
 					if ($this->CategoryManager->SaveCategory($this->Category)) {
 						$this->CallDelegate('PostSaveCategory');
-						header('Location: '.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=Categories&Action='.$Action));
+						$RedirectUrl = GetUrl(
+							$this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '',
+							'PostBackAction=Categories&Action='.$Action);
 					}
 				} else {
 					$this->IsPostBack = 0;
@@ -53,7 +56,9 @@ class CategoryForm extends PostBackControl {
 			} elseif ($this->PostBackAction == 'ProcessCategoryRemove' && $this->IsValidFormPostBack()) {
 				if ($this->Context->Session->User->Permission('PERMISSION_REMOVE_CATEGORIES')) {
 					if ($this->CategoryManager->RemoveCategory($CategoryID, $ReplacementCategoryID)) {
-						header('Location: '.GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=Categories&Action=Removed'));
+						$RedirectUrl = GetUrl(
+							$this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '',
+							'PostBackAction=Categories&Action=Removed');
 					}
 				} else {
 					$this->IsPostBack = 0;
@@ -91,6 +96,11 @@ class CategoryForm extends PostBackControl {
 			if (in_array($this->PostBackAction, array('ProcessCategory', 'ProcessCategoryRemove'))) {
 				// Show the form again with errors
 				$this->PostBackAction = str_replace('Process', '', $this->PostBackAction);
+			}
+
+			if ($RedirectUrl) {
+				//@todo: should the process die here?
+				Redirect($RedirectUrl, '302', '', 0);
 			}
 		}
       $this->CallDelegate('Constructor');

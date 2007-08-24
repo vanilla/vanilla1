@@ -41,8 +41,7 @@ for ($i = 0; $i < $RequiredPermissionsCount; $i++) {
 	}
 }
 if (!$Allowed) {
-	header('Location:'.GetUrl($Configuration, 'index.php'));
-	exit();
+	Redirect(GetUrl($Configuration, 'index.php'));
 }
 
 // 1. DEFINE VARIABLES AND PROPERTIES SPECIFIC TO THIS PAGE

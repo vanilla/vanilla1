@@ -19,10 +19,13 @@ include("appg/init_vanilla.php");
 
 	// Ensure the user is allowed to view this page
 	$Context->Session->Check($Context);
-	if (!$Configuration["USE_CATEGORIES"]) header("Location: ".GetUrl($Configuration, "index.php"));
+	if (!$Configuration["USE_CATEGORIES"]) {
+		//@todo: Should the process die here?
+		Redirect(GetUrl($Configuration, "index.php"), '302', '', 0);
+	}
 
 	// Define properties of the page controls that are specific to this page
-   $Head->BodyId = 'CategoryPage';
+	$Head->BodyId = 'CategoryPage';
 	$Menu->CurrentTab = "categories";
 	$Panel->CssClass = "CategoryPanel";
 	$Panel->BodyCssClass = "Categories";
