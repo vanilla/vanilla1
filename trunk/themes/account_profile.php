@@ -5,11 +5,11 @@ echo '<div id="AccountProfile">';
 
       if (ForceIncomingBool('Success',0)) echo '<div id="Success">'.$this->Context->GetDefinition('ChangesSaved').'</div>';
       $this->Render_Warnings();
-      
+
    echo '<ul class="vcard">';
 
       $this->CallDelegate('PreUsernameRender');
-      
+
       if ($this->User->DisplayIcon != '') {
          echo '<li class="ProfileTitle WithIcon clearfix">
             <div class="ProfileIcon" style="background-image:url(\''.$this->User->DisplayIcon.'\')">&nbsp;</div>';
@@ -21,18 +21,21 @@ echo '<div id="AccountProfile">';
       </li>';
       if ($this->User->RoleDescription != '') echo('<li class="Tagline">'.$this->User->RoleDescription.'</li>');
       if ($this->User->Picture != "" && $this->User->Permission('PERMISSION_HTML_ALLOWED')) echo "<li class=\"Picture\" style=\"background-image: url('".$this->User->Picture."');\">&nbsp;</li>";
-      
+
       $this->CallDelegate('PostPictureRender');
-      
+
       if ($this->Context->Configuration['USE_REAL_NAMES'] && ($this->User->ShowName || $this->Context->Session->User->Permission('PERMISSION_EDIT_USERS'))) {
          echo '<li>
             <h3>'.$this->Context->GetDefinition('RealName').'</h3>
             <p class="fn">'.ReturnNonEmpty($this->User->FullName).'</p>
          </li>';
       }
+      $EmailId = "writeEmail";
       echo '<li>
          <h3>'.$this->Context->GetDefinition('Email').'</h3>
-         <p class="email">'.(($this->Context->Session->UserID > 0 && $this->User->UtilizeEmail) ? GetEmail($this->User->Email) : $this->Context->GetDefinition('NA')).'</p>
+         <p id="' . $EmailId . '" class="email">'
+			.(($this->Context->Session->UserID > 0 && $this->User->UtilizeEmail) ?
+			GetEmail($EmailId, $this->User->Email) : $this->Context->GetDefinition('NA')).'</p>
       </li>
       <li>
          <h3>'.$this->Context->GetDefinition('AccountCreated').'</h3>
@@ -54,16 +57,16 @@ echo '<div id="AccountProfile">';
          <h3>'.$this->Context->GetDefinition('CommentsAdded').'</h3>
          <p>'.$this->User->CountComments.'</p>
       </li>';
-         
+
       $this->CallDelegate('PostBasicPropertiesRender');
-         
+
       if ($this->Context->Session->User->Permission('PERMISSION_IP_ADDRESSES_VISIBLE')) {
          echo '<li>
             <h3>'.$this->Context->GetDefinition('LastKnownIp').'</h3>
             <p>'.$this->User->RemoteIp.'</p>
          </li>';
       }
-         
+
       if (count($this->User->Attributes) > 0) {
          $AttributeCount = count($this->User->Attributes);
          for ($i = 0; $i < $AttributeCount; $i++) {
@@ -74,9 +77,9 @@ echo '<div id="AccountProfile">';
             </li>';
          }
       }
-      
+
       $this->CallDelegate('PostAttributesRender');
-         
+
    echo '</ul>
 </div>
 <div id="AccountHistory">';
