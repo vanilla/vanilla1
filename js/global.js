@@ -6,7 +6,7 @@
 * You should have received a copy of the GNU General Public License along with Vanilla; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 * The latest source code is available at www.lussumo.com
 * Contact Mark O'Sullivan at mark [at] lussumo [dot] com
-* 
+*
 * Description: Non-application specific utility functions
 */
 
@@ -58,7 +58,7 @@ function CompletePreferenceSet(PreferenceName) {
 	 if (Container) Container.className = 'PreferenceComplete';
 }
 
-function Explode(inString, Delimiter) {	 
+function Explode(inString, Delimiter) {
 	 return inString.split(Delimiter);
 }
 
@@ -72,7 +72,7 @@ function GetElements(ElementName, ElementIDPrefix) {
 	var objects = new Array();
 	for (i = 0; i < Elements.length; i++) {
 		if (Elements[i].id.indexOf(ElementIDPrefix) == 0) {
-			objects[objects.length] = Elements[i];			
+			objects[objects.length] = Elements[i];
 		}
 	}
 	return objects;
@@ -111,7 +111,7 @@ function PathFinder(){
 				}
 		  }
 		  return root || false;
-	 }	
+	 }
 	 return this;
 };
 
@@ -129,7 +129,7 @@ function RefreshPage(Timeout) {
 }
 
 function RefreshPageWhenAjaxComplete(Request) {
-	 RefreshPage();	 
+	 RefreshPage();
 }
 
 function SubmitForm(FormName, Sender, WaitText) {
@@ -147,7 +147,7 @@ function SwitchElementClass(ElementToChangeID, SenderID, StyleA, StyleB, Comment
 		  } else {
 				Element.className = StyleB;
 				Sender.innerHTML = CommentB;
-		  }			
+		  }
 	 }
 }
 
@@ -190,7 +190,7 @@ function SwitchPreference(AjaxUrl, PreferenceName, RefreshPageWhenComplete, Post
 		  } else {
 	 		  dm.RequestCompleteEvent = PreferenceSet;
 		  }
-		  dm.LoadData(AjaxUrl+"?Type="+PreferenceName+"&PostBackKey="+PostBackKey+"&Switch="+CheckBox.checked);		
+		  dm.LoadData(AjaxUrl+"?Type="+PreferenceName+"&PostBackKey="+PostBackKey+"&Switch="+CheckBox.checked);
 	 }
 }
 
@@ -247,7 +247,7 @@ function UpdateCheckStatus(Request) {
 function Wait(Sender, WaitText) {
 	 Sender.disabled = true;
 	 Sender.value = WaitText;
-	 
+
 	 el = Sender.parentNode;
 	 while(el != null) {
 		  if (el.tagName == "FORM") {
@@ -258,12 +258,16 @@ function Wait(Sender, WaitText) {
 	 }
 }
 
-function WriteEmail(d, n, v) {
-	document.write("<a "+"hre"+"f='mai"+"lto:"+n+"@"+d+"'>");
-	if (v == '') {
-		document.write(n+"@"+d);
-	} else {
-		document.write(v);
-	}
-	document.write("</a>");
+function WriteEmail(i, d, n, v) {
+	var a, p, t;
+	//Create link
+	a = document.createElement('a');
+	a.href = 'mai'+'lto:'+n+'@'+'d';
+	//Create text link
+	v = v || n+"@"+d;
+	t = document.createTextNode(v);
+	a.appendChild(t);
+	//Append link
+	p = document.getElementById(i);
+	p.appendChild(a);
 }
