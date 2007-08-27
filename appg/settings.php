@@ -197,16 +197,6 @@ $Configuration['PREFERENCE_ShowFormatSelector'] = '1';
 $Configuration['PREFERENCE_ShowDeletedDiscussions'] = '0';
 $Configuration['PREFERENCE_ShowDeletedComments'] = '0';
 
-// Vanilla is partly funded by these sponsored links.
-$Configuration['SPONSORED_LINKS'] = '<a href="http://www.myhomeloanadvice.com">Home Loan</a> <a href="http://www.unitedmortgagerates.com">Mortgage Rates</a> <a href="http://www.casinowatchdogs.com">Online Casino</a>';
-$Configuration['USE_SPONSORED_LINKS'] = '1';
-
-// By leaving the sponsored links in your installation of Vanilla, you are
-// helping to keep all projects by Lussumo alive. That being said, if you need
-// to remove them, you can do so by copying the following line to your
-// conf/settings.php file:
-// $Configuration['USE_SPONSORED_LINKS'] = '0';
-
 // Newbie settings
 // Has Vanilla been installed (this will be set to true in conf/settings.php when setup completes)
 $Configuration['SETUP_COMPLETE'] = '0';

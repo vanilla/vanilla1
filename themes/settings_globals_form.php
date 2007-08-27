@@ -166,13 +166,6 @@ echo '<div id="Form" class="Account GlobalsForm">';
          </li>
       </ul>
       
-      <h2>'.$this->Context->GetDefinition('Sponsored Links').'</h2>
-      <ul>
-         <li id="ForumOptions">
-            <p><span>'.GetDynamicCheckBox('USE_SPONSORED_LINKS', 1, $this->ConfigurationManager->GetSetting('USE_SPONSORED_LINKS'), '', $this->Context->GetDefinition('SupportVanillaWithSponsoredLinks')).'</span></p>
-         </li>
-      </ul>
-      
       <div class="Submit">
          <input type="submit" name="btnSave" value="'.$this->Context->GetDefinition('Save').'" class="Button SubmitButton" />
          <a href="'.GetUrl($this->Context->Configuration, $this->Context->SelfUrl).'" class="CancelButton">'.$this->Context->GetDefinition('Cancel').'</a>
