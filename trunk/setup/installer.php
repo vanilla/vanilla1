@@ -45,9 +45,6 @@ $Configuration['APPLICATION_TITLE'] = '';
 $Configuration['BANNER_TITLE'] = '';
 $Configuration['SETUP_COMPLETE'] = '0';
 $Configuration['SETUP_TEST'] = '0';
-$Configuration['SPONSORED_LINKS'] = '';
-$Configuration['USE_SPONSORED_LINKS'] = '1';
-$SponsoredLinks = '<a href="http://www.myhomeloanadvice.com">Home Loan</a> <a href="http://www.unitedmortgagerates.com">Mortgage Rates</a> <a href="http://www.casinowatchdogs.com">Online Casino</a>';
 
 class FauxContext {
    var $WarningCollector;
@@ -111,7 +108,6 @@ $WebRoot = substr($WebRoot, 0, strlen($WebRoot) - 5); // strips the "setup" off 
 $BaseUrl = 'http://'.ForceString(@$_SERVER['HTTP_HOST'], '').$WebRoot;
 $ThemeDirectory = $WebRoot . 'themes/';
 $AllowNext = 0;
-$DoSponsoredLinks = true;
 
 function CreateFile($File, $Contents, &$Context) {
    if (!file_exists($File)) {
@@ -316,7 +312,6 @@ if (!defined('IN_VANILLA')) exit();
 	if ($SettingsManager->GetSetting('SETUP_COMPLETE') != '0') {
 		$Context->WarningCollector->Add("Vanilla seems to have been installed already. You will need to remove the conf/settings.php, conf/database.php files, and all database tables in order to run the installer utility again.");
 	} else {
-		$DoSponsoredLinks = ForceIncomingBool('DoSponsoredLinks', 0);
 
 		// Validate user inputs
 		if (strip_tags($Username) != $Username) $Context->WarningCollector->Add("You really shouldn't have any html into your username.");
@@ -407,9 +402,6 @@ if (!defined('IN_VANILLA')) exit();
 			$SettingsManager->DefineSetting("COOKIE_DOMAIN", $CookieDomain, 1);
 			$SettingsManager->DefineSetting("COOKIE_PATH", $CookiePath, 1);
 			$SettingsManager->DefineSetting("SETUP_COMPLETE", '1', 1);
-			// Also save the sponsored links to the conf file (so they are not changed later by an upgrade).
-			$SettingsManager->DefineSetting("SPONSORED_LINKS", $SponsoredLinks, 1);
-			$SettingsManager->DefineSetting("USE_SPONSORED_LINKS", $DoSponsoredLinks, 1);			
 			$SettingsManager->SaveSettingsToFile($SettingsFile);
 		}
 	}
@@ -551,12 +543,6 @@ if (!defined('IN_VANILLA')) exit();
 							<li>
 								<label for="tCookiePath">Cookie Path</label>
 								<input id="tCookiePath" type="text" name="CookiePath" value="'.FormatStringForDisplay($CookiePath, 1).'" />
-							</li>
-						</ul>
-						<p>You can help to keep Vanilla free by allowing three unobtrusive text-links in the side-panel on the main page of your forum.</p>
-						<ul>
-							<li>
-								<label for="cSponsoredLinks" class="CheckBox"><input id="cSponsoredLinks" type="checkbox" name="DoSponsoredLinks" value="1"'.($DoSponsoredLinks == 0 ? '' : ' checked="checked"') .'" /> Help Keep Vanilla Free</label>
 							</li>
 						</ul>
 						<div class="Button"><input type="submit" value="Click here to complete the setup process!" /></div>
