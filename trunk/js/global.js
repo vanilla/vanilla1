@@ -258,18 +258,20 @@ function Wait(Sender, WaitText) {
 	 }
 }
 
-function WriteEmail(i, d, n, v) {
+function WriteEmail(d, n, v, i) {
 	if (document.createElement && document.getElementById) {
 		var a, p, t;
 		//Create link
 		a = document.createElement('a');
-		a.href = 'mai'+'lto:'+n+'@'+'d';
+		a.href = 'mai'+'lto:'+n+'@'+d;
 		//Create text link
 		v = v || n+"@"+d;
 		t = document.createTextNode(v);
 		a.appendChild(t);
 		//Append link
-		p = document.getElementById(i);
-		p.appendChild(a);
+		p = document.getElementById(i).parentNode;
+		if (p) {
+			p.appendChild(a);
+		}
 	}
 }

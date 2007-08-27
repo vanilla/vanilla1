@@ -30,12 +30,11 @@ echo '<div id="AccountProfile">';
             <p class="fn">'.ReturnNonEmpty($this->User->FullName).'</p>
          </li>';
       }
-      $EmailId = "writeEmail";
       echo '<li>
          <h3>'.$this->Context->GetDefinition('Email').'</h3>
-         <p id="' . $EmailId . '" class="email">'
+         <p class="email">'
 			.(($this->Context->Session->UserID > 0 && $this->User->UtilizeEmail) ?
-			GetEmail($EmailId, $this->User->Email) : $this->Context->GetDefinition('NA')).'</p>
+			GetEmail($this->User->Email) : $this->Context->GetDefinition('NA')).'</p>
       </li>
       <li>
          <h3>'.$this->Context->GetDefinition('AccountCreated').'</h3>
