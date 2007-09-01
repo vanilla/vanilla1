@@ -47,9 +47,9 @@ $Configuration['SETUP_COMPLETE'] = '0';
 $Configuration['SETUP_TEST'] = '0';
 
 class FauxContext {
-   var $WarningCollector;
-   var $ErrorManager;
-   var $SqlCollector;
+	var $WarningCollector;
+	var $ErrorManager;
+	var $SqlCollector;
 	var $Configuration;
 	var $Dictionary;
 	var $DatabaseTables;
@@ -110,80 +110,80 @@ $ThemeDirectory = $WebRoot . 'themes/';
 $AllowNext = 0;
 
 function CreateFile($File, $Contents, &$Context) {
-   if (!file_exists($File)) {
-      $Handle = @fopen($File, 'wb');
-      if (!$Handle) {
-         $Error = $php_errormsg;
-         if ($Error != '') $Error = 'The system reported the following message:<code>'.$Error.'</code>';
-         $Context->WarningCollector->Add("Failed to create the '".$File."' configuration file. ".$Error);
-      } else {
-         if (fwrite($Handle, $Contents) === FALSE) {
-            $Context->WarningCollector->Add("Failed to write to the '".$File."' file. Make sure that PHP has write access to the file.");
-         }
-         fclose($Handle);
-      }
-   }
+	if (!file_exists($File)) {
+		$Handle = @fopen($File, 'wb');
+		if (!$Handle) {
+			$Error = $php_errormsg;
+			if ($Error != '') $Error = 'The system reported the following message:<code>'.$Error.'</code>';
+			$Context->WarningCollector->Add("Failed to create the '".$File."' configuration file. ".$Error);
+		} else {
+			if (fwrite($Handle, $Contents) === FALSE) {
+				$Context->WarningCollector->Add("Failed to write to the '".$File."' file. Make sure that PHP has write access to the file.");
+			}
+			fclose($Handle);
+		}
+	}
 }
 
 // Step 1. Check for correct PHP, MySQL, and permissions
 if ($PostBackAction == "Permissions") {
 
-   // Make sure we are running at least PHP 4.1.0
-   if (intval(str_replace('.', '', phpversion())) < 410) $Context->WarningCollector->Add("It appears as though you are running PHP version ".phpversion().". Vanilla requires at least version 4.1.0 of PHP. You will need to upgrade your version of PHP before you can continue.");
-   // Make sure MySQL is available
-   if (!function_exists('mysql_connect')) $Context->WarningCollector->Add("It appears as though you do not have MySQL enabled for PHP. You will need a working copy of MySQL and PHP's MySQL extensions enabled in order to run Vanilla.");
-   // Make sure the conf folder is readable
-   if (!is_readable('../conf/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the conf folder.");
-   // Make sure the conf folder is writeable
-   if (!is_writable('../conf/')) $Context->WarningCollector->Add("Vanilla needs to have write permission enabled on the conf folder.");
+	// Make sure we are running at least PHP 4.1.0
+	if (intval(str_replace('.', '', phpversion())) < 410) $Context->WarningCollector->Add("It appears as though you are running PHP version ".phpversion().". Vanilla requires at least version 4.1.0 of PHP. You will need to upgrade your version of PHP before you can continue.");
+	// Make sure MySQL is available
+	if (!function_exists('mysql_connect')) $Context->WarningCollector->Add("It appears as though you do not have MySQL enabled for PHP. You will need a working copy of MySQL and PHP's MySQL extensions enabled in order to run Vanilla.");
+	// Make sure the conf folder is readable
+	if (!is_readable('../conf/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the conf folder.");
+	// Make sure the conf folder is writeable
+	if (!is_writable('../conf/')) $Context->WarningCollector->Add("Vanilla needs to have write permission enabled on the conf folder.");
 
-   // Make sure other folders are readable
-   if (!is_readable('../extensions/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the extensions folder.");
-   if (!is_readable('../languages/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the languages folder.");
-   if (!is_readable('../themes/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the themes folder.");
-   if (!is_readable('../setup/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the setup folder.");
+	// Make sure other folders are readable
+	if (!is_readable('../extensions/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the extensions folder.");
+	if (!is_readable('../languages/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the languages folder.");
+	if (!is_readable('../themes/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the themes folder.");
+	if (!is_readable('../setup/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the setup folder.");
 
 	// Make sure the files don't exist already (ie. the site is already up and running);
-   if (file_exists('../conf/settings.php')) $Context->WarningCollector->Add("Vanilla seems to have been installed already. You will need to remove the conf/settings.php, conf/database.php files, and all database tables in order to run the installer utility again.");
+	if (file_exists('../conf/settings.php')) $Context->WarningCollector->Add("Vanilla seems to have been installed already. You will need to remove the conf/settings.php, conf/database.php files, and all database tables in order to run the installer utility again.");
 
-   if ($Context->WarningCollector->Count() == 0) {
-      $Contents = '<?php
+	if ($Context->WarningCollector->Count() == 0) {
+		$Contents = '<?php
 // Database Configuration Settings
 ?>';
-      CreateFile($RootDirectory.'conf/database.php', $Contents, $Context);
-      $Contents = "<?php
+		CreateFile($RootDirectory.'conf/database.php', $Contents, $Context);
+		$Contents = "<?php
 // Make sure this file was not accessed directly and prevent register_globals configuration array attack
 if (!defined('IN_VANILLA')) exit();
 // Enabled Extensions
 ?>";
-      CreateFile($RootDirectory.'conf/extensions.php', $Contents, $Context);
-      $Contents = "<?php
+		CreateFile($RootDirectory.'conf/extensions.php', $Contents, $Context);
+		$Contents = "<?php
 // Custom Language Definitions
 ?>";
-      CreateFile($RootDirectory.'conf/language.php', $Contents, $Context);
-      $Contents = '<?php
+		CreateFile($RootDirectory.'conf/language.php', $Contents, $Context);
+		$Contents = '<?php
 // Application Settings
 ?>';
-      CreateFile($RootDirectory.'conf/settings.php', $Contents, $Context);
-   }
+		CreateFile($RootDirectory.'conf/settings.php', $Contents, $Context);
+	}
 
-   // Save a test configuration option to the conf/settings.php file (This is inconsequential and is only done to make sure we have read access).
-   if ($Context->WarningCollector->Count() == 0) {
-      $SettingsFile = $RootDirectory . 'conf/settings.php';
-      $SettingsManager = new ConfigurationManager($Context);
-      $SettingsManager->DefineSetting('SETUP_TEST', '1', 1);
-      if (!$SettingsManager->SaveSettingsToFile($SettingsFile)) {
-         $Context->WarningCollector->Clear();
-         $Context->WarningCollector->Add("For some reason we couldn't save your general settings to the '".$SettingsFile."' file.");
-      }
-   }
+	// Save a test configuration option to the conf/settings.php file (This is inconsequential and is only done to make sure we have read access).
+	if ($Context->WarningCollector->Count() == 0) {
+		$SettingsFile = $RootDirectory . 'conf/settings.php';
+		$SettingsManager = new ConfigurationManager($Context);
+		$SettingsManager->DefineSetting('SETUP_TEST', '1', 1);
+		if (!$SettingsManager->SaveSettingsToFile($SettingsFile)) {
+			$Context->WarningCollector->Clear();
+			$Context->WarningCollector->Add("For some reason we couldn't save your general settings to the '".$SettingsFile."' file.");
+		}
+	}
 
-   if ($Context->WarningCollector->Count() == 0) {
-      // Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
-      Redirect($WebRoot.'setup/installer.php?Step=2&PostBackAction=None');
-   }
+	if ($Context->WarningCollector->Count() == 0) {
+		// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
+		Redirect($WebRoot.'setup/installer.php?Step=2&PostBackAction=None');
+	}
 } elseif ($PostBackAction == "Database") {
-   $CurrentStep = 2;
+	$CurrentStep = 2;
 
 	// Make sure the database settings haven't already been committed
 	$DBFile = $RootDirectory . 'conf/database.php';
@@ -245,7 +245,7 @@ if (!defined('IN_VANILLA')) exit();
 							if ($CurrentLine == "") {
 								if ($CurrentQuery != "") {
 									// If the current query creates a table, make sure that the proper character encoding is applied.
-                           if ($DatabaseCharacterEncoding == 'utf8' && strpos($CurrentQuery, 'REATE TABLE') == 1) {
+									if ($DatabaseCharacterEncoding == 'utf8' && strpos($CurrentQuery, 'REATE TABLE') == 1) {
 										str_replace(');', ') DEFAULT CHARACTER SET utf8;', $CurrentQuery);
 									}
 
@@ -299,10 +299,10 @@ if (!defined('IN_VANILLA')) exit();
 		}
 	}
 
-   if ($Context->WarningCollector->Count() == 0) {
+	if ($Context->WarningCollector->Count() == 0) {
 		// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
 		Redirect($WebRoot.'setup/installer.php?Step=3&PostBackAction=None');
-   }
+	}
 } elseif ($PostBackAction == "User") {
 	$CurrentStep = 3;
 
@@ -406,7 +406,7 @@ if (!defined('IN_VANILLA')) exit();
 		}
 	}
 
-   if ($Context->WarningCollector->Count() == 0) {
+	if ($Context->WarningCollector->Count() == 0) {
 		// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
 		Redirect($WebRoot.'setup/installer.php?Step=4&PostBackAction=None');
 	}
@@ -416,14 +416,14 @@ if (!defined('IN_VANILLA')) exit();
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-ca">
-   <head>
-      <title>Vanilla 1.1.2 Installer</title>
+	<head>
+		<title>Vanilla 1.1.2 Installer</title>
 		<link rel="stylesheet" type="text/css" href="./style.css" />
-   </head>
-   <body>
-      <h1>
-         <span><strong>Vanilla 1.1.2</strong> Installer</span>
-      </h1>
+	</head>
+	<body>
+		<h1>
+			<span><strong>Vanilla 1.1.2</strong> Installer</span>
+		</h1>
 		<div class="Container">
 			<div class="Content">
 			<?php
@@ -443,10 +443,10 @@ if (!defined('IN_VANILLA')) exit();
 
 				<p>You will also need to grant read access to the extensions, languages, setup, and themes folders. Typically these permissions are granted by default, but if not you can achieve them with the following commands:</p>
 
-                                <code>chmod --recursive 755 ./extensions
-                                <br />chmod --recursive 755 ./languages
-                                <br />chmod --recursive 755 ./setup
-                                <br />chmod --recursive 755 ./themes</code>
+  										<code>chmod --recursive 755 ./extensions
+  										<br />chmod --recursive 755 ./languages
+  										<br />chmod --recursive 755 ./setup
+  										<br />chmod --recursive 755 ./themes</code>
 
 				<form id=\"frmPermissions\" method=\"post\" action=\"installer.php\">
 				<input type=\"hidden\" name=\"PostBackAction\" value=\"Permissions\" />
@@ -574,5 +574,5 @@ if (!defined('IN_VANILLA')) exit();
 				?>
 			</div>
 		</div>
-   </body>
+	</body>
 </html>
