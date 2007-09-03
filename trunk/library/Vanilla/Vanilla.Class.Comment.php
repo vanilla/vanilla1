@@ -1,16 +1,27 @@
 <?php
-/*
-* Copyright 2003 Mark O'Sullivan
-* This file is part of Vanilla.
-* Vanilla is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
-* Vanilla is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-* You should have received a copy of the GNU General Public License along with Vanilla; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-* The latest source code for Vanilla is available at www.lussumo.com
-* Contact Mark O'Sullivan at mark [at] lussumo [dot] com
-* 
-* Description: Discussion Comment class
-*/
+/**
+ * Discussion Comment class.
+ *
+ * Copyright 2003 Mark O'Sullivan
+ * This file is part of Lussumo's Software Library.
+ * Lussumo's Software Library is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+ * Lussumo's Software Library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License along with Vanilla; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * The latest source code is available at www.lussumo.com
+ * Contact Mark O'Sullivan at mark [at] lussumo [dot] com
+ *
+ * @author Mark O'Sullivan
+ * @copyright 2003 Mark O'Sullivan
+ * @license http://lussumo.com/community/gpl.txt GPL 2
+ * @package Vanilla
+ * @version 1.1.2
+ */
 
+
+/**
+ * Discussion Comment class.
+ * @package Vanilla
+ */
 class Comment extends Delegation {
 	var $CommentID;
 	var $DiscussionID;
@@ -45,7 +56,7 @@ class Comment extends Delegation {
 	var $WhisperUserID;	// The user being whispered to
 	var $WhisperUsername;
 	var $DiscussionWhisperUserID;
-	
+
 	// Clears all properties
 	function Clear() {
 		$this->CommentID = 0;
@@ -81,23 +92,23 @@ class Comment extends Delegation {
 		$this->WhisperUsername = '';
       $this->DiscussionWhisperUserID = 0;
 	}
-	
+
 	function Comment(&$Context) {
 		$this->Name = 'Comment';
 		$this->Delegation($Context);
 		$this->Clear();
 	}
-	
+
 	function FormatPropertiesForDatabaseInput() {
 		// Pass the body into a formatter for db input
       $this->Body = $this->Context->FormatString($this->Body, $this, $this->FormatType, FORMAT_STRING_FOR_DATABASE);
 		$this->Body = FormatStringForDatabaseInput($this->Body);
       $this->WhisperUsername = FormatStringForDatabaseInput($this->WhisperUsername);
 	}
-	
+
 	function FormatPropertiesForDisplay($ForFormDisplay = '0') {
 		$this->CallDelegate('PreFormatPropertiesForDisplay');
-		
+
 		if ($this->Deleted) $this->ShowHtml = 0;
 		if (!$this->AuthCanPostHtml) $this->ShowHtml = 0;
 		if ($this->AuthBlocked) $this->ShowHtml = 0;
@@ -119,11 +130,11 @@ class Comment extends Delegation {
 		$this->AuthIcon = FormatStringForDisplay($this->AuthIcon, 1, 0);
 		return $this->ShowHtml;
 	}
-	
+
 	function FormatPropertiesForSafeDisplay() {
 		// Make sure to pass the body through global string formatters
 		$this->Body = $this->Context->StringManipulator->GlobalParse($this->Body, $this, FORMAT_STRING_FOR_DISPLAY);
-		
+
 		$this->AuthUsername = FormatStringForDisplay($this->AuthUsername);
 		$this->EditUsername = FormatStringForDisplay($this->EditUsername);
 		$this->DeleteUsername = FormatStringForDisplay($this->DeleteUsername);
@@ -165,17 +176,17 @@ class Comment extends Delegation {
 		$this->DeleteUserID = ForceInt(@$DataSet['DeleteUserID'], 0);
 		$this->DeleteUsername = ForceString(@$DataSet['DeleteUsername'], '');
 		$this->RemoteIp = ForceString(@$DataSet['RemoteIp'], '');
-		
+
 		$this->WhisperUserID = ForceInt(@$DataSet['WhisperUserID'], 0);
 		$this->WhisperUsername = ForceString(@$DataSet['WhisperUsername'], '');
 		$this->DiscussionWhisperUserID = ForceInt(@$DataSet['DiscussionWhisperUserID'], 0);
-		
+
 		$this->Status = $this->GetStatus($UserID);
 		if ($this->AuthRoleIcon != '') $this->AuthIcon = $this->AuthRoleIcon;
 	}
 
 	// Retrieve properties from incoming form variables
-	// Returns void	
+	// Returns void
 	function GetPropertiesFromForm() {
 		$this->CommentID = ForceIncomingInt('CommentID', 0);
 		$this->DiscussionID = ForceIncomingInt('DiscussionID', 0);
@@ -186,8 +197,8 @@ class Comment extends Delegation {
 		$this->AuthUserID = ForceIncomingInt('AuthUserID', 0);
       $this->WhisperUsername = ForceIncomingString('WhisperUsername', '');
 	}
-	
-	
+
+
 	function GetStatus($UserID) {
 		$sReturn = '';
 		if ($this->WhisperUserID > 0) {
@@ -211,7 +222,7 @@ class Comment extends Delegation {
 			}
 		}
 		return $sReturn;
-	}	
+	}
 }
 
 ?>

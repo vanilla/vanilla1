@@ -1,29 +1,40 @@
 <?php
-/*
-* Copyright 2003 Mark O'Sullivan
-* This file is part of Vanilla.
-* Vanilla is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
-* Vanilla is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-* You should have received a copy of the GNU General Public License along with Vanilla; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-* The latest source code for Vanilla is available at www.lussumo.com
-* Contact Mark O'Sullivan at mark [at] lussumo [dot] com
-*
-* Description: The SearchForm control is used to render a search form and search results.
-*/
+/**
+ * The SearchForm control is used to render a search form and search results.
+ *
+ * Copyright 2003 Mark O'Sullivan
+ * This file is part of Lussumo's Software Library.
+ * Lussumo's Software Library is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+ * Lussumo's Software Library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License along with Vanilla; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * The latest source code is available at www.lussumo.com
+ * Contact Mark O'Sullivan at mark [at] lussumo [dot] com
+ *
+ * @author Mark O'Sullivan
+ * @copyright 2003 Mark O'Sullivan
+ * @license http://lussumo.com/community/gpl.txt GPL 2
+ * @package Vanilla
+ * @version 1.1.2
+ */
 
+
+/**
+ * The SearchForm control is used to render a search form and search results.
+ * @package Vanilla
+ */
 class SearchForm extends PostBackControl {
    var $FormName;				// The name of this form
    var $Search;            // A search object (contains all parameters related to the search: keywords, etc)
    var $SearchID;          // The id of the search to load
    var $Data;              // Search result data
    var $DataCount;			// The number of records returned by a search
-   
+
 	// Search form controls
    var $CategorySelect;
 	var $OrderSelect;
 	var $TypeRadio;
-	var $RoleSelect;   
-	
+	var $RoleSelect;
+
 	function SearchForm(&$Context, $FormName = '') {
 		$this->Name = 'SearchForm';
 		$this->ValidActions = array('Search', 'SaveSearch');
@@ -33,13 +44,13 @@ class SearchForm extends PostBackControl {
 		$this->Constructor($Context);
 		if ($this->PostBackAction == '') $this->IsPostBack = 1;
 		$this->Context->BodyAttributes .= " onload=\"Focus('txtKeywords');\"";
-		
+
 		$CurrentPage = ForceIncomingInt('page', 1);
-		
+
       // Load a search object
       $this->Search = $this->Context->ObjectFactory->NewObject($this->Context, 'Search');
       $this->Search->GetPropertiesFromForm();
-		
+
 		$this->CallDelegate('PostDefineSearchFromForm');
 
       // Load selectors
@@ -70,7 +81,7 @@ class SearchForm extends PostBackControl {
       $this->TypeRadio->AddOption('Comments', $this->Context->GetDefinition('Comments'));
       $this->TypeRadio->AddOption('Users', $this->Context->GetDefinition('Users'));
       $this->TypeRadio->SelectedID = $this->Search->Type;
-      
+
       $rm = $this->Context->ObjectFactory->NewContextObject($this->Context, 'RoleManager');
       $RoleSet = $rm->GetRoles();
       $this->RoleSelect = $this->Context->ObjectFactory->NewObject($this->Context, 'Select');
@@ -81,7 +92,7 @@ class SearchForm extends PostBackControl {
 		if ($this->Context->Session->User->Permission('PERMISSION_APPROVE_APPLICANTS')) $this->RoleSelect->AddOption($this->Context->GetDefinition('Applicant'), $this->Context->GetDefinition('Applicant'));
       $this->RoleSelect->AddOptionsFromDataSet($this->Context->Database, $RoleSet, 'Name', 'Name');
       $this->RoleSelect->SelectedValue = $this->Search->Roles;
-		
+
 		$this->CallDelegate('PreSearchQuery');
 
       // Handle Searching
@@ -100,15 +111,15 @@ class SearchForm extends PostBackControl {
             $this->Data = $um->GetUserSearch($this->Search, $this->Context->Configuration['SEARCH_RESULTS_PER_PAGE'], $CurrentPage);
 				$this->Search->Keywords = $OriginalKeywords;
 				$this->Search->Query = $OriginalQuery;
-            $this->Search->FormatPropertiesForDisplay();      
-            
+            $this->Search->FormatPropertiesForDisplay();
+
          } else if ($this->Search->Type == 'Topics') {
             $dm = $this->Context->ObjectFactory->NewContextObject($this->Context, 'DiscussionManager');
             $this->Data = $dm->GetDiscussionSearch($this->Context->Configuration['SEARCH_RESULTS_PER_PAGE'], $CurrentPage, $this->Search);
 				$this->Search->Keywords = $OriginalKeywords;
 				$this->Search->Query = $OriginalQuery;
             $this->Search->FormatPropertiesForDisplay();
-            
+
          } else if ($this->Search->Type == 'Comments') {
             $cm = $this->Context->ObjectFactory->NewContextObject($this->Context, 'CommentManager');
             $this->Data = $cm->GetCommentSearch($this->Context->Configuration['SEARCH_RESULTS_PER_PAGE'], $CurrentPage, $this->Search);
@@ -116,9 +127,9 @@ class SearchForm extends PostBackControl {
 				$this->Search->Query = $OriginalQuery;
             $this->Search->FormatPropertiesForDisplay();
          }
-         
+
          if ($this->Data) $this->DataCount = $this->Context->Database->RowCount($this->Data);
-			
+
 			$pl = $this->Context->ObjectFactory->NewContextObject($this->Context, 'PageList');
 			$pl->NextText = $this->Context->GetDefinition('Next');
 			$pl->PreviousText = $this->Context->GetDefinition('Previous');
@@ -146,17 +157,17 @@ class SearchForm extends PostBackControl {
       // present in the querystring
       $this->PostBackParams->Remove('FormPostBackKey');
 	}
-	
+
 	function Render_NoPostBack() {
 		$this->CallDelegate('PreSearchFormRender');
 		include(ThemeFilePath($this->Context->Configuration, 'search_form.php'));
-		
+
 		if ($this->PostBackAction == 'Search') {
-			
+
 			$this->CallDelegate('PreSearchResultsRender');
-			
+
 			include(ThemeFilePath($this->Context->Configuration, 'search_results_top.php'));
-			
+
 			if ($this->DataCount > 0) {
 				$Alternate = 0;
 				$FirstRow = 1;
@@ -203,7 +214,7 @@ class SearchForm extends PostBackControl {
 						$u->Clear();
 						$u->GetPropertiesFromDataSet($Row);
 						$u->FormatPropertiesForDisplay();
-						
+
 						if ($Counter < $this->Context->Configuration['SEARCH_RESULTS_PER_PAGE']) {
 							include($ThemeFilePath);
 						}

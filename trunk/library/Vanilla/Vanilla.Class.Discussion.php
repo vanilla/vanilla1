@@ -1,16 +1,27 @@
 <?php
-/*
-* Copyright 2003 Mark O'Sullivan
-* This file is part of Vanilla.
-* Vanilla is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
-* Vanilla is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-* You should have received a copy of the GNU General Public License along with Vanilla; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-* The latest source code for Vanilla is available at www.lussumo.com
-* Contact Mark O'Sullivan at mark [at] lussumo [dot] com
-*
-* Description: Discussion class
-*/
+/**
+ * Discussion class.
+ *
+ * Copyright 2003 Mark O'Sullivan
+ * This file is part of Lussumo's Software Library.
+ * Lussumo's Software Library is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+ * Lussumo's Software Library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License along with Vanilla; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * The latest source code is available at www.lussumo.com
+ * Contact Mark O'Sullivan at mark [at] lussumo [dot] com
+ *
+ * @author Mark O'Sullivan
+ * @copyright 2003 Mark O'Sullivan
+ * @license http://lussumo.com/community/gpl.txt GPL 2
+ * @package Vanilla
+ * @version 1.1.2
+ */
 
+
+/**
+ * Discussion class.
+ * @package Vanilla
+ */
 class Discussion extends Delegation {
 	var $DiscussionID;
 	var $FirstCommentID;
@@ -43,7 +54,7 @@ class Discussion extends Delegation {
 	var $CountWhispersTo;
 	var $CountWhispersFrom;
 
-	
+
 	// Clears all properties
 	function Clear() {
 		$this->DiscussionID = 0;
@@ -76,7 +87,7 @@ class Discussion extends Delegation {
 		$this->CountWhispersTo = 0;
 		$this->CountWhispersFrom = 0;
 	}
-	
+
 	function Discussion(&$Context) {
 		$this->Name = 'Discussion';
 		$this->Delegation($Context);
@@ -102,28 +113,28 @@ class Discussion extends Delegation {
 		$this->DateCreated = UnixTimestamp(@$DataSet['DateCreated']);
 		$this->DateLastActive = UnixTimestamp(@$DataSet['DateLastActive']);
 		$this->CountComments = @$DataSet['CountComments'];
-		
-		if ($Configuration['ENABLE_WHISPERS']) {		
+
+		if ($Configuration['ENABLE_WHISPERS']) {
          $this->WhisperUserID = @$DataSet['WhisperUserID'];
          $this->WhisperUsername = @$DataSet['WhisperUsername'];
-         
+
          $WhisperFromDateLastActive = UnixTimestamp(@$DataSet['WhisperFromDateLastActive']);
          $WhisperFromLastUserID = @$DataSet['WhisperFromLastUserID'];
          $WhisperFromLastFullName = @$DataSet['WhisperFromLastFullName'];
          $WhisperFromLastUsername = @$DataSet['WhisperFromLastUsername'];
          $this->CountWhispersFrom = @$DataSet['CountWhispersFrom'];
-         
+
          $WhisperToDateLastActive = UnixTimestamp(@$DataSet['WhisperToDateLastActive']);
          $WhisperToLastUserID = @$DataSet['WhisperToLastUserID'];
          $WhisperToLastFullName = @$DataSet['WhisperToLastFullName'];
          $WhisperToLastUsername = @$DataSet['WhisperToLastUsername'];
          $this->CountWhispersTo = @$DataSet['CountWhispersTo'];
-         
+
          $this->CountComments += $this->CountWhispersFrom;
          $this->CountComments += $this->CountWhispersTo;
          $this->CountReplies = $this->CountComments - 1;
          if ($this->CountReplies < 0) $this->CountReplies = 0;
-         
+
          if ($WhisperFromDateLastActive != '') {
             if ($this->DateLastActive < $WhisperFromDateLastActive) {
                $this->DateLastActive = $WhisperFromDateLastActive;
@@ -153,7 +164,7 @@ class Discussion extends Delegation {
 			$this->NewComments = $this->CountComments;
 		}
 		$this->Status = $this->GetStatus();
-		
+
 		// Define the last page
       $TmpCount = ($this->CountComments / $Configuration['COMMENTS_PER_PAGE']);
 		$RoundedCount = intval($TmpCount);
@@ -166,10 +177,10 @@ class Discussion extends Delegation {
 		} else {
 			$this->LastPage = 1;
 		}
-		
+
 		$this->DelegateParameters['DataSet'] = &$DataSet;
 		$this->CallDelegate('PostGetPropertiesFromDataSet');
-	}	
+	}
 
 	// Retrieve a properties from incoming form variables
 	function GetPropertiesFromForm(&$Context) {
@@ -177,7 +188,7 @@ class Discussion extends Delegation {
 		$this->CategoryID = ForceIncomingInt('CategoryID', 0);
 		$this->Name = ForceIncomingString('Name', '');
 		$this->UserDiscussionCount = ForceIncomingInt('UserDiscussionCount', 0);
-		
+
 		$this->WhisperUsername = ForceIncomingString('WhisperUsername', '');
 		$this->WhisperUsername = Strip_Slashes($this->WhisperUsername);
 
@@ -185,7 +196,7 @@ class Discussion extends Delegation {
       $this->Comment = $Context->ObjectFactory->NewContextObject($Context, 'Comment');
 		$this->Comment->GetPropertiesFromForm();
 	}
-	
+
 	function GetStatus() {
 		$sReturn = '';
 		if (!$this->Active) $sReturn = ' Hidden';
@@ -208,7 +219,7 @@ class Discussion extends Delegation {
 		$this->CallDelegate('GetStatus');
 		return $sReturn;
 	}
-	
+
 	function FormatPropertiesForDisplay() {
       $this->WhisperUsername = FormatStringForDisplay($this->WhisperUsername);
 		$this->AuthUsername = FormatStringForDisplay($this->AuthUsername);

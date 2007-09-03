@@ -1,25 +1,36 @@
 <?php
-/*
-* Copyright 2003 Mark O'Sullivan
-* This file is part of Vanilla.
-* Vanilla is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
-* Vanilla is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-* You should have received a copy of the GNU General Public License along with Vanilla; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-* The latest source code for Vanilla is available at www.lussumo.com
-* Contact Mark O'Sullivan at mark [at] lussumo [dot] com
-* 
-* Description: Category management class
-*/
+/**
+ * Category management class.
+ *
+ * Copyright 2003 Mark O'Sullivan
+ * This file is part of Lussumo's Software Library.
+ * Lussumo's Software Library is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+ * Lussumo's Software Library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License along with Vanilla; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * The latest source code is available at www.lussumo.com
+ * Contact Mark O'Sullivan at mark [at] lussumo [dot] com
+ *
+ * @author Mark O'Sullivan
+ * @copyright 2003 Mark O'Sullivan
+ * @license http://lussumo.com/community/gpl.txt GPL 2
+ * @package Vanilla
+ * @version 1.1.2
+ */
 
+
+/**
+ * Category management class.
+ * @package Vanilla
+ */
 class CategoryManager extends Delegation {
 	var $Name;				// The name of this class
    var $Context;			// The context object that contains all global objects (database, error manager, warning collector, session, etc)
-	
+
 	function CategoryManager(&$Context) {
 		$this->Name = 'CategoryManager';
 		$this->Delegation($Context);
 	}
-	
+
 	function GetCategories($IncludeCount = '0', $OrderByPreference = '0', $ForceRoleBlock = '1') {
 		$OrderByPreference = ForceBool($OrderByPreference, 0);
 		$s = $this->GetCategoryBuilder($IncludeCount, $ForceRoleBlock);
@@ -30,9 +41,9 @@ class CategoryManager extends Delegation {
 		$s->AddOrderBy('Priority', 'c', 'asc');
 		return $this->Context->Database->Select($s, $this->Name, 'GetCategories', 'An error occurred while retrieving categories.');
 	}
-	
+
 	function GetCategoryBuilder($IncludeCount = '0', $ForceRoleBlock = '1') {
-		
+
 		$IncludeCount = ForceBool($IncludeCount, 0);
 		$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
 		$s->SetMainTable('Category', 'c');
@@ -45,7 +56,7 @@ class CategoryManager extends Delegation {
 			$s->AddSelect('DiscussionID', 'd', 'DiscussionCount', 'count');
 		}
 		$s->AddSelect(array('CategoryID', 'Name', 'Description'), 'c', '', '', '', 1);
-		
+
 		$BlockCategoriesByRole = 1;
 		if ($this->Context->Session->User->Permission('PERMISSION_ADD_CATEGORIES')
 			|| $this->Context->Session->User->Permission('PERMISSION_EDIT_CATEGORIES')
@@ -53,7 +64,7 @@ class CategoryManager extends Delegation {
 				$BlockCategoriesByRole = 0;
 		}
 		if ($ForceRoleBlock) $BlockCategoriesByRole = 1;
-		
+
 		if ($this->Context->Session->UserID > 0) {
 			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID', 'c', 'CategoryID', 'left join', ' and crb.'.$this->Context->DatabaseColumns['CategoryRoleBlock']['RoleID'].' = '.$this->Context->Session->User->RoleID);
 			$s->AddJoin('CategoryBlock', 'b', 'CategoryID', 'c', 'CategoryID', 'left join', ' and b.'.$this->Context->DatabaseColumns['CategoryBlock']['UserID'].' = '.$this->Context->Session->UserID);
@@ -61,7 +72,7 @@ class CategoryManager extends Delegation {
 		} else {
 			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID', 'c', 'CategoryID', 'left join', ' and crb.'.$this->Context->DatabaseColumns['CategoryRoleBlock']['RoleID'].' = 1');
 		}
-		
+
 		// Limit to categories that this user is allowed to see.
 		if ($BlockCategoriesByRole) {
 			$s->AddWhere('crb', 'Blocked', '', 0, '=', 'and', '', 1, 1);
@@ -73,12 +84,12 @@ class CategoryManager extends Delegation {
          // (so administrators can easily see what they do and don't have access to)
 			$s->AddSelect('Blocked', 'crb', 'RoleBlocked', 'coalesce', '0');
 		}
-		
+
 		$this->DelegateParameters['IncludeCount'] = $IncludeCount;
 		$this->DelegateParameters['ForceRoleBlock'] = $ForceRoleBlock;
 		$this->DelegateParameters['SqlBuilder'] = &$s;
 		$this->CallDelegate('PostGetCategoryBuilder');
-		
+
 		return $s;
 	}
 
@@ -93,7 +104,7 @@ class CategoryManager extends Delegation {
 		}
 		return $this->Context->WarningCollector->Iif($Category, false);
 	}
-	
+
 	function GetCategoryRoleBlocks($CategoryID = '0') {
 		$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
 		$s->SetMainTable('Role', 'r');
@@ -104,7 +115,7 @@ class CategoryManager extends Delegation {
 		$s->AddOrderBy('Priority', 'r', 'asc');
 		return $this->Context->Database->Select($s, $this->Name, 'GetCategoryRoleBlocks', 'An error occurred while retrieving category role blocks.');
 	}
-		
+
 	function RemoveCategory($RemoveCategoryID, $ReplacementCategoryID) {
 		$ReplacementCategoryID = ForceInt($ReplacementCategoryID, 0);
 		if ($ReplacementCategoryID <= 0) {
@@ -117,13 +128,13 @@ class CategoryManager extends Delegation {
 		$s->AddFieldNameValue('CategoryID', $ReplacementCategoryID);
 		$s->AddWhere('d', 'CategoryID', '', $RemoveCategoryID, '=');
 		$this->Context->Database->Update($s, $this->Name, 'RemoveCategory', 'An error occurred while attempting to re-assign user categorizations.');
-		
+
 		// remove user blocks
 		$s->Clear();
 		$s->SetMainTable('CategoryBlock', 'b');
 		$s->AddWhere('b', 'CategoryID', '', $RemoveCategoryID, '=');
 		$this->Context->Database->Delete($s, $this->Name, 'RemoveCategory', 'An error occurred while attempting to remove user-assigned blocks on the selected category.');
-		
+
 		// Now remove the category itself
       $s->Clear();
 		$s->SetMainTable('Category', 'c');
@@ -131,7 +142,7 @@ class CategoryManager extends Delegation {
 		$this->Context->Database->Delete($s, $this->Name, 'RemoveCategory', 'An error occurred while attempting to remove the category.');
 		return true;
 	}
-	
+
 	function SaveCategory(&$Category) {
 		// Validate the properties
 		if($this->ValidateCategory($Category)) {
@@ -139,7 +150,7 @@ class CategoryManager extends Delegation {
 			$s->SetMainTable('Category', 'c');
 			$s->AddFieldNameValue('Name', $Category->Name);
 			$s->AddFieldNameValue('Description', $Category->Description);
-			
+
 			// If creating a new object
 			if ($Category->CategoryID == 0) {
 				$Category->CategoryID = $this->Context->Database->Insert($s, $this->Name, 'SaveCategory', 'An error occurred while creating a new category.');
@@ -147,22 +158,22 @@ class CategoryManager extends Delegation {
 				$s->AddWhere('c', 'CategoryID', '', $Category->CategoryID, '=');
 				$this->Context->Database->Update($s, $this->Name, 'SaveCategory', 'An error occurred while attempting to update the category.');
 			}
-			
+
 			// Now update the blocked roles
          $s->Clear();
 			$s->SetMainTable('CategoryRoleBlock', 'crb');
 			$s->AddWhere('crb', 'CategoryID', '', $Category->CategoryID, '=');
 			$this->Context->Database->Delete($s, $this->Name, 'SaveCategory', 'An error occurred while removing old role block definitions for this category.');
-			
+
 			$Category->AllowedRoles[] = 0;
-			
+
 			$s->Clear();
 			$s->SetMainTable('Role', 'r');
 			$s->AddSelect('RoleID', 'r');
 			$s->AddWhere('r', 'Active', '', 1, '=');
 			$s->AddWhere('r', 'RoleID', '', '('.implode(',',$Category->AllowedRoles).')', 'not in', 'and', '', 0);
 			$BlockedRoles = $this->Context->Database->Select($s, $this->Name, 'SaveCategory', 'An error occurred while retrieving blocked roles.');
-			
+
 			while ($Row = $this->Context->Database->GetRow($BlockedRoles)) {
 				$RoleID = ForceInt($Row['RoleID'], 0);
 				if ($RoleID > 0) {
@@ -177,7 +188,7 @@ class CategoryManager extends Delegation {
 		}
 		return $this->Context->WarningCollector->Iif($Category, false);
 	}
-	
+
 	function SaveCategoryOrder() {
 		$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
 		$ItemCount = ForceIncomingInt('SortItemCount', 0) + 1;
@@ -202,10 +213,10 @@ class CategoryManager extends Delegation {
 
 		// Instantiate a new validator for each field
 		Validate($this->Context->GetDefinition('CategoryNameLower'), 1, $ValidatedCategory->Name, 100, '', $this->Context);
-	
+
 		// If validation was successful, then reset the properties to db safe values for saving
 		if ($this->Context->WarningCollector->Count() == 0) $Category = $ValidatedCategory;
-		
+
 		return $this->Context->WarningCollector->Iif();
 	}
 }

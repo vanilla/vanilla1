@@ -1,20 +1,31 @@
 <?php
-/*
-* Copyright 2003 Mark O'Sullivan
-* This file is part of Vanilla.
-* Vanilla is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
-* Vanilla is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-* You should have received a copy of the GNU General Public License along with Vanilla; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-* The latest source code for Vanilla is available at www.lussumo.com
-* Contact Mark O'Sullivan at mark [at] lussumo [dot] com
-*
-* Description: Search management classes (handles manipulation of saved searches)
-*/
+/**
+ * Search management classes (handles manipulation of saved searches).
+ *
+ * Copyright 2003 Mark O'Sullivan
+ * This file is part of Lussumo's Software Library.
+ * Lussumo's Software Library is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+ * Lussumo's Software Library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License along with Vanilla; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * The latest source code is available at www.lussumo.com
+ * Contact Mark O'Sullivan at mark [at] lussumo [dot] com
+ *
+ * @author Mark O'Sullivan
+ * @copyright 2003 Mark O'Sullivan
+ * @license http://lussumo.com/community/gpl.txt GPL 2
+ * @package Vanilla
+ * @version 1.1.2
+ */
 
+
+/**
+ * Search management classes (handles manipulation of saved searches).
+ * @package Vanilla
+ */
 class SearchManager {
    var $Name;				// The name of this class
    var $Context;			// The context object that contains all global objects (database, error manager, warning collector, session, etc)
-	
+
 	function DeleteSearch($SearchID) {
 		$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
 		$s->SetMainTable('UserSearch', 'us');
@@ -23,15 +34,15 @@ class SearchManager {
 		$this->Context->Database->Delete($s, $this->Name, 'DeleteSearch', 'An error occurred while deleting your search.');
 		return true;
 	}
-	
+
    // Returns a SqlBuilder object with all of the topic properties already defined in the select
    function GetSearchBuilder() {
       $s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
       $s->SetMainTable('UserSearch', 'us');
 	   $s->AddSelect(array('SearchID', 'Label', 'UserID', 'Type', 'Keywords'), 'us');
       return $s;
-   }	
-	
+   }
+
    function GetSearchById($SearchID) {
       $Search = $this->Context->ObjectFactory->NewObject($this->Context, 'Search');
       $s = $this->GetSearchBuilder();
@@ -44,31 +55,31 @@ class SearchManager {
 		}
       return $this->Context->WarningCollector->Iif($Search, false);
    }
-	
+
    function GetSearchCount($UserID) {
       $UserID = ForceInt($UserID, 0);
       $TotalNumberOfRecords = 0;
-      
+
       $s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
       $s->AddSelect('SearchID', 'us', 'Count', 'count');
       $s->SetMainTable('VanillaUserSearch', 'us');
       $s->AddWhere('us', 'UserID', '', $UserID, '=');
-         
+
       $result = $this->Context->Database->Select($s, $this->Name, 'GetSearchCount', 'An error occurred while retrieving search summary data.');
 		while ($rows = $this->Context->Database->GetRow($result)) {
 			$TotalNumberOfRecords = $rows['Count'];
 		}
       return $TotalNumberOfRecords;
    }
-	
+
    function GetSearchList($RecordsToRetrieve = '0', $UserID) {
       $RecordsToRetrieve = ForceInt($RecordsToRetrieve, 0);
-      
+
       $s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
       $s = $this->GetSearchBuilder();
 		$s->AddWhere('us', 'UserID', '', $UserID, '=');
       if ($RecordsToRetrieve > 0) $s->AddLimit(0, $RecordsToRetrieve);
-   
+
       return $this->Context->Database->Select($s, $this->Name, 'GetSearchList', 'An error occurred while retrieving saved searches.');
    }
 
@@ -80,7 +91,7 @@ class SearchManager {
 			$SearchToSave = $Search;
          $SearchToSave->FormatPropertiesForDatabaseInput();
          $s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
-         
+
          // Proceed with the save if there are no warnings
          if ($this->Context->WarningCollector->Count() == 0) {
 				$s->SetMainTable('UserSearch', 'us');
@@ -95,14 +106,14 @@ class SearchManager {
 					$Search->SearchID = $this->Context->Database->Insert($s, $this->Name, 'SaveSearch', 'An error occurred while creating your search.');
 				}
          }
-         
+
       }
       return $this->Context->WarningCollector->Iif();
    }
-	
+
    function SearchManager(&$Context) {
       $this->Name = 'SearchManager';
 		$this->Context = &$Context;
-   }	
+   }
 }
 ?>
