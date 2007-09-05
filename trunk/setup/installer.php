@@ -91,7 +91,7 @@ $DBHost = ForceIncomingString('DBHost', '');
 $DBName = ForceIncomingString('DBName', '');
 $DBUser = ForceIncomingString('DBUser', '');
 $DBPass = ForceIncomingString('DBPass', '');
-$DBTablePrefix = $Configuration['DATABASE_TABLE_PREFIX'];
+$DBTablePrefix = ForceIncomingString('DBTablePrefix', $Configuration['DATABASE_TABLE_PREFIX']);
 $Username = ForceIncomingString('Username', '');
 $Password = ForceIncomingString('Password', '');
 $ConfirmPassword = ForceIncomingString('ConfirmPassword', '');
@@ -101,6 +101,10 @@ $ApplicationTitle = ForceIncomingString('ApplicationTitle', 'Vanilla');
 $CookieDomain = ForceIncomingString('CookieDomain', '');
 $CookieDomain = FormatCookieDomain($CookieDomain);
 $CookiePath = ForceIncomingString('CookiePath', '');
+
+//update $DatabaseTables['User']
+$Context->DatabaseTables['User'] = $DatabaseTables['User'] = $DBTablePrefix.'User';
+
 // Make the banner title the same as the application title
 $WorkingDirectory = str_replace('\\', '/', getcwd()).'/';
 $RootDirectory = str_replace('setup/', '', $WorkingDirectory);
@@ -239,6 +243,10 @@ if (!defined('IN_VANILLA')) exit();
 					// Go ahead and install the database tables
 					// Open the database file & retrieve sql
 					$SqlLines = @file($WorkingDirectory."mysql.sql");
+
+					// replace default 'LUM_' prefix
+					$SqlLines = preg_replace("/((TABLE|INTO) `)LUM_/", "\$1" . $DBTablePrefix, $SqlLines);
+
 					if (!$SqlLines) {
 						$Context->WarningCollector->Add("We couldn't open the \"".$WorkingDirectory."mysql.sql\" file.");
 					} else {
@@ -276,8 +284,17 @@ if (!defined('IN_VANILLA')) exit();
 			$DBManager->DefineSetting("DATABASE_NAME", $DBName, 1);
 			$DBManager->DefineSetting("DATABASE_USER", $DBUser, 1);
 			$DBManager->DefineSetting("DATABASE_PASSWORD", $DBPass, 1);
+			$DBManager->DefineSetting("DATABASE_TABLE_PREFIX", $DBTablePrefix, 1);
 			$DBManager->DefineSetting("DATABASE_CHARACTER_ENCODING", $DatabaseCharacterEncoding, 1);
 			if (!$DBManager->SaveSettingsToFile($DBFile)) {
+				// $Context->WarningCollector->Clear();
+				// $Context->WarningCollector->Add("For some reason we couldn't save your database settings to the '.$DBFile.' file.");
+			}
+
+			// Save user table name
+			if (!AppendToConfigurationFile(
+				$RootDirectory.'conf/database.php',	'$DatabaseTables[\'User\'] = \''.$DBTablePrefix."User';\n")
+			) {
 				// $Context->WarningCollector->Clear();
 				// $Context->WarningCollector->Add("For some reason we couldn't save your database settings to the '.$DBFile.' file.");
 			}
@@ -330,6 +347,7 @@ if (!defined('IN_VANILLA')) exit();
 
 		// Include the db settings defined in the previous step
 		include($RootDirectory.'conf/database.php');
+		$Context->DatabaseTables['User'] = $DatabaseTables['User'];
 
 		// Open the database connection
 		$Connection = false;
@@ -484,6 +502,10 @@ if (!defined('IN_VANILLA')) exit();
 								<li>
 									<label for=\"tDBPass\">MySQL Password</label>
 									<input type=\"password\" id=\"tDBPass\" name=\"DBPass\" value=\"".FormatStringForDisplay($DBPass, 1)."\" />
+								</li>
+								<li>
+									<label for=\"tDBTablePrefix\">MySQL Table Prefix</label>
+									<input type=\"text\" id=\"tDBTablePrefix\" name=\"DBTablePrefix\" value=\"".FormatStringForDisplay($DBTablePrefix, 1)."\" />
 								</li>
 							</ul>
 							<div class=\"Button\"><input type=\"submit\" value=\"Click here to create Vanilla's database and proceed to the next step\" /></div>
