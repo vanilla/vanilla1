@@ -91,6 +91,7 @@ $DBHost = ForceIncomingString('DBHost', '');
 $DBName = ForceIncomingString('DBName', '');
 $DBUser = ForceIncomingString('DBUser', '');
 $DBPass = ForceIncomingString('DBPass', '');
+$DBTablePrefix = $Configuration['DATABASE_TABLE_PREFIX'];
 $Username = ForceIncomingString('Username', '');
 $Password = ForceIncomingString('Password', '');
 $ConfirmPassword = ForceIncomingString('ConfirmPassword', '');
@@ -218,12 +219,15 @@ if (!defined('IN_VANILLA')) exit();
 				$Context->WarningCollector->Add("We had some problems identifying the tables already in your database: ". mysql_error($Connection));
 			} else {
 				$TableConflicts = array();
-				$TableToCompare = '';
+				$TableToCompare = array();
 				while ($Row = mysql_fetch_array($TableData)) {
-					$TableToCompare = $Row[0];
-					$TableToCompare = str_replace('LUM_', '', $TableToCompare);
-					if (array_key_exists($TableToCompare, $DatabaseTables)) {
-						$TableConflicts[] = $Row[0];
+					$TableToCompare[] = strtolower($Row[0]);
+				}
+				foreach ($DatabaseTables as $TableKey => $TableName) {
+					$TableName = GetTableName($TableKey, $DatabaseTables, $DBTablePrefix);
+					$TableName = strtolower($TableName);
+					if (in_array($TableName, $TableToCompare)) {
+						$TableConflicts[] = $TableName;
 					}
 				}
 				if (count($TableConflicts) == count($DatabaseTables)) {
