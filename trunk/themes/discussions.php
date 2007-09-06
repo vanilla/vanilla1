@@ -24,25 +24,25 @@ $RowNumber = 0;
 while ($Row = $this->Context->Database->GetRow($this->DiscussionData)) {
 	$RowNumber++;
 	$this->DelegateParameters['RowNumber'] = &$RowNumber;
-   $Discussion->Clear();
-   $Discussion->GetPropertiesFromDataSet($Row, $this->Context->Configuration);
-   $Discussion->FormatPropertiesForDisplay();
+	$Discussion->Clear();
+	$Discussion->GetPropertiesFromDataSet($Row, $this->Context->Configuration);
+	$Discussion->FormatPropertiesForDisplay();
 	// Prefix the discussion name with the whispered-to username if this is a whisper
-   if ($Discussion->WhisperUserID > 0) {
+	if ($Discussion->WhisperUserID > 0) {
 		$Discussion->Name = @$Discussion->WhisperUsername.': '.$Discussion->Name;
 	}
 
 	// Discussion search results are identical to regular discussion listings, so include the discussion search results template here.
 	include($ThemeFilePath);
-	
-   $FirstRow = 0;
+
+	$FirstRow = 0;
 	$Alternate = FlipBool($Alternate);
 }
 echo $DiscussionList.'
 	</ol>
 </div>';
 if ($this->DiscussionDataCount > 0) {
-   echo '<div class="ContentInfo Bottom">
+	echo '<div class="ContentInfo Bottom">
 		<div class="PageInfo">
 			<p>'.$pl->GetPageDetails($this->Context).'</p>
 			'.$PageList.'

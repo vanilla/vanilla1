@@ -25,16 +25,16 @@
 class SettingsHelp extends Control {
 
 	function SettingsHelp(&$Context) {
-      $this->Name = 'SettingsHelp';
-      $this->Control($Context);
+		$this->Name = 'SettingsHelp';
+		$this->Control($Context);
 		$this->CallDelegate('Constructor');
 	}
 
 	function Render() {
 		if ($this->PostBackAction == '') {
-         $this->CallDelegate('PreRender');
-         include(ThemeFilePath($this->Context->Configuration, 'settings_help.php'));
-         $this->CallDelegate('PostRender');
+			$this->CallDelegate('PreRender');
+			include(ThemeFilePath($this->Context->Configuration, 'settings_help.php'));
+			$this->CallDelegate('PostRender');
 		}
 	}
 }

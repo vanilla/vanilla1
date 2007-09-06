@@ -47,16 +47,16 @@ if (!$Allowed) {
 // 1. DEFINE VARIABLES AND PROPERTIES SPECIFIC TO THIS PAGE
 
 	$Head->BodyId = 'SettingsPage';
-   $Menu->CurrentTab = 'settings';
-   $Panel->CssClass = 'SettingsPanel';
-   $Panel->BodyCssClass = 'SettingsPageBody';
-   if ($Context->PageTitle == '') $Context->PageTitle = $Context->GetDefinition('AdministrativeSettings');
+	$Menu->CurrentTab = 'settings';
+	$Panel->CssClass = 'SettingsPanel';
+	$Panel->BodyCssClass = 'SettingsPageBody';
+	if ($Context->PageTitle == '') $Context->PageTitle = $Context->GetDefinition('AdministrativeSettings');
 
 // 2. BUILD PAGE CONTROLS
 
-   // Build the control panel
+	// Build the control panel
 	$AdminOptions = $Context->GetDefinition('AdministrativeOptions');
-   $Panel->AddList($AdminOptions, 20);
+	$Panel->AddList($AdminOptions, 20);
 	if ($Context->Session->User->Permission('PERMISSION_CHANGE_APPLICATION_SETTINGS')) $Panel->AddListItem($AdminOptions, $Context->GetDefinition('ApplicationSettings'), GetUrl($Configuration, 'settings.php', '', '', '', '', 'PostBackAction=Globals'), '', '', 10);
 	if ($Context->Session->User->Permission('PERMISSION_CHECK_FOR_UPDATES')) $Panel->AddListItem($AdminOptions, $Context->GetDefinition('UpdatesAndReminders'), GetUrl($Configuration, 'settings.php', '', '', '', '', 'PostBackAction=UpdateCheck'), '', '', 20);
 	if ($Context->Session->User->Permission('PERMISSION_MANAGE_EXTENSIONS')) $Panel->AddListItem($AdminOptions, $Context->GetDefinition('ManageExtensions'), GetUrl($Configuration, 'settings.php', '', '', '', '', 'PostBackAction=Extensions'), '', '', 60);
@@ -77,18 +77,18 @@ if (!$Allowed) {
 
 	if ($Context->Session->User->Permission('PERMISSION_MANAGE_REGISTRATION')) $Panel->AddListItem($AdminOptions, $Context->GetDefinition('RegistrationManagement'), GetUrl($Configuration, 'settings.php', '', '', '', '', 'PostBackAction=RegistrationChange'), '', '', 40);
 
-   // Create the default view
-   $SettingsHelp = $Context->ObjectFactory->CreateControl($Context, 'SettingsHelp');
+	// Create the default view
+	$SettingsHelp = $Context->ObjectFactory->CreateControl($Context, 'SettingsHelp');
 
-   // Forms
-   $CategoryForm = $Context->ObjectFactory->CreateControl($Context, 'CategoryForm');
-   $RoleForm = $Context->ObjectFactory->CreateControl($Context, 'RoleForm');
-   $GlobalsForm = $Context->ObjectFactory->CreateControl($Context, 'GlobalsForm');
-   $UpdateCheck = $Context->ObjectFactory->CreateControl($Context, 'UpdateCheck');
-   $ExtensionForm = $Context->ObjectFactory->CreateControl($Context, 'ExtensionForm');
-   $ThemeAndStyleForm = $Context->ObjectFactory->CreateControl($Context, 'ThemeAndStyleForm');
-   $RegistrationForm = $Context->ObjectFactory->CreateControl($Context, 'RegistrationForm');
-   $LanguageForm = $Context->ObjectFactory->CreateControl($Context, 'LanguageForm');
+	// Forms
+	$CategoryForm = $Context->ObjectFactory->CreateControl($Context, 'CategoryForm');
+	$RoleForm = $Context->ObjectFactory->CreateControl($Context, 'RoleForm');
+	$GlobalsForm = $Context->ObjectFactory->CreateControl($Context, 'GlobalsForm');
+	$UpdateCheck = $Context->ObjectFactory->CreateControl($Context, 'UpdateCheck');
+	$ExtensionForm = $Context->ObjectFactory->CreateControl($Context, 'ExtensionForm');
+	$ThemeAndStyleForm = $Context->ObjectFactory->CreateControl($Context, 'ThemeAndStyleForm');
+	$RegistrationForm = $Context->ObjectFactory->CreateControl($Context, 'RegistrationForm');
+	$LanguageForm = $Context->ObjectFactory->CreateControl($Context, 'LanguageForm');
 	$ApplicantsForm = $Context->ObjectFactory->CreateControl($Context, 'ApplicantsForm');
 	$ApplicantData = false;
 	if ($Context->Session->User->Permission('PERMISSION_APPROVE_APPLICANTS') && !$Configuration['ALLOW_IMMEDIATE_ACCESS']) {
@@ -121,6 +121,6 @@ if (!$Allowed) {
 
 // 4. FIRE PAGE EVENTS
 
-   $Page->FireEvents();
+	$Page->FireEvents();
 
 ?>

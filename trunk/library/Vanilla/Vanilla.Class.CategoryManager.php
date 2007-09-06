@@ -24,7 +24,7 @@
  */
 class CategoryManager extends Delegation {
 	var $Name;				// The name of this class
-   var $Context;			// The context object that contains all global objects (database, error manager, warning collector, session, etc)
+	var $Context;			// The context object that contains all global objects (database, error manager, warning collector, session, etc)
 
 	function CategoryManager(&$Context) {
 		$this->Name = 'CategoryManager';
@@ -81,7 +81,7 @@ class CategoryManager extends Delegation {
 			$s->EndWhereGroup();
 		} else {
 			// Identify which of these categories is blocked by role
-         // (so administrators can easily see what they do and don't have access to)
+			// (so administrators can easily see what they do and don't have access to)
 			$s->AddSelect('Blocked', 'crb', 'RoleBlocked', 'coalesce', '0');
 		}
 
@@ -136,7 +136,7 @@ class CategoryManager extends Delegation {
 		$this->Context->Database->Delete($s, $this->Name, 'RemoveCategory', 'An error occurred while attempting to remove user-assigned blocks on the selected category.');
 
 		// Now remove the category itself
-      $s->Clear();
+		$s->Clear();
 		$s->SetMainTable('Category', 'c');
 		$s->AddWhere('c', 'CategoryID', '', $RemoveCategoryID, '=');
 		$this->Context->Database->Delete($s, $this->Name, 'RemoveCategory', 'An error occurred while attempting to remove the category.');
@@ -160,7 +160,7 @@ class CategoryManager extends Delegation {
 			}
 
 			// Now update the blocked roles
-         $s->Clear();
+			$s->Clear();
 			$s->SetMainTable('CategoryRoleBlock', 'crb');
 			$s->AddWhere('crb', 'CategoryID', '', $Category->CategoryID, '=');
 			$this->Context->Database->Delete($s, $this->Name, 'SaveCategory', 'An error occurred while removing old role block definitions for this category.');

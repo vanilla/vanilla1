@@ -30,40 +30,40 @@ class ThemeAndStyleForm extends PostBackControl {
 
 	function DefineThemes() {
 		$ThemeRoot = $this->Context->Configuration['APPLICATION_PATH'].'themes/';
-      $FolderHandle = @opendir($ThemeRoot);
-      if (!$FolderHandle) {
-         $this->Context->WarningCollector->Add(str_replace("//1", $ThemeRoot, $this->Context->GetDefinition("ErrOpenDirectoryThemes")));
-      } else {
+		$FolderHandle = @opendir($ThemeRoot);
+		if (!$FolderHandle) {
+			$this->Context->WarningCollector->Add(str_replace("//1", $ThemeRoot, $this->Context->GetDefinition("ErrOpenDirectoryThemes")));
+		} else {
 			$this->Themes = array();
 
-         // Loop through each file
-         while (false !== ($Item = readdir($FolderHandle))) {
-            // Retrieve theme names (folders which are not system folders or hidden folders
-            if (!in_array($Item, array('.', '..'))
+			// Loop through each file
+			while (false !== ($Item = readdir($FolderHandle))) {
+				// Retrieve theme names (folders which are not system folders or hidden folders
+				if (!in_array($Item, array('.', '..'))
 					&& is_dir($ThemeRoot.$Item)
 					&& substr($Item, 0, 1) != '_'
 					&& substr($Item, 0, 1) != '.') $this->Themes[] = $Item;
-         }
-      }
-   }
+			}
+		}
+	}
 
 	function DefineStyles($ThemePath) {
 		$StyleRoot = $ThemePath.'styles/';
-      $FolderHandle = @opendir($StyleRoot);
-      if (!$FolderHandle) {
-         $this->Context->WarningCollector->Add(str_replace("//1", $StyleRoot, $this->Context->GetDefinition("ErrOpenDirectoryStyles")));
-      } else {
+		$FolderHandle = @opendir($StyleRoot);
+		if (!$FolderHandle) {
+			$this->Context->WarningCollector->Add(str_replace("//1", $StyleRoot, $this->Context->GetDefinition("ErrOpenDirectoryStyles")));
+		} else {
 			$this->Styles = array();
 
-         // Loop through each file
-         while (false !== ($Item = readdir($FolderHandle))) {
-            // Retrieve style names (folders which are not system folders or hidden folders
-            if (!in_array($Item, array('.', '..'))
+			// Loop through each file
+			while (false !== ($Item = readdir($FolderHandle))) {
+				// Retrieve style names (folders which are not system folders or hidden folders
+				if (!in_array($Item, array('.', '..'))
 					&& is_dir($StyleRoot.$Item)
 					&& substr($Item, 0, 1) != '_'
 					&& substr($Item, 0, 1) != '.') $this->Styles[] = $Item;
-         }
-      }
+			}
+		}
 	}
 
 	function ThemeAndStyleForm(&$Context) {
@@ -79,7 +79,7 @@ class ThemeAndStyleForm extends PostBackControl {
 			$this->DefineThemes();
 
 			// Get the name of the current theme folder
-         $CurrentThemeKey = ForceIncomingString('Theme', '');
+			$CurrentThemeKey = ForceIncomingString('Theme', '');
 			if ($CurrentThemeKey != '') {
 				$CurrentTheme = $this->Themes[ForceInt($CurrentThemeKey, 0)];
 
@@ -138,7 +138,7 @@ class ThemeAndStyleForm extends PostBackControl {
 					$ConfigurationManager->SaveSettingsToFile($SettingsFile);
 
 					// See if this style exists in the database yet
-               $s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
+					$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
 					$s->SetMainTable('Style', 's');
 					$s->AddSelect('StyleID', 's');
 					$s->AddWhere('s', 'Url', '', $NewStylePath, '=');
@@ -150,7 +150,7 @@ class ThemeAndStyleForm extends PostBackControl {
 					}
 
 					// If the style doesn't exist yet, add it
-               if ($StyleID == 0) {
+					if ($StyleID == 0) {
 						$s->Clear();
 						$s->SetMainTable('Style', 's');
 						$s->AddFieldNameValue('Name', $NewStyleName);
@@ -161,7 +161,7 @@ class ThemeAndStyleForm extends PostBackControl {
 					}
 
 					// Now that the style has been properly defined, apply it to all users if required
-               if ($StyleID > 0 && ForceIncomingBool('ApplyStyleToUsers', 0)) {
+					if ($StyleID > 0 && ForceIncomingBool('ApplyStyleToUsers', 0)) {
 						$s->Clear();
 						$s->SetMainTable('User', 'u');
 						$s->AddFieldNameValue('StyleID', $StyleID);

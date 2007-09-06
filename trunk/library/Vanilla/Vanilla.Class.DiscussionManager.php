@@ -24,7 +24,7 @@
  */
 class DiscussionManager extends Delegation {
 	var $Name;				// The name of this class
-   var $Context;			// The context object that contains all global objects (database, error manager, warning collector, session, etc)
+	var $Context;			// The context object that contains all global objects (database, error manager, warning collector, session, etc)
 
 	function DiscussionManager(&$Context) {
 		$this->Name = 'DiscussionManager';
@@ -62,50 +62,50 @@ class DiscussionManager extends Delegation {
 		$s->AddSelect('Name', 'lu', 'LastUsername');
 
 		if ($this->Context->Configuration['ENABLE_WHISPERS']) {
-         // Get Whisper user data
-         $s->AddJoin('User', 'wt', 'UserID', 't', 'WhisperUserID', 'left join');
-         $s->AddSelect('Name', 'wt', 'WhisperUsername');
+			// Get Whisper user data
+			$s->AddJoin('User', 'wt', 'UserID', 't', 'WhisperUserID', 'left join');
+			$s->AddSelect('Name', 'wt', 'WhisperUsername');
 			$s->AddGroupBy('DiscussionID', 't');
 
-         // Get data on the last user to send a whisper (to the current user) in the discussion
-         if ($this->Context->Session->User->Permission('PERMISSION_VIEW_ALL_WHISPERS')) {
-            // Get the counts (grouped - hence the need to move the 'whisper to' and 'whisper from' values to the Discussion table for admins).
-            // Select 'whisper from' and 'whisper to' columns from the Discussion table
-            $s->AddJoin('DiscussionUserWhisperFrom', 'tuwf', 'DiscussionID', 't', 'DiscussionID', 'left join');
-            $s->AddJoin('User', 'wluf', 'UserID', 't', 'WhisperFromLastUserID', 'left join');
-            $s->AddJoin('User', 'wlut', 'UserID', 't', 'WhisperToLastUserID', 'left join');
-            $s->AddSelect(array('WhisperFromLastUserID', 'WhisperToLastUserID'), 't');
-            $s->AddSelect('DateLastWhisper', 't', 'WhisperFromDateLastActive');
-            $s->AddSelect('DateLastWhisper', 't', 'WhisperToDateLastActive');
-            // Get the total whisper from count
-            $s->AddSelect('TotalWhisperCount', 't', 'CountWhispersFrom');
-            // Count the whispers to (admin's see all)
-            $s->AddSelect('0', '', 'CountWhispersTo');
-         } else {
-            // Select 'whisper from' columns from the user-specific tables
-            // Get data on the last user to receive a whisper (for the current, viewing user)
-            $s->AddJoin('DiscussionUserWhisperFrom', 'tuwf', 'DiscussionID', 't', 'DiscussionID', 'left join', ' and tuwf.'.$this->Context->DatabaseColumns['DiscussionUserWhisperFrom']['WhisperFromUserID'].' = '.$this->Context->Session->UserID);
-            $s->AddJoin('User', 'wluf', 'UserID', 'tuwf', 'LastUserID', 'left join');
-            $s->AddSelect('LastUserID', 'tuwf', 'WhisperFromLastUserID');
-            $s->AddSelect('DateLastActive', 'tuwf', 'WhisperFromDateLastActive');
+			// Get data on the last user to send a whisper (to the current user) in the discussion
+			if ($this->Context->Session->User->Permission('PERMISSION_VIEW_ALL_WHISPERS')) {
+				// Get the counts (grouped - hence the need to move the 'whisper to' and 'whisper from' values to the Discussion table for admins).
+				// Select 'whisper from' and 'whisper to' columns from the Discussion table
+				$s->AddJoin('DiscussionUserWhisperFrom', 'tuwf', 'DiscussionID', 't', 'DiscussionID', 'left join');
+				$s->AddJoin('User', 'wluf', 'UserID', 't', 'WhisperFromLastUserID', 'left join');
+				$s->AddJoin('User', 'wlut', 'UserID', 't', 'WhisperToLastUserID', 'left join');
+				$s->AddSelect(array('WhisperFromLastUserID', 'WhisperToLastUserID'), 't');
+				$s->AddSelect('DateLastWhisper', 't', 'WhisperFromDateLastActive');
+				$s->AddSelect('DateLastWhisper', 't', 'WhisperToDateLastActive');
+				// Get the total whisper from count
+				$s->AddSelect('TotalWhisperCount', 't', 'CountWhispersFrom');
+				// Count the whispers to (admin's see all)
+				$s->AddSelect('0', '', 'CountWhispersTo');
+			} else {
+				// Select 'whisper from' columns from the user-specific tables
+				// Get data on the last user to receive a whisper (for the current, viewing user)
+				$s->AddJoin('DiscussionUserWhisperFrom', 'tuwf', 'DiscussionID', 't', 'DiscussionID', 'left join', ' and tuwf.'.$this->Context->DatabaseColumns['DiscussionUserWhisperFrom']['WhisperFromUserID'].' = '.$this->Context->Session->UserID);
+				$s->AddJoin('User', 'wluf', 'UserID', 'tuwf', 'LastUserID', 'left join');
+				$s->AddSelect('LastUserID', 'tuwf', 'WhisperFromLastUserID');
+				$s->AddSelect('DateLastActive', 'tuwf', 'WhisperFromDateLastActive');
 
-            // Get the total whisper from count
-            $s->AddSelect('CountWhispers', 'tuwf', 'CountWhispersFrom');
+				// Get the total whisper from count
+				$s->AddSelect('CountWhispers', 'tuwf', 'CountWhispersFrom');
 
-            // Select 'whisper to' columns from the user specific tables
-            // Get data on the last user to send a whisper (for the current, viewing user)
-            $s->AddJoin('DiscussionUserWhisperTo', 'tuwt', 'DiscussionID', 't', 'DiscussionID', 'left join', ' and tuwt.'.$this->Context->DatabaseColumns['DiscussionUserWhisperTo']['WhisperToUserID'].' = '.$this->Context->Session->UserID);
-            $s->AddJoin('User', 'wlut', 'UserID', 'tuwt', 'LastUserID', 'left join');
-            $s->AddSelect('LastUserID', 'tuwt', 'WhisperToLastUserID');
-            $s->AddSelect('DateLastActive', 'tuwt', 'WhisperToDateLastActive');
+				// Select 'whisper to' columns from the user specific tables
+				// Get data on the last user to send a whisper (for the current, viewing user)
+				$s->AddJoin('DiscussionUserWhisperTo', 'tuwt', 'DiscussionID', 't', 'DiscussionID', 'left join', ' and tuwt.'.$this->Context->DatabaseColumns['DiscussionUserWhisperTo']['WhisperToUserID'].' = '.$this->Context->Session->UserID);
+				$s->AddJoin('User', 'wlut', 'UserID', 'tuwt', 'LastUserID', 'left join');
+				$s->AddSelect('LastUserID', 'tuwt', 'WhisperToLastUserID');
+				$s->AddSelect('DateLastActive', 'tuwt', 'WhisperToDateLastActive');
 
-            // Count the whispers to
-            $s->AddSelect('CountWhispers', 'tuwt', 'CountWhispersTo');
-         }
+				// Count the whispers to
+				$s->AddSelect('CountWhispers', 'tuwt', 'CountWhispersTo');
+			}
 
-         // Now that the wluf and wlut tables are defined, assign the whisper names
-         $s->AddSelect('Name', 'wluf', 'WhisperFromLastUsername');
-         $s->AddSelect('Name', 'wlut', 'WhisperToLastUsername');
+			// Now that the wluf and wlut tables are defined, assign the whisper names
+			$s->AddSelect('Name', 'wluf', 'WhisperFromLastUsername');
+			$s->AddSelect('Name', 'wlut', 'WhisperToLastUsername');
 		}
 
 		// Get category data
@@ -113,13 +113,13 @@ class DiscussionManager extends Delegation {
 		$s->AddSelect('Name', 'c', 'Category');
 
 		// Limit to roles with access to this category
-      if ($this->Context->Session->UserID > 0) {
+		if ($this->Context->Session->UserID > 0) {
 			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID', 't', 'CategoryID', 'left join', ' and crb.'.$this->Context->DatabaseColumns['CategoryRoleBlock']['RoleID'].' = '.$this->Context->Session->User->RoleID);
 		} else {
 			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID', 't', 'CategoryID', 'left join', ' and crb.'.$this->Context->DatabaseColumns['CategoryRoleBlock']['RoleID'].' = 1');
 		}
-      $s->AddWhere('crb', 'Blocked', '', '0', '=', 'and', '', 1, 1);
-      $s->AddWhere('crb', 'Blocked', '', '0', '=', 'or', '', 0, 0);
+		$s->AddWhere('crb', 'Blocked', '', '0', '=', 'and', '', 1, 1);
+		$s->AddWhere('crb', 'Blocked', '', '0', '=', 'or', '', 0, 0);
 		$s->AddWhere('crb', 'Blocked', '', 'null', 'is', 'or', '', 0, 0);
 		$s->EndWhereGroup();
 
@@ -165,13 +165,13 @@ class DiscussionManager extends Delegation {
 				$s->AddFieldNameValue('UserID', $this->Context->Session->UserID);
 				$s->AddFieldNameValue('DiscussionID', $DiscussionID);
 				// fail silently
-            $this->Context->Database->Insert($s, $this->Name, 'GetDiscussionById', 'An error occurred while recording this discussion viewing.', 0, 0);
+				$this->Context->Database->Insert($s, $this->Name, 'GetDiscussionById', 'An error occurred while recording this discussion viewing.', 0, 0);
 			} else {
 				// otherwise update
-            $s->AddWhere('utw', 'UserID', '', $this->Context->Session->UserID, '=');
-            $s->AddWhere('utw', 'DiscussionID', '', $Discussion->DiscussionID, '=');
+				$s->AddWhere('utw', 'UserID', '', $this->Context->Session->UserID, '=');
+				$s->AddWhere('utw', 'DiscussionID', '', $Discussion->DiscussionID, '=');
 				// fail silently
-            $this->Context->Database->Update($s, $this->Name, 'GetDiscussionById', 'An error occurred while recording this discussion viewing.', 0);
+				$this->Context->Database->Update($s, $this->Name, 'GetDiscussionById', 'An error occurred while recording this discussion viewing.', 0);
 			}
 		}
 
@@ -188,13 +188,13 @@ class DiscussionManager extends Delegation {
 		$s->AddSelect('DiscussionID', 't', 'Count', 'count');
 
 		// Limit to roles with access to this category
-      if ($this->Context->Session->UserID > 0) {
+		if ($this->Context->Session->UserID > 0) {
 			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID', 't', 'CategoryID', 'left join', ' and crb.'.$this->Context->DatabaseColumns['CategoryRoleBlock']['RoleID'].' = '.$this->Context->Session->User->RoleID);
 		} else {
 			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID', 't', 'CategoryID', 'left join', ' and crb.'.$this->Context->DatabaseColumns['CategoryRoleBlock']['RoleID'].' = 1');
 		}
-      $s->AddWhere('crb', 'Blocked', '', '0', '=', 'and', '', 1, 1);
-      $s->AddWhere('crb', 'Blocked', '', '0', '=', 'or', '', 0, 0);
+		$s->AddWhere('crb', 'Blocked', '', '0', '=', 'and', '', 1, 1);
+		$s->AddWhere('crb', 'Blocked', '', '0', '=', 'or', '', 0, 0);
 		$s->AddWhere('crb', 'Blocked', '', 'null', 'is', 'or', '', 0, 0);
 		$s->EndWhereGroup();
 
@@ -262,7 +262,7 @@ class DiscussionManager extends Delegation {
 		$s->AddOrderBy('Sticky', 't');
 		if ($this->Context->Configuration['ENABLE_WHISPERS']) {
 			// If the user viewing doesn't have permission to view all whispers, make sure to sort by dates that the user viewing is allowed to see
-         if ($this->Context->Session->User && $this->Context->Session->User->Permission('PERMISSION_VIEW_ALL_WHISPERS')) {
+			if ($this->Context->Session->User && $this->Context->Session->User->Permission('PERMISSION_VIEW_ALL_WHISPERS')) {
 				$s->AddOrderBy(array('DateLastWhisper', 'DateLastActive'), array('t', 't'), 'desc', 'greatest', 'coalesce', ', 0');
 			} else {
 				// so, make sure that you only sort by the datelastwhisper field if the user viewing was involved in the whisper.
@@ -308,9 +308,9 @@ class DiscussionManager extends Delegation {
 			$FirstRecord = ($CurrentPage * $RowsPerPage) - $RowsPerPage;
 		}
 		if ($RowsPerPage > 0) $s->AddLimit($FirstRecord, $RowsPerPage+1);
-      if ($this->Context->Configuration['ENABLE_WHISPERS'] && $this->Context->Session->User->Permission('PERMISSION_VIEW_ALL_WHISPERS')) {
-         $s->AddOrderBy(array('DateLastWhisper', 'DateLastActive'), array('t','t'), 'desc', 'greatest', 'coalesce', ', 0');
-      } else {
+		if ($this->Context->Configuration['ENABLE_WHISPERS'] && $this->Context->Session->User->Permission('PERMISSION_VIEW_ALL_WHISPERS')) {
+			$s->AddOrderBy(array('DateLastWhisper', 'DateLastActive'), array('t','t'), 'desc', 'greatest', 'coalesce', ', 0');
+		} else {
 			$this->GetDiscussionWhisperFilter($s);
 			if ($this->Context->Configuration['ENABLE_WHISPERS']) $s->AddOrderBy(array('DateLastActive', 'DateLastActive', 'DateLastActive'), array('tuwt','tuwf','t'), 'desc', 'greatest', 'coalesce', ', 0');
 		}
@@ -378,7 +378,7 @@ class DiscussionManager extends Delegation {
 			$s->EndWhereGroup();
 		}
 		if ($Search->AuthUsername != '') $s->AddWhere('u', 'Name', '', $Search->AuthUsername, '=');
-      if ($this->Context->Configuration['ENABLE_WHISPERS'] && $Search->WhisperFilter) $s->AddWhere('t', 'WhisperUserID', '', 0, '>');
+		if ($this->Context->Configuration['ENABLE_WHISPERS'] && $Search->WhisperFilter) $s->AddWhere('t', 'WhisperUserID', '', 0, '>');
 		return $s;
 	}
 
@@ -470,7 +470,7 @@ class DiscussionManager extends Delegation {
 							$s->AddFieldNameValue('DateCreated', MysqlDateTime());
 							$s->AddFieldNameValue('DateLastActive', MysqlDateTime());
 							$s->AddFieldNameValue('CountComments', 0);
-                     $s->AddFieldNameValue('WhisperUserID', $Discussion->WhisperUserID);
+							$s->AddFieldNameValue('WhisperUserID', $Discussion->WhisperUserID);
 							$Discussion->DiscussionID = $this->Context->Database->Insert($s, $this->Name, 'NewDiscussion', 'An error occurred while creating a new discussion.');
 							$Discussion->Comment->DiscussionID = $Discussion->DiscussionID;
 						} else {

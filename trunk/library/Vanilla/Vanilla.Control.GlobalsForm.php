@@ -43,13 +43,13 @@ class GlobalsForm extends PostBackControl {
 			if ($this->PostBackAction == 'ProcessGlobals' && $this->IsValidFormPostBack()) {
 				$this->ConfigurationManager->GetSettingsFromForm($SettingsFile);
 				// Checkboxes aren't posted back if unchecked, so make sure that they are saved properly
-            $this->ConfigurationManager->DefineSetting('ENABLE_WHISPERS', ForceIncomingBool('ENABLE_WHISPERS', 0), 0);
-            $this->ConfigurationManager->DefineSetting('ALLOW_NAME_CHANGE', ForceIncomingBool('ALLOW_NAME_CHANGE', 0), 0);
-            $this->ConfigurationManager->DefineSetting('PUBLIC_BROWSING', ForceIncomingBool('PUBLIC_BROWSING', 0), 0);
-            $this->ConfigurationManager->DefineSetting('USE_CATEGORIES', ForceIncomingBool('USE_CATEGORIES', 0), 0);
-            $this->ConfigurationManager->DefineSetting('LOG_ALL_IPS', ForceIncomingBool('LOG_ALL_IPS', 0), 0);
+				$this->ConfigurationManager->DefineSetting('ENABLE_WHISPERS', ForceIncomingBool('ENABLE_WHISPERS', 0), 0);
+				$this->ConfigurationManager->DefineSetting('ALLOW_NAME_CHANGE', ForceIncomingBool('ALLOW_NAME_CHANGE', 0), 0);
+				$this->ConfigurationManager->DefineSetting('PUBLIC_BROWSING', ForceIncomingBool('PUBLIC_BROWSING', 0), 0);
+				$this->ConfigurationManager->DefineSetting('USE_CATEGORIES', ForceIncomingBool('USE_CATEGORIES', 0), 0);
+				$this->ConfigurationManager->DefineSetting('LOG_ALL_IPS', ForceIncomingBool('LOG_ALL_IPS', 0), 0);
 
-            	//Validate cookie domain.
+				//Validate cookie domain.
 				//The pattern is loose; eg, It won't stop  "domain.tld" or ".co.uk" to be saved
 				//(the "domain.tld" can be set by the browser, the 2nd won't).
 				Validate(
@@ -68,16 +68,16 @@ class GlobalsForm extends PostBackControl {
 				}
 			}
 		}
-      $this->CallDelegate('Constructor');
+		$this->CallDelegate('Constructor');
 	}
 
 	function Render() {
 		if ($this->IsPostBack) {
-         $this->CallDelegate('PreRender');
+			$this->CallDelegate('PreRender');
 			$this->PostBackParams->Clear();
 			$this->PostBackParams->Set('PostBackAction', 'ProcessGlobals');
-         include(ThemeFilePath($this->Context->Configuration, 'settings_globals_form.php'));
-         $this->CallDelegate('PostRender');
+			include(ThemeFilePath($this->Context->Configuration, 'settings_globals_form.php'));
+			$this->CallDelegate('PostRender');
 		}
 	}
 }

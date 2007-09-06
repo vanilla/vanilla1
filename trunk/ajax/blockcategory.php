@@ -18,7 +18,7 @@ $ExtensionKey = ForceIncomingString('ExtensionKey', '');
 if ($PostBackKey != '' && $PostBackKey == $Context->Session->GetVariable('SessionPostBackKey', 'string')) {
 	$Block = ForceIncomingBool('Block', 0);
 	$BlockCategoryID = ForceIncomingInt('BlockCategoryID', 0);
-	
+
 	if ($BlockCategoryID > 0) {
 		$um = $Context->ObjectFactory->NewContextObject($Context, 'UserManager');
 		if ($Block) {
@@ -27,7 +27,7 @@ if ($PostBackKey != '' && $PostBackKey == $Context->Session->GetVariable('Sessio
 			$um->RemoveCategoryBlock($BlockCategoryID);
 		}
 	}
-	
+
 	// Report success
 	echo 'Complete';
 } else {

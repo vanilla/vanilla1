@@ -39,7 +39,7 @@ class CommentGrid extends Control {
 		// Load information about this discussion
 		$RecordDiscussionView = 1;
 		if ($this->Context->Session->UserID == 0) $RecordDiscussionView = 0;
-      $this->Discussion = $DiscussionManager->GetDiscussionById($DiscussionID, $RecordDiscussionView);
+		$this->Discussion = $DiscussionManager->GetDiscussionById($DiscussionID, $RecordDiscussionView);
 		if ($this->Discussion) {
 			$this->Discussion->FormatPropertiesForDisplay();
 			if (!$this->Discussion->Active && !$this->Context->Session->User->Permission('PERMISSION_VIEW_HIDDEN_DISCUSSIONS')) {
@@ -64,7 +64,7 @@ class CommentGrid extends Control {
 				$FoundComment = 0;
 				while ($this->CurrentPage <= $PageCount && !$FoundComment) {
 					$this->CommentData = $CommentManager->GetCommentList($this->Context->Configuration['COMMENTS_PER_PAGE'], $this->CurrentPage, $DiscussionID);
-				   while ($Row = $this->Context->Database->GetRow($this->CommentData)) {
+					while ($Row = $this->Context->Database->GetRow($this->CommentData)) {
 						if (ForceInt($Row['CommentID'], 0) == $Focus) {
 							$FoundComment = 1;
 							break;
@@ -100,11 +100,11 @@ class CommentGrid extends Control {
 		$this->CallDelegate('Constructor');
 	}
 
-   function Render() {
+	function Render() {
 		$this->CallDelegate('PreRender');
 		include(ThemeFilePath($this->Context->Configuration, 'comments.php'));
 		$this->CallDelegate('PostRender');
-   }
+	}
 }
 
 ?>

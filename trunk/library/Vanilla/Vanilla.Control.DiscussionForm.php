@@ -25,15 +25,15 @@
 class DiscussionForm extends PostBackControl {
 	var $FatalError;		// If a fatal error occurs, only the warning messages should be displayed
 	var $EditDiscussionID;
-   var $Discussion;
+	var $Discussion;
 	var $DiscussionFormattedForDisplay;
 	var $DiscussionID;
 	var $Comment;
 	var $CommentID;
 	var $Form;
 	var $Title;				// The title of the form
-   var $CommentFormAttributes; // Attributes added to the comment form's textarea input
-   var $DiscussionFormAttributes; // Attributes added to the discussion form's textarea input
+	var $CommentFormAttributes; // Attributes added to the comment form's textarea input
+	var $DiscussionFormAttributes; // Attributes added to the discussion form's textarea input
 
 	function DiscussionForm(&$Context) {
 		$this->Name = 'DiscussionForm';
@@ -50,7 +50,7 @@ class DiscussionForm extends PostBackControl {
 		$this->CallDelegate('PreLoadData');
 
 		// Check permissions and make sure that the user can add comments/discussions
-      // Make sure user can post
+		// Make sure user can post
 		if ($this->DiscussionID == 0 && $this->Context->Session->UserID == 0) {
 			$this->Context->WarningCollector->Add($this->Context->GetDefinition('NoDiscussionsNotSignedIn'));
 			$this->FatalError = 1;
@@ -80,7 +80,7 @@ class DiscussionForm extends PostBackControl {
 						$this->Discussion->Comment = $this->Comment;
 					}
 					// Set the page title
-               $this->DiscussionFormattedForDisplay = 1;
+					$this->DiscussionFormattedForDisplay = 1;
 					$this->Discussion->FormatPropertiesForDisplay();
 					$this->Context->PageTitle = $this->Discussion->Name;
 				}
@@ -201,7 +201,7 @@ class DiscussionForm extends PostBackControl {
 		$this->CallDelegate('CommentForm_PreRender');
 
 		// Encode everything properly
-      $Comment->FormatPropertiesForDisplay(1);
+		$Comment->FormatPropertiesForDisplay(1);
 
 		$this->PostBackParams->Set('PostBackAction', 'SaveComment');
 		$this->PostBackParams->Set('UserCommentCount', $this->Context->Session->User->CountComments);

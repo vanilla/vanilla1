@@ -19,7 +19,7 @@ include("appg/init_vanilla.php");
 
 	// Ensure the user is allowed to view this page
 	$Context->Session->Check($Context);
-	
+
 	// Create the comment form
 	$CommentForm = $Context->ObjectFactory->CreateControl($Context, "DiscussionForm");
 
@@ -28,9 +28,9 @@ include("appg/init_vanilla.php");
 		$Context->WarningCollector->Add($Context->GetDefinition("ErrSignInToDiscuss"));
 		$CommentForm->FatalError = 1;
 	}
-	
+
 	// Define properties of the page controls that are specific to this page
-   $Head->BodyId = 'PostPage';
+	$Head->BodyId = 'PostPage';
 	$Menu->CurrentTab = "discussions";
 	$Panel->CssClass = "PostPanel";
 	$Panel->BodyCssClass = "StartDiscussion";
@@ -38,7 +38,7 @@ include("appg/init_vanilla.php");
 // 2. BUILD PAGE CONTROLS
 
 	// Build the control panel
-   $Panel->AddList($Context->GetDefinition("Options"), 10);
+	$Panel->AddList($Context->GetDefinition("Options"), 10);
 	$Panel->AddListItem($Context->GetDefinition("Options"), $Context->GetDefinition("BackToDiscussions"), GetUrl($Configuration, "index.php"));
 
 // 3. ADD CONTROLS TO THE PAGE
@@ -49,8 +49,8 @@ include("appg/init_vanilla.php");
 	$Page->AddRenderControl($NoticeCollector, $Configuration['CONTROL_POSITION_NOTICES']);
 	$Page->AddRenderControl($CommentForm, $Configuration["CONTROL_POSITION_BODY_ITEM"]);
 	$Page->AddRenderControl($Foot, $Configuration["CONTROL_POSITION_FOOT"]);
-	$Page->AddRenderControl($PageEnd, $Configuration["CONTROL_POSITION_PAGE_END"]);	
-	
+	$Page->AddRenderControl($PageEnd, $Configuration["CONTROL_POSITION_PAGE_END"]);
+
 
 // 4. FIRE PAGE EVENTS
 

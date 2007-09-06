@@ -71,9 +71,9 @@ $Configuration['ALLOW_IMMEDIATE_ACCESS'] = '';
 $Configuration['APPROVAL_ROLE'] = '';
 
 class FauxContext {
-   var $WarningCollector;
-   var $ErrorManager;
-   var $SqlCollector;
+	var $WarningCollector;
+	var $ErrorManager;
+	var $SqlCollector;
 	var $Configuration;
 	var $Dictionary;
 	var $DatabaseTables;
@@ -148,60 +148,60 @@ $ApplicationTitle = '';
 
 // Include the old settings file if it is present (it just contains constants)
 if (file_exists($RootDirectory.'conf/old_settings.php')) {
-   include($RootDirectory.'conf/old_settings.php');
+	include($RootDirectory.'conf/old_settings.php');
 
-   // Now re-assign the default configuration settings to the ones defined as constants in the old version
-   if (defined('dbHOST')) {
+	// Now re-assign the default configuration settings to the ones defined as constants in the old version
+	if (defined('dbHOST')) {
 		$NewConfiguration['DATABASE_HOST'] = dbHOST;
 		$DBHost = dbHOST;
 	}
-   if (defined('dbNAME')) {
+	if (defined('dbNAME')) {
 		$NewConfiguration['DATABASE_NAME'] = dbNAME;
 		$DBName = dbNAME;
 	}
-   if (defined('dbUSER')) {
+	if (defined('dbUSER')) {
 		$NewConfiguration['DATABASE_USER'] = dbUSER;
 		$DBUser = dbUSER;
 	}
-   if (defined('dbPASSWORD')) {
+	if (defined('dbPASSWORD')) {
 		$NewConfiguration['DATABASE_PASSWORD'] = dbPASSWORD;
 		$DBPass = dbPASSWORD;
 	}
-   if (defined('agAPPLICATION_TITLE')) {
+	if (defined('agAPPLICATION_TITLE')) {
 		$NewConfiguration['APPLICATION_TITLE'] = agAPPLICATION_TITLE;
 		$ApplicationTitle = agAPPLICATION_TITLE;
 	}
-   if (defined('agBANNER_TITLE')) $NewConfiguration['BANNER_TITLE'] = agBANNER_TITLE;
-   if (defined('agDISCUSSIONS_PER_PAGE')) $NewConfiguration['DISCUSSIONS_PER_PAGE'] = agDISCUSSIONS_PER_PAGE;
-   if (defined('agCOMMENTS_PER_PAGE')) $NewConfiguration['COMMENTS_PER_PAGE'] = agCOMMENTS_PER_PAGE;
-   if (defined('agSEARCH_RESULTS_PER_PAGE')) $NewConfiguration['SEARCH_RESULTS_PER_PAGE'] = agSEARCH_RESULTS_PER_PAGE;
-   if (defined('agSUPPORT_EMAIL')) {
+	if (defined('agBANNER_TITLE')) $NewConfiguration['BANNER_TITLE'] = agBANNER_TITLE;
+	if (defined('agDISCUSSIONS_PER_PAGE')) $NewConfiguration['DISCUSSIONS_PER_PAGE'] = agDISCUSSIONS_PER_PAGE;
+	if (defined('agCOMMENTS_PER_PAGE')) $NewConfiguration['COMMENTS_PER_PAGE'] = agCOMMENTS_PER_PAGE;
+	if (defined('agSEARCH_RESULTS_PER_PAGE')) $NewConfiguration['SEARCH_RESULTS_PER_PAGE'] = agSEARCH_RESULTS_PER_PAGE;
+	if (defined('agSUPPORT_EMAIL')) {
 		$NewConfiguration['SUPPORT_EMAIL'] = agSUPPORT_EMAIL;
 		$SupportEmail = agSUPPORT_EMAIL;
 	}
-   if (defined('agSUPPORT_NAME')) {
+	if (defined('agSUPPORT_NAME')) {
 		$NewConfiguration['SUPPORT_NAME'] = agSUPPORT_NAME;
 		$SupportName = agSUPPORT_NAME;
 	}
-   if (defined('agALLOW_NAME_CHANGE')) $NewConfiguration['ALLOW_NAME_CHANGE'] = agALLOW_NAME_CHANGE;
-   if (defined('agPUBLIC_BROWSING')) $NewConfiguration['PUBLIC_BROWSING'] = agPUBLIC_BROWSING;
-   if (defined('agUSE_CATEGORIES')) $NewConfiguration['USE_CATEGORIES'] = agUSE_CATEGORIES;
-   if (defined('agLOG_ALL_IPS')) $NewConfiguration['LOG_ALL_IPS'] = agLOG_ALL_IPS;
-   if (defined('agPANEL_BOOKMARK_COUNT')) $NewConfiguration['PANEL_BOOKMARK_COUNT'] = agPANEL_BOOKMARK_COUNT;
-   if (defined('agPANEL_PRIVATE_COUNT')) $NewConfiguration['PANEL_PRIVATE_COUNT'] = agPANEL_PRIVATE_COUNT;
-   if (defined('agPANEL_HISTORY_COUNT')) $NewConfiguration['PANEL_HISTORY_COUNT'] = agPANEL_HISTORY_COUNT;
-   if (defined('agPANEL_USERDISCUSSIONS_COUNT')) $NewConfiguration['PANEL_USERDISCUSSIONS_COUNT'] = agPANEL_USERDISCUSSIONS_COUNT;
-   if (defined('agPANEL_SEARCH_COUNT')) $NewConfiguration['PANEL_SEARCH_COUNT'] = agPANEL_SEARCH_COUNT;
-   if (defined('agMAX_COMMENT_LENGTH')) $NewConfiguration['MAX_COMMENT_LENGTH'] = agMAX_COMMENT_LENGTH;
-   if (defined('agDISCUSSION_POST_THRESHOLD')) $NewConfiguration['DISCUSSION_POST_THRESHOLD'] = agDISCUSSION_POST_THRESHOLD;
-   if (defined('agDISCUSSION_TIME_THRESHOLD')) $NewConfiguration['DISCUSSION_TIME_THRESHOLD'] = agDISCUSSION_TIME_THRESHOLD;
-   if (defined('agDISCUSSION_THRESHOLD_PUNISHMENT')) $NewConfiguration['DISCUSSION_THRESHOLD_PUNISHMENT'] = agDISCUSSION_THRESHOLD_PUNISHMENT;
-   if (defined('agCOMMENT_POST_THRESHOLD')) $NewConfiguration['COMMENT_POST_THRESHOLD'] = agCOMMENT_POST_THRESHOLD;
-   if (defined('agCOMMENT_TIME_THRESHOLD')) $NewConfiguration['COMMENT_TIME_THRESHOLD'] = agCOMMENT_TIME_THRESHOLD;
-   if (defined('agCOMMENT_THRESHOLD_PUNISHMENT')) $NewConfiguration['COMMENT_THRESHOLD_PUNISHMENT'] = agCOMMENT_THRESHOLD_PUNISHMENT;
-   if (defined('agDEFAULT_ROLE')) $NewConfiguration['DEFAULT_ROLE'] = agDEFAULT_ROLE;
-   if (defined('agALLOW_IMMEDIATE_ACCESS')) $NewConfiguration['ALLOW_IMMEDIATE_ACCESS'] = agALLOW_IMMEDIATE_ACCESS;
-   if (defined('agAPPROVAL_ROLE')) $NewConfiguration['APPROVAL_ROLE'] = agAPPROVAL_ROLE;
+	if (defined('agALLOW_NAME_CHANGE')) $NewConfiguration['ALLOW_NAME_CHANGE'] = agALLOW_NAME_CHANGE;
+	if (defined('agPUBLIC_BROWSING')) $NewConfiguration['PUBLIC_BROWSING'] = agPUBLIC_BROWSING;
+	if (defined('agUSE_CATEGORIES')) $NewConfiguration['USE_CATEGORIES'] = agUSE_CATEGORIES;
+	if (defined('agLOG_ALL_IPS')) $NewConfiguration['LOG_ALL_IPS'] = agLOG_ALL_IPS;
+	if (defined('agPANEL_BOOKMARK_COUNT')) $NewConfiguration['PANEL_BOOKMARK_COUNT'] = agPANEL_BOOKMARK_COUNT;
+	if (defined('agPANEL_PRIVATE_COUNT')) $NewConfiguration['PANEL_PRIVATE_COUNT'] = agPANEL_PRIVATE_COUNT;
+	if (defined('agPANEL_HISTORY_COUNT')) $NewConfiguration['PANEL_HISTORY_COUNT'] = agPANEL_HISTORY_COUNT;
+	if (defined('agPANEL_USERDISCUSSIONS_COUNT')) $NewConfiguration['PANEL_USERDISCUSSIONS_COUNT'] = agPANEL_USERDISCUSSIONS_COUNT;
+	if (defined('agPANEL_SEARCH_COUNT')) $NewConfiguration['PANEL_SEARCH_COUNT'] = agPANEL_SEARCH_COUNT;
+	if (defined('agMAX_COMMENT_LENGTH')) $NewConfiguration['MAX_COMMENT_LENGTH'] = agMAX_COMMENT_LENGTH;
+	if (defined('agDISCUSSION_POST_THRESHOLD')) $NewConfiguration['DISCUSSION_POST_THRESHOLD'] = agDISCUSSION_POST_THRESHOLD;
+	if (defined('agDISCUSSION_TIME_THRESHOLD')) $NewConfiguration['DISCUSSION_TIME_THRESHOLD'] = agDISCUSSION_TIME_THRESHOLD;
+	if (defined('agDISCUSSION_THRESHOLD_PUNISHMENT')) $NewConfiguration['DISCUSSION_THRESHOLD_PUNISHMENT'] = agDISCUSSION_THRESHOLD_PUNISHMENT;
+	if (defined('agCOMMENT_POST_THRESHOLD')) $NewConfiguration['COMMENT_POST_THRESHOLD'] = agCOMMENT_POST_THRESHOLD;
+	if (defined('agCOMMENT_TIME_THRESHOLD')) $NewConfiguration['COMMENT_TIME_THRESHOLD'] = agCOMMENT_TIME_THRESHOLD;
+	if (defined('agCOMMENT_THRESHOLD_PUNISHMENT')) $NewConfiguration['COMMENT_THRESHOLD_PUNISHMENT'] = agCOMMENT_THRESHOLD_PUNISHMENT;
+	if (defined('agDEFAULT_ROLE')) $NewConfiguration['DEFAULT_ROLE'] = agDEFAULT_ROLE;
+	if (defined('agALLOW_IMMEDIATE_ACCESS')) $NewConfiguration['ALLOW_IMMEDIATE_ACCESS'] = agALLOW_IMMEDIATE_ACCESS;
+	if (defined('agAPPROVAL_ROLE')) $NewConfiguration['APPROVAL_ROLE'] = agAPPROVAL_ROLE;
 }
 
 // Retrieve all postback parameters
@@ -237,84 +237,84 @@ function CreateFile($File, $Contents, &$Context) {
 // Step 1. Check for correct PHP, MySQL, and permissions
 if ($PostBackAction == "Permissions") {
 
-   // Make sure we are running at least PHP 4.1.0
-   if (intval(str_replace('.', '', phpversion())) < 410) $Context->WarningCollector->Add("It appears as though you are running PHP version ".phpversion().". Vanilla requires at least version 4.1.0 of PHP. You will need to upgrade your version of PHP before you can continue.");
-   // Make sure MySQL is available
-   if (!function_exists('mysql_connect')) $Context->WarningCollector->Add("It appears as though you do not have MySQL enabled for PHP. You will need a working copy of MySQL and PHP's MySQL extensions enabled in order to run Vanilla.");
-   // Make sure the conf folder is readable
-   if (!is_readable('../conf/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the conf folder.");
-   // Make sure the conf folder is writeable
-   if (!is_writable('../conf/')) $Context->WarningCollector->Add("Vanilla needs to have write permission enabled on the conf folder.");
+	// Make sure we are running at least PHP 4.1.0
+	if (intval(str_replace('.', '', phpversion())) < 410) $Context->WarningCollector->Add("It appears as though you are running PHP version ".phpversion().". Vanilla requires at least version 4.1.0 of PHP. You will need to upgrade your version of PHP before you can continue.");
+	// Make sure MySQL is available
+	if (!function_exists('mysql_connect')) $Context->WarningCollector->Add("It appears as though you do not have MySQL enabled for PHP. You will need a working copy of MySQL and PHP's MySQL extensions enabled in order to run Vanilla.");
+	// Make sure the conf folder is readable
+	if (!is_readable('../conf/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the conf folder.");
+	// Make sure the conf folder is writeable
+	if (!is_writable('../conf/')) $Context->WarningCollector->Add("Vanilla needs to have write permission enabled on the conf folder.");
 
-   // Make sure other folders are readable
-   if (!is_readable('../extensions/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the extensions folder.");
-   if (!is_readable('../languages/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the languages folder.");
-   if (!is_readable('../themes/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the themes folder.");
-   if (!is_readable('../setup/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the setup folder.");
+	// Make sure other folders are readable
+	if (!is_readable('../extensions/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the extensions folder.");
+	if (!is_readable('../languages/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the languages folder.");
+	if (!is_readable('../themes/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the themes folder.");
+	if (!is_readable('../setup/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the setup folder.");
 
 	// Make sure the files don't exist already (ie. the site is already up and running);
-   if (file_exists('../conf/settings.php')) $Context->WarningCollector->Add("Vanilla seems to have been upgraded already. You will need to remove the conf/settings.php and conf/database.php files to run the upgrade utility again.");
+	if (file_exists('../conf/settings.php')) $Context->WarningCollector->Add("Vanilla seems to have been upgraded already. You will need to remove the conf/settings.php and conf/database.php files to run the upgrade utility again.");
 
-   if ($Context->WarningCollector->Count() == 0) {
-      $Contents = '<?php
+	if ($Context->WarningCollector->Count() == 0) {
+		$Contents = '<?php
 // Database Configuration Settings
 ?>';
-      CreateFile($RootDirectory.'conf/database.php', $Contents, $Context);
-      $Contents = "<?php
+		CreateFile($RootDirectory.'conf/database.php', $Contents, $Context);
+		$Contents = "<?php
 // Make sure this file was not accessed directly and prevent register_globals configuration array attack
 if (!defined('IN_VANILLA')) exit();
 // Enabled Extensions
 ?>";
-      CreateFile($RootDirectory.'conf/extensions.php', $Contents, $Context);
-      $Contents = "<?php
+		CreateFile($RootDirectory.'conf/extensions.php', $Contents, $Context);
+		$Contents = "<?php
 // Custom Language Definitions
 ?>";
-      CreateFile($RootDirectory.'conf/language.php', $Contents, $Context);
-      $Contents = '<?php
+		CreateFile($RootDirectory.'conf/language.php', $Contents, $Context);
+		$Contents = '<?php
 // Application Settings
 ?>';
-      CreateFile($RootDirectory.'conf/settings.php', $Contents, $Context);
-   }
+		CreateFile($RootDirectory.'conf/settings.php', $Contents, $Context);
+	}
 
-   // Save a test configuration option to the conf/settings.php file (This is inconsequential and is only done to make sure we have read access).
-   if ($Context->WarningCollector->Count() == 0) {
-      $SettingsFile = $RootDirectory . 'conf/settings.php';
-      $SettingsManager = new ConfigurationManager($Context);
-      $SettingsManager->DefineSetting('SETUP_TEST', '1', 1);
-      if (!$SettingsManager->SaveSettingsToFile($SettingsFile)) {
-         $Context->WarningCollector->Clear();
-         $Context->WarningCollector->Add("For some reason we couldn't save your general settings to the '".$SettingsFile."' file.");
-      }
-   }
+	// Save a test configuration option to the conf/settings.php file (This is inconsequential and is only done to make sure we have read access).
+	if ($Context->WarningCollector->Count() == 0) {
+		$SettingsFile = $RootDirectory . 'conf/settings.php';
+		$SettingsManager = new ConfigurationManager($Context);
+		$SettingsManager->DefineSetting('SETUP_TEST', '1', 1);
+		if (!$SettingsManager->SaveSettingsToFile($SettingsFile)) {
+			$Context->WarningCollector->Clear();
+			$Context->WarningCollector->Add("For some reason we couldn't save your general settings to the '".$SettingsFile."' file.");
+		}
+	}
 
-   if ($Context->WarningCollector->Count() == 0) {
+	if ($Context->WarningCollector->Count() == 0) {
 		// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
 		Redirect($WebRoot.'setup/upgrader.php?Step=2&PostBackAction=None');
 	}
 } elseif ($PostBackAction == "Database") {
 	$CurrentStep = 2;
-   // Test the database params provided by the user
-   $Connection = @mysql_connect($DBHost, $DBUser, $DBPass);
-   if (!$Connection) {
+	// Test the database params provided by the user
+	$Connection = @mysql_connect($DBHost, $DBUser, $DBPass);
+	if (!$Connection) {
 		$Response = '';
 		if ($php_errormsg != '') $Response = ' The database responded with the following message: '.$php_errormsg;
-      $Context->WarningCollector->Add("We couldn't connect to the server you provided (".$DBHost.").".$Response);
-   } elseif (!mysql_select_db($DBName, $Connection)) {
-      $Context->WarningCollector->Add("We connected to the server, but we couldn't access the \"".$DBName."\" database. Are you sure it exists and that the specified user has access to it?");
-   }
+		$Context->WarningCollector->Add("We couldn't connect to the server you provided (".$DBHost.").".$Response);
+	} elseif (!mysql_select_db($DBName, $Connection)) {
+		$Context->WarningCollector->Add("We connected to the server, but we couldn't access the \"".$DBName."\" database. Are you sure it exists and that the specified user has access to it?");
+	}
 
-   // If the database connection worked...
-   if ($Context->WarningCollector->Count() == 0 && $Connection) {
+	// If the database connection worked...
+	if ($Context->WarningCollector->Count() == 0 && $Connection) {
 
-      // Make sure all of the required tables are there for upgrading
-      $TableData = @mysql_query('show tables', $Connection);
-      if (!$TableData) {
-         $Context->WarningCollector->Add("We had some problems identifying the tables already in your database: ". mysql_error($Connection));
-      } else {
-         $TableMatches = array();
+		// Make sure all of the required tables are there for upgrading
+		$TableData = @mysql_query('show tables', $Connection);
+		if (!$TableData) {
+			$Context->WarningCollector->Add("We had some problems identifying the tables already in your database: ". mysql_error($Connection));
+		} else {
+			$TableMatches = array();
 			$TableToCompare = '';
 			$MissingTables = '';
-         while ($Row = mysql_fetch_array($TableData)) {
+			while ($Row = mysql_fetch_array($TableData)) {
 				$TableToCompare = $Row[0];
 				$TableToCompare = str_replace('lum_', '', strtolower($TableToCompare));
 				// Make sure that the required tables exist
@@ -326,8 +326,8 @@ if (!defined('IN_VANILLA')) exit();
 					}
 				}
 				reset($DatabaseTables);
-         }
-         if (count($TableMatches) != count($DatabaseTables)) {
+			}
+			if (count($TableMatches) != count($DatabaseTables)) {
 				$MissingTables = '';
 				while (list($TableKey, $TableName) = each($DatabaseTables)) {
 					$Found = 0;
@@ -339,15 +339,15 @@ if (!defined('IN_VANILLA')) exit();
 						$MissingTables .= $TableName;
 					}
 				}
-            $Context->WarningCollector->Add("It appears as though your Vanilla installation is missing some tables: <code>".$MissingTables."</code>");
-         } else {
+				$Context->WarningCollector->Add("It appears as though your Vanilla installation is missing some tables: <code>".$MissingTables."</code>");
+			} else {
 				// 1. Upgrade Role Table (The hard part first)
 
 				// Check for current columns in the table
-            $RoleData = @mysql_query('show columns from '.$DatabaseTables['Role'], $Connection);
+				$RoleData = @mysql_query('show columns from '.$DatabaseTables['Role'], $Connection);
 				$RoleColumns = GetColumns($Connection, $DatabaseTables['Role']);
 
-            // 1a. Rename columns
+				// 1a. Rename columns
 				if ($Context->WarningCollector->Count() == 0) {
 					if (in_array('CanLogin', $RoleColumns) && !in_array('PERMISSION_SIGN_IN', $RoleColumns)) {
 						$AlterSQL = "alter table ".$DatabaseTables['Role']." change CanLogin PERMISSION_SIGN_IN enum('1','0') not null default '0'";
@@ -390,9 +390,9 @@ if (!defined('IN_VANILLA')) exit();
 				}
 
 				// 1c. Retrieve current permissions, serialize, and resave as long as the MasterAdmin column was present
-            if (in_array('MasterAdmin', $RoleColumns)) {
+				if (in_array('MasterAdmin', $RoleColumns)) {
 					// Get an updated version of the columns in the database (Because some were changed above)
-               $RoleColumns = GetColumns($Connection, $DatabaseTables['Role']);
+					$RoleColumns = GetColumns($Connection, $DatabaseTables['Role']);
 					$SelectSQL = "select ".implode(',', $RoleColumns)." from ".$DatabaseTables['Role'];
 					$RoleData = @mysql_query($SelectSQL, $Connection);
 					if (!$RoleData) {
@@ -452,41 +452,41 @@ if (!defined('IN_VANILLA')) exit();
 				}
 
 				// 1d. Remove old permission columns
-            if ($Context->WarningCollector->Count() == 0) {
+				if ($Context->WarningCollector->Count() == 0) {
 					// Silently drop these columns. If any errors occur, it doesn't
-               // really slow anything down to leave them behind. It's just clutter.
-               if (in_array('CanPostDiscussion', $RoleColumns)) {
+					// really slow anything down to leave them behind. It's just clutter.
+					if (in_array('CanPostDiscussion', $RoleColumns)) {
 						$AlterSQL = "alter table ".$DatabaseTables['Role']." drop column CanPostDiscussion";
 						@mysql_query($AlterSQL, $Connection);
 					}
-               if (in_array('CanPostComment', $RoleColumns)) {
+					if (in_array('CanPostComment', $RoleColumns)) {
 						$AlterSQL = "alter table ".$DatabaseTables['Role']." drop column CanPostComment";
 						@mysql_query($AlterSQL, $Connection);
 					}
-               if (in_array('AdminUsers', $RoleColumns)) {
+					if (in_array('AdminUsers', $RoleColumns)) {
 						$AlterSQL = "alter table ".$DatabaseTables['Role']." drop column AdminUsers";
 						@mysql_query($AlterSQL, $Connection);
 					}
-               if (in_array('AdminCategories', $RoleColumns)) {
+					if (in_array('AdminCategories', $RoleColumns)) {
 						$AlterSQL = "alter table ".$DatabaseTables['Role']." drop column AdminCategories";
 						@mysql_query($AlterSQL, $Connection);
 					}
-               if (in_array('ShowAllWhispers', $RoleColumns)) {
+					if (in_array('ShowAllWhispers', $RoleColumns)) {
 						$AlterSQL = "alter table ".$DatabaseTables['Role']." drop column ShowAllWhispers";
 						@mysql_query($AlterSQL, $Connection);
 					}
-               if (in_array('MasterAdmin', $RoleColumns)) {
+					if (in_array('MasterAdmin', $RoleColumns)) {
 						$AlterSQL = "alter table ".$DatabaseTables['Role']." drop column MasterAdmin";
 						@mysql_query($AlterSQL, $Connection);
 					}
-               if (in_array('CanViewIps', $RoleColumns)) {
+					if (in_array('CanViewIps', $RoleColumns)) {
 						$AlterSQL = "alter table ".$DatabaseTables['Role']." drop column CanViewIps";
 						@mysql_query($AlterSQL, $Connection);
 					}
 				}
 
 				// 1e. Make sure that there is an unauthenticated role.
-            if ($Context->WarningCollector->Count() == 0) {
+				if ($Context->WarningCollector->Count() == 0) {
 					$SelectSQL = "select RoleID from ".$DatabaseTables['Role']." where UnAuthenticated = '1'";
 					$RoleData = @mysql_query($SelectSQL, $Connection);
 					if (!$RoleData) {
@@ -494,7 +494,7 @@ if (!defined('IN_VANILLA')) exit();
 					} else {
 						if (mysql_num_rows($RoleData) == 0) {
 							// Insert a new unauthenticated role
-                     $InsertSQL = "insert into ".$DatabaseTables['Role']."
+							$InsertSQL = "insert into ".$DatabaseTables['Role']."
 (`Name`, `Active`, `PERMISSION_SIGN_IN`, `PERMISSION_HTML_ALLOWED`, `PERMISSION_RECEIVE_APPLICATION_NOTIFICATION`, `Permissions`, `Priority`, `UnAuthenticated`)
 VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\";N;s:27:\"PERMISSION_START_DISCUSSION\";N;s:28:\"PERMISSION_STICK_DISCUSSIONS\";N;s:27:\"PERMISSION_HIDE_DISCUSSIONS\";N;s:28:\"PERMISSION_CLOSE_DISCUSSIONS\";N;s:27:\"PERMISSION_EDIT_DISCUSSIONS\";N;s:34:\"PERMISSION_VIEW_HIDDEN_DISCUSSIONS\";N;s:24:\"PERMISSION_EDIT_COMMENTS\";N;s:24:\"PERMISSION_HIDE_COMMENTS\";N;s:31:\"PERMISSION_VIEW_HIDDEN_COMMENTS\";N;s:44:\"PERMISSION_ADD_COMMENTS_TO_CLOSED_DISCUSSION\";N;s:25:\"PERMISSION_ADD_CATEGORIES\";N;s:26:\"PERMISSION_EDIT_CATEGORIES\";N;s:28:\"PERMISSION_REMOVE_CATEGORIES\";N;s:26:\"PERMISSION_SORT_CATEGORIES\";N;s:28:\"PERMISSION_VIEW_ALL_WHISPERS\";N;s:29:\"PERMISSION_APPROVE_APPLICANTS\";N;s:27:\"PERMISSION_CHANGE_USER_ROLE\";N;s:21:\"PERMISSION_EDIT_USERS\";N;s:31:\"PERMISSION_IP_ADDRESSES_VISIBLE\";N;s:30:\"PERMISSION_MANAGE_REGISTRATION\";N;s:21:\"PERMISSION_SORT_ROLES\";N;s:20:\"PERMISSION_ADD_ROLES\";N;s:21:\"PERMISSION_EDIT_ROLES\";N;s:23:\"PERMISSION_REMOVE_ROLES\";N;s:28:\"PERMISSION_CHECK_FOR_UPDATES\";N;s:38:\"PERMISSION_CHANGE_APPLICATION_SETTINGS\";N;s:28:\"PERMISSION_MANAGE_EXTENSIONS\";N;s:26:\"PERMISSION_MANAGE_LANGUAGE\";N;s:24:\"PERMISSION_MANAGE_STYLES\";N;s:27:\"PERMISSION_ALLOW_DEBUG_INFO\";N;s:27:\"PERMISSION_DATABASE_CLEANUP\";N;}',0,'1')";
 							if (!@mysql_query($InsertSQL, $Connection)) {
@@ -506,12 +506,12 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 
 				if ($Context->WarningCollector->Count() == 0) {
 					// Retrieve Category Columns
-               $CategoryColumns = GetColumns($Connection, $DatabaseTables['Category']);
+					$CategoryColumns = GetColumns($Connection, $DatabaseTables['Category']);
 					$DiscussionColumns = GetColumns($Connection, $DatabaseTables['Discussion']);
 					$UserColumns = GetColumns($Connection, $DatabaseTables['User']);
 
 					// Make remaining table alterations
-               if (in_array('Order', $CategoryColumns) && !in_array('Priority', $CategoryColumns)) {
+					if (in_array('Order', $CategoryColumns) && !in_array('Priority', $CategoryColumns)) {
 						$AlterSQL = "alter table ".$DatabaseTables['Category']." change `Order` Priority int not null default '0'";
 						if (!@mysql_query($AlterSQL, $Connection)) $Context->WarningCollector->Add("An error occurred renaming LUM_Category.Order to LUM_Category.Priority. MySQL reported the following error: <code>".mysql_error($Connection).'</code>');
 					}
@@ -537,20 +537,20 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 						@mysql_query($AlterSQL, $Connection);
 					}
 				}
-         }
-      }
-      // Close the database connection
-      @mysql_close($Connection);
-   }
+			}
+		}
+		// Close the database connection
+		@mysql_close($Connection);
+	}
 
-   // If the database was upgraded successfully, save all parameters to the conf/database.php file
-   if ($Context->WarningCollector->Count() == 0) {
-      // Save database settings
-      $DBFile = $RootDirectory . 'conf/database.php';
-      $DBManager = new ConfigurationManager($Context);
+	// If the database was upgraded successfully, save all parameters to the conf/database.php file
+	if ($Context->WarningCollector->Count() == 0) {
+		// Save database settings
+		$DBFile = $RootDirectory . 'conf/database.php';
+		$DBManager = new ConfigurationManager($Context);
 		$DBManager->GetSettingsFromFile($DBFile);
 		// Only make these changes if the settings haven't been defined already
-      if ($DBManager->GetSetting('DATABASE_HOST') == '') {
+		if ($DBManager->GetSetting('DATABASE_HOST') == '') {
 			$DBManager->DefineSetting("DATABASE_HOST", $DBHost, 1);
 			$DBManager->DefineSetting("DATABASE_NAME", $DBName, 1);
 			$DBManager->DefineSetting("DATABASE_USER", $DBUser, 1);
@@ -558,7 +558,7 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 			$DBManager->SaveSettingsToFile($DBFile);
 
 			// Save the general settings as well (now that we know this person is authenticated to
-	      // a degree - knowing the database access params).
+			// a degree - knowing the database access params).
 			$SettingsFile = $RootDirectory . 'conf/settings.php';
 			$SettingsManager = new ConfigurationManager($Context);
 			$SettingsManager->DefineSetting('APPLICATION_PATH', $RootDirectory, 1);
@@ -575,21 +575,21 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 		} else {
 			$Context->WarningCollector->Add("Vanilla seems to have been upgraded already. You will need to remove the conf/settings.php and conf/database.php files to run the upgrade utility again.");
 		}
-   }
-   if ($Context->WarningCollector->Count() == 0) {
+	}
+	if ($Context->WarningCollector->Count() == 0) {
 		// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
 		Redirect($WebRoot.'setup/upgrader.php?Step=3&PostBackAction=None');
-   }
+	}
 } elseif ($PostBackAction == "User") {
 	$CurrentStep = 3;
-   // Validate user inputs
-   if (strip_tags($ApplicationTitle) != $ApplicationTitle) $Context->WarningCollector->Add("You can't have any html in your forum name.");
-   if ($SupportName == "") $Context->WarningCollector->Add("You must provide a support contact name.");
-   if (!eregi("(.+)@(.+)\.(.+)", $SupportEmail)) $Context->WarningCollector->Add("The email address you entered doesn't appear to be valid.");
-   if ($ApplicationTitle == "") $Context->WarningCollector->Add("You must provide an application title.");
+	// Validate user inputs
+	if (strip_tags($ApplicationTitle) != $ApplicationTitle) $Context->WarningCollector->Add("You can't have any html in your forum name.");
+	if ($SupportName == "") $Context->WarningCollector->Add("You must provide a support contact name.");
+	if (!eregi("(.+)@(.+)\.(.+)", $SupportEmail)) $Context->WarningCollector->Add("The email address you entered doesn't appear to be valid.");
+	if ($ApplicationTitle == "") $Context->WarningCollector->Add("You must provide an application title.");
 
-   $SettingsFile = $RootDirectory . 'conf/settings.php';
-   $SettingsManager = new ConfigurationManager($Context);
+	$SettingsFile = $RootDirectory . 'conf/settings.php';
+	$SettingsManager = new ConfigurationManager($Context);
 	$SettingsManager->GetSettingsFromFile($SettingsFile);
 	if ($SettingsManager->GetSetting('SETUP_COMPLETE') != '1') {
 		// Include the db settings defined in the previous step
@@ -613,10 +613,10 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 		// Insert the new Style and assign to all users
 		if ($Context->WarningCollector->Count() == 0 && $Connection) {
 			// Truncate all old styles (They can't work with the new Vanilla)
-         $LowerCaseTableNames = 0;
+			$LowerCaseTableNames = 0;
 			if (!@mysql_query('truncate table LUM_Style', $Connection)) {
 				// Try doing it with a lowercase table name before erroring out
-            if (!@mysql_query('truncate table lum_style', $Connection)) {
+				if (!@mysql_query('truncate table lum_style', $Connection)) {
 					$Context->WarningCollector->Add('Failed to clean out LUM_Style table. MySQL reported the following error: <code>'.mysql_error($Connection).'</code>');
 				} else {
 					$LowerCaseTableNames = 1;
@@ -681,7 +681,7 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 		$Context->WarningCollector->Add("Vanilla seems to have been upgraded already. You will need to remove the conf/settings.php and conf/database.php files to run the upgrade utility again.");
 	}
 
-   if ($Context->WarningCollector->Count() == 0) {
+	if ($Context->WarningCollector->Count() == 0) {
 		// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
 		Redirect($WebRoot.'setup/upgrader.php?Step=4&PostBackAction=None');
 	}
@@ -691,14 +691,14 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-ca">
-   <head>
-      <title>Vanilla 1.1.2 Upgrader</title>
+	<head>
+		<title>Vanilla 1.1.2 Upgrader</title>
 		<link rel="stylesheet" type="text/css" href="./style.css" />
-   </head>
-   <body>
-      <h1>
-         <span><strong>Vanilla 1.1.2</strong> Upgrader</span>
-      </h1>
+	</head>
+	<body>
+		<h1>
+			<span><strong>Vanilla 1.1.2</strong> Upgrader</span>
+		</h1>
 		<div class="Container">
 			<div class="Content">
 			<?php
@@ -723,10 +723,10 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 
 				<p>You will also need to grant read access to the extensions, languages, setup, and themes folders. Typically these permissions are granted by default, but if not you can achieve them with the following commands:</p>
 
-                                <code>chmod --recursive 755 ./extensions
-                                <br />chmod --recursive 755 ./languages
-                                <br />chmod --recursive 755 ./setup
-                                <br />chmod --recursive 755 ./themes</code>
+										  <code>chmod --recursive 755 ./extensions
+										  <br />chmod --recursive 755 ./languages
+										  <br />chmod --recursive 755 ./setup
+										  <br />chmod --recursive 755 ./themes</code>
 
 				<form id=\"frmPermissions\" method=\"post\" action=\"upgrader.php\">
 				<input type=\"hidden\" name=\"PostBackAction\" value=\"Permissions\" />
@@ -829,5 +829,5 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 				?>
 			</div>
 		</div>
-   </body>
+	</body>
 </html>

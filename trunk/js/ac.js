@@ -7,7 +7,7 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 	} else {
 		this.Delimiter = new Array('');  // Delimiter for multiple autocomplete. Set it to empty array for single autocomplete
 	}
-	
+
 	this.StartCharacter = 1; // Show widget only after this number of characters is typed in.
 	this.KeywordSourceUrl = "autocomplete.php?Search=";
 	/* ---- Public Variables ---- */
@@ -17,7 +17,7 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 	this.StandardRowClass = 'AutoCompleteRow';
 	this.HoverRowClass = 'AutoCompleteHoverRow';
 	/* --- Styles --- */
-	  
+
 	this.TableID = 'AutoCompleteTable';
 
 	/* ---- Private Variables ---- */
@@ -40,15 +40,15 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 	var _CaretMove = false;
 	this._Keywords = new Array();
 	/* ---- Private Variables---- */
-	
+
 	var _Self = this;
 	_Curr = null;
 	_Curr = document.getElementById(TextInputID);
-	
+
 	if (_Curr) {
 		addEvent(_Curr, "focus", SetupEvents);
 		// turn existing autocomplete off
-		_Curr.setAttribute("autocomplete", "off"); 
+		_Curr.setAttribute("autocomplete", "off");
 	}
 	function SetupEvents(){
 		addEvent(document,"keydown",CheckKey);
@@ -69,7 +69,7 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 		if (_KWCount == 1 && _Self._Keywords[0] == '') {
 			_KWCount = 0;
 			_Self._Keywords = new Array();
-		}		
+		}
 		_Total = _KWCount;
 		if (document.getElementById(_Self.TableID)) { _Display = false; document.body.removeChild(document.getElementById(_Self.TableID)); }
 		if (document.getElementById(_Self.TableID+'_iefix')){ document.body.removeChild(document.getElementById(_Self.TableID+'_iefix')); }
@@ -88,7 +88,7 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 		a.cellSpacing = '0';
 		a.style.zIndex = '200';
 		document.body.appendChild(a);
-		
+
 		var i;
 		var first = true;
 		var j = 1;
@@ -290,7 +290,7 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 	function GetItems(kc){
 		if (kc == 38 || kc == 40 || kc == 13 || kc == 9) return;
 		var i;
-		if (_Display){ 
+		if (_Display){
 			var word = 0;
 			var c = 0;
 			for (var i=0;i<=_Self._Keywords.length;i++){
@@ -302,7 +302,7 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 			}
 			_Pre = word;
 		} else { _Pre = -1 };
-		
+
 		if (_Curr.value == ''){
 			_MouseOnList = 0;
 			RemoveAutocomplete();
@@ -311,7 +311,7 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 		if (_Self.Delimiter.length > 0){
 			caret_pos_start = getCaretStart(_Curr);
 			caret_pos_end = getCaretEnd(_Curr);
-			
+
 			delim_split = '';
 			for (i=0;i<_Self.Delimiter.length;i++){
 				delim_split += _Self.Delimiter[i];
@@ -341,7 +341,7 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 				}
 				l+=_DelimWords[i].length + 1;
 			}
-			var ot = _DelimWords[_CDelimWord].trim(); 
+			var ot = _DelimWords[_CDelimWord].trim();
 			var t = _DelimWords[_CDelimWord].addslashes().trim();
 		}else{
 			var ot = _Curr.value;
@@ -352,7 +352,7 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 			RemoveAutocomplete();
 		}
 		if (ot.length < _Self.StartCharacter) return this;
-		
+
 		// Get the values from database
 		var dm = new DataManager();
 		dm.RequestCompleteEvent = GenerateItems;
@@ -363,7 +363,7 @@ function AutoComplete (TextInputID, AllowMultipleChoices){
 	function HandleFailure(Request) {
 		HideResults();
 	}
-	
+
 	function HideResults() {
 		_MouseOnList = 0;
 		RemoveAutocomplete();
@@ -479,7 +479,7 @@ function setCaret(obj,l){
 	if (obj.setSelectionRange){
 		obj.setSelectionRange(l,l);
 	}else if(obj.createTextRange){
-		m = obj.createTextRange();		
+		m = obj.createTextRange();
 		m.moveStart('character',l);
 		m.collapse();
 		m.select();
@@ -491,7 +491,7 @@ function setSelection(obj,s,e){
 	if (obj.setSelectionRange){
 		obj.setSelectionRange(s,e);
 	}else if(obj.createTextRange){
-		m = obj.createTextRange();		
+		m = obj.createTextRange();
 		m.moveStart('character',s);
 		m.moveEnd('character',e);
 		m.select();
@@ -503,7 +503,7 @@ String.prototype.addslashes = function(){
 	return this.replace(/(["\\\.\|\[\]\^\*\+\?\$\(\)])/g, '\\$1');
 }
 String.prototype.trim = function () {
-    return this.replace(/^\s*(\S*(\s+\S+)*)\s*$/, "$1");
+	return this.replace(/^\s*(\S*(\s+\S+)*)\s*$/, "$1");
 };
 /* --- Escape --- */
 
@@ -530,7 +530,7 @@ function curLeft(obj){
 
 // is a given input a number?
 function isNumber(a) {
-    return typeof a == 'number' && isFinite(a);
+	return typeof a == 'number' && isFinite(a);
 }
 
 /* Object Functions */

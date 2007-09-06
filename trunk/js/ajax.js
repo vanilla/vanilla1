@@ -12,7 +12,7 @@ function DataManager() {
 	// events with this.Param.
 	self.Param = null;
 	this.Param = self.Param;
-	
+
 	// Methods
 	this.CreateDataHandler = function(Request) {
 		var DataHandler = function() {

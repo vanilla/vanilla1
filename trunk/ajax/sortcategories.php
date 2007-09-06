@@ -18,8 +18,8 @@ $Sql = 'update '.$Configuration['DATABASE_TABLE_PREFIX']."Category set Priority 
 $SortOrder = ForceIncomingArray('CategoryID', array());
 $ItemCount = count($SortOrder);
 for ($i = 0; $i < $ItemCount; $i++) {
-   $ExecSql = str_replace(array('//1', '//2'), array($i, $SortOrder[$i]), $Sql);
-   $Context->Database->Execute($ExecSql, 'AJAX', 'ReorderCategories', 'Failed to reorder categories', 0);
+	$ExecSql = str_replace(array('//1', '//2'), array($i, $SortOrder[$i]), $Sql);
+	$Context->Database->Execute($ExecSql, 'AJAX', 'ReorderCategories', 'Failed to reorder categories', 0);
 }
 $Context->Unload();
 ?>

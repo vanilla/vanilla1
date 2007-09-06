@@ -24,7 +24,7 @@
  */
 class Menu extends Control {
 	var $Tabs;				// Tab collection
-   var $CurrentTab;		// The current tab
+	var $CurrentTab;		// The current tab
 
 	function AddTab($Text, $Value, $Url, $Attributes = '', $Position = '0', $ForcePosition = '0') {
 		$this->AddItemToCollection($this->Tabs, array('Text' => $Text, 'Value' => $Value, 'Url' => $Url, 'Attributes' => $Attributes), $Position, $ForcePosition);
@@ -41,19 +41,19 @@ class Menu extends Control {
 	}
 
 	function RemoveTab($TabUrl) {
-      while (list($Key, $Tab) = each($this->Tabs)) {
+		while (list($Key, $Tab) = each($this->Tabs)) {
 			if ($Tab['Url'] == $TabUrl) unset ($this->Tabs[$Key]);
-      }
+		}
 	}
 
-   function Render() {
+	function Render() {
 		// First sort the tabs by key
-      ksort($this->Tabs);
+		ksort($this->Tabs);
 		// Now write the Menu
-      $this->CallDelegate('PreRender');
+		$this->CallDelegate('PreRender');
 		include(ThemeFilePath($this->Context->Configuration, 'menu.php'));
 		$this->CallDelegate('PostRender');
-   }
+	}
 
 	function TabClass($CurrentTab, $ComparisonTab, $CssClass = '') {
 		if ($CssClass == '') $CssClass = 'TabOn';

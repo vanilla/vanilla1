@@ -19,12 +19,12 @@ include("appg/init_vanilla.php");
 
 	// Ensure the user is allowed to view this page
 	$Context->Session->Check($Context);
-	
+
 	// Define properties of the page controls that are specific to this page
-   $Head->BodyId = 'DiscussionsPage';
+	$Head->BodyId = 'DiscussionsPage';
 	$Menu->CurrentTab = 'discussions';
 	$Panel->CssClass = 'DiscussionPanel';
-   $Panel->BodyCssClass = 'Discussions';
+	$Panel->BodyCssClass = 'Discussions';
 
 // 2. BUILD PAGE CONTROLS
 	$DiscussionGrid = $Context->ObjectFactory->CreateControl($Context, 'DiscussionGrid');
@@ -45,7 +45,7 @@ include("appg/init_vanilla.php");
 			} elseif ($Configuration['UPDATE_REMINDER'] == 'Quarterly') {
 				if ($Days > 90) $ShowUpdateMessage = 1;
 			}
-			
+
 			if ($ShowUpdateMessage) {
 				$Message = '';
 				if ($Days == 0) {
@@ -57,9 +57,9 @@ include("appg/init_vanilla.php");
 			}
 		}
 	}
-   
+
 	// Remind them to get addons if this is a new install
-   if ($Configuration['ADDON_NOTICE']) {
+	if ($Configuration['ADDON_NOTICE']) {
 		if ($Context->Session->User && $Context->Session->User->Permission('PERMISSION_MANAGE_EXTENSIONS')) {
 			$HideNotice = ForceIncomingBool('TurnOffAddonNotice', 0);
 			if ($HideNotice) {

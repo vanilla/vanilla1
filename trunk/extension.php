@@ -19,9 +19,9 @@ include('appg/init_vanilla.php');
 
 	// Ensure the user is allowed to view this page
 	$Context->Session->Check($Context);
-   
-   $Head->BodyId = 'ExtensionPage';
-	
+
+	$Head->BodyId = 'ExtensionPage';
+
 // 2. BUILD PAGE CONTROLS
 	$PostBackAction = ForceIncomingString('PostBackAction', '');
 	if ($PostBackAction == '') {

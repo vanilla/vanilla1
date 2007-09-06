@@ -73,7 +73,7 @@ class DiscussionGrid extends Control {
 	function Render() {
 		$this->CallDelegate('PreRender');
 		// Set up the pagelist
-      $CategoryID = ForceIncomingInt('CategoryID', 0);
+		$CategoryID = ForceIncomingInt('CategoryID', 0);
 		if ($CategoryID == 0) $CategoryID = '';
 		$pl = $this->Context->ObjectFactory->NewContextObject($this->Context, 'PageList', 'CategoryID', $CategoryID);
 		$pl->NextText = $this->Context->GetDefinition('Next');

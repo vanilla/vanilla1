@@ -63,7 +63,7 @@ $Context->PageTitle = $CommentGrid->Discussion->Name;
 				"",
 				"id=\"HideDiscussion\" onclick=\"if (confirm('".$Context->GetDefinition($CommentGrid->Discussion->Active?"ConfirmHideDiscussion":"ConfirmUnhideDiscussion")."')) DiscussionSwitch('".$CommentGrid->Context->Configuration['WEB_ROOT']."ajax/switch.php', 'Active', '".$CommentGrid->Discussion->DiscussionID."', '".FlipBool($CommentGrid->Discussion->Active)."', 'HideDiscussion', '".$SessionPostBackKey."'); return false;\"");
 		}
-		if ($Context->Session->User->Permission("PERMISSION_CLOSE_DISCUSSIONS")) {		
+		if ($Context->Session->User->Permission("PERMISSION_CLOSE_DISCUSSIONS")) {
 			$CloseText = $Context->GetDefinition(($CommentGrid->Discussion->Closed?"ReOpen":"Close")."ThisDiscussion");
 			$Panel->AddListItem($Options,
 				$CloseText,
@@ -88,7 +88,7 @@ $Context->PageTitle = $CommentGrid->Discussion->Name;
 				"id=\"SinkDiscussion\" onclick=\"if (confirm('".$Context->GetDefinition($CommentGrid->Discussion->Sink?"ConfirmUnSink":"ConfirmSink")."')) DiscussionSwitch('".$CommentGrid->Context->Configuration['WEB_ROOT']."ajax/switch.php', 'Sink', '".$CommentGrid->Discussion->DiscussionID."', '".FlipBool($CommentGrid->Discussion->Sink)."', 'SinkDiscussion', '".$SessionPostBackKey."'); return false;\"");
 		}
 	}
-	
+
 	// Create the comment footer
 	$CommentFoot = $Context->ObjectFactory->CreateControl($Context, "CommentFoot");
 

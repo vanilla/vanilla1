@@ -24,7 +24,7 @@
  */
 class CommentManager extends Delegation {
 	var $Name;				// The name of this class
-   var $Context;			// The context object that contains all global objects (database, error manager, warning collector, session, etc)
+	var $Context;			// The context object that contains all global objects (database, error manager, warning collector, session, etc)
 
 	function CommentManager(&$Context) {
 		$this->Name = 'CommentManager';
@@ -41,10 +41,10 @@ class CommentManager extends Delegation {
 		$s->AddJoin('User', 'e', 'UserID', 'm', 'EditUserID', 'left join');
 		$s->AddJoin('User', 'd', 'UserID', 'm', 'DeleteUserID', 'left join');
 		$s->AddJoin('Discussion', 't', 'DiscussionID', 'm', 'DiscussionID', 'inner join');
-      $s->AddJoin('User', 'w', 'UserID', 'm', 'WhisperUserID', 'left join');
+		$s->AddJoin('User', 'w', 'UserID', 'm', 'WhisperUserID', 'left join');
 
 		// Limit to roles with access to this category
-      if ($this->Context->Session->UserID > 0) {
+		if ($this->Context->Session->UserID > 0) {
 			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID', 't', 'CategoryID', 'left join', ' and crb.'.$this->Context->DatabaseColumns['CategoryRoleBlock']['RoleID'].' = '.$this->Context->Session->User->RoleID);
 		} else {
 			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID', 't', 'CategoryID', 'left join', ' and crb.'.$this->Context->DatabaseColumns['CategoryRoleBlock']['RoleID'].' = 1');
@@ -63,8 +63,8 @@ class CommentManager extends Delegation {
 		$s->AddSelect('PERMISSION_HTML_ALLOWED', 'r', 'AuthCanPostHtml');
 		$s->AddSelect('Name', 'e', 'EditUsername');
 		$s->AddSelect('Name', 'd', 'DeleteUsername');
-      $s->AddSelect('WhisperUserID', 't', 'DiscussionWhisperUserID');
-      $s->AddSelect('Name', 'w', 'WhisperUsername');
+		$s->AddSelect('WhisperUserID', 't', 'DiscussionWhisperUserID');
+		$s->AddSelect('Name', 'w', 'WhisperUsername');
 
 
 		$this->CallDelegate("CommentBuilder_PreWhere");
@@ -110,14 +110,14 @@ class CommentManager extends Delegation {
 		}
 		$s->AddSelect('CommentID', 'm', 'Count', 'count');
 		if ($this->Context->Configuration['ENABLE_WHISPERS']) {
-         if (!$this->Context->Session->User->Permission('PERMISSION_VIEW_ALL_WHISPERS')) {
-            $s->AddWhere('m', 'WhisperUserID', '', $this->Context->Session->UserID, '=', 'and', '', 1, 1);
-            $s->AddWhere('m', 'WhisperUserID', '', 'null', 'is', 'or', '', 0);
-            $s->AddWhere('m', 'WhisperUserID', '', '0', '=', 'or', '', 0);
-            $s->AddWhere('m', 'WhisperUserID', '', '0', '=', 'or', '', 1);
-            $s->AddWhere('m', 'AuthUserID', '', $this->Context->Session->UserID, '=', 'or');
-            $s->EndWhereGroup();
-         }
+			if (!$this->Context->Session->User->Permission('PERMISSION_VIEW_ALL_WHISPERS')) {
+				$s->AddWhere('m', 'WhisperUserID', '', $this->Context->Session->UserID, '=', 'and', '', 1, 1);
+				$s->AddWhere('m', 'WhisperUserID', '', 'null', 'is', 'or', '', 0);
+				$s->AddWhere('m', 'WhisperUserID', '', '0', '=', 'or', '', 0);
+				$s->AddWhere('m', 'WhisperUserID', '', '0', '=', 'or', '', 1);
+				$s->AddWhere('m', 'AuthUserID', '', $this->Context->Session->UserID, '=', 'or');
+				$s->EndWhereGroup();
+			}
 		} else {
 			// If whispers aren't on - we want to make sure that whispers aren't included in the count
 			$s->AddWhere('m', 'WhisperUserID', '', 0, '=', 'and', '', 1, 1);
@@ -159,14 +159,14 @@ class CommentManager extends Delegation {
 		}
 
 		if ($this->Context->Configuration['ENABLE_WHISPERS']) {
-         if (!$this->Context->Session->User->Permission('PERMISSION_VIEW_ALL_WHISPERS')) {
-            $s->AddWhere('m', 'WhisperUserID', '', $this->Context->Session->UserID, '=', 'and', '', 1, 1);
-            $s->AddWhere('m', 'WhisperUserID', '', 'null', 'is', 'or', '', 0);
-            $s->AddWhere('m', 'WhisperUserID', '', '0', '=', 'or', '', 0);
-            $s->AddWhere('m', 'WhisperUserID', '', '0', '=', 'or', '', 1);
-            $s->AddWhere('m', 'AuthUserID', '', $this->Context->Session->UserID, '=', 'or');
-            $s->EndWhereGroup();
-         }
+			if (!$this->Context->Session->User->Permission('PERMISSION_VIEW_ALL_WHISPERS')) {
+				$s->AddWhere('m', 'WhisperUserID', '', $this->Context->Session->UserID, '=', 'and', '', 1, 1);
+				$s->AddWhere('m', 'WhisperUserID', '', 'null', 'is', 'or', '', 0);
+				$s->AddWhere('m', 'WhisperUserID', '', '0', '=', 'or', '', 0);
+				$s->AddWhere('m', 'WhisperUserID', '', '0', '=', 'or', '', 1);
+				$s->AddWhere('m', 'AuthUserID', '', $this->Context->Session->UserID, '=', 'or');
+				$s->EndWhereGroup();
+			}
 		} else {
 			// If whispers aren't on - we want to make sure that whispers aren't included in the count
 			$s->AddWhere('m', 'WhisperUserID', '', 0, '=', 'and', '', 1, 1);
@@ -206,7 +206,7 @@ class CommentManager extends Delegation {
 
 		$s->AddJoin('User', 'a', 'UserID', 'c', 'AuthUserID', 'inner join');
 		$s->AddJoin('Discussion', 'd', 'DiscussionID', 'c', 'DiscussionID', 'inner join');
-      $s->AddJoin('User', 'w', 'UserID', 'c', 'WhisperUserID', 'left join');
+		$s->AddJoin('User', 'w', 'UserID', 'c', 'WhisperUserID', 'left join');
 		$s->AddJoin('Category', 'ca', 'CategoryID', 'd', 'CategoryID', 'left join');
 
 		// Caused the query to be 50 times slower
@@ -214,7 +214,7 @@ class CommentManager extends Delegation {
 
 
 		// Limit to roles with access to this category
-      if ($this->Context->Session->UserID > 0) {
+		if ($this->Context->Session->UserID > 0) {
 			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID', 'd', 'CategoryID', 'left join', ' and crb.'.$this->Context->DatabaseColumns['CategoryRoleBlock']['RoleID'].' = '.$this->Context->Session->User->RoleID);
 		} else {
 			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID', 'd', 'CategoryID', 'left join', ' and crb.'.$this->Context->DatabaseColumns['CategoryRoleBlock']['RoleID'].' = 1');
@@ -222,8 +222,8 @@ class CommentManager extends Delegation {
 
 		$s->AddSelect(array('CommentID', 'DiscussionID', 'Body', 'FormatType', 'DateCreated', 'Deleted', 'AuthUserID', 'WhisperUserID'), 'c');
 		$s->AddSelect('Name', 'a', 'AuthUsername');
-      $s->AddSelect('WhisperUserID', 'd', 'DiscussionWhisperUserID');
-      $s->AddSelect('Name', 'w', 'WhisperUsername');
+		$s->AddSelect('WhisperUserID', 'd', 'DiscussionWhisperUserID');
+		$s->AddSelect('Name', 'w', 'WhisperUsername');
 
 
 		$s->AddWhere('crb', 'Blocked', '', 0, '=', 'and', '', 1, 1);
@@ -255,22 +255,22 @@ class CommentManager extends Delegation {
 		if ($Search->AuthUsername != '') $s->AddWhere('a', 'Name', '', $Search->AuthUsername, '=');
 
 		if ($this->Context->Configuration['ENABLE_WHISPERS']) {
-         if ($Search->WhisperFilter) $s->AddWhere('c', 'WhisperUserID', '', 0, '>');
-         if ($Search->AuthUsername != '') $s->AddWhere('a', 'Name', '', $Search->AuthUsername, '=');
-         if (!$this->Context->Session->User->Permission('PERMISSION_VIEW_ALL_WHISPERS')) {
-            // If the user cannot view all whispers, make sure that:
-            // if the current topic is a whisper, make sure it is the
-            // author or the whisper recipient viewing
-            $s->AddWhere('d', 'AuthUserID', '', $this->Context->Session->UserID, '=', 'and', '', 1, 1);
+			if ($Search->WhisperFilter) $s->AddWhere('c', 'WhisperUserID', '', 0, '>');
+			if ($Search->AuthUsername != '') $s->AddWhere('a', 'Name', '', $Search->AuthUsername, '=');
+			if (!$this->Context->Session->User->Permission('PERMISSION_VIEW_ALL_WHISPERS')) {
+				// If the user cannot view all whispers, make sure that:
+				// if the current topic is a whisper, make sure it is the
+				// author or the whisper recipient viewing
+				$s->AddWhere('d', 'AuthUserID', '', $this->Context->Session->UserID, '=', 'and', '', 1, 1);
 				$s->AddWhere('d', 'WhisperUserID', '', $this->Context->Session->UserID, '=', 'or', '', 1, 0);
 				$s->AddWhere('d', 'WhisperUserID', '', 0, '=', 'or', '', 1, 0);
 				$s->EndWhereGroup();
 
-            $s->AddWhere('c', 'AuthUserID', '', $this->Context->Session->UserID, '=', 'and', '', 1, 1);
+				$s->AddWhere('c', 'AuthUserID', '', $this->Context->Session->UserID, '=', 'and', '', 1, 1);
 				$s->AddWhere('c', 'WhisperUserID', '', $this->Context->Session->UserID, '=', 'or', '', 1, 0);
 				$s->AddWhere('c', 'WhisperUserID', '', 0, '=', 'or', '', 1, 0);
-            $s->EndWhereGroup();
-         }
+				$s->EndWhereGroup();
+			}
 		} else {
 			$s->AddWhere('c', 'WhisperUserID', '', 0, '=', 'and', '', 1, 1);
 			$s->AddWhere('c', 'WhisperUserID', '', 0, '=', 'or', '', 0);
@@ -728,7 +728,7 @@ class CommentManager extends Delegation {
 		$s->AddWhere('c', 'Deleted', '', 0, '=', 'and');
 		$s->AddWhere('c', 'WhisperUserID', '', 0, '=', 'and');
 		$CountData = $this->Context->Database->Select($s, $this->Name, 'ReCountComments', 'An error occurred while retrieving comment summary data.');
-      $CommentCount = $this->Context->Database->RowCount($CountData);
+		$CommentCount = $this->Context->Database->RowCount($CountData);
 
 		$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
 		$s->SetMainTable('Discussion', 'd');
@@ -777,7 +777,7 @@ class CommentManager extends Delegation {
 		}
 
 		// If a record was found, update the discussion
-      if ($last_user_id > 0) {
+		if ($last_user_id > 0) {
 			$s->Clear();
 			$s->SetMainTable('Discussion', 'd');
 			$s->AddFieldNameValue('LastUserID', $last_user_id);

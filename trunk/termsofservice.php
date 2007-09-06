@@ -16,18 +16,18 @@ include("conf/settings.php");
 
 class FauxContext {
 	var $Dictionary;
-   
-   // Constructor
-   function FauxContext() {
+
+	// Constructor
+	function FauxContext() {
 		$this->Dictionary = array();
-   }
-	
+	}
+
 	function GetDefinition($Code) {
-      if (array_key_exists($Code, $this->Dictionary)) {
-         return $this->Dictionary[$Code];
-      } else {
-         return $Code;
-      }
+		if (array_key_exists($Code, $this->Dictionary)) {
+			return $this->Dictionary[$Code];
+		} else {
+			return $Code;
+		}
 	}
 }
 $Context = new FauxContext();
@@ -41,14 +41,14 @@ include($Configuration['APPLICATION_PATH'].'conf/language.php');
 <head>
 <title><?php echo $Context->GetDefinition("TermsOfService"); ?></title>
 <style type="text/css">
-body { 
-	background: #ffffff; 
+body {
+	background: #ffffff;
 	margin: 10px;
-   padding-bottom: 10px;
+	padding-bottom: 10px;
 }
-body, div, h1, h2, p { 
-	font-family: Trebuchet MS, tahoma, arial, verdana; 
-	color: #000; 
+body, div, h1, h2, p {
+	font-family: Trebuchet MS, tahoma, arial, verdana;
+	color: #000;
 	line-height: 160%;
 }
 h1 {
@@ -70,8 +70,8 @@ p {
 	margin-left: 0px;
 	margin-right: 0px;
 	margin-top: 0px;
-   margin-bottom: 10px;
-	font-size: 12px; 
+	margin-bottom: 10px;
+	font-size: 12px;
 	color: #333;
 }
 a, a:link, a:visited {

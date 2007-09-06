@@ -10,7 +10,7 @@
 *
 * Description: English language dictionary
 *
-* 
+*
 * !!!!!DO NOT ALTER THIS FILE!!!!!
 * If you need to make changes to these definitions, add the new definitions to
 * your conf/language.php file. Definitions made there will override these.
@@ -245,7 +245,7 @@ $Context->Dictionary['TermsOfServiceBody'] = "<h1>Terms of Service</h1>
 
 <p>Considering the real-time nature of this community, it is impossible for us to review messages or confirm the validity of information posted.
 We do not actively monitor the contents of and are not responsible for any content posted.
-We do not vouch for or warrant the accuracy, completeness or usefulness of any message, and are not responsible for the contents of any data posted by members. 
+We do not vouch for or warrant the accuracy, completeness or usefulness of any message, and are not responsible for the contents of any data posted by members.
 The messages express the views of the author of the message, not necessarily the views of this community or any entity associated with this community.
 Any user who feels that a posted message is objectionable is encouraged to contact us immediately by email.
 We have the ability to remove objectionable messages and we will make every effort to do so, within a reasonable time frame, if we determine that removal is necessary.
@@ -571,13 +571,13 @@ $Context->Dictionary['DiscussionType'] = 'Discussion Type';
 $Context->Dictionary['ErrPostBackKeyInvalid'] = 'There was a problem authenticating your post information.';
 $Context->Dictionary['ErrPostBackActionInvalid'] = 'Your post information was not be defined properly.';
 // Moved from settings.php
-$Context->Dictionary['TextWhispered'] = 'Private'; 
-$Context->Dictionary['TextSticky'] = 'Sticky'; 
-$Context->Dictionary['TextClosed'] = 'Closed'; 
+$Context->Dictionary['TextWhispered'] = 'Private';
+$Context->Dictionary['TextSticky'] = 'Sticky';
+$Context->Dictionary['TextClosed'] = 'Closed';
 $Context->Dictionary['TextHidden'] = 'Deleted';
 $Context->Dictionary['TextSink'] = 'Sink';
-$Context->Dictionary['TextBookmarked'] = 'Bookmarked'; 
-$Context->Dictionary['TextPrefix'] = '['; 
+$Context->Dictionary['TextBookmarked'] = 'Bookmarked';
+$Context->Dictionary['TextPrefix'] = '[';
 $Context->Dictionary['TextSuffix'] = ']';
 // Added for new update checker
 $Context->Dictionary['CheckingForUpdates'] = 'Checking for updates...';

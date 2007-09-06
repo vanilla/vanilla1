@@ -35,20 +35,20 @@ class Discussion extends Delegation {
 	var $Closed;			// Boolean value indicating if the Discussion will allow any further Comments to be added
 	var $Sticky;			// Boolean value indicating if the Discussion should appear at the top of the list
 	var $Bookmarked;		// Boolean value indicating if the Discussion has been bookmared by the current user
-   var $Sink;				// Boolean value indicating if the discussion should sink (ie. allow comments to be added, but not stay at the top of the list).
+	var $Sink;				// Boolean value indicating if the discussion should sink (ie. allow comments to be added, but not stay at the top of the list).
 	var $Name;
 	var $DateCreated;
 	var $DateLastActive;
 	var $CountComments;		// Number of Comments currently in this Discussion
-   var $CountReplies;		// Number of replies currently in this Discussion (one less than the Comment count)
+	var $CountReplies;		// Number of replies currently in this Discussion (one less than the Comment count)
 	var $Comment;				// Only used when creating/editing a discussion
-   var $LastViewed;
+	var $LastViewed;
 	var $LastViewCountComments;
 	var $NewComments;
 	var $Status;
 	var $LastPage;				// The last page of the discussion
   	// Used to prevent double posts and "back button" posts
-   var $UserDiscussionCount;
+	var $UserDiscussionCount;
 	var $WhisperUserID;	// If this discussion was whispered to a particular user
 	var $WhisperUsername;		// Display purposes only - The user's username
 	var $CountWhispersTo;
@@ -115,42 +115,42 @@ class Discussion extends Delegation {
 		$this->CountComments = @$DataSet['CountComments'];
 
 		if ($Configuration['ENABLE_WHISPERS']) {
-         $this->WhisperUserID = @$DataSet['WhisperUserID'];
-         $this->WhisperUsername = @$DataSet['WhisperUsername'];
+			$this->WhisperUserID = @$DataSet['WhisperUserID'];
+			$this->WhisperUsername = @$DataSet['WhisperUsername'];
 
-         $WhisperFromDateLastActive = UnixTimestamp(@$DataSet['WhisperFromDateLastActive']);
-         $WhisperFromLastUserID = @$DataSet['WhisperFromLastUserID'];
-         $WhisperFromLastFullName = @$DataSet['WhisperFromLastFullName'];
-         $WhisperFromLastUsername = @$DataSet['WhisperFromLastUsername'];
-         $this->CountWhispersFrom = @$DataSet['CountWhispersFrom'];
+			$WhisperFromDateLastActive = UnixTimestamp(@$DataSet['WhisperFromDateLastActive']);
+			$WhisperFromLastUserID = @$DataSet['WhisperFromLastUserID'];
+			$WhisperFromLastFullName = @$DataSet['WhisperFromLastFullName'];
+			$WhisperFromLastUsername = @$DataSet['WhisperFromLastUsername'];
+			$this->CountWhispersFrom = @$DataSet['CountWhispersFrom'];
 
-         $WhisperToDateLastActive = UnixTimestamp(@$DataSet['WhisperToDateLastActive']);
-         $WhisperToLastUserID = @$DataSet['WhisperToLastUserID'];
-         $WhisperToLastFullName = @$DataSet['WhisperToLastFullName'];
-         $WhisperToLastUsername = @$DataSet['WhisperToLastUsername'];
-         $this->CountWhispersTo = @$DataSet['CountWhispersTo'];
+			$WhisperToDateLastActive = UnixTimestamp(@$DataSet['WhisperToDateLastActive']);
+			$WhisperToLastUserID = @$DataSet['WhisperToLastUserID'];
+			$WhisperToLastFullName = @$DataSet['WhisperToLastFullName'];
+			$WhisperToLastUsername = @$DataSet['WhisperToLastUsername'];
+			$this->CountWhispersTo = @$DataSet['CountWhispersTo'];
 
-         $this->CountComments += $this->CountWhispersFrom;
-         $this->CountComments += $this->CountWhispersTo;
-         $this->CountReplies = $this->CountComments - 1;
-         if ($this->CountReplies < 0) $this->CountReplies = 0;
+			$this->CountComments += $this->CountWhispersFrom;
+			$this->CountComments += $this->CountWhispersTo;
+			$this->CountReplies = $this->CountComments - 1;
+			if ($this->CountReplies < 0) $this->CountReplies = 0;
 
-         if ($WhisperFromDateLastActive != '') {
-            if ($this->DateLastActive < $WhisperFromDateLastActive) {
-               $this->DateLastActive = $WhisperFromDateLastActive;
-               $this->LastUserID = $WhisperFromLastUserID;
-               $this->LastFullName = $WhisperFromLastFullName;
-               $this->LastUsername = $WhisperFromLastUsername;
-            }
-         }
-         if ($WhisperToDateLastActive != '') {
-            if ($this->DateLastActive < $WhisperToDateLastActive) {
-               $this->DateLastActive = $WhisperToDateLastActive;
-               $this->LastUserID = $WhisperToLastUserID;
-               $this->LastFullName = $WhisperToLastFullName;
-               $this->LastUsername = $WhisperToLastUsername;
-            }
-         }
+			if ($WhisperFromDateLastActive != '') {
+				if ($this->DateLastActive < $WhisperFromDateLastActive) {
+					$this->DateLastActive = $WhisperFromDateLastActive;
+					$this->LastUserID = $WhisperFromLastUserID;
+					$this->LastFullName = $WhisperFromLastFullName;
+					$this->LastUsername = $WhisperFromLastUsername;
+				}
+			}
+			if ($WhisperToDateLastActive != '') {
+				if ($this->DateLastActive < $WhisperToDateLastActive) {
+					$this->DateLastActive = $WhisperToDateLastActive;
+					$this->LastUserID = $WhisperToLastUserID;
+					$this->LastFullName = $WhisperToLastFullName;
+					$this->LastUsername = $WhisperToLastUsername;
+				}
+			}
 		}
 
 		$this->CountReplies = $this->CountComments - 1;
@@ -166,7 +166,7 @@ class Discussion extends Delegation {
 		$this->Status = $this->GetStatus();
 
 		// Define the last page
-      $TmpCount = ($this->CountComments / $Configuration['COMMENTS_PER_PAGE']);
+		$TmpCount = ($this->CountComments / $Configuration['COMMENTS_PER_PAGE']);
 		$RoundedCount = intval($TmpCount);
 		if ($TmpCount > 1) {
 			if ($TmpCount > $RoundedCount) {
@@ -193,14 +193,14 @@ class Discussion extends Delegation {
 		$this->WhisperUsername = Strip_Slashes($this->WhisperUsername);
 
 		// Load the comment
-      $this->Comment = $Context->ObjectFactory->NewContextObject($Context, 'Comment');
+		$this->Comment = $Context->ObjectFactory->NewContextObject($Context, 'Comment');
 		$this->Comment->GetPropertiesFromForm();
 	}
 
 	function GetStatus() {
 		$sReturn = '';
 		if (!$this->Active) $sReturn = ' Hidden';
-      if ($this->WhisperUserID > 0) $sReturn .= ' Whispered';
+		if ($this->WhisperUserID > 0) $sReturn .= ' Whispered';
 		if ($this->Closed) $sReturn .= ' Closed';
 		if ($this->Sticky) $sReturn .= ' Sticky';
 		if ($this->Bookmarked) $sReturn .= ' Bookmarked';
@@ -221,7 +221,7 @@ class Discussion extends Delegation {
 	}
 
 	function FormatPropertiesForDisplay() {
-      $this->WhisperUsername = FormatStringForDisplay($this->WhisperUsername);
+		$this->WhisperUsername = FormatStringForDisplay($this->WhisperUsername);
 		$this->AuthUsername = FormatStringForDisplay($this->AuthUsername);
 		$this->LastUsername = FormatStringForDisplay($this->LastUsername);
 		$this->Category = FormatStringForDisplay($this->Category);
