@@ -6,10 +6,10 @@
 * You should have received a copy of the GNU General Public License along with Vanilla; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 * The latest source code for Vanilla is available at www.lussumo.com
 * Contact Mark O'Sullivan at mark [at] lussumo [dot] com
-* 
+*
 * Description: Utility functions specific to Vanilla
 */
-  
+
 // Add a new custom name/value pair input to the account form
 function AddLabelValuePair() {
 	var Counter = document.getElementById('LabelValuePairCount');
@@ -23,15 +23,15 @@ function AddLabelValuePair() {
 		LabelInput.name = "Label"+Counter.value;
 		LabelInput.maxLength = "20";
 		LabelInput.className = "LVLabelInput";
-		
-		// Create the value container		
+
+		// Create the value container
 		var Value = document.createElement("li");
 		var ValueInput = document.createElement("input");
 		ValueInput.type = "text";
 		ValueInput.name = "Value"+Counter.value;
 		ValueInput.maxLength = "200";
 		ValueInput.className = "LVValueInput";
-		
+
 		// Add the items to the page
 		Label.appendChild(LabelInput);
 		Value.appendChild(ValueInput);
@@ -85,7 +85,7 @@ function ApplyBookmark(Element, ClassName, Text) {
 	if (Button) {
 		Button.className = ClassName;
 		Button.innerHTML = Text;
-	}	
+	}
 }
 function BookmarkComplete(Request) {
 	setTimeout("ApplyBookmark('SetBookmark', 'Complete', '"+this.Param+"');", 400);
@@ -102,7 +102,7 @@ function ShowAdvancedSearch() {
 	var SearchDiscussions = document.getElementById("SearchDiscussionFields");
 	var SearchComments = document.getElementById("SearchCommentFields");
 	var SearchUsers = document.getElementById("SearchUserFields");
-	
+
 	if (SearchSimple && SearchDiscussions && SearchComments && SearchUsers ) {
 		SearchSimple.style.display = "none";
 		SearchDiscussions.style.display = "block";
@@ -115,7 +115,7 @@ function ShowSimpleSearch() {
 	var SearchDiscussions = document.getElementById("SearchDiscussionFields");
 	var SearchComments = document.getElementById("SearchCommentFields");
 	var SearchUsers = document.getElementById("SearchUserFields");
-	
+
 	if (SearchSimple && SearchDiscussions && SearchComments && SearchUsers ) {
 		SearchSimple.style.display = "block";
 		SearchDiscussions.style.display = "none";
@@ -143,12 +143,12 @@ function ToggleCommentBox(AjaxUrl, SmallText, BigText, PostBackKey) {
 	var CommentBox = document.getElementById("CommentBox");
 	if (CommentBox) {
 		if (CommentBox.className == "LargeCommentBox") SwitchVal = 1;
-		
+
 		var Parameters = "Type=ShowLargeCommentBox&Switch="+SwitchVal+"&PostBackKey="+PostBackKey;
 		var dm = new DataManager();
 		dm.RequestCompleteEvent = ToggleCommentBoxComplete;
 		dm.RequestFailedEvent = HandleFailure;
-		dm.LoadData(AjaxUrl+"?"+Parameters);		
+		dm.LoadData(AjaxUrl+"?"+Parameters);
 	}
 }
 function ToggleCommentBoxComplete(Request) {

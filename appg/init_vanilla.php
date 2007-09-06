@@ -103,7 +103,7 @@ if ($Context->Session->UserID > 0) {
 		'PERMISSION_MANAGE_LANGUAGE',
 		'PERMISSION_MANAGE_STYLES',
 		'PERMISSION_MANAGE_THEMES');
-		
+
 	$RequiredPermissionsCount = count($RequiredPermissions);
 	$i = 0;
 	for ($i = 0; $i < $RequiredPermissionsCount; $i++) {
@@ -113,7 +113,7 @@ if ($Context->Session->UserID > 0) {
 		}
 	}
 
-	// Add the account tab   
+	// Add the account tab
 	$Menu->AddTab($Context->GetDefinition('Account'), 'account', GetUrl($Configuration, 'account.php'), '', $Configuration['TAB_POSITION_ACCOUNT']);
 }
 

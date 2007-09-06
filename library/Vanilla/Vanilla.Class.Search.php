@@ -23,51 +23,51 @@
  * @package Vanilla
  */
 class Search {
-   var $SearchID;			// The unique identifier assigned to this search by the system
-   var $Label;				// The label assigned to this search by the user
-   var $Type;				// The type of search to perform
-   var $Keywords;			// The keywords defined by the user
+	var $SearchID;			// The unique identifier assigned to this search by the system
+	var $Label;				// The label assigned to this search by the user
+	var $Type;				// The type of search to perform
+	var $Keywords;			// The keywords defined by the user
 	var $Query;				// The actual string to be searched on in the sql query
-   var $Categories;		// The category names to search in (comment & discussion search)
-   var $AuthUsername;	// The author's username to filter to (comment & discussion search)
-   var $WhisperFilter;	// Should the search be limited to whispers
+	var $Categories;		// The category names to search in (comment & discussion search)
+	var $AuthUsername;	// The author's username to filter to (comment & discussion search)
+	var $WhisperFilter;	// Should the search be limited to whispers
 	var $Roles;				// The roles to filter to (user search)
 	var $UserOrder;		// The order to sort results in (user search)
-   var $HighlightWords;	// Breaks the query into words to be highlighted in search results
+	var $HighlightWords;	// Breaks the query into words to be highlighted in search results
 
-   // Clears all properties
-   function Clear() {
-      $this->SearchID = 0;
-      $this->Label = '';
-      $this->Type = 'Topics';
-      $this->Keywords = '';
+	// Clears all properties
+	function Clear() {
+		$this->SearchID = 0;
+		$this->Label = '';
+		$this->Type = 'Topics';
+		$this->Keywords = '';
 		$this->Query = '';
-      $this->Categories = 0;
-      $this->AuthUsername = '';
+		$this->Categories = 0;
+		$this->AuthUsername = '';
 		$this->WhisperFilter = 0;
 		$this->Roles = 0;
 		$this->UserOrder = '';
 		$this->HighlightWords = array();
-   }
+	}
 
 	function DefineType($InValue) {
-      if ($InValue != 'Users' && $InValue != 'Comments') $InValue = 'Topics';
+		if ($InValue != 'Users' && $InValue != 'Comments') $InValue = 'Topics';
 		return $InValue;
 	}
 
-   function GetPropertiesFromDataSet($DataSet, $ParseKeywords = '0') {
+	function GetPropertiesFromDataSet($DataSet, $ParseKeywords = '0') {
 		$ParseKeywords = ForceBool($ParseKeywords, 0);
 
-      $this->SearchID = ForceInt(@$DataSet['SearchID'], 0);
-      $this->Label = ForceString(@$DataSet['Label'], '');
-      $this->Type = $this->DefineType(ForceString(@$DataSet['Type'], ''));
-      $this->Keywords = urldecode(ForceString(@$DataSet['Keywords'], ''));
+		$this->SearchID = ForceInt(@$DataSet['SearchID'], 0);
+		$this->Label = ForceString(@$DataSet['Label'], '');
+		$this->Type = $this->DefineType(ForceString(@$DataSet['Type'], ''));
+		$this->Keywords = urldecode(ForceString(@$DataSet['Keywords'], ''));
 		if ($ParseKeywords) $this->ParseKeywords($this->Type, $this->Keywords);
-   }
+	}
 
-   function GetPropertiesFromForm() {
-      $this->SearchID = ForceIncomingInt('SearchID', 0);
-      $this->Label = ForceIncomingString('Label', '');
+	function GetPropertiesFromForm() {
+		$this->SearchID = ForceIncomingInt('SearchID', 0);
+		$this->Label = ForceIncomingString('Label', '');
 		$this->Type = $this->DefineType(ForceIncomingString('Type', ''));
 		$this->Keywords = urldecode(ForceIncomingString('Keywords', ''));
 
@@ -75,15 +75,15 @@ class Search {
 		$Advanced = ForceIncomingBool('Advanced', 0);
 		if ($Advanced) {
 			// Load all of the search variables from the form
-	      $this->Categories = ForceIncomingString('Categories', '');
+			$this->Categories = ForceIncomingString('Categories', '');
 			$this->AuthUsername = ForceIncomingString('AuthUsername', '');
 			$this->Roles = ForceIncomingString('Roles', '');
 			$this->UserOrder = ForceIncomingString('UserOrder', '');
 			$this->Query = $this->Keywords;
 
 			// Build the keyword definition
-         $KeyDef = '';
-         if ($this->Type == 'Users') {
+			$KeyDef = '';
+			if ($this->Type == 'Users') {
 				if ($this->Roles != '') $KeyDef = 'roles:'.$this->Roles.';';
 				if ($this->UserOrder != '') $KeyDef .= 'sort:'.$this->UserOrder.';';
 				$this->Keywords = $KeyDef.$this->Keywords;
@@ -94,9 +94,9 @@ class Search {
 			}
 		} else {
 			// Load all of the search variables from the keyword definition
-         $this->ParseKeywords($this->Type, $this->Keywords);
+			$this->ParseKeywords($this->Type, $this->Keywords);
 		}
-   }
+	}
 
 	function ParseKeywords($Type, $Keywords) {
 		if ($Type == 'Users') {
@@ -119,10 +119,10 @@ class Search {
 			}
 
 			// Check for username assignment
-         $ColonPos = strpos($this->Query, ':');
+			$ColonPos = strpos($this->Query, ':');
 			if ($ColonPos !== false && $ColonPos != 0) {
 				// If a colon was found, check to see that it didn't occur before any quotes
-            $QuotePos = strpos($this->Query, '"');
+				$QuotePos = strpos($this->Query, '"');
 
 				if ($QuotePos === false || $QuotePos > $ColonPos) {
 					$this->AuthUsername = substr($this->Query, 0, $ColonPos);
@@ -174,11 +174,11 @@ class Search {
 		$this->Roles = FormatStringForDatabaseInput($this->Roles);
 	}
 
-   function FormatPropertiesForDisplay() {
-      $this->Label = FormatStringForDisplay($this->Label);
-      $this->Keywords = FormatStringForDisplay($this->Keywords);
-      $this->AuthUsername = FormatStringForDisplay($this->AuthUsername);
+	function FormatPropertiesForDisplay() {
+		$this->Label = FormatStringForDisplay($this->Label);
+		$this->Keywords = FormatStringForDisplay($this->Keywords);
+		$this->AuthUsername = FormatStringForDisplay($this->AuthUsername);
 		$this->Query = FormatStringForDisplay($this->Query);
-   }
+	}
 }
 ?>

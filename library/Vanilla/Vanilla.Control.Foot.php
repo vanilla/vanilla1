@@ -39,12 +39,12 @@ class Foot extends Control {
 		if ($CssClass != '') $this->CssClass = ' '.$CssClass;
 		$this->Links = array();
 		// Add the default links
-      $this->AddLink('javascript:PopTermsOfService();',
+		$this->AddLink('javascript:PopTermsOfService();',
 			$this->Context->GetDefinition('TermsOfService'),
 			'',
 			100);
 
-      $this->AddLink('http://lussumo.com/docs/',
+		$this->AddLink('http://lussumo.com/docs/',
 			$this->Context->GetDefinition('Documentation'),
 			'_blank',
 			200);

@@ -23,7 +23,7 @@
  * @package Vanilla
  */
 class SignInManager {
-   var $Context;				// The context object that contains all global objects (database, error manager, warning collector, session, etc)
+	var $Context;				// The context object that contains all global objects (database, error manager, warning collector, session, etc)
 	var $Username;
 	var $Password;
 

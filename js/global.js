@@ -11,9 +11,9 @@
 */
 
 if(document.all && !document.getElementById) {
-    document.getElementById = function(id) {
-         return document.all[id];
-    }
+	document.getElementById = function(id) {
+		 return document.all[id];
+	}
 }
 
 function BlockSubmit(evt, Handler) {
@@ -133,8 +133,8 @@ function RefreshPageWhenAjaxComplete(Request) {
 }
 
 function SubmitForm(FormName, Sender, WaitText) {
-    Wait(Sender, WaitText);
-    document[FormName].submit();
+	Wait(Sender, WaitText);
+	document[FormName].submit();
 }
 
 function SwitchElementClass(ElementToChangeID, SenderID, StyleA, StyleB, CommentA, CommentB) {
@@ -152,19 +152,19 @@ function SwitchElementClass(ElementToChangeID, SenderID, StyleA, StyleB, Comment
 }
 
 function SwitchExtension(AjaxUrl, ExtensionKey, PostBackKey) {
-    var Item = document.getElementById(ExtensionKey);
-    if (Item) Item.className = "Processing";
-    var Parameters = "ExtensionKey="+ExtensionKey+"&PostBackKey="+PostBackKey;
-    var dm = new DataManager();
+	var Item = document.getElementById(ExtensionKey);
+	if (Item) Item.className = "Processing";
+	var Parameters = "ExtensionKey="+ExtensionKey+"&PostBackKey="+PostBackKey;
+	var dm = new DataManager();
 	 dm.Param = ExtensionKey;
-    dm.RequestFailedEvent = SwitchExtensionResult;
-    dm.RequestCompleteEvent = SwitchExtensionResult;
-    dm.LoadData(AjaxUrl+"?"+Parameters);
+	dm.RequestFailedEvent = SwitchExtensionResult;
+	dm.RequestCompleteEvent = SwitchExtensionResult;
+	dm.LoadData(AjaxUrl+"?"+Parameters);
 }
 
 function SwitchExtensionResult(Request) {
-    var Item = document.getElementById(Trim(Request.responseText));
-    if (Item) {
+	var Item = document.getElementById(Trim(Request.responseText));
+	if (Item) {
 		  setTimeout("SwitchExtensionItemClass('"+Trim(Request.responseText)+"')",400);
 	 } else {
 		  alert(Trim(Request.responseText));
@@ -172,9 +172,9 @@ function SwitchExtensionResult(Request) {
 }
 
 function SwitchExtensionItemClass(ItemID) {
-    var Item = document.getElementById(ItemID);
-    var chk = document.getElementById('chk'+ItemID+'ID');
-    if (Item && chk) Item.className = chk.checked ? 'Enabled' : 'Disabled';
+	var Item = document.getElementById(ItemID);
+	var chk = document.getElementById('chk'+ItemID+'ID');
+	if (Item && chk) Item.className = chk.checked ? 'Enabled' : 'Disabled';
 }
 
 function SwitchPreference(AjaxUrl, PreferenceName, RefreshPageWhenComplete, PostBackKey) {

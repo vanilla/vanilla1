@@ -18,23 +18,23 @@ $Search = ForceIncomingString('Search', '');
 $Search = urldecode($Search);
 $Search = FormatStringForDatabaseInput($Search);
 if ($Search != '') {
-   $s = $Context->ObjectFactory->NewContextObject($Context, 'SqlBuilder');
-   $s->SetMainTable('User', 'u');
-   $s->AddSelect('Name', 'u');
-   $s->AddWhere('u', 'Name', '', $Search.'%', 'like');
-   $s->AddOrderBy('Name', 'u', 'asc');
-   $s->AddLimit(0,10);
-   $ResultSet = $Context->Database->Select($s, 'Ajax', 'AutoComplete', 'An error occurred while retrieving autocomplete items.', 0);
-   $Name = '';
-   $Loop = 1;
-   if ($ResultSet) {
-      while ($row = $Context->Database->GetRow($ResultSet)) {
-         if ($Loop > 1) echo ',';
-         $Name = FormatStringForDisplay($row['Name'], 1);
-         echo $Name;
-         $Loop++;
-      }
-   }
+	$s = $Context->ObjectFactory->NewContextObject($Context, 'SqlBuilder');
+	$s->SetMainTable('User', 'u');
+	$s->AddSelect('Name', 'u');
+	$s->AddWhere('u', 'Name', '', $Search.'%', 'like');
+	$s->AddOrderBy('Name', 'u', 'asc');
+	$s->AddLimit(0,10);
+	$ResultSet = $Context->Database->Select($s, 'Ajax', 'AutoComplete', 'An error occurred while retrieving autocomplete items.', 0);
+	$Name = '';
+	$Loop = 1;
+	if ($ResultSet) {
+		while ($row = $Context->Database->GetRow($ResultSet)) {
+			if ($Loop > 1) echo ',';
+			$Name = FormatStringForDisplay($row['Name'], 1);
+			echo $Name;
+			$Loop++;
+		}
+	}
 }
 $Context->Unload();
 ?>

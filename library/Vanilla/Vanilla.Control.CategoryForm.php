@@ -114,37 +114,37 @@ class CategoryForm extends PostBackControl {
 				Redirect($RedirectUrl, '302', '', 0);
 			}
 		}
-      $this->CallDelegate('Constructor');
+		$this->CallDelegate('Constructor');
 	}
 
 	function Render() {
 		if ($this->IsPostBack) {
-         $this->CallDelegate('PreRender');
+			$this->CallDelegate('PreRender');
 			$this->PostBackParams->Clear();
 			$CategoryID = ForceIncomingInt('CategoryID', 0);
 
 			if ($this->PostBackAction == 'Category') {
 				$this->PostBackParams->Set('PostBackAction', 'ProcessCategory');
-            $this->CallDelegate('PreEditRender');
-            include(ThemeFilePath($this->Context->Configuration, 'settings_category_edit.php'));
-            $this->CallDelegate('PostEditRender');
+				$this->CallDelegate('PreEditRender');
+				include(ThemeFilePath($this->Context->Configuration, 'settings_category_edit.php'));
+				$this->CallDelegate('PostEditRender');
 
 			} elseif ($this->PostBackAction == 'CategoryRemove') {
 				$this->PostBackParams->Set('PostBackAction', 'ProcessCategoryRemove');
 				$this->CategorySelect->Attributes = "onchange=\"document.location='".GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '', 'PostBackAction=CategoryRemove')."&amp;CategoryID='+this.options[this.selectedIndex].value;\"";
 				$this->CategorySelect->SelectedValue = $CategoryID;
-            $this->CallDelegate('PreRemoveRender');
-            include(ThemeFilePath($this->Context->Configuration, 'settings_category_remove.php'));
-            $this->CallDelegate('PostRemoveRender');
+				$this->CallDelegate('PreRemoveRender');
+				include(ThemeFilePath($this->Context->Configuration, 'settings_category_remove.php'));
+				$this->CallDelegate('PostRemoveRender');
 
 			} else {
 				$this->PostBackParams->Set('PostBackAction', 'ProcessCategories');
-            $this->CallDelegate('PreListRender');
-            include(ThemeFilePath($this->Context->Configuration, 'settings_category_list.php'));
-            $this->CallDelegate('PostListRender');
+				$this->CallDelegate('PreListRender');
+				include(ThemeFilePath($this->Context->Configuration, 'settings_category_list.php'));
+				$this->CallDelegate('PostListRender');
 
 			}
-         $this->CallDelegate('PostRender');
+			$this->CallDelegate('PostRender');
 		}
 	}
 }

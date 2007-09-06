@@ -23,7 +23,7 @@ a:hover {
 	width: 1px;
 	font-size: 1px;
 	}
-	
+
 /* Errors & Success */
 .ErrorContainer {
 	background: url(alert.gif) no-repeat top left #FFEDEF;
@@ -58,7 +58,7 @@ a:hover {
 	color: #D57D00;
 	line-height: 150%;
 	}
-	
+
 /* Remove System Message Button */
 .Notice span {
 	float:right;
@@ -73,7 +73,7 @@ a:hover {
 	}
 .Invisible { display: none; }
 .Visible { display: block; }
-	
+
 /* Session.. */
 
 #Session {
@@ -338,7 +338,7 @@ html>body .ContentInfo h1 { width:80% !important; }
 	}
 
 /* Discussion Index */
-  
+
 #PageJump {
 	margin: 9px 0px 0px 20px;
 	float: right;
@@ -348,7 +348,7 @@ html>body .ContentInfo h1 { width:80% !important; }
 	margin-top:-5px !important;
 	float: left;
 	width: 100%;
-	}	
+	}
 #Discussions, #Discussions * {
 	margin:0px;
 	padding:0px;
@@ -436,7 +436,7 @@ html>body .ContentInfo h1 { width:80% !important; }
 	}
 
 /* Category Index */
-  
+
 #CategoryPage div.ContentInfo h1 {
 	float: left;
 	text-align: left;
@@ -624,7 +624,7 @@ html>body .ContentInfo h1 { width:80% !important; }
 #Comments .CommentBody ol li {
 	border-bottom:none;
 	padding:0px;
-	}	
+	}
 #CommentsPage .ContentInfo.Middle .PageInfo {
 	border-top: 0px;
 	margin:0px;
@@ -639,7 +639,7 @@ html>body .ContentInfo h1 { width:80% !important; }
 	padding-left: 16px;
 	display: block;
 	white-space: pre;
-	}	
+	}
 
 /* Search Page */
 
@@ -689,7 +689,7 @@ html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
 	color: #f60 !important;
 	position: relative;
 	top: -20px;
-	float: right;	
+	float: right;
 	}
 
 /* Advanced Search Form */
@@ -707,9 +707,9 @@ html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
 #ddRoles, #ddOrder, #ddCommentCategories, #ddDiscussionCategories {
 	width: auto !important;
 	}
-	
+
 /* Search Results */
-  
+
 #SearchPage {
 	margin-bottom: 20px;
 	}
@@ -722,7 +722,7 @@ html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
 	}
 
 /* Comment Search Results */
-  
+
 #CommentResults {
 	margin-top:-5px !important;
 	}
@@ -750,7 +750,7 @@ html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
 	}
 #CommentResults ul a {
 	color:#777;
-	}	
+	}
 #CommentResults .CommentResult ul {
 	background-color:#fff !important;
 	}
@@ -790,7 +790,7 @@ html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
 	}
 
 /* User Search Results */
-  
+
 #UserResults {
 	margin-top:-5px !important;
 	}
@@ -837,7 +837,7 @@ li.User.Name .UserIcon {
 	margin-right: 6px !important;
 	background-repeat:no-repeat !important;
 	display: inline !important;
-	background: center center no-repeat;	
+	background: center center no-repeat;
 	}
 li.User.Name a {
 	font-size: 14px;
@@ -908,7 +908,7 @@ li.User.Name span {
 	font-family:'Trebuchet MS', 'Verdana', 'Tahoma', 'Arial', sans-serif;
 	font-size:13px;
 	font-weight: normal;
-	}	
+	}
 #Form textarea {
 	width:99.5%;
 	height:150px;
@@ -940,14 +940,14 @@ li.User.Name span {
 	}
 #Form.AddComments {
 	width: 100%;
-	}	
+	}
 #Form.AddComments fieldset {
 	margin: 0px;
 	}
 #Form.AddComments form {
 	margin-top: 0px !important;
 	}
-#Form.StartDiscussion label, 
+#Form.StartDiscussion label,
 #Form.AddComments label {
 	display:block;
 	width:100%;
@@ -968,7 +968,7 @@ li.User.Name span {
 	}
 .DiscussionBox {
 	width: 400px;
-	}	
+	}
 #Form .Button {
 	width: auto !important;
 	}
@@ -1045,7 +1045,7 @@ li.User.Name span {
 	margin-top:5px;
 	}
 #Form.Account p span label {
-	float:none;	
+	float:none;
 	display:inline;
 	margin-left:5px;
 	font-weight:bold;
@@ -1058,9 +1058,9 @@ li.User.Name span {
 #Form.Preferences p span label {
 	font-weight: normal;
 	}
-	
+
 /* Globals Form */
-  
+
 #Form.GlobalsForm select.SmallSelect {
 	font-size: 11px;
 	width: 50px;
@@ -1074,7 +1074,7 @@ li.User.Name span {
 #Form.GlobalsForm p {
 	margin-bottom: 10px;
 	}
-	
+
 /* Update Check form */
 .UpdateOld .Name,
 .UpdateGood .Name,
@@ -1111,9 +1111,9 @@ li.User.Name span {
 	background: url(progress.gif) no-repeat center left;
 }
 
-  
+
 /* RoleEdit Form */
-  
+
 #Form.RoleEditForm li p span label {
 	font-weight: normal !important;
 	}
@@ -1122,7 +1122,7 @@ li.User.Name span {
 #Form.CategoryList .RoleBlocked {
 	background: url(disabled-tile.gif) #F4F4C2;
 	}
-	
+
 /* Category Form */
 #Form.CategoryForm li p span label {
 	font-weight: normal !important;
@@ -1141,7 +1141,7 @@ div.Extensions ul {
 div.Extensions ul {
 	background-color:#fffeec;
 	}
-div.Extensions ul li { 
+div.Extensions ul li {
 	border-bottom:1px solid #ddd;
 	margin:0px !important;
 	padding:10px !important;
@@ -1232,7 +1232,7 @@ div.Applicants ul {
 	}
 
 /* Custom form for sortable list */
-  
+
 .SortList {
 	background-color: #ffc;
 	border: 1px solid #ddd;
@@ -1367,7 +1367,7 @@ div.Applicants ul {
 	display: inline;
 	float: left;
 	width: 32px;
-	}	
+	}
 #AccountProfile .ProfileTitle p {
 	width:auto;
 	float: right;
@@ -1431,9 +1431,9 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
 	padding-bottom:0px;
 	font-style:italic;
 	}
-	
+
 /* Settings Home */
-  
+
 #Form.Help form {
 	width: 450px !important;
 	margin: 0px;
@@ -1472,7 +1472,7 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
 	}
 
 /* Autocomplete results */
-  
+
 .AutoCompleteContainer {
 	margin: 0px;
 	padding: 0px;
@@ -1491,7 +1491,7 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
 	background: #335EA8;
 	color: #fff;
 	}
-	
+
 /* Ajax progress */
 .HideProgress {
 	background: url(hprogress.gif) center center no-repeat;
@@ -1520,7 +1520,7 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
 	}
 
 /* IE Rendering Fixes */
-  
+
 #Body, #Form h2, #Form p {height: 1%;}
 
 /* Thank you positioniseverything.com*/
@@ -1535,23 +1535,23 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
 .clearfix {
 	display:inline-table;
 	}
-	
+
 /* Hides from IE-mac \*/
-  
+
 * html .clearfix {
 	height:1%;
 	}
 .clearfix {
 	display:block;
 	}
-	
+
 /* End hide from IE-mac */
-  
+
 /* IE 7 Fixes - thanks WallPhone */
-  
+
 #Content .ContentInfo.Bottom .PageInfo p {
 	min-width: 20px;
 	}
 html>body #Content .ContentInfo.Bottom .PageInfo {
 	border-top: 1px solid #fff;
-	} 
+	}

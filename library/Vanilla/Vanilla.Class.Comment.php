@@ -26,7 +26,7 @@ class Comment extends Delegation {
 	var $CommentID;
 	var $DiscussionID;
 	var $Discussion;				// Display purposes only
-   var $CategoryID;
+	var $CategoryID;
 	var $Category;
 	var $AuthUserID;
 	var $AuthUsername;		// Display purposes only - User's username
@@ -37,13 +37,13 @@ class Comment extends Delegation {
 	var $AuthRoleDesc;
 	var $AuthCanPostHtml;	// Is this author in a role where posting html is allowed
 	var $AuthBlocked;			// Is this author blocked from posting html by the viewing user?
-   var $CommentBlocked;		// Is this comment blocked from visible html by the viewing user?
+	var $CommentBlocked;		// Is this comment blocked from visible html by the viewing user?
 	var $EditUserID;
 	var $EditUsername;		// Display purposes only - Editing user's username
 	var $DateCreated;
 	var $DateEdited;
 	var $Body;				// Actual body of the comment
-   var $FormatType;		// How should the comment be formatted for display?
+	var $FormatType;		// How should the comment be formatted for display?
 	var $Deleted;			// Boolean value indicating if the comment shows up to users
 	var $DateDeleted;
 	var $DeleteUserID;
@@ -51,7 +51,7 @@ class Comment extends Delegation {
 	var $RemoteIp;
 	var $Status;
 	// Used to prevent double posts and "back button" posts
-   var $UserCommentCount;
+	var $UserCommentCount;
 	var $ShowHtml;
 	var $WhisperUserID;	// The user being whispered to
 	var $WhisperUsername;
@@ -90,7 +90,7 @@ class Comment extends Delegation {
 		$this->ShowHtml = 1;
 		$this->WhisperUserID = 0;
 		$this->WhisperUsername = '';
-      $this->DiscussionWhisperUserID = 0;
+		$this->DiscussionWhisperUserID = 0;
 	}
 
 	function Comment(&$Context) {
@@ -101,9 +101,9 @@ class Comment extends Delegation {
 
 	function FormatPropertiesForDatabaseInput() {
 		// Pass the body into a formatter for db input
-      $this->Body = $this->Context->FormatString($this->Body, $this, $this->FormatType, FORMAT_STRING_FOR_DATABASE);
+		$this->Body = $this->Context->FormatString($this->Body, $this, $this->FormatType, FORMAT_STRING_FOR_DATABASE);
 		$this->Body = FormatStringForDatabaseInput($this->Body);
-      $this->WhisperUsername = FormatStringForDatabaseInput($this->WhisperUsername);
+		$this->WhisperUsername = FormatStringForDatabaseInput($this->WhisperUsername);
 	}
 
 	function FormatPropertiesForDisplay($ForFormDisplay = '0') {
@@ -117,7 +117,7 @@ class Comment extends Delegation {
 		$this->AuthUsername = FormatStringForDisplay($this->AuthUsername);
 		$this->EditUsername = FormatStringForDisplay($this->EditUsername);
 		$this->DeleteUsername = FormatStringForDisplay($this->DeleteUsername);
-      $this->WhisperUsername = FormatStringForDisplay($this->WhisperUsername);
+		$this->WhisperUsername = FormatStringForDisplay($this->WhisperUsername);
 		$this->Discussion = FormatStringForDisplay($this->Discussion);
 		$this->Category = FormatStringForDisplay($this->Category);
 		if ($ForFormDisplay) {
@@ -138,7 +138,7 @@ class Comment extends Delegation {
 		$this->AuthUsername = FormatStringForDisplay($this->AuthUsername);
 		$this->EditUsername = FormatStringForDisplay($this->EditUsername);
 		$this->DeleteUsername = FormatStringForDisplay($this->DeleteUsername);
-      $this->WhisperUsername = FormatStringForDisplay($this->WhisperUsername);
+		$this->WhisperUsername = FormatStringForDisplay($this->WhisperUsername);
 		$this->Discussion = FormatStringForDisplay($this->Discussion);
 		$this->Category = FormatStringForDisplay($this->Category);
 		$this->Body = FormatHtmlStringInline($this->Body, 0, 1);
@@ -195,7 +195,7 @@ class Comment extends Delegation {
 		$this->Body = ForceIncomingString('Body', '');
 		$this->UserCommentCount = ForceIncomingInt('UserCommentCount', 0);
 		$this->AuthUserID = ForceIncomingInt('AuthUserID', 0);
-      $this->WhisperUsername = ForceIncomingString('WhisperUsername', '');
+		$this->WhisperUsername = ForceIncomingString('WhisperUsername', '');
 	}
 
 

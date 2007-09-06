@@ -37,11 +37,11 @@ class PreferencesForm extends PostBackControl {
 			$this->User = $User;
 
 			// Add the default preferences
-         $this->AddPreference('DiscussionIndex', 'JumpToLastReadComment', 'JumpToLastReadComment');
-         $this->AddPreference('CommentsForm', 'ShowFormatTypeSelector', 'ShowFormatSelector');
+			$this->AddPreference('DiscussionIndex', 'JumpToLastReadComment', 'JumpToLastReadComment');
+			$this->AddPreference('CommentsForm', 'ShowFormatTypeSelector', 'ShowFormatSelector');
 
 			if ($this->Context->Session->User->Permission('PERMISSION_RECEIVE_APPLICATION_NOTIFICATION')) {
-	         $this->AddPreference('NewUsers', 'NewApplicantNotifications', 'SendNewApplicantNotifications', 0, 1);
+				$this->AddPreference('NewUsers', 'NewApplicantNotifications', 'SendNewApplicantNotifications', 0, 1);
 			}
 			if ($this->Context->Session->User->Permission('PERMISSION_VIEW_HIDDEN_DISCUSSIONS')) $this->AddPreference('HiddenInformation', 'DisplayHiddenDiscussions', 'ShowDeletedDiscussions', 0);
 			if ($this->Context->Session->User->Permission('PERMISSION_VIEW_HIDDEN_COMMENTS')) $this->AddPreference('HiddenInformation', 'DisplayHiddenComments', 'ShowDeletedComments', 0);

@@ -225,7 +225,7 @@ $Configuration['SELF_URL'] = @$_SERVER['PHP_SELF'];
 // Include custom settings
 include(dirname(__FILE__) . '/../conf/settings.php');
 if ($Configuration['SETUP_COMPLETE'] == '0') {
-   header('Location: ./setup/index.html');
+	header('Location: ./setup/index.html');
 }
 
 // Define a constant to prevent a register_globals attack on the configuration paths

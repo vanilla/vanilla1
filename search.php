@@ -19,10 +19,10 @@ include("appg/init_vanilla.php");
 
 	// Ensure the user is allowed to view this page
 	$Context->Session->Check($Context);
-	
+
 	// Define properties of the page controls that are specific to this page
 	$Context->PageTitle = $Context->GetDefinition("Search");
-   $Head->BodyId = 'SearchPage';
+	$Head->BodyId = 'SearchPage';
 	$Menu->CurrentTab = "search";
 	$Panel->CssClass = "SearchPanel";
 	$Panel->BodyCssClass = "Search";
@@ -31,7 +31,7 @@ include("appg/init_vanilla.php");
 
 	// Search form
 	$SearchForm = $Context->ObjectFactory->CreateControl($Context, "SearchForm");
-	
+
 // 3. ADD CONTROLS TO THE PAGE
 
 	$Page->AddRenderControl($Head, $Configuration["CONTROL_POSITION_HEAD"]);
@@ -45,5 +45,5 @@ include("appg/init_vanilla.php");
 // 4. FIRE PAGE EVENTS
 
 	$Page->FireEvents();
-	
+
 ?>

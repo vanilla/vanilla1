@@ -43,7 +43,7 @@ function DiscussionPrefix(&$Context, &$Discussion) {
 function GetLastCommentQuerystring(&$Discussion, &$Configuration) {
 	$Suffix = '';
 	if ($Configuration['URL_BUILDING_METHOD'] == 'mod_rewrite') $Suffix = CleanupString($Discussion->Name).'/';
-   $JumpToItem = $Discussion->CountComments - (($Discussion->LastPage - 1) * $Configuration['COMMENTS_PER_PAGE']);
+	$JumpToItem = $Discussion->CountComments - (($Discussion->LastPage - 1) * $Configuration['COMMENTS_PER_PAGE']);
 	if ($JumpToItem < 0) $JumpToItem = 0;
 	$LastPage = $Discussion->LastPage;
 	if ($LastPage == 0) $LastPage = '';
@@ -67,7 +67,7 @@ function GetUnreadQuerystring(&$Discussion, &$Configuration, $CurrentUserJumpToL
 }
 
 function HighlightTrimmedString($Haystack, $Needles, $TrimLength = '') {
-   $Highlight = '<span class="Highlight">\1</span>';
+	$Highlight = '<span class="Highlight">\1</span>';
 	$Pattern = '#(?!<.*?)(%s)(?![^<>]*?>)#i';
 	$TrimLength = ForceInt($TrimLength, 0);
 	if ($TrimLength > 0) $Haystack = SliceString($Haystack, $TrimLength);

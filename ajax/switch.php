@@ -21,7 +21,7 @@ if ($PostBackKey != '' && $PostBackKey == $Context->Session->GetVariable('Sessio
 	$Switch = ForceIncomingBool('Switch', 0);
 	$DiscussionID = ForceIncomingInt('DiscussionID', 0);
 	$CommentID = ForceIncomingInt('CommentID', 0);
-	
+
 	// Don't create unnecessary objects
 	if (in_array($Type, array('Active', 'Closed', 'Sticky', 'Sink'))) {
 		$dm = $Context->ObjectFactory->NewContextObject($Context, 'DiscussionManager');
@@ -33,7 +33,7 @@ if ($PostBackKey != '' && $PostBackKey == $Context->Session->GetVariable('Sessio
 	}
 	// Handle the switches
 	if ($Type == 'Bookmark' && $DiscussionID > 0) {
-		if ($Context->Session->UserID == 0) die();	
+		if ($Context->Session->UserID == 0) die();
 		if ($Switch) {
 			$um->AddBookmark($Context->Session->UserID, $DiscussionID);
 		} else {
@@ -53,7 +53,7 @@ if ($PostBackKey != '' && $PostBackKey == $Context->Session->GetVariable('Sessio
 	} elseif ($Type != '') {
 		$um->SwitchUserPreference($Type, $Switch);
 	}
-	
+
 	echo 'Complete';
 } else {
 	echo $Context->GetDefinition('ErrPostBackKeyInvalid');

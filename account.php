@@ -21,8 +21,8 @@ include("appg/init_vanilla.php");
 	$Context->Session->Check($Context);
 
 	// Make sure that any existing $UserManager object is destroyed so that
-   // extensions using delegation to perform actions on this page's $UserManager
-   // object work as they should.
+	// extensions using delegation to perform actions on this page's $UserManager
+	// object work as they should.
 	if (!@$UserManager) unset($UserManager);
 	$UserManager = $Context->ObjectFactory->NewContextObject($Context, "UserManager");
 	$AccountUserID = ForceIncomingInt("u", $Context->Session->UserID);
@@ -44,7 +44,7 @@ include("appg/init_vanilla.php");
 	}
 
 	// Define properties of the page controls that are specific to this page
-   $Head->BodyId = 'AccountPage';
+	$Head->BodyId = 'AccountPage';
 	$Menu->CurrentTab = "account";
 	$Panel->CssClass = "AccountPanel";
 	$Panel->BodyCssClass = "AccountPageBody";

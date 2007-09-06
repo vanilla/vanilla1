@@ -2,12 +2,12 @@
 // Note: This file is included from the library/Framework/Framework.Control.ExtensionForm.php control.
 
 echo '<div id="Form" class="Account Extensions">
-   <fieldset>
-      <legend>'.$this->Context->GetDefinition('Extensions').'</legend>'
-      .$this->Get_Warnings()
-      .'<form action="#" method="post">
+	<fieldset>
+		<legend>'.$this->Context->GetDefinition('Extensions').'</legend>'
+		.$this->Get_Warnings()
+		.'<form action="#" method="post">
 		<p>'.$this->Context->GetDefinition('ExtensionFormNotes').'</p>
-      
+
 			<ul>';
 				if (is_array($this->Extensions)) {
 					$ExtensionList = '';
@@ -32,7 +32,7 @@ echo '<div id="Form" class="Account Extensions">
 					echo '<li><p>'.$this->Context->GetDefinition('NoExtensions').'</p></li>';
 				}
 			echo '</ul>
-      </form>					
-   </fieldset>
+		</form>
+	</fieldset>
 </div>';
 ?>
