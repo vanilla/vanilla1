@@ -271,10 +271,6 @@ a:hover {
 	margin:0px;
 	padding:0px;
 	}
-.ContentInfo h1 {
-	color:#000;
-	margin-right:100%;
-	}
 #CommentsPage .ContentInfo h1 {
 	float:left;
 	width:60%;
@@ -283,6 +279,7 @@ a:hover {
 	text-align:left;
 	}
 html>body .ContentInfo h1 { width:80% !important; }
+body#DiscussionsPage .ContentInfo h1 { width:auto !important; }
 .ContentInfo input {
 	font-size:10px;
 	margin-left:5px;
