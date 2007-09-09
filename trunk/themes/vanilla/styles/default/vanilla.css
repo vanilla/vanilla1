@@ -638,6 +638,27 @@ body#DiscussionsPage .ContentInfo h1 { width:auto !important; }
 	display: block;
 	white-space: pre;
 	}
+/* Thanks to Bergamot */
+#Comments blockquote {
+	padding:8px 16px;
+	margin:0 0 8px;
+	background-color: #E5EAF6;
+	border-left: 6px solid #ACBEDF;
+	color:#56568F;
+	}
+#Comments blockquote blockquote {
+	border-right: 1px solid #ACBEDF;
+	border-top: 1px solid #ACBEDF;
+	border-bottom: 1px solid #ACBEDF;
+	}
+#Comments blockquote cite {
+	font-weight:bold;
+	display:block;
+	margin-bottom:8px;
+	padding-bottom:8px;
+	border-bottom:1px solid #ACBEDF;
+	color:#56568F;
+	}
 
 /* Search Page */
 
