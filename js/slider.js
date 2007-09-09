@@ -1,6 +1,9 @@
-// Copyright (c) 2005 Marty Haught
-// 
-// See scriptaculous.js for full license.
+// script.aculo.us slider.js v1.7.0, Fri Jan 19 19:16:36 CET 2007
+
+// Copyright (c) 2005, 2006 Marty Haught, Thomas Fuchs 
+//
+// script.aculo.us is freely distributable under the terms of an MIT-style license.
+// For details, see the script.aculo.us web site: http://script.aculo.us/
 
 if(!Control) var Control = {};
 Control.Slider = Class.create();
@@ -32,6 +35,9 @@ Control.Slider.prototype = {
     this.value     = 0; // assure backwards compat
     this.values    = this.handles.map( function() { return 0 });
     this.spans     = this.options.spans ? this.options.spans.map(function(s){ return $(s) }) : false;
+    this.options.startSpan = $(this.options.startSpan || null);
+    this.options.endSpan   = $(this.options.endSpan || null);
+
     this.restricted = this.options.restricted || false;
 
     this.maximum   = this.options.maximum || this.range.end;
@@ -42,6 +48,12 @@ Control.Slider.prototype = {
     this.alignY = parseInt(this.options.alignY || '0');
     
     this.trackLength = this.maximumOffset() - this.minimumOffset();
+
+    this.handleLength = this.isVertical() ? 
+      (this.handles[0].offsetHeight != 0 ? 
+        this.handles[0].offsetHeight : this.handles[0].style.height.replace(/px$/,"")) : 
+      (this.handles[0].offsetWidth != 0 ? this.handles[0].offsetWidth : 
+        this.handles[0].style.width.replace(/px$/,""));
 
     this.active   = false;
     this.dragging = false;
@@ -60,18 +72,26 @@ Control.Slider.prototype = {
     this.eventMouseUp   = this.endDrag.bindAsEventListener(this);
     this.eventMouseMove = this.update.bindAsEventListener(this);
 
-    // Initialize handles
+    // Initialize handles in reverse (make sure first handle is active)
     this.handles.each( function(h,i) {
-      slider.setValue(parseInt(slider.options.sliderValue || slider.range.start), i);
+      i = slider.handles.length-1-i;
+      slider.setValue(parseFloat(
+        (slider.options.sliderValue instanceof Array ? 
+          slider.options.sliderValue[i] : slider.options.sliderValue) || 
+         slider.range.start), i);
       Element.makePositioned(h); // fix IE
       Event.observe(h, "mousedown", slider.eventMouseDown);
     });
     
+    Event.observe(this.track, "mousedown", this.eventMouseDown);
     Event.observe(document, "mouseup", this.eventMouseUp);
     Event.observe(document, "mousemove", this.eventMouseMove);
+    
+    this.initialized = true;
   },
   dispose: function() {
     var slider = this;    
+    Event.stopObserving(this.track, "mousedown", this.eventMouseDown);
     Event.stopObserving(document, "mouseup", this.eventMouseUp);
     Event.stopObserving(document, "mousemove", this.eventMouseMove);
     this.handles.each( function(h) {
@@ -106,11 +126,12 @@ Control.Slider.prototype = {
   },
   setValue: function(sliderValue, handleIdx){
     if(!this.active) {
-      this.activeHandle    = this.handles[handleIdx];
-      this.activeHandleIdx = handleIdx;
+      this.activeHandleIdx = handleIdx || 0;
+      this.activeHandle    = this.handles[this.activeHandleIdx];
+      this.updateStyles();
     }
     handleIdx = handleIdx || this.activeHandleIdx || 0;
-    if(this.restricted) {
+    if(this.initialized && this.restricted) {
       if((handleIdx>0) && (sliderValue<this.values[handleIdx-1]))
         sliderValue = this.values[handleIdx-1];
       if((handleIdx < (this.handles.length-1)) && (sliderValue>this.values[handleIdx+1]))
@@ -120,21 +141,24 @@ Control.Slider.prototype = {
     this.values[handleIdx] = sliderValue;
     this.value = this.values[0]; // assure backwards compat
     
-    this.handles[handleIdx].style[ this.isVertical() ? 'top' : 'left'] = 
+    this.handles[handleIdx].style[this.isVertical() ? 'top' : 'left'] = 
       this.translateToPx(sliderValue);
     
     this.drawSpans();
-    this.updateFinished();
+    if(!this.dragging || !this.event) this.updateFinished();
   },
   setValueBy: function(delta, handleIdx) {
     this.setValue(this.values[handleIdx || this.activeHandleIdx || 0] + delta, 
       handleIdx || this.activeHandleIdx || 0);
   },
   translateToPx: function(value) {
-    return Math.round((this.trackLength / (this.range.end - this.range.start)) * (value - this.range.start)) + "px";
+    return Math.round(
+      ((this.trackLength-this.handleLength)/(this.range.end-this.range.start)) * 
+      (value - this.range.start)) + "px";
   },
   translateToValue: function(offset) {
-    return ((offset/this.trackLength) * (this.range.end - this.range.start)) + this.range.start;
+    return ((offset/(this.trackLength-this.handleLength) * 
+      (this.range.end-this.range.start)) + this.range.start);
   },
   getRange: function(range) {
     var v = this.values.sortBy(Prototype.K); 
@@ -145,8 +169,11 @@ Control.Slider.prototype = {
     return(this.isVertical() ? this.alignY : this.alignX);
   },
   maximumOffset: function(){
-    return(this.isVertical() ?
-      this.track.offsetHeight - this.alignY : this.track.offsetWidth - this.alignX);
+    return(this.isVertical() ? 
+      (this.track.offsetHeight != 0 ? this.track.offsetHeight :
+        this.track.style.height.replace(/px$/,"")) - this.alignY : 
+      (this.track.offsetWidth != 0 ? this.track.offsetWidth : 
+        this.track.style.width.replace(/px$/,"")) - this.alignY);
   },  
   isVertical:  function(){
     return (this.axis == 'vertical');
@@ -154,45 +181,66 @@ Control.Slider.prototype = {
   drawSpans: function() {
     var slider = this;
     if(this.spans)
-      $R(0, this.spans.length-1).each(function(r) { slider.setSpan(r, slider.getRange(r)) });
+      $R(0, this.spans.length-1).each(function(r) { slider.setSpan(slider.spans[r], slider.getRange(r)) });
+    if(this.options.startSpan)
+      this.setSpan(this.options.startSpan,
+        $R(0, this.values.length>1 ? this.getRange(0).min() : this.value ));
+    if(this.options.endSpan)
+      this.setSpan(this.options.endSpan, 
+        $R(this.values.length>1 ? this.getRange(this.spans.length-1).max() : this.value, this.maximum));
   },
   setSpan: function(span, range) {
     if(this.isVertical()) {
-      this.spans[span].style.top = this.translateToPx(range.start);
-      this.spans[span].style.height = this.translateToPx(range.end - range.start);
+      span.style.top = this.translateToPx(range.start);
+      span.style.height = this.translateToPx(range.end - range.start + this.range.start);
     } else {
-      this.spans[span].style.left = this.translateToPx(range.start);
-      this.spans[span].style.width = this.translateToPx(range.end - range.start);
+      span.style.left = this.translateToPx(range.start);
+      span.style.width = this.translateToPx(range.end - range.start + this.range.start);
     }
+  },
+  updateStyles: function() {
+    this.handles.each( function(h){ Element.removeClassName(h, 'selected') });
+    Element.addClassName(this.activeHandle, 'selected');
   },
   startDrag: function(event) {
     if(Event.isLeftClick(event)) {
       if(!this.disabled){
         this.active = true;
         
-        // find the handle (prevents issues with Safari)
         var handle = Event.element(event);
-        while((this.handles.indexOf(handle) == -1) && handle.parentNode) 
-          handle = handle.parentNode;
-        
-        this.activeHandle    = handle;
-        this.activeHandleIdx = this.handles.indexOf(this.activeHandle);
-        
         var pointer  = [Event.pointerX(event), Event.pointerY(event)];
-        var offsets  = Position.cumulativeOffset(this.activeHandle);
-        this.offsetX = (pointer[0] - offsets[0]);
-        this.offsetY = (pointer[1] - offsets[1]);
-        
+        var track = handle;
+        if(track==this.track) {
+          var offsets  = Position.cumulativeOffset(this.track); 
+          this.event = event;
+          this.setValue(this.translateToValue( 
+           (this.isVertical() ? pointer[1]-offsets[1] : pointer[0]-offsets[0])-(this.handleLength/2)
+          ));
+          var offsets  = Position.cumulativeOffset(this.activeHandle);
+          this.offsetX = (pointer[0] - offsets[0]);
+          this.offsetY = (pointer[1] - offsets[1]);
+        } else {
+          // find the handle (prevents issues with Safari)
+          while((this.handles.indexOf(handle) == -1) && handle.parentNode) 
+            handle = handle.parentNode;
+            
+          if(this.handles.indexOf(handle)!=-1) {
+            this.activeHandle    = handle;
+            this.activeHandleIdx = this.handles.indexOf(this.activeHandle);
+            this.updateStyles();
+            
+            var offsets  = Position.cumulativeOffset(this.activeHandle);
+            this.offsetX = (pointer[0] - offsets[0]);
+            this.offsetY = (pointer[1] - offsets[1]);
+          }
+        }
       }
       Event.stop(event);
     }
   },
   update: function(event) {
    if(this.active) {
-      if(!this.dragging) {
-        this.dragging = true;
-        if(this.activeHandle.style.position=="") style.position = "relative";
-      }
+      if(!this.dragging) this.dragging = true;
       this.draw(event);
       // fix AppleWebKit rendering
       if(navigator.appVersion.indexOf('AppleWebKit')>0) window.scrollBy(0,0);
@@ -204,8 +252,10 @@ Control.Slider.prototype = {
     var offsets = Position.cumulativeOffset(this.track);
     pointer[0] -= this.offsetX + offsets[0];
     pointer[1] -= this.offsetY + offsets[1];
+    this.event = event;
     this.setValue(this.translateToValue( this.isVertical() ? pointer[1] : pointer[0] ));
-    if(this.options.onSlide) this.options.onSlide(this.values.length>1 ? this.values : this.value, this);
+    if(this.initialized && this.options.onSlide)
+      this.options.onSlide(this.values.length>1 ? this.values : this.value, this);
   },
   endDrag: function(event) {
     if(this.active && this.dragging) {
@@ -221,6 +271,8 @@ Control.Slider.prototype = {
     this.updateFinished();
   },
   updateFinished: function() {
-    if(this.options.onChange) this.options.onChange(this.values.length>1 ? this.values : this.value, this);
+    if(this.initialized && this.options.onChange) 
+      this.options.onChange(this.values.length>1 ? this.values : this.value, this);
+    this.event = null;
   }
 }
