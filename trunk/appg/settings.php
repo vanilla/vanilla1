@@ -61,6 +61,7 @@ $Configuration['SIGNOUT_URL'] = 'people.php?PostBackAction=SignOutNow';
 
 // People Settings
 $Configuration['AUTHENTICATION_MODULE'] = 'People/People.Class.Authenticator.php';
+$Configuration['SESSION_NAME'] = '';
 $Configuration['COOKIE_USER_KEY'] = 'lussumocookieone';
 $Configuration['COOKIE_VERIFICATION_KEY'] = 'lussumocookietwo';
 $Configuration['SESSION_USER_IDENTIFIER'] = 'LussumoUserID';
