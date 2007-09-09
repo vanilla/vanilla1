@@ -272,7 +272,8 @@ a:hover {
 	padding:0px;
 	}
 .ContentInfo h1 {
-	color: #000;
+	color:#000;
+	margin-right:100%;
 	}
 #CommentsPage .ContentInfo h1 {
 	float:left;
@@ -740,6 +741,7 @@ html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
 	color:#777;
 	background-color:#fefecc;
 	border-bottom:1px solid #ccc;
+	min-width:0px;
 	}
 #CommentResults ul span, #CommentResults ul span a, #CommentResults ul a {
 	color:#aaa;
@@ -810,6 +812,7 @@ html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
 #UserResults li ul {
 	margin-top: 0px !important;
 	border-bottom:1px solid #ccc;
+	min-width:0px;
 	}
 #UserResults li li {
 	height:auto;
