@@ -519,6 +519,7 @@ body#DiscussionsPage .ContentInfo h1 { width:auto !important; }
 	margin:0px;
 	padding:0px;
 	list-style:none;
+	height:1%;
 	}
 #Comments li {
 	margin:0px;
