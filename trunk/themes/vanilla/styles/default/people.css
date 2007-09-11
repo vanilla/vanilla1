@@ -99,7 +99,6 @@ h1 strong {
 	margin: 8px 0px 0px 0px;
 	padding: 0px 4px 0px 8px;
 	width: 260px;
-	xborder-right: 1px solid #f3f3f3;
 	position: absolute;
 	}
 .About h2 {
@@ -285,7 +284,7 @@ html>body div.Apply #Form { /* ugly hack, but fixes display error in IE. */
 .PasswordReset .About {
 	width: 254px;
 	}
-#Form.PasswordResetForm {
+.PasswordResetForm {
 	padding: 0px 0px 0px 267px;
 	}
 
