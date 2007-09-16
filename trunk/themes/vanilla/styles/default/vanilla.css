@@ -271,6 +271,9 @@ a:hover {
 	margin:0px;
 	padding:0px;
 	}
+.ContentInfo h1 {
+	color:#000;
+	}
 #CommentsPage .ContentInfo h1 {
 	float:left;
 	width:60%;
