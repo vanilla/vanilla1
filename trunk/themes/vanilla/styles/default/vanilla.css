@@ -281,8 +281,9 @@ a:hover {
 	white-space:nowrap;
 	text-align:left;
 	}
-html>body .ContentInfo h1 { width:80% !important; }
-body#DiscussionsPage .ContentInfo h1 { width:auto !important; }
+html>body#CommentsPage .ContentInfo h1 {
+	width:80% !important;
+	}
 .ContentInfo input {
 	font-size:10px;
 	margin-left:5px;
