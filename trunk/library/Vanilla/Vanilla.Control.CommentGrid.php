@@ -46,57 +46,57 @@ class CommentGrid extends Control {
 				$this->Discussion = false;
 				$this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrDiscussionNotFound'));
 			}
-		}
 
-		if ($this->Context->WarningCollector->Count() > 0) {
-			$this->CommentData = false;
-			$this->CommentDataCount = 0;
-		} else {
-			// Load the data
-			$CommentManager = $Context->ObjectFactory->NewContextObject($Context, 'CommentManager');
-			$this->CommentDataCount = $CommentManager->GetCommentCount($DiscussionID);
-
-			// If trying to focus on a particular comment, make sure to look at the correct page
-			$Focus = ForceIncomingInt('Focus', 0);
-			$PageCount = CalculateNumberOfPages($this->CommentDataCount, $this->Context->Configuration['COMMENTS_PER_PAGE']);
-			if ($Focus > 0 && $PageCount > 1) {
-				$this->CurrentPage = 1;
-				$FoundComment = 0;
-				while ($this->CurrentPage <= $PageCount && !$FoundComment) {
-					$this->CommentData = $CommentManager->GetCommentList($this->Context->Configuration['COMMENTS_PER_PAGE'], $this->CurrentPage, $DiscussionID);
-					while ($Row = $this->Context->Database->GetRow($this->CommentData)) {
-						if (ForceInt($Row['CommentID'], 0) == $Focus) {
-							$FoundComment = 1;
-							break;
-						}
-					}
-					$this->CurrentPage++;
-				}
-				$this->Context->Database->RewindDataSet($this->CommentData);
+			if ($this->Context->WarningCollector->Count() > 0) {
+				$this->CommentData = false;
+				$this->CommentDataCount = 0;
 			} else {
-				$this->CommentData = $CommentManager->GetCommentList($this->Context->Configuration['COMMENTS_PER_PAGE'], $this->CurrentPage, $DiscussionID);
+				// Load the data
+				$CommentManager = $Context->ObjectFactory->NewContextObject($Context, 'CommentManager');
+				$this->CommentDataCount = $CommentManager->GetCommentCount($DiscussionID);
+
+				// If trying to focus on a particular comment, make sure to look at the correct page
+				$Focus = ForceIncomingInt('Focus', 0);
+				$PageCount = CalculateNumberOfPages($this->CommentDataCount, $this->Context->Configuration['COMMENTS_PER_PAGE']);
+				if ($Focus > 0 && $PageCount > 1) {
+					$this->CurrentPage = 1;
+					$FoundComment = 0;
+					while ($this->CurrentPage <= $PageCount && !$FoundComment) {
+						$this->CommentData = $CommentManager->GetCommentList($this->Context->Configuration['COMMENTS_PER_PAGE'], $this->CurrentPage, $DiscussionID);
+						while ($Row = $this->Context->Database->GetRow($this->CommentData)) {
+							if (ForceInt($Row['CommentID'], 0) == $Focus) {
+								$FoundComment = 1;
+								break;
+							}
+						}
+						$this->CurrentPage++;
+					}
+					$this->Context->Database->RewindDataSet($this->CommentData);
+				} else {
+					$this->CommentData = $CommentManager->GetCommentList($this->Context->Configuration['COMMENTS_PER_PAGE'], $this->CurrentPage, $DiscussionID);
+				}
 			}
+
+			// Set up the pagelist
+			$this->pl = $this->Context->ObjectFactory->NewContextObject($this->Context, 'PageList', 'DiscussionID', $this->Discussion->DiscussionID, CleanupString($this->Discussion->Name).'/');
+			$this->pl->NextText = $this->Context->GetDefinition('Next');
+			$this->pl->PreviousText = $this->Context->GetDefinition('Previous');
+			$this->pl->CssClass = 'PageList';
+			$this->pl->TotalRecords = $this->CommentDataCount;
+			$this->pl->CurrentPage = $this->CurrentPage;
+			$this->pl->RecordsPerPage = $this->Context->Configuration['COMMENTS_PER_PAGE'];
+			$this->pl->PagesToDisplay = 10;
+			$this->pl->PageParameterName = 'page';
+			$this->pl->DefineProperties();
+			$this->pl->QueryStringParams->Remove('Focus');
+
+			$this->ShowForm = 0;
+			if ($this->Context->Session->UserID > 0
+				&& ($this->pl->PageCount == 1 || $this->pl->PageCount == $this->CurrentPage)
+				&& ((!$this->Discussion->Closed && $this->Discussion->Active) || $this->Context->Session->User->Permission('PERMISSION_ADD_COMMENTS_TO_CLOSED_DISCUSSION'))
+				&& $this->CommentData
+				&& $this->Context->Session->User->Permission('PERMISSION_ADD_COMMENTS')) $this->ShowForm = 1;
 		}
-
-		// Set up the pagelist
-		$this->pl = $this->Context->ObjectFactory->NewContextObject($this->Context, 'PageList', 'DiscussionID', $this->Discussion->DiscussionID, CleanupString($this->Discussion->Name).'/');
-		$this->pl->NextText = $this->Context->GetDefinition('Next');
-		$this->pl->PreviousText = $this->Context->GetDefinition('Previous');
-		$this->pl->CssClass = 'PageList';
-		$this->pl->TotalRecords = $this->CommentDataCount;
-		$this->pl->CurrentPage = $this->CurrentPage;
-		$this->pl->RecordsPerPage = $this->Context->Configuration['COMMENTS_PER_PAGE'];
-		$this->pl->PagesToDisplay = 10;
-		$this->pl->PageParameterName = 'page';
-		$this->pl->DefineProperties();
-		$this->pl->QueryStringParams->Remove('Focus');
-
-		$this->ShowForm = 0;
-		if ($this->Context->Session->UserID > 0
-			&& ($this->pl->PageCount == 1 || $this->pl->PageCount == $this->CurrentPage)
-			&& ((!$this->Discussion->Closed && $this->Discussion->Active) || $this->Context->Session->User->Permission('PERMISSION_ADD_COMMENTS_TO_CLOSED_DISCUSSION'))
-			&& $this->CommentData
-			&& $this->Context->Session->User->Permission('PERMISSION_ADD_COMMENTS')) $this->ShowForm = 1;
 		$this->CallDelegate('Constructor');
 	}
 

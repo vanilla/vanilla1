@@ -48,10 +48,14 @@ include("appg/init_vanilla.php");
 	$Menu->CurrentTab = "account";
 	$Panel->CssClass = "AccountPanel";
 	$Panel->BodyCssClass = "AccountPageBody";
-	if ($AccountUser->UserID == $Context->Session->UserID) {
-		$Context->PageTitle = $Context->GetDefinition("MyAccount");
+	if ($AccountUser) {
+		if ($AccountUser->UserID == $Context->Session->UserID) {
+			$Context->PageTitle = $Context->GetDefinition("MyAccount");
+		} else {
+			$Context->PageTitle = $AccountUser->Name;
+		}
 	} else {
-		$Context->PageTitle = $AccountUser->Name;
+		$Context->PageTitle = $Context->GetDefinition("ErrUserNotFound");
 	}
 
 // 2. BUILD PAGE CONTROLS
@@ -75,7 +79,9 @@ include("appg/init_vanilla.php");
 				}
 			}
 		}
-		if ($AccountUser->UserID == $Context->Session->UserID) {
+		if ( $AccountUser
+			&& $AccountUser->UserID == $Context->Session->UserID
+		) {
 			$Panel->AddListItem($AccountOptions, $Context->GetDefinition("ChangeForumFunctionality"), GetUrl($Context->Configuration, $Context->SelfUrl, "", "", "", "", "PostBackAction=Functionality"), "", "", 40);
 		}
 	}
