@@ -27,7 +27,6 @@ $DiscussionManager = $Context->ObjectFactory->NewContextObject($Context, "Discus
 // Create the comment grid
 $DiscussionID = ForceIncomingInt("DiscussionID", 0);
 $CommentGrid = $Context->ObjectFactory->CreateControl($Context, "CommentGrid", $DiscussionManager, $DiscussionID);
-
 // Create the comment form
 if ($CommentGrid->ShowForm) {
 	$CommentForm = $Context->ObjectFactory->CreateControl($Context, 'DiscussionForm');
@@ -40,12 +39,18 @@ $Head->BodyId = 'CommentsPage';
 $Menu->CurrentTab = "discussions";
 $Panel->CssClass = "CommentPanel";
 $Panel->BodyCssClass = "Comments";
-$Context->PageTitle = $CommentGrid->Discussion->Name;
+if ($CommentGrid->Discussion) {
+	$Context->PageTitle = $CommentGrid->Discussion->Name;
+} else {
+	$Context->PageTitle = $Context->GetDefinition('ErrDiscussionNotFound');
+}
 
 // 2. BUILD PAGE CONTROLS
 
 	// Add discussion options to the panel
-	if ($Context->Session->UserID > 0) {
+	if ($CommentGrid->Discussion
+		&& $Context->Session->UserID > 0
+	) {
 		$Options = $Context->GetDefinition("Options");
 		$Panel->AddList($Options, 5);
 		$BookmarkText = $Context->GetDefinition($CommentGrid->Discussion->Bookmarked ? "UnbookmarkThisDiscussion" : "BookmarkThisDiscussion");
