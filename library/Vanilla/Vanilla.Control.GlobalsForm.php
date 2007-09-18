@@ -15,7 +15,7 @@
  * @copyright 2003 Mark O'Sullivan
  * @license http://lussumo.com/community/gpl.txt GPL 2
  * @package Vanilla
- * @version 1.1.2
+ * @version 1.1.3
  */
 
 
