@@ -12,40 +12,49 @@
 			Build a new release of vanilla
 	</description>
 
-	<property name="vanilla.version" value="1.2.alpha.0"/>
-	<property name="framework.version" value="1.2.alpha.0"/>
-	<property name="people.version" value="1.2.alpha.0"/>
+	<!-- Vanilla, People and Framework versions -->
+	<property name="vanilla.version"	value="1.2.alpha.0"/>
+	<property name="framework.version"	value="1.2.alpha.0"/>
+	<property name="people.version"		value="1.2.alpha.0"/>
 
-	<property name="build.dir" value="${basedir}${file.separator}build${file.separator}"/>
-	<property name="dist.dir" value="${basedir}${file.separator}dist${file.separator}"/>
-	<property name="src.dir" value="${basedir}${file.separator}src${file.separator}"/>
+	<!-- path to build, dist and src folders -->
+	<property name="build.dir"	value="${basedir}${file.separator}build${file.separator}"/>
+	<property name="dist.dir"	value="${basedir}${file.separator}dist${file.separator}"/>
+	<property name="src.dir"	value="${basedir}${file.separator}src${file.separator}"/>
 
-	<property name="dist.name" value="Vanilla-${vanilla.version}"/>
-	<property name="dist.zip" value="${dist.dir}${file.separator}${dist.name}.zip"/>
+	<!-- name of folder and zip package name (eg: Vanilla-1.2) -->
+	<property name="dist.name"			value="Vanilla-${vanilla.version}"/>
+	<property name="dist.zip"			value="${dist.dir}${file.separator}${dist.name}.zip"/>
+	<property name="build.vanilla.dir"	value="${build.dir}${file.separator}${dist.name}"/>
 
-	<property name="build.vanilla.dir" value="${build.dir}${file.separator}${dist.name}"/>
-	<property name="jar.compressor.path" value="${basedir}${file.separator}tools${file.separator}jar${file.separator}yuicompressor.jar"/>
-	<property name="src.js.dir" value="${src.dir}${file.separator}js${file.separator}"/>
-	<property name="build.js.dir" value="${build.vanilla.dir}${file.separator}js${file.separator}"/>
+	<!-- Js compression vanilla related -->
+	<property name="jar.compressor.path"	value="${basedir}${file.separator}tools${file.separator}jar${file.separator}yuicompressor.jar"/>
+	<property name="src.js.dir"				value="${src.dir}${file.separator}js${file.separator}"/>
+	<property name="build.js.dir"			value="${build.vanilla.dir}${file.separator}js${file.separator}"/>
 
+	<!-- External ant task lib folder -->
 	<property name="project.ant.lib.dir" value="${basedir}${file.separator}tools${file.separator}ant-library${file.separator}"/>
 
-	<property name="svn.vanilla.base" value="http://lussumo.com/svn/vanilla/"/>
-	<property name="svn.framework.base" value="http://lussumo.com/svn/framework/"/>
-	<property name="svn.people.base" value="http://lussumo.com/svn/people/"/>
-	<property name="svn.vanilla.src" value="${svn.vanilla.base}revisions/vanilla-1.2"/>
-	<property name="svn.framework.src" value="${svn.framework.base}framework1.2"/>
-	<property name="svn.people.src" value="${svn.people.base}branches/people-1.2"/>
-	<property name="svn.vanilla.tag" value="${svn.vanilla.base}tags/Vanilla-${vanilla.version}"/>
-	<property name="svn.framework.tag" value="${svn.framework.base}tags/Framework-${framework.version}"/>
-	<property name="svn.people.tag" value="${svn.vanilla.base}tags/People-${people.version}"/>
-	<property name="svn.wc.path" value="${basedir}"/>
-	<property name="svn.wc.status" value=""/>
+	<!-- SVN related properties -->
+	<property name="svn.vanilla.base"	value="http://lussumo.com/svn/vanilla/"/>
+	<property name="svn.vanilla.src"	value="${svn.vanilla.base}revisions/vanilla-1.2"/>
+	<property name="svn.vanilla.tag"	value="${svn.vanilla.base}tags/Vanilla-${vanilla.version}"/>
 
+	<property name="svn.framework.base"	value="http://lussumo.com/svn/framework/"/>
+	<property name="svn.framework.src"	value="${svn.framework.base}branches/framework1.2"/>
+	<property name="svn.framework.tag"	value="${svn.framework.base}tags/Framework-${framework.version}"/>
 	<property name="svn.framework.folder" value="src/library/Framework"/>
-	<property name="svn.people.folder" value="src/library/People"/>
 
+	<property name="svn.people.base"	value="http://lussumo.com/svn/people/"/>
+	<property name="svn.people.src"		value="${svn.people.base}branches/people-1.2"/>
+	<property name="svn.people.tag"		value="${svn.people.base}tags/People-${people.version}"/>
+	<property name="svn.people.folder"	value="src/library/People"/>
 
+	<property name="svn.wc.path"		value="${basedir}"/>
+	<property name="svn.wc.status"		value=""/>
+
+	<!--	User related properties (username and password).
+			Copy build.properties-tmp to build.property and file it with your username, password...	-->
 	<property file="build.properties"/>
 
 
@@ -153,7 +162,7 @@
 			<commit dir="${svn.wc.path}${file.separator}${svn.framework.folder}" message="${svn.message}"/>
 			<status path="./" propstatusproperty="svn.wc.status"/>
 		</svn>
-		<echo>Statue: ${svn.wc.status}</echo>
+		<echo>Status: ${svn.wc.status}</echo>
 	</target>
 
 	<!-- - - - - - - - - - - - - - - - - -
