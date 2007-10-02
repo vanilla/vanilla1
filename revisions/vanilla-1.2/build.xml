@@ -22,13 +22,31 @@
 
 	<property name="dist.name" value="Vanilla-${vanilla.version}"/>
 	<property name="dist.zip" value="${dist.dir}${file.separator}${dist.name}.zip"/>
-	
+
 	<property name="build.vanilla.dir" value="${build.dir}${file.separator}${dist.name}"/>
 	<property name="jar.compressor.path" value="${basedir}${file.separator}tools${file.separator}jar${file.separator}yuicompressor.jar"/>
 	<property name="src.js.dir" value="${src.dir}${file.separator}js${file.separator}"/>
 	<property name="build.js.dir" value="${build.vanilla.dir}${file.separator}js${file.separator}"/>
 
+	<property name="project.ant.lib.dir" value="${basedir}${file.separator}tools${file.separator}ant-library${file.separator}"/>
 
+	<property name="svn.vanilla.base" value="http://lussumo.com/svn/vanilla/"/>
+	<property name="svn.framework.base" value="http://lussumo.com/svn/framework/"/>
+	<property name="svn.people.base" value="http://lussumo.com/svn/people/"/>
+	<property name="svn.vanilla.src" value="${svn.vanilla.base}revisions/vanilla-1.2"/>
+	<property name="svn.framework.src" value="${svn.framework.base}framework1.2"/>
+	<property name="svn.people.src" value="${svn.people.base}branches/people-1.2"/>
+	<property name="svn.vanilla.tag" value="${svn.vanilla.base}tags/Vanilla-${vanilla.version}"/>
+	<property name="svn.framework.tag" value="${svn.framework.base}tags/Framework-${framework.version}"/>
+	<property name="svn.people.tag" value="${svn.vanilla.base}tags/People-${people.version}"/>
+	<property name="svn.wc.path" value="$base.dir"/>
+	<property name="svn.wc.status" value=""/>
+
+	<property name="svn.framework.folder" value="src/library/Framework"/>
+	<property name="svn.people.folder" value="src/library/People"/>
+
+
+	<property file="build.properties"/>
 
 
 	<!-- =================================
@@ -98,5 +116,47 @@
 				<include name="**/**"/>
 			</fileset>
 		</delete>
+	</target>
+
+
+	<!-- =================================
+		  target: tag
+		 ================================= -->
+	<target name="tag" depends="init" description="--> Tag a new version of Vanilla">
+		<svn username="${svn.username}" password="${svn.password}">
+			<copy srcUrl="${svn.vanilla.src}" destUrl="${svn.vanilla.tag}" message="Tag version ${vanilla.version}"/>
+			<copy srcUrl="${svn.framework.src}" destUrl="${svn.framework.tag}" message="Tag version ${framework.version}"/>
+			<copy srcUrl="${svn.people.src}" destUrl="${svn.people.tag}" message="Tag version ${people.version}"/>
+			<update dir="${basedir}" recurse="false"/>
+			<commit dir="${basedir}" recurse="false"/>
+			<propset path="${basedir}" name="svn:externals" value="${svn.framework.folder} ${svn.framework.tag}${line.separator}${svn.people.folder} ${svn.people.tag}"/>
+		</svn>
+	</target>
+
+	<!-- =================================
+		  target: commit
+		 ================================= -->
+	<target name="commit" depends="init" description="--> Commit changes">
+		<svn username="${svn.username}" password="${svn.password}" javahl="false">
+			<update dir="${basedir}"/>
+			<commit dir="${basedir}" message="${svn.message}"/>
+			<commit dir="${basedir}${file.separator}${svn.people.folder}" message="${svn.message}"/>
+			<commit dir="${basedir}${file.separator}${svn.framework.folder}" message="${svn.message}"/>
+			<status path="./" propstatusproperty="svn.wc.status"/>
+		</svn>
+		<echo>Statue: ${svn.wc.status}</echo>
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - -
+		  target: init
+		 - - - - - - - - - - - - - - - - - -->
+	<target name="init">
+		<path id="project.classpath">
+			<fileset dir="${project.ant.lib.dir}">
+				<include name="**/*.jar"/>
+			</fileset>
+ 		</path>
+		<typedef resource="org/tigris/subversion/svnant/svnantlib.xml" classpathref="project.classpath"/>
+		<!-- <typedef resource="svntypes.xml" classpathref="project.classpath"/> -->
 	</target>
 </project>
