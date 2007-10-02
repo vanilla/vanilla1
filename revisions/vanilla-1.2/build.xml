@@ -2,10 +2,63 @@
 <!-- ======================================================================
 	 1 Oct 2007 16:22:21
 
-	 Vanilla builder
+	 Vanilla Builder
 	 Build a new release of vanilla
 
-	 Damien Lebrun
+	 Copyright 2007 Lussumo
+	 This file is part of Lussumo's Software Library.
+	 Lussumo's Software Library is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+	 Lussumo's Software Library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+	 You should have received a copy of the GNU General Public License along with Vanilla; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+	 The latest source code is available at www.lussumo.com
+	 Contact Mark O'Sullivan at mark [at] lussumo [dot] com
+
+	 @author Damien Lebrun
+	 @copyright 2007 Lussumo
+	 @license http://lussumo.com/community/gpl.txt GPLv2
+
+
+	 Requirements:
+
+ 	 - JDK 1.5+
+ 	 - Ant 1.7+
+ 	 - PHPDocumentor 1.4 (not yet implemented)
+
+	 Usage:
+
+	 ant [options] [target]
+
+	  Options:
+
+	  See Ant manual (http://ant.apache.org/manual/index.html)
+
+	  Targets:
+
+		build:
+		  Build a Vanilla package.
+		  Edit the *.version properties.
+
+		tag:
+		  Tag the working copy of Vanilla - People and Framework.
+		  You might have to edit *.version properties and the build.properties file
+		  for you svn username and password (create one from build.properties-tmp).
+
+		commit:
+		  Commit your working copy.
+		  You might have to edit the build.properties file for you svn username and password,
+		  and the commit message.
+
+		update:
+		  Update your working copy
+		  You might have to edit the build.properties file for you svn username and password.
+
+		clean:
+		  Remove build and dist folder.
+
+		prepare:
+		  Create build and dist folder.
+
+
 	 ====================================================================== -->
 <project name="Vanilla builder" default="build">
 	<description>

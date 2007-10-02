@@ -1,3 +1,5 @@
+# If you need to update to or tag a previous release.
+# svn.update.rev = HEAD
 svn.username =
 svn.password =
-svn.message = Vanilla 1.2:
+svn.message = Vanilla 1.2
