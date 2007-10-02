@@ -52,6 +52,7 @@
 
 	<property name="svn.wc.path"		value="${basedir}"/>
 	<property name="svn.wc.status"		value=""/>
+	<property name="svn.update.rev"		value="HEAD"/>
 
 	<!--	User related properties (username and password).
 			Copy build.properties-tmp to build.property and file it with your username, password...	-->
@@ -135,8 +136,16 @@
 	<!-- =================================
 		  target: tag
 		 ================================= -->
-	<target name="tag" depends="initSvnTask" description="--> Tag a new version of Vanilla">
+	<target name="tag" depends="update" description="--> Tag a new version of Vanilla">
 		<echo level="info" message="${line.separator}Tag Vanilla ${vanilla.version}, People ${people.version} and Framework ${framework.version}."/>
+		<fail message="Status: ${svn.wc.status}.${line.separator}Check-it out first before tagging the working copy">
+			<condition>
+				<or>
+					<equals arg1="${svn.wc.status}" arg2="conflicted" casesensitive="true" trim="true"/>
+					<equals arg1="${svn.wc.status}" arg2="modified" casesensitive="true" trim="true"/>
+				</or>
+			</condition>
+		</fail>
 		<svn username="${svn.username}" password="${svn.password}">
 			<!-- Tag People and Framework first -->
 			<copy srcUrl="${svn.framework.src}" destUrl="${svn.framework.tag}" message="Tag version ${framework.version}"/>
@@ -153,10 +162,15 @@
 	<!-- =================================
 		  target: commit
 		 ================================= -->
-	<target name="commit" depends="initSvnTask" description="--> Commit changes">
+	<target name="commit" depends="update" description="--> Commit changes">
 		<echo level="info" message="${line.separator}Commit Vanilla, People and Framework.${line.separator}${svn.message}"/>
+		<echo level="info" message="${line.separator}Commit working copy to ${svn.vanilla.src}...${line.separator}Message: ${svn.message}"/>
+		<fail message="Status: ${svn.wc.status}.${line.separator}Fix conflict first.">
+			<condition>
+				<equals arg1="${svn.wc.status}" arg2="conflicted" casesensitive="true" trim="true"/>
+			</condition>
+		</fail>
 		<svn username="${svn.username}" password="${svn.password}">
-			<update dir="${svn.wc.path}"/>
 			<commit dir="${svn.wc.path}" message="${svn.message}"/>
 			<commit dir="${svn.wc.path}${file.separator}${svn.people.folder}" message="${svn.message}"/>
 			<commit dir="${svn.wc.path}${file.separator}${svn.framework.folder}" message="${svn.message}"/>
@@ -164,6 +178,19 @@
 		</svn>
 		<echo>Status: ${svn.wc.status}</echo>
 	</target>
+
+	<!-- =================================
+		  target: update
+		 ================================= -->
+	<target name="update" depends="initSvnTask" description="--> Update working copy">
+		<echo level="info" message="Update working copy with ${svn.vanilla.src}..." />
+		<svn username="${svn.username}" password="${svn.password}">
+			<update dir="${svn.wc.path}" revision="${svn.update.rev}"/>
+			<status path="${svn.wc.path}" propstatusproperty="svn.wc.status"/>
+		</svn>
+		<echo>Status: ${svn.wc.status}</echo>
+	</target>
+
 
 	<!-- - - - - - - - - - - - - - - - - -
 		  target: init
