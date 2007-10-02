@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ======================================================================
+	 1 Oct 2007 16:22:21
+
+	 Vanilla builder
+	 Build a new release of vanilla
+
+	 Damien Lebrun
+	 ====================================================================== -->
+<project name="Vanilla builder" default="build">
+	<description>
+			Build a new release of vanilla
+	</description>
+
+	<property name="vanilla.version" value="1.2.alpha.0"/>
+	<property name="framework.version" value="1.2.alpha.0"/>
+	<property name="people.version" value="1.2.alpha.0"/>
+
+	<property name="build.dir" value="${basedir}${file.separator}build${file.separator}"/>
+	<property name="dist.dir" value="${basedir}${file.separator}dist${file.separator}"/>
+	<property name="src.dir" value="${basedir}${file.separator}src${file.separator}"/>
+
+	<property name="dist.name" value="Vanilla-${vanilla.version}"/>
+	<property name="dist.zip" value="${dist.dir}${file.separator}${dist.name}.zip"/>
+	
+	<property name="build.vanilla.dir" value="${build.dir}${file.separator}${dist.name}"/>
+	<property name="jar.compressor.path" value="${basedir}${file.separator}tools${file.separator}jar${file.separator}yuicompressor.jar"/>
+	<property name="src.js.dir" value="${src.dir}${file.separator}js${file.separator}"/>
+	<property name="build.js.dir" value="${build.vanilla.dir}${file.separator}js${file.separator}"/>
+
+
+
+
+	<!-- =================================
+			  target: build
+			  		 ================================= -->
+	<target name="build" depends="prepare" description="--> Build a new release of vanilla">
+		<echo level="info" message="${line.separator}Copy files which do not need any processing..."/>
+		<copy todir="${build.vanilla.dir}" verbose="true">
+			<fileset dir="${src.dir}">
+				<exclude name="**/*.php"/>
+				<exclude name="**/*.html"/>
+				<exclude name="js/*.js"/>
+				<exclude name="**/.svn/**"/>
+			</fileset>
+		</copy>
+		<echo level="info" message="${line.separator}Copy php and html files, replacing version number..."/>
+		<copy todir="${build.vanilla.dir}" verbose="true" encoding="UTF-8">
+			<fileset dir="${src.dir}">
+				<include name="**/*.php"/>
+				<include name="**/*.html"/>
+			</fileset>
+			<filterset begintoken="@@" endtoken="@@">
+				<filter token="VANILLA-VERSION" value="${vanilla.version}"/>
+				<filter token="FRAMEWORK-VERSION" value="${framework.version}"/>
+				<filter token="PEOPLE-VERSION" value="${people.version}"/>
+			</filterset>
+		</copy>
+		<echo level="info" message="${line.separator}Compress js file..."/>
+		<apply executable="java" parallel="false" addsourcefile="false" verbose="true">
+			<fileset dir="${src.js.dir}" includes="*.js"/>
+			<arg line="-jar"/>
+			<arg path="${jar.compressor.path}"/>
+			<arg line="--charset UTF-8"/>
+			<arg line="--type js"/>
+			<redirector>
+				<!-- redirect STDIN; fileset collects relative to its dir, but we need -->
+				<!-- relative to basedir -->
+				<inputmapper type="glob" from="*" to="${src.js.dir}*"/>
+				<!-- redirect STDOUT to file in dest-dir -->
+				<outputmapper id="out" type="glob" from="*.js" to="${build.js.dir}*.js"/>
+			</redirector>
+		</apply>
+		<echo level="info" message="${line.separator}css compression is possible but does not support one hack use in vanilla.css."/>
+		<echo level="info" message="${line.separator}Build package..."/>
+		<zip basedir="${build.dir}" destfile="${dist.zip}" level="9"/>
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - -
+			  target: prepare
+			 - - - - - - - - - - - - - - - - - -->
+	<target name="prepare" depends="clean">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${build.dir}${file.separator}${dist.name}"/>
+		<mkdir dir="${dist.dir}"/>
+	</target>
+
+
+	<!-- - - - - - - - - - - - - - - - - -
+			  target: clean
+			 - - - - - - - - - - - - - - - - - -->
+	<target name="clean">
+		<delete includeemptydirs="true">
+			<fileset dir="${build.dir}">
+				<include name="**/**"/>
+			</fileset>
+			<fileset dir="${dist.dir}">
+				<include name="**/**"/>
+			</fileset>
+		</delete>
+	</target>
+</project>
