@@ -21,7 +21,7 @@
 	 Requirements:
 
  	 - JDK 1.5+
- 	 - Ant 1.7+
+ 	 - Ant 1.7
  	 - PHPDocumentor 1.4 (not yet implemented)
 
 	 Usage:
@@ -75,7 +75,7 @@
 	<property name="dist.dir"	value="${basedir}${file.separator}dist${file.separator}"/>
 	<property name="src.dir"	value="${basedir}${file.separator}src${file.separator}"/>
 
-	<!-- name of folder and zip package name (eg: Vanilla-1.2) -->
+	<!-- name of the folder and zip package name (eg: Vanilla-1.2) -->
 	<property name="dist.name"			value="Vanilla-${vanilla.version}"/>
 	<property name="dist.zip"			value="${dist.dir}${file.separator}${dist.name}.zip"/>
 	<property name="build.vanilla.dir"	value="${build.dir}${file.separator}${dist.name}"/>
@@ -155,9 +155,9 @@
 				<outputmapper id="out" type="glob" from="*.js" to="${build.js.dir}*.js"/>
 			</redirector>
 		</apply>
-		<echo level="info" message="${line.separator}css compression is possible but does not support one hack use in vanilla.css."/>
+		<echo level="info" message="${line.separator}css compression is possible for css files but does not support one hack use in vanilla.css."/>
 		<echo level="info" message="${line.separator}Build package..."/>
-		<!-- Pack the Vanilla -->
+		<!-- Pack Vanilla -->
 		<zip basedir="${build.dir}" destfile="${dist.zip}" level="9"/>
 	</target>
 
@@ -189,7 +189,7 @@
 	<!-- =================================
 		  target: tag
 		 ================================= -->
-	<target name="tag" depends="update" description="--> Tag a new version of Vanilla">
+	<target name="tag" depends="update" description="--> Tag a new release of Vanilla">
 		<echo level="info" message="${line.separator}Tag Vanilla ${vanilla.version}, People ${people.version} and Framework ${framework.version}."/>
 		<fail message="Status: ${svn.wc.status}.${line.separator}Check-it out first before tagging the working copy">
 			<condition>
