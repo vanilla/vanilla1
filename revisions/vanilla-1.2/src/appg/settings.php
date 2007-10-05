@@ -204,10 +204,7 @@ $Configuration['SETUP_COMPLETE'] = '0';
 $Configuration['ADDON_NOTICE'] = '1';
 
 // Application versions
-define('APPLICATION', 'Vanilla');
-define('FRAMEWORK_VERSION', '1.1.2');
-define('PEOPLE_VERSION', '1.1.2');
-define('APPLICATION_VERSION', '1.1.3');
+include(dirname(__FILE__) . '/version.php');
 
 // Application Mode Constants
 define('MODE_DEBUG', 'DEBUG');
@@ -226,7 +223,7 @@ $Configuration['SELF_URL'] = @$_SERVER['PHP_SELF'];
 // Include custom settings
 include(dirname(__FILE__) . '/../conf/settings.php');
 if ($Configuration['SETUP_COMPLETE'] == '0') {
-	header('Location: ./setup/index.html');
+	header('Location: ./setup/index.php');
 }
 
 // Define a constant to prevent a register_globals attack on the configuration paths
