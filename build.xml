@@ -304,7 +304,6 @@
 		  target: checkModification
 		 - - - - - - - - - - - - - - - - - -->
 	<target name="checkModification" depends="update">
-<!--
 		<resourcecount property="svn.wc.modified.count">
 			<fileset dir="${svn.wc.path}">
 				<svnModified/>
@@ -337,7 +336,6 @@
 				</not>
 			</condition>
 		</fail>
--->
 	</target>
 
 
