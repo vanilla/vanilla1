@@ -1,12 +1,15 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<?php
+// Set application name and version
+include('../appg/version.php');
+?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-ca">
 	<head>
-		<title>Vanilla @@VANILLA-VERSION@@ Setup</title>
+		<title><?php echo APPLICATION . ' ' . APPLICATION_VERSION; ?></title>
 		<link rel="stylesheet" type="text/css" href="./style.css" />
 	</head>
 	<body>
 		<h1>
-			<span><strong>Vanilla @@VANILLA-VERSION@@</strong> Setup</span>
+			<span><strong><?php echo APPLICATION . ' ' . APPLICATION_VERSION; ?></strong> Setup</span>
 		</h1>
 		<div class="Container">
 			<div class="Content">
@@ -32,7 +35,7 @@
 
 				<p>When you are finished backing everything up, upload all of the new Vanilla files to your server, open this file in your web browser and click the upgrade link below.</p>
 
-				<div class="Button"><a href="upgrader.php">Click here to upgrade from Vanilla 0.9.2.x to Vanilla @@VANILLA-VERSION@@</a></div>
+				<div class="Button"><a href="upgrader.php">Click here to upgrade from Vanilla 0.9.2.x to <?php echo APPLICATION . ' ' . APPLICATION_VERSION; ?></a></div>
 			</div>
 		</div>
 	</body>
