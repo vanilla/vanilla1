@@ -19,6 +19,9 @@ include('../library/Framework/Framework.Class.ConfigurationManager.php');
 // Include database structure
 include('../appg/database.php');
 
+// Set application name and version
+include('../appg/version.php');
+
 // Set up some configuration defaults to override
 $Configuration['DATABASE_HOST'] = '';
 $Configuration['DATABASE_NAME'] = '';
@@ -439,12 +442,12 @@ if (!defined('IN_VANILLA')) exit();
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-ca">
 	<head>
-		<title>Vanilla @@VANILLA-VERSION@@ Installer</title>
+		<title><?php echo APPLICATION . ' ' . APPLICATION_VERSION; ?> Installer</title>
 		<link rel="stylesheet" type="text/css" href="./style.css" />
 	</head>
 	<body>
 		<h1>
-			<span><strong>Vanilla @@VANILLA-VERSION@@</strong> Installer</span>
+			<span><strong><?php echo APPLICATION . ' ' . APPLICATION_VERSION; ?></strong> Installer</span>
 		</h1>
 		<div class="Container">
 			<div class="Content">

@@ -5,6 +5,3 @@
 # This file should never be added to the svn!!!
 svn.username =
 svn.password =
-
-# The commit message
-svn.message =
