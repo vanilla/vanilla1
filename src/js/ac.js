@@ -1,3 +1,4 @@
+
 function AutoComplete (TextInputID, AllowMultipleChoices){
 	/* ---- Public Variables ---- */
 	this.TimeOut = -1; // Autocomplete Timeout in ms (-1: autocomplete never time out)

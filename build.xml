@@ -126,6 +126,7 @@
 	<property name="svn.vanilla.diff.old.path"	value="/src"/>
 	<property name="svn.vanilla.diff.new.url"	value="${svn.vanilla.src}${svn.vanilla.diff.new.path}"/>
 	<property name="svn.vanilla.diff.old.url"	value="${svn.vanilla.base}tags/Vanilla-${vanilla.old.version}${svn.vanilla.diff.old.path}"/>
+	<property name="svn.vanilla.diff.external.url" value="${svn.vanilla.base}tags/Vanilla-${vanilla.old.version}"/>
 
 	<property name="svn.vanilla.diff.output.path"	value="${build.dir}vanilla.diff"/>
 	<property name="svn.framework.diff.output.path" value="${build.dir}framework.diff"/>
@@ -244,10 +245,9 @@
 		 ================================= -->
 	<target name="getChanges" depends="checkModification" description="--> Get changes between two release">
 		<echo level="info" message="Get diff between ${svn.vanilla.diff.new.url} and ${svn.vanilla.diff.old.url}..." />
-
 		<!-- Get the previous version numbers of people and framework -->
 		<svn username="${svn.username}" password="${svn.password}">
-			<propget url="${svn.vanilla.diff.old.url}/" name="svn:externals" property="svn.vanilla.diff.old.externals"/>
+			<propget url="${svn.vanilla.diff.external.url}" name="svn:externals" property="svn.vanilla.diff.old.externals"/>
 		</svn>
 		<loadproperties>
 			<string value="${svn.vanilla.diff.old.externals}"/>
@@ -258,6 +258,7 @@
 		</loadproperties>
 
 		<!-- Get Diff... -->
+
 		<delete file="${svn.vanilla.diff.output.path}"/>
 		<delete file="${svn.framework.diff.output.path}"/>
 		<delete file="${svn.people.diff.output.path}"/>
@@ -303,6 +304,7 @@
 		  target: checkModification
 		 - - - - - - - - - - - - - - - - - -->
 	<target name="checkModification" depends="update">
+<!--
 		<resourcecount property="svn.wc.modified.count">
 			<fileset dir="${svn.wc.path}">
 				<svnModified/>
@@ -335,6 +337,7 @@
 				</not>
 			</condition>
 		</fail>
+-->
 	</target>
 
 
