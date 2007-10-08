@@ -10,6 +10,7 @@
 * Description: Utility functions specific to Vanilla
 */
 
+
 // Add a new custom name/value pair input to the account form
 function AddLabelValuePair() {
 	var Counter = document.getElementById('LabelValuePairCount');

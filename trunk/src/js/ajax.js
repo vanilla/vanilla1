@@ -1,3 +1,4 @@
+
 function DataManager() {
 	// Properties
 	var self = this;
