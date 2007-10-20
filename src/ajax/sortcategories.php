@@ -14,11 +14,15 @@
 include('../appg/settings.php');
 include('../appg/init_ajax.php');
 
+if ($Context->Session->User->Permission('PERMISSION_SORT_CATEGORIES')) {
+	die();
+}
+
 $Sql = 'update '.$Configuration['DATABASE_TABLE_PREFIX']."Category set Priority = '//1' where CategoryID = '//2';";
 $SortOrder = ForceIncomingArray('CategoryID', array());
 $ItemCount = count($SortOrder);
 for ($i = 0; $i < $ItemCount; $i++) {
-	$ExecSql = str_replace(array('//1', '//2'), array($i, $SortOrder[$i]), $Sql);
+	$ExecSql = str_replace(array('//1', '//2'), array($i, ForceInt($SortOrder[$i])), $Sql);
 	$Context->Database->Execute($ExecSql, 'AJAX', 'ReorderCategories', 'Failed to reorder categories', 0);
 }
 $Context->Unload();
