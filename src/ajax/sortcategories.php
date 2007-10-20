@@ -14,8 +14,8 @@
 include('../appg/settings.php');
 include('../appg/init_ajax.php');
 
-if ($Context->Session->User->Permission('PERMISSION_SORT_CATEGORIES')) {
-	die();
+if (!$Context->Session->User->Permission('PERMISSION_SORT_CATEGORIES')) {
+	die('Error permission');
 }
 
 $Sql = 'update '.$Configuration['DATABASE_TABLE_PREFIX']."Category set Priority = '//1' where CategoryID = '//2';";
