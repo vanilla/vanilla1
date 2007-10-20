@@ -14,7 +14,7 @@
 include('../appg/settings.php');
 include('../appg/init_ajax.php');
 
-if ($Context->Session->User->Permission('PERMISSION_EDIT_ROLES')) {
+if (!$Context->Session->User->Permission('PERMISSION_EDIT_ROLES')) {
 	die();
 }
 
