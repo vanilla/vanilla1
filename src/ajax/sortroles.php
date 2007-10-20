@@ -14,16 +14,19 @@
 include('../appg/settings.php');
 include('../appg/init_ajax.php');
 
-if (!$Context->Session->User->Permission('PERMISSION_EDIT_ROLES')) {
-	die();
+if (!$Context->Session->User->Permission('PERMISSION_SORT_ROLES')) {
+	die('Error permission');
 }
 
 $Sql = 'update '.$Configuration["DATABASE_TABLE_PREFIX"]."Role set Priority = '//1' where RoleID = '//2';";
 $SortOrder = ForceIncomingArray('RoleID', array());
 $ItemCount = count($SortOrder);
 for ($i = 0; $i < $ItemCount; $i++) {
-	$ExecSql = str_replace(array('//1', '//2'), array($i, ForceInt($SortOrder[$i])), $Sql);
-	$Context->Database->Execute($ExecSql, 'AJAX', 'ReorderRoles', 'Failed to reorder roles', 0);
+	$RoleID = ForceInt($SortOrder[$i], null);
+	if ($RoleID !== null) {
+		$ExecSql = str_replace(array('//1', '//2'), array($i, $RoleID), $Sql);
+		$Context->Database->Execute($ExecSql, 'AJAX', 'ReorderRoles', 'Failed to reorder roles', 0);
+	}
 }
 echo $SortOrder;
 $Context->Unload();
