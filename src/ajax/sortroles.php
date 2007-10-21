@@ -14,8 +14,15 @@
 include('../appg/settings.php');
 include('../appg/init_ajax.php');
 
+$PostBackKey = ForceIncomingString('PostBackKey', '');
+if ($PostBackKey = ''
+	|| $PostBackKey !== $Context->Session->GetVariable('SessionPostBackKey', 'string')
+) {
+	die($Context->GetDefinition('ErrPostBackKeyInvalid'));
+}
+
 if (!$Context->Session->User->Permission('PERMISSION_SORT_ROLES')) {
-	die('Error permission');
+	die($Context->GetDefinition('ErrPermissionSortRoles'));
 }
 
 $Sql = 'update '.$Configuration["DATABASE_TABLE_PREFIX"]."Role set Priority = '//1' where RoleID = '//2';";
