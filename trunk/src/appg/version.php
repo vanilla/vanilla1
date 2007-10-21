@@ -12,7 +12,7 @@
 */
 
 define('APPLICATION', 'Vanilla');
-define('FRAMEWORK_VERSION', '1.1.2');
-define('PEOPLE_VERSION', '1.1.2');
-define('APPLICATION_VERSION', '1.1.3');
+define('FRAMEWORK_VERSION', '1.1.3');
+define('PEOPLE_VERSION', '1.1.3');
+define('APPLICATION_VERSION', '1.1.4');
 ?>
