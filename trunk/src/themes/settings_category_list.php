@@ -41,7 +41,12 @@ echo '<div id="Form" class="Account CategoryList">';
 			echo "
 			<script type=\"text/javascript\" language=\"javascript\">
 			// <![CDATA[
-				Sortable.create('SortCategories', {dropOnEmpty:true, tag:'div', constraint: 'vertical', ghosting: false, onUpdate: function() {new Ajax.Updater('SortResult', '".$this->Context->Configuration['WEB_ROOT']."ajax/sortcategories.php', {onComplete: function(request) { new Effect.Highlight('SortCategories',{startcolor:'#ffff99'});}, parameters:Sortable.serialize('SortCategories', {tag:'div', name:'CategoryID'}), evalScripts:true, asynchronous:true})}});
+				Sortable.create('SortCategories', {dropOnEmpty:true, tag:'div', constraint: 'vertical', ghosting: false, onUpdate: function() {new Ajax.Updater('SortResult', '"
+					. $this->Context->Configuration['WEB_ROOT'] . "ajax/sortcategories.php', "
+					. "{onComplete: function(request) { new Effect.Highlight('SortCategories',{startcolor:'#ffff99'});}, "
+					. "parameters:Sortable.serialize('SortCategories', {tag:'div', name:'CategoryID'})"
+					." + '&PostBackKey=" . $this->SessionPostBackKey . "', "
+					. "evalScripts:true, asynchronous:true})}});
 			// ]]>
 			</script>";
 		}
