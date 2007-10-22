@@ -187,7 +187,7 @@
 			<filterchain>
 				<replaceregex  pattern="FRAMEWORK_VERSION', '.*'" replace="FRAMEWORK_VERSION', '${framework.version}'"/>
 				<replaceregex  pattern="PEOPLE_VERSION', '.*'" replace="PEOPLE_VERSION', '${people.version}'"/>
-				<replaceregex  pattern="APPLICATION_VERSION', '.*'" replace="FRAMEWORK_VERSION', '${vanilla.version}'"/>
+				<replaceregex  pattern="APPLICATION_VERSION', '.*'" replace="APPLICATION_VERSION', '${vanilla.version}'"/>
 			</filterchain>
 		</copy>
 		<echo level="info" message="${line.separator}Compress js file..."/>
