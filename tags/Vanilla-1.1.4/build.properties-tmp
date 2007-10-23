@@ -1,0 +1,7 @@
+# If you need to update to or tag a previous release.
+# svn.update.rev = HEAD
+
+# Your svn password and username
+# This file should never be added to the svn!!!
+svn.username =
+svn.password =
