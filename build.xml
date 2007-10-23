@@ -109,6 +109,8 @@
 				<exclude name="**/*.php"/>
 				<exclude name="**/*.html"/>
 				<exclude name="js/*.js"/>
+				<exclude name="conf/*.php"/>
+				<exclude name="extension/**"/>
 				<exclude name="**/.svn/**"/>
 			</fileset>
 		</copy>
@@ -118,6 +120,8 @@
 			<fileset dir="${src.dir}">
 				<include name="**/*.php"/>
 				<include name="**/*.html"/>
+				<exclude name="conf/*.php"/>
+				<exclude name="extension/**"/>
 			</fileset>
 			<filterset begintoken="@@" endtoken="@@">
 				<filter token="VANILLA-VERSION" value="${vanilla.version}"/>
@@ -142,7 +146,6 @@
 			</redirector>
 		</apply>
 		<echo level="info" message="${line.separator}css compression is possible for css files but it does not support one hack use in vanilla.css."/>
-
 	</target>
 
 
