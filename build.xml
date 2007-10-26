@@ -37,7 +37,7 @@
 		buildPackage:
 		  Build vanilla packages (vanilla and update).
 		  You should check vanilla.old.version
-		  hold the correct version number of the last release (line 81).
+		  hold the correct version number of the last release (line 90).
 
 		buildVanilla:
 		  Build a Vanilla package.
@@ -45,20 +45,20 @@
 
 		buildUpdate:
 		  Build a Vanilla Update package.
-		  You should check vanilla.old.version
-		  hold the correct version number of the last release (line 81).
+		  You should check vanilla.old.version hold the correct
+		  version number of the last release (line 90).
 
 		tag:
 		  Tag the working copy of Vanilla - People and Framework.
-		  You should check vanilla.old.version
-		  hold the correct version number of the last release (line 81)
-		  and the update build.properties file for your svn username and password
+		  You should check vanilla.old.version hold the correct
+		  version number of the last release (line 90) and
+		  Update build.properties file for your svn username and password
 		  (create one from build.properties-tmp).
 
 		getChanges:
 		  Will create diff files for vanilla, people and framework and list of the files modified
 		  since the last release. You should check vanilla.old.version
-		  hold the correct version number of the last release (line 81).
+		  hold the correct version number of the last release (line 90).
 
 		update:
 		  Update your working copy
@@ -70,6 +70,15 @@
 		prepare:
 		  Create build and dist folder.
 
+		backUp:
+		  Create a back-up of a vanilla installation over ssh
+		  Update build.properties file for your ssh setting and set the
+		  remote server parameter (create one from build.properties-tmp).
+
+		deploy:
+		  Install Vanilla files on a remote server over ssh
+		  Update build.properties file for your ssh setting and set the
+		  remote server parameter (create one from build.properties-tmp).
 
 	 ====================================================================== -->
 <project name="Vanilla builder" default="buildVanilla">
@@ -85,6 +94,7 @@
 	<property name="dist.dir"	value="${basedir}${file.separator}dist${file.separator}"/>
 	<property name="src.dir"	value="${basedir}${file.separator}src${file.separator}"/>
 	<property name="tools.dir"	value="${basedir}${file.separator}tools${file.separator}"/>
+	<property name="bak.dir"	value="${basedir}${file.separator}bak${file.separator}"/>
 
 
 	<!-- =================================
@@ -146,6 +156,21 @@
 			</redirector>
 		</apply>
 		<echo level="info" message="${line.separator}css compression is possible for css files but it does not support one hack use in vanilla.css."/>
+<!--
+		<mkdir dir="${build.js.dir}src"/>
+		<copy todir="${build.js.dir}src">
+			<fileset dir="${src.js.dir}">
+				<include name="**"/>
+			</fileset>
+		</copy>
+
+		<mkdir dir="${build.vanilla.installer.dir}/appg/md5"/>
+		<checksum todir="${build.vanilla.installer.dir}/appg/md5">
+			<fileset dir="${build.vanilla.installer.dir}">
+				<exclude name="appg/md5/**"/>
+			</fileset>
+		</checksum>
+-->
 	</target>
 
 
@@ -154,7 +179,7 @@
 		 ================================= -->
 	<target name="buildUpdate" depends="loadProperties,buildVanilla,getChanges" description="--> description">
 		<copy todir="${build.vanilla.upgrader.dir}" verbose="true">
-			<fileset dir="${build.vanilla.installer.dir}" includesfile="${build.dir}${svn.diff.brief.name}"/>
+			<fileset dir="${build.vanilla.installer.dir}" includesfile="${svn.application.brief.path}"/>
 		</copy>
 	</target>
 
@@ -169,11 +194,11 @@
 			<copy srcUrl="${svn.framework.src}" destUrl="${svn.framework.tag}" message="Tag version ${framework.version}"/>
 			<copy srcUrl="${svn.people.src}" destUrl="${svn.people.tag}" message="Tag version ${people.version}"/>
 			<!-- Change svn:externals of framework and people for the tagged versions -->
-			<propset path="${svn.wc.path}" name="svn:externals" value="${svn.framework.folder} ${svn.framework.tag}${line.separator}${svn.people.folder} ${svn.people.tag}"/>
+			<propset path="${svn.wc.path}${file.separator}src" name="svn:externals" value="${svn.framework.folder} ${svn.framework.tag}${line.separator}${svn.people.folder} ${svn.people.tag}"/>
 			<!-- Tag the working copy -->
 			<copy srcPath="${svn.wc.path}" destUrl="${svn.vanilla.tag}" message="Tag version ${vanilla.version}"/>
 			<!-- reverse the svn:externals change -->
-			<revert dir="${svn.wc.path}" recurse="false"/>
+			<revert dir="${svn.wc.path}${file.separator}src" recurse="false"/>
 		</svn>
 	</target>
 
@@ -183,9 +208,10 @@
 		 ================================= -->
 	<target name="getChanges" depends="loadProperties,checkModification" description="--> Get changes between two release">
 		<echo level="info" message="Get diff between ${svn.vanilla.diff.new.url} and ${svn.vanilla.diff.old.url}..." />
+
 		<!-- Get the previous version numbers of people and framework -->
 		<svn username="${svn.username}" password="${svn.password}">
-			<propget url="${svn.vanilla.diff.external.url}" name="svn:externals" property="svn.vanilla.diff.old.externals"/>
+			<propget url="${svn.vanilla.diff.external.url}/src" name="svn:externals" property="svn.vanilla.diff.old.externals"/>
 		</svn>
 		<loadproperties>
 			<string value="${svn.vanilla.diff.old.externals}"/>
@@ -196,34 +222,35 @@
 		</loadproperties>
 
 		<!-- Get Diff... -->
-
-		<delete file="${svn.vanilla.diff.output.path}"/>
-		<delete file="${svn.framework.diff.output.path}"/>
-		<delete file="${svn.people.diff.output.path}"/>
+		<delete dir="${svn.diff.output.dir}" includes="*.diff"/>
+		<property name="svn.diff.vanilla.output.path"	value="${svn.diff.output.dir}vanilla.diff"/>
+		<property name="svn.diff.framework.output.path" value="${svn.diff.output.dir}framework.diff"/>
+		<property name="svn.diff.people.output.path"	value="${svn.diff.output.dir}people.diff"/>
 		<svn username="${svn.username}" password="${svn.password}">
-			<diff newurl="${svn.vanilla.diff.new.url}" oldurl="${svn.vanilla.diff.old.url}" outfile="${svn.vanilla.diff.output.path}"/>
-			<diff newurl="${svn.framework.src}" oldurl="${svn.framework.diff.old.url}" outfile="${svn.framework.diff.output.path}"/>
-			<diff newurl="${svn.people.src}" oldurl="${svn.people.diff.old.url}" outfile="${svn.people.diff.output.path}"/>
+			<diff newurl="${svn.vanilla.diff.new.url}" oldurl="${svn.vanilla.diff.old.url}" outfile="${svn.diff.vanilla.output.path}"/>
+			<diff newurl="${svn.framework.src}" oldurl="${svn.framework.diff.old.url}" outfile="${svn.diff.framework.output.path}"/>
+			<diff newurl="${svn.people.src}" oldurl="${svn.people.diff.old.url}" outfile="${svn.diff.people.output.path}"/>
 		</svn>
 
+
 		<!-- Extract the names of changed files -->
-		<copy file="${svn.vanilla.diff.output.path}" tofile="${svn.vanilla.diff.brief.output.path}" overwrite="true">
+		<copy file="${svn.diff.vanilla.output.path}" tofile="${svn.brief.output.dir}vanilla${svn.brief.ext}" overwrite="true">
 			<filterchain>
 				<containsregex pattern="^Index: (.*)$" replace="\1"/>
 			</filterchain>
 		</copy>
-		<copy file="${svn.framework.diff.output.path}" tofile="${svn.framework.diff.brief.output.path}" overwrite="true">
+		<copy file="${svn.diff.framework.output.path}" tofile="${svn.brief.output.dir}framework${svn.brief.ext}" overwrite="true">
 			<filterchain>
 				<containsregex pattern="^Index: (.*)$" replace="library/Framework/\1"/>
 			</filterchain>
 		</copy>
-		<copy file="${svn.people.diff.output.path}" tofile="${svn.people.diff.brief.output.path}" overwrite="true">
+		<copy file="${svn.diff.people.output.path}" tofile="${svn.brief.output.dir}people${svn.brief.ext}" overwrite="true">
 			<filterchain>
 				<containsregex pattern="^Index: (.*)$" replace="library/People/\1"/>
 			</filterchain>
 		</copy>
-		<concat destfile="${build.dir}${svn.diff.brief.name}">
-			<fileset dir="${build.dir}" includes="*-changes.txt"/>
+		<concat destfile="${svn.application.brief.path}">
+			<fileset dir="${build.dir}" includes="*${svn.brief.ext}"/>
 		</concat>
 	</target>
 
@@ -238,27 +265,47 @@
 		</svn>
 	</target>
 
+	<!-- =================================
+		  target: backUp
+		 ================================= -->
+	<target name="backUp" depends="loadProperties" description="--> Back-up a forum">
+		<mkdir dir="${bak.dir}"/>
+		<copy failonerror="off" file="${bak.dir}${ssh.remote.backUp.name}" tofile="${bak.dir}old-${ssh.remote.backUp.name}" overwrite="true"/>
+		<sshexec command="${ssh.cmd.packData}"  host="${ssh.host}" username="${ssh.username}" keyfile="${ssh.key.path}" passphrase="${ssh.key.pass}" trust="true"/>
+		<scp remoteFile="${ssh.username}@${ssh.host}:/${ssh.remote.backUp.path}" todir="${bak.dir}" username="${ssh.username}" keyfile="${ssh.key.path}" passphrase="${ssh.key.pass}" trust="true"></scp>
+	</target>
+
+	<!-- =================================
+		  target: deploy
+		 ================================= -->
+	<target name="deploy" depends="buildVanilla" description="--> Install Vanilla (only the files) on a server">
+		<tar destfile="${ssh.local.vanilla.tar.path}" basedir="${dist.installer.src}" compression="gzip"></tar>
+		<scp remoteTofile="${ssh.username}@${ssh.host}:/${ssh.remote.vanilla.tar.path}" localFile="${ssh.local.vanilla.tar.path}" username="${ssh.username}" keyfile="${ssh.key.path}" passphrase="${ssh.key.pass}" trust="true"></scp>
+		<sshexec command="${ssh.cmd.deploy}" host="${ssh.host}" username="${ssh.username}" keyfile="${ssh.key.path}" passphrase="${ssh.key.pass}" trust="true"/>
+	</target>
+
+
 	<!-- - - - - - - - - - - - - - - - - -
 		  target: checkModification
 		 - - - - - - - - - - - - - - - - - -->
 	<target name="checkModification" depends="update">
 		<resourcecount property="svn.wc.modified.count">
-			<fileset dir="${svn.wc.path}">
+			<fileset dir="${svn.wc.path}${file.separator}src">
 				<svnModified/>
 			</fileset>
 		</resourcecount>
 		<resourcecount property="svn.wc.added.count">
-			<fileset dir="${svn.wc.path}">
+			<fileset dir="${svn.wc.path}${file.separator}src">
 				<svnAdded/>
 			</fileset>
 		</resourcecount>
 		<resourcecount property="svn.wc.missing.count">
-			<fileset dir="${svn.wc.path}">
+			<fileset dir="${svn.wc.path}${file.separator}src">
 				<svnMissing/>
 			</fileset>
 		</resourcecount>
 		<resourcecount property="svn.wc.deleted.count">
-			<fileset dir="${svn.wc.path}">
+			<fileset dir="${svn.wc.path}${file.separator}src">
 				<svnDeleted/>
 			</fileset>
 		</resourcecount>
@@ -357,15 +404,14 @@
 		<property name="svn.framework.base"	value="http://lussumo.com/svn/framework/"/>
 		<property name="svn.framework.src"	value="${svn.framework.base}trunk"/>
 		<property name="svn.framework.tag"	value="${svn.framework.base}tags/Framework-${framework.version}"/>
-		<property name="svn.framework.folder" value="src/library/Framework"/>
+		<property name="svn.framework.folder" value="library/Framework"/>
 
 		<property name="svn.people.base"	value="http://lussumo.com/svn/people/"/>
 		<property name="svn.people.src"		value="${svn.people.base}trunk"/>
 		<property name="svn.people.tag"		value="${svn.people.base}tags/People-${people.version}"/>
-		<property name="svn.people.folder"	value="src/library/People"/>
+		<property name="svn.people.folder"	value="library/People"/>
 
 		<property name="svn.wc.path"		value="${basedir}"/>
-		<property name="svn.wc.status"		value=""/>
 		<property name="svn.update.rev"		value="HEAD"/>
 
 		<property name="svn.vanilla.diff.new.path"	value="/src"/>
@@ -374,15 +420,11 @@
 		<property name="svn.vanilla.diff.old.url"	value="${svn.vanilla.base}tags/Vanilla-${vanilla.old.version}${svn.vanilla.diff.old.path}"/>
 		<property name="svn.vanilla.diff.external.url" value="${svn.vanilla.base}tags/Vanilla-${vanilla.old.version}"/>
 
-		<property name="svn.vanilla.diff.output.path"	value="${build.dir}vanilla.diff"/>
-		<property name="svn.framework.diff.output.path" value="${build.dir}framework.diff"/>
-		<property name="svn.people.diff.output.path"	value="${build.dir}people.diff"/>
+		<property name="svn.diff.output.dir" value="${build.dir}"/>
+		<property name="svn.brief.output.dir" value="${build.dir}"/>
+		<property name="svn.brief.ext" value="diff-brief.txt"/>
+		<property name="svn.application.brief.path" value="${svn.brief.output.dir}changed-files.txt"/>
 
-		<property name="svn.vanilla.diff.brief.output.path"	value="${build.dir}vanilla-changes.txt"/>
-		<property name="svn.framework.diff.brief.output.path" value="${build.dir}framework-changes.txt"/>
-		<property name="svn.people.diff.brief.output.path"	value="${build.dir}people-changes.txt"/>
-
-		<property name="svn.diff.brief.name"			value="diff-brief.txt"/>
 
 		<!--	User related properties (username and password).
 				Copy build.properties-tmp to build.property and file it with your username, password...	-->
