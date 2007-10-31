@@ -182,6 +182,10 @@ class Comment extends Delegation {
 		$this->DiscussionWhisperUserID = ForceInt(@$DataSet['DiscussionWhisperUserID'], 0);
 
 		$this->Status = $this->GetStatus($UserID);
+
+		$this->DelegateParameters['DataSet'] = $DataSet;
+		$this->CallDelegate('PreAssignAuthRoleIcon');
+
 		if ($this->AuthRoleIcon != '') $this->AuthIcon = $this->AuthRoleIcon;
 	}
 
