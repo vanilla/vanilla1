@@ -88,32 +88,32 @@ function HideElement(ElementID, ClearElement) {
 }
 
 function PathFinder(){
-	 this.params = new function(){
-		  this.url = document.URL;
-		  this.domain = document.domain;
-		  this.httpMethod = this.url.replace(/^(http|https)(:\/\/).*$/, "$1$2");
-		  return this;
-	 };
-	 this.getRootPath = function(tag, attr, path) {
-		  var Tags = document.getElementsByTagName(tag);
-		  var src = '';
-		  var root = '';
-		  for(var i=0;i<Tags.length;i++) {
-				src = '';
-				if(Tags[i].getAttribute && Tags[i].getAttribute(attr)){
-					src = Tags[i].getAttribute(attr);
-				} else if (eval("Tags["+i+"]."+attr)) {
-					src = eval("Tags["+i+"]."+attr);
-				}
-				if(src.match(path)){
-					 root = src.replace(path, '');
-					 root = root.replace(/^http(s)?:\/\/[^\/]+/, ''); //because the src attr could have been a partial or complete url
-					 break;
-				}
-		  }
-		  return root || false;
-	 }
-	 return this;
+	this.params = new function(){
+		this.url = document.URL;
+		this.domain = document.domain;
+		this.httpMethod = this.url.replace(/^(http|https)(:\/\/).*$/, "$1$2");
+		return this;
+	};
+	this.getRootPath = function(tag, attr, path) {
+		var Tags = document.getElementsByTagName(tag);
+		var src = '';
+		var root = '';
+		for(var i=0;i<Tags.length;i++) {
+			src = '';
+			if(Tags[i].getAttribute && Tags[i].getAttribute(attr)){
+				src = Tags[i].getAttribute(attr);
+			} else if (Tags[i][attr]) {
+				src = Tags[i][attr];
+			}
+			if(src.match(path)){
+				root = src.replace(path, '');
+				root = root.replace(/^http(s)?:\/\/[^\/]+/, ''); //because the src attr could have been a partial or complete url
+				break;
+			}
+		}
+		return root || false;
+	}
+	return this;
 };
 
 function PopTermsOfService(Url) {
@@ -203,7 +203,7 @@ function UpdateCheck(AjaxUrl, RequestName, PostBackKey) {
 	var dm = new DataManager();
 	dm.RequestCompleteEvent = UpdateCheckStatus;
 	dm.RequestFailedEvent = UpdateCheckStatus;
-   dm.Param = AjaxUrl;
+	dm.Param = AjaxUrl;
 	dm.LoadData(AjaxUrl+"?RequestName="+RequestName+"&PostBackKey="+PostBackKey);
 }
 
@@ -246,33 +246,33 @@ function UpdateCheckStatus(Request) {
 }
 
 function Wait(Sender, WaitText) {
-	 Sender.disabled = true;
-	 Sender.value = WaitText;
+	Sender.disabled = true;
+	Sender.value = WaitText;
 
-	 el = Sender.parentNode;
-	 while(el != null) {
-		  if (el.tagName == "FORM") {
-				el.submit();
-				break;
-		  }
-		  el = el.parentNode;
-	 }
+	var el = Sender.parentNode;
+	while(el != null) {
+		if (el.tagName == "FORM") {
+			el.submit();
+			break;
+		}
+		el = el.parentNode;
+	}
 }
 
-function WriteEmail(d, n, v, i) {
+function WriteEmail(Domain, Name, Label, Reference) {
 	if (document.createElement && document.getElementById) {
-		var a, p, t;
+		var link, script, textNode;
 		//Create link
-		a = document.createElement('a');
-		a.href = 'mai'+'lto:'+n+'@'+d;
+		link = document.createElement('a');
+		link.href = 'mai'+'lto:'+Name+'@'+Domain;
 		//Create text link
-		v = v || n+"@"+d;
-		t = document.createTextNode(v);
-		a.appendChild(t);
+		Label = Label || Name+"@"+Domain;
+		textNode = document.createTextNode(Label);
+		link.appendChild(textNode);
 		//Append link
-		p = document.getElementById(i).parentNode;
-		if (p) {
-			p.appendChild(a);
+		script = document.getElementById(Reference);
+		if (script) {
+			script.parentNode.appendChild(link);
 		}
 	}
 }
