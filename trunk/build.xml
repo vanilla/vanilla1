@@ -103,8 +103,8 @@
 	<target name="buildPackage" depends="buildVanilla,buildUpdate" description="--> Build a new release of vanilla">
 		<echo level="info" message="${line.separator}Build package..."/>
 		<!-- Pack Vanilla -->
-		<zip basedir="${dist.installer.src}" destfile="${dist.installer.zip}" level="9"/>
-		<zip basedir="${dist.upgrader.src}" destfile="${dist.upgrader.zip}" level="9"/>
+		<zip basedir="${dist.installer.src}" destfile="${dist.installer.zip}" level="9" excludes="**/js/test, **/js/test/**"/>
+		<zip basedir="${dist.upgrader.src}" destfile="${dist.upgrader.zip}" level="9" excludes="**/js/test, **/js/test/**"/>
 	</target>
 
 
@@ -368,7 +368,7 @@
 		<!-- Get version numbers -->
 		<loadproperties srcfile="${src.dir}appg${file.separator}version.php">
 			<filterchain>
-				<containsregex pattern="define.*'(.+)_(.+)'.*'([\d\.]+)'.*" replace="\1.\2 = \3"/>
+				<containsregex pattern="define.*'(.+)_(.+)'.*'([\w\.]+)'.*" replace="\1.\2 = \3"/>
 			</filterchain>
 		</loadproperties>
 		<property name="vanilla.version"		value="${APPLICATION.VERSION}"/>
