@@ -1,44 +1,3 @@
-/**
- * An easy way to create elements for testing
- */
-fixture = {
-	/**
-	 * id of the container
-	 * @param {string}
-	 */
-	selector: '#fixtures',
-
-	/**
-	 * Last set of html set. allow to easely reset the content while a test.
-	 * @private
-	 * @param {string}
-	 */
-	lastSet: '',
-
-	/**
-	 * Create the fixture
-	 * @param {string} html code to create.
-	 */
-	set: function(html) {
-		this.lastSet = html;
-		$(this.selector).html(html);
-	},
-
-	/**
-	 * Reset the fixture to the last set
-	 */
-	reset: function() {
-		$(this.selector).html(this.lastSet);
-	},
-
-	/**
-	 * empty the fixture container
-	 */
-	empty: function() {
-		$(this.selector).empty();
-	}
-};
-
 test('BlockSubmit()', function() {
 	var evt, done, result;
 
@@ -69,7 +28,7 @@ test('BlockSubmit()', function() {
 });
 
 test('CheckAll()', function(){
-	var r1, r2, r3;
+	var r1, r2, r3, fixture = new Fixture('CheckAll');
 
 	fixture.set(
 		'<form action="#">'
@@ -102,7 +61,7 @@ test('CheckAll()', function(){
 });
 
 test('CheckNone()', function(){
-	var r1, r2, r3;
+	var r1, r2, r3, fixture = new Fixture('CheckNone');
 
 	fixture.set(
 		'<form action="#">'
@@ -135,7 +94,7 @@ test('CheckNone()', function(){
 });
 
 test('CheckSwitch()', function(){
-	var result;
+	var result, fixture = new Fixture('CheckSwitch');
 
 	fixture.set(
 		'<form action="#"><input type="checkbox" name="testCheckBox" id="testCheckBox" checked="checked"/></form>'
@@ -155,20 +114,21 @@ test('CheckSwitch()', function(){
 });
 
 test('ClearContents()', function(){
-	var el;
+	var el, fixture = new Fixture('ClearContents');
 
 	fixture.set('<p id="testP">test</p>');
 	el = $('#testP');
 
 	equals( el.html(), 'test', 'fixture well set');
 
-	ClearContents(el.get()[0]);
+	ClearContents(el.get(0));
 	ok( !(el.html()), 'content cleared');
 
 	fixture.empty();
 });
 
 test('CompletePreferenceSet()', function(){
+	var fixture = new Fixture('CompletePreferenceSet');
 
 	fixture.set('<p id="testP" class="test">test</p>');
 
@@ -188,11 +148,33 @@ test('Explode()', function(){
 });
 
 test('Focus()', function(){
-	//How can I test that something is in focus
+	var started = false, fixture = new Fixture('Focus');
+
+	fixture.set('<form action="#"><input type="text" id="testFocus" name="testFocus"/></form>');
+
+	// when the input is on focus, test ok and restart.
+	$('#testFocus').bind('focus', function(){
+		ok(true, 'object on focus');
+		start();
+		started = true;
+	});
+
+	expect(1);
+	stop();
+
+	Focus('testFocus');
+
+	// in case of a problem, the tests will run again (this one will fail).
+	function cleanUp() {
+		if (!started) start();
+		fixture.empty();
+	}
+	setTimeout(cleanUp, 200);
 });
 
 test('GetElements()', function(){
-	var els;
+	var els, fixture = new Fixture('GetElements');
+
 	fixture.set('<p>not a test</p><p id="test_1">test 1</p><p id="test_2">test 2</p>');
 
 	els = GetElements('p', 'test_');
@@ -204,7 +186,8 @@ test('GetElements()', function(){
 });
 
 test('HideElement()', function(){
-	var el;
+	var el, fixture = new Fixture('HideElement');
+
 	fixture.set('<p id="testP">test</p>');
 
 	el = $('#testP');
@@ -231,9 +214,13 @@ test('PathFinder()', function(){
 	equals( r, '/community/', 'test with regex' );
 });
 
-test('PopTermsOfService()', function(){});
+test('PopTermsOfService()', function(){
+	// How to test this?
+});
 
 test('PreferenceSet()', function(){
+	var fixture = new Fixture('PreferenceSet');
+
 	fixture.set('<p id="testP">test</p>');
 
 	expect(1);
@@ -258,11 +245,44 @@ test('RefreshPageWhenAjaxComplete()', function(){
 });
 
 test('SubmitForm()', function(){
-	// ?? maybe using iFrame
+	var fixture = new Fixture('SubmitForm');
+
+	fixture.set(
+		'<iframe name="SubmitFormTarget" id="SubmitFormTarget"  height="200" width="200" src="iframeStart.html"></iframe>'
+		+ '<form name="SubmitFormForm" action="getNames.html" target="SubmitFormTarget" method="POST">'
+		+ '<input type="submit" id="SubmitFormInput" name="test" value="test"/></form>'
+	);
+
+	SubmitForm('SubmitFormForm', $('#SubmitFormInput').get(0), 'wait...');
+
+	// The form when submit should change the location of the iframe
+	// It will check it is done
+	function checkSrc() {
+		var pageName, href;
+
+		// Location of the iframe
+		href = frames['SubmitFormTarget'].location.href;
+
+		// Extract the page name,
+		// I could try to get path to this folder, but I just compare the page name.
+		pageName = href.split('/').reverse()[0];
+		equals(	pageName, 'getNames.html', 'Check the iframe address.');
+
+		start();
+		fixture.empty();
+	}
+
+	expect(1);
+	stop();
+
+	// It has to wait the page load in the iframe
+	setTimeout(checkSrc, 1000);
+
 });
 
 test('SwitchElementClass()', function(){
-	var ClassName, Comment;
+	var ClassName, Comment, fixture = new Fixture('SwitchElementClass');
+
 	fixture.set('<p id="testA" class="classA">test</p><p id="testB">commentA</p>');
 
 	// easy way to get effet of SwitchElementClass
@@ -283,32 +303,33 @@ test('SwitchElementClass()', function(){
 });
 
 test('SwitchExtension()', function(){
+	var fixture = new Fixture('SwitchExtension');
+
 	fixture.set(
 		'<form action="#"><div id="ajaxResult"><input type="checkbox" id="chkajaxResultID"/></form>'
 	);
+
 	expect(3);
 	stop();
 
 	// overwrite DatManager to check parameter (and not send anything)
-	DataManager = function(){
-		this.Param = '';
-		this.RequestFailedEvent = '';
-		this.RequestCompleteEvent= '';
-		this.LoadData = function(url) {
+	setFauxDataManager(
+		'test.php?ExtensionKey=ajaxResult&PostBackKey=TestPostBackKey',
+		'ajaxResult',
+		function(){
 			ok( $('#ajaxResult').is('.Processing'), 'Check item shows as Processing' );
-			ok( this.Param == 'ajaxResult', 'check extension key' );
-			ok( url == 'test.php?ExtensionKey=ajaxResult&PostBackKey=TestPostBackKey', 'check url' );
 			start();
 			fixture.empty();
-		};
-		return this;
-	}
+		}
+	);
 
 	SwitchExtension('test.php', 'ajaxResult', 'TestPostBackKey');
 
 });
 
 test('SwitchExtensionResult()', function(){
+	var fixture = new Fixture('SwitchExtensionResult');
+
 	fixture.set(
 		'<form action="#"><div id="ajaxResult"><input type="checkbox" id="chkajaxResultID"/></form>'
 	);
@@ -328,6 +349,8 @@ test('SwitchExtensionResult()', function(){
 });
 
 test('SwitchExtensionItemClass()', function(){
+	var fixture = new Fixture('SwitchExtensionItemClass');
+
 	fixture.set(
 		'<form action="#"><div id="ajaxResult"><input type="checkbox" id="chkajaxResultID"/></form>'
 	);
@@ -342,30 +365,25 @@ test('SwitchExtensionItemClass()', function(){
 });
 
 test('SwitchPreference()', function(){
+	var fixture = new Fixture('SwitchPreference');
 
 	fixture.set(
 		'<form action="#"><div id="ajaxResult"><input type="checkbox" id="ajaxResultID"/></form>'
 	);
 
-	expect(4);
-	stop();
 
-	// overwrite DatManager to check parameter (and not send anything)
-	DataManager = function(){
-		this.Param = '';
-		this.RequestFailedEvent = '';
-		this.RequestCompleteEvent = '';
-		this.LoadData = function(url) {
+	// overwrite DatManager to check parameters
+	setFauxDataManager(
+		'test.php?Type=ajaxResult&PostBackKey=TestPostBackKey&Switch=false',
+		'ajaxResult',
+		function(){
 			ok( $('#ajaxResult').is('.PreferenceProgress'), 'Check item shows as PreferenceProgress' );
-			equals(this.Param, 'ajaxResult', 'check Preference Name' );
 			equals(this.RequestCompleteEvent, PreferenceSet, 'Check success callback' );
-			equals( url, 'test.php?Type=ajaxResult&PostBackKey=TestPostBackKey&Switch=false', 'check url' );
-			start();
 			fixture.empty();
-		};
-		return this;
-	}
+		}
+	);
 
+	expect(4);
 	SwitchPreference('test.php', 'ajaxResult', false, 'TestPostBackKey');
 });
 
@@ -376,27 +394,22 @@ test('Trim()', function(){
 });
 
 test('UpdateCheck()', function(){
+
 	expect(2);
 	stop();
-
 	// overwrite DatManager to check parameter (and not send anything)
-	DataManager = function(){
-		this.Param = '';
-		this.RequestFailedEvent = '';
-		this.RequestCompleteEvent = '';
-		this.LoadData = function(url) {
-			equals(this.Param, 'test.php', 'check Preference Name' );
-			equals( url, 'test.php?RequestName=requestName&PostBackKey=TestPostBackKey', 'check url' );
-			start();
-		};
-		return this;
-	}
+	setFauxDataManager(
+		'test.php?RequestName=requestName&PostBackKey=TestPostBackKey',
+		'test.php',
+		start
+	);
 
 	UpdateCheck('test.php', 'requestName', 'TestPostBackKey');
 });
 
 test('UpdateCheckStatus()', function(){
-	var BackUpUpdateCheck, count = 0;
+	var BackUpUpdateCheck, count = 0, fixture = new Fixture('UpdateCheckStatus');
+
 	fixture.set(
 		'<div id="Core"><div id="CoreDetails"></div></div>'
 		+ '<div id="itemName"><div id="itemNameDetails"></div></div>'
@@ -411,7 +424,7 @@ test('UpdateCheckStatus()', function(){
 	window.UpdateCheck = function (url, itemName, PostBackKey){
 		equals(url, 'test.php', 'check url send for' + itemName);
 		equals(PostBackKey, 'TestPostBackKey', 'check PostBackKey send for' + itemName);
-		count++
+		count++;
 		if (count > 5) {
 			window.UpdateCheck = BackUpUpdateCheck;
 			start();
@@ -424,7 +437,6 @@ test('UpdateCheckStatus()', function(){
 	ok(!($('#CoreDetails').html()), 'no changes' );
 	ok(!($('#itemName').attr('class')), 'no changes' );
 	ok(!($('#itemNameDetails').html()), 'no changes' );
-	fixture.empty();
 
 	// Test "ERROR" return messages. it should not execute UpdateCheck
 	fixture.reset();
@@ -470,28 +482,37 @@ test('UpdateCheckStatus()', function(){
 	ok( $('#itemName').is('.UpdateGood'), 'Check extendion good class ' );
 	equals( $('#itemNameDetails').html(), 'good message', 'Check good extension message' );
 
+	fixture.empty();
+
 });
 
 // This test is imcomplete, it should check the form is submitted
 test('Wait()', function(){
+	var fixture = new Fixture('Wait');
+
 	fixture.set(
-		'<form id="testForm" target="testIframe" action="http://getvanilla.com"><input type="submit" name="testInput" value="submit" id="testInput"/></form>'
-		+ '<iframe name="testIframe" id="testIframe" width="200px" height="200px" src="http://www.google.com"/>'
+		'<form id="testForm" target="testIframe" action="getNames.html"><input type="submit" name="testInput" value="submit" id="testInput"/></form>'
+		+ '<iframe name="testIframe" id="testIframe" width="200px" height="200px" src="iframeStart.html"/>'
 	);
 
 	Input = $('#testInput');
-	Wait(Input.get()[0], 'Waiting...');
+	Wait(Input.get(0), 'Waiting...');
+
+	// check the button is desable
+	// See the SubmitForm test to check the form has be submitted
 	ok(Input.attr('disabled'), 'Check submit button is disable');
 
 	fixture.empty();
 });
 
 test('WriteEmail()', function(){
+	var fixture = new Fixture('WriteEmail');
+
 	fixture.set('<div id="testDiv">test<div id="testScript">test</div></p>');
 
-	WriteEmail('example.com', 'example', 'test', 'testScript');
+	WriteEmail('example.com', 'example', 'tested', 'testScript');
 	equals( $('#testDiv a').get().length, 1, 'Check the link is created' );
-	equals( $('#testDiv a').html(), 'test', 'Check link test' );
+	equals( $('#testDiv a').html(), 'tested', 'Check link test' );
 	equals( $('#testDiv a').attr('href'), 'mailto:example@example.com', 'check address link');
 
 	fixture.empty();
