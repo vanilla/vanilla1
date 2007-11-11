@@ -132,7 +132,7 @@ function ToggleCategoryBlock(AjaxUrl, CategoryID, Block, SenderID, PostBackKey) 
 		Sender.className = 'HideProgress';
 	}
 	var Parameters = "BlockCategoryID="+CategoryID+"&Block="+Block+'&PostBackKey='+PostBackKey;
-   var dm = new DataManager();
+	var dm = new DataManager();
 	dm.RequestCompleteEvent = RefreshPageWhenAjaxComplete;
 	dm.RequestFailedEvent = HandleFailure;
 	dm.LoadData(AjaxUrl+"?"+Parameters);
