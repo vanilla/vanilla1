@@ -321,12 +321,15 @@ test( 'WhisperBack()', function() {
 			'<textarea name="Body" id="frmBody"></textarea>' +
 			'</form>');
 	expect(2);
+	stop();
 	// test textarea is in focus
 	$('#frmBody').bind('focus', function(){ ok(true, 'test the textarea is in focus'); });
 
 	WhisperBack('20', 'Mark', '/foo/');
 	equals($('#frmInput').attr('value'), 'Mark', 'test input value');
 
-	ft.empty();
+	function cleanUp() { ft.empty(); start(); }
+
+	setTimeout(cleanUp, 100);
 	// how could I check the redirect part of this fonction (when the reply form is not on the page)
 });
