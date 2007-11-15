@@ -428,6 +428,20 @@ class DiscussionManager extends Delegation {
 				// Validate the Discussion topic
 				$Name = FormatStringForDatabaseInput($Discussion->Name);
 				Validate($this->Context->GetDefinition('DiscussionTopicLower'), 1, $Name, 100, '', $this->Context);
+
+				//Validate the category ID and role
+				$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
+				$s->SetMainTable('Category', 'c');
+				$s->AddSelect('CategoryID', 'c');
+				$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID', 'c', 'CategoryID', 'left join', ' and crb.'.$this->Context->DatabaseColumns['CategoryRoleBlock']['RoleID'].' = '.$this->Context->Session->User->RoleID);
+				$s->AddWhere('crb', 'Blocked', '', '0', '=', 'and', '', 1, 1);
+				$s->AddWhere('crb', 'Blocked', '', '0', '=', 'or', '', 0, 0);
+				$s->AddWhere('crb', 'Blocked', '', 'null', 'is', 'or', '', 0, 0);
+				$s->AddWhere('c', 'CategoryID', '', $Discussion->CategoryID, '=', 'and');
+				$s->EndWhereGroup();
+
+				$CategoryAllowed = $this->Context->Database->Select($s, $this->Name, 'SaveDiscussion', 'An error occurred while validating category permissions.');
+
 				if ($Discussion->CategoryID <= 0) $this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrSelectCategory'));
 
 				// Validate first comment
@@ -452,7 +466,7 @@ class DiscussionManager extends Delegation {
 				if ($this->Context->WarningCollector->Count() == 0) $Discussion->Name = $Name;
 
 				if($this->Context->WarningCollector->Iif()) {
-					$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
+					$s->Clear();
 
 					// Update the user info & check for spam
 					if ($NewDiscussion) {
