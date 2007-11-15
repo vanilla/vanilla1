@@ -351,6 +351,7 @@ if (!defined('IN_VANILLA')) exit();
 		// Include the db settings defined in the previous step
 		include($RootDirectory.'conf/database.php');
 		$Context->DatabaseTables['User'] = $DatabaseTables['User'];
+		$Context->Configuration['DATABASE_TABLE_PREFIX'] = $Configuration['DATABASE_TABLE_PREFIX'];
 
 		// Open the database connection
 		$Connection = false;
