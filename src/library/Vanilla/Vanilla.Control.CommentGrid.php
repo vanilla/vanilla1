@@ -59,9 +59,10 @@ class CommentGrid extends Control {
 				$Focus = ForceIncomingInt('Focus', 0);
 				$PageCount = CalculateNumberOfPages($this->CommentDataCount, $this->Context->Configuration['COMMENTS_PER_PAGE']);
 				if ($Focus > 0 && $PageCount > 1) {
-					$this->CurrentPage = 1;
+					$this->CurrentPage = 0;
 					$FoundComment = 0;
 					while ($this->CurrentPage <= $PageCount && !$FoundComment) {
+                  $this->CurrentPage++;
 						$this->CommentData = $CommentManager->GetCommentList($this->Context->Configuration['COMMENTS_PER_PAGE'], $this->CurrentPage, $DiscussionID);
 						while ($Row = $this->Context->Database->GetRow($this->CommentData)) {
 							if (ForceInt($Row['CommentID'], 0) == $Focus) {
@@ -69,7 +70,6 @@ class CommentGrid extends Control {
 								break;
 							}
 						}
-						$this->CurrentPage++;
 					}
 					$this->Context->Database->RewindDataSet($this->CommentData);
 				} else {
