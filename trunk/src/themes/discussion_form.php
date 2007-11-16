@@ -8,6 +8,7 @@ echo '<div id="Form" class="StartDiscussion">
 		.$this->Get_PostBackForm('frmPostDiscussion', 'post', 'post.php')
 		.'<ul>';
 	if ($this->Context->Configuration['USE_CATEGORIES']) {
+		$this->DelegateParameters['CategorySelect'] = &$cs;
 		$this->CallDelegate('DiscussionForm_PreCategoryRender');
 		$cs->Attributes .= ' id="ddCategories"';
 		echo '<li>
