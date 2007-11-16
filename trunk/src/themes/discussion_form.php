@@ -9,7 +9,7 @@ echo '<div id="Form" class="StartDiscussion">
 		.'<ul>';
 	if ($this->Context->Configuration['USE_CATEGORIES']) {
 		$this->CallDelegate('DiscussionForm_PreCategoryRender');
-		$cs->Attributes = ' id="ddCategories"';
+		$cs->Attributes .= ' id="ddCategories"';
 		echo '<li>
 			<label for="ddCategories">'.$this->Context->GetDefinition('SelectDiscussionCategory').'</label>
 			'.$cs->Get()
