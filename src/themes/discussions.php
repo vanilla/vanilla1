@@ -31,7 +31,8 @@ while ($Row = $this->Context->Database->GetRow($this->DiscussionData)) {
 	if ($Discussion->WhisperUserID > 0) {
 		$Discussion->Name = @$Discussion->WhisperUsername.': '.$Discussion->Name;
 	}
-
+	$this->DelegateParameters['Discussion'] = &$Discussion;
+	$this->CallDelegate( 'PreSingleDiscussionRender' );
 	// Discussion search results are identical to regular discussion listings, so include the discussion search results template here.
 	include($ThemeFilePath);
 

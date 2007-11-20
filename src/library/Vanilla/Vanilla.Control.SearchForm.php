@@ -182,6 +182,8 @@ class SearchForm extends PostBackControl {
 						$Discussion->GetPropertiesFromDataSet($Row, $this->Context->Configuration);
 						$Discussion->FormatPropertiesForDisplay();
 						if ($Counter < $this->Context->Configuration['SEARCH_RESULTS_PER_PAGE']) {
+							$this->DelegateParameters['Discussion'] = &$Discussion;
+							$this->CallDelegate('PreSingleDiscussionRender');
 							include($ThemeFilePath);
 						}
 						$FirstRow = 0;
