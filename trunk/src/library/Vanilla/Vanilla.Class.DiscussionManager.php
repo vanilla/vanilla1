@@ -29,6 +29,7 @@ class DiscussionManager extends Delegation {
 	function DiscussionManager(&$Context) {
 		$this->Name = 'DiscussionManager';
 		$this->Delegation($Context);
+		$this->CallDelegate('Constructor');
 	}
 
 	function GetBookmarkedDiscussionsByUserID($UserID, $RecordsToReturn = '0', $IncludeDiscussionID = '0') {
@@ -476,6 +477,10 @@ class DiscussionManager extends Delegation {
 
 					// Proceed with the save if there are no warnings
 					if ($this->Context->WarningCollector->Count() == 0) {
+
+						$this->DelegateParameters['SqlBuilder'] = &$s;
+						$this->CallDelegate( 'PreSaveDiscussion' );
+
 						$s->SetMainTable('Discussion', 'd');
 						$s->AddFieldNameValue('Name', $Discussion->Name);
 						$s->AddFieldNameValue('CategoryID', $Discussion->CategoryID);

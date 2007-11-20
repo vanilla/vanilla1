@@ -95,7 +95,7 @@ class Discussion extends Delegation {
 	}
 
 	// Retrieve properties from current DataRowSet
-	function GetPropertiesFromDataSet($DataSet, $Configuration) {
+	function GetPropertiesFromDataSet($DataSet, &$Configuration) {
 		$this->DiscussionID = @$DataSet['DiscussionID'];
 		$this->FirstCommentID = @$DataSet['FirstCommentID'];
 		$this->CategoryID = @$DataSet['CategoryID'];
@@ -166,6 +166,7 @@ class Discussion extends Delegation {
 		$this->Status = $this->GetStatus();
 
 		// Define the last page
+		$this->CallDelegate('PreDefineLastPage');
 		$TmpCount = ($this->CountComments / $Configuration['COMMENTS_PER_PAGE']);
 		$RoundedCount = intval($TmpCount);
 		if ($TmpCount > 1) {
@@ -177,7 +178,7 @@ class Discussion extends Delegation {
 		} else {
 			$this->LastPage = 1;
 		}
-
+		
 		$this->DelegateParameters['DataSet'] = &$DataSet;
 		$this->CallDelegate('PostGetPropertiesFromDataSet');
 	}

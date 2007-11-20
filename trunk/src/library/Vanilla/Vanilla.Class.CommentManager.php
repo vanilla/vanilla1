@@ -355,6 +355,9 @@ class CommentManager extends Delegation {
 						$s->AddFieldNameValue('DateCreated', MysqlDateTime());
 						$s->AddFieldNameValue('WhisperUserID', $Comment->WhisperUserID);
 
+						$this->DelegateParameters['SqlBuilder'] = &$s;
+						$this->CallDelegate('PreInsertNewComment');
+
 						$Comment->CommentID = $this->Context->Database->Insert($s, $this->Name, 'SaveComment', 'An error occurred while creating a new discussion comment.');
 
 						$this->CallDelegate('PostSaveNewComment');
