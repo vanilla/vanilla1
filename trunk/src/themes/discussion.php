@@ -7,9 +7,13 @@ $UnreadUrl = GetUnreadQuerystring($Discussion, $this->Context->Configuration, $C
 $NewUrl = GetUnreadQuerystring($Discussion, $this->Context->Configuration, 1);
 $LastUrl = GetLastCommentQuerystring($Discussion, $this->Context->Configuration, $CurrentUserJumpToLastCommentPref);
 
+$this->DelegateParameters['Discussion'] = &$Discussion;
+$this->DelegateParameters['DiscussionList'] = &$DiscussionList;
+
 $DiscussionList .= '
-<li id="Discussion_'.$Discussion->DiscussionID.'" class="Discussion'.$Discussion->Status.($Discussion->CountComments == 1?' NoReplies':'').($this->Context->Configuration['USE_CATEGORIES'] ? ' Category_'.$Discussion->CategoryID:'').($Alternate ? ' Alternate' : '').'">
-	<ul>
+<li id="Discussion_'.$Discussion->DiscussionID.'" class="Discussion'.$Discussion->Status.($Discussion->CountComments == 1?' NoReplies':'').($this->Context->Configuration['USE_CATEGORIES'] ? ' Category_'.$Discussion->CategoryID:'').($Alternate ? ' Alternate' : '').'">';
+	$this->CallDelegate('PreDiscussionOptionsRender');
+	$DiscussionList .= '<ul>
 		<li class="DiscussionType">
 			<span>'.$this->Context->GetDefinition('DiscussionType').'</span>'.DiscussionPrefix($this->Context, $Discussion).'
 		</li>
@@ -43,11 +47,10 @@ $DiscussionList .= '
 			</li>
 			';
 		}
-	$this->DelegateParameters['Discussion'] = &$Discussion;
-	$this->DelegateParameters['DiscussionList'] = &$DiscussionList;
 
 	$this->CallDelegate('PostDiscussionOptionsRender');
 
 $DiscussionList .= '</ul>
 </li>';
+$this->CallDelegate('PostDiscussionRender');
 ?>
