@@ -183,7 +183,7 @@ class Comment extends Delegation {
 
 		$this->Status = $this->GetStatus($UserID);
 
-		$this->DelegateParameters['DataSet'] = $DataSet;
+		$this->DelegateParameters['DataSet'] = &$DataSet;
 		$this->CallDelegate('PreAssignAuthRoleIcon');
 
 		if ($this->AuthRoleIcon != '') $this->AuthIcon = $this->AuthRoleIcon;
