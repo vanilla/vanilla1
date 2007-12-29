@@ -1,0 +1,50 @@
+# If you need to update to or tag a previous release.
+# svn.update.rev = HEAD
+
+# Your svn password and username
+# This file should never be added to the svn!!!
+svn.username =
+svn.password =
+
+
+# ssh address and credentials
+# I set it use key identification
+
+ssh.host =
+ssh.username =
+ssh.key.path =
+ssh.key.pass =
+
+
+## BACK-UP ##
+#
+# Name and remote path to the package to download
+# e.g.:
+# ssh.remote.backUp.name = back-up.tar.gz
+# ssh.remote.backUp.path = /var/${ssh.remote.backUp.name}
+
+ssh.remote.backUp.name =
+ssh.remote.backUp.path =
+
+# command to execute on the server before downloading the backup
+# e.g.:
+# ssh.cmd.packData = cd /var; tar -zcvf ${ssh.remote.backUp.name} www/;
+
+ssh.cmd.packData =
+
+## DEPLOY ##
+#
+# The vanilla files will be packed to be tranfered
+# Set the path of this package localy and on the server
+# e.g.:
+# ssh.local.vanilla.tar.path = ${dist.dir}${dist.installer.name}.tar.gz
+# ssh.remote.vanilla.tar.path = /var/${dist.installer.name}.tar.gz
+
+ssh.local.vanilla.tar.path = ${dist.dir}${dist.installer.name}.tar.gz
+ssh.remote.vanilla.tar.path =
+
+# Command to execute when the package is on the server
+# e.g.:
+# ssh.cmd.deploy = cd /tmp; tar -xzvvf ${ssh.remote.vanilla.tar.path}; cp -r ${dist.installer.name}/* /var/www
+
+ssh.cmd.deploy =
