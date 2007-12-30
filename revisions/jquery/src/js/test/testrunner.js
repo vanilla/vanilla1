@@ -13,6 +13,8 @@ var _config = {
 	asyncTimeout: 2 // seconds for async timeout
 };
 
+$ = jQuery;
+
 var isLocal = !!(window.location.protocol == 'file:');
 
 $(function() {

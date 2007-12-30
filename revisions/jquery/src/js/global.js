@@ -10,6 +10,8 @@
 * Description: Non-application specific utility functions
 */
 
+// Using jQuery without the "$" shortcut
+jQuery.noConflict();
 
 if(document.all && !document.getElementById) {
 	document.getElementById = function(id) {
@@ -42,12 +44,7 @@ function CheckNone(IdToMatch) {
 }
 
 function CheckSwitch(IdToMatch, Switch) {
-	var el = document.getElementsByTagName("input");
-	for (i = 0; i < el.length; i++) {
-		if (el[i].type == "checkbox" && el[i].id.indexOf(IdToMatch) == 0) {
-			el[i].checked = Switch;
-		}
-	}
+	jQuery("input:checkbox[id^=" + IdToMatch + "]").attr("checked", Switch);
 }
 
 function ClearContents(Container) {
@@ -55,8 +52,8 @@ function ClearContents(Container) {
 }
 
 function CompletePreferenceSet(PreferenceName) {
-	 var Container = document.getElementById(PreferenceName);
-	 if (Container) Container.className = 'PreferenceComplete';
+	//@todo	Should add the class or replace all class with this one?
+	jQuery("#" + PreferenceName).attr("class", 'PreferenceComplete');
 }
 
 function Explode(inString, Delimiter) {
@@ -64,27 +61,16 @@ function Explode(inString, Delimiter) {
 }
 
 function Focus(ElementID) {
-	var el = document.getElementById(ElementID);
-	if (el) el.focus();
+	jQuery("#" + ElementID).focus();
 }
 
 function GetElements(ElementName, ElementIDPrefix) {
-	var Elements = document.getElementsByTagName(ElementName);
-	var objects = new Array();
-	for (i = 0; i < Elements.length; i++) {
-		if (Elements[i].id.indexOf(ElementIDPrefix) == 0) {
-			objects[objects.length] = Elements[i];
-		}
-	}
-	return objects;
+	return jQuery(ElementName + "[id^=" + ElementIDPrefix + "]").get();
 }
 
 function HideElement(ElementID, ClearElement) {
-	var Element = document.getElementById(ElementID);
-	if (Element) {
-		Element.style.display = "none";
-		if (ClearElement == 1) ClearContents(Element);
-	}
+	var el = jQuery("#" + ElementID).hide();
+	if (ClearElement == 1 && el.size() > 0) el.html('');
 }
 
 function PathFinder(){
@@ -95,22 +81,16 @@ function PathFinder(){
 		return this;
 	};
 	this.getRootPath = function(tag, attr, path) {
-		var Tags = document.getElementsByTagName(tag);
-		var src = '';
 		var root = '';
-		for(var i=0;i<Tags.length;i++) {
-			src = '';
-			if(Tags[i].getAttribute && Tags[i].getAttribute(attr)){
-				src = Tags[i].getAttribute(attr);
-			} else if (Tags[i][attr]) {
-				src = Tags[i][attr];
+		$(tag).each(function(){
+			if (root === '') {
+				var src = $(this).attr(attr);
+				if(src.match(path)){
+					root = src.replace(path, '');
+					root = root.replace(/^http(s)?:\/\/[^\/]+/, ''); //because the src attr could have been a partial or complete url
+				}
 			}
-			if(src.match(path)){
-				root = src.replace(path, '');
-				root = root.replace(/^http(s)?:\/\/[^\/]+/, ''); //because the src attr could have been a partial or complete url
-				break;
-			}
-		}
+		});
 		return root || false;
 	}
 	return this;
@@ -157,7 +137,7 @@ function SwitchExtension(AjaxUrl, ExtensionKey, PostBackKey) {
 	if (Item) Item.className = "Processing";
 	var Parameters = "ExtensionKey="+ExtensionKey+"&PostBackKey="+PostBackKey;
 	var dm = new DataManager();
-	 dm.Param = ExtensionKey;
+	dm.Param = ExtensionKey;
 	dm.RequestFailedEvent = SwitchExtensionResult;
 	dm.RequestCompleteEvent = SwitchExtensionResult;
 	dm.LoadData(AjaxUrl+"?"+Parameters);
@@ -208,71 +188,52 @@ function UpdateCheck(AjaxUrl, RequestName, PostBackKey) {
 }
 
 function UpdateCheckStatus(Request) {
+	var ItemName, itemId, Message, PostBackKey, Item, ItemDetails, itemClass, detailMessage;
+
 	if (Request.responseText == "COMPLETE") return;
 
-	var ItemName = Request.responseText.substring(0, Request.responseText.indexOf("|"));
-	if (ItemName == "First") {
-		var Item = document.getElementById('Core');
-		var ItemDetails = document.getElementById("CoreDetails");
-	} else {
-		var Item = document.getElementById(ItemName);
-		var ItemDetails = document.getElementById(ItemName+"Details");
-	}
-	var Message = Request.responseText.slice(Request.responseText.indexOf("|")+1);
-	var FormPostBackKey = document.getElementById("FormPostBackKey");
-	var PostBackKey = (FormPostBackKey) ? FormPostBackKey.value : '';
 
-	if (Item && ItemDetails) {
+	Message = Request.responseText.slice(Request.responseText.indexOf("|")+1);
+	PostBackKey = $("#FormPostBackKey").attr('value') || '';
+	ItemName = itemId = Request.responseText.substring(0, Request.responseText.indexOf("|"));
+	if (ItemName == "First") {
+		itemId = "Core";
+	}
+
+	Item = jQuery("#" + itemId);
+	ItemDetails = jQuery("#" + itemId + "Details");
+
+
+	if (Item.size() > 0 && ItemDetails.size() > 0) {
 		if (Message.indexOf("ERROR]") == 1) {
-			Item.className = "UpdateError";
-			ItemDetails.innerHTML = Message.replace(/\[ERROR\]/g,"");
+			itemClass = "UpdateError";
+			detailMessage = Message.replace(/\[ERROR\]/g,"");
 		} else {
 			// Change the class of the item
 			if (Message.indexOf("OLD]") == 1) {
-				Item.className = "UpdateOld";
+				itemClass = "UpdateOld";
 			} else if (Message.indexOf("UNKNOWN]") == 1) {
-				Item.className = "UpdateUnknown";
+				itemClass = "UpdateUnknown";
 			} else {
-				Item.className = "UpdateGood";
+				itemClass = "UpdateGood";
 			}
 			// Report the status of the returned extension
-			ItemDetails.innerHTML = Message.replace(/\[OLD\]/g,"").replace(/\[UNKNOWN\]/g, "").replace(/\[GOOD\]/g, "");
+			detailMessage = Message.replace(/\[OLD\]/g,"").replace(/\[UNKNOWN\]/g, "").replace(/\[GOOD\]/g, "");
 			// Request the next extension
 			setTimeout("UpdateCheck('"+this.Param+"', '"+ItemName+"', '"+PostBackKey+"');", 300);
 		}
+		Item.attr('class', itemClass);
+		ItemDetails.html(detailMessage);
 	} else {
 		alert('Error: '+Request.responseText);
 	}
 }
 
 function Wait(Sender, WaitText) {
-	Sender.disabled = true;
-	Sender.value = WaitText;
-
-	var el = Sender.parentNode;
-	while(el != null) {
-		if (el.tagName == "FORM") {
-			el.submit();
-			break;
-		}
-		el = el.parentNode;
-	}
+	jQuery(Sender).attr({'disabled': true, 'value': WaitText}).parents("form").submit();
 }
 
 function WriteEmail(Domain, Name, Label, Reference) {
-	if (document.createElement && document.getElementById) {
-		var link, script, textNode;
-		//Create link
-		link = document.createElement('a');
-		link.href = 'mai'+'lto:'+Name+'@'+Domain;
-		//Create text link
-		Label = Label || Name+"@"+Domain;
-		textNode = document.createTextNode(Label);
-		link.appendChild(textNode);
-		//Append link
-		script = document.getElementById(Reference);
-		if (script) {
-			script.parentNode.appendChild(link);
-		}
-	}
+	Label = Label || Name + "@" + Domain;
+	$("#" + Reference).before('<a href="' + 'mai' + 'lto:' + Name + '@' + Domain + '">' + Label + '</a>');
 }

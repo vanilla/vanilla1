@@ -14,7 +14,11 @@
 include('../appg/settings.php');
 include('../appg/init_ajax.php');
 
+$Version = ForceIncomingString('Version', '1');
 $Search = ForceIncomingString('Search', '');
+if ($Search == '') {
+	$Search = ForceIncomingString('q', '');
+}
 $Search = urldecode($Search);
 $Search = FormatStringForDatabaseInput($Search);
 if ($Search != '') {
@@ -28,13 +32,18 @@ if ($Search != '') {
 	$Name = '';
 	$Loop = 1;
 	if ($ResultSet) {
+		$Delimiter = ',';
+		if (version_compare($Version, '2', '>=')) {
+			$Delimiter = "\n";
+		}
 		while ($row = $Context->Database->GetRow($ResultSet)) {
-			if ($Loop > 1) echo ',';
+			if ($Loop > 1) echo $Delimiter;
 			$Name = FormatStringForDisplay($row['Name'], 1);
 			echo $Name;
 			$Loop++;
 		}
 	}
 }
+
 $Context->Unload();
 ?>

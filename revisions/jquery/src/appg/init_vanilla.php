@@ -76,6 +76,9 @@ $PageEnd = $Context->ObjectFactory->CreateControl($Context, 'PageEnd');
 // BUILD THE PAGE HEAD
 // Every page will require some basic definitions for the header.
 $Head->AddScript('js/jquery.js');
+$Head->AddScript('js/jquery-plugins/dimensions/jquery.dimensions.js');
+$Head->AddScript('js/jquery-plugins/bgiframe/jquery.bgiframe.js');
+$Head->AddScript('js/jquery-plugins/autocomplete/jquery.autocomplete.js');
 $Head->AddScript('js/global.js');
 $Head->AddScript('js/vanilla.js');
 $Head->AddScript('js/ajax.js');
