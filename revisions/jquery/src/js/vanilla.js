@@ -13,37 +13,19 @@
 
 // Add a new custom name/value pair input to the account form
 function AddLabelValuePair() {
-	var Counter = document.getElementById('LabelValuePairCount');
-	var Container = document.getElementById('CustomInfo');
-	if (Counter && Container) {
-		Counter.value++;
+	var CounterEl = jQuery('#LabelValuePairCount');
+	var Container = jQuery('#CustomInfo');
+	if (CounterEl.size() > 0 && Container.size() > 0) {
+		var Counter = +(CounterEl.attr('value')) + 1;
+		CounterEl.attr('value', Counter);
 
-		var Label = document.createElement("li");
-		var LabelInput = document.createElement("input");
-		LabelInput.type = "text";
-		LabelInput.name = "Label"+Counter.value;
-		LabelInput.maxLength = "20";
-		LabelInput.className = "LVLabelInput";
-
-		// Create the value container
-		var Value = document.createElement("li");
-		var ValueInput = document.createElement("input");
-		ValueInput.type = "text";
-		ValueInput.name = "Value"+Counter.value;
-		ValueInput.maxLength = "200";
-		ValueInput.className = "LVValueInput";
-
-		// Add the items to the page
-		Label.appendChild(LabelInput);
-		Value.appendChild(ValueInput);
-		Container.appendChild(Label);
-		Container.appendChild(Value);
+		Container.append('<li><input type="text" name="Label' + Counter +'" maxlength="20" class="LVLabelInput" /></li>')
+		Container.append('<li><input type="text" name="Value' + Counter +'" maxlength="200" class="LVValueInput" /></li>')
 	}
 }
 
 function DiscussionSwitch(AjaxUrl, SwitchType, DiscussionID, SwitchValue, SenderID, PostBackKey) {
-	var Sender = document.getElementById(SenderID);
-	if (Sender) Sender.className = 'Progress';
+	jQuery("#" + SenderID).attr('class', 'Progress');
 	var Parameters = "Type="+SwitchType+"&DiscussionID="+DiscussionID+"&Switch="+SwitchValue+"&PostBackKey="+PostBackKey;
 	var dm = new DataManager();
 	dm.RequestCompleteEvent = RefreshPageWhenAjaxComplete;
@@ -54,11 +36,7 @@ function DiscussionSwitch(AjaxUrl, SwitchType, DiscussionID, SwitchValue, Sender
 function HideComment(AjaxUrl, Switch, DiscussionID, CommentID, ShowText, HideText, SenderID, PostBackKey) {
 	var ConfirmText = (Switch==1?HideText:ShowText);
 	if (confirm(ConfirmText)) {
-		var Sender = document.getElementById(SenderID);
-		if (Sender) {
-			Sender.innerHTML = '&nbsp;';
-			Sender.className = 'HideProgress';
-		}
+		jQuery("#" + SenderID).attr('class', 'HideProgress').html('&nbsp;');
 		var dm = new DataManager();
 		dm.RequestCompleteEvent = RefreshPageWhenAjaxComplete;
 		dm.RequestFailedEvent = HandleFailure;
@@ -68,69 +46,54 @@ function HideComment(AjaxUrl, Switch, DiscussionID, CommentID, ShowText, HideTex
 
 // Apply or remove a bookmark
 function SetBookmark(AjaxUrl, CurrentSwitchVal, Identifier, BookmarkText, UnbookmarkText, PostBackKey) {
-	var Sender = document.getElementById('SetBookmark');
-	if (Sender) {
-		Sender.className = 'Progress';
-		var Switch = Sender.name == '' ? CurrentSwitchVal : Sender.name;
-		var FlipSwitch = Switch == 1 ? 0 : 1;
-		Sender.name = FlipSwitch;
-		var dm = new DataManager();
+	var Switch, FlipSwitch, Sender = jQuery("#SetBookmark"), dm;
+	if (Sender.size() > 0) {
+		Switch = Sender.attr('name');
+		Switch = Switch == '' ? CurrentSwitchVal : Switch;
+		FlipSwitch = Switch == 1 ? 0 : 1;
+
+		Sender.attr({'name': FlipSwitch, 'class': 'Progress'});
+
+		dm = new DataManager();
 		dm.Param = (FlipSwitch == 0 ? BookmarkText : UnbookmarkText);
 		dm.RequestCompleteEvent = BookmarkComplete;
 		dm.RequestFailedEvent = BookmarkFailed;
 		dm.LoadData(AjaxUrl+"?Type=Bookmark&Switch="+FlipSwitch+"&DiscussionID="+Identifier+"&PostBackKey="+PostBackKey);
 	}
 }
+
 function ApplyBookmark(Element, ClassName, Text) {
-	var Button = document.getElementById(Element);
-	if (Button) {
-		Button.className = ClassName;
-		Button.innerHTML = Text;
-	}
+	jQuery("#" + Element).attr('class', ClassName).html(Text);
 }
+
 function BookmarkComplete(Request) {
 	setTimeout("ApplyBookmark('SetBookmark', 'Complete', '"+this.Param+"');", 400);
 }
+
 function BookmarkFailed(Request) {
-	var Button = document.getElementById('SetBookmark');
-	if (Button) {
-		Button.className = 'Complete';
+	var Button = jQuery('#SetBookmark');
+	if (Button.size() > 0) {
+		Button.attr('class', 'Complete');
 		alert("Failed: ("+Request.status+") "+Request.statusText);
 	}
 }
+
 function ShowAdvancedSearch() {
-	var SearchSimple = document.getElementById("SearchSimpleFields");
-	var SearchDiscussions = document.getElementById("SearchDiscussionFields");
-	var SearchComments = document.getElementById("SearchCommentFields");
-	var SearchUsers = document.getElementById("SearchUserFields");
-
-	if (SearchSimple && SearchDiscussions && SearchComments && SearchUsers ) {
-		SearchSimple.style.display = "none";
-		SearchDiscussions.style.display = "block";
-		SearchComments.style.display = "block";
-		SearchUsers.style.display = "block";
-	}
+	jQuery("#SearchSimpleFields").hide();
+	jQuery("#SearchDiscussionFields").show();
+	jQuery("#SearchCommentFields").show();
+	jQuery("#SearchUserFields").show();
 }
-function ShowSimpleSearch() {
-	var SearchSimple = document.getElementById("SearchSimpleFields");
-	var SearchDiscussions = document.getElementById("SearchDiscussionFields");
-	var SearchComments = document.getElementById("SearchCommentFields");
-	var SearchUsers = document.getElementById("SearchUserFields");
 
-	if (SearchSimple && SearchDiscussions && SearchComments && SearchUsers ) {
-		SearchSimple.style.display = "block";
-		SearchDiscussions.style.display = "none";
-		SearchComments.style.display = "none";
-		SearchUsers.style.display = "none";
-	}
+function ShowSimpleSearch() {
+	jQuery("#SearchSimpleFields").show();
+	jQuery("#SearchDiscussionFields").hide();
+	jQuery("#SearchCommentFields").hide();
+	jQuery("#SearchUserFields").hide();
 }
 
 function ToggleCategoryBlock(AjaxUrl, CategoryID, Block, SenderID, PostBackKey) {
-	var Sender = document.getElementById(SenderID);
-	if (Sender) {
-		Sender.innerHTML = '&nbsp;';
-		Sender.className = 'HideProgress';
-	}
+	jQuery("#" + SenderID).attr('class', 'HideProgress').html('&nbsp;');
 	var Parameters = "BlockCategoryID="+CategoryID+"&Block="+Block+'&PostBackKey='+PostBackKey;
 	var dm = new DataManager();
 	dm.RequestCompleteEvent = RefreshPageWhenAjaxComplete;
@@ -139,12 +102,13 @@ function ToggleCategoryBlock(AjaxUrl, CategoryID, Block, SenderID, PostBackKey) 
 }
 
 function ToggleCommentBox(AjaxUrl, SmallText, BigText, PostBackKey) {
-   SwitchElementClass('CommentBox', 'CommentBoxController', 'SmallCommentBox', 'LargeCommentBox', BigText, SmallText);
+	SwitchElementClass('CommentBox', 'CommentBoxController', 'SmallCommentBox', 'LargeCommentBox', BigText, SmallText);
 	var SwitchVal = 0;
-	var CommentBox = document.getElementById("CommentBox");
-	if (CommentBox) {
-		if (CommentBox.className == "LargeCommentBox") SwitchVal = 1;
-
+	var className = jQuery("#CommentBox").attr('class');
+	if (className) {
+		if (className == "LargeCommentBox") {
+			SwitchVal = 1;
+		}
 		var Parameters = "Type=ShowLargeCommentBox&Switch="+SwitchVal+"&PostBackKey="+PostBackKey;
 		var dm = new DataManager();
 		dm.RequestCompleteEvent = ToggleCommentBoxComplete;
