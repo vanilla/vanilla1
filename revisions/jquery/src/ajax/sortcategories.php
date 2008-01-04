@@ -25,7 +25,10 @@ if (!$Context->Session->User->Permission('PERMISSION_SORT_CATEGORIES')) {
 	die($Context->GetDefinition('ErrPermissionSortCategories'));
 }
 
-$Sql = 'update '.$Configuration['DATABASE_TABLE_PREFIX']."Category set Priority = '//1' where CategoryID = '//2';";
+$Sql = 'update '. GetTableName('Category', $DatabaseTables, $Configuration["DATABASE_TABLE_PREFIX"])
+	. ' set ' . $DatabaseColumns['Category']['Priority'] . " = '//1' where "
+	. $DatabaseColumns['Category']['CategoryID'] ." = '//2';";
+
 $SortOrder = ForceIncomingArray('CategoryID', array());
 $ItemCount = count($SortOrder);
 for ($i = 0; $i < $ItemCount; $i++) {

@@ -25,7 +25,10 @@ if (!$Context->Session->User->Permission('PERMISSION_SORT_ROLES')) {
 	die($Context->GetDefinition('ErrPermissionSortRoles'));
 }
 
-$Sql = 'update '.$Configuration["DATABASE_TABLE_PREFIX"]."Role set Priority = '//1' where RoleID = '//2';";
+$Sql = 'update '. GetTableName('Role', $DatabaseTables, $Configuration["DATABASE_TABLE_PREFIX"])
+	. ' set ' . $DatabaseColumns['Role']['Priority'] . " = '//1' where "
+	. $DatabaseColumns['Role']['RoleID'] ." = '//2';";
+
 $SortOrder = ForceIncomingArray('RoleID', array());
 $ItemCount = count($SortOrder);
 for ($i = 0; $i < $ItemCount; $i++) {
