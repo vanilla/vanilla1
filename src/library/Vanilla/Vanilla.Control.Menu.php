@@ -41,10 +41,10 @@ class Menu extends Control {
 	}
 
 	function RemoveTab($TabUrl) {
+		reset($this->Tabs);
 		while (list($Key, $Tab) = each($this->Tabs)) {
 			if ($Tab['Url'] == $TabUrl) unset ($this->Tabs[$Key]);
 		}
-		reset($this->Tabs);
 	}
 
 	function Render() {
