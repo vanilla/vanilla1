@@ -17,7 +17,7 @@ body {
 	text-align: center;
 }
 body, div, input, textarea, select {
-	font-family: Trebuchet MS, Verdana, Tahoma, Arial;
+	font-family:'Trebuchet MS', Verdana, Tahoma, Arial, sans-serif;
 	font-size: 12px;
 	color: #062971;
 }
@@ -39,7 +39,7 @@ a:hover {
 	border-bottom: 1px solid #FFC2CA;
 	padding: 10px 9px 9px 9px;
 	color: #c00;
-	margin: 0px 6px 0px 6px;
+	margin: 0 6px 0 6px;
 }
 .ErrorTitle {
 	font-weight: bold;
@@ -78,8 +78,8 @@ a:hover {
 h1 {
 	text-align: center;
 	background: url('waves.blue.gif') no-repeat center top #E5EAF6;
-	padding: 4px 0px 4px 0px;
-	margin: 0px 0px 6px 0px;
+	padding: 4px 0 4px 0;
+	margin: 0px 0 6px 0;
 	border-bottom: 1px solid #c7d3ea;
 }
 h1, h1 a {
@@ -96,21 +96,21 @@ h1 strong {
 /* About Paragraphs */
 
 .About {
-	margin: 8px 0px 0px 0px;
-	padding: 0px 4px 0px 8px;
+	margin: 8px 0 0 0;
+	padding: 0 4px 0 8px;
 	width: 260px;
 	position: absolute;
 	}
 .About h2 {
 	font-size: 14px;
 	font-weight: bold;
-	margin: 0px;
-	padding: 0px;
+	margin: 0;
+	padding: 0;
 	color:#000;
 	}
 .About p {
-	margin: 0px;
-	padding: 2px 0px 6px 0px;
+	margin: 0;
+	padding: 2px 0 6px 0;
 	color:#000;
 	line-height: 150%;
 	}
@@ -122,9 +122,9 @@ h1 strong {
 /* Forms */
 
 fieldset {
-	border: 0px;
-	margin: 0px;
-	padding: 0px 6px 6px 6px;
+	border: 0;
+	margin: 0;
+	padding: 0 6px 6px 6px;
 	}
 legend {
 	font-size:14px;
@@ -132,20 +132,20 @@ legend {
 	color:#000;
 	}
 fieldset p {
-	margin: 0px;
-	padding: 0px 2px 8px 2px;
+	margin: 0;
+	padding: 0 2px 8px 2px;
 	color: #333;
 	}
 #Form form {
 	background: #f3f3f3;
-	margin: 0px;
+	margin: 0;
 	padding: 6px 1px 6px 6px;
 	}
 #Form ul,
 #Form ul li {
 	list-style: none;
-	margin: 0px;
-	padding: 0px;
+	margin: 0;
+	padding: 0;
 	}
 #Form ul li {
 	padding-bottom:6px;
@@ -163,7 +163,7 @@ fieldset p {
 	}
 #Form .Submit {
 	clear: left;
-	padding: 6px 0px 0px 88px;
+	padding: 6px 0 0 88px;
 	text-align: left;
 	}
 #Form .Button {
@@ -174,10 +174,10 @@ fieldset p {
 /* Sign-In Page */
 
 #Form.SignInForm fieldset {
-	padding: 0px 6px 0px 6px;
+	padding: 0 6px 0 6px;
 	}
 #Form.SignInForm .Submit {
-	padding: 6px 0px 0px 0px;
+	padding: 6px 0 0 0;
 	clear: left;
 	text-align: center;
 	}
@@ -191,14 +191,14 @@ fieldset p {
 	width: auto;
 	}
 .MembershipOptionLinks {
-	margin: 4px 0px 0px 6px !important;
+	margin: 4px 0 0 6px !important;
 	}
 .MembershipOptionLinks li {
 	width: 132px;
 	overflow: hidden;
 	white-space: nowrap;
-	padding: 0px;
-	margin: 0px;
+	padding: 0;
+	margin: 0;
 	}
 .MembershipOptionLinks a,
 .MembershipOptionLinks a:link,
@@ -208,7 +208,7 @@ fieldset p {
 	color:#c96;
 	text-decoration: none;
 	text-align: center;
-	padding: 3px 0px 3px 0px;
+	padding: 3px 0 3px 0;
 	font-size:12px;
 	}
 .MembershipOptionLinks a:hover {
@@ -227,21 +227,21 @@ fieldset p {
 /* Password Request Form */
 
 .PasswordRequestForm .ErrorContainer {
-	margin: 0px;
+	margin: 0;
 	}
 .PasswordRequest .About {
 	width: 234px;
 	}
 .PasswordRequestForm {
-	padding: 0px 0px 0px 247px;
+	padding: 0 0 0 247px;
 	}
 
 /* Apply Form */
 #Form.ApplyForm {
-	padding: 0px 0px 0px 282px;
+	padding: 0 0 0 282px;
 	}
 .ApplyForm .ErrorContainer {
-	margin: 0px;
+	margin: 0;
 	}
 div.Apply #Form {
 	height: 300px;
@@ -276,7 +276,7 @@ html>body div.Apply #Form { /* ugly hack, but fixes display error in IE. */
 /* Password Reset Form */
 
 #Form.PasswordResetForm .ErrorContainer {
-	margin: 0px;
+	margin: 0;
 	}
 #Form.PasswordResetForm .Submit {
 	padding-left:100px;
@@ -285,7 +285,7 @@ html>body div.Apply #Form { /* ugly hack, but fixes display error in IE. */
 	width: 254px;
 	}
 .PasswordResetForm {
-	padding: 0px 0px 0px 267px;
+	padding: 0 0 0 267px;
 	}
 
 /* Form Complete */
@@ -296,18 +296,18 @@ html>body div.Apply #Form { /* ugly hack, but fixes display error in IE. */
 .FormComplete h2 {
 	font-size: 14px;
 	font-weight: bold;
-	margin: 0px;
-	padding: 0px 0px 6px 0px;
+	margin: 0;
+	padding: 0 0 6px 0;
 	color:#000;
 	}
 .FormComplete ul {
 	list-style: none;
-	margin: 0px;
-	padding: 0px;
+	margin: 0;
+	padding: 0;
 	}
 .FormComplete ul li {
-	margin: 0px;
-	padding: 0px;
+	margin: 0;
+	padding: 0;
 	color:#000;
 	}
 .FormComplete ul li strong {
