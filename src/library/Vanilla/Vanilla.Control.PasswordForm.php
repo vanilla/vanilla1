@@ -37,8 +37,7 @@ class PasswordForm extends PostBackControl {
 			$this->User->UserID = $UserID;
 			if ($this->PostBackAction == 'ProcessPassword' && $this->IsValidFormPostBack()) {
 				if ($this->UserManager->ChangePassword($this->User)) {
-					$Url = GetUrl($this->Context->Configuration, $this->Context->SelfUrl);
-					//@todo: Should the process die here?
+					$Url = GetUrl($this->Context->Configuration, $this->Context->SelfUrl, '', '','','','Success=1');
 					Redirect($Url, '302', '', 0);
 				}
 			}
