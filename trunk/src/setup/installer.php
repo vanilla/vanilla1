@@ -105,9 +105,6 @@ $CookieDomain = ForceIncomingString('CookieDomain', '');
 $CookieDomain = FormatCookieDomain($CookieDomain);
 $CookiePath = ForceIncomingString('CookiePath', '');
 
-//update $DatabaseTables['User']
-$Context->DatabaseTables['User'] = $DatabaseTables['User'] = $DBTablePrefix.'User';
-
 // Make the banner title the same as the application title
 $WorkingDirectory = str_replace('\\', '/', getcwd()).'/';
 $RootDirectory = str_replace('setup/', '', $WorkingDirectory);
@@ -247,9 +244,6 @@ if (!defined('IN_VANILLA')) exit();
 					// Open the database file & retrieve sql
 					$SqlLines = @file($WorkingDirectory."mysql.sql");
 
-					// replace default 'LUM_' prefix
-					$SqlLines = preg_replace("/((TABLE|INTO) `)LUM_/", "\$1" . $DBTablePrefix, $SqlLines);
-
 					if (!$SqlLines) {
 						$Context->WarningCollector->Add("We couldn't open the \"".$WorkingDirectory."mysql.sql\" file.");
 					} else {
@@ -263,7 +257,10 @@ if (!defined('IN_VANILLA')) exit();
 									if ($DatabaseCharacterEncoding == 'utf8' && strpos($CurrentQuery, 'REATE TABLE') == 1) {
 										str_replace(');', ') DEFAULT CHARACTER SET utf8;', $CurrentQuery);
 									}
-
+									// replace default 'LUM_' prefix for all tables except the user table
+									if (!strpos($CurrentQuery, '`LUM_User`')) {
+										$CurrentQuery = preg_replace("/((TABLE|INTO) `)LUM_/", "\$1" . $DBTablePrefix, $CurrentQuery);
+									}
 									if (!@mysql_query($CurrentQuery, $Connection)) {
 										$Context->WarningCollector->Add("An error occurred while we were attempting to create the database tables. MySQL reported the following error: <code>".mysql_error($Connection).'</code><code>QUERY: '.$CurrentQuery.'</code>');
 										$i = count($SqlLines)+1;
@@ -294,14 +291,6 @@ if (!defined('IN_VANILLA')) exit();
 				// $Context->WarningCollector->Add("For some reason we couldn't save your database settings to the '.$DBFile.' file.");
 			}
 
-			// Save user table name
-			if (!AppendToConfigurationFile(
-				$RootDirectory.'conf/database.php',	'$DatabaseTables[\'User\'] = \''.$DBTablePrefix."User';\n")
-			) {
-				// $Context->WarningCollector->Clear();
-				// $Context->WarningCollector->Add("For some reason we couldn't save your database settings to the '.$DBFile.' file.");
-			}
-
 			// Save the general settings as well (now that we know this person is authenticated to
 			// a degree - knowing the database access params).
 			$SettingsFile = $RootDirectory . 'conf/settings.php';
@@ -324,8 +313,12 @@ if (!defined('IN_VANILLA')) exit();
 	}
 
 	if ($Context->WarningCollector->Count() == 0) {
-		// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
-		Redirect($WebRoot.'setup/installer.php?Step=3&PostBackAction=None');
+		If ($DBPass == '') {
+			$Context->WarningCollector->Add('Your configuration contains a blank MySQL password, please note that this is a potential security risk, and not supported by Vanilla. Make a note that before you will be able to sign in, you will need to add the following line to conf/settings.php: <code>$Configuration[\'DATABASE_PASSWORD\'] = \'\';</code><p><a href="'.$WebRoot.'setup/installer.php?Step=3&PostBackAction=None">Continue installation</a> with these settings, or specify a different account.');
+		} else {
+			// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
+			Redirect($WebRoot.'setup/installer.php?Step=3&PostBackAction=None');
+		}
 	}
 } elseif ($PostBackAction == "User") {
 	$CurrentStep = 3;
@@ -350,8 +343,7 @@ if (!defined('IN_VANILLA')) exit();
 
 		// Include the db settings defined in the previous step
 		include($RootDirectory.'conf/database.php');
-		$Context->DatabaseTables['User'] = $DatabaseTables['User'];
-		$Context->Configuration['DATABASE_TABLE_PREFIX'] = $Configuration['DATABASE_TABLE_PREFIX'];
+		$Context->Configuration = $Configuration;
 
 		// Open the database connection
 		$Connection = false;
