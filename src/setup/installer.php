@@ -88,7 +88,7 @@ $Context->Dictionary['ErrOpenFile'] = 'The file could not be opened. Please make
 $Context->Dictionary['ErrWriteFile'] = 'The file could not be written.';
 
 // Retrieve all postback parameters
-$CurrentStep = ForceIncomingInt("Step", 0);
+$CurrentStep = ForceIncomingInt('Step', 0);
 $PostBackAction = ForceIncomingString('PostBackAction', '');
 $DBHost = ForceIncomingString('DBHost', '');
 $DBName = ForceIncomingString('DBName', '');
@@ -120,10 +120,10 @@ function CreateFile($File, $Contents, &$Context) {
 		if (!$Handle) {
 			$Error = $php_errormsg;
 			if ($Error != '') $Error = 'The system reported the following message:<code>'.$Error.'</code>';
-			$Context->WarningCollector->Add("Failed to create the '".$File."' configuration file. ".$Error);
+			$Context->WarningCollector->Add('Failed to create the \''.$File.'\' configuration file. '.$Error);
 		} else {
 			if (fwrite($Handle, $Contents) === FALSE) {
-				$Context->WarningCollector->Add("Failed to write to the '".$File."' file. Make sure that PHP has write access to the file.");
+				$Context->WarningCollector->Add('Failed to write to the \''.$File.'\' file. Make sure that PHP has write access to the file.');
 			}
 			fclose($Handle);
 		}
@@ -131,40 +131,40 @@ function CreateFile($File, $Contents, &$Context) {
 }
 
 // Step 1. Check for correct PHP, MySQL, and permissions
-if ($PostBackAction == "Permissions") {
+if ($PostBackAction == 'Permissions') {
 
 	// Make sure we are running at least PHP 4.1.0
-	if (intval(str_replace('.', '', phpversion())) < 410) $Context->WarningCollector->Add("It appears as though you are running PHP version ".phpversion().". Vanilla requires at least version 4.1.0 of PHP. You will need to upgrade your version of PHP before you can continue.");
+	if (intval(str_replace('.', '', phpversion())) < 410) $Context->WarningCollector->Add('It appears as though you are running PHP version '.phpversion().'. Vanilla requires at least version 4.1.0 of PHP. You will need to upgrade your version of PHP before you can continue.');
 	// Make sure MySQL is available
-	if (!function_exists('mysql_connect')) $Context->WarningCollector->Add("It appears as though you do not have MySQL enabled for PHP. You will need a working copy of MySQL and PHP's MySQL extensions enabled in order to run Vanilla.");
+	if (!function_exists('mysql_connect')) $Context->WarningCollector->Add('It appears as though you do not have MySQL enabled for PHP. You will need a working copy of MySQL and PHP&#8217;s MySQL extensions enabled in order to run Vanilla.');
 	// Make sure the conf folder is readable
-	if (!is_readable('../conf/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the conf folder.");
+	if (!is_readable('../conf/')) $Context->WarningCollector->Add('Vanilla needs to have read permission enabled on the conf folder.');
 	// Make sure the conf folder is writeable
-	if (!is_writable('../conf/')) $Context->WarningCollector->Add("Vanilla needs to have write permission enabled on the conf folder.");
+	if (!is_writable('../conf/')) $Context->WarningCollector->Add('Vanilla needs to have write permission enabled on the conf folder.');
 
 	// Make sure other folders are readable
-	if (!is_readable('../extensions/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the extensions folder.");
-	if (!is_readable('../languages/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the languages folder.");
-	if (!is_readable('../themes/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the themes folder.");
-	if (!is_readable('../setup/')) $Context->WarningCollector->Add("Vanilla needs to have read permission enabled on the setup folder.");
+	if (!is_readable('../extensions/')) $Context->WarningCollector->Add('Vanilla needs to have read permission enabled on the extensions folder.');
+	if (!is_readable('../languages/')) $Context->WarningCollector->Add('Vanilla needs to have read permission enabled on the languages folder.');
+	if (!is_readable('../themes/')) $Context->WarningCollector->Add('Vanilla needs to have read permission enabled on the themes folder.');
+	if (!is_readable('../setup/')) $Context->WarningCollector->Add('Vanilla needs to have read permission enabled on the setup folder.');
 
 	// Make sure the files don't exist already (ie. the site is already up and running);
-	if (file_exists('../conf/settings.php')) $Context->WarningCollector->Add("Vanilla seems to have been installed already. You will need to remove the conf/settings.php, conf/database.php files, and all database tables in order to run the installer utility again.");
+	if (file_exists('../conf/settings.php')) $Context->WarningCollector->Add('Vanilla seems to have been installed already. You will need to remove the conf/settings.php, conf/database.php files, and all database tables in order to run the installer utility again.');
 
 	if ($Context->WarningCollector->Count() == 0) {
 		$Contents = '<?php
 // Database Configuration Settings
 ?>';
 		CreateFile($RootDirectory.'conf/database.php', $Contents, $Context);
-		$Contents = "<?php
+		$Contents = '<?php
 // Make sure this file was not accessed directly and prevent register_globals configuration array attack
-if (!defined('IN_VANILLA')) exit();
+if (!defined(\'IN_VANILLA\')) exit();
 // Enabled Extensions
-?>";
+?>';
 		CreateFile($RootDirectory.'conf/extensions.php', $Contents, $Context);
-		$Contents = "<?php
+		$Contents = '<?php
 // Custom Language Definitions
-?>";
+?>';
 		CreateFile($RootDirectory.'conf/language.php', $Contents, $Context);
 		$Contents = '<?php
 // Application Settings
@@ -179,7 +179,7 @@ if (!defined('IN_VANILLA')) exit();
 		$SettingsManager->DefineSetting('SETUP_TEST', '1', 1);
 		if (!$SettingsManager->SaveSettingsToFile($SettingsFile)) {
 			$Context->WarningCollector->Clear();
-			$Context->WarningCollector->Add("For some reason we couldn't save your general settings to the '".$SettingsFile."' file.");
+			$Context->WarningCollector->Add('For some reason we couldn&#8217;t save your general settings to the \''.$SettingsFile.'\' file.');
 		}
 	}
 
@@ -187,7 +187,7 @@ if (!defined('IN_VANILLA')) exit();
 		// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
 		Redirect($WebRoot.'setup/installer.php?Step=2&PostBackAction=None');
 	}
-} elseif ($PostBackAction == "Database") {
+} elseif ($PostBackAction == 'Database') {
 	$CurrentStep = 2;
 
 	// Make sure the database settings haven't already been committed
@@ -196,7 +196,7 @@ if (!defined('IN_VANILLA')) exit();
 	$DBManager->GetSettingsFromFile($DBFile);
 	// Make sure the database file doesn't already contain data
 	if ($DBManager->GetSetting('DATABASE_NAME') != '') {
-		$Context->WarningCollector->Add("Vanilla seems to have been installed already. You will need to remove the conf/settings.php, conf/database.php files, and all database tables in order to run the installer utility again.");
+		$Context->WarningCollector->Add('Vanilla seems to have been installed already. You will need to remove the conf/settings.php, conf/database.php files, and all database tables in order to run the installer utility again.');
 	} else {
 		// Test the database params provided by the user
 		$Connection = @mysql_connect($DBHost, $DBUser, $DBPass);
@@ -204,9 +204,9 @@ if (!defined('IN_VANILLA')) exit();
 		if (!$Connection) {
 			$Response = '';
 			if ($php_errormsg != '') $Response = ' The database responded with the following message: '.$php_errormsg;
-			$Context->WarningCollector->Add("We couldn't connect to the server you provided (".$DBHost.").".$Response);
+			$Context->WarningCollector->Add('We couldn&#8217;t connect to the server you provided ('.$DBHost.').'.$Response);
 		} elseif (!mysql_select_db($DBName, $Connection)) {
-			$Context->WarningCollector->Add("We connected to the server, but we couldn't access the \"".$DBName."\" database. Are you sure it exists and that the specified user has access to it?");
+			$Context->WarningCollector->Add('We connected to the server, but we couldn&#8217;t access the \''.$DBName.'\' database. Are you sure it exists and that the specified user has access to it?');
 		}
 
 		// If the database connection worked, attempt to set up the database
@@ -220,7 +220,7 @@ if (!defined('IN_VANILLA')) exit();
 			// Make sure there are no conflicting tables in the database
 			$TableData = @mysql_query('show tables', $Connection);
 			if (!$TableData) {
-				$Context->WarningCollector->Add("We had some problems identifying the tables already in your database: ". mysql_error($Connection));
+				$Context->WarningCollector->Add('We had some problems identifying the tables already in your database: '. mysql_error($Connection));
 			} else {
 				$TableConflicts = array();
 				$TableToCompare = array();
@@ -229,43 +229,40 @@ if (!defined('IN_VANILLA')) exit();
 				}
 				foreach ($DatabaseTables as $TableKey => $TableName) {
 					$TableName = GetTableName($TableKey, $DatabaseTables, $DBTablePrefix);
-					$TableName = strtolower($TableName);
+					$TableName = strtolower(iif($TableKey == 'User', $DBTablePrefix, '') . $TableName);
 					if (in_array($TableName, $TableToCompare)) {
 						$TableConflicts[] = $TableName;
 					}
 				}
 				if (count($TableConflicts) == count($DatabaseTables)) {
-					$Context->WarningCollector->Add("It appears as though you've already got Vanilla installed. If you are attempting to upgrade your existing installation of Vanilla, you should be using the <a href=\"upgrader.php\">upgrade script</a>.");
+					$Context->WarningCollector->Add('It appears as though you&#8217;ve already got Vanilla installed. If you are attempting to upgrade your existing installation of Vanilla, you should be using the <a href="upgrader.php">upgrade script</a>.');
 					$AllowNext = 1;
 				} elseif (count($TableConflicts) > 0) {
-					$Context->WarningCollector->Add("There appear to be some tables already in your database that conflict with the tables Vanilla would need to insert. Those tables are: <code>".implode(', ', $TableConflicts)."</code>If you are attempting to upgrade your existing installation of Vanilla, you should be using the <a href=\"upgrader.php\">upgrade script</a>.");
+					$Context->WarningCollector->Add('There appear to be some tables already in your database that conflict with the tables Vanilla would need to insert. Those tables are: <code>'.implode(', ', $TableConflicts).'</code>If you are attempting to upgrade your existing installation of Vanilla, you should be using the <a href="upgrader.php">upgrade script</a>.');
 				} else {
 					// Go ahead and install the database tables
 					// Open the database file & retrieve sql
-					$SqlLines = @file($WorkingDirectory."mysql.sql");
+					$SqlLines = @file($WorkingDirectory.'mysql.sql');
 
 					if (!$SqlLines) {
-						$Context->WarningCollector->Add("We couldn't open the \"".$WorkingDirectory."mysql.sql\" file.");
+						$Context->WarningCollector->Add('We couldn&#8217;t open the \''.$WorkingDirectory.'mysql.sql\' file.');
 					} else {
-						$CurrentQuery = "";
-						$CurrentLine = "";
+						$CurrentQuery = '';
+						$CurrentLine = '';
 						for ($i = 0; $i < count($SqlLines); $i++) {
 							$CurrentLine = trim($SqlLines[$i]);
-							if ($CurrentLine == "") {
-								if ($CurrentQuery != "") {
+							if ($CurrentLine == '') {
+								if ($CurrentQuery != '') {
 									// If the current query creates a table, make sure that the proper character encoding is applied.
 									if ($DatabaseCharacterEncoding == 'utf8' && strpos($CurrentQuery, 'REATE TABLE') == 1) {
 										str_replace(');', ') DEFAULT CHARACTER SET utf8;', $CurrentQuery);
 									}
-									// replace default 'LUM_' prefix for all tables except the user table
-									if (!strpos($CurrentQuery, '`LUM_User`')) {
-										$CurrentQuery = preg_replace("/((TABLE|INTO) `)LUM_/", "\$1" . $DBTablePrefix, $CurrentQuery);
-									}
+									$CurrentQuery = preg_replace('/((TABLE|INTO) `)LUM_/', "\$1" . $DBTablePrefix, $CurrentQuery);
 									if (!@mysql_query($CurrentQuery, $Connection)) {
-										$Context->WarningCollector->Add("An error occurred while we were attempting to create the database tables. MySQL reported the following error: <code>".mysql_error($Connection).'</code><code>QUERY: '.$CurrentQuery.'</code>');
+										$Context->WarningCollector->Add('An error occurred while we were attempting to create the database tables. MySQL reported the following error: <code>'.mysql_error($Connection).'</code><code>QUERY: '.$CurrentQuery.'</code>');
 										$i = count($SqlLines)+1;
 									}
-									$CurrentQuery = "";
+									$CurrentQuery = '';
 								}
 							} else {
 								$CurrentQuery .= $CurrentLine;
@@ -280,15 +277,22 @@ if (!defined('IN_VANILLA')) exit();
 
 		// If the database was created successfully, save all parameters to the conf/database.php file
 		if ($Context->WarningCollector->Count() == 0) {
-			$DBManager->DefineSetting("DATABASE_HOST", $DBHost, 1);
-			$DBManager->DefineSetting("DATABASE_NAME", $DBName, 1);
-			$DBManager->DefineSetting("DATABASE_USER", $DBUser, 1);
-			$DBManager->DefineSetting("DATABASE_PASSWORD", $DBPass, 1);
-			$DBManager->DefineSetting("DATABASE_TABLE_PREFIX", $DBTablePrefix, 1);
-			$DBManager->DefineSetting("DATABASE_CHARACTER_ENCODING", $DatabaseCharacterEncoding, 1);
+			$DBManager->DefineSetting('DATABASE_HOST', $DBHost, 1);
+			$DBManager->DefineSetting('DATABASE_NAME', $DBName, 1);
+			$DBManager->DefineSetting('DATABASE_USER', $DBUser, 1);
+			$DBManager->DefineSetting('DATABASE_PASSWORD', $DBPass, 1);
+			$DBManager->DefineSetting('DATABASE_TABLE_PREFIX', $DBTablePrefix, 1);
+			$DBManager->DefineSetting('DATABASE_CHARACTER_ENCODING', $DatabaseCharacterEncoding, 1);
 			if (!$DBManager->SaveSettingsToFile($DBFile)) {
 				// $Context->WarningCollector->Clear();
-				// $Context->WarningCollector->Add("For some reason we couldn't save your database settings to the '.$DBFile.' file.");
+				// $Context->WarningCollector->Add('For some reason we couldn&#8217;t save your database settings to the '.$DBFile.' file.');
+			}
+
+			// Save user table name
+			if (!AppendToConfigurationFile($RootDirectory.'conf/database.php',
+					'$DatabaseTables[\'User\'] = \''.$DBTablePrefix."User';\n")) {
+				// $Context->WarningCollector->Clear();
+				// $Context->WarningCollector->Add('For some reason we couldn&#8217;t save your database settings to the '.$DBFile.' file.');
 			}
 
 			// Save the general settings as well (now that we know this person is authenticated to
@@ -301,49 +305,50 @@ if (!defined('IN_VANILLA')) exit();
 			$SettingsManager->DefineSetting('EXTENSIONS_PATH', $RootDirectory . 'extensions/', 1);
 			$SettingsManager->DefineSetting('LANGUAGES_PATH', $RootDirectory . 'languages/', 1);
 			$SettingsManager->DefineSetting('THEME_PATH', $RootDirectory . 'themes/vanilla/', 1);
-			$SettingsManager->DefineSetting("DEFAULT_STYLE", $ThemeDirectory.'vanilla/styles/default/', 1);
-			$SettingsManager->DefineSetting("WEB_ROOT", $WebRoot, 1);
-			$SettingsManager->DefineSetting("BASE_URL", $BaseUrl, 1);
-			$SettingsManager->DefineSetting("FORWARD_VALIDATED_USER_URL", $BaseUrl, 1);
+			$SettingsManager->DefineSetting('DEFAULT_STYLE', $ThemeDirectory.'vanilla/styles/default/', 1);
+			$SettingsManager->DefineSetting('WEB_ROOT', $WebRoot, 1);
+			$SettingsManager->DefineSetting('BASE_URL', $BaseUrl, 1);
+			$SettingsManager->DefineSetting('FORWARD_VALIDATED_USER_URL', $BaseUrl, 1);
 			if (!$SettingsManager->SaveSettingsToFile($SettingsFile)) {
 				// $Context->WarningCollector->Clear();
-				// $Context->WarningCollector->Add("For some reason we couldn't save your general settings to the '".$SettingsFile."' file.");
+				// $Context->WarningCollector->Add('For some reason we couldn&#8217;t save your general settings to the '.$SettingsFile.' file.');
 			}
 		}
 	}
 
 	if ($Context->WarningCollector->Count() == 0) {
 		If ($DBPass == '') {
-			$Context->WarningCollector->Add('Your configuration contains a blank MySQL password, please note that this is a potential security risk, and not supported by Vanilla. Make a note that before you will be able to sign in, you will need to add the following line to conf/settings.php: <code>$Configuration[\'DATABASE_PASSWORD\'] = \'\';</code><p><a href="'.$WebRoot.'setup/installer.php?Step=3&PostBackAction=None">Continue installation</a> with these settings, or specify a different account.');
+			$Context->WarningCollector->Add('Your configuration contains a blank MySQL password, please note that this is a potential security risk, and not supported by Vanilla. Make a note that before you will be able to sign in, you will need to add the following line to conf/settings.php: <code>$Configuration[\'DATABASE_PASSWORD\'] = \'\';</code><p /><a href="'.$WebRoot.'setup/installer.php?Step=3&PostBackAction=None">Continue installation</a> with these settings, or specify a different account.');
 		} else {
 			// Redirect to the next step (this is done so that refreshes don't cause steps to be redone)
 			Redirect($WebRoot.'setup/installer.php?Step=3&PostBackAction=None');
 		}
 	}
-} elseif ($PostBackAction == "User") {
+} elseif ($PostBackAction == 'User') {
 	$CurrentStep = 3;
 
 	$SettingsFile = $RootDirectory . 'conf/settings.php';
 	$SettingsManager = new ConfigurationManager($Context);
 	$SettingsManager->GetSettingsFromFile($SettingsFile);
 	if ($SettingsManager->GetSetting('SETUP_COMPLETE') != '0') {
-		$Context->WarningCollector->Add("Vanilla seems to have been installed already. You will need to remove the conf/settings.php, conf/database.php files, and all database tables in order to run the installer utility again.");
+		$Context->WarningCollector->Add('Vanilla seems to have been installed already. You will need to remove the conf/settings.php, conf/database.php files, and all database tables in order to run the installer utility again.');
 	} else {
 
 		// Validate user inputs
-		if (strip_tags($Username) != $Username) $Context->WarningCollector->Add("You really shouldn't have any html into your username.");
-		if (strlen($Username) > 20) $Context->WarningCollector->Add("Your username is too long");
-		if ($Password != $ConfirmPassword) $Context->WarningCollector->Add("The passwords you entered didn't match.");
-		if (strip_tags($ApplicationTitle) != $ApplicationTitle) $Context->WarningCollector->Add("You can't have any html in your forum name.");
-		if ($Username == "") $Context->WarningCollector->Add("You must provide a username.");
-		if ($Password == "") $Context->WarningCollector->Add("You must provide a password.");
-		if ($SupportName == "") $Context->WarningCollector->Add("You must provide a support contact name.");
-		if (!eregi("(.+)@(.+)\.(.+)", $SupportEmail)) $Context->WarningCollector->Add("The email address you entered doesn't appear to be valid.");
-		if ($ApplicationTitle == "") $Context->WarningCollector->Add("You must provide an application title.");
+		if (strip_tags($Username) != $Username) $Context->WarningCollector->Add('You really shouldn&#8217;t have any html into your username.');
+		if (strlen($Username) > 20) $Context->WarningCollector->Add('Your username is too long');
+		if ($Password != $ConfirmPassword) $Context->WarningCollector->Add('The passwords you entered didn&#8217;t match.');
+		if (strip_tags($ApplicationTitle) != $ApplicationTitle) $Context->WarningCollector->Add('You can&#8217;t have any html in your forum name.');
+		if ($Username == '') $Context->WarningCollector->Add('You must provide a username.');
+		if ($Password == '') $Context->WarningCollector->Add('You must provide a password.');
+		if ($SupportName == '') $Context->WarningCollector->Add('You must provide a support contact name.');
+		if (!eregi("(.+)@(.+)\.(.+)", $SupportEmail)) $Context->WarningCollector->Add('The email address you entered doesn&#8217;t appear to be valid.');
+		if ($ApplicationTitle == '') $Context->WarningCollector->Add('You must provide an application title.');
 
 		// Include the db settings defined in the previous step
 		include($RootDirectory.'conf/database.php');
 		$Context->Configuration = $Configuration;
+		$Context->DatabaseTables = $DatabaseTables;
 
 		// Open the database connection
 		$Connection = false;
@@ -354,9 +359,9 @@ if (!defined('IN_VANILLA')) exit();
 			$DBPass = $Configuration['DATABASE_PASSWORD'];
 			$Connection = @mysql_connect($DBHost, $DBUser, $DBPass);
 			if (!$Connection) {
-				$Context->WarningCollector->Add("We couldn't connect to the server you provided (".$DBHost."). Are you sure you entered the right server, username and password?");
+				$Context->WarningCollector->Add('We couldn&#8217;t connect to the server you provided ('.$DBHost.'). Are you sure you entered the right server, username and password?');
 			} elseif (!mysql_select_db($DBName, $Connection)) {
-				$Context->WarningCollector->Add("We connected to the server, but we couldn't access the \"".$DBName."\" database. Are you sure it exists and that the specified user has access to it?");
+				$Context->WarningCollector->Add('We connected to the server, but we couldn&#8217;t access the \''.$DBName.'\' database. Are you sure it exists and that the specified user has access to it?');
 			} elseif (version_compare(mysql_get_server_info($Connection), '4.1.0', '>=')) {
 				/* On MySQL 4.1 and later, force UTF-8 */
 				mysql_query('SET NAMES "utf8"', $Connection);
@@ -385,7 +390,7 @@ if (!defined('IN_VANILLA')) exit();
 			$s->AddFieldNameValue('UtilizeEmail', 0);
 			$s->AddFieldNameValue('RemoteIp', GetRemoteIp(1));
 			if (!@mysql_query($s->GetInsert(), $Connection)) {
-				$Context->WarningCollector->Add("Something bad happened when we were trying to create your administrative user account. Mysql said: ".mysql_error($Connection));
+				$Context->WarningCollector->Add('Something bad happened when we were trying to create your administrative user account. Mysql said: '.mysql_error($Connection));
 			} else {
 				// Now insert the role history assignment
 				$NewUserID = mysql_insert_id($Connection);
@@ -413,13 +418,13 @@ if (!defined('IN_VANILLA')) exit();
 
 		// Save the application constants
 		if ($Context->WarningCollector->Count() == 0) {
-			$SettingsManager->DefineSetting("SUPPORT_EMAIL", $SupportEmail, 1);
-			$SettingsManager->DefineSetting("SUPPORT_NAME", $SupportName, 1);
-			$SettingsManager->DefineSetting("APPLICATION_TITLE", $ApplicationTitle, 1);
-			$SettingsManager->DefineSetting("BANNER_TITLE", $ApplicationTitle, 1);
-			$SettingsManager->DefineSetting("COOKIE_DOMAIN", $CookieDomain, 1);
-			$SettingsManager->DefineSetting("COOKIE_PATH", $CookiePath, 1);
-			$SettingsManager->DefineSetting("SETUP_COMPLETE", '1', 1);
+			$SettingsManager->DefineSetting('SUPPORT_EMAIL', $SupportEmail, 1);
+			$SettingsManager->DefineSetting('SUPPORT_NAME', $SupportName, 1);
+			$SettingsManager->DefineSetting('APPLICATION_TITLE', $ApplicationTitle, 1);
+			$SettingsManager->DefineSetting('BANNER_TITLE', $ApplicationTitle, 1);
+			$SettingsManager->DefineSetting('COOKIE_DOMAIN', $CookieDomain, 1);
+			$SettingsManager->DefineSetting('COOKIE_PATH', $CookiePath, 1);
+			$SettingsManager->DefineSetting('SETUP_COMPLETE', '1', 1);
 			$SettingsManager->SaveSettingsToFile($SettingsFile);
 		}
 	}
@@ -448,12 +453,12 @@ if (!defined('IN_VANILLA')) exit();
 			if ($CurrentStep < 2 || $CurrentStep > 4) {
 				echo  '<h2>Vanilla Installation Wizard (Step 1 of 3)</h2>';
 				if ($Context->WarningCollector->Count() > 0) {
-					echo "<div class=\"Warnings\">
+					echo '<div class="Warnings">
 						<strong>We came across some problems while checking your permissions...</strong>
-						".$Context->WarningCollector->GetMessages()."
-					</div>";
+						'.$Context->WarningCollector->GetMessages().'
+					</div>';
 				}
-				echo "<p>Navigate the filesystem of your server to the Vanilla folder. Vanilla will need read AND write access to the <strong>conf</strong> folder.</p>
+				echo '<p>Navigate the filesystem of your server to the Vanilla folder. Vanilla will need read AND write access to the <strong>conf</strong> folder.</p>
 
 				<p>There are many ways to set these permissions. One way is to execute the following from the root Vanilla folder:</p>
 
@@ -466,62 +471,62 @@ if (!defined('IN_VANILLA')) exit();
 					<br />chmod -R 755 ./setup
 					<br />chmod -R 755 ./themes</code>
 
-				<form id=\"frmPermissions\" method=\"post\" action=\"installer.php\">
-				<input type=\"hidden\" name=\"PostBackAction\" value=\"Permissions\" />
-				<div class=\"Button\"><input type=\"submit\" value=\"Click here to check your permissions and proceed to the next step\" /></div>
-				</form>";
+				<form id="frmPermissions" method="post" action="installer.php">
+				<input type="hidden" name="PostBackAction" value="Permissions" />
+				<div class="Button"><input type="submit" value="Click here to check your permissions and proceed to the next step" /></div>
+				</form>';
 			} elseif ($CurrentStep == 2) {
-					echo "<h2>Vanilla Installation Wizard (Step 2 of 3)</h2>";
+					echo '<h2>Vanilla Installation Wizard (Step 2 of 3)</h2>';
 					if ($Context->WarningCollector->Count() > 0) {
-						echo "<div class=\"Warnings\">
+						echo '<div class="Warnings">
 							<strong>We came across some problems while setting up Vanilla...</strong>
-							".$Context->WarningCollector->GetMessages()."
-						</div>";
+							'.$Context->WarningCollector->GetMessages().'
+						</div>';
 					}
-					echo "<p>Create your new Vanilla database, and specify the MySQL connection parameters below:</p>
+					echo '<p>Create your new Vanilla database, and specify the MySQL connection parameters below:</p>
 					<fieldset>
-						<form id=\"frmDatabase\" method=\"post\" action=\"installer.php\">
-						<input type=\"hidden\" name=\"PostBackAction\" value=\"Database\" />
+						<form id="frmDatabase" method="post" action="installer.php">
+						<input type="hidden" name="PostBackAction" value="Database" />
 							<ul>
 								<li>
-									<label for=\"tDBHost\">MySQL Server</label>
-									<input type=\"text\" id=\"tDBHost\" name=\"DBHost\" value=\"".FormatStringForDisplay($DBHost, 1)."\" />
+									<label for="tDBHost">MySQL Server</label>
+									<input type="text" id="tDBHost" name="DBHost" value="'.FormatStringForDisplay($DBHost, 1).'" />
 								</li>
 								<li>
-									<label for=\"tDBName\">MySQL Database Name</label>
-									<input type=\"text\" id=\"tDBName\" name=\"DBName\" value=\"".FormatStringForDisplay($DBName, 1)."\" />
+									<label for="tDBName">MySQL Database Name</label>
+									<input type="text" id="tDBName" name="DBName" value="'.FormatStringForDisplay($DBName, 1).'" />
 								</li>
 								<li>
-									<label for=\"tDBUser\">MySQL User</label>
-									<input type=\"text\" id=\"tDBUser\" name=\"DBUser\" value=\"".FormatStringForDisplay($DBUser, 1)."\" />
+									<label for="tDBUser">MySQL User</label>
+									<input type="text" id="tDBUser" name="DBUser" value="'.FormatStringForDisplay($DBUser, 1).'" />
 								</li>
 								<li>
-									<label for=\"tDBPass\">MySQL Password</label>
-									<input type=\"password\" id=\"tDBPass\" name=\"DBPass\" value=\"".FormatStringForDisplay($DBPass, 1)."\" />
+									<label for="tDBPass">MySQL Password</label>
+									<input type="password" id="tDBPass" name="DBPass" value="'.FormatStringForDisplay($DBPass, 1).'" />
 								</li>
 								<li>
-									<label for=\"tDBTablePrefix\">MySQL Table Prefix</label>
-									<input type=\"text\" id=\"tDBTablePrefix\" name=\"DBTablePrefix\" value=\"".FormatStringForDisplay($DBTablePrefix, 1)."\" />
+									<label for="tDBTablePrefix">MySQL Table Prefix</label>
+									<input type="text" id="tDBTablePrefix" name="DBTablePrefix" value="'.FormatStringForDisplay($DBTablePrefix, 1).'" />
 								</li>
 							</ul>
-							<div class=\"Button\"><input type=\"submit\" value=\"Click here to create Vanilla's database and proceed to the next step\" /></div>
+							<div class="Button"><input type="submit" value="Click here to create Vanilla&#8217;s database and proceed to the next step" /></div>
 						</form>
-					</fieldset>";
+					</fieldset>';
 				} elseif ($CurrentStep == 3) {
-					if ($PostBackAction != "User") {
-						$CookieDomain = ForceString(@$_SERVER['HTTP_HOST'], "");
+					if ($PostBackAction != 'User') {
+						$CookieDomain = ForceString(@$_SERVER['HTTP_HOST'], '');
 						$CookieDomain = FormatCookieDomain($CookieDomain);
 						$CookiePath = $WebRoot;
 					}
-					echo "<h2>Vanilla Installation Wizard (Step 3 of 3)</h2>";
+					echo '<h2>Vanilla Installation Wizard (Step 3 of 3)</h2>';
 					if ($Context->WarningCollector->Count() > 0) {
-						echo "<div class=\"Warnings\">
+						echo '<div class="Warnings">
 							<strong>We came across some problems while setting up Vanilla...</strong>
-							".$Context->WarningCollector->GetMessages()."
-						</div>";
+							'.$Context->WarningCollector->GetMessages().'
+						</div>';
 					}
-					echo "<p>Now let's set up your administrative account for Vanilla.</p>
-						<fieldset>"
+					echo '<p>Now let&#8217;s set up your administrative account for Vanilla.</p>
+						<fieldset>'
 						.'<form name="frmUser" method="post" action="installer.php">
 						<input type="hidden" name="PostBackAction" value="User" />
 						<ul>
@@ -537,9 +542,8 @@ if (!defined('IN_VANILLA')) exit();
 								<label for="tConfirmPassword">Confirm Password</label>
 								<input id="tConfirmPassword" type="password" name="ConfirmPassword" value="'.FormatStringForDisplay($ConfirmPassword, 1).'" />
 							</li>
-						</ul>'
-						."<p>Up next we've got to set up the support contact information for your forum. This is what people will see when emails go out from the system for things like password retrieval and role changes.</p>"
-						.'<ul>
+						</ul><p>Up next we&#8217;ve got to set up the support contact information for your forum. This is what people will see when emails go out from the system for things like password retrieval and role changes.</p>
+						<ul>
 							<li>
 								<label for="tSupportName">Support Contact Name</label>
 								<input id="tSupportName" type="text" name="SupportName" value="'.FormatStringForDisplay($SupportName, 1).'" />
@@ -555,9 +559,9 @@ if (!defined('IN_VANILLA')) exit();
 								<label for="tApplicationTitle">Forum Name</label>
 								<input id="tApplicationTitle" type="text" name="ApplicationTitle" value="'.FormatStringForDisplay($ApplicationTitle, 1).'" />
 							</li>
-						</ul>'
-						."<p>The cookie domain is where you want cookies assigned to for Vanilla. Typically the cookie domain will be something like www.yourdomain.com. Cookies can be further defined to a particular path on your website using the \"Cookie Path\" setting. (TIP: If you want your Vanilla cookies to apply to all subdomains of your domain, use \".yourdomain.com\" as the cookie domain).</p>"
-						.'<ul>
+						</ul>
+						<p>The cookie domain is where you want cookies assigned to for Vanilla. Typically the cookie domain will be something like www.yourdomain.com. Cookies can be further defined to a particular path on your website using the "Cookie Path" setting. (TIP: If you want your Vanilla cookies to apply to all subdomains of your domain, use ".yourdomain.com" as the cookie domain).</p>
+						<ul>
 							<li>
 								<label for="tCookieDomain">Cookie Domain</label>
 								<input id="tCookieDomain" type="text" name="CookieDomain" value="'.FormatStringForDisplay($CookieDomain, 1).'" />
@@ -571,8 +575,8 @@ if (!defined('IN_VANILLA')) exit();
 						</form>
 					</fieldset>';
 				} else {
-					echo "<h2>Vanilla Installation Wizard (Complete)</h2>
-					<p><strong>That's it! Vanilla is set up and ready to go.</strong></p>
+					echo '<h2>Vanilla Installation Wizard (Complete)</h2>
+					<p><strong>That&#8217;s it! Vanilla is set up and ready to go.</strong></p>
 					<p>Before you start inviting your friends in for discussions, there are a lot of other things you might want to set up. The #1 thing on your list should be getting some add-ons for Vanilla. With add-ons you can do all sorts of cool things like:</p>
 					<ul>
 						<li>Allow your users to save their common searches</li>
@@ -580,8 +584,8 @@ if (!defined('IN_VANILLA')) exit();
 						<li>Add Atom and RSS feeds to your forum</li>
 						<li>Allow users to quote other users in discussions</li>
 					</ul>
-					<p>All of these extensions (and a lot more) are available in <a href=\"http://lussumo.com/addons/\" target=\"Lussumo\">the Vanilla Add-on directory</a>.</p>
-					<p>You'll also want to fine-tune your application settings, like:</p>
+					<p>All of these extensions (and a lot more) are available in <a href="http://lussumo.com/addons/" target="Lussumo">the Vanilla Add-on directory</a>.</p>
+					<p>You&#8217;ll also want to fine-tune your application settings, like:</p>
 					<ul>
 						<li>Change the number of discussions or comments per page</li>
 						<li>Allow the public to browse your forum without an account</li>
@@ -590,8 +594,8 @@ if (!defined('IN_VANILLA')) exit();
 					</ul>
 					<p>All of these configuration options (and many more) are available in the settings tab of your Vanilla forum.</p>
 
-					<p>If you need some help getting started with administering your new Vanilla forum, you can <a href=\"http://lussumo.com/docs\" target=\"Lussumo\">read the complete documentation</a> or ask for help on the <a href=\"http://lussumo.com/community/\" target=\"Lussumo\">Lussumo Community Forum</a>. Enough talking...</p>
-					<div class=\"Button\"><a href=\"../people.php\">Go sign in and have some fun!</a></div>";
+					<p>If you need some help getting started with administering your new Vanilla forum, you can <a href="http://lussumo.com/docs" target="Lussumo">read the complete documentation</a> or ask for help on the <a href="http://lussumo.com/community/" target="Lussumo">Lussumo Community Forum</a>. Enough talking...</p>
+					<div class="Button"><a href="../people.php">Go sign in and have some fun!</a></div>';
 				}
 				?>
 			</div>
