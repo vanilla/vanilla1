@@ -94,6 +94,31 @@ class Discussion extends Delegation {
 		$this->Clear();
 	}
 
+	function DiscussionPrefix() {
+		$Prefix = '';
+		if (!$this->Active) $Prefix = $this->Context->GetDefinition('TextHidden');
+
+		if ($this->Sticky && $this->Context->GetDefinition('TextSticky') != '' && $Prefix != '') $Prefix .= ', ';
+		if ($this->Sticky) $Prefix .= $this->Context->GetDefinition('TextSticky');
+
+		if ($this->Closed && $this->Context->GetDefinition('TextClosed') != '' && $Prefix != '') $Prefix .= ', ';
+		if ($this->Closed) $Prefix .= $this->Context->GetDefinition('TextClosed');
+
+		if ($this->Bookmarked && $this->Context->GetDefinition('TextBookmarked') != '' && $Prefix != '') $Prefix .= ', ';
+		if ($this->Bookmarked) $Prefix .= $this->Context->GetDefinition('TextBookmarked');
+
+		if ($this->Sink && $this->Context->GetDefinition('TextSink') != '' && $Prefix != '') $Prefix .= ', ';
+		if ($this->Sink) $Prefix .= $this->Context->GetDefinition('TextSink');
+
+		if ($this->WhisperUserID > 0 && $this->Context->GetDefinition('TextWhispered') != '' && $Prefix != '') $Prefix .= ', ';
+		if ($this->WhisperUserID > 0) $Prefix .= $this->Context->GetDefinition('TextWhispered');
+
+		$this->DelegateParameters['Prefix'] = &$Prefix;
+		$this->CallDelegate('PostDiscussionPrefix');
+
+		if ($Prefix != '') return $this->Context->GetDefinition('TextPrefix').$Prefix.$this->Context->GetDefinition('TextSuffix').' ';
+}
+
 	// Retrieve properties from current DataRowSet
 	function GetPropertiesFromDataSet($DataSet, &$Configuration) {
 		$this->DiscussionID = @$DataSet['DiscussionID'];
@@ -178,7 +203,7 @@ class Discussion extends Delegation {
 		} else {
 			$this->LastPage = 1;
 		}
-		
+
 		$this->DelegateParameters['DataSet'] = &$DataSet;
 		$this->CallDelegate('PostGetPropertiesFromDataSet');
 	}

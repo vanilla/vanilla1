@@ -19,25 +19,8 @@
 
 
 function DiscussionPrefix(&$Context, &$Discussion) {
-	$Prefix = '';
-	if (!$Discussion->Active) $Prefix = $Context->GetDefinition('TextHidden');
-
-	if ($Discussion->Sticky && $Context->GetDefinition('TextSticky') != '' && $Prefix != '') $Prefix .= ', ';
-	if ($Discussion->Sticky) $Prefix .= $Context->GetDefinition('TextSticky');
-
-	if ($Discussion->Closed && $Context->GetDefinition('TextClosed') != '' && $Prefix != '') $Prefix .= ', ';
-	if ($Discussion->Closed) $Prefix .= $Context->GetDefinition('TextClosed');
-
-	if ($Discussion->Bookmarked && $Context->GetDefinition('TextBookmarked') != '' && $Prefix != '') $Prefix .= ', ';
-	if ($Discussion->Bookmarked) $Prefix .= $Context->GetDefinition('TextBookmarked');
-
-	if ($Discussion->Sink && $Context->GetDefinition('TextSink') != '' && $Prefix != '') $Prefix .= ', ';
-	if ($Discussion->Sink) $Prefix .= $Context->GetDefinition('TextSink');
-
-	if ($Discussion->WhisperUserID > 0 && $Context->GetDefinition('TextWhispered') != '' && $Prefix != '') $Prefix .= ', ';
-	if ($Discussion->WhisperUserID > 0) $Prefix .= $Context->GetDefinition('TextWhispered');
-
-	if ($Prefix != '') return $Context->GetDefinition('TextPrefix').$Prefix.$Context->GetDefinition('TextSuffix').' ';
+	// Call the Discussion object's method directly, this call is depreciated.
+	return $Discussion->DiscussionPrefix();
 }
 
 function GetLastCommentQuerystring(&$Discussion, &$Configuration) {
