@@ -181,7 +181,9 @@ class DiscussionForm extends PostBackControl {
 
 		if ($this->Comment) $this->PostBackParams->Set('CommentID', $this->Comment->CommentID);
 		$this->PostBackParams->Set('DiscussionID', $this->DiscussionID);
-		$this->Title = $this->Context->GetDefinition('StartANewDiscussion');
+		$this->Title = ($this->EditDiscussionID 
+			? $this->Context->GetDefinition('EditYourDiscussion')
+			: $this->Context->GetDefinition('StartANewDiscussion'));
 		if ($this->EditDiscussionID > 0 || ($this->CommentID == 0 && $this->DiscussionID == 0)) {
 			$this->Form = 'DiscussionForm';
 		} else {
