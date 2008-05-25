@@ -318,34 +318,32 @@ class CommentManager extends Delegation {
 			if ($Comment->CommentID == 0) $this->Context->ErrorManager->AddError($this->Context, $this->Name, 'SaveComment', 'Your last comment in this discussion could not be found.');
 		} else {
 			// Validate the properties
-			$SaveComment = $Comment;
 			if (!$SkipValidation) {
 				if (!$this->Context->Session->User->Permission('PERMISSION_ADD_COMMENTS')) $this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrPermissionAddComments'));
-				$this->ValidateComment($SaveComment);
-				$this->ValidateWhisperUsername($SaveComment);
+				$this->ValidateComment($Comment);
+				$this->ValidateWhisperUsername($Comment);
 			}
 			if ($this->Context->WarningCollector->Iif()) {
 				$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
 
 				// If creating a new object
-				if ($SaveComment->CommentID == 0) {
+				if ($Comment->CommentID == 0) {
 					// Update the user info & check for spam
 					if (!$SkipValidation) {
 						$UserManager = $this->Context->ObjectFactory->NewContextObject($this->Context, 'UserManager');
 						$UserManager->UpdateUserCommentCount($this->Context->Session->UserID);
 					}
 
-					$this->DelegateParameters['Comment'] = &$SaveComment;
+					$this->DelegateParameters['Comment'] = &$Comment;
 
 					// Format the values for db input
-					$SaveComment->FormatPropertiesForDatabaseInput();
+					$Comment->FormatPropertiesForDatabaseInput();
 
 					// Proceed with the save if there are no warnings
 					if ($this->Context->WarningCollector->Count() == 0) {
 
 						$this->CallDelegate('PreSaveNewComment');
 
-						$Comment = $SaveComment;
 						$s->SetMainTable('Comment', 'm');
 						$s->AddFieldNameValue('Body', $Comment->Body);
 						$s->AddFieldNameValue('FormatType', $Comment->FormatType);
@@ -439,8 +437,6 @@ class CommentManager extends Delegation {
 						}
 					}
 				} else {
-					$Comment = $SaveComment;
-
 					// Format the values for db input
 					$Comment->FormatPropertiesForDatabaseInput();
 
