@@ -43,7 +43,7 @@ class SearchForm extends PostBackControl {
 		$this->DataCount = 0;
 		$this->Constructor($Context);
 		if ($this->PostBackAction == '') $this->IsPostBack = 1;
-		$this->Context->BodyAttributes .= " onload=\"Focus('txtKeywords');\"";
+		$this->Context->BodyAttributes .= ' onload="Focus(\'txtKeywords\');"';
 
 		$CurrentPage = ForceIncomingInt('page', 1);
 
@@ -68,7 +68,7 @@ class SearchForm extends PostBackControl {
 		$this->OrderSelect = $this->Context->ObjectFactory->NewObject($this->Context, 'Select');
 		$this->OrderSelect->Name = 'UserOrder';
 		$this->OrderSelect->CssClass = 'SearchSelect';
-		$this->OrderSelect->Attributes = " id=\"UserOrder\"";
+		$this->OrderSelect->Attributes = ' id="UserOrder"';
 		$this->OrderSelect->AddOption('', $this->Context->GetDefinition('Username'));
 		$this->OrderSelect->AddOption('Date', $this->Context->GetDefinition('DateLastActive'));
 		$this->OrderSelect->SelectedValue = $this->Search->UserOrder;
@@ -87,7 +87,7 @@ class SearchForm extends PostBackControl {
 		$this->RoleSelect = $this->Context->ObjectFactory->NewObject($this->Context, 'Select');
 		$this->RoleSelect->Name = 'Roles';
 		$this->RoleSelect->CssClass = 'SearchSelect';
-		$this->RoleSelect->Attributes = " id=\"RoleFilter\"";
+		$this->RoleSelect->Attributes = ' id="RoleFilter"';
 		$this->RoleSelect->AddOption('', $this->Context->GetDefinition('AllRoles'));
 		if ($this->Context->Session->User->Permission('PERMISSION_APPROVE_APPLICANTS')) $this->RoleSelect->AddOption($this->Context->GetDefinition('Applicant'), $this->Context->GetDefinition('Applicant'));
 		$this->RoleSelect->AddOptionsFromDataSet($this->Context->Database, $RoleSet, 'Name', 'Name');
@@ -216,6 +216,9 @@ class SearchForm extends PostBackControl {
 						$u->Clear();
 						$u->GetPropertiesFromDataSet($Row);
 						$u->FormatPropertiesForDisplay();
+
+						$this->DelegateParameters['User'] = &$u;
+						$this->CallDelegate('PreRenderUserSearch');
 
 						if ($Counter < $this->Context->Configuration['SEARCH_RESULTS_PER_PAGE']) {
 							include($ThemeFilePath);
