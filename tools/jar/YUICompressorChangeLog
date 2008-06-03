@@ -1,3 +1,72 @@
+YUI Compressor 2.3.5, 2008-02-08
+--------------------------------
+
++ Added a warning when more than one 'var' statement is used in a single scope.
+  Automatic coalescence is extremely complicated, and would be unsafe if not
+  done properly.
+
+YUI Compressor 2.3.4, 2008-02-07
+--------------------------------
+
++ Expanded the list of reserved words used by isValidIdentifier()
+
+YUI Compressor 2.3.3, 2008-02-04
+--------------------------------
+
++ C-style comments starting with /*! are preserved. This is especially
+  useful with comments containing copyright/license information.
+
+YUI Compressor 2.3.2, 2008-02-01
+--------------------------------
+
++ Compressing an empty JS file throws an error [SourceForge bug #1884207]
++ When a string is the first token in a function body, it was removed from
+  the compressed file [SourceForge bug #1884314]
+
+YUI Compressor 2.3.1, 2008-01-30
+--------------------------------
+
++ Added test against list of reserved words in method isValidIdentifier.
+
+YUI Compressor 2.3, 2008-01-28
+------------------------------
+
++ Always output a ';' at the end of a minified JavaScript file. This allows
+  the concatenating of several minified files without the fear of introducing
+  a syntax error.
++ Removed all System.exit() statements. Throw exceptions instead. This is
+  especially useful when running the compressor from within a J2EE container.
+  [SourceForge bug #1834750]
++ Transform obj["foo"] into obj.foo whenever possible, saving 3 bytes.
++ Transform 'foo': ... into foo: ... whenever possible, saving 2 bytes.
++ Added support for multi-line string literals [SourceForge bug #1871453]
++ Added support for unescaped slashes inside character classes in regexp.
++ Minor performance improvements.
++ Preserve the escaping for an octal representation of a character in string
+  literals [SourceForge bug #1844894]
+
+    var a = '\001';
+
++ CSS: Preserve comments that hide CSS rules from IE Mac:
+
+    /* Hides from IE-mac \*/
+    ...
+    /* End hide from IE-mac */
+
++ CSS: Added support for box model hack [SourceForge bug #1862107]
+
+    div.content {
+      width:400px;
+      voice-family: "\"}\"";
+      voice-family:inherit;
+      width:300px;
+    }
+
+YUI Compressor 2.2.5, 2007-10-09
+--------------------------------
+
++ Remove line terminator after escape in string literals.
+
 YUI Compressor 2.2.4, 2007-10-01
 --------------------------------
 
