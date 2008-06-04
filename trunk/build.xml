@@ -109,7 +109,7 @@
     	
     	<!-- Create the zip archive -->
     	<echo>Create archive....</echo>
-    	<zip basedir="${build.dir}" destfile="${dist.dir}${dist.name}.zip" level="9" excludes="**/js/test, **/js/test/**"/>
+    	<zip basedir="${build.dir}" destfile="${dist.dir}${dist.name}.zip" excludes="**/js/test, **/js/test/**"/>
     	
     </target>
 
