@@ -70,5 +70,14 @@ $Head->AddScript('js/global.js');
 $Head->AddStyleSheet($Context->StyleUrl.'people.css', 'screen', 100, '');
 
 // INCLUDE EXTENSIONS
-if ($Configuration['PEOPLE_USE_EXTENSIONS']) include($Configuration['APPLICATION_PATH'].'conf/extensions.php');
+if ($Configuration['PEOPLE_USE_EXTENSIONS']) {
+	include($Configuration['APPLICATION_PATH'].'conf/extensions.php');
+
+	// Make sure to get all delegates from the extensions into objects which were
+	// constructed before the extensions were loaded.
+	$Head->GetDelegatesFromContext();
+	$Banner->GetDelegatesFromContext();
+	$Foot->GetDelegatesFromContext();
+	$PageEnd->GetDelegatesFromContext();
+}
 ?>
