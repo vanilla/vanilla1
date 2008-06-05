@@ -107,12 +107,18 @@
 			</fileset>
 		</copy>
     	
+    	<!-- create md5 signatures -->
+		<exec executable="php" failonerror="true">
+    		<arg line="-f"/>
+    		<arg path="${tools.md5.path}"/>
+    		<arg path="${build.app.dir}"/>
+		</exec>
+    	
     	<!-- Create the zip archive -->
     	<echo>Create archive....</echo>
     	<zip basedir="${build.dir}" destfile="${dist.dir}${dist.name}.zip" excludes="**/js/test, **/js/test/**"/>
     	
     </target>
-
 
     <!-- - - - - - - - - - - - - - - - - - 
           target: clean                      
