@@ -459,8 +459,13 @@ class DiscussionManager extends Delegation {
 				$s->EndWhereGroup();
 
 				$CategoryAllowed = $this->Context->Database->Select($s, $this->Name, 'SaveDiscussion', 'An error occurred while validating category permissions.');
-
-				if ($Discussion->CategoryID <= 0) $this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrSelectCategory'));
+				if ($this->Context->Database->RowCount($CategoryAllowed) < 1) {
+					$Discussion->CategoryID = 0;
+				}
+				
+				if ($Discussion->CategoryID <= 0) {
+					$this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrSelectCategory'));
+				}
 
 				// Validate first comment
 				$Discussion->Comment->DiscussionID = $Discussion->DiscussionID;
