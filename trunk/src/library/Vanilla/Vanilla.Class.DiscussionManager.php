@@ -228,12 +228,27 @@ class DiscussionManager extends Delegation {
 	}
 
 	function GetDiscussionList($RowsPerPage, $CurrentPage, $CategoryID) {
-		$CategoryID = ForceInt($CategoryID, 0);
-		$TotalNumberOfRecords = 0;
+		// validate CategoryID, should be an int or an array of int superior to 0 
+		$tmp = $CategoryID;
+		$CategoryID = array();
+		if (is_array($tmp)) {
+			foreach ($tmp as $Id) {
+				$Id = ForceInt($Id, 0);
+				if ($Id > 0) {
+					$CategoryID[] = $Id;
+				}
+			}
+		} else {
+			$tmp = ForceInt($tmp, 0);
+			if ($tmp > 0) {
+				$CategoryID[] = $tmp;
+			}
+		}
+		unset($tmp);
 
 		if ($RowsPerPage > 0) {
 			$CurrentPage = ForceInt($CurrentPage, 1);
-			if ($CurrentPage < 1) $CurrentPage == 1;
+			if ($CurrentPage < 1) $CurrentPage = 1;
 			$RowsPerPage = ForceInt($RowsPerPage, 50);
 			$FirstRecord = ($CurrentPage * $RowsPerPage) - $RowsPerPage;
 		}
@@ -247,8 +262,10 @@ class DiscussionManager extends Delegation {
 			|| !$this->Context->Session->User->Preference('ShowDeletedDiscussions')) {
 			$s->AddWhere('t', 'Active', '', '1', '=');
 		}
-		if ($CategoryID > 0) {
-			$s->AddWhere('t', 'CategoryID', '', $CategoryID, '=');
+		if (count($CategoryID) === 1) {
+			$s->AddWhere('t', 'CategoryID', '', $CategoryID[0], '=');
+		} elseif(count($CategoryID) > 1) {
+			$s->AddWhere('t', 'CategoryID', '', '('. implode(',', $CategoryID) .')', 'IN');
 		} elseif ($this->Context->Session->UserID > 0) {
 			$s->AddJoin('CategoryBlock', 'cb', 'CategoryID', 't', 'CategoryID', 'left join', ' and cb.'.$this->Context->DatabaseColumns['CategoryBlock']['UserID'].' = '.$this->Context->Session->UserID);
 			// This coalesce seems to be slowing things down
@@ -304,7 +321,7 @@ class DiscussionManager extends Delegation {
 		if (!$this->Context->Session->User->Permission('PERMISSION_HIDE_DISCUSSIONS') || !$this->Context->Session->User->Preference('ShowDeletedDiscussions')) $s->AddWhere('t', 'Active', '', '1', '=');
 		if ($RowsPerPage > 0) {
 			$CurrentPage = ForceInt($CurrentPage, 1);
-			if ($CurrentPage < 1) $CurrentPage == 1;
+			if ($CurrentPage < 1) $CurrentPage = 1;
 			$RowsPerPage = ForceInt($RowsPerPage, 50);
 			$FirstRecord = ($CurrentPage * $RowsPerPage) - $RowsPerPage;
 		}
