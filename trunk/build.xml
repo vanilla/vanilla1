@@ -108,6 +108,7 @@
 		</copy>
     	
     	<!-- create md5 signatures -->
+    	<echo>Create MD% file signatures...</echo>
 		<exec executable="php" failonerror="true">
     		<arg line="-f"/>
     		<arg path="${tools.md5.path}"/>
@@ -120,6 +121,17 @@
     	
     </target>
 
+	<!-- ================================= 
+          target: update              
+         ================================= -->
+    <target name="update" description="--> Update the working copy">
+    	<echo>Update working copy...</echo>
+    	<svn>
+    		<update dir="./"/>
+    	</svn>
+    </target>
+
+	
     <!-- - - - - - - - - - - - - - - - - - 
           target: clean                      
          - - - - - - - - - - - - - - - - - -->
@@ -152,7 +164,7 @@
 	<!-- - - - - - - - - - - - - - - - - - 
           target: prepare                      
          - - - - - - - - - - - - - - - - - -->
-    <target name="prepare" depends="clean,update,getAppDetails">
+    <target name="prepare" depends="clean,getAppDetails">
     	<property name="dist.name" value="${app.name}-${app.version}"/>
     	<property name="build.app.dir" value="${build.dir}${dist.name}/"/>
     	<property name="build.js.dir" value="${build.app.dir}${js.dir}"/>
@@ -161,13 +173,4 @@
 		<mkdir dir="${build.app.dir}"/>
     </target>
 	
-	<!-- - - - - - - - - - - - - - - - - - 
-          target: update                      
-         - - - - - - - - - - - - - - - - - -->
-    <target name="update">
-    	<echo>Update working copy...</echo>
-    	<svn>
-    		<update dir="./"/>
-    	</svn>
-    </target>
 </project>

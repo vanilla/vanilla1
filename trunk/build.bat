@@ -1,11 +1,12 @@
 :checkAntHome
 if not defined ANT_HOME goto noAntHome
-set EXEC=%ANT_HOME%\bin\ant.bat
+set ANT_EXEC=%ANT_HOME%\bin\ant.bat
 goto build
 
 :noAntHome
 echo WARNING: You have not set the ANT_HOME environment variable. Ant is require to build vanilla.
-set EXEC=ant
+set ANT_EXEC=ant
 
 :build
-%EXEC%
+%ANT_EXEC% update
+%ANT_EXEC%
