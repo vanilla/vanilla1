@@ -189,7 +189,7 @@ class CommentManager extends Delegation {
 		$s = $this->GetSearchBuilder($Search);
 		if ($RowsPerPage > 0) {
 			$CurrentPage = ForceInt($CurrentPage, 1);
-			if ($CurrentPage < 1) $CurrentPage == 1;
+			if ($CurrentPage < 1) $CurrentPage = 1;
 			$RowsPerPage = ForceInt($RowsPerPage, 50);
 			$FirstRecord = ($CurrentPage * $RowsPerPage) - $RowsPerPage;
 		}
