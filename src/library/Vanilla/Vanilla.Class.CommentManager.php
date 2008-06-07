@@ -145,7 +145,7 @@ class CommentManager extends Delegation {
 
 		if ($RowsPerPage > 0) {
 			$CurrentPage = ForceInt($CurrentPage, 1);
-			if ($CurrentPage < 1) $CurrentPage == 1;
+			if ($CurrentPage < 1) $CurrentPage = 1;
 			$RowsPerPage = ForceInt($RowsPerPage, 50);
 			if ($FirstRecord == "0") $FirstRecord = ($CurrentPage * $RowsPerPage) - $RowsPerPage;
 		}
