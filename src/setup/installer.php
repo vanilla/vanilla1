@@ -342,7 +342,7 @@ if (!defined(\'IN_VANILLA\')) exit();
 		if ($Username == '') $Context->WarningCollector->Add('You must provide a username.');
 		if ($Password == '') $Context->WarningCollector->Add('You must provide a password.');
 		if ($SupportName == '') $Context->WarningCollector->Add('You must provide a support contact name.');
-		if (!eregi("(.+)@(.+)\.(.+)", $SupportEmail)) $Context->WarningCollector->Add('The email address you entered doesn&#8217;t appear to be valid.');
+		if (!eregi('(.+)@(.+)\.(.+)', $SupportEmail)) $Context->WarningCollector->Add('The email address you entered doesn&#8217;t appear to be valid.');
 		if ($ApplicationTitle == '') $Context->WarningCollector->Add('You must provide an application title.');
 
 		// Include the db settings defined in the previous step
