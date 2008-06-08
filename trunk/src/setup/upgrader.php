@@ -588,7 +588,7 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 	// Validate user inputs
 	if (strip_tags($ApplicationTitle) != $ApplicationTitle) $Context->WarningCollector->Add("You can't have any html in your forum name.");
 	if ($SupportName == "") $Context->WarningCollector->Add("You must provide a support contact name.");
-	if (!eregi("(.+)@(.+)\.(.+)", $SupportEmail)) $Context->WarningCollector->Add("The email address you entered doesn't appear to be valid.");
+	if (!eregi('(.+)@(.+)\.(.+)', $SupportEmail)) $Context->WarningCollector->Add("The email address you entered doesn't appear to be valid.");
 	if ($ApplicationTitle == "") $Context->WarningCollector->Add("You must provide an application title.");
 
 	$SettingsFile = $RootDirectory . 'conf/settings.php';

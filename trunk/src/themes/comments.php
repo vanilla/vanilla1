@@ -97,7 +97,7 @@ if ($this->Context->WarningCollector->Count() > 0) {
 						if ($Comment->Deleted) $CommentList .= ' <i>'.str_replace(array('//1', '//2'), array(TimeDiff($this->Context, $Comment->DateDeleted), $Comment->DeleteUsername), $this->Context->GetDefinition('CommentHiddenOnXByY')).'</i>';
 						// Whisper back button
 						if (!$this->Discussion->Closed && $Comment->WhisperUserID > 0 && $Comment->WhisperUserID == $this->Context->Session->UserID) $CommentList .= '<a class="WhisperBack" onclick="'
-							."WhisperBack('".$Comment->DiscussionID."', '".str_replace("'", "\'", $CommentAuthUsername)."', '".$this->Context->Configuration['BASE_URL']."');"
+							."WhisperBack('".$Comment->DiscussionID."', '".str_replace("'", "\\'", $CommentAuthUsername)."', '".$this->Context->Configuration['BASE_URL']."');"
 						 .'">'.$this->Context->GetDefinition('WhisperBack').'</a>';
 
 					$CommentList .= '</li>
