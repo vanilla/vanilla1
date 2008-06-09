@@ -153,7 +153,7 @@ class DiscussionManager extends Delegation {
 			$Discussion = false;
 		}
 		while ($rows = $this->Context->Database->GetRow($result)) {
-			$Discussion->GetPropertiesFromDataSet($rows, $this->Context->Configuration);
+			$Discussion->GetPropertiesFromDataSet($rows);
 		}
 
 		if ($Discussion && $RecordDiscussionView) {

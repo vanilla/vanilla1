@@ -120,7 +120,7 @@ class Discussion extends Delegation {
 }
 
 	// Retrieve properties from current DataRowSet
-	function GetPropertiesFromDataSet($DataSet, &$Configuration) {
+	function GetPropertiesFromDataSet($DataSet) {
 		$this->DiscussionID = @$DataSet['DiscussionID'];
 		$this->FirstCommentID = @$DataSet['FirstCommentID'];
 		$this->CategoryID = @$DataSet['CategoryID'];
@@ -138,8 +138,8 @@ class Discussion extends Delegation {
 		$this->DateCreated = UnixTimestamp(@$DataSet['DateCreated']);
 		$this->DateLastActive = UnixTimestamp(@$DataSet['DateLastActive']);
 		$this->CountComments = @$DataSet['CountComments'];
-
-		if ($Configuration['ENABLE_WHISPERS']) {
+		
+		if ($this->Context->Configuration['ENABLE_WHISPERS']) {
 			$this->WhisperUserID = @$DataSet['WhisperUserID'];
 			$this->WhisperUsername = @$DataSet['WhisperUsername'];
 
@@ -192,7 +192,7 @@ class Discussion extends Delegation {
 
 		// Define the last page
 		$this->CallDelegate('PreDefineLastPage');
-		$TmpCount = ($this->CountComments / $Configuration['COMMENTS_PER_PAGE']);
+		$TmpCount = ($this->CountComments / $this->Context->Configuration['COMMENTS_PER_PAGE']);
 		$RoundedCount = intval($TmpCount);
 		if ($TmpCount > 1) {
 			if ($TmpCount > $RoundedCount) {
