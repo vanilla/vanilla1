@@ -179,7 +179,7 @@ class SearchForm extends PostBackControl {
 					$ThemeFilePath = ThemeFilePath($this->Context->Configuration, 'discussion.php');
 					while ($Row = $this->Context->Database->GetRow($this->Data)) {
 						$Discussion->Clear();
-						$Discussion->GetPropertiesFromDataSet($Row, $this->Context->Configuration);
+						$Discussion->GetPropertiesFromDataSet($Row);
 						$Discussion->FormatPropertiesForDisplay();
 						if ($Counter < $this->Context->Configuration['SEARCH_RESULTS_PER_PAGE']) {
 							$this->DelegateParameters['Discussion'] = &$Discussion;

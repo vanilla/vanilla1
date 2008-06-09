@@ -25,7 +25,7 @@ while ($Row = $this->Context->Database->GetRow($this->DiscussionData)) {
 	$RowNumber++;
 	$this->DelegateParameters['RowNumber'] = &$RowNumber;
 	$Discussion->Clear();
-	$Discussion->GetPropertiesFromDataSet($Row, $this->Context->Configuration);
+	$Discussion->GetPropertiesFromDataSet($Row);
 	$Discussion->FormatPropertiesForDisplay();
 	// Prefix the discussion name with the whispered-to username if this is a whisper
 	if ($Discussion->WhisperUserID > 0) {
