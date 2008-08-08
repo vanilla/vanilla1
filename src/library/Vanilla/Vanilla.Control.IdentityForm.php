@@ -23,7 +23,13 @@
  * @package Vanilla
  */
 class IdentityForm extends PostBackControl {
+	/**
+	 * @var UserManager
+	 */
 	var $UserManager;
+	/**
+	 * @var User
+	 */
 	var $User;
 
 	function IdentityForm (&$Context, &$UserManager, &$User) {
@@ -53,6 +59,7 @@ class IdentityForm extends PostBackControl {
 
 	function Render() {
 		if ($this->IsPostBack) {
+			$this->User->FormatPropertiesForDisplay();
 			$this->CallDelegate('PreRender');
 			include(ThemeFilePath($this->Context->Configuration, 'account_identity_form.php'));
 			$this->CallDelegate('PostRender');
