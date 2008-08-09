@@ -10,7 +10,7 @@ if ($this->Context->WarningCollector->Count() > 0) {
 } else {
 	$PageDetails = $this->pl->GetPageDetails($this->Context);
 	$PageList = $this->pl->GetNumericList();
-	$SessionPostBackKey = $this->Context->Session->GetVariable('SessionPostBackKey', 'string');
+	$SessionPostBackKey = $this->Context->Session->GetCsrfValidationKey();
 
 	$CommentList .= '<div class="ContentInfo Top">
 		<h1>';

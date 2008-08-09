@@ -19,7 +19,7 @@ $PostBackKey = ForceIncomingString('PostBackKey', '');
 $ExtensionKey = ForceIncomingString('ExtensionKey', '');
 $RequestName = ForceIncomingString('RequestName', '');
 if ($PostBackKey != '' 
-	&& $PostBackKey != $Context->Session->GetVariable('SessionPostBackKey', 'string')
+	&& $PostBackKey != $Context->Session->GetCsrfValidationKey()
 ) {
 	echo $RequestName.'|[ERROR]'.$Context->GetDefinition('ErrPostBackKeyInvalid');
 } else if ($RequestName == 'Core') {

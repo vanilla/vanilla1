@@ -16,7 +16,7 @@ $Configuration['SELF_URL'] = 'comments.php';
 include("appg/init_vanilla.php");
 
 // 1. DEFINE VARIABLES AND PROPERTIES SPECIFIC TO THIS PAGE
-$SessionPostBackKey = $Context->Session->GetVariable('SessionPostBackKey', 'string');
+$SessionPostBackKey = $Context->Session->GetCsrfValidationKey();
 
 // Ensure the user is allowed to view this page
 $Context->Session->Check($Context);
