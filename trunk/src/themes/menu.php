@@ -3,9 +3,12 @@
 
 echo '<div id="Session">';
 	if ($this->Context->Session->UserID > 0) {
-		echo str_replace('//1',
-			$this->Context->Session->User->Name,
-			$this->Context->GetDefinition('SignedInAsX')).' (<a href="'.$this->Context->Configuration['SIGNOUT_URL'].'">'.$this->Context->GetDefinition('SignOut').'</a>)';
+		echo str_replace('//1',	$this->Context->Session->User->Name, $this->Context->GetDefinition('SignedInAsX'))
+			. ' (<a href="'
+			. AppendUrlParameters(
+				$this->Context->Configuration['SIGNOUT_URL'],
+				'FormPostBackKey=' . $this->Context->Session->GetCsrfValidationKey() )
+			. '">'.$this->Context->GetDefinition('SignOut').'</a>)';
 	} else {
 		echo $this->Context->GetDefinition('NotSignedIn').' (<a href="'.AppendUrlParameters($this->Context->Configuration['SIGNIN_URL'], 'ReturnUrl='.GetRequestUri()).'">'.$this->Context->GetDefinition('SignIn').'</a>)';
 	}
