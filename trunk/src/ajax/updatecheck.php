@@ -18,7 +18,9 @@ include('../appg/init_ajax.php');
 $PostBackKey = ForceIncomingString('PostBackKey', '');
 $ExtensionKey = ForceIncomingString('ExtensionKey', '');
 $RequestName = ForceIncomingString('RequestName', '');
-if ($PostBackKey != $Context->Session->GetVariable('SessionPostBackKey', 'string')) {
+if ($PostBackKey != '' 
+	&& $PostBackKey != $Context->Session->GetVariable('SessionPostBackKey', 'string')
+) {
 	echo $RequestName.'|[ERROR]'.$Context->GetDefinition('ErrPostBackKeyInvalid');
 } else if ($RequestName == 'Core') {
 	// Ping the Lussumo server with core version information
