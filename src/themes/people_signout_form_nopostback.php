@@ -1,15 +1,12 @@
 <?php
 // Note: This file is included from the library/People/People.Control.Leave.php class.
 
-	echo '<div>';
-	$this->Render_Warnings();
+	echo '<div id="SignOutForm">';
 	$this->Render_PostBackForm();
-
+	$this->Render_Warnings();
 	echo '<fieldset>
-			<legend>'.$this->Context->GetDefinition('SignOut').'</legend>
-			<p>'.$this->Context->GetDefinition('TrySigningOutAgain').'</p>
 			<div class="Submit">
-				<input type="submit" name="" value="'.$this->Context->GetDefinition('SignOut').'" class="Button" />
+				<input type="submit" name="sign-out" value="'.$this->Context->GetDefinition('SignOut').'" class="Button" />
 			</div>
 		</form>
 		</fieldset>

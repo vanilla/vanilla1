@@ -570,6 +570,7 @@ $Context->Dictionary['DiscussionType'] = 'Discussion Type';
 // Added for Vanilla 1.1 on 2007-02-20
 $Context->Dictionary['ErrPostBackKeyInvalid'] = 'There was a problem authenticating your post information.';
 $Context->Dictionary['ErrPostBackActionInvalid'] = 'Your post information was not be defined properly.';
+$Context->Dictionary['ErrPostBackKeySignOutInvalid'] = 'Can you please confirm your would like to sign out?';
 // Moved from settings.php
 $Context->Dictionary['TextWhispered'] = 'Private';
 $Context->Dictionary['TextSticky'] = 'Sticky';

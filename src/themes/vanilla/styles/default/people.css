@@ -315,6 +315,13 @@ html>body div.Apply #Form { /* ugly hack, but fixes display error in IE. */
 	color:#e00;
 	}
 
+/* Sign-out form */
+
+#SignOutForm div.Submit {
+	text-align:center;
+	margin-top:10px;
+	}
+
 /* Foot */
 
 .Foot {
