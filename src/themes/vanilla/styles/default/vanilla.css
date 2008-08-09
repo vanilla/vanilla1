@@ -834,7 +834,7 @@ html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
 	}
 #UserResults li ul {
 	margin-top: 0 !important;
-	border-bottom:1 solid #ccc;
+	border-bottom:1px solid #ccc;
 	min-width:0;
 	}
 #UserResults li li {
