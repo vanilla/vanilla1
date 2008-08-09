@@ -16,7 +16,7 @@ include('../appg/init_ajax.php');
 
 $PostBackKey = ForceIncomingString('PostBackKey', '');
 $ExtensionKey = ForceIncomingString('ExtensionKey', '');
-if ($PostBackKey != '' && $PostBackKey == $Context->Session->GetVariable('SessionPostBackKey', 'string')) {
+if ($PostBackKey != '' && $PostBackKey == $Context->Session->GetCsrfValidationKey()) {
 	$Type = ForceIncomingString('Type', '');
 	$Switch = ForceIncomingBool('Switch', 0);
 	$DiscussionID = ForceIncomingInt('DiscussionID', 0);

@@ -16,7 +16,9 @@ include('../appg/init_ajax.php');
 
 $PostBackKey = ForceIncomingString('PostBackKey', '');
 $ExtensionKey = ForceIncomingString('ExtensionKey', '');
-if ($PostBackKey != '' && $PostBackKey == $Context->Session->GetVariable('SessionPostBackKey', 'string')) {
+if ($PostBackKey != ''
+	&& $PostBackKey == $Context->Session->GetCsrfValidationKey()
+) {
 	$ExtensionForm = $Context->ObjectFactory->CreateControl($Context, 'ExtensionForm');
 	if ($ExtensionForm->SwitchExtension($ExtensionKey)) {
 		echo $ExtensionKey;

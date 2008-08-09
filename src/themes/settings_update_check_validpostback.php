@@ -5,7 +5,7 @@ echo '<div id="Form" class="Account UpdateCheck Extensions">
 	<fieldset>
 		<legend>'.$this->Context->GetDefinition('UpdateCheck').'</legend>
 		<form id="frmUpdateCheck" method="post" action="">
-		<input type="hidden" id="FormPostBackKey" name="FormPostBackKey" value="'.$this->Context->Session->GetVariable("SessionPostBackKey", "string").'" />
+		<input type="hidden" id="FormPostBackKey" name="FormPostBackKey" value="'.$this->Context->Session->GetCsrfValidationKey().'" />
 		<div class="Errors Invisible" id="UpdateCheckErrors"></div>
 		<ul id="UpdateCheckItems">
 			<li id="Core" class="UpdateChecking">

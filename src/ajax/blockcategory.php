@@ -15,7 +15,7 @@ include('../appg/settings.php');
 include('../appg/init_ajax.php');
 $PostBackKey = ForceIncomingString('PostBackKey', '');
 $ExtensionKey = ForceIncomingString('ExtensionKey', '');
-if ($PostBackKey != '' && $PostBackKey == $Context->Session->GetVariable('SessionPostBackKey', 'string')) {
+if ($PostBackKey != '' && $PostBackKey == $Context->Session->GetCsrfValidationKey()) {
 	$Block = ForceIncomingBool('Block', 0);
 	$BlockCategoryID = ForceIncomingInt('BlockCategoryID', 0);
 

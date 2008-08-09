@@ -1,7 +1,7 @@
 <?php
 // Note: This file is included from the library/Vanilla/Vanilla.Control.CategoryList.php class.
 
-$SessionPostBackKey = $this->Context->Session->GetVariable('SessionPostBackKey', 'string');
+$SessionPostBackKey = $this->Context->Session->GetCsrfValidationKey();
 
 $CategoryList = '<div class="ContentInfo Top">
 	<h1>'.$this->Context->PageTitle.'</h1>
