@@ -121,7 +121,7 @@ class DiscussionForm extends PostBackControl {
 				$this->DelegateParameters['ResultDiscussion'] = &$ResultDiscussion;
 				$this->CallDelegate('PostSaveDiscussion');
 
-				if ($ResultDiscussion) {
+				if ($ResultDiscussion && ($ResultDiscussion->DiscussionID > 0)) {
 					// Saved successfully, so send back to the discussion
 					$Suffix = CleanupString($this->Discussion->Name).'/';
 					$Redirect = GetUrl(
@@ -181,7 +181,7 @@ class DiscussionForm extends PostBackControl {
 
 		if ($this->Comment) $this->PostBackParams->Set('CommentID', $this->Comment->CommentID);
 		$this->PostBackParams->Set('DiscussionID', $this->DiscussionID);
-		$this->Title = ($this->EditDiscussionID 
+		$this->Title = ($this->EditDiscussionID
 			? $this->Context->GetDefinition('EditYourDiscussion')
 			: $this->Context->GetDefinition('StartANewDiscussion'));
 		if ($this->EditDiscussionID > 0 || ($this->CommentID == 0 && $this->DiscussionID == 0)) {
