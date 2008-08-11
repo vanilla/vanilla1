@@ -41,7 +41,7 @@
          - - - - - - - - - - - - - - - - - -->
     <target name="tag" depends="getAppDetails">
 		<echo level="info" message="${line.separator}Tag Vanilla ${app.version}, People ${people.version} and Framework ${framework.version}."/>
-    	<svn username="${svn.username}" password="${svn.password}">
+    	<svn username="${svn.user}" password="${svn.password}">
 			<!-- Tag People and Framework first -->
 			<copy srcUrl="${svn.framework.trunk}${svn.framework.src}" destUrl="${svn.framework.newTag}" message="Tag version ${framework.version}"/>
 			<copy srcUrl="${svn.people.trunk}${svn.people.src}" destUrl="${svn.people.newTag}" message="Tag version ${people.version}"/>
