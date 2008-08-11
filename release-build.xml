@@ -39,7 +39,7 @@
 	<!-- - - - - - - - - - - - - - - - - - 
           target: tag                      
          - - - - - - - - - - - - - - - - - -->
-    <target name="tag">
+    <target name="tag" depends="getAppDetails">
 		<echo level="info" message="${line.separator}Tag Vanilla ${app.version}, People ${people.version} and Framework ${framework.version}."/>
     	<svn username="${svn.username}" password="${svn.password}">
 			<!-- Tag People and Framework first -->
