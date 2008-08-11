@@ -150,7 +150,7 @@
 		<echo>Get application names and versions...</echo>
 		<loadproperties srcfile="${src.dir}appg/version.php">
 			<filterchain>
-				<containsregex pattern="define.*'(.+)_(.+)'.*'([\w\.]+)'.*" replace="\1.\2 = \3"/>
+				<containsregex pattern="define.*'(.+)_(.+)'.*'([-\w\.]+)'.*" replace="\1.\2 = \3"/>
 			</filterchain>
 		</loadproperties>
 		<property name="app.version"		value="${APPLICATION.VERSION}"/>
