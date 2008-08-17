@@ -39,7 +39,7 @@ $Result = $Checker->Check($build . '/appg/md5.csv');
 if ($Result === null) {
 	exit("Failed: \n Could not find $build/appg/md5.csv");
 } else if(!$Result) {
-	exit("Failed: \n" . $Checker->ErrorAsText());
+	exit("Failed: \n" . $Checker->ErrorsAsText());
 } else {
 	fwrite(STDOUT, "Your installation in $build seems to be fine.");
 }
