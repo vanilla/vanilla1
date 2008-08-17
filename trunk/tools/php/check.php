@@ -1,6 +1,6 @@
 <?
 /**
- * Description: Create vanilla files' md5 signatures;
+ * Description: Check of files' md5 signatures example;
  *  
  *
  * Copyright 2008 Lussumo.com
@@ -11,7 +11,7 @@
  * The latest source code is available at www.lussumo.com
  * Contact Mark O'Sullivan at mark [at] lussumo [dot] com
  *
- * @author Damien Lenrun
+ * @author Damien Lebrun
  * @copyright 2008 Lussumo.com
  * @license http://lussumo.com/community/gpl.txt GPL 2
  * @package Framework
@@ -35,10 +35,11 @@ if (empty($argv[1])) {
 }
 
 $Checker = new IntegrityChecker($build);
-$Result = $Checker->Save($build . '/appg/md5.csv');
-
-if (!$Result) {
-	exit("Failed: Could not could not create the md5 signature.");
+$Result = $Checker->Check($build . '/appg/md5.csv');
+if ($Result === null) {
+	exit("Failed: \n Could not find $build/appg/md5.csv");
+} else if(!$Result) {
+	exit("Failed: \n" . $Checker->ErrorAsText());
 } else {
-	fwrite(STDOUT, "Signature created in $build/appg/md5.csv");
+	fwrite(STDOUT, "Your installation in $build seems to be fine.");
 }

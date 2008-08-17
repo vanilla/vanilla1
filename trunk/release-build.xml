@@ -4,7 +4,8 @@
 
      Vanilla release build    
      
-     Build vanilla
+     Build vanilla archive,
+     Build a patch archive,
      tag applications,
      and extract list of changed files from svn diff. 
                    
