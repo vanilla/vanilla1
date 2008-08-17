@@ -40,6 +40,7 @@
 				<exclude name="conf/*.php"/>
 				<exclude name="extension/**"/>
 				<exclude name="**/.svn/**"/>
+				<exclude name="**/thumbs.db"/>
 			</fileset>
 		</copy>
     	
@@ -51,6 +52,7 @@
 				<include name="**/*.html"/>
 				<exclude name="conf/*.php"/>
 				<exclude name="extension/**"/>
+				<exclude name="**/thumbs.db"/>
 			</fileset>
 			<filterset begintoken="@@" endtoken="@@">
 				<filter token="VANILLA-VERSION" value="${app.version}"/>
