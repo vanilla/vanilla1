@@ -32,8 +32,17 @@
     <!-- ================================= 
           target: build              
          ================================= -->
-    <target name="build" depends="tag,getChanges">
+    <target name="build" depends="prepare">
     	<ant antfile="build.xml" dir="./"/>
+    	<antcall target="getChanges"/>
+    	<antcall target="tag"/>
+    	
+    	<!-- build changed-only-package -->
+		<copy todir="${build.upgrade.dir}" verbose="true">
+			<fileset dir="${build.app.dir}" includesfile="${all.changedFiles}"/>
+		</copy>
+    	<echo>Create update archive....</echo>
+    	<zip basedir="${build.dir}" destfile="${dist.dir}${dist.upgrade.name}.zip" excludes="${dist.name}/**, **/js/test, **/js/test/**"/>
     </target>
 	
 	<!-- - - - - - - - - - - - - - - - - - 
@@ -119,6 +128,11 @@
     	<property name="svn.app.newTag" 	value="${svn.app.tags}Vanilla-${app.version}"/>
     	<property name="svn.people.newTag" 	value="${svn.people.tags}People-${people.version}"/>
     	<property name="svn.framework.newTag" 	value="${svn.framework.tags}Framework-${framework.version}"/>
+    	<property name="dist.name" value="${app.name}-${app.version}"/>
+    	<property name="dist.upgrade.name" value="vanilla-upgrade-${app.old_version}-to-${app.version}"/>
+    	<property name="build.upgrade.dir" value="${build.dir}${dist.upgrade.name}/"/>
+    	<property name="build.app.dir" value="${build.dir}${dist.name}/"/>
+
 		<echo>Vanilla version ${app.version} - last version: ${app.old_version}</echo>
 		<echo>People version ${people.version} - last version: ${people.old_version}</echo>
 		<echo>Framework version ${framework.version} - last version: ${framework.old_version}</echo>
@@ -127,8 +141,9 @@
 	<!-- - - - - - - - - - - - - - - - - - 
           target: prepare                      
          - - - - - - - - - - - - - - - - - -->
-    <target name="prepare" depends="clean">
+    <target name="prepare" depends="clean,getAppDetails">
 		<mkdir dir="${build.diff.dir}"/>
+    	<mkdir dir="${build.upgrade.dir}"/>
     </target>
 	
 	<!-- - - - - - - - - - - - - - - - - - 
@@ -136,6 +151,7 @@
          - - - - - - - - - - - - - - - - - -->
     <target name="clean">
 		<delete dir="${build.diff.dir}"/>
+    	<delete dir="${build.upgrade.dir}"/>
     </target>
 
 </project>
