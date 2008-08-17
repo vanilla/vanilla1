@@ -15,6 +15,7 @@ include('../library/Framework/Framework.Class.SqlBuilder.php');
 include('../library/Framework/Framework.Class.MessageCollector.php');
 include('../library/Framework/Framework.Class.ErrorManager.php');
 include('../library/Framework/Framework.Class.ConfigurationManager.php');
+include('../library/Framework/Framework.Class.IntegrityChecker.php');
 
 // Include database structure
 include('../appg/database.php');
@@ -104,6 +105,7 @@ $ApplicationTitle = ForceIncomingString('ApplicationTitle', 'Vanilla');
 $CookieDomain = ForceIncomingString('CookieDomain', '');
 $CookieDomain = FormatCookieDomain($CookieDomain);
 $CookiePath = ForceIncomingString('CookiePath', '');
+$SkipCheck = ForceIncomingInt('SkipCheck', 0);
 
 // Make the banner title the same as the application title
 $WorkingDirectory = str_replace('\\', '/', getcwd()).'/';
@@ -132,25 +134,51 @@ function CreateFile($File, $Contents, &$Context) {
 
 // Step 1. Check for correct PHP, MySQL, and permissions
 if ($PostBackAction == 'Permissions') {
-
+	
+	$FilePermissionIssues = 0;
 	// Make sure we are running at least PHP 4.1.0
 	if (intval(str_replace('.', '', phpversion())) < 410) $Context->WarningCollector->Add('It appears as though you are running PHP version '.phpversion().'. Vanilla requires at least version 4.1.0 of PHP. You will need to upgrade your version of PHP before you can continue.');
 	// Make sure MySQL is available
 	if (!function_exists('mysql_connect')) $Context->WarningCollector->Add('It appears as though you do not have MySQL enabled for PHP. You will need a working copy of MySQL and PHP&#8217;s MySQL extensions enabled in order to run Vanilla.');
-	// Make sure the conf folder is readable
-	if (!is_readable('../conf/')) $Context->WarningCollector->Add('Vanilla needs to have read permission enabled on the conf folder.');
-	// Make sure the conf folder is writeable
-	if (!is_writable('../conf/')) $Context->WarningCollector->Add('Vanilla needs to have write permission enabled on the conf folder.');
 
-	// Make sure other folders are readable
-	if (!is_readable('../extensions/')) $Context->WarningCollector->Add('Vanilla needs to have read permission enabled on the extensions folder.');
-	if (!is_readable('../languages/')) $Context->WarningCollector->Add('Vanilla needs to have read permission enabled on the languages folder.');
-	if (!is_readable('../themes/')) $Context->WarningCollector->Add('Vanilla needs to have read permission enabled on the themes folder.');
-	if (!is_readable('../setup/')) $Context->WarningCollector->Add('Vanilla needs to have read permission enabled on the setup folder.');
+	// Make sure the conf folder is writeable
+	if (!is_writable('../conf/')) {
+		$Context->WarningCollector->Add('Vanilla needs to have write permission enabled on the conf folder.');
+		$FilePermissionIssues = 1;
+	}
+
+	// Make sure all folders are readable
+	$TestFolder = array(
+		'conf' => '../conf/',
+		'extensions' => '../extensions/',
+		'languages' => '../languages/',
+		'themes' => '../themes/',
+		'setup' => '../setup/'
+	);
+	foreach ($TestFolder as $FolderName => $Path) {
+		if (!is_readable($Path)) {
+			$Context->WarningCollector->Add('Vanilla needs to have read permission enabled on the '. $FolderName . ' folder.');
+			$FilePermissionIssues = 1;
+		}
+	}
 
 	// Make sure the files don't exist already (ie. the site is already up and running);
 	if (file_exists('../conf/settings.php')) $Context->WarningCollector->Add('Vanilla seems to have been installed already. You will need to remove the conf/settings.php, conf/database.php files, and all database tables in order to run the installer utility again.');
 
+	
+	// Make sure files have been correctly uploaded
+	$CorruptionIssue = 0;
+	if (!$SkipCheck) {
+		$Checker = new IntegrityChecker('../');
+		if ($Checker->Check('../appg/md5.csv') === false) {
+			
+			$Context->WarningCollector->Add(
+				'Some files seems to be missing or corrupted:<br/>' . nl2br($Checker->ErrorsAsText())
+			);
+			$CorruptionIssue = 1;
+		}
+	}
+	
 	if ($Context->WarningCollector->Count() == 0) {
 		$Contents = '<?php
 // Database Configuration Settings
@@ -453,27 +481,46 @@ if (!defined(\'IN_VANILLA\')) exit();
 			if ($CurrentStep < 2 || $CurrentStep > 4) {
 				echo  '<h2>Vanilla Installation Wizard (Step 1 of 3)</h2>';
 				if ($Context->WarningCollector->Count() > 0) {
+					// display error message and some help messages.
 					echo '<div class="Warnings">
 						<strong>We came across some problems while checking your permissions...</strong>
 						'.$Context->WarningCollector->GetMessages().'
 					</div>';
+
+					if ($FilePermissionIssues) {
+						echo '<p>Navigate the filesystem of your server to the Vanilla folder.
+						Vanilla will need read AND write access to the <strong>conf</strong> folder.</p>
+
+						<p>There are many ways to set these permissions.
+						One way is to use your shell access
+						and to execute the following from the root Vanilla folder:</p>
+
+						<code>chmod 777 ./conf</code>
+		
+						<p>You will also need to grant read access to the extensions, languages, setup, and themes folders.
+						Typically these permissions are granted by default, but if not you can achieve them with the following commands:</p>
+		
+		  					<code>chmod -R 755 ./extensions
+							<br />chmod -R 755 ./languages
+							<br />chmod -R 755 ./setup
+							<br />chmod -R 755 ./themes</code>
+						
+						If you do not have shell access to your server, use 
+						<a href="http://www.phpjunkyard.com/ftp-chmod-tutorial.php">your FTP program</a> instead.';
+					} else if ($CorruptionIssue) {
+						echo '<p>Try to re-upload Vanilla on your server or 
+						<a href="installer.php?PostBackAction=Permissions&SkipCheck=1">skip the integrity check</a> if it was expected.
+						</p>';
+					}
+					
+				} else {
+					echo '<p>This wizard will first check that no files has been corrupted and that your server has the correct file permission.</p>';
 				}
-				echo '<p>Navigate the filesystem of your server to the Vanilla folder. Vanilla will need read AND write access to the <strong>conf</strong> folder.</p>
-
-				<p>There are many ways to set these permissions. One way is to execute the following from the root Vanilla folder:</p>
-
-				<code>chmod 777 ./conf</code>
-
-				<p>You will also need to grant read access to the extensions, languages, setup, and themes folders. Typically these permissions are granted by default, but if not you can achieve them with the following commands:</p>
-
-  					<code>chmod -R 755 ./extensions
-					<br />chmod -R 755 ./languages
-					<br />chmod -R 755 ./setup
-					<br />chmod -R 755 ./themes</code>
-
-				<form id="frmPermissions" method="post" action="installer.php">
+				 
+				
+				echo '<form id="frmPermissions" method="post" action="installer.php">
 				<input type="hidden" name="PostBackAction" value="Permissions" />
-				<div class="Button"><input type="submit" value="Click here to check your permissions and proceed to the next step" /></div>
+				<div class="Button"><input type="submit" value="Click here to check your installation and proceed to the next step" /></div>
 				</form>';
 			} elseif ($CurrentStep == 2) {
 					echo '<h2>Vanilla Installation Wizard (Step 2 of 3)</h2>';
