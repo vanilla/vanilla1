@@ -75,12 +75,12 @@ $PageEnd = $Context->ObjectFactory->CreateControl($Context, 'PageEnd');
 
 // BUILD THE PAGE HEAD
 // Every page will require some basic definitions for the header.
-$Head->AddScript('js/global.js');
-$Head->AddScript('js/vanilla.js');
-$Head->AddScript('js/ajax.js');
-$Head->AddScript('js/ac.js');
-$Head->AddStyleSheet($Context->StyleUrl.'vanilla.css', 'screen', 100, '');
-$Head->AddStyleSheet($Context->StyleUrl.'vanilla.print.css', 'print', 101, '');
+$Head->AddScript('js/global.js?v='.APPLICATION_VERSION);
+$Head->AddScript('js/vanilla.js?v='.APPLICATION_VERSION);
+$Head->AddScript('js/ajax.js?v='.APPLICATION_VERSION);
+$Head->AddScript('js/ac.js?v='.APPLICATION_VERSION);
+$Head->AddStyleSheet($Context->StyleUrl.'vanilla.css?v='.APPLICATION_VERSION, 'screen', 100, '');
+$Head->AddStyleSheet($Context->StyleUrl.'vanilla.print.css?v='.APPLICATION_VERSION, 'print', 101, '');
 
 // BUILD THE MAIN MENU
 $Menu->AddTab($Context->GetDefinition('Discussions'), 'discussions', GetUrl($Configuration, './'), '', $Configuration['TAB_POSITION_DISCUSSIONS']);
