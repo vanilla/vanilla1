@@ -42,8 +42,20 @@
 		<copy todir="${build.upgrade.dir}" verbose="true">
 			<fileset dir="${build.app.dir}" includesfile="${all.changedFiles}"/>
 		</copy>
+    	<!-- include all src files, changed or not -->
+		<copy todir="${build.upgrade.js.dir}" verbose="true">
+			<fileset dir="${build.js.dir}">
+				<include name="src/*.js"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.upgrade.css.dir}" verbose="true">
+			<fileset dir="${build.css.dir}">
+				<include name="src/*.css"/>
+			</fileset>
+		</copy>
+    	
     	<echo>Create update archive....</echo>
-    	<zip basedir="${build.dir}" destfile="${dist.dir}${dist.upgrade.name}.zip" excludes="${dist.name}/**, **/js/test, **/js/test/**"/>
+    	<zip basedir="${build.dir}" destfile="${dist.dir}${dist.upgrade.name}.zip" includes="${dist.upgrade.name}/**" excludes="**/js/test, **/js/test/**"/>
     </target>
 	
 	<!-- - - - - - - - - - - - - - - - - - 
@@ -57,10 +69,12 @@
 			<copy srcUrl="${svn.people.trunk}${svn.people.src}" destUrl="${svn.people.newTag}" message="Tag version ${people.version}"/>
 			<!-- Change svn:externals of framework and people for the tagged versions -->
 			<propset path="${src.dir}" name="svn:externals" value="library/Framework ${svn.framework.newTag}${line.separator}library/People ${svn.people.newTag}"/>
+    		<propset path="${tools.script.dir}" name="svn:externals" value="framework ${svn.framework.newTag}"/>
 			<!-- Tag the working copy -->
 			<copy srcPath="${svn.wc}" destUrl="${svn.app.newTag}" message="Tag version ${app.version}"/>
 			<!-- reverse the svn:externals change -->
 			<revert dir="${src.dir}" recurse="false"/>
+    		<revert dir="${tools.script.dir}" recurse="false"/>
 		</svn>
     </target>
 	
@@ -105,6 +119,9 @@
 		<concat destfile="${all.changedFiles}">
 			<fileset dir="${build.diff.dir}" includes="*.txt"/>
 		</concat>
+		<concat destfile="${all.changedFiles}" append="true">
+			<string value="appg/md5.csv" />
+		</concat>
     </target>
 	
 	<!-- - - - - - - - - - - - - - - - - - 
@@ -133,6 +150,10 @@
     	<property name="dist.upgrade.name" value="vanilla-upgrade-${app.old_version}-to-${app.version}"/>
     	<property name="build.upgrade.dir" value="${build.dir}${dist.upgrade.name}/"/>
     	<property name="build.app.dir" value="${build.dir}${dist.name}/"/>
+    	<property name="build.js.dir" value="${build.app.dir}${js.dir}"/>
+    	<property name="build.css.dir" value="${build.app.dir}${css.dir}"/>
+    	<property name="build.upgrade.js.dir" value="${build.upgrade.dir}${js.dir}"/>
+    	<property name="build.upgrade.css.dir" value="${build.upgrade.dir}${css.dir}"/>
 
 		<echo>Vanilla version ${app.version} - last version: ${app.old_version}</echo>
 		<echo>People version ${people.version} - last version: ${people.old_version}</echo>
