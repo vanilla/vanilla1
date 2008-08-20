@@ -168,7 +168,9 @@ if ($PostBackAction == 'Permissions') {
 	
 	// Make sure files have been correctly uploaded
 	$CorruptionIssue = 0;
-	if (!$SkipCheck) {
+	if ( $Context->WarningCollector->Count() == 0
+		&& !$SkipCheck
+	) {
 		$Checker = new IntegrityChecker('../');
 		if ($Checker->Check('../appg/md5.csv') === false) {
 			
