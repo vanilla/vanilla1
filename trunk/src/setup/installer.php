@@ -499,16 +499,15 @@ if (!defined(\'IN_VANILLA\')) exit();
 
 						<code>chmod 777 ./conf</code>
 		
-						<p>You will also need to grant read access to the extensions, languages, setup, and themes folders.
-						Typically these permissions are granted by default, but if not you can achieve them with the following commands:</p>
-		
-		  					<code>chmod -R 755 ./extensions
+						<p>You will also need to grant read access to the extensions, languages, setup,
+						and themes folders. Typically these permissions are granted by default,
+						but if not you can achieve them with the following commands:</p>
+
+							<code>chmod -R 755 ./extensions
 							<br />chmod -R 755 ./languages
 							<br />chmod -R 755 ./setup
 							<br />chmod -R 755 ./themes</code>
-						
-						If you do not have shell access to your server, use 
-						<a href="http://www.phpjunkyard.com/ftp-chmod-tutorial.php">your FTP program</a> instead.';
+						';
 					} else if ($CorruptionIssue) {
 						echo '<p>Try to re-upload Vanilla on your server or 
 						<a href="installer.php?PostBackAction=Permissions&SkipCheck=1">skip the integrity check</a> if it was expected.
@@ -518,8 +517,8 @@ if (!defined(\'IN_VANILLA\')) exit();
 				} else {
 					echo '<p>This wizard will first check that no files has been corrupted and that your server has the correct file permission.</p>';
 				}
-				 
-				
+
+
 				echo '<form id="frmPermissions" method="post" action="installer.php">
 				<input type="hidden" name="PostBackAction" value="Permissions" />
 				<div class="Button"><input type="submit" value="Click here to check your installation and proceed to the next step" /></div>
