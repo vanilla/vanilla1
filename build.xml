@@ -36,6 +36,7 @@
 				<exclude name="**/*.php"/>
 				<exclude name="**/*.html"/>
 				<exclude name="${js.dir}*.js"/>
+				<exclude name="${js.dir}/test/**"/>
 				<exclude name="${css.dir}*.css"/>
 				<exclude name="conf/*.php"/>
 				<exclude name="extension/**"/>
@@ -48,6 +49,7 @@
 		<echo message="${line.separator}Copy php and html files, replacing version number..."/>
 		<copy todir="${build.app.dir}" verbose="true"  encoding="UTF-8" outputencoding="UTF-8">
 			<fileset dir="${src.dir}">
+				<exclude name="${js.dir}/test/**"/>
 				<include name="**/*.php"/>
 				<include name="**/*.html"/>
 				<exclude name="conf/*.php"/>
