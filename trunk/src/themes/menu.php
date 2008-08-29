@@ -5,12 +5,16 @@ echo '<div id="Session">';
 	if ($this->Context->Session->UserID > 0) {
 		echo str_replace('//1',	$this->Context->Session->User->Name, $this->Context->GetDefinition('SignedInAsX'))
 			. ' (<a href="'
-			. AppendUrlParameters(
+			. FormatStringForDisplay(AppendUrlParameters(
 				$this->Context->Configuration['SIGNOUT_URL'],
-				'FormPostBackKey=' . $this->Context->Session->GetCsrfValidationKey() )
+				'FormPostBackKey=' . $this->Context->Session->GetCsrfValidationKey() ))
 			. '">'.$this->Context->GetDefinition('SignOut').'</a>)';
 	} else {
-		echo $this->Context->GetDefinition('NotSignedIn').' (<a href="'.AppendUrlParameters($this->Context->Configuration['SIGNIN_URL'], 'ReturnUrl='.GetRequestUri()).'">'.$this->Context->GetDefinition('SignIn').'</a>)';
+		echo $this->Context->GetDefinition('NotSignedIn') . ' (<a href="'
+			. FormatStringForDisplay(AppendUrlParameters(
+				$this->Context->Configuration['SIGNIN_URL'],
+				'ReturnUrl='. urlencode(GetRequestUri(0))))
+			. '">'.$this->Context->GetDefinition('SignIn').'</a>)';
 	}
 	echo '</div>';
 	$this->CallDelegate('PreHeadRender');
