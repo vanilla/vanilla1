@@ -126,6 +126,7 @@ $Context->Dictionary['Comments'] = 'Comments';
 $Context->Dictionary['Users'] = 'Users';
 $Context->Dictionary['AllRoles'] = 'All roles';
 $Context->Dictionary['Advanced'] = 'Advanced';
+$Context->Dictionary['SearchTerms'] = 'Search terms:';
 $Context->Dictionary['ChooseSearchType'] = 'Search:';
 $Context->Dictionary['DiscussionTopicSearch'] = 'Discussion topic search';
 $Context->Dictionary['FindDiscussionsContaining'] = 'Find discussion topics containing';
