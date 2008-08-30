@@ -23,7 +23,12 @@ $UserList .= '<li class="UserAccount'.($Alternate ? ' Alternate' : '').($FirstRo
 		</li>
 		<li class="User CommentsAdded">
 			<span>'.$this->Context->GetDefinition('CommentsAdded').'</span> '.$u->CountComments.'
-		</li>
+		</li>';
+$this->DelegateParameters['User'] = &$u;
+$this->DelegateParameters['UserList'] = &$UserList;
+$this->CallDelegate('PostUserOptionsRender');
+
+$UserList .= '
 	</ul>
 </li>';
 
