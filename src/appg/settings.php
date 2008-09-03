@@ -78,6 +78,9 @@ $Configuration['APPROVAL_ROLE'] = '3';
 $Configuration['SAFE_REDIRECT'] = 'people.php?PageAction=SignOutNow';
 $Configuration['PEOPLE_USE_EXTENSIONS'] = '1';
 $Configuration['DEFAULT_EMAIL_VISIBLE'] = '0';
+$Configuration['PASSWORD_HASH_MODULE'] = 'People/People.Class.PasswordHash.php';
+$Configuration['PASSWORD_HASH_CLASS'] = 'PasswordHash';
+$Configuration['REHASH_PASSWORD'] = '0';
 
 // Framework Settings
 $Configuration['SMTP_HOST'] = '';
