@@ -29,6 +29,7 @@ include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Context.php');
 include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Delegation.php');
 include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Control.php');
 include($Configuration['LIBRARY_PATH'].$Configuration['AUTHENTICATION_MODULE']);
+include($Configuration['LIBRARY_PATH'].$Configuration['PASSWORD_HASH_MODULE']);
 include($Configuration['LIBRARY_PATH'].'People/People.Class.Session.php');
 include($Configuration['LIBRARY_PATH'].'People/People.Class.User.php');
 
