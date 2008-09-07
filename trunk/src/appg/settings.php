@@ -230,6 +230,10 @@ if ($Configuration['SETUP_COMPLETE'] == '0') {
 	header('Location: ./setup/index.php');
 }
 
+// Define a constant to prevent a register_globals attack on the configuration paths
+define('IN_VANILLA', '1');
+
+//upgrade database
 if ($Configuration['DATABASE_VERSION'] < 2) {
 	include_once($Configuration['APPLICATION_PATH'].'appg/database.php');
 	include_once($Configuration['DATABASE_PATH']);
@@ -255,14 +259,11 @@ if ($Configuration['DATABASE_VERSION'] < 2) {
 	$Query = 'ALTER TABLE '
 		. GetTableName('User', $DatabaseTables, $Configuration["DATABASE_TABLE_PREFIX"])
 		. ' CHANGE ' . $DatabaseColumns['User']['Password'].' '
-		. $DatabaseColumns['User']['Password'] 
-		. ' VARBINARY( 34 ) NULL DEFAULT NULL';
+		. $DatabaseColumns['User']['Password'] . ' VARBINARY( 34 ) NULL DEFAULT NULL';
 	if ($Context->Database->Execute($Query,'','','',0)) {
-		AddConfigurationSetting(new Context($Configuration), 'DATABASE_VERSION', '2');
+		AddConfigurationSetting($Context, 'DATABASE_VERSION', '2');
 	}
 	unset($Context, $Query);
 }
 
-// Define a constant to prevent a register_globals attack on the configuration paths
-define('IN_VANILLA', '1');
 ?>
