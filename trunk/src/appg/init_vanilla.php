@@ -14,25 +14,24 @@
 if (!defined('IN_VANILLA')) exit();
 
 // GLOBAL INCLUDES
-include($Configuration['APPLICATION_PATH'].'appg/headers.php');
-include($Configuration['APPLICATION_PATH'].'appg/database.php');
-include($Configuration['DATABASE_PATH']);
-include($Configuration['LIBRARY_PATH'].'Framework/Framework.Functions.php');
-include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Database.php');
-include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.'.$Configuration['DATABASE_SERVER'].'.php');
-include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.SqlBuilder.php');
-include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.MessageCollector.php');
-include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.ErrorManager.php');
-include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.ObjectFactory.php');
-include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.StringManipulator.php');
-include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Context.php');
-include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Delegation.php');
-include($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Control.php');
-include($Configuration['LIBRARY_PATH'].'Vanilla/Vanilla.Functions.php');
-include($Configuration['LIBRARY_PATH'].$Configuration['AUTHENTICATION_MODULE']);
-include($Configuration['LIBRARY_PATH'].$Configuration['PASSWORD_HASH_MODULE']);
-include($Configuration['LIBRARY_PATH'].'People/People.Class.Session.php');
-include($Configuration['LIBRARY_PATH'].'People/People.Class.User.php');
+include_once($Configuration['APPLICATION_PATH'].'appg/headers.php');
+include_once($Configuration['APPLICATION_PATH'].'appg/database.php');
+include_once($Configuration['DATABASE_PATH']);
+include_once($Configuration['LIBRARY_PATH'].'Framework/Framework.Functions.php');
+include_once($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Database.php');
+include_once($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.'.$Configuration['DATABASE_SERVER'].'.php');
+include_once($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.SqlBuilder.php');
+include_once($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.MessageCollector.php');
+include_once($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.ErrorManager.php');
+include_once($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.ObjectFactory.php');
+include_once($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.StringManipulator.php');
+include_once($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Context.php');
+include_once($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Delegation.php');
+include_once($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Control.php');
+include_once($Configuration['LIBRARY_PATH'].'Vanilla/Vanilla.Functions.php');
+include_once($Configuration['LIBRARY_PATH'].$Configuration['AUTHENTICATION_MODULE']);
+include_once($Configuration['LIBRARY_PATH'].'People/People.Class.Session.php');
+include_once($Configuration['LIBRARY_PATH'].'People/People.Class.User.php');
 
 // INSTANTIATE THE CONTEXT OBJECT
 // The context object handles the following:

@@ -45,6 +45,7 @@ $Configuration['FARM_DATABASE_NAME'] = 'your_farm_database_name';
 $Configuration['FARM_DATABASE_USER'] = 'your_farm_database_user_name';
 $Configuration['FARM_DATABASE_PASSWORD'] = 'your_farm_database_password';
 $Configuration['DATABASE_CHARACTER_ENCODING'] = '';
+$Configuration['DATABASE_VERSION'] = '1';
 
 // Path Settings
 $Configuration['APPLICATION_PATH'] = '/path/to/vanilla/';
@@ -78,9 +79,8 @@ $Configuration['APPROVAL_ROLE'] = '3';
 $Configuration['SAFE_REDIRECT'] = 'people.php?PageAction=SignOutNow';
 $Configuration['PEOPLE_USE_EXTENSIONS'] = '1';
 $Configuration['DEFAULT_EMAIL_VISIBLE'] = '0';
-$Configuration['PASSWORD_HASH_MODULE'] = 'People/People.Class.PasswordHash.php';
-$Configuration['PASSWORD_HASH_CLASS'] = 'PasswordHash';
-$Configuration['REHASH_PASSWORD'] = '0';
+$Configuration['PASSWORD_HASH_ITERATION'] = '8';
+$Configuration['PASSWORD_HASH_PORTABLE'] = '1';
 
 // Framework Settings
 $Configuration['SMTP_HOST'] = '';
@@ -228,6 +228,39 @@ $Configuration['SELF_URL'] = @$_SERVER['PHP_SELF'];
 include(dirname(__FILE__) . '/../conf/settings.php');
 if ($Configuration['SETUP_COMPLETE'] == '0') {
 	header('Location: ./setup/index.php');
+}
+
+if ($Configuration['DATABASE_VERSION'] < 2) {
+	include_once($Configuration['APPLICATION_PATH'].'appg/database.php');
+	include_once($Configuration['DATABASE_PATH']);
+	include_once($Configuration['LIBRARY_PATH'].'Framework/Framework.Functions.php');
+	include_once($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Database.php');
+	include_once($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.'.$Configuration['DATABASE_SERVER'].'.php');
+	include_once($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.SqlBuilder.php');
+	include_once($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.MessageCollector.php');
+	include_once($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.ErrorManager.php');
+	include_once($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.ObjectFactory.php');
+	include_once($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.StringManipulator.php');
+	include_once($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Context.php');
+	include_once($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Delegation.php');
+	include_once($Configuration['LIBRARY_PATH'].'Vanilla/Vanilla.Functions.php');
+	include_once($Configuration['LIBRARY_PATH'].$Configuration['AUTHENTICATION_MODULE']);
+	include_once($Configuration['LIBRARY_PATH'].'People/People.Class.Session.php');
+	include_once($Configuration['LIBRARY_PATH'].'People/People.Class.User.php');
+
+	$Context = new Context($Configuration);
+	$Context->DatabaseTables = &$DatabaseTables;
+	$Context->DatabaseColumns = &$DatabaseColumns;	
+
+	$Query = 'ALTER TABLE '
+		. GetTableName('User', $DatabaseTables, $Configuration["DATABASE_TABLE_PREFIX"])
+		. ' CHANGE ' . $DatabaseColumns['User']['Password'].' '
+		. $DatabaseColumns['User']['Password'] 
+		. ' VARBINARY( 34 ) NULL DEFAULT NULL';
+	if ($Context->Database->Execute($Query,'','','',0)) {
+		AddConfigurationSetting(new Context($Configuration), 'DATABASE_VERSION', '2');
+	}
+	unset($Context, $Query);
 }
 
 // Define a constant to prevent a register_globals attack on the configuration paths
