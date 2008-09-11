@@ -31,6 +31,7 @@ include_once($Configuration['LIBRARY_PATH'].'Framework/Framework.Class.Control.p
 include_once($Configuration['LIBRARY_PATH'].'Vanilla/Vanilla.Functions.php');
 include_once($Configuration['LIBRARY_PATH'].$Configuration['AUTHENTICATION_MODULE']);
 include_once($Configuration['LIBRARY_PATH'].'People/People.Class.Session.php');
+include_once($Configuration['LIBRARY_PATH'].'People/People.Class.PasswordHash.php');
 include_once($Configuration['LIBRARY_PATH'].'People/People.Class.User.php');
 
 // INSTANTIATE THE CONTEXT OBJECT
