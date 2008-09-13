@@ -1547,7 +1547,7 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
 
 /* IE Rendering Fixes */
 
-#Body, #Form h2, #Form p {height: 1%;}
+#Body, #Form h2, #Form p, blockquote {height: 1%;}
 
 /* Thank you positioniseverything.com*/
 
