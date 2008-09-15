@@ -86,6 +86,7 @@ $Configuration['PASSWORD_HASH_PORTABLE'] = '1';
 $Configuration['SMTP_HOST'] = '';
 $Configuration['SMTP_USER'] = '';
 $Configuration['SMTP_PASSWORD'] = '';
+$Configuration['DEFAULT_EMAIL_MIME_TYPE'] = 'text/plain';
 $Configuration['LANGUAGE'] = "English";
 $Configuration['URL_BUILDING_METHOD'] = 'Standard';  // Standard or mod_rewrite
 $Configuration['CHARSET'] = 'utf-8';
