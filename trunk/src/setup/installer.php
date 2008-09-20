@@ -515,7 +515,7 @@ if (!defined(\'IN_VANILLA\')) exit();
 					}
 					
 				} else {
-					echo '<p>This wizard will first check that no files has been corrupted and that your server has the correct file permission.</p>';
+					echo '<p>This wizard will first check the integrity and permissions of Vanilla files on the server.</p>';
 				}
 
 
