@@ -134,7 +134,7 @@ function CreateFile($File, $Contents, &$Context) {
 
 // Step 1. Check for correct PHP, MySQL, and permissions
 if ($PostBackAction == 'Permissions') {
-	
+
 	$FilePermissionIssues = 0;
 	// Make sure we are running at least PHP 4.1.0
 	if (intval(str_replace('.', '', phpversion())) < 410) $Context->WarningCollector->Add('It appears as though you are running PHP version '.phpversion().'. Vanilla requires at least version 4.1.0 of PHP. You will need to upgrade your version of PHP before you can continue.');
@@ -165,7 +165,7 @@ if ($PostBackAction == 'Permissions') {
 	// Make sure the files don't exist already (ie. the site is already up and running);
 	if (file_exists('../conf/settings.php')) $Context->WarningCollector->Add('Vanilla seems to have been installed already. You will need to remove the conf/settings.php, conf/database.php files, and all database tables in order to run the installer utility again.');
 
-	
+
 	// Make sure files have been correctly uploaded
 	$CorruptionIssue = 0;
 	if ( $Context->WarningCollector->Count() == 0
@@ -173,14 +173,14 @@ if ($PostBackAction == 'Permissions') {
 	) {
 		$Checker = new IntegrityChecker('../');
 		if ($Checker->Check('../appg/md5.csv') === false) {
-			
+
 			$Context->WarningCollector->Add(
 				'Some files seems to be missing or corrupted:<br/>' . nl2br($Checker->ErrorsAsText())
 			);
 			$CorruptionIssue = 1;
 		}
 	}
-	
+
 	if ($Context->WarningCollector->Count() == 0) {
 		$Contents = '<?php
 // Database Configuration Settings
@@ -287,7 +287,7 @@ if (!defined(\'IN_VANILLA\')) exit();
 									if ($DatabaseCharacterEncoding == 'utf8' && strpos($CurrentQuery, 'REATE TABLE') == 1) {
 										str_replace(');', ') DEFAULT CHARACTER SET utf8;', $CurrentQuery);
 									}
-									$CurrentQuery = preg_replace('/((TABLE|INTO) `)LUM_/', "\$1" . $DBTablePrefix, $CurrentQuery);
+									$CurrentQuery = preg_replace('/((TABLE|INTO) `)LUM_/', '${1}' . $DBTablePrefix, $CurrentQuery);
 									if (!@mysql_query($CurrentQuery, $Connection)) {
 										$Context->WarningCollector->Add('An error occurred while we were attempting to create the database tables. MySQL reported the following error: <code>'.mysql_error($Connection).'</code><code>QUERY: '.$CurrentQuery.'</code>');
 										$i = count($SqlLines)+1;
@@ -498,7 +498,7 @@ if (!defined(\'IN_VANILLA\')) exit();
 						and to execute the following from the root Vanilla folder:</p>
 
 						<code>chmod 777 ./conf</code>
-		
+
 						<p>You will also need to grant read access to the extensions, languages, setup,
 						and themes folders. Typically these permissions are granted by default,
 						but if not you can achieve them with the following commands:</p>
@@ -509,11 +509,11 @@ if (!defined(\'IN_VANILLA\')) exit();
 							<br />chmod -R 755 ./themes</code>
 						';
 					} else if ($CorruptionIssue) {
-						echo '<p>Try to re-upload Vanilla on your server or 
+						echo '<p>Try to re-upload Vanilla on your server or
 						<a href="installer.php?PostBackAction=Permissions&SkipCheck=1">skip the integrity check</a> if it was expected.
 						</p>';
 					}
-					
+
 				} else {
 					echo '<p>This wizard will first check the integrity and permissions of Vanilla files on the server.</p>';
 				}
