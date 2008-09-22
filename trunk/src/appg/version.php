@@ -19,8 +19,8 @@
  * Previous_vanilla_version: 1.1.4
  */
 define('APPLICATION', 'Vanilla');
-define('FRAMEWORK_VERSION', '1.1.4-rc4');
-define('PEOPLE_VERSION', '1.1.4-rc4');
-define('APPLICATION_VERSION', '1.1.5-rc4');
+define('FRAMEWORK_VERSION', '1.1.4');
+define('PEOPLE_VERSION', '1.1.4');
+define('APPLICATION_VERSION', '1.1.5');
 
 ?>
