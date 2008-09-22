@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     9 Aug 2008 15:04:02                                                        
+
+     Vanilla release build    
+     
+     Build vanilla archive,
+     Build a patch archive,
+     tag applications,
+     and extract list of changed files from svn diff. 
+                   
+     requires:
+		- JDK 1.5+
+		- Ant 1.7
+                   
+     Damien Lebrun                                                                
+     ====================================================================== -->
+<project name="Vanilla release build" default="build">
+    <description>
+            Build vanilla,tag applications, extract list of changed files from 
+    </description>
+
+	<loadproperties srcfile="build.properties"/>
+	<loadproperties srcfile="release-build.properties"/>
+	<loadproperties srcfile="svn-credential.properties"/>
+	<path id="project.classpath">
+		<fileset dir="${tools.ant.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+	<typedef resource="org/tigris/subversion/svnant/svnantlib.xml" classpathref="project.classpath"/>
+	
+    <!-- ================================= 
+          target: build              
+         ================================= -->
+    <target name="build" depends="prepare">
+    	<ant antfile="build.xml" dir="./"/>
+    	<antcall target="getChanges"/>
+    	<antcall target="tag"/>
+    	
+    	<!-- build changed-only-package -->
+		<copy todir="${build.upgrade.dir}" verbose="true">
+			<fileset dir="${build.app.dir}" includesfile="${all.changedFiles}"/>
+		</copy>
+    	<!-- include all src files, changed or not -->
+		<copy todir="${build.upgrade.js.dir}" verbose="true">
+			<fileset dir="${build.js.dir}">
+				<include name="src/*.js"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.upgrade.css.dir}" verbose="true">
+			<fileset dir="${build.css.dir}">
+				<include name="src/*.css"/>
+			</fileset>
+		</copy>
+    	
+    	<echo>Create update archive....</echo>
+    	<zip basedir="${build.dir}" destfile="${dist.dir}${dist.upgrade.name}.zip" includes="${dist.upgrade.name}/**" excludes="**/js/test, **/js/test/**"/>
+    </target>
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: tag                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="tag" depends="getAppDetails">
+		<echo level="info" message="${line.separator}Tag Vanilla ${app.version}, People ${people.version} and Framework ${framework.version}."/>
+    	<svn username="${svn.user}" password="${svn.password}">
+			<!-- Tag People and Framework first -->
+			<copy srcUrl="${svn.framework.trunk}${svn.framework.src}" destUrl="${svn.framework.newTag}" message="Tag version ${framework.version}"/>
+			<copy srcUrl="${svn.people.trunk}${svn.people.src}" destUrl="${svn.people.newTag}" message="Tag version ${people.version}"/>
+			<!-- Change svn:externals of framework and people for the tagged versions -->
+			<propset path="${src.dir}" name="svn:externals" value="library/Framework ${svn.framework.newTag}${line.separator}library/People ${svn.people.newTag}"/>
+    		<propset path="${tools.script.dir}" name="svn:externals" value="framework ${svn.framework.newTag}"/>
+			<!-- Tag the working copy -->
+			<copy srcPath="${svn.wc}" destUrl="${svn.app.newTag}" message="Tag version ${app.version}"/>
+			<!-- reverse the svn:externals change -->
+			<revert dir="${src.dir}" recurse="false"/>
+    		<revert dir="${tools.script.dir}" recurse="false"/>
+		</svn>
+    </target>
+	
+
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: getChanges                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="getChanges" depends="prepare,getAppDetails">
+		<!-- Get Diff... -->
+
+		<echo level="info" message="Get diff between ${svn.app.trunk}${svn.app.src} and ${svn.app.tags}Vanilla-${app.old_version}/${svn.app.src}..." />
+		<svn>
+			<diff newurl="${svn.app.trunk}${svn.app.src}" oldurl="${svn.app.tags}Vanilla-${app.old_version}/${svn.app.src}" outfile="${app.diff}"/>
+		</svn>
+			
+    	<echo level="info" message="Get diff between ${svn.people.trunk}${svn.people.src} and ${svn.people.tags}People-${people.old_version}/${svn.people.src}..." />
+    	<svn>
+			<diff newurl="${svn.people.trunk}${svn.people.src}" oldurl="${svn.people.tags}People-${people.old_version}/${svn.people.src}" outfile="${people.diff}"/>
+    	</svn>
+    	
+    	<echo level="info" message="Get diff between ${svn.framework.trunk}${svn.framework.src} and ${svn.framework.tags}Framework-${framework.old_version}/${svn.framework.src}..." />
+    	<svn>
+			<diff newurl="${svn.framework.trunk}${svn.framework.src}" oldurl="${svn.framework.tags}Framework-${framework.old_version}/${svn.framework.src}" outfile="${framework.diff}"/>
+    	</svn>
+
+		<echo level="info" message="Get list of changed files..." />
+		<copy file="${app.diff}" tofile="${app.changedFiles}" overwrite="true">
+			<filterchain>
+				<containsregex pattern="^Index: (.*)$" replace="\1"/>
+			</filterchain>
+		</copy>
+		<copy file="${people.diff}" tofile="${people.changedFiles}" overwrite="true">
+			<filterchain>
+				<containsregex pattern="^Index: (.*)$" replace="library/People/\1"/>
+			</filterchain>
+		</copy>
+		<copy file="${framework.diff}" tofile="${framework.changedFiles}" overwrite="true">
+			<filterchain>
+				<containsregex pattern="^Index: (.*)$" replace="library/Framework/\1"/>
+			</filterchain>
+		</copy>
+		<concat destfile="${all.changedFiles}">
+			<fileset dir="${build.diff.dir}" includes="*.txt"/>
+		</concat>
+		<concat destfile="${all.changedFiles}" append="true">
+			<string value="appg/md5.csv" />
+		</concat>
+    </target>
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: getAppDetails                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="getAppDetails">
+		<echo>Get application names and versions...</echo>
+		<loadproperties srcfile="${src.dir}appg/version.php">
+			<filterchain>
+				<containsregex pattern="^define.*'(.+)_(.+)'.*'([-\w\.]+)'.*$" replace="\1.\2 = \3"/>
+			</filterchain>
+		</loadproperties>
+		<loadproperties srcfile="${src.dir}appg/version.php">
+			<filterchain>
+				<containsregex pattern="^.*Previous_(\w+)_version:\s*([-\w\.]+)\s*$" replace="\1.old_version = \2"/>
+			</filterchain>
+		</loadproperties>
+		<property name="app.version"		value="${APPLICATION.VERSION}"/>
+		<property name="framework.version"	value="${FRAMEWORK.VERSION}"/>
+		<property name="people.version"		value="${PEOPLE.VERSION}"/>
+    	<property name="app.old_version"	value="${vanilla.old_version}"/>
+    	<property name="svn.app.newTag" 	value="${svn.app.tags}Vanilla-${app.version}"/>
+    	<property name="svn.people.newTag" 	value="${svn.people.tags}People-${people.version}"/>
+    	<property name="svn.framework.newTag" 	value="${svn.framework.tags}Framework-${framework.version}"/>
+    	<property name="dist.name" value="${app.name}-${app.version}"/>
+    	<property name="dist.upgrade.name" value="vanilla-upgrade-${app.old_version}-to-${app.version}"/>
+    	<property name="build.upgrade.dir" value="${build.dir}${dist.upgrade.name}/"/>
+    	<property name="build.app.dir" value="${build.dir}${dist.name}/"/>
+    	<property name="build.js.dir" value="${build.app.dir}${js.dir}"/>
+    	<property name="build.css.dir" value="${build.app.dir}${css.dir}"/>
+    	<property name="build.upgrade.js.dir" value="${build.upgrade.dir}${js.dir}"/>
+    	<property name="build.upgrade.css.dir" value="${build.upgrade.dir}${css.dir}"/>
+
+		<echo>Vanilla version ${app.version} - last version: ${app.old_version}</echo>
+		<echo>People version ${people.version} - last version: ${people.old_version}</echo>
+		<echo>Framework version ${framework.version} - last version: ${framework.old_version}</echo>
+    </target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: prepare                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="prepare" depends="clean,getAppDetails">
+		<mkdir dir="${build.diff.dir}"/>
+    	<mkdir dir="${build.upgrade.dir}"/>
+    </target>
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: clean                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="clean">
+		<delete dir="${build.diff.dir}"/>
+    	<delete dir="${build.upgrade.dir}"/>
+    </target>
+
+</project>
