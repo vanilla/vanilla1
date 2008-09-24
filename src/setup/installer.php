@@ -15,7 +15,6 @@ include('../library/Framework/Framework.Class.SqlBuilder.php');
 include('../library/Framework/Framework.Class.MessageCollector.php');
 include('../library/Framework/Framework.Class.ErrorManager.php');
 include('../library/Framework/Framework.Class.ConfigurationManager.php');
-include('../library/Framework/Framework.Class.IntegrityChecker.php');
 
 // Include database structure
 include('../appg/database.php');
@@ -105,7 +104,6 @@ $ApplicationTitle = ForceIncomingString('ApplicationTitle', 'Vanilla');
 $CookieDomain = ForceIncomingString('CookieDomain', '');
 $CookieDomain = FormatCookieDomain($CookieDomain);
 $CookiePath = ForceIncomingString('CookiePath', '');
-$SkipCheck = ForceIncomingInt('SkipCheck', 0);
 
 // Make the banner title the same as the application title
 $WorkingDirectory = str_replace('\\', '/', getcwd()).'/';
@@ -165,21 +163,6 @@ if ($PostBackAction == 'Permissions') {
 	// Make sure the files don't exist already (ie. the site is already up and running);
 	if (file_exists('../conf/settings.php')) $Context->WarningCollector->Add('Vanilla seems to have been installed already. You will need to remove the conf/settings.php, conf/database.php files, and all database tables in order to run the installer utility again.');
 
-
-	// Make sure files have been correctly uploaded
-	$CorruptionIssue = 0;
-	if ( $Context->WarningCollector->Count() == 0
-		&& !$SkipCheck
-	) {
-		$Checker = new IntegrityChecker('../');
-		if ($Checker->Check('../appg/md5.csv') === false) {
-
-			$Context->WarningCollector->Add(
-				'Some files seems to be missing or corrupted:<br/>' . nl2br($Checker->ErrorsAsText())
-			);
-			$CorruptionIssue = 1;
-		}
-	}
 
 	if ($Context->WarningCollector->Count() == 0) {
 		$Contents = '<?php
@@ -508,14 +491,9 @@ if (!defined(\'IN_VANILLA\')) exit();
 							<br />chmod -R 755 ./setup
 							<br />chmod -R 755 ./themes</code>
 						';
-					} else if ($CorruptionIssue) {
-						echo '<p>Try to re-upload Vanilla on your server or
-						<a href="installer.php?PostBackAction=Permissions&SkipCheck=1">skip the integrity check</a> if it was expected.
-						</p>';
 					}
-
 				} else {
-					echo '<p>This wizard will first check the integrity and permissions of Vanilla files on the server.</p>';
+					echo '<p>This wizard will first check can been installed.</p>';
 				}
 
 
