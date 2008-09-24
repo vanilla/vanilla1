@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- ====================================================================== 
-     3 Jun 2008 16:12:05                                                        
+<!-- ======================================================================
+     3 Jun 2008 16:12:05
 
-     Vanilla Forum    
+     Vanilla Forum
      Build the vanilla package
-     
+
      requires:
 		- JDK 1.5+
 		- Ant 1.7
-                   
-     Damien Lebrun                                                              
+
+     Damien Lebrun
      ====================================================================== -->
 <project name="Vanilla Forum" default="build">
     <description>
             Build the vanilla package
     </description>
-	
+
 	<loadproperties srcfile="build.properties"/>
 	<path id="project.classpath">
 		<fileset dir="${tools.ant.dir}">
@@ -24,11 +24,11 @@
 	</path>
 	<typedef resource="org/tigris/subversion/svnant/svnantlib.xml" classpathref="project.classpath"/>
 
-    <!-- ================================= 
-          target: build              
+    <!-- =================================
+          target: build
          ================================= -->
     <target name="build" depends="prepare" description="--> Build the vanilla package">
-    	
+
     	<!-- binary file could be corrupted if filtered, so we copy them separatly -->
 		<echo message="${line.separator}Copy files which do not need any processing..."/>
 		<copy todir="${build.app.dir}" verbose="true" encoding="UTF-8" outputencoding="UTF-8">
@@ -46,7 +46,7 @@
 				<exclude name="**/__MACOSX"/>
 			</fileset>
 		</copy>
-    	
+
     	<!-- Filter php and html files for the version number -->
 		<echo message="${line.separator}Copy php and html files, replacing version number..."/>
 		<copy todir="${build.app.dir}" verbose="true"  encoding="UTF-8" outputencoding="UTF-8">
@@ -64,7 +64,7 @@
 				<filter token="PEOPLE-VERSION" value="${people.version}"/>
 			</filterset>
 		</copy>
-    	
+
 		<!--	Compress js files with Julien Lecomte's YUI Compressor.
 				(copy the source file to js/src/) -->
 		<echo message="${line.separator}Compress js files..."/>
@@ -81,14 +81,14 @@
 				<outputmapper id="out" type="glob" from="*.js" to="${build.js.dir}*.js"/>
 			</redirector>
 		</apply>
-    	
+
 		<mkdir dir="${build.js.dir}src"/>
 		<copy todir="${build.js.dir}src">
 			<fileset dir="${src.js.dir}">
 				<include name="*.js"/>
 			</fileset>
 		</copy>
-    	
+
 		<!--	Compress css files with Julien Lecomte's YUI Compressor
 				(copy the original files to themes/vanilla/styles/default/src/) -->
 		<echo message="${line.separator}Compress css files..."/>
@@ -105,30 +105,30 @@
 				<outputmapper id="out" type="glob" from="*.css" to="${build.css.dir}*.css"/>
 			</redirector>
 		</apply>
-    	
+
 		<mkdir dir="${build.css.dir}src"/>
 		<copy todir="${build.css.dir}src">
 			<fileset dir="${src.css.dir}">
 				<include name="*.css"/>
 			</fileset>
 		</copy>
-    	
-    	<!-- create md5 signatures -->
+
+    	<!-- create md5 signatures
     	<echo>Create MD% file signatures...</echo>
 		<exec executable="php" failonerror="true">
     		<arg line="-f"/>
     		<arg path="${tools.md5.path}"/>
     		<arg path="${build.app.dir}"/>
-		</exec>
-    	
+		</exec>-->
+
     	<!-- Create the zip archive -->
     	<echo>Create archive....</echo>
     	<zip basedir="${build.dir}" destfile="${dist.dir}${dist.name}.zip" excludes="**/js/test, **/js/test/**"/>
-    	
+
     </target>
 
-	<!-- ================================= 
-          target: update              
+	<!-- =================================
+          target: update
          ================================= -->
     <target name="update" description="--> Update the working copy">
     	<echo>Update working copy...</echo>
@@ -137,9 +137,9 @@
     	</svn>
     </target>
 
-	
-    <!-- - - - - - - - - - - - - - - - - - 
-          target: clean                      
+
+    <!-- - - - - - - - - - - - - - - - - -
+          target: clean
          - - - - - - - - - - - - - - - - - -->
     <target name="clean">
     	<echo>Delete content of ${build.dir} and ${dist.dir}...</echo>
@@ -149,8 +149,8 @@
 		</delete>
     </target>
 
-	<!-- - - - - - - - - - - - - - - - - - 
-          target: getAppDetails                      
+	<!-- - - - - - - - - - - - - - - - - -
+          target: getAppDetails
          - - - - - - - - - - - - - - - - - -->
     <target name="getAppDetails">
 		<echo>Get application names and versions...</echo>
@@ -166,17 +166,17 @@
 		<echo>People version ${people.version}</echo>
 		<echo>Framework version ${framework.version}</echo>
     </target>
-	
-	<!-- - - - - - - - - - - - - - - - - - 
-          target: prepare                      
+
+	<!-- - - - - - - - - - - - - - - - - -
+          target: prepare
          - - - - - - - - - - - - - - - - - -->
     <target name="prepare" depends="clean,getAppDetails">
     	<property name="dist.name" value="${app.name}-${app.version}"/>
     	<property name="build.app.dir" value="${build.dir}${dist.name}/"/>
     	<property name="build.js.dir" value="${build.app.dir}${js.dir}"/>
     	<property name="build.css.dir" value="${build.app.dir}${css.dir}"/>
-    	
+
 		<mkdir dir="${build.app.dir}"/>
     </target>
-	
+
 </project>
