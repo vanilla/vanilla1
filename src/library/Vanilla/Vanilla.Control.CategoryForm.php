@@ -67,6 +67,11 @@ class CategoryForm extends PostBackControl {
 			} elseif ($this->PostBackAction == 'ProcessCategoryRemove' && $this->IsValidFormPostBack()) {
 				if ($this->Context->Session->User->Permission('PERMISSION_REMOVE_CATEGORIES')) {
 					if ($this->CategoryManager->RemoveCategory($CategoryID, $ReplacementCategoryID)) {
+
+						$this->DelegateParameters['RemovedCategory'] = $CategoryID;
+						$this->DelegateParameters['ReplacementCategory'] = $ReplacementCategoryID;
+						$this->CallDelegate('PostRemoveCategory');
+
 						$RedirectUrl = GetUrl(
 							$this->Context->Configuration, $this->Context->SelfUrl, '', '', '', '',
 							'PostBackAction=Categories&Action=Removed');
