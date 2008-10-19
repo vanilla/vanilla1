@@ -257,7 +257,7 @@ if ($Configuration['DATABASE_VERSION'] < 2) {
 
 	$Context = new Context($Configuration);
 	$Context->DatabaseTables = &$DatabaseTables;
-	$Context->DatabaseColumns = &$DatabaseColumns;	
+	$Context->DatabaseColumns = &$DatabaseColumns;
 
 	$Query = 'ALTER TABLE '
 		. GetTableName('User', $DatabaseTables, $Configuration["DATABASE_TABLE_PREFIX"])
