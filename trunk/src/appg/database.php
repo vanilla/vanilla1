@@ -17,6 +17,9 @@ $DatabaseTables['UserBookmark'] = 'UserBookmark';
 $DatabaseTables['UserDiscussionWatch'] = 'UserDiscussionWatch';
 $DatabaseTables['UserRoleHistory'] = 'UserRoleHistory';
 
+// Tables which do not need concatenation with the Database prefix
+$DatabasePrefixLessTables = array('User');
+
 // Column References:
 
 // Category Table
