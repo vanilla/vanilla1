@@ -15,7 +15,7 @@ include('../appg/settings.php');
 include('../appg/init_ajax.php');
 
 $PostBackKey = ForceIncomingString('PostBackKey', '');
-if ($PostBackKey = ''
+if ($PostBackKey == ''
 	|| $PostBackKey !== $Context->Session->GetCsrfValidationKey()
 ) {
 	die($Context->GetDefinition('ErrPostBackKeyInvalid'));
