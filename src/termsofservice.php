@@ -49,7 +49,7 @@ body {
 	padding-bottom: 10px;
 }
 body, div, h1, h2, p {
-	font-family: Trebuchet MS, tahoma, arial, verdana;
+	font-family: "Trebuchet MS", tahoma, arial, verdana;
 	color: #000;
 	line-height: 160%;
 }
