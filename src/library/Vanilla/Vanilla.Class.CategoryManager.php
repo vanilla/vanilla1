@@ -68,7 +68,7 @@ class CategoryManager extends Delegation {
 		if ($this->Context->Session->UserID > 0) {
 			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID', 'c', 'CategoryID', 'left join', ' and crb.'.$this->Context->DatabaseColumns['CategoryRoleBlock']['RoleID'].' = '.$this->Context->Session->User->RoleID);
 			$s->AddJoin('CategoryBlock', 'b', 'CategoryID', 'c', 'CategoryID', 'left join', ' and b.'.$this->Context->DatabaseColumns['CategoryBlock']['UserID'].' = '.$this->Context->Session->UserID);
-			$s->AddSelect('Blocked', 'b', 'Blocked', 'coalesce', '0');
+			$s->AddSelect('Blocked', 'b', 'Blocked', 'coalesce', '0', 1);
 		} else {
 			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID', 'c', 'CategoryID', 'left join', ' and crb.'.$this->Context->DatabaseColumns['CategoryRoleBlock']['RoleID'].' = 1');
 		}
@@ -82,7 +82,7 @@ class CategoryManager extends Delegation {
 		} else {
 			// Identify which of these categories is blocked by role
 			// (so administrators can easily see what they do and don't have access to)
-			$s->AddSelect('Blocked', 'crb', 'RoleBlocked', 'coalesce', '0');
+			$s->AddSelect('Blocked', 'crb', 'RoleBlocked', 'coalesce', '0', 1);
 		}
 
 		$this->DelegateParameters['IncludeCount'] = $IncludeCount;
