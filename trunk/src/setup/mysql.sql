@@ -4,7 +4,7 @@ CREATE TABLE `LUM_Category` (
   `Description` text NULL,
   `Priority` int(11) NOT NULL default '0',
   PRIMARY KEY  (`CategoryID`)
-);
+) DEFAULT CHARACTER SET utf8;
 
 INSERT INTO `LUM_Category` VALUES (1,'General','General discussions go in here...',7);
 
@@ -14,7 +14,7 @@ CREATE TABLE `LUM_CategoryBlock` (
   `Blocked` enum('1','0') NOT NULL default '1',
   PRIMARY KEY  (`CategoryID`,`UserID`),
   KEY `cat_block_user` (`UserID`)
-);
+) DEFAULT CHARACTER SET utf8;
 
 CREATE TABLE `LUM_CategoryRoleBlock` (
   `CategoryID` int(11) NOT NULL default '0',
@@ -22,7 +22,7 @@ CREATE TABLE `LUM_CategoryRoleBlock` (
   `Blocked` enum('1','0') NOT NULL default '0',
   KEY `cat_roleblock_cat` (`CategoryID`),
   KEY `cat_roleblock_role` (`RoleID`)
-);
+) DEFAULT CHARACTER SET utf8;
 
 CREATE TABLE `LUM_Comment` (
   `CommentID` int(8) NOT NULL auto_increment,
@@ -42,7 +42,7 @@ CREATE TABLE `LUM_Comment` (
   KEY `comment_user` (`AuthUserID`),
   KEY `comment_whisper` (`WhisperUserID`),
   KEY `comment_discussion` (`DiscussionID`)
-);
+) DEFAULT CHARACTER SET utf8;
 
 CREATE TABLE `LUM_Discussion` (
   `DiscussionID` int(8) NOT NULL auto_increment,
@@ -70,7 +70,7 @@ CREATE TABLE `LUM_Discussion` (
   KEY `discussion_last` (`LastUserID`),
   KEY `discussion_category` (`CategoryID`),
   KEY `discussion_dateactive` (`DateLastActive`)
-);
+) DEFAULT CHARACTER SET utf8;
 
 CREATE TABLE `LUM_DiscussionUserWhisperFrom` (
   `DiscussionID` int(11) NOT NULL default '0',
@@ -81,7 +81,7 @@ CREATE TABLE `LUM_DiscussionUserWhisperFrom` (
   PRIMARY KEY  (`DiscussionID`,`WhisperFromUserID`),
   KEY `discussion_user_whisper_lastuser` (`LastUserID`),
   KEY `discussion_user_whisper_lastactive` (`DateLastActive`)
-);
+) DEFAULT CHARACTER SET utf8;
 
 CREATE TABLE `LUM_DiscussionUserWhisperTo` (
   `DiscussionID` int(11) NOT NULL default '0',
@@ -92,7 +92,7 @@ CREATE TABLE `LUM_DiscussionUserWhisperTo` (
   PRIMARY KEY  (`DiscussionID`,`WhisperToUserID`),
   KEY `discussion_user_whisperto_lastuser` (`LastUserID`),
   KEY `discussion_user_whisperto_lastactive` (`DateLastActive`)
-);
+) DEFAULT CHARACTER SET utf8;
 
 CREATE TABLE `LUM_IpHistory` (
   `IpHistoryID` int(11) NOT NULL auto_increment,
@@ -100,7 +100,7 @@ CREATE TABLE `LUM_IpHistory` (
   `UserID` int(11) NOT NULL default '0',
   `DateLogged` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`IpHistoryID`)
-);
+) DEFAULT CHARACTER SET utf8;
 
 CREATE TABLE `LUM_Role` (
   `RoleID` int(2) NOT NULL auto_increment,
@@ -115,7 +115,7 @@ CREATE TABLE `LUM_Role` (
   `Priority` int(11) NOT NULL default '0',
   `UnAuthenticated` enum('1','0') NOT NULL default '0',
   PRIMARY KEY  (`RoleID`)
-);
+) DEFAULT CHARACTER SET utf8;
 
 INSERT INTO `LUM_Role`
 (`Name`, `Active`, `PERMISSION_SIGN_IN`, `PERMISSION_HTML_ALLOWED`, `PERMISSION_RECEIVE_APPLICATION_NOTIFICATION`, `Permissions`, `Priority`, `UnAuthenticated`)
@@ -131,7 +131,7 @@ CREATE TABLE `LUM_Style` (
   `Url` varchar(255) NOT NULL default '',
   `PreviewImage` varchar(20) NOT NULL default '',
   PRIMARY KEY  (`StyleID`)
-);
+) DEFAULT CHARACTER SET utf8;
 
 CREATE TABLE `LUM_User` (
   `UserID` int(10) NOT NULL auto_increment,
@@ -169,13 +169,13 @@ CREATE TABLE `LUM_User` (
   KEY `user_role` (`RoleID`),
   KEY `user_style` (`StyleID`),
   KEY `user_name` (`Name`)
-);
+) DEFAULT CHARACTER SET utf8;
 
 CREATE TABLE `LUM_UserBookmark` (
   `UserID` int(10) NOT NULL default '0',
   `DiscussionID` int(8) NOT NULL default '0',
   PRIMARY KEY  (`UserID`,`DiscussionID`)
-);
+) DEFAULT CHARACTER SET utf8;
 
 CREATE TABLE `LUM_UserDiscussionWatch` (
   `UserID` int(10) NOT NULL default '0',
@@ -183,7 +183,7 @@ CREATE TABLE `LUM_UserDiscussionWatch` (
   `CountComments` int(11) NOT NULL default '0',
   `LastViewed` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`UserID`,`DiscussionID`)
-);
+) DEFAULT CHARACTER SET utf8;
 
 CREATE TABLE `LUM_UserRoleHistory` (
   `UserID` int(10) NOT NULL default '0',
@@ -193,7 +193,7 @@ CREATE TABLE `LUM_UserRoleHistory` (
   `Notes` varchar(200) default NULL,
   `RemoteIp` varchar(100) default NULL,
   KEY `UserID` (`UserID`)
-);
+) DEFAULT CHARACTER SET utf8;
 
 INSERT INTO `LUM_User`
 (`RoleID`, `StyleID`, `FirstName`, `LastName`, `Name`, `Password`, `Email`, `UtilizeEmail`, `ShowName`, `CountVisit`, CountDiscussions`, `CountComments`, `DateFirstVisit`, `DateLastActive`,`SendNewApplicantNotifications`)
