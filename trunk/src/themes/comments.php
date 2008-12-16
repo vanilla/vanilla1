@@ -34,11 +34,13 @@ if ($this->Context->WarningCollector->Count() > 0) {
 	$RowNumber = 0;
 	$CommentID = 0;
 	$Alternate = 0;
+	$FirstComment = 1;
 
 	// Define the current user's permissions and preferences
 	// (small optimization so they don't have to be checked every loop):
 	$PERMISSION_EDIT_COMMENTS = $this->Context->Session->User->Permission('PERMISSION_EDIT_COMMENTS');
 	$PERMISSION_HIDE_COMMENTS = $this->Context->Session->User->Permission('PERMISSION_HIDE_COMMENTS');
+	$PERMISSION_HIDE_DISCUSSIONS = $this->Context->Session->User->Permission('PERMISSION_HIDE_DISCUSSIONS');
 	$PERMISSION_EDIT_DISCUSSIONS = $this->Context->Session->User->Permission('PERMISSION_EDIT_DISCUSSIONS');
 
 	while ($Row = $this->Context->Database->GetRow($this->CommentData)) {
@@ -115,10 +117,16 @@ if ($this->Context->WarningCollector->Count() > 0) {
 							if ((!$this->Discussion->Closed && $this->Discussion->Active) || $PERMISSION_EDIT_COMMENTS || $PERMISSION_EDIT_DISCUSSIONS) $CommentList .= '<a href="'.GetUrl($this->Context->Configuration, 'post.php', '', 'CommentID', $Comment->CommentID).'">'.$this->Context->GetDefinition('edit').'</a>
 							';
 						}
-						if ($PERMISSION_HIDE_COMMENTS) $CommentList .= '<a id="HideComment'.$Comment->CommentID.'" href="./" onclick="'
-						."HideComment('".$this->Context->Configuration['WEB_ROOT']."ajax/switch.php', '".($Comment->Deleted?"0":"1")."', '".$this->Discussion->DiscussionID."', '".$Comment->CommentID."', '".$this->Context->GetDefinition("ShowConfirm")."', '".$this->Context->GetDefinition("HideConfirm")."', 'HideComment".$Comment->CommentID."', '".$SessionPostBackKey."');"
-						.' return false;">'.$this->Context->GetDefinition($Comment->Deleted?'Show':'Hide').'</a>
-						';
+						if ($PERMISSION_HIDE_COMMENTS && !$FirstComment) {
+							$CommentList .= '<a id="HideComment'.$Comment->CommentID.'" href="./" onclick="'
+							."HideComment('".$this->Context->Configuration['WEB_ROOT']."ajax/switch.php', '".($Comment->Deleted?"0":"1")."', '".$this->Discussion->DiscussionID."', '".$Comment->CommentID."', '".$this->Context->GetDefinition("ShowConfirm")."', '".$this->Context->GetDefinition("HideConfirm")."', 'HideComment".$Comment->CommentID."', '".$SessionPostBackKey."');"
+							.' return false;">'.$this->Context->GetDefinition($Comment->Deleted?'Show':'Hide').'</a>
+							';
+						}
+						if ($PERMISSION_HIDE_DISCUSSIONS && $FirstComment) {
+							$CommentList .= "<a id=\"HideDiscussion2\" href=\"./\" onclick=\"if (confirm('".$this->Context->GetDefinition($this->Discussion->Active?"ConfirmHideDiscussion":"ConfirmUnhideDiscussion")."')) DiscussionSwitch('".$this->Context->Configuration['WEB_ROOT']."ajax/switch.php', 'Active', '".$this->Discussion->DiscussionID."', '".FlipBool($this->Discussion->Active)."', 'HideDiscussion', '".$SessionPostBackKey."'); return false;\">".$this->Context->GetDefinition(($this->Discussion->Active?"Hide":"Unhide")."DiscussionLC")."</a>";
+							$FirstComment = 0;
+						}
 					}
 					$this->DelegateParameters['CommentList'] = &$CommentList;
 					$this->CallDelegate('PostCommentOptionsRender');
