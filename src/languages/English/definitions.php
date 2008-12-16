@@ -343,6 +343,8 @@ $Context->Dictionary['MakeThisDiscussionUnsticky'] = 'Make this discussion UnSti
 $Context->Dictionary['MakeThisDiscussionSticky'] = 'Make this discussion sticky';
 $Context->Dictionary['HideThisDiscussion'] = 'Delete this discussion';
 $Context->Dictionary['UnhideThisDiscussion'] = 'Undelete this discussion';
+$Context->Dictionary['HideDiscussionLC'] = 'delete discussion';
+$Context->Dictionary['UnhideDiscussionLC'] = 'undelete discussion';
 
 // Warnings
 $Context->Dictionary['ErrOpenDirectoryExtensions'] = 'Failed to open the extensions directory. Please ensure that PHP has read access to the //1 directory.';
