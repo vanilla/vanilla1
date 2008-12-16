@@ -35,6 +35,9 @@ if ($this->Context->WarningCollector->Count() > 0) {
 	$CommentID = 0;
 	$Alternate = 0;
 	$FirstComment = 1;
+	if ($this->CurrentPage > 1) {
+	   $FirstComment = 0;
+	}
 
 	// Define the current user's permissions and preferences
 	// (small optimization so they don't have to be checked every loop):
