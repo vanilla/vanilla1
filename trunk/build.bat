@@ -8,5 +8,4 @@ echo WARNING: You have not set the ANT_HOME environment variable. Ant is require
 set ANT_EXEC=ant
 
 :build
-%ANT_EXEC% update
-%ANT_EXEC%
+%ANT_EXEC% update && %ANT_EXEC%
