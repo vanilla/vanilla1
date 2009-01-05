@@ -127,7 +127,7 @@ if ($this->Context->WarningCollector->Count() > 0) {
 							';
 						}
 						if ($PERMISSION_HIDE_DISCUSSIONS && $FirstComment) {
-							$CommentList .= "<a id=\"HideDiscussion2\" href=\"./\" onclick=\"if (confirm('".$this->Context->GetDefinition($this->Discussion->Active?"ConfirmHideDiscussion":"ConfirmUnhideDiscussion")."')) DiscussionSwitch('".$this->Context->Configuration['WEB_ROOT']."ajax/switch.php', 'Active', '".$this->Discussion->DiscussionID."', '".FlipBool($this->Discussion->Active)."', 'HideDiscussion', '".$SessionPostBackKey."'); return false;\">".$this->Context->GetDefinition(($this->Discussion->Active?"Hide":"Unhide")."DiscussionLC")."</a>";
+							$CommentList .= "<a id=\"HideDiscussion".$this->Discussion->DiscussionID."\" href=\"./\" onclick=\"if (confirm('".$this->Context->GetDefinition($this->Discussion->Active?"ConfirmHideDiscussion":"ConfirmUnhideDiscussion")."')) DiscussionSwitch('".$this->Context->Configuration['WEB_ROOT']."ajax/switch.php', 'Active', '".$this->Discussion->DiscussionID."', '".FlipBool($this->Discussion->Active)."', 'HideDiscussion', '".$SessionPostBackKey."'); return false;\">".$this->Context->GetDefinition(($this->Discussion->Active?"Hide":"Unhide")."DiscussionLC")."</a>";
 							$FirstComment = 0;
 						}
 					}
