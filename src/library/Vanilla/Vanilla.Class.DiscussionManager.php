@@ -561,6 +561,9 @@ class DiscussionManager extends Delegation {
 				case 'Sink':
 					if (!$this->Context->Session->User->Permission('PERMISSION_SINK_DISCUSSIONS')) $this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrPermissionSinkDiscussions'));
 					break;
+				case 'Move':
+					if (!$this->Context->Session->User->Permission('PERMISSION_MOVE_DISCUSSIONS')) $this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrPermissionMoveDiscussions'));
+					break;
 			}
 			if ($this->Context->Database->Update($s, $this->Name, 'SwitchDiscussionProperty', 'An error occurred while manipulating the '.$PropertyName.' property of the discussion.', 0) <= 0) $this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrPermissionDiscussionEdit'));
 		}
