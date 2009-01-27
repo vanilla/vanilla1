@@ -18,12 +18,12 @@ $PostBackKey = ForceIncomingString('PostBackKey', '');
 $ExtensionKey = ForceIncomingString('ExtensionKey', '');
 if ($PostBackKey != '' && $PostBackKey == $Context->Session->GetCsrfValidationKey()) {
 	$Type = ForceIncomingString('Type', '');
-	$Switch = ForceIncomingBool('Switch', 0);
+	$Switch = ForceIncomingInt('Switch', 0);
 	$DiscussionID = ForceIncomingInt('DiscussionID', 0);
 	$CommentID = ForceIncomingInt('CommentID', 0);
 
 	// Don't create unnecessary objects
-	if (in_array($Type, array('Active', 'Closed', 'Sticky', 'Sink'))) {
+	if (in_array($Type, array('Active', 'Closed', 'Sticky', 'Sink', 'Move'))) {
 		$dm = $Context->ObjectFactory->NewContextObject($Context, 'DiscussionManager');
 	} elseif ($Type == 'Comment') {
 		$cm = $Context->ObjectFactory->NewContextObject($Context, 'CommentManager');
@@ -46,6 +46,8 @@ if ($PostBackKey != '' && $PostBackKey == $Context->Session->GetCsrfValidationKe
 		|| ($Type == 'Sink' && $Context->Session->User->Permission('PERMISSION_SINK_DISCUSSIONS'))
 		)) {
 		$dm->SwitchDiscussionProperty($DiscussionID, $Type, $Switch);
+	} elseif ($Type == 'Move' && $Context->Session->User->Permission('PERMISSION_MOVE_DISCUSSIONS')) {
+		$dm->SwitchDiscussionProperty($DiscussionID, "CategoryID", $Switch);
 	} elseif ($Type == 'Comment' && $CommentID > 0 && $DiscussionID > 0 && $Context->Session->User->Permission('PERMISSION_HIDE_COMMENTS')) {
 		$cm->SwitchCommentProperty($CommentID, $DiscussionID, $Switch);
 	} elseif ($Type == 'SendNewApplicantNotifications') {

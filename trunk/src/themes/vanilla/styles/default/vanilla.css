@@ -1581,3 +1581,6 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
 html>body #Content .ContentInfo.Bottom .PageInfo {
 	border-top: 1px solid #fff;
 	}
+#MoveDiscussionDropdown {
+	display:none;
+	}
