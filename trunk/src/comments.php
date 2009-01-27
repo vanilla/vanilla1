@@ -52,7 +52,7 @@ if ($CommentGrid->Discussion) {
 		&& $Context->Session->UserID > 0
 	) {
 		$Options = $Context->GetDefinition("Options");
-		$Panel->AddList($Options, 5);
+		$Panel->AddList($Options, 6);
 		$BookmarkText = $Context->GetDefinition($CommentGrid->Discussion->Bookmarked ? "UnbookmarkThisDiscussion" : "BookmarkThisDiscussion");
 		$Panel->AddListItem($Options,
 			$BookmarkText,
@@ -91,6 +91,15 @@ if ($CommentGrid->Discussion) {
 				"./",
 				"",
 				"id=\"SinkDiscussion\" onclick=\"if (confirm('".$Context->GetDefinition($CommentGrid->Discussion->Sink?"ConfirmUnSink":"ConfirmSink")."')) DiscussionSwitch('".$CommentGrid->Context->Configuration['WEB_ROOT']."ajax/switch.php', 'Sink', '".$CommentGrid->Discussion->DiscussionID."', '".FlipBool($CommentGrid->Discussion->Sink)."', 'SinkDiscussion', '".$SessionPostBackKey."'); return false;\"");
+		}
+		if ($Context->Session->User->Permission("PERMISSION_MOVE_DISCUSSIONS")) {
+			$MoveText = $Context->GetDefinition("MoveText");
+			$Panel->AddListItem($Options,
+				$MoveText,
+				"javascript:void(0);",
+				"",				
+				"id=\"MoveDiscussion\" onclick=\"showById('MoveDiscussionDropdown');\"");
+			$Panel->AddListItem($Options,MoveDiscussionForm($Context, $SessionPostBackKey, $DiscussionID));
 		}
 	}
 
