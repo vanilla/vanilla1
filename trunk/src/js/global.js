@@ -276,3 +276,7 @@ function WriteEmail(Domain, Name, Label, Reference) {
 		}
 	}
 }
+
+function showById(id){
+	document.getElementById(id).style.display='block';
+}
