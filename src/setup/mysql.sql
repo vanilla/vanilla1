@@ -20,8 +20,7 @@ CREATE TABLE `LUM_CategoryRoleBlock` (
   `CategoryID` int(11) NOT NULL default '0',
   `RoleID` int(11) NOT NULL default '0',
   `Blocked` enum('1','0') NOT NULL default '0',
-  KEY `cat_roleblock_cat` (`CategoryID`),
-  KEY `cat_roleblock_role` (`RoleID`)
+  PRIMARY KEY (`CategoryID`,`RoleID`)
 ) DEFAULT CHARACTER SET utf8;
 
 CREATE TABLE `LUM_Comment` (
