@@ -18,7 +18,11 @@ $PostBackKey = ForceIncomingString('PostBackKey', '');
 $ExtensionKey = ForceIncomingString('ExtensionKey', '');
 if ($PostBackKey != '' && $PostBackKey == $Context->Session->GetCsrfValidationKey()) {
 	$Type = ForceIncomingString('Type', '');
-	$Switch = ForceIncomingInt('Switch', 0);
+	if ($Type == 'Move') {
+		$Switch = ForceIncomingInt('Switch', 0);
+	} else {
+		$Switch = ForceIncomingBool('Switch', 0);
+	}
 	$DiscussionID = ForceIncomingInt('DiscussionID', 0);
 	$CommentID = ForceIncomingInt('CommentID', 0);
 
