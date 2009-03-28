@@ -1,3 +1,5 @@
+#summary How to upgrade Vanilla.
+
 =How to upgrade Vanilla=
 
 ==Upgrading from Vanilla 1 to Vanilla 1.0.1==
