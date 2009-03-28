@@ -60,7 +60,7 @@
     	<zip basedir="${build.dir}" destfile="${dist.dir}${dist.upgrade.name}.zip" includes="${dist.upgrade.name}/**" excludes="**/js/test, **/js/test/**"/>
     	
     	<echo>Uploading packages to google code...</echo>
-    	<gcupload username="${svn.user}" password="${svn.password}" projectname="lussumo-vanilla" filename="${dist.dir}${dist.name}.zip" targetfilename="${app.name}-${app.version}.zip" summary="Vanilla ${app.version}" labels="Featured, Type-Package, OpSys-All" />
+    	<gcupload username="${svn.user}" password="${svn.password}" projectname="lussumo-vanilla" filename="${dist.dir}${dist.name}.zip" targetfilename="${app.name}-${app.version}.zip" summary="Vanilla ${app.version}" labels="Featured, Type-Archive, OpSys-All" />
     </target>
 	
 	<!-- - - - - - - - - - - - - - - - - - 
