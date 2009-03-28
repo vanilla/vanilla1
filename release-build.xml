@@ -29,6 +29,7 @@
 		</fileset>
 	</path>
 	<typedef resource="org/tigris/subversion/svnant/svnantlib.xml" classpathref="project.classpath"/>
+	<taskdef classname="net.bluecow.googlecode.ant.GoogleCodeUploadTask" classpath="${tools.ant.dir}/ant-googlecode-0.0.1.jar" name="gcupload"/>
 	
     <!-- ================================= 
           target: build              
@@ -36,12 +37,13 @@
     <target name="build" depends="prepare">
     	<ant antfile="build.xml" dir="./"/>
     	<antcall target="getChanges"/>
-    	<antcall target="tag"/>
+    	<!-- <antcall target="tag"/>-->
     	
     	<!-- build changed-only-package -->
 		<copy todir="${build.upgrade.dir}" verbose="true">
 			<fileset dir="${build.app.dir}" includesfile="${all.changedFiles}"/>
 		</copy>
+    	
     	<!-- include all src files, changed or not -->
 		<copy todir="${build.upgrade.js.dir}" verbose="true">
 			<fileset dir="${build.js.dir}">
@@ -56,6 +58,9 @@
     	
     	<echo>Create update archive....</echo>
     	<zip basedir="${build.dir}" destfile="${dist.dir}${dist.upgrade.name}.zip" includes="${dist.upgrade.name}/**" excludes="**/js/test, **/js/test/**"/>
+    	
+    	<echo>Uploading packages to google code...</echo>
+    	<gcupload username="${svn.user}" password="${svn.password}" projectname="lussumo-vanilla" filename="${dist.dir}${dist.name}.zip" targetfilename="${app.name}-${app.version}.zip" summary="Vanilla ${app.version}" labels="Featured, Type-Package, OpSys-All" />
     </target>
 	
 	<!-- - - - - - - - - - - - - - - - - - 
@@ -64,17 +69,8 @@
     <target name="tag" depends="getAppDetails">
 		<echo level="info" message="${line.separator}Tag Vanilla ${app.version}, People ${people.version} and Framework ${framework.version}."/>
     	<svn username="${svn.user}" password="${svn.password}">
-			<!-- Tag People and Framework first -->
-			<copy srcUrl="${svn.framework.trunk}${svn.framework.src}" destUrl="${svn.framework.newTag}" message="Tag version ${framework.version}"/>
-			<copy srcUrl="${svn.people.trunk}${svn.people.src}" destUrl="${svn.people.newTag}" message="Tag version ${people.version}"/>
-			<!-- Change svn:externals of framework and people for the tagged versions -->
-			<propset path="${src.dir}" name="svn:externals" value="library/Framework ${svn.framework.newTag}${line.separator}library/People ${svn.people.newTag}"/>
-    		<propset path="${tools.script.dir}" name="svn:externals" value="framework ${svn.framework.newTag}"/>
-			<!-- Tag the working copy -->
-			<copy srcPath="${svn.wc}" destUrl="${svn.app.newTag}" message="Tag version ${app.version}"/>
-			<!-- reverse the svn:externals change -->
-			<revert dir="${src.dir}" recurse="false"/>
-    		<revert dir="${tools.script.dir}" recurse="false"/>
+			<!-- Tag Vanilla trunk-->
+			<copy srcUrl="svn.app.trunk" destUrl="${svn.app.newTag}" message="Tag version ${app.version}"/>
 		</svn>
     </target>
 	
@@ -87,41 +83,16 @@
 
 		<echo level="info" message="Get diff between ${svn.app.trunk}${svn.app.src} and ${svn.app.tags}Vanilla-${app.old_version}/${svn.app.src}..." />
 		<svn>
-			<diff newurl="${svn.app.trunk}${svn.app.src}" oldurl="${svn.app.tags}Vanilla-${app.old_version}/${svn.app.src}" outfile="${app.diff}"/>
+			<diff newurl="${svn.read.app.trunk}${svn.app.src}" oldurl="${svn.read.app.tags}Vanilla-${app.old_version}/${svn.app.src}" outfile="${app.diff}"/>
 		</svn>
 			
-    	<echo level="info" message="Get diff between ${svn.people.trunk}${svn.people.src} and ${svn.people.tags}People-${people.old_version}/${svn.people.src}..." />
-    	<svn>
-			<diff newurl="${svn.people.trunk}${svn.people.src}" oldurl="${svn.people.tags}People-${people.old_version}/${svn.people.src}" outfile="${people.diff}"/>
-    	</svn>
-    	
-    	<echo level="info" message="Get diff between ${svn.framework.trunk}${svn.framework.src} and ${svn.framework.tags}Framework-${framework.old_version}/${svn.framework.src}..." />
-    	<svn>
-			<diff newurl="${svn.framework.trunk}${svn.framework.src}" oldurl="${svn.framework.tags}Framework-${framework.old_version}/${svn.framework.src}" outfile="${framework.diff}"/>
-    	</svn>
-
 		<echo level="info" message="Get list of changed files..." />
 		<copy file="${app.diff}" tofile="${app.changedFiles}" overwrite="true">
 			<filterchain>
 				<containsregex pattern="^Index: (.*)$" replace="\1"/>
 			</filterchain>
 		</copy>
-		<copy file="${people.diff}" tofile="${people.changedFiles}" overwrite="true">
-			<filterchain>
-				<containsregex pattern="^Index: (.*)$" replace="library/People/\1"/>
-			</filterchain>
-		</copy>
-		<copy file="${framework.diff}" tofile="${framework.changedFiles}" overwrite="true">
-			<filterchain>
-				<containsregex pattern="^Index: (.*)$" replace="library/Framework/\1"/>
-			</filterchain>
-		</copy>
-		<concat destfile="${all.changedFiles}">
-			<fileset dir="${build.diff.dir}" includes="*.txt"/>
-		</concat>
-		<concat destfile="${all.changedFiles}" append="true">
-			<string value="appg/md5.csv" />
-		</concat>
+
     </target>
 	
 	<!-- - - - - - - - - - - - - - - - - - 
@@ -140,13 +111,9 @@
 			</filterchain>
 		</loadproperties>
 		<property name="app.version"		value="${APPLICATION.VERSION}"/>
-		<property name="framework.version"	value="${FRAMEWORK.VERSION}"/>
-		<property name="people.version"		value="${PEOPLE.VERSION}"/>
     	<property name="app.old_version"	value="${vanilla.old_version}"/>
     	<property name="svn.app.newTag" 	value="${svn.app.tags}Vanilla-${app.version}"/>
-    	<property name="svn.people.newTag" 	value="${svn.people.tags}People-${people.version}"/>
-    	<property name="svn.framework.newTag" 	value="${svn.framework.tags}Framework-${framework.version}"/>
-    	<property name="dist.name" value="${app.name}-${app.version}"/>
+     	<property name="dist.name" value="${app.name}-${app.version}"/>
     	<property name="dist.upgrade.name" value="vanilla-upgrade-${app.old_version}-to-${app.version}"/>
     	<property name="build.upgrade.dir" value="${build.dir}${dist.upgrade.name}/"/>
     	<property name="build.app.dir" value="${build.dir}${dist.name}/"/>
@@ -156,8 +123,6 @@
     	<property name="build.upgrade.css.dir" value="${build.upgrade.dir}${css.dir}"/>
 
 		<echo>Vanilla version ${app.version} - last version: ${app.old_version}</echo>
-		<echo>People version ${people.version} - last version: ${people.old_version}</echo>
-		<echo>Framework version ${framework.version} - last version: ${framework.old_version}</echo>
     </target>
 
 	<!-- - - - - - - - - - - - - - - - - - 
