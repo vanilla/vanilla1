@@ -1,6 +1,6 @@
-======How to upgrade Vanilla======
+=How to upgrade Vanilla=
 
-=====Upgrading from Vanilla 1 to Vanilla 1.0.1=====
+==Upgrading from Vanilla 1 to Vanilla 1.0.1==
 
 Assuming you haven't made any changes to the core Vanilla files, upgrading is easy. By "core Vanilla files", I am referring to all files NOT in the conf or extensions directories. All you need to do is:
 
@@ -14,7 +14,7 @@ Assuming you haven't made any changes to the core Vanilla files, upgrading is ea
 
 **Your Upgrade is Complete!**
 
-=====Upgrading from Vanilla 0.9.2.x to Vanilla 1.0.1=====
+==Upgrading from Vanilla 0.9.2.x to Vanilla 1.0.1==
 
   * Back up your current files *just in case*.
   * Download the new version from http://getvanilla.com.
