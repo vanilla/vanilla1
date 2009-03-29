@@ -110,7 +110,9 @@ $WorkingDirectory = str_replace('\\', '/', getcwd()).'/';
 $RootDirectory = str_replace('setup/', '', $WorkingDirectory);
 $WebRoot = dirname(ForceString(@$_SERVER['PHP_SELF'], ''));
 $WebRoot = substr($WebRoot, 0, strlen($WebRoot) - 5); // strips the "setup" off the end of the path.
-$BaseUrl = 'http://'.ForceString(@$_SERVER['HTTP_HOST'], '').$WebRoot;
+$IsSecure = @$_SERVER["HTTPS"] || @$_SERVER['SERVER_PORT'] == 443;
+$HttpMethod = $IsSecure ? 'https://' : 'http://';
+$BaseUrl = $HttpMethod . ForceString(@$_SERVER['HTTP_HOST'], '').$WebRoot;
 $ThemeDirectory = $WebRoot . 'themes/';
 $AllowNext = 0;
 
@@ -321,6 +323,7 @@ if (!defined(\'IN_VANILLA\')) exit();
 			$SettingsManager->DefineSetting('DEFAULT_STYLE', $ThemeDirectory.'vanilla/styles/default/', 1);
 			$SettingsManager->DefineSetting('WEB_ROOT', $WebRoot, 1);
 			$SettingsManager->DefineSetting('BASE_URL', $BaseUrl, 1);
+			$SettingsManager->DefineSetting('HTTP_METHOD', $HttpMethod, 1);
 			$SettingsManager->DefineSetting('FORWARD_VALIDATED_USER_URL', $BaseUrl, 1);
 			if (!$SettingsManager->SaveSettingsToFile($SettingsFile)) {
 				// $Context->WarningCollector->Clear();
