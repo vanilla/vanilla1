@@ -80,4 +80,44 @@ function ParseQueryForHighlighting(&$Context, $Query) {
 		return array();
 	}
 }
+
+/**
+ * Create a form to select the category of discussion.
+ *
+ * Return an empty string if there is less than two categories available.
+ *
+ * @param Context $Context
+ * @param string $SessionPostBackKey
+ * @param int $DiscussionID
+ * @return string
+ */
+function MoveDiscussionForm(&$Context, $SessionPostBackKey, $DiscussionID) {
+	$CategoryManager = $Context->ObjectFactory->NewContextObject($Context, 'CategoryManager');
+	$CategoryData = $CategoryManager->GetCategories(0, 1);
+	if ($Context->Database->RowCount($CategoryData) < 2) {
+		return '';
+	}
+	else {
+		$Select = $Context->ObjectFactory->NewObject($Context, 'Select');
+		$Select->Name = 'CategoryID';
+		$Select->SelectedValue = ForceIncomingInt('MoveDiscussionDropdown', 0);
+		$Select->Attributes .= " id=\"MoveDiscussionDropdown\" onchange=\"if (confirm('".$Context->GetDefinition("ConfirmMoveDiscussion")."')) DiscussionSwitch('".$Context->Configuration['WEB_ROOT']."ajax/switch.php', 'Move', '".$DiscussionID."', ''+this.options[this.selectedIndex].value+'', 'MoveDiscussion', '".$SessionPostBackKey."'); return false;\"";
+		$Select->AddOption(0, $Context->GetDefinition('SelectCategoryToMoveTo'));
+		$cat = $Context->ObjectFactory->NewObject($Context, 'Category');
+		$Row = $Context->Database->GetRow($CategoryData);
+		while ($Row) {
+			$cat->Clear();
+			$cat->GetPropertiesFromDataSet($Row);
+			$Select->AddOption($cat->CategoryID, $cat->Name);
+			$Row = $Context->Database->GetRow($CategoryData);
+		}
+		return "<form id=\"frmMoveDiscussion\"
+				name=\"frmMoveDiscussion\"
+				method=\"post\"
+				action=\"".$Context->Configuration['WEB_ROOT']."post.php\">".
+      			$Select->Get()."
+	     		</form>";
+	}
+}
+
 ?>

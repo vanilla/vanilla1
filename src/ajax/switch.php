@@ -50,8 +50,13 @@ if ($PostBackKey != '' && $PostBackKey == $Context->Session->GetCsrfValidationKe
 		|| ($Type == 'Sink' && $Context->Session->User->Permission('PERMISSION_SINK_DISCUSSIONS'))
 		)) {
 		$dm->SwitchDiscussionProperty($DiscussionID, $Type, $Switch);
-	} elseif ($Type == 'Move' && $Context->Session->User->Permission('PERMISSION_MOVE_DISCUSSIONS')) {
-		$dm->SwitchDiscussionProperty($DiscussionID, "CategoryID", $Switch);
+	} elseif ($Type == 'Move') {
+		$Discussion = $dm->GetDiscussionById($DiscussionID);
+		if ($Context->Session->User->Permission('PERMISSION_MOVE_ANY_DISCUSSIONS')
+			|| $Discussion->AuthUserID == $Context->Session->UserID
+		) {
+			$Result = $dm->MoveDiscussion($DiscussionID, $Switch);
+		}
 	} elseif ($Type == 'Comment' && $CommentID > 0 && $DiscussionID > 0 && $Context->Session->User->Permission('PERMISSION_HIDE_COMMENTS')) {
 		$cm->SwitchCommentProperty($CommentID, $DiscussionID, $Switch);
 	} elseif ($Type == 'SendNewApplicantNotifications') {

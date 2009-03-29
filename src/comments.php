@@ -77,6 +77,7 @@ if ($CommentGrid->Discussion) {
 				"id=\"CloseDiscussion\" onclick=\"if (confirm('".$Context->GetDefinition($CommentGrid->Discussion->Closed?"ConfirmReopenDiscussion":"ConfirmCloseDiscussion")."')) DiscussionSwitch('".$CommentGrid->Context->Configuration['WEB_ROOT']."ajax/switch.php', 'Closed', '".$CommentGrid->Discussion->DiscussionID."', '".FlipBool($CommentGrid->Discussion->Closed)."', 'CloseDiscussion', '".$SessionPostBackKey."'); return false;\"");
 		}
 		if ($Context->Session->User->Permission("PERMISSION_STICK_DISCUSSIONS")) {
+			header('CanSink: true');
 			$StickyText = $Context->GetDefinition("MakeThisDiscussion".($CommentGrid->Discussion->Sticky?"Unsticky":"Sticky"));
 			$Panel->AddListItem($Options,
 				$StickyText,
@@ -92,14 +93,20 @@ if ($CommentGrid->Discussion) {
 				"",
 				"id=\"SinkDiscussion\" onclick=\"if (confirm('".$Context->GetDefinition($CommentGrid->Discussion->Sink?"ConfirmUnSink":"ConfirmSink")."')) DiscussionSwitch('".$CommentGrid->Context->Configuration['WEB_ROOT']."ajax/switch.php', 'Sink', '".$CommentGrid->Discussion->DiscussionID."', '".FlipBool($CommentGrid->Discussion->Sink)."', 'SinkDiscussion', '".$SessionPostBackKey."'); return false;\"");
 		}
-		if ($Context->Session->User->Permission("PERMISSION_MOVE_DISCUSSIONS")) {
-			$MoveText = $Context->GetDefinition("MoveText");
-			$Panel->AddListItem($Options,
-				$MoveText,
-				"javascript:void(0);",
-				"",				
-				"id=\"MoveDiscussion\" onclick=\"showById('MoveDiscussionDropdown');\"");
-			$Panel->AddListItem($Options,MoveDiscussionForm($Context, $SessionPostBackKey, $DiscussionID));
+		if ($Configuration['USE_CATEGORIES']
+			&& ($Context->Session->User->Permission("PERMISSION_MOVE_ANY_DISCUSSIONS")
+				|| $Context->Session->UserID == $CommentGrid->Discussion->AuthUserID)
+		) {
+			$MoveDiscussionForm = MoveDiscussionForm($Context, $SessionPostBackKey, $DiscussionID);
+			if ($MoveDiscussionForm) {
+				$MoveText = $Context->GetDefinition("MoveText");
+				$Panel->AddListItem($Options,
+					$MoveText,
+					"javascript:void(0);",
+					"",
+					"id=\"MoveDiscussion\" onclick=\"showById('MoveDiscussionDropdown');\"");
+				$Panel->AddListItem($Options,$MoveDiscussionForm, '');
+			}
 		}
 	}
 
