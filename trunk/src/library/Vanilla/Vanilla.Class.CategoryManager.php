@@ -26,6 +26,43 @@ class CategoryManager extends Delegation {
 	var $Name;				// The name of this class
 	var $Context;			// The context object that contains all global objects (database, error manager, warning collector, session, etc)
 
+
+	/**
+	 * Check that a category exist.
+	 *
+	 * If a role id is supplied,
+	 * it will chack that the category is available to that role.
+	 *
+	 * @param int $CategoryID
+	 * @param int $RoleID
+	 * @return boolean
+	 */
+	function CategoryExist($CategoryID, $RoleID=null) {
+		$CategoryID = ForceInt($CategoryID, 0);
+		$RoleID = ForceInt($RoleID, 0);
+		if (!$CategoryID) {
+			return False;
+		}
+		$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
+		$s->SetMainTable('Category', 'c');
+		$s->AddSelect('Name', 'c');
+		if ($RoleID !== null) {
+			$s->AddJoin('CategoryRoleBlock', 'crb', 'CategoryID', 'c', 'CategoryID', 'left join',
+				' and crb.'.$this->Context->DatabaseColumns['CategoryRoleBlock']['RoleID'].' = '.$RoleID);
+			$s->AddWhere('crb', 'Blocked', '', '0', '=', 'and', '', 1, 1);
+			$s->AddWhere('crb', 'Blocked', '', '0', '=', 'or', '', 0, 0);
+			$s->AddWhere('crb', 'Blocked', '', 'null', 'is', 'or', '', 0, 0);
+			$s->AddWhere('c', 'CategoryID', '', $CategoryID, '=', 'and');
+			$s->EndWhereGroup();
+		} else {
+			$s->AddWhere('c', 'CategoryID', '', $CategoryID, '=');
+		}
+		$ResultSet = $this->Context->Database->Select($s, $this->Name,
+			'HasCategory', 'An error occurred while attempting to find a category.');
+		$Count = $this->Context->Database->RowCount($ResultSet);
+		return $Count == 1;
+	}
+
 	function CategoryManager(&$Context) {
 		$this->Name = 'CategoryManager';
 		$this->Delegation($Context);

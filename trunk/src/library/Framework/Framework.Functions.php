@@ -974,37 +974,6 @@ function WriteEmail($Email, $LinkText = '') {
 	echo(GetEmail($Email, $LinkText));
 }
 
-// Taken and modified from Mark's CategoryJumper extension
-function MoveDiscussionForm(&$Context, $SessionPostBackKey, $DiscussionID) {
-	$CategoryManager = $Context->ObjectFactory->NewContextObject($Context, 'CategoryManager');
-	$CategoryData = $CategoryManager->GetCategories(0, 1);
-	if (!$CategoryData) {
-		return '';      
-	}
-	else {
-		$Select = $Context->ObjectFactory->NewObject($Context, 'Select');
-		$Select->Name = 'CategoryID';
-		$Select->SelectedValue = ForceIncomingInt('MoveDiscussionDropdown', 0);
-		$Select->Attributes .= " id=\"MoveDiscussionDropdown\" onchange=\"if (confirm('".$Context->GetDefinition("ConfirmMoveDiscussion")."')) DiscussionSwitch('".$Context->Configuration['WEB_ROOT']."ajax/switch.php', 'Move', '".$DiscussionID."', ''+this.options[this.selectedIndex].value+'', 'MoveDiscussion', '".$SessionPostBackKey."'); return false;\"";
-		$Select->AddOption(0, $Context->GetDefinition('SelectCategoryToMoveTo'));         
-		$LastBlocked = -1;
-		$cat = $Context->ObjectFactory->NewObject($Context, 'Category');
-		while ($Row = $Context->Database->GetRow($CategoryData)) {
-			$cat->Clear();
-			$cat->GetPropertiesFromDataSet($Row);
-			if ($cat->Blocked != $LastBlocked && $LastBlocked != -1) {
-				$Select->AddOption('-1', '---', " disabled=\"disabled\"");
-			}
-			$Select->AddOption($cat->CategoryID, $cat->Name);
-			$LastBlocked = $cat->Blocked;
-		}         
-		return "<form id=\"frmMoveDiscussion\"
-				name=\"frmMoveDiscussion\"
-				method=\"post\" 
-				action=\"".$Context->Configuration['WEB_ROOT']."post.php\">".
-      			$Select->Get()."
-	     		</form>";
-	}
-}
+
 
 ?>

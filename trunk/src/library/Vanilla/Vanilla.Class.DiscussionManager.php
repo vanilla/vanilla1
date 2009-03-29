@@ -228,7 +228,7 @@ class DiscussionManager extends Delegation {
 	}
 
 	function GetDiscussionList($RowsPerPage, $CurrentPage, $CategoryID) {
-		// validate CategoryID, should be an int or an array of int superior to 0 
+		// validate CategoryID, should be an int or an array of int superior to 0
 		$tmp = $CategoryID;
 		$CategoryID = array();
 		if (is_array($tmp)) {
@@ -413,6 +413,34 @@ class DiscussionManager extends Delegation {
 		return $this->Context->Database->Select($s, $this->Name, 'GetViewedDiscussionsByUserID', 'An error occurred while retrieving discussions.');
 	}
 
+	/**
+	 * Change the discussion's category.
+	 *
+	 * @param int $DiscussionID
+	 * @param int $CategoryID
+	 * @return boolean
+	 */
+	function MoveDiscussion($DiscussionID, $CategoryID) {
+		$DiscussionID = ForceInt($DiscussionID, 0);
+		$CategoryID = ForceInt($CategoryID, 0);
+		if (!$DiscussionID || !$CategoryID) {
+			return False;
+		}
+
+		$cm = $this->Context->ObjectFactory->NewContextObject($this->Context, 'CategoryManager');
+		if (!$cm->CategoryExist($CategoryID, $this->Context->Session->User->RoleID)) {
+			return False;
+		}
+
+		$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
+		$s->SetMainTable('Discussion', 'd');
+		$s->AddFieldNameValue('CategoryID', $CategoryID, 0);
+		$s->AddWhere('d', 'DiscussionID', '', $DiscussionID, '=');
+		$Update = $this->Context->Database->Update($s, $this->Name, 'MoveDiscussion',
+			'An error occurred while moving the discussion to a new category.', 0);
+		return $Update == 1;
+	}
+
 	function SaveDiscussion($Discussion) {
 		if (!$this->Context->Session->User->Permission('PERMISSION_START_DISCUSSION')) {
 			$this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrPermissionStartDiscussions'));
@@ -462,7 +490,7 @@ class DiscussionManager extends Delegation {
 				if ($this->Context->Database->RowCount($CategoryAllowed) < 1) {
 					$Discussion->CategoryID = 0;
 				}
-				
+
 				if ($Discussion->CategoryID <= 0) {
 					$this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrSelectCategory'));
 				}
@@ -560,9 +588,6 @@ class DiscussionManager extends Delegation {
 					break;
 				case 'Sink':
 					if (!$this->Context->Session->User->Permission('PERMISSION_SINK_DISCUSSIONS')) $this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrPermissionSinkDiscussions'));
-					break;
-				case 'Move':
-					if (!$this->Context->Session->User->Permission('PERMISSION_MOVE_DISCUSSIONS')) $this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrPermissionMoveDiscussions'));
 					break;
 			}
 			if ($this->Context->Database->Update($s, $this->Name, 'SwitchDiscussionProperty', 'An error occurred while manipulating the '.$PropertyName.' property of the discussion.', 0) <= 0) $this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrPermissionDiscussionEdit'));
