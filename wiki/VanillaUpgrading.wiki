@@ -2,9 +2,9 @@
 
 =How to upgrade Vanilla=
 
-Before any upgrade, back up your current Vanilla files.
+*Before any upgrade, back up your current Vanilla files.*
 
-**Problems?**
+_Problems?_
 
 Ask for help at the [http://lussumo.com/community community forum].
 
