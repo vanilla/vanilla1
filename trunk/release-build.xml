@@ -70,7 +70,7 @@
 		<echo level="info" message="${line.separator}Tag Vanilla ${app.version}, People ${people.version} and Framework ${framework.version}."/>
     	<svn username="${svn.user}" password="${svn.password}">
 			<!-- Tag Vanilla trunk-->
-			<copy srcUrl="{svn.app.trunk}" destUrl="${svn.app.newTag}" message="Tag version ${app.version}"/>
+			<copy srcUrl="${svn.app.trunk}" destUrl="${svn.app.newTag}" message="Tag version ${app.version}"/>
 		</svn>
     </target>
 	
