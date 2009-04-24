@@ -14,13 +14,13 @@
 
 /**
  * Previous version:
- * Previous_framework_version: 1.1.5
- * Previous_people_version: 1.1.5
- * Previous_vanilla_version: 1.1.5a
+ * Previous_framework_version: 1.1.6
+ * Previous_people_version: 1.1.6
+ * Previous_vanilla_version: 1.1.6
  */
 define('APPLICATION', 'Vanilla');
-define('FRAMEWORK_VERSION', '1.1.6');
-define('PEOPLE_VERSION', '1.1.6');
-define('APPLICATION_VERSION', '1.1.6');
+define('FRAMEWORK_VERSION', '1.1.7');
+define('PEOPLE_VERSION', '1.1.7');
+define('APPLICATION_VERSION', '1.1.7');
 
 ?>
