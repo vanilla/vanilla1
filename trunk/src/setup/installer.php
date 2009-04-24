@@ -35,6 +35,7 @@ $Configuration['EXTENSIONS_PATH'] = '';
 $Configuration['LANGUAGES_PATH'] = '';
 $Configuration['THEME_PATH'] = '';
 $Configuration['BASE_URL'] = '';
+$Configuration['HTTP_METHOD'] = '';
 $Configuration['DEFAULT_STYLE'] = '';
 $Configuration['WEB_ROOT'] = '';
 $Configuration['COOKIE_DOMAIN'] = '-';
