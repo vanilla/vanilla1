@@ -15,7 +15,7 @@ This upgrade patches an xss vulnerability discovered in the update checker.
 To upgrade, download the new Vanilla-1.1.8 package from [http://getvanilla.com getvanilla.com] and replace the following files in your 1.1.7 installation:
 
 {{{
-ajax/update_checker.php
+ajax/updatecheck.php
 appg/version.php
 }}}
 
