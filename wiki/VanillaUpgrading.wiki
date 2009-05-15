@@ -8,6 +8,30 @@ _Problems?_
 
 Ask for help at the [http://lussumo.com/community community forum].
 
+== Upgrading from Vanilla 1.1.7 to Vanilla 1.1.8 ==
+
+This upgrade patches an xss vulnerability discovered in the update checker.
+
+To upgrade, download the new Vanilla-1.1.8 package from [http://getvanilla.com getvanilla.com] and replace the following files in your 1.1.7 installation:
+
+{{{
+ajax/update_checker.php
+appg/version.php
+}}}
+
+
+== Upgrading from Vanilla 1.1.6 to Vanilla 1.1.7 ==
+
+This upgrade is only related to the installer. Upgrading will only be necessary if you need to (re)install Vanilla.
+
+To upgrade, download the new Vanilla-1.1.7 package from [http://getvanilla.com getvanilla.com] and replace the following files in your 1.1.6 installation:
+
+{{{
+appg/version.php
+setup/installer.php
+setup/mysql.sql
+}}}
+ 
 
 == Upgrading from Vanilla 1.1.5a to Vanilla 1.1.6 ==
 
