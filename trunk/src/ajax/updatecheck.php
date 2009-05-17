@@ -18,10 +18,12 @@ include('../appg/init_ajax.php');
 $PostBackKey = ForceIncomingString('PostBackKey', '');
 $ExtensionKey = ForceIncomingString('ExtensionKey', '');
 $RequestName = ForceIncomingString('RequestName', '');
+$SafeRequestName = htmlentities($RequestName);
+
 if ($PostBackKey != '' 
 	&& $PostBackKey != $Context->Session->GetCsrfValidationKey()
 ) {
-	echo $RequestName.'|[ERROR]'.$Context->GetDefinition('ErrPostBackKeyInvalid');
+	echo $SafeRequestName.'|[ERROR]'.$Context->GetDefinition('ErrPostBackKeyInvalid');
 } else if ($RequestName == 'Core') {
 	// Ping the Lussumo server with core version information
 	$VersionStatus = OpenUrl($Context->Configuration['UPDATE_URL']
@@ -53,7 +55,7 @@ if ($PostBackKey != ''
 	// Load all extensions for version information
 	$Extensions = DefineExtensions($Context);
 	if (!is_array($Extensions)) {
-		echo $RequestName.'|[ERROR]'.$Context->WarningCollector->GetPlainMessages();
+		echo $SafeRequestName.'|[ERROR]'.$Context->WarningCollector->GetPlainMessages();
 	} elseif (count($Extensions) > 0) {
 		// All of the extensions were loaded successfully.
 		// Ping the Lussumo server with the next extension
