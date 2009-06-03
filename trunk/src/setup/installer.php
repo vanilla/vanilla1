@@ -112,8 +112,8 @@ $RootDirectory = str_replace('setup/', '', $WorkingDirectory);
 $WebRoot = dirname(ForceString(@$_SERVER['PHP_SELF'], ''));
 $WebRoot = substr($WebRoot, 0, strlen($WebRoot) - 5); // strips the "setup" off the end of the path.
 $IsSecure = @$_SERVER["HTTPS"] || @$_SERVER['SERVER_PORT'] == 443;
-$HttpMethod = $IsSecure ? 'https://' : 'http://';
-$BaseUrl = $HttpMethod . ForceString(@$_SERVER['HTTP_HOST'], '').$WebRoot;
+$HttpMethod = $IsSecure ? 'https' : 'http';
+$BaseUrl = $HttpMethod . '://' . ForceString(@$_SERVER['HTTP_HOST'], '').$WebRoot;
 $ThemeDirectory = $WebRoot . 'themes/';
 $AllowNext = 0;
 
