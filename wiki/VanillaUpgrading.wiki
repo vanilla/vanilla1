@@ -8,6 +8,22 @@ _Problems?_
 
 Ask for help at the [http://lussumo.com/community community forum].
 
+== Upgrading from Vanilla 1.1.8 to Vanilla 1.1.9 ==
+
+This upgrade patches a bug with the installer.
+
+To upgrade, download the new [http://code.google.com/p/lussumo-vanilla/downloads/list Vanilla-1.1.9 package] and replace the following files in your 1.1.8 installation:
+
+{{{
+appg/version.php
+setup/installer.php
+}}}
+
+Also, if you installed Vanilla 1.1.8, you should check `$Configuration['HTTP_METHOD']`
+in `conf/settings.php` does not end with "://" (there might be any `$Configuration['HTTP_METHOD']`). It should either be set to "http" or
+"https".
+
+
 == Upgrading from Vanilla 1.1.7 to Vanilla 1.1.8 ==
 
 This upgrade patches an xss vulnerability discovered in the update checker.
