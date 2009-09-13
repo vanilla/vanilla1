@@ -12,6 +12,10 @@
 
 
 /* Global Definitions */
+* {
+	-moz-outline: none;
+}
+
 body {
 	background: #F5F9FF;
 	text-align: center;
