@@ -20,7 +20,7 @@ setup/installer.php
 }}}
 
 Also, if you installed Vanilla 1.1.8, you should check `$Configuration['HTTP_METHOD']`
-in `conf/settings.php` does not end with "://" (there might be any `$Configuration['HTTP_METHOD']`). It should either be set to "http" or
+in `conf/settings.php` does not end with "://" (there might not be any `$Configuration['HTTP_METHOD']`). It should either be set to "http" or
 "https".
 
 
