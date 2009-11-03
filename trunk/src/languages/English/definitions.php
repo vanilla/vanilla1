@@ -221,6 +221,7 @@ $Context->Dictionary['YouAreSignedIn'] = 'You are signed in';
 $Context->Dictionary['BottomOfPage'] = 'Bottom of Page';
 $Context->Dictionary['NotSignedIn'] = 'Not signed in';
 $Context->Dictionary['SignIn'] = 'Sign In';
+$Context->Dictionary['Register'] = 'Register';
 $Context->Dictionary['Discussions'] = 'Discussions';
 $Context->Dictionary['Settings'] = 'Settings';
 $Context->Dictionary['Account'] = 'Account';
