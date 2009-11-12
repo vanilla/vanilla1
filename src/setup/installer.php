@@ -359,7 +359,7 @@ if (!defined(\'IN_VANILLA\')) exit();
 		if ($Username == '') $Context->WarningCollector->Add('You must provide a username.');
 		if ($Password == '') $Context->WarningCollector->Add('You must provide a password.');
 		if ($SupportName == '') $Context->WarningCollector->Add('You must provide a support contact name.');
-		if (!eregi('(.+)@(.+)\.(.+)', $SupportEmail)) $Context->WarningCollector->Add('The email address you entered doesn&#8217;t appear to be valid.');
+		if (!preg_match('/(.+)@(.+)\.(.+)/i', $SupportEmail)) $Context->WarningCollector->Add('The email address you entered doesn&#8217;t appear to be valid.');
 		if ($ApplicationTitle == '') $Context->WarningCollector->Add('You must provide an application title.');
 
 		// Include the db settings defined in the previous step
@@ -497,7 +497,7 @@ if (!defined(\'IN_VANILLA\')) exit();
 						';
 					}
 				} else {
-					echo '<p>This wizard will first check can been installed.</p>';
+					echo '<p>This wizard will first check if Vanilla can be installed.</p>';
 				}
 
 
@@ -513,7 +513,7 @@ if (!defined(\'IN_VANILLA\')) exit();
 							'.$Context->WarningCollector->GetMessages().'
 						</div>';
 					}
-					echo '<p>Create your new Vanilla database, and specify the MySQL connection parameters below:</p>
+					echo '<p>Specify the MySQL connection parameters for your database below:</p>
 					<fieldset>
 						<form id="frmDatabase" method="post" action="installer.php">
 						<input type="hidden" name="PostBackAction" value="Database" />
