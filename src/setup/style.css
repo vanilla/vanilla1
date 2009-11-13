@@ -1,7 +1,7 @@
 body {
 	background: #fff;
-	margin: 0px;
-	padding: 0px;
+	margin: 0;
+	padding: 0;
 	text-align: center;
 }
 body, div, p, blockquote, h1, h2, input {
@@ -22,8 +22,8 @@ a:hover {
 h1 {
 	background: #F1F3FF;
 	border-bottom: 1px solid #ACBEDF;
-	margin: 0px;
-	padding: 0px;
+	margin: 0;
+	padding: 0;
 }
 h1 span {
 	background: url(leaf.gif) no-repeat center left;
@@ -33,7 +33,7 @@ h1 span {
 	margin-left: auto;
 	margin-right: auto;
 	font-size: 36px;
-	padding: 20px 0px 20px 0px;
+	padding: 20px 0 20px 0;
 	text-align: left;
 }
 h1 span strong {
@@ -48,15 +48,15 @@ h1 span strong {
 	margin-right: auto;
 	text-align: left;
 	width: 500px;
-	padding: 20px 0px 0px 0px;
+	padding: 20px 0 0 0;
 }
 h2 {
-	margin: 0px;
-	padding: 0px;
+	margin: 0;
+	padding: 0;
 }
 code {
 	background: #FEFECC;
-	margin: 10px 0px 10px 0px;
+	margin: 10px 0 10px 0;
 	padding: 10px;
 	border-left: 4px solid #FCEEAA;
 	color: #960;
@@ -65,19 +65,19 @@ code {
 	display: block;
 }
 fieldset {
-	border: 0px;
-	margin: 0px;
-	padding: 0px;
+	border: 0;
+	margin: 0;
+	padding: 0;
 }
 fieldset ul {
 	list-style: none;
-	margin: 0px;
+	margin: 0;
 	padding: 8px 8px 2px 8px;
 	background: #efefef;
 }
 fieldset label {
 	float: left;
-	margin: 0px 0px 6px 0px;
+	margin: 0 0 6px 0;
 	width:30%;
 }
 fieldset label.CheckBox {
@@ -94,14 +94,14 @@ fieldset ul li input {
 	width: 50%;
 }
 .Button {
-	padding: 10px 0px 20px 0px;
+	padding: 10px 0 20px 0;
 }
 .Button input {
 	font-size: 14px;
 	font-weight: bold;
-	border: 0px;
-	margin: 0px;
-	padding: 0px;
+	border: 0;
+	margin: 0;
+	padding: 0;
 	background: none;
 	cursor: pointer;
 	color: #64AE18;
@@ -114,7 +114,7 @@ fieldset ul li input {
 .Warnings {
 	background: url(../themes/vanilla/styles/default/alert.gif) left top no-repeat #FFFECC;
 	padding: 8px;
-	margin: 10px 0px 0px 0px;
+	margin: 10px 0 0 0;
 	border-top: 1px solid #FAEBB1;
 	border-bottom: 1px solid #FAEBB1;
 	color: #D57D00;
@@ -126,7 +126,7 @@ fieldset ul li input {
 .Warnings strong {
 	color: #c00;
 	display: block;
-	padding: 0px 0px 4px 22px;
+	padding: 0 0 4px 22px;
 }
 .Warnings div a,
 .Warnings div a:link,
@@ -138,9 +138,9 @@ fieldset ul li input {
 }
 .Warnings div code {
 	background: none;
-	margin: 10px 0px 10px 0px;
-	padding: 0px;
-	border: 0px;
+	margin: 10px 0 10px 0;
+	padding: 0;
+	border: 0;
 	color: #960;
 	font-family: courier;
 	font-size: 12px;
