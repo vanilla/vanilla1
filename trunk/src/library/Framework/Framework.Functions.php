@@ -603,7 +603,7 @@ function GetTableName($Key, $TableCollection, $Prefix) {
 }
 
 function GetUrl($Configuration, $PageName, $Divider = '', $Key = '', $Value = '', $PageNumber='', $Querystring='', $Suffix = '') {
-	if ($Configuration['URL_BUILDING_METHOD'] == 'mod_rewrite') {
+	if (!empty($Configuration['URL_BUILDING_METHOD']) && $Configuration['URL_BUILDING_METHOD'] == 'mod_rewrite') {
 		if ($PageName == './') $PageName = 'index.php';
 		return $Configuration['BASE_URL']
 			.($PageName == 'index.php' && $Value != '' ? '' : $Configuration['REWRITE_'.$PageName])
@@ -626,7 +626,7 @@ function GetUrl($Configuration, $PageName, $Divider = '', $Key = '', $Value = ''
 		}
 		if ($sReturn != '') $sReturn = '?'.$sReturn;
 		if ($Querystring != '' && substr($Querystring, 0, 1) == '#') $sReturn .= $Querystring;
-		return $Configuration['BASE_URL'].$PageName.$sReturn;
+		if (!empty($Configuration['BASE_URL'])) return $Configuration['BASE_URL'].$PageName.$sReturn;
 	}
 }
 
