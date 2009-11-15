@@ -131,10 +131,18 @@ class Search {
 			}
 		}
 		$Highlight = $this->Query;
-		if ($Highlight != '') {
-			$Highlight = eregi_replace('\'', '', $Highlight);
-			$Highlight = eregi_replace(' and ', '', $Highlight);
-			$Highlight = eregi_replace(' or ', '', $Highlight);
+		if (!empty($Highlight)) {
+			$patterns = array(
+				'/\'/',
+				'/ and /',
+				'/ or /',
+			);
+			$replacements = array(
+				'//',
+				'//',
+				'//',
+			);
+			$Highlight = preg_replace($patterns, $replacements, $Highlight);
 			$this->HighlightWords = explode(' ', $Highlight);
 		}
 	}
