@@ -626,7 +626,7 @@ function GetUrl($Configuration, $PageName, $Divider = '', $Key = '', $Value = ''
 		}
 		if ($sReturn != '') $sReturn = '?'.$sReturn;
 		if ($Querystring != '' && substr($Querystring, 0, 1) == '#') $sReturn .= $Querystring;
-		if (!empty($Configuration['BASE_URL'])) return $Configuration['BASE_URL'].$PageName.$sReturn;
+		return $Configuration['BASE_URL'].$PageName.$sReturn;
 	}
 }
 
