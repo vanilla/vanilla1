@@ -540,6 +540,9 @@ class DiscussionManager extends Delegation {
 							$s->AddFieldNameValue('DateLastActive', MysqlDateTime());
 							$s->AddFieldNameValue('CountComments', 0);
 							$s->AddFieldNameValue('WhisperUserID', $Discussion->WhisperUserID);
+							if ($Discussion->WhisperUserID != '0') {
+								$s->AddFieldNameValue('DateLastWhisper', MysqlDateTime());
+							}
 							$Discussion->DiscussionID = $this->Context->Database->Insert($s, $this->Name, 'NewDiscussion', 'An error occurred while creating a new discussion.');
 							$Discussion->Comment->DiscussionID = $Discussion->DiscussionID;
 						} else {
