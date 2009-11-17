@@ -7,19 +7,31 @@ the build process will compress js and css files and produce a zip archive.
 Vanilla is built using Ant (http://ant.apache.org/).
 
 
+Building Vanilla on OS X 10.6
+=============================
+
+Ant and subversion is installed by default.
+
+- Open a terminal;
+- Check-out the trunk:
+
+	svn co http://lussumo-vanilla.googlecode.com/svn/trunk/ vanilla-dev
+
+- Build Vanilla:
+
+        cd vanilla-dev
+        svn up
+        ant
+
+
 Building Vanilla on Ubuntu
 ==========================
 
-- Open a terminal;
-- Install Ant and Subversion:<code>sudo apt-get install subversion sun-java6-jdk ant ant-optional php5-cli</code>
-- Check-out the trunk:<code>svn co http://lussumo-vanilla.googlecode.com/svn/trunk/ vanilla-dev</code>
-- Build Vanilla:
-	
-	cd vanilla-dev
-	svn up
-	ant
+Like on OSX 10.6, but you will have first to install Ant and subversion:
 
-It might fail if Ant cannot find a recent a jdk version of Java.
+- Install Ant and Subversion:
+
+	sudo apt-get install subversion sun-java6-jdk ant ant-optional php5-cli
 
 
 Building Vanilla on Windows
@@ -44,3 +56,4 @@ Building Vanilla on Windows
 
 Each time you want to create an updated package, simple click on build.bat.
 It will download the last update for you.
+
