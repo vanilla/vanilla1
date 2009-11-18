@@ -105,7 +105,7 @@ $Configuration['LAST_UPDATE'] = '';
 $Configuration['HTTP_METHOD'] = 'http'; // Could alternately be https
 
 // Vanilla Settings
-$Configuration['ENABLE_WHISPERS'] = '0';
+$Configuration['ENABLE_WHISPERS'] = '1';
 $Configuration['DISCUSSIONS_PER_PAGE'] = '30';
 $Configuration['COMMENTS_PER_PAGE'] = '50';
 $Configuration['SEARCH_RESULTS_PER_PAGE'] = '30';
