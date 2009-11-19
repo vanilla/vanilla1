@@ -1,0 +1,13 @@
+1.4 (17.11.2009)
+  • Added JavaScript resizing, meaning there are no horizontal scrollbars, not even in divs.
+  • Added requirement for Vanilla 1.2 (or just update /js/prototype.js to 1.6.1+)
+
+1.3 (11.01.2006)
+  • Removed security patch again, as it was not neccesary and resulted in errors
+  • Added ThickBox support using the JQuery and JQThickBox extension from Stash
+
+1.2 (04.12.2006)
+  • Added security patch for Vanilla 1.0.3
+
+1.1 (12.10.2006)
+  • Added caching for inline images
