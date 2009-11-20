@@ -21,6 +21,6 @@
 define('APPLICATION', 'Vanilla');
 define('FRAMEWORK_VERSION', '1.1.7');
 define('PEOPLE_VERSION', '1.1.7');
-define('APPLICATION_VERSION', '1.1.9');
+define('APPLICATION_VERSION', '1.1.10');
 
 ?>
