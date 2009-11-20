@@ -14,12 +14,7 @@ echo '<div id="Session">';
 			. FormatStringForDisplay(AppendUrlParameters(
 				$this->Context->Configuration['SIGNIN_URL'],
 				'ReturnUrl='. urlencode(GetRequestUri(0))))
-			. '">'.$this->Context->GetDefinition('SignIn').'</a> or
-			<a href="'
-			. FormatStringForDisplay(AppendUrlParameters(
-				$this->Context->Configuration['REGISTRATION_URL'],
-				'ReturnUrl='. urlencode(GetRequestUri(0))))
-			. '">'.$this->Context->GetDefinition('Register').'</a>)';
+			. '">'.$this->Context->GetDefinition('SignIn').'</a>)';
 	}
 	echo '</div>';
 	$this->CallDelegate('PreHeadRender');
