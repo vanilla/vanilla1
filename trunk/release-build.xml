@@ -29,7 +29,7 @@
 		</fileset>
 	</path>
 	<typedef resource="org/tigris/subversion/svnant/svnantlib.xml" classpathref="project.classpath"/>
-	<taskdef classname="net.bluecow.googlecode.ant.GoogleCodeUploadTask" classpath="${tools.ant.dir}/ant-googlecode-0.0.1.jar" name="gcupload"/>
+	<taskdef classname="net.bluecow.googlecode.ant.GoogleCodeUploadTask" classpath="${tools.ant.dir}/ant-googlecode-0.0.2.jar" name="gcupload"/>
 	
     <!-- ================================= 
           target: build              
