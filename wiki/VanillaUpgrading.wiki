@@ -8,6 +8,36 @@ _Problems?_
 
 Ask for help at the [http://lussumo.com/community community forum].
 
+== Upgrading from Vanilla 1.1.9 to Vanilla 1.1.10 ==
+
+This upgrade patches a bug with the installer.
+
+To upgrade, download the new [http://code.google.com/p/lussumo-vanilla/downloads/list Vanilla-1.1.10 package] and replace the following files in your 1.1.9 installation:
+
+{{{
+appg/settings.php
+appg/version.php
+js/prototype.js
+js/builder.js
+js/sound.js
+js/effects.js
+js/unittest.js
+js/scriptaculous.js
+js/dragdrop.js
+js/slider.js
+js/controls.js
+library/Vanilla/Vanilla.Class.Search.php
+library/Vanilla/Vanilla.Class.DiscussionManager.php
+library/Framework/Framework.Functions.php
+languages/English/definitions.php
+setup/installer.php
+setup/style.css
+themes/vanilla/styles/default/utility.css
+themes/vanilla/styles/default/vanilla.print.css
+themes/vanilla/styles/default/people.css
+themes/vanilla/styles/default/vanilla.css
+}}}
+
 == Upgrading from Vanilla 1.1.8 to Vanilla 1.1.9 ==
 
 This upgrade patches a bug with the installer.
