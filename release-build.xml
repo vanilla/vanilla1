@@ -63,6 +63,16 @@
     	<gcupload username="${svn.user}" password="${svn.password}" projectname="lussumo-vanilla" filename="${dist.dir}${dist.name}.zip" targetfilename="${app.name}-${app.version}.zip" summary="Vanilla ${app.version}" labels="Featured, Type-Archive, OpSys-All" />
     </target>
 	
+	<!-- ================================= 
+          target: update              
+         ================================= -->
+    <target name="update" description="Update the working copy">
+    	<svn username="${svn.user}" password="${svn.password}">
+			<update dir="${svn.wc}"/>
+		</svn>
+    </target>
+
+	
 	<!-- - - - - - - - - - - - - - - - - - 
           target: tag                      
          - - - - - - - - - - - - - - - - - -->
