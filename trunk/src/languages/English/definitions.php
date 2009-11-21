@@ -471,7 +471,7 @@ $Context->Dictionary['XSecondAgo'] = '//1 second ago';
 $Context->Dictionary['XSecondsAgo'] = '//1 seconds ago';
 $Context->Dictionary['nothing'] = 'nothing';
 $Context->Dictionary['EnableWhispers'] = 'Enable Whispers';
-$Context->Dictionary['ExtensionFormNotes'] = 'Extensions are used to add new functionality into Vanilla. Listed below are all of the extensions you currently have installed. To enable an extension, check the box next to the extension name. <a href="http://lussumo.com/addons/">Click here for more extensions from Lussumo</a>.';
+$Context->Dictionary['ExtensionFormNotes'] = 'Extensions are used to add new functionality into Vanilla. Listed below are all of the extensions you currently have installed. To enable an extension, check the box next to the extension name.<br /><a href="http://vanillaforums.org/addon/browse/all/recent/1/">Click here to find extensions to download</a>.';
 $Context->Dictionary['EnabledExtensions'] = 'Enabled Extensions';
 $Context->Dictionary['DisabledExtensions'] = 'Disabled Extensions';
 $Context->Dictionary['ErrExtensionNotFound'] = 'The specified extension could not be found.';
