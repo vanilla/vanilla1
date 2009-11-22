@@ -2,7 +2,7 @@
 	/*
 	Extension Name: Whisperfi
 	Extension Url: subjunk@gmail.com
-	Description: An extension that displays a notification at the top of the Discussions page when you have been whispered to inside a public discussion.
+	Description: An extension that displays a notification at the top of the Discussions page when a user has received a whisper.
 	Version: 1.1
 	Author: Klaus Burton
 	Author Url: http://www.redskiesdesign.com/
@@ -13,16 +13,7 @@
 		include('_includes/install.php');
 	}
 
-	CreateArrayEntry($Context->Dictionary, 'WhisperfiUserSettings',   'Whisper Notification');
-	CreateArrayEntry($Context->Dictionary, 'WhisperfiUserPreference', 'Display the "new whispers" notification');
-	CreateArrayEntry($Context->Dictionary, 'AdminAutoAll',            'Force whisper notifications for all users');
-	CreateArrayEntry($Context->Dictionary, 'WhisperfiSettings',       'Whisperfi Settings');
-	CreateArrayEntry($Context->Dictionary, 'WhisperfiOptions',        'Options');
-	CreateArrayEntry($Context->Dictionary, 'WhisperfiAdminNotes',     'This page controls how Whisperfi works on your forum');
-	CreateArrayEntry($Context->Dictionary, 'NotificationManagement',  'Notification Management');
-	CreateArrayEntry($Context->Dictionary, 'TellWhenWhisper',         'Tell me when someone whispers a comment to me');
 	CreateArrayEntry($Context->Dictionary, 'YouHaveBeenWhisperedIn',  'You have been whispered in the following discussions:');
-	CreateArrayEntry($Context->Dictionary, 'XNew',                    '//1'); // The number of new whispers you have in that discussion
 
 	// If user is currently viewing a whisper, mark it read
 	if ($Context->Configuration['ENABLE_WHISPERS']) {
@@ -94,42 +85,4 @@
 	function whisperfiSwitch($Context,$Switch,$UserID,$Target) {
 		mysql_query("UPDATE `".$Context->Configuration['DATABASE_TABLE_PREFIX']."User` SET $Target = $Switch WHERE UserID = $UserID",$Context->Database->Connection);
 	}
-
-	/*
-	 * User Options
-	if (in_array($Context->SelfUrl, array('account.php'))) {
-		if (!@$UserManager) {
-			unset($UserManager);
-		}
-		$UserManager = $Context->ObjectFactory->NewContextObject($Context, "UserManager");
-		$AccountUserID = ForceIncomingInt("u", $Context->Session->UserID);
-		if (!@$AccountUser) {
-			$AccountUser = $UserManager->GetUserById($AccountUserID);
-		}
-
-		if ($Context->Session->User) {
-			if (($AccountUser->UserID == $Context->Session->UserID OR $Context->Session->User->Permission("PERMISSION_EDIT_USERS")) AND $Context->Configuration['WHISPERFI_AUTO_ALL'] == 0) {
-				if (isset($_GET['u'])) {
-					if ($_GET['u'] == $AccountUser->UserID) {
-						include('_includes/usersettings.php');
-						$Panel->AddListItem($Context->GetDefinition('AccountOptions'), $Context->GetDefinition('WhisperfiUserSettings'), GetUrl($Configuration, $Context->SelfUrl, "", "", "", "", "u=".ForceIncomingInt('u',$Context->Session->UserID)."&amp;PostBackAction=Whisperfi"), "", "", 92);
-						$Page->AddRenderControl($Context->ObjectFactory->NewContextObject($Context, "WhisperfiControl"), $Configuration["CONTROL_POSITION_BODY_ITEM"]);
-					}
-				} else {
-					include('_includes/usersettings.php');
-					$Panel->AddListItem($Context->GetDefinition('AccountOptions'), $Context->GetDefinition('WhisperfiUserSettings'), GetUrl($Configuration, $Context->SelfUrl, "", "", "", "", "u=".ForceIncomingInt('u',$Context->Session->UserID)."&amp;PostBackAction=Whisperfi"), "", "", 92);
-					$Page->AddRenderControl($Context->ObjectFactory->NewContextObject($Context, "WhisperfiControl"), $Configuration["CONTROL_POSITION_BODY_ITEM"]);
-				}
-			}
-		}
-		$Head->AddStyleSheet('extensions/Whisperfi/style.css');
-	}
-	*/
-
-	/*
-	 * Admin Options
-	if ($Context->SelfUrl == "settings.php" && $Context->Session->User->Permission('PERMISSION_MANAGE_EXTENSIONS')) {
-		include('_includes/adminsettings.php');
-	}
-	*/
 ?>
