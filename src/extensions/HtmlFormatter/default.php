@@ -11,16 +11,16 @@ Author Url: http://www.redskiesdesign.com/
 
 //SETTINGS, EDIT WHAT YOU WANT HERE
 
-//if you want lots of control over what users can put, set this to 1
-//array $Html_AllowedTags describes what tags and attributes are allowed
-define('HTML_USE_WHITELIST',			1);
+// If you want lots of control over what users can put, set this to 1
+// Array $Html_AllowedTags describes what tags and attributes are allowed
+define('HTML_USE_WHITELIST', 1);
 
-//index = node name
-//value = array with allowed attributes; 0 = none; non-zero = all; array can be passed with allowed attributes
+// Index = node name
+// Value = array with allowed attributes; 0 = none; non-zero = all; array can be passed with allowed attributes
 if(HTML_USE_WHITELIST)
 	$Html_AllowedTags = array(
 		'a' => array('href', 'title'), 
-		'img' => array('src', 'align', 'alt'), 
+		'img' => array('src', 'align', 'alt', 'class'),
 		'font' => array('family', 'color', 'size'), 
 		'b' => 0, 
 		'i' => 0, 
@@ -37,25 +37,22 @@ if(HTML_USE_WHITELIST)
 		//etc...
 	);
 
-//self explanatory really; boolean value telling HtmlFormatter whether or not inline styling is allowed
-//(this must also be set to 1 if you're using a whitelist and allow style attributes somewhere)
-define('HTML_ALLOW_INLINE_STYLING',		1);
+// Boolean value telling HtmlFormatter whether or not inline styling is allowed
+// This must also be set to 1 if you're using a whitelist and allow style attributes somewhere
+define('HTML_ALLOW_INLINE_STYLING', 1);
 
-//should we convert newlines (ie. \n;\r;\r\n) to line-breaks (<br />) or leave them as they are?
-define('HTML_CONVERT_NEWLINES',			1);
+// Should we convert newlines (ie. \n;\r;\r\n) to line-breaks (<br />) or leave them as they are?
+define('HTML_CONVERT_NEWLINES', 1);
 
-//are html comments allowed?
-define('HTML_ALLOW_COMMENTS', 			1);
+// Are html comments allowed?
+define('HTML_ALLOW_COMMENTS', 1);
 
-//this option tells the parser to make sure there are no stray opening or closing tags anywhere
-//provides more protection against forgetful/poor markup and/or malicious users, but will take slightly longer
-define('HTML_POLICE_TAGS',				1);
+// This option tells the parser to make sure there are no stray opening or closing tags anywhere
+// Provides more protection against forgetful/poor markup and/or malicious users, but will take slightly longer
+define('HTML_POLICE_TAGS', 1);
 
-//allow youtube and google videos to be posted, tags are:
-//<video type="google">docid</video> (google video) -or-
-//<video type="youtube">video id</video> (youtube) -or-
-//<video type="myspace">video id</video> (myspace)
-define('HTML_VIDEO_TAG',				1);
+// Allow videos to be posted
+define('HTML_VIDEO_TAG', 1);
 
 //index = type (what you specify in the tag)
 //value = replacement html; VIDEO_ID = video id (duh) (can only contain numbers, letters, - and _)
@@ -78,28 +75,35 @@ if(HTML_VIDEO_TAG)
 		'own3d' => ' <object width="636" height="380"><param name="movie" value="http://www.own3d.tv/stream/VIDEO_ID" /><param name="allowfullscreen" value="true" /><param name="wmode" value="transparent" /><embed src="http://www.own3d.tv/stream/VIDEO_ID" type="application/x-shockwave-flash" allowfullscreen="true" width="636" height="380" wmode="transparent"></embed></object>'
 	);
 
-//which tags should simply be removed (be warned, most of these are here because they are not safe 
-//enough to allow/clean, remove at your own risk)
+// Which tags should simply be removed (be warned, most of these are here because they are not safe
+// Enough to allow/clean, remove at your own risk)
 $Html_DisallowedTags = array('link', 'iframe', 'frame', 'frameset', 'object', 'param', 'embed', 'style', 
 	'applet', 'meta', 'layer', 'import', 'xml', 'script', 'body', 'html', 'head', 'title', 'ilayer');
 
-//don't parse anything in these tags
-//(as this is geared towards vanilla, pre is not included by default)
+// Don't parse anything in these tags
+// As this is geared towards vanilla, pre is not included by default
 $Html_Literals = array('code', 'samp');
 
-//which url protocols are allowed
+// Which url protocols are allowed
 $Html_AllowedProtocols = array('http', 'https', 'ftp', 'news', 'nntp', 'feed', 'gopher', 'mailto');
 
-//protocol to replace invalid protocols with
+// Protocol to replace invalid protocols with
 $Html_DefaultProtocol = 'http://';
 
-//END SETTINGS
+// END SETTINGS
 
 
-//unclosed or orphaned tags
+// Include required JavaScript for dynamic image resizing
+if (in_array($Context->SelfUrl, array('comments.php'))) {
+	$Head->AddScript('js/prototype.js');
+	$Head->AddScript('js/scriptaculous.js');
+	$Head->AddScript('extensions/HtmlFormatter/functions.js');
+}
+
+// Unclosed or orphaned tags
 $Html_TagArray = array();
 
-//entites and their equivelents
+// Entites and their equivelents
 $Html_EntityTable = array_flip(get_html_translation_table(HTML_ENTITIES));
 unset($Html_EntityTable['&amp;'], $Html_EntityTable['&lt;'], $Html_EntityTable['&gt;']);
 
@@ -110,19 +114,19 @@ class HtmlFormatter extends StringFormatter
 	var $FreestandingLoose = array('li', 'option', 'dt', 'dd', 'td', 'tfoot', 'th', 'tbody', 'thead', 'tr', 'colgroup');
 	var $Freestanding = array('area', 'base', 'basefont', 'br', 'col', 'frame', 'hr', 'img', 'input', 'isindex', 'link', 'meta', 'param');
 	var $TagArray;
-	
+
 	function HtmlFormatter()
 	{
 		$this->AllowedProtocols = &$GLOBALS['Html_AllowedProtocols'];
 		$this->DefaultProtocol = &$GLOBALS['Html_DefaultProtocol'];
 		$this->TagArray = &$GLOBALS['Html_TagArray'];
 	}
-	
+
 	function Execute($String)
 	{
 		$this->TagArray = array('normal' => array(), 'extraclosing' => array());
 		$String = str_replace(chr(0), ' ', $String);
-		
+
 		//comments
 		$String = preg_replace_callback(
 			'/<!--(.*?)(-->|$)/s', 
@@ -135,7 +139,7 @@ class HtmlFormatter extends StringFormatter
 			), 
 			$String
 		);
-		
+
 		//handle literals
 		$String = preg_replace_callback(
 			'/<('.implode('|', $GLOBALS['Html_Literals']).')((?>[^>A-Za-z\d][^>]*)|)>(.+?)<\/\1((?>[^>A-Za-z\d][^>]*)|)>/si', 
@@ -145,17 +149,17 @@ class HtmlFormatter extends StringFormatter
 			), 
 			$String
 		);
-		
+
 		//clean up any stray '<'
 		$String = preg_replace(
 			'/<(?![A-Za-z\/'.(HTML_ALLOW_COMMENTS?'!':'').'])/i', 
 			'&lt;', 
 			$String
 		);
-		
+
 		//go through and check attributes of each tag
 		$sReturn = preg_replace_callback('/<((?>[^>]+))(>|$)/', array($this, 'RemoveEvilAttribs'), $String);
-		
+
 		if(HTML_POLICE_TAGS)
 		{
 			$this->TagArray['normal'] = array_reverse($this->TagArray['normal'], 1);
@@ -164,14 +168,14 @@ class HtmlFormatter extends StringFormatter
 				if(in_array($i, $this->FreestandingLoose)) continue;
 				if($v > 0) $sReturn .= str_repeat('</'.$i.'>', $v);
 			}
-			
+
 			//now we manage orphaned closing tags
 			while(list($i, $v) = each($this->TagArray['extraclosing']))
 			{
 				if($v > 0) $sReturn = str_repeat('<'.$i.'>', $v) . $sReturn;
 			}
 		}
-		
+
 		if(HTML_VIDEO_TAG) 
 			$sReturn = preg_replace_callback(
 				'/<video(?>\s+)type=(["\'`])((?>\w+))\1(?>\s*)>((?>[A-Za-z\-_\d]+))<\/video>/is', 
@@ -187,6 +191,7 @@ class HtmlFormatter extends StringFormatter
 			);
 		
 		//return '<samp>'.nl2br(htmlspecialchars($sReturn)).'</samp>';
+		$sReturn = str_replace('img', 'img class="InlineImage"', $sReturn);
 		return $sReturn;
 	}
 	
@@ -325,11 +330,11 @@ class HtmlFormatter extends StringFormatter
 				$Attribs, 
 				PREG_SET_ORDER
 			);
-			
+
 			$Inside = '';
 			for($i = 0; $i < $c; $i++)
 				$Inside .= HtmlFormatter::HandleAttribute($Node, $Attribs[$i]);
-			
+
 			$sReturn = $Node.' '.$Inside;
 			if($Free) $sReturn .= '/';
 		}
