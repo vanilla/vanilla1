@@ -95,6 +95,8 @@
 		mysql_query("UPDATE `".$Context->Configuration['DATABASE_TABLE_PREFIX']."User` SET $Target = $Switch WHERE UserID = $UserID",$Context->Database->Connection);
 	}
 
+	/*
+	 * User Options
 	if (in_array($Context->SelfUrl, array('account.php'))) {
 		if (!@$UserManager) {
 			unset($UserManager);
@@ -104,6 +106,7 @@
 		if (!@$AccountUser) {
 			$AccountUser = $UserManager->GetUserById($AccountUserID);
 		}
+
 		if ($Context->Session->User) {
 			if (($AccountUser->UserID == $Context->Session->UserID OR $Context->Session->User->Permission("PERMISSION_EDIT_USERS")) AND $Context->Configuration['WHISPERFI_AUTO_ALL'] == 0) {
 				if (isset($_GET['u'])) {
@@ -121,8 +124,12 @@
 		}
 		$Head->AddStyleSheet('extensions/Whisperfi/style.css');
 	}
+	*/
 
+	/*
+	 * Admin Options
 	if ($Context->SelfUrl == "settings.php" && $Context->Session->User->Permission('PERMISSION_MANAGE_EXTENSIONS')) {
 		include('_includes/adminsettings.php');
 	}
+	*/
 ?>

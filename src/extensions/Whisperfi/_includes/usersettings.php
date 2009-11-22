@@ -26,7 +26,7 @@
 												$Active = 'checked="checked" ';
 											}
 											echo '
-											<p id="WhisperfiCont"'.$SubscribedEntireForum.$SubscribedComment.'>
+											<p id="WhisperfiCont">
 												<span>
 													<label for="WhisperfiField">
 														<input type="checkbox" value="1" id="WhisperfiField" '.$Active.' onclick="Whisperfi();" /> '.$this->Context->GetDefinition("WhisperfiUserPreference").'
