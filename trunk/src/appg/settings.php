@@ -57,6 +57,7 @@ $Configuration['THEME_PATH'] = '/path/to/vanilla/themes/vanilla/';
 $Configuration['BASE_URL'] = 'http://your.base.url/to/vanilla/';
 $Configuration['DEFAULT_STYLE'] = '/vanilla/themes/vanilla/styles/default/';
 $Configuration['WEB_ROOT'] = '/vanilla/';
+$Configuration['WEB_ROOT_MINIFY'] = 'vanilla';
 $Configuration['SIGNIN_URL'] = 'people.php';
 $Configuration['REGISTRATION_URL'] = 'people.php?PostBackAction=ApplyForm';
 $Configuration['SIGNOUT_URL'] = 'people.php?PostBackAction=SignOutNow';
