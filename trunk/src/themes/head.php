@@ -13,17 +13,58 @@ $HeadString = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://
 		}
 
 		if (is_array($this->StyleSheets)) {
+			$MinifyString = '';
+			$MinifyStringScreen = '';
+			$MinifyStringPrint = '';
+			$FirstLoop    = '';
+			$FirstLoopScreen    = '';
+			$FirstLoopPrint    = '';
 			while (list($Key, $StyleSheet) = each($this->StyleSheets)) {
-				$HeadString .= '
-				<link rel="stylesheet" type="text/css" href="'.$StyleSheet['Sheet'].'"'.($StyleSheet['Media'] == ''?'':' media="'.$StyleSheet['Media'].'"').' />';
+				if (empty($StyleSheet['Media'])) {
+					$MinifyString .= $FirstLoop.$StyleSheet['Sheet'];
+					$FirstLoop     = ",";
+				} elseif ($StyleSheet['Media'] == "screen") {
+					$MinifyStringScreen .= $FirstLoop.$StyleSheet['Sheet'];
+					$FirstLoopScreen     = ",";
+				} elseif ($StyleSheet['Media'] == "print") {
+					$MinifyStringPrint .= $FirstLoop.$StyleSheet['Sheet'];
+					$FirstLoopPrint     = ",";
+				}
+			}
+			if (!empty($MinifyString)) {
+				$WebRootWithoutSlashes = substr($this->Context->Configuration['WEB_ROOT'], 1);
+				$WebRootWithoutSlashes = substr($WebRootWithoutSlashes, 0, -1);
+				$MinifyString = str_replace($this->Context->Configuration['WEB_ROOT'],'',$MinifyString);
+				$HeadString .= '<link rel="stylesheet" type="text/css" href="'.$this->Context->Configuration['WEB_ROOT'].'min/b='.$WebRootWithoutSlashes.'&f='.$MinifyString.'" />';
+			}
+			if (!empty($MinifyStringScreen)) {
+				$WebRootWithoutSlashes = substr($this->Context->Configuration['WEB_ROOT'], 1);
+				$WebRootWithoutSlashes = substr($WebRootWithoutSlashes, 0, -1);
+				$MinifyStringScreen = str_replace($this->Context->Configuration['WEB_ROOT'],'',$MinifyStringScreen);
+				$HeadString .= '<link rel="stylesheet" type="text/css" href="'.$this->Context->Configuration['WEB_ROOT'].'min/b='.$WebRootWithoutSlashes.'&f='.$MinifyStringScreen.'" media="screen" />';
+			}
+			if (!empty($MinifyStringPrint)) {
+				$WebRootWithoutSlashes = substr($this->Context->Configuration['WEB_ROOT'], 1);
+				$WebRootWithoutSlashes = substr($WebRootWithoutSlashes, 0, -1);
+				$MinifyStringPrint = str_replace($this->Context->Configuration['WEB_ROOT'],'',$MinifyStringPrint);
+				$HeadString .= '<link rel="stylesheet" type="text/css" href="'.$this->Context->Configuration['WEB_ROOT'].'min/b='.$WebRootWithoutSlashes.'&f='.$MinifyStringPrint.'" media="print" />';
 			}
 		}
 		if (is_array($this->Scripts)) {
+			$MinifyString = '';
+			$FirstLoop    = '';
+
 			$ScriptCount = count($this->Scripts);
 			$i = 0;
 			for ($i = 0; $i < $ScriptCount; $i++) {
-				$HeadString .= '
-				<script type="text/javascript" src="'.$this->Scripts[$i].'"></script>';
+				$MinifyString .= $FirstLoop.$this->Scripts[$i];
+				$FirstLoop     = ",";
+			}
+			if ($MinifyString != '') {
+				$WebRootWithoutSlashes = substr($this->Context->Configuration['WEB_ROOT'], 1);
+				$WebRootWithoutSlashes = substr($WebRootWithoutSlashes, 0, -1);
+				$MinifyString = str_replace($this->Context->Configuration['WEB_ROOT'],'',$MinifyString);
+				$HeadString .= '<script type="text/javascript" src="'.$this->Context->Configuration['WEB_ROOT'].'min/b='.$WebRootWithoutSlashes.'&f='.$MinifyString.'"></script>';
 			}
 		}
 
