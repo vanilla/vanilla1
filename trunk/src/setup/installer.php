@@ -113,8 +113,12 @@ $WebRoot = dirname(ForceString(@$_SERVER['PHP_SELF'], ''));
 $WebRoot = substr($WebRoot, 0, strlen($WebRoot) - 5); // strips the "setup" off the end of the path.
 
 // Strip the slash from the start and end of $WebRoot to be used by Minify
-$WebRootMinify = substr($WebRoot, 1);
-$WebRootMinify = substr($WebRootMinify, 0, -1);
+if ($WebRoot != "/") {
+	$WebRootMinify = substr($WebRoot, 1);
+	$WebRootMinify = substr($WebRootMinify, 0, -1);
+} else {
+	$WebRootMinify = "";
+}
 
 $IsSecure = @$_SERVER["HTTPS"] || @$_SERVER['SERVER_PORT'] == 443;
 $HttpMethod = $IsSecure ? 'https' : 'http';
