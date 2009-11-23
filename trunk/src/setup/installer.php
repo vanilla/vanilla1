@@ -38,6 +38,7 @@ $Configuration['BASE_URL'] = '';
 $Configuration['HTTP_METHOD'] = '';
 $Configuration['DEFAULT_STYLE'] = '';
 $Configuration['WEB_ROOT'] = '';
+$Configuration['WEB_ROOT_MINIFY'] = '';
 $Configuration['COOKIE_DOMAIN'] = '-';
 $Configuration['COOKIE_PATH'] = '-';
 $Configuration['SUPPORT_EMAIL'] = '';
