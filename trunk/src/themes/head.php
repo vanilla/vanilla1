@@ -12,6 +12,14 @@ $HeadString = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://
 			<meta name="'.$Name.'" content="'.$Content.'" />';
 		}
 
+		// Prepare the base path to pass on to Minify
+		if ($this->Context->Configuration['WEB_ROOT_MINIFY'] == "/") {
+			$WebRootMinifyPrepend = '';
+		}
+		else {
+			$WebRootMinifyPrepend = 'b='.$this->Context->Configuration['WEB_ROOT_MINIFY'].'&';
+		}
+
 		if (is_array($this->StyleSheets)) {
 			$MinifyString = '';
 			$MinifyStringScreen = '';
@@ -30,13 +38,6 @@ $HeadString = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://
 					$MinifyStringPrint .= $FirstLoop.$StyleSheet['Sheet'];
 					$FirstLoopPrint     = ",";
 				}
-			}
-
-			if ($this->Context->Configuration['WEB_ROOT_MINIFY'] == "/") {
-				$WebRootMinifyPrepend = '';
-			}
-			else {
-				$WebRootMinifyPrepend = 'b='.$this->Context->Configuration['WEB_ROOT_MINIFY'].'&';
 			}
 
 			if (!empty($MinifyString)) {
@@ -68,11 +69,11 @@ $HeadString = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://
 				$MinifyString .= $FirstLoop.$this->Scripts[$i];
 				$FirstLoop     = ",";
 			}
-			if ($MinifyString != '') {
-				$WebRootWithoutSlashes = substr($this->Context->Configuration['WEB_ROOT'], 1);
-				$WebRootWithoutSlashes = substr($WebRootWithoutSlashes, 0, -1);
-				$MinifyString = str_replace($this->Context->Configuration['WEB_ROOT'],'',$MinifyString);
-				$HeadString .= '<script type="text/javascript" src="'.$this->Context->Configuration['WEB_ROOT'].'min/b='.$WebRootWithoutSlashes.'&f='.$MinifyString.'"></script>';
+			if (!empty($MinifyString)) {
+				if ($this->Context->Configuration['WEB_ROOT'] != "/") {
+					$MinifyString = str_replace($this->Context->Configuration['WEB_ROOT'],'',$MinifyString);
+				}
+				$HeadString .= '<script type="text/javascript" src="'.$this->Context->Configuration['WEB_ROOT'].'min/'.$WebRootMinifyPrepend.'f='.$MinifyString.'"></script>';
 			}
 		}
 
