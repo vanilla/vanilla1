@@ -118,7 +118,7 @@ if ($WebRoot != "/") {
 	$WebRootMinify = substr($WebRoot, 1);
 	$WebRootMinify = substr($WebRootMinify, 0, -1);
 } else {
-	$WebRootMinify = "";
+	$WebRootMinify = "/";
 }
 
 $IsSecure = @$_SERVER["HTTPS"] || @$_SERVER['SERVER_PORT'] == 443;

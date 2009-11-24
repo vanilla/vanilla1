@@ -31,23 +31,31 @@ $HeadString = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://
 					$FirstLoopPrint     = ",";
 				}
 			}
+
+			if ($this->Context->Configuration['WEB_ROOT_MINIFY'] == "/") {
+				$WebRootMinifyPrepend = '';
+			}
+			else {
+				$WebRootMinifyPrepend = 'b='.$this->Context->Configuration['WEB_ROOT_MINIFY'].'&';
+			}
+
 			if (!empty($MinifyString)) {
 				if ($this->Context->Configuration['WEB_ROOT'] != "/") {
 					$MinifyString = str_replace($this->Context->Configuration['WEB_ROOT'],'',$MinifyString);
 				}
-				$HeadString .= '<link rel="stylesheet" type="text/css" href="'.$this->Context->Configuration['WEB_ROOT'].'min/b='.$this->Context->Configuration['WEB_ROOT_MINIFY'].'&f='.$MinifyString.'" />';
+				$HeadString .= '<link rel="stylesheet" type="text/css" href="'.$this->Context->Configuration['WEB_ROOT'].'min/'.$WebRootMinifyPrepend.'f='.$MinifyString.'" />';
 			}
 			if (!empty($MinifyStringScreen)) {
 				if ($this->Context->Configuration['WEB_ROOT'] != "/") {
 					$MinifyStringScreen = str_replace($this->Context->Configuration['WEB_ROOT'],'',$MinifyStringScreen);
 				}
-				$HeadString .= '<link rel="stylesheet" type="text/css" href="'.$this->Context->Configuration['WEB_ROOT'].'min/b='.$this->Context->Configuration['WEB_ROOT_MINIFY'].'&f='.$MinifyStringScreen.'" media="screen" />';
+				$HeadString .= '<link rel="stylesheet" type="text/css" href="'.$this->Context->Configuration['WEB_ROOT'].'min/'.$WebRootMinifyPrepend.'f='.$MinifyStringScreen.'" media="screen" />';
 			}
 			if (!empty($MinifyStringPrint)) {
 				if ($this->Context->Configuration['WEB_ROOT'] != "/") {
 					$MinifyStringPrint = str_replace($this->Context->Configuration['WEB_ROOT'],'',$MinifyStringPrint);
 				}
-				$HeadString .= '<link rel="stylesheet" type="text/css" href="'.$this->Context->Configuration['WEB_ROOT'].'min/b='.$this->Context->Configuration['WEB_ROOT_MINIFY'].'&f='.$MinifyStringPrint.'" media="print" />';
+				$HeadString .= '<link rel="stylesheet" type="text/css" href="'.$this->Context->Configuration['WEB_ROOT'].'min/'.$WebRootMinifyPrepend.'f='.$MinifyStringPrint.'" media="print" />';
 			}
 		}
 		if (is_array($this->Scripts)) {
