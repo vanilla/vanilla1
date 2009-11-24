@@ -32,15 +32,21 @@ $HeadString = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://
 				}
 			}
 			if (!empty($MinifyString)) {
-				$MinifyString = str_replace($this->Context->Configuration['WEB_ROOT'],'',$MinifyString);
+				if ($this->Context->Configuration['WEB_ROOT'] != "/") {
+					$MinifyString = str_replace($this->Context->Configuration['WEB_ROOT'],'',$MinifyString);
+				}
 				$HeadString .= '<link rel="stylesheet" type="text/css" href="'.$this->Context->Configuration['WEB_ROOT'].'min/b='.$this->Context->Configuration['WEB_ROOT_MINIFY'].'&f='.$MinifyString.'" />';
 			}
 			if (!empty($MinifyStringScreen)) {
-				$MinifyStringScreen = str_replace($this->Context->Configuration['WEB_ROOT'],'',$MinifyStringScreen);
+				if ($this->Context->Configuration['WEB_ROOT'] != "/") {
+					$MinifyStringScreen = str_replace($this->Context->Configuration['WEB_ROOT'],'',$MinifyStringScreen);
+				}
 				$HeadString .= '<link rel="stylesheet" type="text/css" href="'.$this->Context->Configuration['WEB_ROOT'].'min/b='.$this->Context->Configuration['WEB_ROOT_MINIFY'].'&f='.$MinifyStringScreen.'" media="screen" />';
 			}
 			if (!empty($MinifyStringPrint)) {
-				$MinifyStringPrint = str_replace($this->Context->Configuration['WEB_ROOT'],'',$MinifyStringPrint);
+				if ($this->Context->Configuration['WEB_ROOT'] != "/") {
+					$MinifyStringPrint = str_replace($this->Context->Configuration['WEB_ROOT'],'',$MinifyStringPrint);
+				}
 				$HeadString .= '<link rel="stylesheet" type="text/css" href="'.$this->Context->Configuration['WEB_ROOT'].'min/b='.$this->Context->Configuration['WEB_ROOT_MINIFY'].'&f='.$MinifyStringPrint.'" media="print" />';
 			}
 		}
