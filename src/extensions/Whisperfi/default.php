@@ -3,7 +3,7 @@
 	Extension Name: Whisperfi
 	Extension Url: subjunk@gmail.com
 	Description: An extension that displays a notification at the top of the Discussions page when a user has received a whisper.
-	Version: 1.1
+	Version: 1.1.1
 	Author: Klaus Burton
 	Author Url: http://www.redskiesdesign.com/
 	*/
@@ -22,8 +22,8 @@
 				// Mark whispers in this discussion as read
 				$DiscussionID = ForceIncomingInt("DiscussionID", "0");
 				mysql_query("
-					UPDATE Vanilla_Comment AS Comment
-					LEFT JOIN Vanilla_Discussion as Discussion
+					UPDATE ".$Context->Configuration['DATABASE_TABLE_PREFIX']."Comment AS Comment
+					LEFT JOIN ".$Context->Configuration['DATABASE_TABLE_PREFIX']."Discussion as Discussion
 					ON Comment.DiscussionID = Discussion.DiscussionID
 					SET Comment.WhisperRead = 1
 					WHERE Comment.WhisperRead = '0' AND Discussion.DiscussionID = '".$DiscussionID."' AND (Discussion.WhisperUserID = '".$Context->Session->UserID."') OR (Comment.WhisperUserID = '".$Context->Session->UserID."')
