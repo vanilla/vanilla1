@@ -1488,10 +1488,10 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
 	margin:10px;
 	}
 .WhisperFrom {
-	background-color:#fefceb;
+	background-color:#fef8c9;
 	}
 .WhisperTo {
-	background-color:#feebfa;
+	background-color:#fcd3f3;
 	}
 .left {
 	float:left;
