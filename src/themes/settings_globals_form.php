@@ -45,9 +45,13 @@ echo '<div id="Form" class="Account GlobalsForm">';
 				$Selector->Name = 'DISCUSSIONS_PER_PAGE';
 				$Selector->Attributes = ' id="ddDiscussionsPerPage"';
 				$i = 10;
-				while ($i < 101) {
+				while ($i < 20) {
 					$Selector->AddOption($i, $i);
-					$i += 10;
+					$i += 1;
+				}
+				while ($i < 51) {
+					$Selector->AddOption($i, $i);
+					$i += 5;
 				}
 				$Selector->SelectedValue = $this->ConfigurationManager->GetSetting('DISCUSSIONS_PER_PAGE');
 				echo $Selector->Get().'
