@@ -38,7 +38,6 @@ $Configuration['BASE_URL'] = '';
 $Configuration['HTTP_METHOD'] = '';
 $Configuration['DEFAULT_STYLE'] = '';
 $Configuration['WEB_ROOT'] = '';
-$Configuration['WEB_ROOT_MINIFY'] = '';
 $Configuration['COOKIE_DOMAIN'] = '-';
 $Configuration['COOKIE_PATH'] = '-';
 $Configuration['SUPPORT_EMAIL'] = '';
@@ -112,15 +111,6 @@ $WorkingDirectory = str_replace('\\', '/', getcwd()).'/';
 $RootDirectory = str_replace('setup/', '', $WorkingDirectory);
 $WebRoot = dirname(ForceString(@$_SERVER['PHP_SELF'], ''));
 $WebRoot = substr($WebRoot, 0, strlen($WebRoot) - 5); // strips the "setup" off the end of the path.
-
-// Strip the slash from the start and end of $WebRoot to be used by Minify
-if ($WebRoot != "/") {
-	$WebRootMinify = substr($WebRoot, 1);
-	$WebRootMinify = substr($WebRootMinify, 0, -1);
-} else {
-	$WebRootMinify = "/";
-}
-
 $IsSecure = @$_SERVER["HTTPS"] || @$_SERVER['SERVER_PORT'] == 443;
 $HttpMethod = $IsSecure ? 'https' : 'http';
 $BaseUrl = $HttpMethod . '://' . ForceString(@$_SERVER['HTTP_HOST'], '').$WebRoot;
@@ -185,11 +175,9 @@ if ($PostBackAction == 'Permissions') {
 		$Contents = '<?php
 // Make sure this file was not accessed directly and prevent register_globals configuration array attack
 if (!defined(\'IN_VANILLA\')) exit();
-// Enabled Extensions
-';
+// Enabled Extensions\n';
 		if (file_exists($RootDirectory.'extensions/Whisperfi/default.php')) {
-			$Contents .= 'include($Configuration[\'EXTENSIONS_PATH\']."Whisperfi/default.php");
-';
+			$Contents .= 'include($Configuration[\'EXTENSIONS_PATH\']."Whisperfi/default.php");\n';
 		}
 		$Contents .= '?>';
 		CreateFile($RootDirectory.'conf/extensions.php', $Contents, $Context);
@@ -338,7 +326,6 @@ if (!defined(\'IN_VANILLA\')) exit();
 			$SettingsManager->DefineSetting('THEME_PATH', $RootDirectory . 'themes/vanilla/', 1);
 			$SettingsManager->DefineSetting('DEFAULT_STYLE', $ThemeDirectory.'vanilla/styles/default/', 1);
 			$SettingsManager->DefineSetting('WEB_ROOT', $WebRoot, 1);
-			$SettingsManager->DefineSetting('WEB_ROOT_MINIFY', $WebRootMinify, 1);
 			$SettingsManager->DefineSetting('BASE_URL', $BaseUrl, 1);
 			$SettingsManager->DefineSetting('HTTP_METHOD', $HttpMethod, 1);
 			$SettingsManager->DefineSetting('FORWARD_VALIDATED_USER_URL', $BaseUrl, 1);
