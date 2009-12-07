@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Nov 27, 2009 12:14:09 PM                                                        
+
+     Minify  
+     Package the Minify extension
+                                                                   
+     ====================================================================== -->
+<project name="Minify" default="build">
+    
+	<description>
+            Package the Minify extension
+    </description>
+	
+	<property name="antlib.dir" location="../../../tools/ant-library/"/>
+	<import file="${antlib.dir}/extension.xml"/>
+	
+</project>
