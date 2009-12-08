@@ -7,7 +7,7 @@
 
      requires:
 		- JDK 1.5+
-		- Ant 1.7.1
+		- Ant 1.7
 
      Damien Lebrun
      ====================================================================== -->
@@ -73,6 +73,16 @@
     		<include name="**/*.js"/>
     		<include name="**/*.css"/>
     	</patternset>
+    	
+    	<patternset id="src.binary.patterns">
+    		<include name="**/**"/>
+    		<exclude name="**/*.php"/>
+    		<exclude name="**/*.html"/>
+    		<exclude name="**/*.htm"/>
+    		<exclude name="**/*.txt"/>
+    		<exclude name="**/*.js"/>
+    		<exclude name="**/*.css"/>
+    	</patternset>
  
     	
     	<!-- binary file could be corrupted if filtered, so we copy them separatly -->
@@ -80,9 +90,7 @@
 		
     	<copy todir="${build.app.dir}" verbose="true" encoding="UTF-8" outputencoding="UTF-8">
         	<fileset dir="${src.dir}" id="src.binary.fileset" >
-        		<patternset>
-        			<invert refid="src.tofilter.patterns"/>
-        		</patternset>
+        		<patternset refid="src.binary.patterns"/>
         		<patternset refid="src.exclude.patterns"/>
         	</fileset>
 		</copy>
