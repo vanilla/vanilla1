@@ -24,10 +24,20 @@
 		name="tools.compress.ant"
 		location="${antlib.dir}/yuicompressor-2.4.4-dev-ant-fork.jar"/>
 	
+	<!-- Update default exclude patterns -->
+	<defaultexcludes add="**/.git"/>
+	<defaultexcludes add="**/.git/**"/>
+	<defaultexcludes add="**/.hg"/>
+	<defaultexcludes add="**/.hg/**"/>
+	<defaultexcludes add="**/thumbs.db"/>
+	<defaultexcludes add="**/__MACOSX"/>
+	
 	<fileset dir="${src.dir}" id="src.fileset">
 		<include name="**/*.php"/>
 		<include name="**/*.tpl"/>
-		<include name="**/*.x?html?"/>
+		<include name="**/*.htm"/>
+		<include name="**/*.html"/>
+		<include name="**/*.xhtml"/>
 		<include name="**/.ht*"/>
 		<include name="**/*.css"/>
 		<include name="**/*.txt"/>
@@ -38,13 +48,13 @@
 		<include name="**/*.ico"/>
 		<include name="**/*.gif"/>
 		<include name="**/*.jpe?g"/>
+		<include name="**/*.jpg"/>
 		<include name="**/*.xml"/>
 		<include name="**/*.swf"/>
 		<include name="**/*.sql"/>
 		<include name="**/*.ini"/>
 		<include name="**/*.mp3"/>
 		<include name="**/*.gz"/>
-		<exclude name=".git/**"/>
 		<exclude name="build/**"/>
 		<exclude name="dist/**"/>
 		<exclude name="build.xml"/>
@@ -99,13 +109,21 @@
     </target>
 	
 	<!-- - - - - - - - - - - - - - - - - - 
-          target: compress                      
+          target: init.tasks                      
          - - - - - - - - - - - - - - - - - -->
-    <target name="compress" if="compressors.available">
-    	<echo>Compressing js and css files...</echo>
+    <target name="init.tasks" unless="task.compressor.defined">
     	<taskdef
     		resource="com/yahoo/platform/yui/compressor/ant/antlib.xml"
     	    classpath="${tools.compress.ant}"/>
+    </target>
+
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: compress                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="compress" depends="init.tasks" if="compressors.available">
+    	<echo>Compressing js and css files...</echo>
+    	
     	<jscompressor>
     		<fileset refid="build.js.fileset"/>
     	</jscompressor>
@@ -140,7 +158,7 @@
          - - - - - - - - - - - - - - - - - -->
     <target name="clean"  if="build.run">
     	<echo>Cleaning "build" directory...</echo>
-    	<delete dir="${zip.target}"/>
+    	<delete dir="${zip.target}" verbose="true"/>
     </target>
 
 
