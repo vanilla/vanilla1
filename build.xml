@@ -7,58 +7,96 @@
 
      requires:
 		- JDK 1.5+
-		- Ant 1.7
+		- Ant 1.7.1
 
      Damien Lebrun
      ====================================================================== -->
-<project name="Vanilla Forum" default="build">
+<project name="Vanilla Forum" default="dist">
     <description>
             Build the vanilla package
     </description>
-
+	
+	<!-- Properties -->
 	<loadproperties srcfile="build.properties"/>
+	
+	<!-- Add additional ant types and task -->
 	<path id="project.classpath">
-		<fileset dir="${tools.ant.dir}">
+		<fileset dir="${tools.antlib.dir}">
 			<include name="**/*.jar"/>
 		</fileset>
 	</path>
+	
 	<typedef resource="org/tigris/subversion/svnant/svnantlib.xml" classpathref="project.classpath"/>
 	<typedef resource="com/yahoo/platform/yui/compressor/ant/antlib.xml" classpathref="project.classpath"/>
+	
+	<macrodef name="buildExtension">
+		<attribute name="name"/>
+		<attribute name="target" default="dist"/>
+		<sequential>
+			<echo>Building @{name}...</echo>
+	    	<ant inheritall="false" antfile="${src.extension.dir}/@{name}/build.xml" target="@{target}">
+	    		<property name="build.dir" location="${build.extension.dir}"/>
+	    		<property name="dist.dir" location="${dist.dir}"/>
+	    		<property name="package.name" value="@{name}"/>
+	    		<property name="task.compressor.defined" value="true"/>
+	    	</ant>
+		</sequential>
+	</macrodef>
+	
+	<!-- Update default exclude patterns -->
+	<defaultexcludes add="**/.git"/>
+	<defaultexcludes add="**/.git/**"/>
+	<defaultexcludes add="**/.hg"/>
+	<defaultexcludes add="**/.hg/**"/>
+	<defaultexcludes add="**/thumbs.db"/>
+	<defaultexcludes add="**/__MACOSX"/>
 
+	
     <!-- =================================
           target: build
          ================================= -->
     <target name="build" depends="prepare" description="--> Build the vanilla package">
 
+    	
+    	<!-- File patterns -->
+    	
+    	<patternset id="src.exclude.patterns">
+    		<exclude name="conf/*.php"/>
+    		<exclude name="extensions/**"/>
+    	</patternset>
+    	
+    	<patternset id="src.tofilter.patterns">
+    		<include name="**/*.php"/>
+    		<include name="**/*.html"/>
+    		<include name="**/*.htm"/>
+    		<include name="**/*.txt"/>
+    		<include name="**/*.js"/>
+    		<include name="**/*.css"/>
+    	</patternset>
+ 
+    	
     	<!-- binary file could be corrupted if filtered, so we copy them separatly -->
-		<echo message="${line.separator}Copy files which do not need any processing..."/>
-		<copy todir="${build.app.dir}" verbose="true" encoding="UTF-8" outputencoding="UTF-8">
-			<fileset dir="${src.dir}">
-				<exclude name="**/*.php"/>
-				<exclude name="**/*.html"/>
-				<exclude name="${js.dir}*.js"/>
-				<exclude name="${js.dir}/test/**"/>
-				<exclude name="${css.dir}*.css"/>
-				<exclude name="conf/*.php"/>
-				<exclude name="extension/**"/>
-				<exclude name="**/.svn/**"/>
-				<exclude name="**/thumbs.db"/>
-				<exclude name="**/.DS_STORE"/>
-				<exclude name="**/__MACOSX"/>
-			</fileset>
+		<echo>Copying binary files...</echo>
+		
+    	<copy todir="${build.app.dir}" verbose="true" encoding="UTF-8" outputencoding="UTF-8">
+        	<fileset dir="${src.dir}" id="src.binary.fileset" >
+        		<patternset>
+        			<invert refid="src.tofilter.patterns"/>
+        		</patternset>
+        		<patternset refid="src.exclude.patterns"/>
+        	</fileset>
 		</copy>
 
+    	
     	<!-- Filter php and html files for the version number -->
-		<echo message="${line.separator}Copy php and html files, replacing version number..."/>
-		<copy todir="${build.app.dir}" verbose="true"  encoding="UTF-8" outputencoding="UTF-8">
-			<fileset dir="${src.dir}">
-				<exclude name="${js.dir}/test/**"/>
-				<include name="**/*.php"/>
-				<include name="**/*.html"/>
-				<exclude name="conf/*.php"/>
-				<exclude name="extension/**"/>
-				<exclude name="**/thumbs.db"/>
-			</fileset>
+		<echo>Copying text files, with token filtering...</echo>
+    	<echo>Tokens: @@VANILLA-VERSION@@, @@FRAMEWORK-VERSION@@ and @@PEOPLE-VERSION@@</echo>
+		
+    	<copy todir="${build.app.dir}" verbose="true"  encoding="UTF-8" outputencoding="UTF-8">
+    		<fileset dir="${src.dir}" id="src.tofilter.fileset">
+	    		<patternset refid="src.tofilter.patterns"/>
+	    		<patternset refid="src.exclude.patterns"/>
+	    	</fileset>
 			<filterset begintoken="@@" endtoken="@@">
 				<filter token="VANILLA-VERSION" value="${app.version}"/>
 				<filter token="FRAMEWORK-VERSION" value="${framework.version}"/>
@@ -66,54 +104,78 @@
 			</filterset>
 		</copy>
 
+    	
 		<!--	Compress js files with Julien Lecomte's YUI Compressor.
 				(copy the source file to js/src/) -->
-		<echo message="${line.separator}Compress js files..."/>
-		
-    	<fileset dir="${src.js.dir}" id="src.js.filset">
-			<include name="**/*.js"/>
-			<exclude name="test/**"/>
-		</fileset>
+		<echo message="Compressing js files..."/>
     	
-    	<jscompressor destdir="${build.js.dir}">
-    		<fileset refid="src.js.filset"/>
+    	<fileset dir="${build.js.dir}" id="build.js.fileset">
+    		<include name="**/*.js"/>
+    		<exclude name="src/**"/>
+    		<patternset refid="src.exclude.patterns"/>
+    	</fileset>
+
+    	<mkdir dir="${build.js.dir}src"/>
+		<copy todir="${build.js.dir}src">
+			<fileset refid="build.js.fileset"/>
+		</copy>
+    	
+    	<jscompressor>
+    		<fileset refid="build.js.fileset"/>
     	</jscompressor>
 
-		<mkdir dir="${build.js.dir}src"/>
-		<copy todir="${build.js.dir}src">
-			<fileset refid="src.js.filset"/>
-		</copy>
     	
 
 		<!--	Compress css files with Julien Lecomte's YUI Compressor
 				(copy the original files to themes/vanilla/styles/default/src/) -->
-		<echo message="${line.separator}Compress css files..."/>
+		<echo message="Compressing css files..."/>
     	
-    	<fileset dir="${src.css.dir}" id="src.css.fileset">
+    	<fileset dir="${build.css.dir}" id="build.css.fileset">
     		<include name="**/*.css"/>
+    		<exclude name="src/**"/>
+    		<patternset refid="src.exclude.patterns"/>
     	</fileset>
-    	
-    	<csscompressor destdir="${build.css.dir}">
-    		<fileset refid="src.css.fileset"/>
-    	</csscompressor>
-    	
+
 		<mkdir dir="${build.css.dir}src"/>
 		<copy todir="${build.css.dir}src">
-			<fileset refid="src.css.fileset"/>
+			<fileset refid="build.css.fileset"/>
 		</copy>
     	
-
+    	<csscompressor>
+    		<fileset refid="build.css.fileset"/>
+    	</csscompressor>
+    	
+    	<!-- Build extensions -->
+		<buildExtension name="HtmlFormatter"/>
+    	<buildExtension name="Minify"/>
+    	<buildExtension name="Notifi"/>
+    	<buildExtension name="Whisperfi"/>
+    	
+    </target>
+	
+	<!-- ================================= 
+          target: dist              
+         ================================= -->
+    <target name="dist" depends="build" description="description">
     	<!-- Create the zip archive -->
     	<echo>Create archive....</echo>
-    	<zip basedir="${build.dir}" destfile="${dist.dir}${dist.name}.zip" excludes="**/js/test, **/js/test/**"/>
-
+    	
+    	<zip basedir="${build.dir}"
+    		destfile="${dist.dir}${dist.name}.zip"
+    		excludes="**/js/test/**"/>
+    	
+    	<zip basedir="${build.dir}"
+    		destfile="${dist.dir}${dist.core.name}.zip"
+    		excludes="**/js/test/**,**/extensions/?*/**"/>
+    		
     </target>
+
 
 	<!-- =================================
           target: update
          ================================= -->
     <target name="update" description="--> Update the working copy">
-    	<echo>Update working copy...</echo>
+    	<echo>Updating working copy...</echo>
     	<svn>
     		<update dir="./"/>
     	</svn>
@@ -124,7 +186,7 @@
           target: clean
          - - - - - - - - - - - - - - - - - -->
     <target name="clean">
-    	<echo>Delete content of ${build.dir} and ${dist.dir}...</echo>
+    	<echo>Deleting content of ${build.dir} and ${dist.dir}...</echo>
 		<delete includeemptydirs="true">
 			<fileset dir="${build.dir}" includes="**/*"/>
 			<fileset dir="${dist.dir}" includes="**/*"/>
@@ -135,7 +197,7 @@
           target: getAppDetails
          - - - - - - - - - - - - - - - - - -->
     <target name="getAppDetails">
-		<echo>Get application names and versions...</echo>
+		<echo>Getting application names and versions...</echo>
 		<loadproperties srcfile="${src.dir}appg/version.php">
 			<filterchain>
 				<containsregex pattern="define.*'(.+)_(.+)'.*'([-\w\.]+)'.*" replace="\1.\2 = \3"/>
@@ -154,11 +216,15 @@
          - - - - - - - - - - - - - - - - - -->
     <target name="prepare" depends="clean,getAppDetails">
     	<property name="dist.name" value="${app.name}-${app.version}"/>
+    	<property name="dist.core.name" value="${app.name}-core-${app.version}"/>
+    	
     	<property name="build.app.dir" value="${build.dir}${dist.name}/"/>
+    	<property name="build.extension.dir" value="${build.dir}${dist.name}/extensions/"/>
     	<property name="build.js.dir" value="${build.app.dir}${js.dir}"/>
     	<property name="build.css.dir" value="${build.app.dir}${css.dir}"/>
 
 		<mkdir dir="${build.app.dir}"/>
     </target>
+
 
 </project>
