@@ -206,17 +206,22 @@
          - - - - - - - - - - - - - - - - - -->
     <target name="getAppDetails">
 		<echo>Getting application names and versions...</echo>
-		<loadproperties srcfile="${src.dir}appg/version.php">
+		
+    	<loadproperties srcfile="${src.dir}appg/version.php">
 			<filterchain>
 				<containsregex pattern="define.*'(.+)_(.+)'.*'([-\w\.]+)'.*" replace="\1.\2 = \3"/>
 			</filterchain>
 		</loadproperties>
-		<property name="app.version"		value="${APPLICATION.VERSION}"/>
-		<property name="framework.version"		value="${FRAMEWORK.VERSION}"/>
-		<property name="people.version"			value="${PEOPLE.VERSION}"/>
-		<echo>Vanilla version ${app.version}</echo>
-		<echo>People version ${people.version}</echo>
-		<echo>Framework version ${framework.version}</echo>
+    	<property name="app.version"		value="${APPLICATION.VERSION}"/>
+    	
+		<loadproperties srcfile="${src.dir}appg/version.php">
+			<filterchain>
+				<containsregex pattern="^.*Previous_(\w+)_version:\s*([-\w\.]+)\s*$" replace="\1.old_version = \2"/>
+			</filterchain>
+		</loadproperties>
+    	<property name="app.old_version"	value="${vanilla.old_version}"/>
+    	
+    	<echo>Vanilla version ${app.version} - last version: ${app.old_version}</echo>
     </target>
 
 	<!-- - - - - - - - - - - - - - - - - -
