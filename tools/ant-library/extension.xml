@@ -8,10 +8,10 @@
      author                                                                
      ====================================================================== -->
 <project name="project" default="build">
-    <description>
+	<description>
             description
     </description>
-	
+
 	<!-- Properties -->
 	<property name="src.dir" location="./"/>
 	<property name="build.dir" location="./build/"/>
@@ -23,7 +23,7 @@
 	<property
 		name="tools.compress.ant"
 		location="${antlib.dir}/yuicompressor-2.4.4-dev-ant-fork.jar"/>
-	
+
 	<!-- Update default exclude patterns -->
 	<defaultexcludes add="**/.git"/>
 	<defaultexcludes add="**/.git/**"/>
@@ -31,7 +31,7 @@
 	<defaultexcludes add="**/.hg/**"/>
 	<defaultexcludes add="**/thumbs.db"/>
 	<defaultexcludes add="**/__MACOSX"/>
-	
+
 	<fileset dir="${src.dir}" id="src.fileset">
 		<include name="**/*.php"/>
 		<include name="**/*.tpl"/>
@@ -60,106 +60,107 @@
 		<exclude name="build.xml"/>
 		<exclude name="build.properties"/>
 	</fileset>
-	
+
 	<fileset dir="${zip.target}" id="build.js.fileset">
-    	<include name="**/*.js"/>
-    	<exclude name="**/*-min.js"/>
+		<include name="**/*.js"/>
+		<exclude name="**/*-min.js"/>
 		<exclude name="**/*-debug.js"/>
 	</fileset>
 
 	<fileset dir="${zip.target}" id="build.css.fileset">
-    	<include name="**/*.css"/>
-    	<exclude name="**/*-min.css"/>
+		<include name="**/*.css"/>
+		<exclude name="**/*-min.css"/>
 		<exclude name="**/*-debug.css"/>
 	</fileset>
 
-    <!-- ================================= 
+	<!-- ================================= 
           target: default    
          ================================= -->
-    <target name="build" depends="prepare" description="description" >
-    	<echo>Building ${package.name}...</echo>
-        <copy todir="${zip.target}">
-        	<fileset refid="src.fileset"/>
-        </copy>
-    	<antcall target="compress"></antcall>
-    </target>
+	<target name="build" depends="prepare" description="description" >
+		<echo>Building ${package.name}...</echo>
+		<copy todir="${zip.target}">
+			<fileset refid="src.fileset"/>
+		</copy>
+		<antcall target="compress">
+		</antcall>
+	</target>
 
-	
+
 	<!-- ================================= 
           target: dist              
          ================================= -->
-    <target name="dist" depends="build" description="description">
-    	<echo>Creating ${package.name}-${package.version}'s package...</echo>
-    	<zip basedir="${build.dir}"
+	<target name="dist" depends="build" description="description">
+		<echo>Creating ${package.name}-${package.version}'s package...</echo>
+		<zip basedir="${build.dir}"
     		destfile="${dist.dir}/${package.name}-${package.version}.zip"
     		includes="${package.name}/**"/>
-    </target>
+	</target>
 
-	
+
 	<!-- - - - - - - - - - - - - - - - - - 
           target: init                      
          - - - - - - - - - - - - - - - - - -->
-    <target name="init">
-    	<condition property="build.run">
-    		<not>
-    			<equals arg1="${package.name}" arg2="project"/>
-    		</not>
-    	</condition>
-    	<available property="compressors.available" file="${tools.compress.ant}"/>
-    </target>
-	
+	<target name="init">
+		<condition property="build.run">
+			<not>
+				<equals arg1="${package.name}" arg2="project"/>
+			</not>
+		</condition>
+		<available property="compressors.available" file="${tools.compress.ant}"/>
+	</target>
+
 	<!-- - - - - - - - - - - - - - - - - - 
           target: init.tasks                      
          - - - - - - - - - - - - - - - - - -->
-    <target name="init.tasks" unless="task.compressor.defined">
-    	<taskdef
+	<target name="init.tasks" unless="task.compressor.defined">
+		<taskdef
     		resource="com/yahoo/platform/yui/compressor/ant/antlib.xml"
     	    classpath="${tools.compress.ant}"/>
-    </target>
+	</target>
 
-	
+
 	<!-- - - - - - - - - - - - - - - - - - 
           target: compress                      
          - - - - - - - - - - - - - - - - - -->
-    <target name="compress" depends="init.tasks" if="compressors.available">
-    	<echo>Compressing js and css files...</echo>
-    	
-    	<jscompressor>
-    		<fileset refid="build.js.fileset"/>
-    	</jscompressor>
-    	<csscompressor>
-    		<fileset refid="build.css.fileset"/>
-    	</csscompressor>
-    </target>
+	<target name="compress" depends="init.tasks" if="compressors.available">
+		<echo>Compressing js and css files...</echo>
+
+		<jscompressor>
+			<fileset refid="build.js.fileset"/>
+		</jscompressor>
+		<csscompressor>
+			<fileset refid="build.css.fileset"/>
+		</csscompressor>
+	</target>
 
 	<!-- - - - - - - - - - - - - - - - - - 
           target: getVersion                      
          - - - - - - - - - - - - - - - - - -->
-    <target name="getVersion" unless="package.version">
-    	<echo>Gettings extension version...</echo>
-    	<loadproperties srcfile="${src.dir}/default.php">
+	<target name="getVersion" unless="package.version">
+		<echo>Gettings extension version...</echo>
+		<loadproperties srcfile="${src.dir}/default.php">
 			<filterchain>
 				<containsregex pattern="\s*Version\:\s*(.*)" replace="package.version = \1"/>
 			</filterchain>
 		</loadproperties>
-    </target>
+	</target>
 
-    <!-- - - - - - - - - - - - - - - - - - 
+	<!-- - - - - - - - - - - - - - - - - - 
           target: prepare                      
          - - - - - - - - - - - - - - - - - -->
-    <target name="prepare" depends="init,clean,getVersion" if="build.run">
+	<target name="prepare" depends="init,clean,getVersion" if="build.run">
 		<echo>Creating "build" and "dist" directories...</echo>
-    	<mkdir dir="${zip.target}"/>
-    	<mkdir dir="${dist.dir}"/>
-    </target>
-	
+		<mkdir dir="${zip.target}"/>
+		<mkdir dir="${dist.dir}"/>
+	</target>
+
 	<!-- - - - - - - - - - - - - - - - - - 
           target: clean                      
          - - - - - - - - - - - - - - - - - -->
-    <target name="clean"  if="build.run">
-    	<echo>Cleaning "build" directory...</echo>
-    	<delete dir="${zip.target}" verbose="true"/>
-    </target>
+	<target name="clean"  if="build.run">
+		<echo>Cleaning "build" directory...</echo>
+		<delete dir="${zip.target}" verbose="true"/>
+	</target>
 
 
 </project>
