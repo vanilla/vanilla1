@@ -1,7 +1,8 @@
 function SetWhisperfi(Type,ElementID,Value,Elem,Class,NewText) {
 	var pathFinder, root, ajax;
 	pathFinder = new PathFinder();
-	root = pathFinder.getRootPath('script', 'src', 'extensions/Whisperfi/functions.js') || pathFinder.getRootPath('script', 'src', /extensions\/LowCalVanilla\/packer\.php.*$/) || '';
+	root = pathFinder.getRootPath('link', 'href', 'themes/vanilla/styles/default/favicon.ico') ||
+		pathFinder.getRootPath('script', 'src', 'extensions/Whisperfi/functions.js') || '';
 	ajax = new Ajax.Request( root + 'extensions/Whisperfi/ajax.php', {
 		parameters:'PostBackAction=ChangeWhisperfi&Type='+Type+'&ElementID='+ElementID+'&Value='+Value,
 		onSuccess: function(r) {
