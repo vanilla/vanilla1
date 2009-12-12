@@ -16,7 +16,11 @@ Author Url: http://www.redskiesdesign.com/
  * Copyright (c) 2009 Damien Lebrun <dinoboff@gmail.com>
  */
 
-// TODO: add packaging  level options.
+// Make sure the fille is included in vanilla
+if (!defined('IN_VANILLA')) exit();
+
+// Disable extension if php < 5.2.1 (Minify requirement
+if (version_compare(PHP_VERSION, '5.2.1') < 0) return;
 
 $Context->AddToDelegate('Head',
       'PackAssets',
