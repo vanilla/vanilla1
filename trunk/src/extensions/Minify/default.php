@@ -2,11 +2,19 @@
 /*
 Extension Name: Minify
 Extension Url: subjunk@gmail.com
-Description: Combines, minifies, caches, gzips and serves correct headers for CSS and JavaScript files, making the forum load faster for users
+Description: Vanilla bridge for Minify which packed JS and CSS file together. Improve client-side load by limiting request for external filea.
 Version: 1.0
 Author: Klaus Burton
 Author Url: http://www.redskiesdesign.com/
-*/
+
+ * Minify:
+ * Copyright (c) 2008 Ryan Grove <ryan@wonko.com>
+ * Copyright (c) 2008 Steve Clay <steve@mrclay.org>
+ *
+ * Vanilla Bridge:
+ * Copyright (c) 2009 Klaus Burton <http://www.redskiesdesign.com/>
+ * Copyright (c) 2009 Damien Lebrun <dinoboff@gmail.com>
+ */
 
 // TODO: add packaging  level options.
 
