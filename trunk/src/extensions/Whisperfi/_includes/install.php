@@ -48,6 +48,6 @@
 		// Add Notifi to be gzipped
 		LowCalVanilla_AddScript($Context, $Head, 'extensions/Whisperfi/functions.js');
 	} else {
-		$Head->AddScript('extensions/Whisperfi/functions.js', 450);
+		$Head->AddScript('extensions/Whisperfi/functions.js', 350);
 	} 
 ?>
