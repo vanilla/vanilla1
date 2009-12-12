@@ -107,8 +107,8 @@
 	    	</fileset>
 			<filterset begintoken="@@" endtoken="@@">
 				<filter token="VANILLA-VERSION" value="${app.version}"/>
-				<filter token="FRAMEWORK-VERSION" value="${framework.version}"/>
-				<filter token="PEOPLE-VERSION" value="${people.version}"/>
+				<filter token="FRAMEWORK-VERSION" value="${app.version}"/>
+				<filter token="PEOPLE-VERSION" value="${app.version}"/>
 			</filterset>
 		</copy>
 
