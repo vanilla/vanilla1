@@ -21,14 +21,29 @@ $Context->AddToDelegate('Head',
  * @param Head $Head
  */
 function Minify_Head_PackAssets_Delegation(&$Head) {
+	Minify_Script($Head);
+	Minify_StyleSheets($Head);
+}
+
+
+/**
+ * Replace multiple JS file from $Head->_Scripts by one or more request
+ * to Minify which will pack them.
+ *
+ * @param Head $Head
+ */
+function Minify_Script(&$Head) {
 	$WebRoot = $Head->Context->Configuration['WEB_ROOT'];
 
-	// Pack Scripts
 	$Filters = Minify_GetScriptFilter(3);
 	foreach ($Filters as $FilterPair) {
 		list($ToPackFilter, $ToKeepFilter) = $FilterPair;
-		$ToPackScripts = array_filter($Head->_Scripts, $ToPackFilter);
-		$MinScript = Minify_Script($ToPackScripts, $WebRoot, $MinifyPrepend);
+
+		$ScriptsToPack = array_filter($Head->_Scripts, $ToPackFilter);
+		asort($ScriptsToPack, SORT_NUMERIC);
+		$ScriptsToPack = array_keys($ScriptsToPack);
+
+		$MinScript =  Minify_MinURL($ScriptsToPack, $WebRoot);
 
 		if ($MinScript) {
 			$Head->_Scripts = array_filter($Head->_Scripts, $ToKeepFilter);
@@ -36,9 +51,18 @@ function Minify_Head_PackAssets_Delegation(&$Head) {
 		}
 	}
 
-	// Pack StyleSheets
+}
 
-	// TODO: Keep correct order or force the use of specific ranges by media
+
+/**
+ * Replace multiple css file targetting the same media by a request to Minify
+ * which will pack them.
+ *
+ * @param Head $Head
+ */
+function Minify_StyleSheets(&$Head) {
+	$WebRoot = $Head->Context->Configuration['WEB_ROOT'];
+	
 	$Collections = array();
 	foreach ($Head->StyleSheets as $StyleSheet) {
 		if (!array_key_exists($StyleSheet['Media'], $Collections)) {
@@ -50,7 +74,7 @@ function Minify_Head_PackAssets_Delegation(&$Head) {
 
 	$Head->StyleSheets = array();
 	foreach ($Collections as $Media => $StyleSheets) {
-		$MinStyleSheet = Minify_StyleSheets($StyleSheets, $WebRoot);
+		$MinStyleSheet = Minify_MinURL($StyleSheets, $WebRoot);
 		if ($MinStyleSheet) {
 			$Head->StyleSheets[] = array(
 				'Media'=>$Media, 'Sheet'=>$MinStyleSheet);
@@ -65,53 +89,17 @@ function Minify_Head_PackAssets_Delegation(&$Head) {
 
 
 /**
- * Get URL for packed version of a collection of scripts
+ * Convert a list a path to a Minify url.
  *
- * Return false if there is less than two scripts to pack, or if any script
- * URL does not start by WebRoot.
+ * Will fails if there is less than 2 files in the list or if the files
+ * are not in $WebRoot.
  *
- * @param array $Scripts The key should a path, the value should  the script
- *              position.
- * @param string $WebRoot Path all the script start with.
- * @return bool|string
- */
-function Minify_Script($Scripts, $WebRoot) {
-
-	if (!is_array($Scripts) || count($Scripts) < 2) {
-		return false;
-	}
-
-	$MinifyPrepend = '';
-	if ($WebRoot !== "/") {
-		$MinifyPrepend = 'b=' . trim($WebRoot, '/') . '&';
-	}
-
-	asort($Scripts, SORT_NUMERIC);
-	
-	$RelPaths = array();
-	while (list($Script,) = each($Scripts)) {
-		$RelPaths[] = Minify_MakeRelative($Script, $WebRoot);
-	}
-
-	return $WebRoot . 'extensions/Minify/'
-		. $MinifyPrepend
-		. 'f=' . implode(',', $RelPaths);
-}
-
-/**
- * Get URL for packed version of a collection of style sheets
- *
- * Return false if there is less than two style sheet, or if any script
- * URL does not start by WebRoot.
- *
- * @param array $StyleSheets The key should be the position of style sheet,
- *              the value should be the path
+ * @param array $FileList
  * @param string $WebRoot
  * @return bool|string
  */
-function Minify_StyleSheets($StyleSheets, $WebRoot) {
-
-	if (!is_array($StyleSheets) || count($StyleSheets) < 2) {
+function Minify_MinURL($FileList, $WebRoot) {
+	if (!is_array($FileList) || count($FileList) < 2) {
 		return false;
 	}
 
@@ -120,16 +108,16 @@ function Minify_StyleSheets($StyleSheets, $WebRoot) {
 		$MinifyPrepend = 'b=' . trim($WebRoot, '/') . '&';
 	}
 
-	foreach ($StyleSheets as &$Sheet) {
-		$Sheet = Minify_MakeRelative($Sheet, $WebRoot);
-		if ($Sheet === false) {
+	foreach ($FileList as &$Path) {
+		$Path = Minify_MakeRelative($Path, $WebRoot);
+		if ($Path === false) {
 			return false;
 		}
 	}
 
-	return !Error && $WebRoot . 'extensions/Minify/'
-		. $WebRootMinifyPrepend
-		. 'f=' . implode(',', $StyleSheets);
+	return $WebRoot . 'extensions/Minify/'
+		. $MinifyPrepend
+		. 'f=' . implode(',', $FileList);
 }
 
 /**
@@ -140,11 +128,11 @@ function Minify_StyleSheets($StyleSheets, $WebRoot) {
  * @return bool|string Return false if one of the path is not in $Base
  */
 function Minify_MakeRelative($Path, $Base) {
-	if (strpos($Path, $Base) === 0) {
-		return substr($Path, strlen($Base));
-	} else {
+	if (!strpos($Path, $Base) === 0) {
 		return false;
 	}
+
+	return substr($Path, strlen($Base));
 }
 
 /**
