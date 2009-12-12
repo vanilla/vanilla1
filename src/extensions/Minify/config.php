@@ -31,7 +31,7 @@ $min_errorLogger = false;
  * Allow use of the Minify URI Builder app. If you no longer need 
  * this, set to false.
  **/
-$min_enableBuilder = true;
+$min_enableBuilder = false;
 
 
 /**
@@ -107,7 +107,7 @@ $min_serveOptions['minApp']['groupsOnly'] = false;
 /**
  * Maximum # of files that can be specified in the "f" GET parameter
  */
-$min_serveOptions['minApp']['maxFiles'] = 10;
+$min_serveOptions['minApp']['maxFiles'] = 25;
 
 
 /**
@@ -150,6 +150,29 @@ $min_uploaderHoursBehind = 0;
  */
 $min_libPath = dirname(__FILE__) . '/lib';
 
+
+function CssEncoder($css, $options=array()) {
+	require_once 'Minify/CSS/UriRewriter.php';
+	if (isset($options['currentDir'])) {
+		return Minify_CSS_UriRewriter::rewrite(
+			$css
+			,$options['currentDir']
+			,isset($options['docRoot']) ? $options['docRoot'] : $_SERVER['DOCUMENT_ROOT']
+			,isset($options['symlinks']) ? $options['symlinks'] : array()
+		);
+	} else {
+		return Minify_CSS_UriRewriter::prepend(
+			$css
+			,$options['prependRelativePath']
+		);
+	}
+}
+
+/**
+ * No javascript or CSS compression
+ */
+$min_serveOptions['minifiers']['application/x-javascript'] = '';
+$min_serveOptions['minifiers']['text/css'] = 'CssEncoder';
 
 // try to disable output_compression (may not have an effect)
 ini_set('zlib.output_compression', '0');
