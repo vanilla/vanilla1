@@ -431,9 +431,9 @@ if (in_array($Context->SelfUrl, array('account.php'))) {
 }
 
 if (in_array($Context->SelfUrl, array('comments.php','index.php','account.php','categories.php'))) {
-	$Head->AddScript('js/prototype.js');
-	$Head->AddScript('js/scriptaculous.js');
-	$Head->AddScript('extensions/Notifi/functions.js');
+	$Head->AddScript('js/prototype.js', 150);
+	$Head->AddScript('js/scriptaculous.js', 151);
+	$Head->AddScript('extensions/Notifi/functions.js', 450);
 }
 
 if ($Context->Session->UserID > 0) {

@@ -41,8 +41,8 @@ class CategoryForm extends PostBackControl {
 			// Add the javascript to the head for sorting categories
 			if ($this->PostBackAction == "Categories") {
 				global $Head;
-				$Head->AddScript('js/prototype.js');
-				$Head->AddScript('js/scriptaculous.js');
+				$Head->AddScript('js/prototype.js', 150);
+				$Head->AddScript('js/scriptaculous.js', 151);
 			}
 
 			$CategoryID = ForceIncomingInt('CategoryID', 0);

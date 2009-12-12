@@ -43,8 +43,8 @@ class RoleForm extends PostBackControl {
 			// Add the javascript to the head for sorting roles
 			if ($this->PostBackAction == "Roles") {
 				global $Head;
-				$Head->AddScript('js/prototype.js');
-				$Head->AddScript('js/scriptaculous.js');
+				$Head->AddScript('js/prototype.js', 150);
+				$Head->AddScript('js/scriptaculous.js', 151);
 			}
 
 			$RoleID = ForceIncomingInt('RoleID', 0);
