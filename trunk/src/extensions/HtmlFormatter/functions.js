@@ -1,37 +1,25 @@
-function getDesiredWidth() {
-	if (window.innerHeight) {
-		var desiredWidth  = window.innerWidth - 280;
-	}
-	else {
-		var desiredWidth  = document.documentElement.clientWidth - 280;
-	}
-	return desiredWidth;
-}
+(function($){
+    $.HtmlFormatter = {
+        margin: 280,
 
-function changeDimensions() {
-	$$('img.InlineImage').each(function(elmt) {
-		var originalWidth = elmt.getWidth();
-		var desiredWidth  = getDesiredWidth();
-		if (originalWidth > desiredWidth) {
-			elmt.setStyle({width:desiredWidth+'px'});
-		}
-	});
-}
+        getDesiredWidth: function() {
+            var innerWidth = window.innerWidth ||
+                document.documentElement.clientWidth;
+            return innerWidth - $.HtmlFormatter.margin;
+        },
 
-Event.observe(window, 'load', function() {
-	changeDimensions();
-});
+        changeDimensions: function() {
+            var $img = $('img.InlineImage'),
+                desiredWidth = $.HtmlFormatter.getDesiredWidth();
 
-window.onresize = function() {
-	$$('img.InlineImage').each(function(elmt) {
-		elmt.setStyle({width:'auto'});
-	});
-	changeDimensions();
-};
+            $img.width('auto');
+            if ($img.width() > desiredWidth) {
+                $img.width(desiredWidth);
+            }
+        }
+    };
 
-window.onmaximize = function() {
-	$$('img.InlineImage').each(function(elmt) {
-		elmt.setStyle({width:'auto'});
-	});
-	changeDimensions();
-};
+    $(window).bind('load resize', $.HtmlFormatter.changeDimensions);
+
+
+})(jQuery.noConflict());
