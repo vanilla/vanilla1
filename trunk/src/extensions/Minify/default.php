@@ -22,6 +22,10 @@ if (!defined('IN_VANILLA')) exit();
 // Disable extension if php < 5.2.1 (Minify requirement
 if (version_compare(PHP_VERSION, '5.2.1') < 0) return;
 
+if (!array_key_exists('MINIFY_PACKING_LEVEL', $Configuration)) {
+	AddConfigurationSetting($Context, 'MINIFY_PACKING_LEVEL', 3);
+}
+
 $Context->AddToDelegate('Head',
       'PackAssets',
       'Minify_Head_PackAssets_Delegation');
@@ -46,8 +50,9 @@ function Minify_Head_PackAssets_Delegation(&$Head) {
  */
 function Minify_Script(&$Head) {
 	$WebRoot = $Head->Context->Configuration['WEB_ROOT'];
+	$PackingLevel = $Head->Context->Configuration['MINIFY_PACKING_LEVEL'];
 
-	$Filters = Minify_GetScriptFilter(3);
+	$Filters = Minify_GetScriptFilter($PackingLevel);
 	foreach ($Filters as $FilterPair) {
 		list($ToPackFilter, $ToKeepFilter) = $FilterPair;
 
