@@ -24,8 +24,8 @@
  * @package Framework
  */
 class Head extends Control {
-	var $_Scripts;			// Script collection
-	var $Scripts;
+	var $_Scripts;
+	var $Scripts;           // Script collection
 	var $StyleSheets;		// Stylesheet collection
 	var $Strings;			// String collection
 	var $BodyId;			// identifier assigned to the body tag
@@ -49,8 +49,8 @@ class Head extends Control {
 	 * - Between 300 and 499 for script specific to a page. The ones with a
 	 * position over 399 should not be packed together.
 	 *
-	 * - 500 is the default position. Extensions must not optimise the loading
-	 *   of these scripts.
+	 * - 500 or above is the default position. Extensions must not optimise the
+	 * loading of these scripts.
 	 *
 	 * @param string $ScriptLocation Set the location of the script, relative to
 	 *        the forum root.
@@ -60,9 +60,9 @@ class Head extends Control {
 	 *        the forum root URL.
 	 */
 	function AddScript($ScriptLocation, $Position = Null, $ScriptRoot = '~') {
-		$DefaultPosition = '500';
+		$DefaultPosition = 500;
 		if ($Position === Null) {
-			$Position = $DefaultPosition;
+			$Position = $DefaultPosition + count($this->_Scripts);
 		}
 		
 		if (!is_array($this->_Scripts)) {
