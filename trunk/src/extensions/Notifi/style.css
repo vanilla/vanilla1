@@ -20,3 +20,14 @@
 .redlink {
 	color:			#FF0033;
 }
+
+.notifiToggleLink .notifiActive,
+.notifiToggleLink .notifiSep {
+	display: none;
+}
+
+#Panel ul li a.notifiToggleLink span {
+	color: inherit;
+	font-size: inherit;
+	padding-left: inherit;
+}

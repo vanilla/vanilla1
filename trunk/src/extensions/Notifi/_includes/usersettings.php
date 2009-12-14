@@ -37,11 +37,11 @@
 						$Active = 'checked="checked" ';
 					}
 					echo '
-	          <p id="NotifiOwnCont"'.$SubscribedEntireForum.$SubscribedComment.'>
+          <p id="NotifiOwnCont" class="notifiToggleCBox" '.$SubscribedEntireForum.$SubscribedComment.'>
 		     <span>
 		        <label for="NotifiOwnField">
-			   <input type="checkbox" value="1" id="NotifiOwnField" '.$Active.' onclick="NotifiOwn();" /> '.$this->Context->GetDefinition("NotificationOnOwnExplanation").'
-			</label>
+			       <input type="checkbox" name="NOTIFI_OWN" id="NotifiOwnField" '.$Active.' /> '.$this->Context->GetDefinition("NotificationOnOwnExplanation").'
+			    </label>
 		     </span>
 		  </p>';
 					$Active = ' ';
@@ -49,21 +49,21 @@
 						$Active = 'checked="checked" ';
 					}
 					echo '
-	          <p id="NotifiCommentCont"'.$SubscribedEntireForum.'>
-		     <span>
-		        <label for="NotifiCommentField">
-			   <input type="checkbox" value="1" id="NotifiCommentField" '.$Active.' onclick="NotifiComment();" /> '.$this->Context->GetDefinition("NotificationOnCommentExplanation").'
-			</label>
-		     </span>
-		  </p>';
+            <p class="notifiToggleCBox" id="NotifiCommentCont"'.$SubscribedEntireForum.'>
+               <span>
+		         <label for="NotifiCommentField">
+			        <input type="checkbox" name="NOTIFY_COMMENT" id="NotifiCommentField" '.$Active.' /> '.$this->Context->GetDefinition("NotificationOnCommentExplanation").'
+                 </label>
+		      </span>
+		   </p>';
 					$Active = ' ';
 					if (notifiCheck($this->Context,'KeepEmailing')== true) {
 						$Active = 'checked="checked" ';
 					}
-					echo '<p id="KeepEmailingCont">
+					echo '<p class="notifiToggleCBox">
 		     <span>
 		        <label for="KeepEmailingField">
-			   <input type="checkbox" value="1" id="KeepEmailingField" '.$Active.' onclick="KeepEmailing();" /> '.$this->Context->GetDefinition("KeepEmailingExplanation").'
+			   <input type="checkbox" name="NOTIFI_KEEPEMAILING" id="KeepEmailingField" '.$Active.' /> '.$this->Context->GetDefinition("KeepEmailingExplanation").'
 			</label>
 		     </span>
 		  </p>';
@@ -81,14 +81,15 @@
 							$Active = 'checked="checked" ';
 						}
 						echo '
-	             <li>
-		        <p>
-			   <span id="NotifiAllCont">
-			      <label for="NotifiAll">
-			         <input type="checkbox" value="1" id="NotifiAllField" '.$Active.' onclick="NotifiAll();" /> '.$this->Context->GetDefinition("NotificationForum").'
-			      </label>
-			   </span>
-			</p>
+	          <li>
+		        <p class="notifiToggleCBox">
+			       <span>
+			          <label for="NotifiAll">
+			             <input type="checkbox" name="NOTIFI_ALL" id="NotifiAllField" '.$Active.' /> '
+					     . $this->Context->GetDefinition("NotificationForum") .'
+			          </label>
+			       </span>
+			    </p>
 		     </li>
 		  </ul>';
 					}
@@ -111,14 +112,13 @@
 								}
 								echo '
 		           <li>
-			      <p>
-			         <span id="NotifiCatCont_'.$cat->CategoryID.'">
-				    <label for="NotifiCat_'.$cat->CategoryID.'">
-				       <input type="checkbox" name="NotifiCat_'.$cat->CategoryID.'" value="1" id="NotifiCat_'.$cat->CategoryID.'" '.$Active.' onclick="NotifiCat('.$cat->CategoryID.');" /> '.$cat->Name.'
-				    </label>
-				 </span>
-			      </p>
-			   </li>';
+			          <p class="notifiToggleCBox"><span>
+				         <label for="NotifiCat_'.$cat->CategoryID.'">
+				            <input type="checkbox" name="NOTIFI_CATEGORY_'.$cat->CategoryID.'" id="NotifiCat_'.$cat->CategoryID.'" '.$Active.');" /> '
+							. $cat->Name .'
+				         </label></span>
+			         </p>
+			      </li>';
 							}
 							echo '</ul></span>';
 						}
@@ -138,10 +138,11 @@
 								}
 								echo '
 		           <li>
-			      <p>
-			         <span id="NotifiDiscussionCont_'.$row[0].'">
+			      <p class="notifiToggleCBox">
+			         <span>
 				    <label for="NotifiDiscussion_'.$row[0].'">
-				       <input type="checkbox" name="NotifiDiscussion_'.$row[0].'" value="1" id="NotifiDiscussion_'.$row[0].'" '.$Active.' onclick="NotifiDiscussion('.$row[0].');" /> '.$row[1].'
+				       <input type="checkbox" name="NOTIFI_DISCUSSION_'.$row[0].'" id="NotifiDiscussion_'.$row[0].'" '.$Active.' /> '
+								. $row[1] .'
 				    </label>
 				 </span>
 			      </p>

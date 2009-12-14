@@ -8,20 +8,18 @@ Author: Klaus Burton
 Author Url: http://www.redskiesdesign.com/
 */
 
+
 // General definitions
 $Context->SetDefinition('Notification',                           'Notification');
-$Context->SetDefinition('SubscribeForum',                         'Subscribe to forum');
-$Context->SetDefinition('SubscribeForumTitle',                    'Receive an email whenever there is a new post in this forum');
-$Context->SetDefinition('UnsubscribeForum',                       'Unsubscribe from forum');
-$Context->SetDefinition('UnsubscribeForumTitle',                  'Stop receiving email whenever there is a new post in this forum');
-$Context->SetDefinition('SubscribeCategory',                      'Subscribe to category');
-$Context->SetDefinition('SubscribeCategoryTitle',                 'Receive an email whenever there is a new post in this category');
-$Context->SetDefinition('UnsubscribeCategory',                    'Unsubscribe category');
-$Context->SetDefinition('UnsubscribeCategoryTitle',               'Stop receiving email whenever there is a new post in this category');
-$Context->SetDefinition('SubscribeDiscussion',                    'Subscribe to discussion');
-$Context->SetDefinition('SubscribeDiscussionTitle',               'Receive an email whenever there is a new post in this discussion');
-$Context->SetDefinition('UnsubscribeDiscussion',                  'Unsubscribe discussion');
-$Context->SetDefinition('UnsubscribeDiscussionTitle',             'Stop receiving email whenever there is a new post in this discussion');
+$Context->SetDefinition('SubscribeTo',                            'Subscribe to');
+$Context->SetDefinition('Unsubscribe',                            'Unsubscribe');
+$Context->SetDefinition('UnsubscribeFrom',                        'Unsubscribe from');
+$Context->SetDefinition('Forum',                                  'forum');
+$Context->SetDefinition('SubscribeUnsubscribeForumTitle',         'Start/stop receiving an email whenever there is a new post in this forum');
+$Context->SetDefinition('Category',                               'category');
+$Context->SetDefinition('SubscribeUnsubscribeCategoryTitle',      'Start/stop receive an email whenever there is a new post in this category');
+$Context->SetDefinition('Discussion',                             'discussion');
+$Context->SetDefinition('SubscribeUnsubscribeDiscussionTitle',    'Start/stop receiving an email whenever there is a new post in this discussion');
 $Context->SetDefinition('NotificationManagement',                 'Notification Management');
 $Context->SetDefinition('NotificationOptions',                    'Notification options');
 $Context->SetDefinition('NotifiSettings',                         'Notifi Settings');
@@ -127,12 +125,27 @@ function notifiCheck($Context,$Target) {
 // Add "subscribe/unsubscribe" links to the panel
 if ($Context->Session->UserID > 0 && isset($Panel) && $Context->Configuration['NOTIFI_AUTO_ALL'] == 0) {
 	$Panel->AddList($Context->GetDefinition('Notification'), 100);
+
 	if ($Context->Configuration['NOTIFI_ALLOW_ALL'] == 1 && in_array($Context->SelfUrl, array('comments.php','index.php','categories.php'))) {
+
+		$SubscribeClass = 'notifiSubscribe';
+		$UnsuscribeClass = 'notifiUnSubscribe';
 		if (CheckNotifi($Context,'ALL',0)) {
-			$Panel->AddListItem($Context->GetDefinition('Notification'),$Context->GetDefinition('UnsubscribeForum'),"./","","title=\"".$Context->GetDefinition('UnsubscribeForumTitle')."\" id=\"SetNotifiAll\" onclick=\"PNotifiAll('".$Context->GetDefinition('SubscribeForum')."', '".$Context->GetDefinition('UnsubscribeForum')."'); return false;\"");
+			$SubscribeClass .= ' notifiActive';
 		} else {
-			$Panel->AddListItem($Context->GetDefinition('Notification'),$Context->GetDefinition('SubscribeForum'),"./","","title=\"".$Context->GetDefinition('SubscribeForumTitle')."\" id=\"SetNotifiAll\" onclick=\"PNotifiAll('".$Context->GetDefinition('SubscribeForum')."', '".$Context->GetDefinition('UnsubscribeForum')."'); return false;\"");
+			$UnsuscribeClass .= ' notifiActive';
 		}
+		$LinkContent = '<span class="'. $SubscribeClass.'">'
+			. $Context->GetDefinition('SubscribeTo') .'</span>'
+			. '<span class="notifiSep"> / </span>'
+			. '<span class="'. $UnsuscribeClass .'">'
+			. $Context->GetDefinition('Unubscribe') .'</span> '
+			. $Context->GetDefinition('Forum');
+		$Panel->AddListItem(
+				$Context->GetDefinition('Notification'), $LinkContent,"./#Notify_ALL","",
+				'title="'.$Context->GetDefinition('SubscribeUnubscribeForumTitle')
+					. '" id="SetNotifiAll" class="notifiToggleLink"');
+		unset($SubscribeClass, $UnsuscribeClass, $LinkContent);
 	}
 	$DiscussionID = ForceIncomingInt("DiscussionID", "0");
 	if ($DiscussionID > 0) {
@@ -143,18 +156,47 @@ if ($Context->Session->UserID > 0 && isset($Panel) && $Context->Configuration['N
 		$CategoryID = ForceIncomingInt('CategoryID',0);
 	}
 	if ($Context->Configuration['NOTIFI_ALLOW_CATEGORY'] == 1 && in_array($Context->SelfUrl, array('index.php','comments.php')) AND ($CategoryID > 0)) {
+
+		$SubscribeClass = 'notifiSubscribe';
+		$UnsuscribeClass = 'notifiUnSubscribe';
 		if (CheckNotifi($Context,'CATEGORY',$CategoryID) == true) {
-			$Panel->AddListItem($Context->GetDefinition('Notification'),$Context->GetDefinition('UnsubscribeCategory'),"./","","title=\"".$Context->GetDefinition('UnsubscribeCategoryTitle')."\" id=\"SetNotifiCategory_".$CategoryID."\" onclick=\"PNotifiCategory(".$CategoryID.",'".$Context->GetDefinition('SubscribeCategory')."', '".$Context->GetDefinition('UnsubscribeCategory')."'); return false;\"");
+			$SubscribeClass .= ' notifiActive';
 		} else {
-			$Panel->AddListItem($Context->GetDefinition('Notification'),$Context->GetDefinition('SubscribeCategory'),"./","","title=\"".$Context->GetDefinition('SubscribeCategoryTitle')."\" id=\"SetNotifiCategory_".$CategoryID."\" onclick=\"PNotifiCategory(".$CategoryID.",'".$Context->GetDefinition('SubscribeCategory')."', '".$Context->GetDefinition('UnsubscribeCategory')."'); return false;\"");
+			$UnsuscribeClass .= ' notifiActive';
 		}
+		$LinkContent = '<span class="'. $SubscribeClass.'">'
+			. $Context->GetDefinition('SubscribeTo') .'</span>'
+			. '<span class="notifiSep"> / </span>'
+			. '<span class="'. $UnsuscribeClass .'">'
+			. $Context->GetDefinition('Unubscribe') .'</span> '
+			. $Context->GetDefinition('Category');
+		$Panel->AddListItem(
+				$Context->GetDefinition('Notification'), $LinkContent,
+				"./#Notifi_CATEGORY_" . $CategoryID,"",
+				'title="'.$Context->GetDefinition('SubscribeUnsubscribeCategoryTitle')
+					. '" id="SetNotifiCategory_'.$CategoryID.'" class="notifiToggleLink"');
+		unset($SubscribeClass, $UnsuscribeClass, $LinkContent);
 	}
 	if ($Context->Configuration['NOTIFI_ALLOW_DISCUSSION'] == 1 && in_array($Context->SelfUrl, array('comments.php')) AND $DiscussionID > 0) {
+
+		$SubscribeClass = 'notifiSubscribe';
+		$UnsuscribeClass = 'notifiUnSubscribe';
 		if (CheckNotifi($Context,'DISCUSSION',$DiscussionID) == true) {
-			$Panel->AddListItem($Context->GetDefinition('Notification'),$Context->GetDefinition('UnsubscribeDiscussion'),"./","","title=\"".$Context->GetDefinition('UnsubscribeDiscussionTitle')."\" id=\"SetNotifiDiscussion_".$DiscussionID."\" onclick=\"PNotifiDiscussion(".$DiscussionID.",'".$Context->GetDefinition('SubscribeDiscussion')."', '".$Context->GetDefinition('UnsubscribeDiscussion')."'); return false;\"");
+			$SubscribeClass .= ' notifiActive';
 		} else {
-			$Panel->AddListItem($Context->GetDefinition('Notification'),$Context->GetDefinition('SubscribeDiscussion'),"./","","title=\"".$Context->GetDefinition('SubscribeDiscussionTitle')."\" id=\"SetNotifiDiscussion_".$DiscussionID."\" onclick=\"PNotifiDiscussion(".$DiscussionID.",'".$Context->GetDefinition('SubscribeDiscussion')."', '".$Context->GetDefinition('UnsubscribeDiscussion')."'); return false;\"");
+			$UnsuscribeClass .= ' notifiActive';
 		}
+		$LinkContent = '<span class="'. $SubscribeClass.'">'
+			. $Context->GetDefinition('SubscribeTo') .'</span>'
+			. '<span class="notifiSep"> / </span>'
+			. '<span class="'. $UnsuscribeClass .'">'
+			. $Context->GetDefinition('Unubscribe') .'</span> '
+			. $Context->GetDefinition('Discussion');
+		$Panel->AddListItem(
+			$Context->GetDefinition('Notification'),$LinkContent,
+				"./#Notifi_DISCUSSION_".$DiscussionID,"",
+				'title="'. $Context->GetDefinition('SubscribeUnsubscribeDiscussionTitle')
+					. '" id=\"SetNotifiDiscussion_'.$DiscussionID.'" class="notifiToggleLink"');
 	}
 }
 
@@ -427,13 +469,17 @@ if (in_array($Context->SelfUrl, array('account.php'))) {
 			}
 		}
 	}
-	$Head->AddStyleSheet('extensions/Notifi/style.css');
 }
 
 if (in_array($Context->SelfUrl, array('comments.php','index.php','account.php','categories.php'))) {
-	$Head->AddScript('js/prototype.js', 150);
-	$Head->AddScript('js/scriptaculous.js', 151);
-	$Head->AddScript('extensions/Notifi/functions.js', 350);
+	$Head->AddStyleSheet('extensions/Notifi/style.css');
+	if (version_compare(APPLICATION_VERSION, '1.2-dev') >= 0) {
+		$Head->AddScript('js/jquery.js', 190);
+		$Head->AddScript('extensions/Notifi/functions.js', 350);
+	} else {
+		$Head->AddScript('js/jquery.js');
+		$Head->AddScript('extensions/Notifi/functions.js');
+	}
 }
 
 if ($Context->Session->UserID > 0) {
