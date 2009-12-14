@@ -1,130 +1,131 @@
-function show(id) {
-	document.getElementById(id).style.display='block';
-}
+(function($){
+	$.Notifi = {
+		root: null,
+		ajaxUrl: '/extensions/Notifi/ajax.php',
 
-function hide(id) {
-	document.getElementById(id).style.display='none';
-}
+		/**
+		 * Set $.Notifi.root to the forum base url and register event Notifi's
+		 * checkbox and link switch.
+		 */
+		init: function() {
+			var pathFinder = new PathFinder();
+			
+			this.root =
+				pathFinder.getRootPath('link', 'href', 'themes/vanilla/styles/default/favicon.ico') ||
+				pathFinder.getRootPath('script', 'src', 'extensions/Notifi/functions.js') || '';
 
-function SetNotifi(Type,ElementID,Value,Elem,Class,NewText) {
-	var pathFinder, root, ajax;
-	pathFinder = new PathFinder();
-	root = pathFinder.getRootPath('link', 'href', 'themes/vanilla/styles/default/favicon.ico') ||
-		pathFinder.getRootPath('script', 'src', 'extensions/Notifi/functions.js') || '';
-	ajax = new Ajax.Request( root + 'extensions/Notifi/ajax.php', {
-		parameters:'PostBackAction=ChangeNotifi&Type='+Type+'&ElementID='+ElementID+'&Value='+Value,
-		onSuccess: function(r) {
-			if (Type === "ALL" && Elem === "NotifiAllCont") {
-				if (Value === 1) {
-					hide('NotifiOwnCont');
-					hide('NotifiCommentCont');
-					hide('categoriesContainer');
-					hide('discussionsContainer');
-				} else if (!Value) {
-					show('NotifiOwnCont');
-					show('NotifiCommentCont');
-					show('categoriesContainer');
-					show('discussionsContainer');
+			$('.notifiToggleCBox input').click(this.toggleCBox)
+			$('.notifiToggleLink').click(this.toggleLink);
+		},
+
+		/**
+		 * Sent the Ajax request to enable/disable a Notifi option.
+		 *
+		 * @param type  Type of Notifi option (ALL|CATEGORY|DISCUSSION|COMMENT|OWN|KEEPEMAILING).
+		 * @param id    ID of category, discussion or comment to enable notification for.
+		 * @param value Value to set the option to.
+		 * @param cb    Function to call on successful answer.
+		 */
+		update: function(type, id, value, cb) {
+			var param = {
+				PostBackAction: 'ChangeNotifi',
+				Type: type,
+				ElementID: id,
+				Value: value
+			};
+			
+			$.post(this.root + this.ajaxUrl, param, cb);
+			return true;
+		},
+
+
+		/**
+		 * Toggle a Notifi option represented by a checkbox.
+		 *
+		 * Toggle a Notifi option via an Ajax request and add a
+		 * "PreferenceProgress" class to the checkbox container during
+		 * the request.
+		 *
+		 * On type ALL or COMMENT, it will show/hide more specific option
+		 */
+		toggleCBox: function() {
+			var $input = $(this),
+				$cont = $input.parents('.notifiToggleCBox'),
+				className = 'PreferenceProgress',
+				value = $input.attr('checked') ? 1 : 0,
+				inputName, type, id;
+
+			// Get type and id of category or discussion from imput name
+			// e.g.: name="NOTIFI_CATEGORY_1"
+			inputName = $input.attr('name').split('_');
+			type = inputName[1];
+			id = inputName.length === 3 ? inputName[2] : 0;
+
+			$cont.addClass(className);
+			$.Notifi.update(type, id, value, function(){
+				$cont.removeClass(className);
+
+				if (type === 'ALL') {
+					if (value === 1) {
+						$('#NotifiOwnCont').hide();
+						$('#NotifiCommentCont').hide();
+						$('#categoriesContainer').hide();
+						$('#discussionsContainer').hide();
+					} else {
+						$('#NotifiOwnCont').show();
+						$('#NotifiCommentCont').show();
+						$('#categoriesContainer').show();
+						$('#discussionsContainer').show();
+					}
 				}
-			}
-			if (Type === "COMMENT" && Elem === "NotifiCommentCont") {
-				if (Value === 1) {
-					hide('NotifiOwnCont');
-				} else if (!Value) {
-					show('NotifiOwnCont');
+
+				if (type === 'COMMENT') {
+					if (value === 1) {
+						$('#NotifiOwnCont').hide();
+					} else {
+						$('#NotifiOwnCont').show();
+					}
 				}
-			}
-			if (Elem === "SetNotifiAll" || Elem === "SetNotifiDiscussion_"+ElementID || Elem === "SetNotifiCategory_"+ElementID) {
-				Element.removeClassName(Elem,Class);
-				if (NewText) {
-					Elem.innerHTML = NewText;
-				}
-				$(Elem).innerHTML = NewText;
+
+				
+			});
+		},
+
+		/**
+		 * Toggle a subscribe/unsubscribe link to enable a Notifi option
+		 */
+		toggleLink: function(event) {
+			var $elem = $(this),
+				progressClassName = 'Progress',
+				activeClassName = 'notifiActive',
+				value, attr, type, id;
+
+			event.preventDefault();
+
+			// Retrieve type and id from link URL
+			attr = $elem.attr('href').split('_');
+			type = attr[1];
+			id = attr.length === 3 ? attr[2] : 0;
+
+			if ($('.notifiSubscribe', this).hasClass(activeClassName)) {
+				value = 0;
 			} else {
-				Element.removeClassName(Elem,Class);
-				if (NewText) {
-					Elem.innerHTML = NewText;
-				}
+				value = 1;
 			}
+
+			$elem.addClass(progressClassName);
+			$.Notifi.update(type, id, value, function(){
+				$elem.removeClass(progressClassName);
+				$('.notifiSubscribe', $elem).toggleClass(activeClassName);
+				$('.notifiUnSubscribe', $elem).toggleClass(activeClassName)
+			});
 		}
+
+	};
+
+	// On DOM ready, initialize Notifi
+	$(function(){
+		$.Notifi.init();
 	});
-	return true;
-}
-
-function NotifiCat(CategoryID) {
-	Element.addClassName('NotifiCatCont_'+CategoryID,'PreferenceProgress');
-	if ($('NotifiCat_'+CategoryID).checked == true) Value = 1;
-	else Value = 0;
-	SetNotifi('CATEGORY',CategoryID,Value,'NotifiCatCont_'+CategoryID,'PreferenceProgress','');
-}
-
-function NotifiDiscussion(DiscussionID) {
-	Element.addClassName('NotifiDiscussionCont_'+DiscussionID,'PreferenceProgress');
-	if ($('NotifiDiscussion_'+DiscussionID).checked == true) Value = 1;
-	else Value = 0;
-	SetNotifi('DISCUSSION',DiscussionID,Value,'NotifiDiscussionCont_'+DiscussionID,'PreferenceProgress','');
-}
-
-function PNotifiAll(SetText,UnSetText) {
-	Element.addClassName('SetNotifiAll','Progress');
-	if ($('SetNotifiAll').innerHTML == SetText) {
-		Value = 1;
-		NewText = UnSetText;
-	} else {
-		Value = 0;
-		NewText = SetText;
-	}
-	SetNotifi('ALL',0,Value,'SetNotifiAll','Progress',NewText);
-}
-
-function PNotifiCategory(CategoryID,SetText,UnSetText) {
-	Element.addClassName('SetNotifiCategory_'+CategoryID,'Progress');
-	if ($('SetNotifiCategory_'+CategoryID).innerHTML == SetText) {
-		Value = 1;
-		NewText = UnSetText;
-	} else {
-		Value = 0;
-		NewText = SetText;
-	}
-	SetNotifi('CATEGORY',CategoryID,Value,'SetNotifiCategory_'+CategoryID,'Progress',NewText);
-}
-
-function PNotifiDiscussion(DiscussionID,SetText,UnSetText) {
-	Element.addClassName('SetNotifiDiscussion_'+DiscussionID,'Progress');
-	if ($('SetNotifiDiscussion_'+DiscussionID).innerHTML == SetText) {
-		Value = 1;
-		NewText = UnSetText;
-	} else {
-		Value = 0;
-		NewText = SetText;
-	}
-	SetNotifi('DISCUSSION',DiscussionID,Value,'SetNotifiDiscussion_'+DiscussionID,'Progress',NewText);
-}
-
-function NotifiAll() {
-	Element.addClassName('NotifiAllCont','PreferenceProgress');
-	if ($('NotifiAllField').checked == true) Value = 1;
-	else Value = 0;
-	SetNotifi('ALL',0,Value,'NotifiAllCont','PreferenceProgress','');
-}
-
-function NotifiOwn() {
-	Element.addClassName('NotifiOwnCont','PreferenceProgress');
-	if ($('NotifiOwnField').checked == true) Value = 1;
-	else Value = 0;
-	SetNotifi('OWN',0,Value,'NotifiOwnCont','PreferenceProgress','');
-}
-
-function NotifiComment() {
-	Element.addClassName('NotifiCommentCont','PreferenceProgress');
-	if ($('NotifiCommentField').checked == true) Value = 1;
-	else Value = 0;
-	SetNotifi('COMMENT',0,Value,'NotifiCommentCont','PreferenceProgress','');
-}
-
-function KeepEmailing() {
-	Element.addClassName('KeepEmailingCont','PreferenceProgress');
-	if ($('KeepEmailingField').checked == true) Value = 1;
-	else Value = 0;
-	SetNotifi('KEEPEMAILING',0,Value,'KeepEmailingCont','PreferenceProgress','');
-}
+	
+})(jQuery.noConflict())

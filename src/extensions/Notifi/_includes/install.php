@@ -88,14 +88,4 @@
 		}
 	}
 
-	// Check the Low-Cal Vanilla is installed
-	if (!empty($Configuration['LOWCALVANILLA_TOOLS_PATH'])) {
-		// Include Low-Cal Vanilla.
-		require_once($Configuration['LOWCALVANILLA_TOOLS_PATH']);
-
-		// Add Notifi to be gzipped
-		LowCalVanilla_AddScript($Context, $Head, 'extensions/Notifi/functions.js');
-	} else {
-		$Head->AddScript('extensions/Notifi/functions.js', 350);
-	} 
 ?>
