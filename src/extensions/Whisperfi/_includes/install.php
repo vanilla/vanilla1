@@ -39,15 +39,4 @@
 			AddConfigurationSetting($Context, 'WHISPERFI_INSTALL_COMPLETE', '1');
 		}
 	}
-
-	// Check the Low-Cal Vanilla is installed
-	if (!empty($Configuration['LOWCALVANILLA_TOOLS_PATH'])) {
-		// Include Low-Cal Vanilla.
-		require_once($Configuration['LOWCALVANILLA_TOOLS_PATH']);
-
-		// Add Notifi to be gzipped
-		LowCalVanilla_AddScript($Context, $Head, 'extensions/Whisperfi/functions.js');
-	} else {
-		$Head->AddScript('extensions/Whisperfi/functions.js', 350);
-	} 
 ?>
