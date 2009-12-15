@@ -562,7 +562,7 @@ html>body#CommentsPage .ContentInfo h1 {
 	margin-right: 6px;
 	background-repeat:no-repeat;
 	display: inline;
-	background: #fff center center no-repeat;
+	background: center center no-repeat;
 	}
 #Comments .CommentHeader li span {
 	display:none;
