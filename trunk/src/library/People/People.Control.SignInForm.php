@@ -42,7 +42,7 @@ class SignInForm extends PostBackControl {
 			$this->ReturnUrl = urldecode(ForceIncomingString('ReturnUrl', ''));
 			if ($this->ReturnUrl != '') $this->PostBackParams->Add('ReturnUrl', $this->ReturnUrl);
 			$this->Username = ForceIncomingString('Username', '');
-			$this->Password = ForceIncomingString('Password', '');
+			$this->Password = ForceIncomingString('Password', '', false);
 			$this->RememberMe = ForceIncomingBool('RememberMe', 0);
 
 			// Set up the page

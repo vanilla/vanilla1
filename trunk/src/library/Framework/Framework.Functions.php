@@ -387,11 +387,11 @@ function ForceIncomingInt($VariableName, $DefaultValue) {
 }
 
 // Check both the get and post incoming data for a variable
-function ForceIncomingString($VariableName, $DefaultValue) {
+function ForceIncomingString($VariableName, $DefaultValue, $Trim=true) {
 	if (isset($_GET[$VariableName])) {
-		return Strip_Slashes(ForceString($_GET[$VariableName], $DefaultValue));
+		return Strip_Slashes(ForceString($_GET[$VariableName], $DefaultValue, $Trim));
 	} elseif (isset($_POST[$VariableName])) {
-		return Strip_Slashes(ForceString($_POST[$VariableName], $DefaultValue));
+		return Strip_Slashes(ForceString($_POST[$VariableName], $DefaultValue, $Trim));
 	} else {
 		return $DefaultValue;
 	}
@@ -410,9 +410,9 @@ function ForceSet($InValue, $DefaultValue) {
 }
 
 // Take a value and force it to be a string.
-function ForceString($InValue, $DefaultValue) {
+function ForceString($InValue, $DefaultValue, $Trim=true) {
 	if (is_string($InValue)) {
-		$sReturn = trim($InValue);
+		$sReturn = $Trim ? trim($InValue) : $InValue;
 		if (empty($sReturn) && strlen($sReturn) == 0) $sReturn = $DefaultValue;
 	} else {
 		$sReturn = $DefaultValue;

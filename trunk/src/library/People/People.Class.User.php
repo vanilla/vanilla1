@@ -260,16 +260,16 @@ class User {
 		$this->ShowName = ForceIncomingBool('ShowName', 0);
 		$this->Email = ForceIncomingString('Email', '');
 		$this->UtilizeEmail = ForceIncomingBool('UtilizeEmail',0);
-		$this->Password = ForceIncomingString('Password', '');
+		$this->Password = ForceIncomingString('Password', '', false);
 		$this->Icon = PrependString(array('http://', 'https://'), ForceIncomingString('Icon',''));
 		$this->Picture = PrependString(array('http://', 'https://'), ForceIncomingString('Picture',''));
 		$this->AgreeToTerms = ForceIncomingBool('AgreeToTerms', 0);
 		$this->ReadTerms = ForceIncomingBool('ReadTerms', 0);
 		$this->Discovery = ForceIncomingString('Discovery', '');
 
-		$this->OldPassword = ForceIncomingString('OldPassword', '');
-		$this->NewPassword = ForceIncomingString('NewPassword', '');
-		$this->ConfirmPassword = ForceIncomingString('ConfirmPassword', '');
+		$this->OldPassword = ForceIncomingString('OldPassword', '', false);
+		$this->NewPassword = ForceIncomingString('NewPassword', '', false);
+		$this->ConfirmPassword = ForceIncomingString('ConfirmPassword', '', false);
 
 		// Retrieve attributes from the form
 		$AttributeCount = ForceIncomingInt('LabelValuePairCount', 0);
