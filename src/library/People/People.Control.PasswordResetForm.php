@@ -58,8 +58,8 @@ class PasswordResetForm extends PostBackControl {
 			// Form properties
 			$this->UserID = ForceIncomingInt('u', 0);
 			$this->EmailVerificationKey = ForceIncomingString('k', '');
-			$this->NewPassword = ForceIncomingString('NewPassword', '');
-			$this->ConfirmPassword = ForceIncomingString('ConfirmPassword', '');
+			$this->NewPassword = ForceIncomingString('NewPassword', '', false);
+			$this->ConfirmPassword = ForceIncomingString('ConfirmPassword', '', false);
 			$this->CallDelegate('Constructor');
 
 			$um = $this->Context->ObjectFactory->NewContextObject($this->Context, 'UserManager');
