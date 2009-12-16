@@ -40,6 +40,7 @@ class SignInForm extends PostBackControl {
 		if ($this->IsPostBack) {
 			$this->FormName = $FormName;
 			$this->ReturnUrl = urldecode(ForceIncomingString('ReturnUrl', ''));
+			$ValidateReturnUrl = strstr($this->ReturnUrl, $this->Context->Configuration['BASE_URL']);
 			if ($this->ReturnUrl != '') $this->PostBackParams->Add('ReturnUrl', $this->ReturnUrl);
 			$this->Username = ForceIncomingString('Username', '');
 			$this->Password = ForceIncomingString('Password', '', false);
@@ -68,7 +69,7 @@ class SignInForm extends PostBackControl {
 							$this->ApplicantCount = $UserManager->GetApplicantCount();
 							if ($this->ApplicantCount > 0) $AutoRedirect = 0;
 						}
-						if ($this->ReturnUrl == '') {
+						if ($this->ReturnUrl == '' || empty($ValidateReturnUrl)) {
 							$this->ReturnUrl = $this->Context->Configuration['FORWARD_VALIDATED_USER_URL'];
 						} else {
 							$this->ReturnUrl = str_replace('&amp;', '&', $this->ReturnUrl);
