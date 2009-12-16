@@ -242,7 +242,7 @@ fieldset p {
 
 /* Apply Form */
 #Form.ApplyForm {
-	padding: 0 0 0 282px;
+	padding: 8px 0 0 282px;
 	}
 .ApplyForm .ErrorContainer {
 	margin: 0;
