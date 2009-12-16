@@ -140,6 +140,9 @@ class PeopleSession {
 				if ($Context->Configuration['SESSION_NAME']) {
 					session_name($Context->Configuration['SESSION_NAME']);
 				}
+				if (!empty($Context->Configuration['SESSION_SAVE_PATH'])) {
+					session_save_path($Context->$Configuration['SESSION_SAVE_PATH']);
+				}
 				session_start();
 				setcookie(session_name(), session_id(), null,
 					$Context->Configuration['COOKIE_PATH'],
@@ -192,6 +195,10 @@ class PeopleSession {
 			if (!empty($Context->Configuration['SESSION_NAME'])) {
 				session_name($Context->Configuration['SESSION_NAME']);
 			}
+			if (!empty($Context->Configuration['SESSION_SAVE_PATH'])) {
+				session_save_path($Context->$Configuration['SESSION_SAVE_PATH']);
+			}
+			
 			$UseSsl = ($Context->Configuration['HTTP_METHOD'] === "https");
 			if (version_compare(PHP_VERSION, '5.2.0', '>=')) {
 				session_set_cookie_params(0, $Context->Configuration['COOKIE_PATH'],
