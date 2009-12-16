@@ -261,7 +261,7 @@ html>body div.Apply #Form { /* ugly hack, but fixes display error in IE. */
 	width: 98px;
 	}
 #Form.ApplyForm label#AgreeToTermsLabel {
-	width: 220px;
+	width: 215px;
 	}
 #Form.ApplyForm input {
 	width: 156px;
