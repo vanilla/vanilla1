@@ -90,7 +90,11 @@ class Validator {
 	function Validate() {
 		// If a regexp was supplied, attempt to validate on it (empty strings allowed)
 		if($this->ValidationExpression != '' && $this->Value != '') {
-			if(!eregi($this->ValidationExpression, $this->Value)) {
+			if(!preg_match(
+					// attempts to convert eregi pattern to preg
+					'/'.str_replace('/', '\\/',$this->ValidationExpression).'/i',
+					$this->Value)
+			) {
 				$this->isValid = 0;
 				$this->Context->WarningCollector->Add($this->ValidationExpressionErrorMessage);
 			}

@@ -72,9 +72,9 @@ function HighlightTrimmedString($Haystack, $Needles, $TrimLength = '') {
 function ParseQueryForHighlighting(&$Context, $Query) {
 	if ($Query != '') {
 		$Query = DecodeHtmlEntities($Query);
-		$Query = eregi_replace('"', '', $Query);
-		$Query = eregi_replace(' '.$Context->GetDefinition('And').' ', ' ', $Query);
-		$Query = eregi_replace(' '.$Context->GetDefinition('Or').' ', ' ', $Query);
+		$Query = str_replace('"', '', $Query);
+		$Query = preg_replace('/ '.$Context->GetDefinition('And').' /i', ' ', $Query);
+		$Query = preg_replace('/ '.$Context->GetDefinition('Or').' /i', ' ', $Query);
 		return explode(' ', $Query);
 	} else {
 		return array();
