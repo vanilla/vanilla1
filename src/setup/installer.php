@@ -175,9 +175,11 @@ if ($PostBackAction == 'Permissions') {
 		$Contents = '<?php
 // Make sure this file was not accessed directly and prevent register_globals configuration array attack
 if (!defined(\'IN_VANILLA\')) exit();
-// Enabled Extensions\n';
+// Enabled Extensions
+';
 		if (file_exists($RootDirectory.'extensions/Whisperfi/default.php')) {
-			$Contents .= 'include($Configuration[\'EXTENSIONS_PATH\']."Whisperfi/default.php");\n';
+			$Contents .= 'include($Configuration[\'EXTENSIONS_PATH\']."Whisperfi/default.php");
+';
 		}
 		$Contents .= '?>';
 		CreateFile($RootDirectory.'conf/extensions.php', $Contents, $Context);
