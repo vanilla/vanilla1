@@ -1,10 +1,10 @@
 <?php
 /*
 Extension Name: AjaxQuote
-Extension Url: http://lussumo.com/community/discussion/3853/ajaxquote/
+Extension Url: http://vanillaforums.org/addon/171/ajaxquote
 Description: Adds quote option to posts. Works with any format type without complex JS parsing (retrives original data from DB on the fly). Redirects to last(CommentBox) page if needed.
 Version: 1.0
-Author: Ivan Weiler a.k.a. Scip
+Author: Ivan Weiler (Scip)
 Author Url: http://www.studioat.hr/
 */
 

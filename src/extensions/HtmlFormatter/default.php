@@ -1,18 +1,12 @@
 <?php
 /*
- * 
-
 Extension Name: Html Formatter
-Extension Url: http://lussumo.com/docs/
+Extension Url: http://vanillaforums.org/addon/33/html-formatter
 Description: Allows html to be used in strings, but breaks out all "script" related activities.
 Version: 2.5
-Author: Klaus Burton
-Author Url: http://www.redskiesdesign.com/
-
- * Copyright (c) 2006, 2007, 2008 SirNot
- * Copyright (c) 2009 Klaus Burton
- * 
- */
+Author: SirNot
+Author Url: N/A
+*/
 
 
 //SETTINGS, EDIT WHAT YOU WANT HERE

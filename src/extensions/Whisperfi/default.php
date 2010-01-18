@@ -1,7 +1,7 @@
 <?php
 	/*
 	Extension Name: Whisperfi
-	Extension Url: subjunk@gmail.com
+	Extension Url: http://vanillaforums.org/addon/435/whisperfi
 	Description: An extension that displays a notification at the top of the Discussions page when a user has received a whisper.
 	Version: 1.1.1
 	Author: Klaus Burton
