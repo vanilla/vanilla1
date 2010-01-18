@@ -1,7 +1,7 @@
 <?php
 /*
 Extension Name: Notifi
-Extension Url: subjunk@gmail.com
+Extension Url: http://vanillaforums.org/addon/409/notifi
 Description: Allows users to choose to receive email notifications about new posts in either the whole forum, specific categories or specific discussions.
 Version: 2.0.4
 Author: Klaus Burton
