@@ -647,7 +647,9 @@ html>body#CommentsPage .ContentInfo h1 {
 	display: block;
 	white-space: pre;
 	}
+
 /* Thanks to Bergamot */
+
 #Comments blockquote {
 	padding:8px 16px;
 	margin:0 0 8px;
@@ -721,6 +723,7 @@ html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
 	}
 
 /* Advanced Search Form */
+
 #SearchDiscussionFields, #SearchCommentFields, #SearchUserFields {
 	display: none;
 	}
@@ -806,11 +809,13 @@ html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
 	font-size:10px;
 	margin-right:10px!important;
 	}
+
 /*
   This is an IE kludge.
   For some reason IE was adding about 20px of padding to the top of this element
   and the only way to get rid of it was to add a 1px border to the top.
 */
+
 #CommentResults .SearchComment {
 	border-top: 1px solid #fefecc;
 	}
@@ -828,11 +833,13 @@ html>body #Form.Search { /* ugly hack, but fixes display error in IE. */
 	padding:0;
 	list-style:none;
 	}
+
 /*
   This is an IE kludge.
   For some reason IE was adding about 20px of padding to the top of this element
   and the only way to get rid of it was to add a 1px border to the top.
 */
+
 #UserResults li {
 	border-top: 1px solid #fff;
 	}
@@ -1141,7 +1148,6 @@ li.User.Name span {
 	background: url(progress.gif) no-repeat center left;
 }
 
-
 /* RoleEdit Form */
 
 #Form.RoleEditForm li p span label {
@@ -1149,11 +1155,13 @@ li.User.Name span {
 	}
 
 /* Category List */
+
 #Form.CategoryList .RoleBlocked {
 	background: url(disabled-tile.gif) #F4F4C2;
 	}
 
 /* Category Form */
+
 #Form.CategoryForm li p span label {
 	font-weight: normal !important;
 	}
@@ -1203,6 +1211,18 @@ div.Extensions h3 label {
 	display: inline !important;
 	padding-left: 30px !important;
 	}
+div.Extensions h3 span.AuthorUrl {
+	display: block !important;
+	margin-left: 30px !important;
+	}
+div.Extensions h3 span.AuthorUrl a {
+	color: #84733d !important;
+	text-decoration: underline;
+	}
+div.Extensions h3 span.Author,
+div.Extensions h3 span.Author a {
+	color: #1EB136 !important
+}
 div.Extensions ul li input {
 	width: auto !important;
 	margin-top: 3px !important;
@@ -1210,7 +1230,6 @@ div.Extensions ul li input {
 	position: absolute;
 	}
 div.Extensions h3 a {
-	color:#1EB136 !important;
 	text-decoration: none;
 	}
 div.Extensions h3 a:hover {
@@ -1468,6 +1487,10 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
 	width: 450px !important;
 	margin: 0;
 	padding: 0;
+	}
+#Form.Help fieldset legend {
+	padding: 0 !important;
+	margin-bottom: 6px;
 	}
 #SettingsPage #Form.Help p.Description {
 	padding: 10px !important;
