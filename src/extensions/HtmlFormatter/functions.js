@@ -1,6 +1,6 @@
 (function($){
     $.HtmlFormatter = {
-        margin: 280,
+        margin: 290,
 
         getDesiredWidth: function() {
             var innerWidth = window.innerWidth ||
