@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Jan 24, 2010 21:08:00 PM                                                        
+
+     Expire
+     Package the Expire extension
+                                                                   
+     ====================================================================== -->
+<project name="Expire" default="build">
+    
+	<description>
+            Package the Expire extension
+    </description>
+	
+	<property name="antlib.dir" location="../../../tools/ant-library/"/>
+	<import file="${antlib.dir}/extension.xml"/>
+	
+</project>
