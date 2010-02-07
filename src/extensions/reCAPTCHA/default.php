@@ -1,7 +1,7 @@
 <?php
 /*
 Extension Name: reCAPTCHA
-Extension Url: http://code.google.com/p/vanilla-friends/
+Extension Url: http://vanillaforums.org/addon/407/recaptcha
 Description: Add reCAPTCHA validation to the registration form.
 Version: 1.10.2
 Author: squirrel, inspired by Dinoboff's CAPTCHA

@@ -1,7 +1,7 @@
 <?php
 /*
 Extension Name: Set List
-Extension Url: http://code.google.com/p/vanilla-friends/
+Extension Url: http://vanillaforums.org/addon/386/set-list
 Description: Quickly and easily create a form for any extension's settings.
 Version: 1.1.0
 Author: squirrel
