@@ -82,8 +82,8 @@ a:hover {
 
 #Session {
 	position:absolute;
-	top:12px;
-	right:12px;
+	top:25px;
+	right:18px;
 	text-align:right;
 	font-size:11px;
 	color:#5d709f;
@@ -171,8 +171,6 @@ a:hover {
 #Panel h1 a {
 	color:#c00;
 	font-size:14px;
-	text-transform:uppercase;
-	margin-left:4px;
 	}
 #Panel h1 a em {
 	font-style: normal;
@@ -184,13 +182,12 @@ a:hover {
 	}
 #Panel h2 {
 	color:#000;
-	font-size:14px;
+	font-size:11px;
 	border-bottom:1px solid #ccc;
 	margin:10px 0 3px 0;
-	padding:2px 0;
-	text-indent:4px;
+	padding:0;
+	text-indent: 4px;
 	width:180px;
-	font-weight:normal;
 	}
 #Panel ul ul, #Panel ul p, #Panel select {
 	margin:0 4px;
