@@ -326,7 +326,7 @@ if (!defined(\'IN_VANILLA\')) exit();
 			$SettingsManager->DefineSetting('EXTENSIONS_PATH', $RootDirectory . 'extensions/', 1);
 			$SettingsManager->DefineSetting('LANGUAGES_PATH', $RootDirectory . 'languages/', 1);
 			$SettingsManager->DefineSetting('THEME_PATH', $RootDirectory . 'themes/vanilla/', 1);
-			$SettingsManager->DefineSetting('DEFAULT_STYLE', $ThemeDirectory.'vanilla/styles/default/', 1);
+			$SettingsManager->DefineSetting('DEFAULT_STYLE', $ThemeDirectory.'vanilla modern/styles/default/', 1);
 			$SettingsManager->DefineSetting('WEB_ROOT', $WebRoot, 1);
 			$SettingsManager->DefineSetting('BASE_URL', $BaseUrl, 1);
 			$SettingsManager->DefineSetting('HTTP_METHOD', $HttpMethod, 1);
