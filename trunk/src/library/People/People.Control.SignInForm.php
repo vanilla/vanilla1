@@ -40,7 +40,7 @@ class SignInForm extends PostBackControl {
 		if ($this->IsPostBack) {
 			$this->FormName = $FormName;
 			$this->ReturnUrl = urldecode(ForceIncomingString('ReturnUrl', ''));
-			$ValidateReturnUrl = strstr($this->ReturnUrl, $this->Context->Configuration['BASE_URL']);
+			$ValidateReturnUrl = strstr($this->ReturnUrl, $this->Context->Configuration['COOKIE_DOMAIN'].$this->Context->Configuration['COOKIE_PATH']);
 			if ($this->ReturnUrl != '') $this->PostBackParams->Add('ReturnUrl', $this->ReturnUrl);
 			$this->Username = ForceIncomingString('Username', '');
 			$this->Password = ForceIncomingString('Password', '', false);
