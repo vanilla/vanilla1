@@ -1,7 +1,7 @@
 <?php
 /*
 Extension Name: Expire
-Extension Url: http://code.google.com/p/vanilla-friends/
+Extension Url: http://vanillaforums.org/addon/418/expire
 Description: Automatically close or sink old discussions.
 Version: 1.0.1
 Author: squirrel
