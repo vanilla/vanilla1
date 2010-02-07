@@ -26,7 +26,7 @@ echo '<div id="Session">';
 	echo '<div id="Header">
 			<a name="pgtop"></a>
 			<h1>
-				<img src="'.$this->Context->Configuration['DEFAULT_STYLE'].'logo.png" alt="logo" />
+				'.$this->Context->Configuration['BANNER_TITLE'].'
 			</h1>
 
 			<ul>';
