@@ -118,32 +118,36 @@ a:hover {
 	}
 #Header ul {
 	text-align:center;
+	font-size:14px;
+	font-family:"myriad pro","lucida grande","trebuchet ms",Arial,Helvetica,sans-serif;
+	position:relative;
+	top:7px;
 	}
 #Header ul li {
 	display:inline;
 	margin:0 1px;
-	border-bottom:1px solid #acbedf;
 	}
 #Header ul li.TabOn {
 	background-color:#fff;
-	border:1px solid #acbedf;
-	border-bottom:1px solid #fff;
 	font-weight:bold;
 	}
 #Header ul li a {
-	padding:1px 5px;
-	font-size:11px;
+	padding:3px 7px 4px 7px;
 	text-decoration:none;
 	background-color:#5d709f;
 	color:#fff;
+	border:1px solid #5D709F;
+	-moz-border-radius:2px;
 	}
 #Header ul li a:hover {
 	background-color:#919ebe;
+	border:1px solid #919ebe;
 	}
 #Header ul li.TabOn a,
 #Header ul li.TabOn a:hover {
 	background-color:#fff;
-	color:#000;
+	color:#444;
+	border:1px solid #ACBEDF;
 	}
 #Header ul li a em {
 	font-style:normal;
@@ -170,9 +174,9 @@ a:hover {
 	}
 #Panel h1 a {
 	color:#c00;
-	font-size:14px;
-	text-transform:uppercase;
+	font-size:17px;
 	margin-left:4px;
+	font-family:"myriad pro","lucida grande","trebuchet ms",Arial,Helvetica,sans-serif;
 	}
 #Panel h1 a em {
 	font-style: normal;
@@ -180,7 +184,7 @@ a:hover {
 	color:#a00;
 	}
 #Panel h1 a:hover {
-	color:#f00;
+	color:#c33;
 	}
 #Panel h2 {
 	color:#000;
@@ -191,6 +195,7 @@ a:hover {
 	text-indent:4px;
 	width:180px;
 	font-weight:normal;
+	font-family:"myriad pro","lucida grande","trebuchet ms",Arial,Helvetica,sans-serif;
 	}
 #Panel ul ul, #Panel ul p, #Panel select {
 	margin:0 4px;
@@ -278,8 +283,12 @@ a:hover {
 	margin:0;
 	padding:0;
 	}
-.ContentInfo h1 {
-	color:#000;
+.ContentInfo h1,
+#Form.Account legend,
+#Form fieldset legend {
+	color:#757575;
+	font-size:16px;
+	font-family:"myriad pro","lucida grande","trebuchet ms",Arial,Helvetica,sans-serif;
 	}
 #CommentsPage .ContentInfo h1 {
 	float:left;
@@ -910,9 +919,7 @@ li.User.Name span {
 #Form fieldset legend {
 	padding: 4px 0 4px 0;
 	margin: 0;
-	font-size:14px;
 	font-weight:bold;
-	color:#000;
 	}
 #Form form {
 	margin: 0;
@@ -1037,9 +1044,9 @@ li.User.Name span {
 #Form.Account * {
 	color:#84733d;
 	}
-#Form.Account legend {
-	color:#000;
-	}
+.vcard li {
+	color:#062971 !important;
+}
 #Form.Account h2 {
 	font-size:14px;
 	margin-bottom:10px;
