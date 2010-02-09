@@ -12,7 +12,7 @@
 			} elseif ($this->IsValidFormPostBack()) {
 				$SettingsFile = $this->Context->Configuration['APPLICATION_PATH'].'conf/settings.php';
 				$this->ConfigurationManager = $this->Context->ObjectFactory->NewContextObject($this->Context, 'ConfigurationManager');
-				if ($this->PostBackAction == 'ProcessNotifi' && $this->IsValidFormPostBack()) {
+				if ($this->PostBackAction == 'ProcessNotifi') {
 					$this->ConfigurationManager->GetSettingsFromForm($SettingsFile);
 					$this->ConfigurationManager->DefineSetting('NOTIFI_ALLOW_ALL',        ForceIncomingBool('NOTIFI_ALLOW_ALL',        0), 0);
 					$this->ConfigurationManager->DefineSetting('NOTIFI_ALLOW_CATEGORY',   ForceIncomingBool('NOTIFI_ALLOW_CATEGORY',   0), 0);
