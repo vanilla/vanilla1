@@ -189,7 +189,7 @@
 
 		updatePostBackKey: function(wwwAuthentication) {
 			var parts = wwwAuthentication.split('='), cookieName;
-			console.log(parts);
+
 			if (parts.length != 2 ||
 				wwwAuthentication[0].indexOf('Vanilla-Csrf-Check') >= 0
 			) {
