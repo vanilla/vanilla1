@@ -1,18 +1,5 @@
 (function($){
-	/**
-	 * @link http://www.quirksmode.org/js/cookies.html
-	 */
-	var readCookie = function (name) {
-		var nameEQ = name + "=";
-		var ca = document.cookie.split(';');
-		for(var i=0;i < ca.length;i++) {
-			var c = ca[i];
-			while (c.charAt(0)==' ') c = c.substring(1,c.length);
-			if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-		}
-		return null;
-	}
-
+	
 	$.Notifi = {
 		root: null,
 		ajaxUrl: '/extensions/Notifi/ajax.php',
@@ -51,11 +38,11 @@
 				return function(wwwAuthenticate) {
 
 
-					if (wwwAuthenticate.indexOf('Vanilla-Csrf-Check realm') >= 0 &&
+					if (wwwAuthenticate.indexOf('Vanilla-Csrf-Check') >= 0 &&
 						$.Notifi.updatePostBackKey(wwwAuthenticate) &&
 						tries++ < 3
 					) {
-						param.data.PostBackKey = this.postBackKey;
+						param.data.PostBackKey = $.Notifi.postBackKey;
 						$.Notifi._update(param);
 						return true;
 					}
@@ -202,15 +189,14 @@
 
 		updatePostBackKey: function(wwwAuthentication) {
 			var parts = wwwAuthentication.split('='), cookieName;
-
+			console.log(parts);
 			if (parts.length != 2 ||
 				wwwAuthentication[0].indexOf('Vanilla-Csrf-Check') >= 0
 			) {
 				return false;
 			}
 
-			cookieName = parts[1].replace('"', '');
-			this.postBackKey = readCookie(cookieName);
+			this.postBackKey = parts[1].replace('"', '');
 			return true;
 		}
 

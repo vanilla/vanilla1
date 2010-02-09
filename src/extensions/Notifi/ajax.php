@@ -17,7 +17,7 @@
 	}
 
 	if ($Context->Session->UserID === 0) {
-		header("HTTP/1.1 401 Unauthorized");
+		header("HTTP/1.1 401 Unauthorised");
 		header('WWW-Authenticate: Vanilla-Login-1.0');
 		header('Location: ' . ConcatenatePath(
 				$Context->Configuration['BASE_URL'],
@@ -30,16 +30,9 @@
 	if ($PostBackKey == ''
 		|| $PostBackKey === $Context->Session->GetCsrfValidationKey()
 	) {
-		$CookieName = empty($Context->Configuration['COOKIE_CSRF_KEY']) ? 
-				'lussumocookiethree' : $Context->Configuration['COOKIE_CSRF_KEY'];
-
 		header("HTTP/1.1 401 Unauthorized");
-		header('Www-Authenticate: Vanilla-Csrf-Check realm="'. $CookieName .'"');
-		setcookie(
-				$CookieName,
-				$Context->Session->GetCsrfValidationKey(),
-				time() + 300);
-		echo 'Do you really want to do that?';
+		header('Www-Authenticate: Vanilla-Csrf-Check key="'. $Context->Session->GetCsrfValidationKey() .'"');
+		echo 'Unable to authenticate this request.';
 		$Context->Unload();
 		exit();
 	}
