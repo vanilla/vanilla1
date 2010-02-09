@@ -1,7 +1,22 @@
 (function($){
+	/**
+	 * @link http://www.quirksmode.org/js/cookies.html
+	 */
+	var readCookie = function (name) {
+		var nameEQ = name + "=";
+		var ca = document.cookie.split(';');
+		for(var i=0;i < ca.length;i++) {
+			var c = ca[i];
+			while (c.charAt(0)==' ') c = c.substring(1,c.length);
+			if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+		}
+		return null;
+	}
+
 	$.Notifi = {
 		root: null,
 		ajaxUrl: '/extensions/Notifi/ajax.php',
+		postBackKey: '',
 
 		/**
 		 * Set $.Notifi.root to the forum base url and register event Notifi's
@@ -27,15 +42,63 @@
 		 * @param cb    Function to call on successful answer.
 		 */
 		update: function(type, id, value, cb) {
-			var param = {
-				PostBackAction: 'ChangeNotifi',
-				Type: type,
-				ElementID: id,
-				Value: value
-			};
-			
-			$.post(this.root + this.ajaxUrl, param, cb);
+			var param, authRetry;
+
+			// Used in case of error dues to invalid PostBack key.
+			// Will try twice to resent the request with an updated PostBackKey
+			authRetry = (function(){
+				var tries = 1;
+				return function(wwwAuthenticate) {
+
+
+					if (wwwAuthenticate.indexOf('Vanilla-Csrf-Check realm') >= 0 &&
+						$.Notifi.updatePostBackKey(wwwAuthenticate) &&
+						tries++ < 3
+					) {
+						param.data.PostBackKey = this.postBackKey;
+						$.Notifi._update(param);
+						return true;
+					}
+					return false;
+				};
+
+			})();
+
+			param = {
+				type: "POST",
+				dataType: "text",
+				url: this.root + this.ajaxUrl,
+				beforeSend: cb.beforeSend,
+				success: cb.success,
+				error: function(resp) {
+					var wwwAuthenticate;
+
+					if (resp.status === 401) {
+						wwwAuthenticate = resp.getResponseHeader('Www-Authenticate');
+					}
+
+					if (!wwwAuthenticate || !authRetry(wwwAuthenticate)) {
+						cb.undo && cb.undo();
+						window.alert(resp.responseText);
+					}
+				},
+				data: {
+					PostBackAction: 'ChangeNotifi',
+					Type: type,
+					ElementID: id,
+					Value: value,
+					PostBackKey: this.postBackKey
+				}};
+
+			$.Notifi._update(param);
 			return true;
+		},
+
+		/**
+		 * Send an Ajax request with a copy of the parameters.
+		 */
+		_update: function(param) {
+			$.ajax($.extend({}, param));
 		},
 
 
@@ -61,33 +124,42 @@
 			type = inputName[1];
 			id = inputName.length === 3 ? inputName[2] : 0;
 
-			$cont.addClass(className);
-			$.Notifi.update(type, id, value, function(){
-				$cont.removeClass(className);
 
-				if (type === 'ALL') {
-					if (value === 1) {
-						$('#NotifiOwnCont').hide();
-						$('#NotifiCommentCont').hide();
-						$('#categoriesContainer').hide();
-						$('#discussionsContainer').hide();
-					} else {
-						$('#NotifiOwnCont').show();
-						$('#NotifiCommentCont').show();
-						$('#categoriesContainer').show();
-						$('#discussionsContainer').show();
+			$.Notifi.update(type, id, value, {
+				beforeSend: function(){
+					$cont.addClass(className);
+				},
+				success: function(){
+					$cont.removeClass(className);
+
+					if (type === 'ALL') {
+						if (value === 1) {
+							$('#NotifiOwnCont').hide();
+							$('#NotifiCommentCont').hide();
+							$('#categoriesContainer').hide();
+							$('#discussionsContainer').hide();
+						} else {
+							$('#NotifiOwnCont').show();
+							$('#NotifiCommentCont').show();
+							$('#categoriesContainer').show();
+							$('#discussionsContainer').show();
+						}
 					}
-				}
 
-				if (type === 'COMMENT') {
-					if (value === 1) {
-						$('#NotifiOwnCont').hide();
-					} else {
-						$('#NotifiOwnCont').show();
+					if (type === 'COMMENT') {
+						if (value === 1) {
+							$('#NotifiOwnCont').hide();
+						} else {
+							$('#NotifiOwnCont').show();
+						}
 					}
-				}
 
-				
+
+				},
+				undo: function(){
+					$cont.removeClass(className);
+					$input.attr('checked', !$input.attr('checked'));
+				}
 			});
 		},
 
@@ -113,12 +185,33 @@
 				value = 1;
 			}
 
-			$elem.addClass(progressClassName);
-			$.Notifi.update(type, id, value, function(){
-				$elem.removeClass(progressClassName);
-				$('.notifiSubscribe', $elem).toggleClass(activeClassName);
-				$('.notifiUnSubscribe', $elem).toggleClass(activeClassName)
+			$.Notifi.update(type, id, value, {
+				beforeSend: function() {
+					$elem.addClass(progressClassName);
+				},
+				success: function() {
+					$elem.removeClass(progressClassName);
+					$('.notifiSubscribe', $elem).toggleClass(activeClassName);
+					$('.notifiUnSubscribe', $elem).toggleClass(activeClassName)
+				},
+				undo: function() {
+					$elem.removeClass(progressClassName);
+				}
 			});
+		},
+
+		updatePostBackKey: function(wwwAuthentication) {
+			var parts = wwwAuthentication.split('='), cookieName;
+
+			if (parts.length != 2 ||
+				wwwAuthentication[0].indexOf('Vanilla-Csrf-Check') >= 0
+			) {
+				return false;
+			}
+
+			cookieName = parts[1].replace('"', '');
+			this.postBackKey = readCookie(cookieName);
+			return true;
 		}
 
 	};
