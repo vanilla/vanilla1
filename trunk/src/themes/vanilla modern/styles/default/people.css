@@ -60,6 +60,8 @@ a:hover {
 	margin-top: 100px;
 	border: 1px solid #c7d3ea;
 	background: #fff;
+	-moz-border-radius-bottomleft: 10px;
+	-moz-border-radius-bottomright: 10px;
 }
 .SiteContainer,
 .Foot {
