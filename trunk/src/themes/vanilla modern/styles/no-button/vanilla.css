@@ -169,33 +169,25 @@ a:hover {
 	list-style:none;
 	}
 #Panel button {
-	margin-top:20px;
-	color:#666;
-	font-size:16px;
-	font-family:"myriad pro","lucida grande","trebuchet ms",Arial,Helvetica,sans-serif;
-	font-weight:bold;
-	padding:9px;
-	background:url('button-overlay.png') repeat-x center #ffcc00;
-	background-color:rgba(255,204,0,1);
-	border:1px solid #ffcc00;
-	-moz-border-radius:10px;
-	-webkit-border-radius:10px;
-	border-radius:10px;
-	border-bottom:1px solid #9f9f9f;
-	-moz-box-shadow:inset 0 1px 0 rgba(255,255,255,0.5);
-	-webkit-box-shadow:inset 0 1px 0 rgba(255,255,255,0.5);
-	box-shadow:inset 0 1px 0 rgba(255,255,255,0.5);
-	cursor:pointer;
-}
-#Panel button:hover{
-	background-color:rgba(255,204,0,0.8);
-}
-#Panel button:active{
-	position:relative;
-	top:2px;
+	display:none;
 }
 #Panel h1 {
-	display:none;
+	margin-top:20px;
+	font-size:14px;
+	}
+#Panel h1 a {
+	color:#c00;
+	font-size:17px;
+	margin-left:4px;
+	font-family:"myriad pro","lucida grande","trebuchet ms",Arial,Helvetica,sans-serif;
+	}
+#Panel h1 a em {
+	font-style: normal;
+	text-decoration: underline;
+	color:#a00;
+	}
+#Panel h1 a:hover {
+	color:#c33;
 	}
 #Panel h2 {
 	color:#000;
