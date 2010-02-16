@@ -472,7 +472,7 @@ if (in_array($Context->SelfUrl, array('account.php'))) {
 }
 
 if (in_array($Context->SelfUrl, array('comments.php','index.php','account.php','categories.php'))) {
-	$Head->AddStyleSheet('extensions/Notifi/style.css');
+	$Head->AddStyleSheet('extensions/Notifi/style.css', 'screen', 100);
 	if (version_compare(APPLICATION_VERSION, '1.2-dev') >= 0) {
 		$Head->AddScript('js/jquery.js', 190);
 		$Head->AddScript('extensions/Notifi/functions.js', 350);

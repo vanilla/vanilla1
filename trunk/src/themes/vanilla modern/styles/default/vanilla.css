@@ -30,7 +30,7 @@ a:hover {
 
 /* Errors & Success */
 .ErrorContainer {
-	background: url(alert.gif) no-repeat top left #FFEDEF;
+	background: url('alert.gif') no-repeat top left #FFEDEF;
 	border-top: 1px solid #FFC2CA;
 	padding: 10px 10px 10px 27px !important;
 	overflow: hidden;
@@ -54,7 +54,7 @@ a:hover {
 	margin-bottom: 10px !important;
 	}
 .Notice {
-	background: url(notice.gif) left center no-repeat #FFFECC;
+	background: url('notice.gif') left center no-repeat #FFFECC;
 	border: 1px solid #FAEBB1;
 	font-size:13px;
 	padding: 8px 8px 8px 30px;
@@ -99,7 +99,7 @@ a:hover {
 /* Header.. */
 
 #Header {
-	background: url(waves.blue.gif) repeat-x left top #E5EAF6;
+	background: url('waves.blue.gif') repeat-x left top #E5EAF6;
 	border-top:1px solid #acbedf;
 	border-bottom:1px solid #acbedf;
 	}
@@ -548,7 +548,7 @@ html>body#CommentsPage .ContentInfo h1 {
 	border-bottom:1px solid #ccc;
 	}
 #Comments li.Hidden {
-	background: url(hidden-tile.gif) top left repeat-x #fafafa;
+	background: url('hidden-tile.gif') top left repeat-x #fafafa;
 	}
 #Comments .CommentHeader {
 	padding-left: 8px;
@@ -1147,16 +1147,16 @@ li.User.Name span {
 	background: #FFFEEC;
 	}
 .UpdateOld .Name {
-	background: url(ico.alert.gif) no-repeat top left;
+	background: url('ico.alert.gif') no-repeat top left;
 }
 .UpdateGood .Name {
-	background: url(ico.check.gif) no-repeat top left;
+	background: url('ico.check.gif') no-repeat top left;
 }
 .UpdateUnknown .Name {
-	background: url(ico.unknown.gif) no-repeat top left;
+	background: url('ico.unknown.gif') no-repeat top left;
 }
 .UpdateChecking .Name {
-	background: url(progress.gif) no-repeat center left;
+	background: url('progress.gif') no-repeat center left;
 }
 
 /* RoleEdit Form */
@@ -1168,7 +1168,7 @@ li.User.Name span {
 /* Category List */
 
 #Form.CategoryList .RoleBlocked {
-	background: url(disabled-tile.gif) #F4F4C2;
+	background: url('disabled-tile.gif') #F4F4C2;
 	}
 
 /* Category Form */
@@ -1200,13 +1200,13 @@ div.Extensions ul li.Enabled {
 	background: #FEFECB;
 	}
 div.Extensions ul li.Disabled {
-	background: url(disabled-tile.gif) #F4F4C2;
+	background: url('disabled-tile.gif') #F4F4C2;
 	}
 div.Extensions ul li.Processing {
 	background: #FEFECB;
 	}
 div.Extensions ul li.Processing label {
-	background: url(progress.gif) no-repeat center left;
+	background: url('progress.gif') no-repeat center left;
 	}
 div.Extensions ul li.Processing input {
 	display: none;
@@ -1325,7 +1325,7 @@ div.Applicants ul {
 	text-decoration: underline;
 	}
 .SortRemove {
-	background: url(btn.remove.gif) no-repeat center right;
+	background: url('btn.remove.gif') no-repeat center right;
 	text-decoration: none;
 	margin-left: 10px !important;
 	padding-left: 15px !important;
@@ -1558,17 +1558,17 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
 
 /* Ajax progress */
 .HideProgress {
-	background: url(hprogress.gif) center center no-repeat;
+	background: url('hprogress.gif') center center no-repeat;
 	text-decoration: none !important;
 	padding-left: 15px;
 	padding-right: 15px;
 	}
 .Progress {
-	background: url(hprogress.gif) left center no-repeat;
+	background: url('hprogress.gif') left center no-repeat;
 	padding-left: 22px !important;
 	}
 .PreferenceProgress {
-	background: url(hprogress.gif) left center no-repeat;
+	background: url('hprogress.gif') left center no-repeat;
 	padding-left: 16px !important;
 	}
 .Complete,
