@@ -325,7 +325,7 @@ if (!defined(\'IN_VANILLA\')) exit();
 			$SettingsManager->DefineSetting('LIBRARY_PATH', $RootDirectory . 'library/', 1);
 			$SettingsManager->DefineSetting('EXTENSIONS_PATH', $RootDirectory . 'extensions/', 1);
 			$SettingsManager->DefineSetting('LANGUAGES_PATH', $RootDirectory . 'languages/', 1);
-			$SettingsManager->DefineSetting('THEME_PATH', $RootDirectory . 'themes/vanilla/', 1);
+			$SettingsManager->DefineSetting('THEME_PATH', $RootDirectory . 'themes/vanilla modern/', 1);
 			$SettingsManager->DefineSetting('DEFAULT_STYLE', $ThemeDirectory.'vanilla modern/styles/default/', 1);
 			$SettingsManager->DefineSetting('WEB_ROOT', $WebRoot, 1);
 			$SettingsManager->DefineSetting('BASE_URL', $BaseUrl, 1);
@@ -431,7 +431,7 @@ if (!defined(\'IN_VANILLA\')) exit();
 			$s->Clear();
 			$s->SetMainTable('Style', 's');
 			$s->AddFieldNameValue('Name', 'Vanilla');
-			$s->AddFieldNameValue('Url', $ThemeDirectory.'vanilla/styles/default/');
+			$s->AddFieldNameValue('Url', $ThemeDirectory.'vanilla modern/styles/default/');
 			@mysql_query($s->GetInsert(), $Connection);
 		}
 
@@ -467,7 +467,7 @@ if (!defined(\'IN_VANILLA\')) exit();
 	</head>
 	<body>
 		<h1>
-			<span><strong><?php echo APPLICATION . ' ' . APPLICATION_VERSION; ?></strong> Installer</span>
+			<img src="../themes/vanilla modern/styles/default/logo.png" alt="logo" />
 		</h1>
 		<div class="Container">
 			<div class="Content">
