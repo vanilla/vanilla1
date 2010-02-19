@@ -23,7 +23,7 @@ h1 {
 	background: #F1F3FF;
 	border-bottom: 1px solid #ACBEDF;
 	margin: 0;
-	padding: 0;
+	padding: 20px;
 }
 h1 span {
 	background: url(leaf.gif) no-repeat center left;
@@ -53,6 +53,8 @@ h1 span strong {
 h2 {
 	margin: 0;
 	padding: 0;
+	font-family:"myriad pro","lucida grande","trebuchet ms",Arial,Helvetica,sans-serif;
+	color:#666;
 }
 code {
 	background: #FEFECC;
@@ -145,4 +147,14 @@ fieldset ul li input {
 	font-family: courier;
 	font-size: 12px;
 	display: block;
+}
+#Upgrading {
+	display: none;
+	border: 1px #acbedf solid;
+	margin: 20px 0 0 0;
+	padding: 10px;
+}
+
+#ShowUpgrade {
+	cursor: pointer;
 }
