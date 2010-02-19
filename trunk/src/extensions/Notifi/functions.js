@@ -8,13 +8,25 @@
 		/**
 		 * Set $.Notifi.root to the forum base url and register event Notifi's
 		 * checkbox and link switch.
+		 *
 		 */
 		init: function() {
 			var pathFinder = new PathFinder();
-			
+
+			// To find the root path, the forum need a theme with a favicon
+			// or the page need a script from an extension.
 			this.root =
-				pathFinder.getRootPath('link', 'href', 'themes/vanilla/styles/default/favicon.ico') ||
-				pathFinder.getRootPath('script', 'src', 'extensions/Notifi/functions.js') || '';
+				pathFinder.getRootPath(
+					'link',
+					'href',
+					/themes\/[-\d\w]+\/styles\/[-\d\w]+\/favicon.ico$/
+				) ||
+				pathFinder.getRootPath(
+					'script',
+					'src',
+					/extensions\/[-\d\w]+\/[-\/\d\w]+\.(js|php)/
+				) ||
+				'';
 
 			$('.notifiToggleCBox input').click(this.toggleCBox)
 			$('.notifiToggleLink').click(this.toggleLink);
@@ -23,10 +35,14 @@
 		/**
 		 * Sent the Ajax request to enable/disable a Notifi option.
 		 *
-		 * @param type  Type of Notifi option (ALL|CATEGORY|DISCUSSION|COMMENT|OWN|KEEPEMAILING).
-		 * @param id    ID of category, discussion or comment to enable notification for.
+		 * @param type  Type of Notifi option
+		 *				(ALL|CATEGORY|DISCUSSION|COMMENT|OWN|KEEPEMAILING).
+		 * @param id    ID of category, discussion or comment to
+		 *				enable notification for.
 		 * @param value Value to set the option to.
-		 * @param cb    Function to call on successful answer.
+		 * @param cb    Should hold the success, beforeSend (jQuery.Ajax option)
+		 *				and undo functions (undo is called after an error that
+		 *				can be fix).
 		 */
 		update: function(type, id, value, cb) {
 			var param, authRetry;
@@ -37,7 +53,6 @@
 				var tries = 1;
 				return function(wwwAuthenticate) {
 
-
 					if (wwwAuthenticate.indexOf('Vanilla-Csrf-Check') >= 0 &&
 						$.Notifi.updatePostBackKey(wwwAuthenticate) &&
 						tries++ < 3
@@ -47,6 +62,7 @@
 						return true;
 					}
 					return false;
+					
 				};
 
 			})();
@@ -151,7 +167,7 @@
 		},
 
 		/**
-		 * Toggle a subscribe/unsubscribe link to enable a Notifi option
+		 * Toggle a subscribe/unsubscribe link to enable/disable a Notifi option
 		 */
 		toggleLink: function(event) {
 			var $elem = $(this),
@@ -188,7 +204,7 @@
 		},
 
 		updatePostBackKey: function(wwwAuthentication) {
-			var parts = wwwAuthentication.split('='), cookieName;
+			var parts = wwwAuthentication.split('=');
 
 			if (parts.length != 2 ||
 				wwwAuthentication[0].indexOf('Vanilla-Csrf-Check') >= 0
