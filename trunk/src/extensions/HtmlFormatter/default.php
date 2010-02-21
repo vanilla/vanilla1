@@ -61,13 +61,13 @@ if(HTML_VIDEO_TAG)
 		'google' => '<embed style="width: 400px; height: 326px;" id="VideoPlayback" '.
 					'type="application/x-shockwave-flash" src="http://video.google.com/googleplayer.swf?docId=VIDEO_ID"></embed>', 
 
-		'youtube' => '<object width="480" height="360"><param name="movie" value="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D18"></param>'.
-					'<embed src="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D18" type="application/x-shockwave-flash" width="480" height="360"></embed>'.
-					'</object>', 
-
-		'youtubehd' => '<object width="854" height="504"><param name="movie" value="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D22"></param>'.
-					'<embed src="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D22" type="application/x-shockwave-flash" width="854" height="504"></embed>'.
+		'youtube' => '<object width="640" height="385"><param name="movie" value="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D18"></param>'.
+					'<embed src="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D18" type="application/x-shockwave-flash" width="640" height="385"></embed>'.
 					'</object>',
+
+		'youtubehd' => '<object width="853" height="505"><param name="movie" value="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D22"></param>'.
+					'<embed src="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D22" type="application/x-shockwave-flash" width="853" height="505"></embed>'.
+					'</object>', 
 
 		'myspace' => '<embed src="http://lads.myspace.com/videos/vplayer.swf" flashvars="m=VIDEO_ID&type=video" '.
 					'type="application/x-shockwave-flash" width="430" height="346"></embed>', 
