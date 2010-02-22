@@ -81,8 +81,16 @@ class Head extends Control {
 		}
 
 		$ScriptPath = $ScriptLocation;
+		$ScriptPathServer = ConcatenatePath($this->Context->Configuration['APPLICATION_PATH'], $ScriptLocation);
+
 		if ($ScriptRoot != '') {
 			$ScriptPath = ConcatenatePath($ScriptRoot, $ScriptLocation);
+		}
+
+		// If we can find the file on the server, append its last
+		// modified date after the filename in the output
+		if (file_exists($ScriptPathServer)) {
+			$ScriptPath  .= '?t='.filemtime($ScriptPathServer);
 		}
 
 		if (!array_key_exists($ScriptPath, $this->_Scripts)) {
@@ -93,10 +101,39 @@ class Head extends Control {
 	}
 
 	function AddStyleSheet($StyleSheetLocation, $Media = '', $Position = '100', $StyleRoot = '~') {
-		if ($StyleRoot == '~') $StyleRoot = $this->Context->Configuration['WEB_ROOT'];
-		if (!is_array($this->StyleSheets)) $this->StyleSheets = array();
+		$NumberOfReplaces = '0'; // Needs to be variable for PHP 5.0.5+
+		$StylePathServer = '';
+
+		if ($StyleRoot == '~') {
+			$StyleRoot = $this->Context->Configuration['WEB_ROOT'];
+		}
+
+		// If the path is absolute using StyleSheetLocation, make it
+		// relative
+		if (strpos($StyleSheetLocation,$this->Context->Configuration['WEB_ROOT']) === 0) {
+			$StylePathServer = str_replace($this->Context->Configuration['WEB_ROOT'], "", $StyleSheetLocation, $NumberOfReplaces);
+		}
+		// If the path is absolute using StyleRoot, make it relative
+		elseif (strpos($StyleRoot,$this->Context->Configuration['WEB_ROOT']) === 0) {
+			$StylePathServer = str_replace($this->Context->Configuration['WEB_ROOT'], "", $StyleRoot.$StyleSheetLocation, $NumberOfReplaces);
+			$StyleSheetLocation = $this->Context->Configuration['WEB_ROOT'].$StylePathServer;
+		}
+		// Path is already relative
+		else {
+			$StylePathServer = $StyleRoot.$StyleSheetLocation;
+			$StyleSheetLocation = $StylePathServer;
+		}
+
+		$StylePathServer = $this->Context->Configuration['APPLICATION_PATH'].$StylePathServer;
+		if (!is_array($this->StyleSheets)) {
+			$this->StyleSheets = array();
+		}
 		$StylePath = $StyleSheetLocation;
-		if ($StyleRoot != '') $StylePath = ConcatenatePath($StyleRoot, $StyleSheetLocation);
+		// If we can find the file on the server, append its last
+		// modified date after the filename in the output
+		if (file_exists($StylePathServer)) {
+			$StylePath  .= '?t='.filemtime($StylePathServer);
+		}
 		$this->InsertItemAt($this->StyleSheets,
 				array('Sheet' => $StylePath, 'Media' => $Media),
 				$Position);

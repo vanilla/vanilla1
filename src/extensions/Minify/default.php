@@ -127,6 +127,7 @@ function Minify_MinURL($FileList, $WebRoot) {
 
 	foreach ($FileList as &$Path) {
 		$Path = Minify_MakeRelative($Path, $WebRoot);
+		$Path = substr($Path, 0, strpos($Path, "?"));
 		if ($Path === false) {
 			return false;
 		}
