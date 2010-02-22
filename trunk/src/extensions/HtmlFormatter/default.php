@@ -58,21 +58,39 @@ define('HTML_VIDEO_TAG', 1);
 //value = replacement html; VIDEO_ID = video id (duh) (can only contain numbers, letters, - and _)
 if(HTML_VIDEO_TAG)
 	$Html_VideoLinks = array(
-		'google' => '<embed style="width: 400px; height: 326px;" id="VideoPlayback" '.
-					'type="application/x-shockwave-flash" src="http://video.google.com/googleplayer.swf?docId=VIDEO_ID"></embed>', 
+		'google' => '
+			<embed style="width: 400px; height: 326px;" id="VideoPlayback" type="application/x-shockwave-flash" src="http://video.google.com/googleplayer.swf?docId=VIDEO_ID"></embed>',
 
-		'youtube' => '<object width="640" height="385"><param name="movie" value="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D18"></param>'.
-					'<embed src="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D18" type="application/x-shockwave-flash" width="640" height="385"></embed>'.
-					'</object>',
+		'youtube' => '
+			<object width="640" height="385">
+				<param name="movie" value="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D18"></param>
+				<embed src="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D18" type="application/x-shockwave-flash" width="640" height="385"></embed>
+			</object>',
 
-		'youtubehd' => '<object width="853" height="505"><param name="movie" value="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D22"></param>'.
-					'<embed src="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D22" type="application/x-shockwave-flash" width="853" height="505"></embed>'.
-					'</object>', 
+		'youtubehd' => '
+			<object width="853" height="505">
+				<param name="movie" value="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D22"></param>
+				<embed src="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D22" type="application/x-shockwave-flash" width="853" height="505"></embed>
+			</object>', 
 
-		'myspace' => '<embed src="http://lads.myspace.com/videos/vplayer.swf" flashvars="m=VIDEO_ID&type=video" '.
-					'type="application/x-shockwave-flash" width="430" height="346"></embed>', 
+		'myspace' => '
+			<embed src="http://lads.myspace.com/videos/vplayer.swf" flashvars="m=VIDEO_ID&type=video" type="application/x-shockwave-flash" width="430" height="346"></embed>',
 
-		'own3d' => ' <object width="636" height="380"><param name="movie" value="http://www.own3d.tv/stream/VIDEO_ID" /><param name="allowfullscreen" value="true" /><param name="wmode" value="transparent" /><embed src="http://www.own3d.tv/stream/VIDEO_ID" type="application/x-shockwave-flash" allowfullscreen="true" width="636" height="380" wmode="transparent"></embed></object>'
+		'own3d' => '
+			<object width="636" height="380">
+				<param name="movie" value="http://www.own3d.tv/stream/VIDEO_ID" />
+				<param name="allowfullscreen" value="true" />
+				<param name="wmode" value="transparent" />
+				<embed src="http://www.own3d.tv/stream/VIDEO_ID" type="application/x-shockwave-flash" allowfullscreen="true" width="636" height="380" wmode="transparent"></embed>
+			</object>',
+
+		'vimeo' => '
+			<object width="640" height="360">
+				<param name="allowfullscreen" value="true" />
+				<param name="allowscriptaccess" value="always" />
+				<param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=VIDEO_ID&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=0&amp;show_portrait=0&amp;color=00ADEF&amp;fullscreen=1" />
+				<embed src="http://vimeo.com/moogaloop.swf?clip_id=VIDEO_ID&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=0&amp;show_portrait=0&amp;color=00ADEF&amp;fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="640" height="360"></embed>
+			</object>'
 	);
 
 // Which tags should simply be removed (be warned, most of these are here because they are not safe
