@@ -129,23 +129,23 @@ if ($Context->Session->UserID > 0 && isset($Panel) && $Context->Configuration['N
 	if ($Context->Configuration['NOTIFI_ALLOW_ALL'] == 1 && in_array($Context->SelfUrl, array('comments.php','index.php','categories.php'))) {
 
 		$SubscribeClass = 'notifiSubscribe';
-		$UnsuscribeClass = 'notifiUnSubscribe';
+		$UnsubscribeClass = 'notifiUnSubscribe';
 		if (CheckNotifi($Context,'ALL',0)) {
 			$SubscribeClass .= ' notifiActive';
 		} else {
-			$UnsuscribeClass .= ' notifiActive';
+			$UnsubscribeClass .= ' notifiActive';
 		}
 		$LinkContent = '<span class="'. $SubscribeClass.'">'
 			. $Context->GetDefinition('SubscribeTo') .'</span>'
 			. '<span class="notifiSep"> / </span>'
-			. '<span class="'. $UnsuscribeClass .'">'
-			. $Context->GetDefinition('Unubscribe') .'</span> '
+			. '<span class="'. $UnsubscribeClass .'">'
+			. $Context->GetDefinition('Unsubscribe') .'</span> '
 			. $Context->GetDefinition('Forum');
 		$Panel->AddListItem(
 				$Context->GetDefinition('Notification'), $LinkContent,"./#Notify_ALL","",
 				'title="'.$Context->GetDefinition('SubscribeUnubscribeForumTitle')
 					. '" id="SetNotifiAll" class="notifiToggleLink"');
-		unset($SubscribeClass, $UnsuscribeClass, $LinkContent);
+		unset($SubscribeClass, $UnsubscribeClass, $LinkContent);
 	}
 	$DiscussionID = ForceIncomingInt("DiscussionID", "0");
 	if ($DiscussionID > 0) {
@@ -158,16 +158,16 @@ if ($Context->Session->UserID > 0 && isset($Panel) && $Context->Configuration['N
 	if ($Context->Configuration['NOTIFI_ALLOW_CATEGORY'] == 1 && in_array($Context->SelfUrl, array('index.php','comments.php')) AND ($CategoryID > 0)) {
 
 		$SubscribeClass = 'notifiSubscribe';
-		$UnsuscribeClass = 'notifiUnSubscribe';
+		$UnsubscribeClass = 'notifiUnSubscribe';
 		if (CheckNotifi($Context,'CATEGORY',$CategoryID) == true) {
 			$SubscribeClass .= ' notifiActive';
 		} else {
-			$UnsuscribeClass .= ' notifiActive';
+			$UnsubscribeClass .= ' notifiActive';
 		}
 		$LinkContent = '<span class="'. $SubscribeClass.'">'
 			. $Context->GetDefinition('SubscribeTo') .'</span>'
 			. '<span class="notifiSep"> / </span>'
-			. '<span class="'. $UnsuscribeClass .'">'
+			. '<span class="'. $UnsubscribeClass .'">'
 			. $Context->GetDefinition('Unubscribe') .'</span> '
 			. $Context->GetDefinition('Category');
 		$Panel->AddListItem(
@@ -175,21 +175,21 @@ if ($Context->Session->UserID > 0 && isset($Panel) && $Context->Configuration['N
 				"./#Notifi_CATEGORY_" . $CategoryID,"",
 				'title="'.$Context->GetDefinition('SubscribeUnsubscribeCategoryTitle')
 					. '" id="SetNotifiCategory_'.$CategoryID.'" class="notifiToggleLink"');
-		unset($SubscribeClass, $UnsuscribeClass, $LinkContent);
+		unset($SubscribeClass, $UnsubscribeClass, $LinkContent);
 	}
 	if ($Context->Configuration['NOTIFI_ALLOW_DISCUSSION'] == 1 && in_array($Context->SelfUrl, array('comments.php')) AND $DiscussionID > 0) {
 
 		$SubscribeClass = 'notifiSubscribe';
-		$UnsuscribeClass = 'notifiUnSubscribe';
+		$UnsubscribeClass = 'notifiUnSubscribe';
 		if (CheckNotifi($Context,'DISCUSSION',$DiscussionID) == true) {
 			$SubscribeClass .= ' notifiActive';
 		} else {
-			$UnsuscribeClass .= ' notifiActive';
+			$UnsubscribeClass .= ' notifiActive';
 		}
 		$LinkContent = '<span class="'. $SubscribeClass.'">'
 			. $Context->GetDefinition('SubscribeTo') .'</span>'
 			. '<span class="notifiSep"> / </span>'
-			. '<span class="'. $UnsuscribeClass .'">'
+			. '<span class="'. $UnsubscribeClass .'">'
 			. $Context->GetDefinition('Unubscribe') .'</span> '
 			. $Context->GetDefinition('Discussion');
 		$Panel->AddListItem(
