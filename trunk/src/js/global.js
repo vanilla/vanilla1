@@ -59,6 +59,36 @@ function CompletePreferenceSet(PreferenceName) {
 	 if (Container) Container.className = 'PreferenceComplete';
 }
 
+function definition(Name, Value) {
+	var Undefined, Meta, metaName, Content, Cache = definition._cache;
+
+	if (Cache === Undefined && document.getElementsByTagName) {
+		Cache = definition._cache = {};
+		Meta = document.getElementsByTagName('meta');
+		
+		for (var i=0, l=Meta.length; i < l; i++) {
+			metaName =
+				Meta[i].name ||
+				Meta[i].getAttribute('name') ||
+				'';
+			Content =
+				Meta[i].content ||
+				Meta[i].getAttribute('content') ||
+				'';
+
+			if (metaName.substring(0, 10) === 'X-Vanilla-') {
+				Cache[metaName.substring(10)] = Content;
+			}
+		}
+	}
+
+	if (Value !== Undefined) {
+		Cache[Name] = Value;
+	}
+
+	return Cache[Name];
+}
+
 function Explode(inString, Delimiter) {
 	 return inString.split(Delimiter);
 }
