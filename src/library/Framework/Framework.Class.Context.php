@@ -97,6 +97,11 @@ class Context {
 	/**
 	 * @var array
 	 */
+	var $JSDictionary;
+
+	/**
+	 * @var array
+	 */
 	var $Configuration;
 
 	/**
@@ -144,6 +149,7 @@ class Context {
 		$this->StyleUrl = '';
 		$this->PageTitle = '';
 		$this->Dictionary = array();
+		$this->JSDictionary = array();
 		$this->DelegateCollection = array();
 		$this->PassThruVars = array();
 
@@ -177,6 +183,9 @@ class Context {
 		// Add the plain text manipulator
 		$TextFormatter = new TextFormatter();
 		$this->StringManipulator->AddManipulator($Configuration['DEFAULT_FORMAT_TYPE'], $TextFormatter);
+
+		// Set web root definition. Will be available on the client side
+		$this->SetDefinition('WebRoot', $Configuration['WEB_ROOT'], True);
 	}
 
 	/**
@@ -215,11 +224,16 @@ class Context {
 	 * the definition in the extension will not override it.
 	 * @param string $Code Code-word
 	 * @param string $Definition dfeault definition
+	 * @param string $AvailableInJS The definition will be avaible in JavaScript
 	 * @return void
 	 */
-	function SetDefinition($Code, $Definition) {
+	function SetDefinition($Code, $Definition, $AvailableInJS = False) {
 		if (!array_key_exists($Code, $this->Dictionary)) {
 			$this->Dictionary[$Code] = $Definition;
+		}
+
+		if ($AvailableInJS && !array_key_exists($Code, $this->JSDictionary)) {
+			$this->JSDictionary[$Code] = $Definition;
 		}
 	}
 

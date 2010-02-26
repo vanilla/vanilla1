@@ -171,6 +171,12 @@ class Head extends Control {
 
 	function Render() {
 
+		foreach ($this->Context->JSDictionary as $Key => $Value) {
+			$Key = 'X-Vanilla-' . FormatStringForDisplay($Key);
+			$Value = FormatStringForDisplay($Value);
+			$this->Meta[$Key] = $Value;
+		}
+
 		// Can be used to replace css and script
 		// e.g. Use file and script
 		$this->CallDelegate('FilterAssets');
