@@ -11,22 +11,7 @@
 		 *
 		 */
 		init: function() {
-			var pathFinder = new PathFinder();
-
-			// To find the root path, the forum need a theme with a favicon
-			// or the page need a script from an extension.
-			this.root =
-				pathFinder.getRootPath(
-					'link',
-					'href',
-					/themes\/[-\d\w]+\/styles\/[-\d\w]+\/favicon.ico$/
-				) ||
-				pathFinder.getRootPath(
-					'script',
-					'src',
-					/extensions\/[-\d\w]+\/[-\/\d\w]+\.(js|php)/
-				) ||
-				'';
+			this.root = definition('WebRoot') || '';
 
 			$('.notifiToggleCBox input').click(this.toggleCBox)
 			$('.notifiToggleLink').click(this.toggleLink);
