@@ -29,7 +29,7 @@ $Context->Dictionary['UseThickBox'] = 'Use ThickBox (Requires JQuery and JQThick
 
 // Maximum width of inline images
 if( !array_key_exists('INLINEIMAGES_MAX_WIDTH', $Configuration)) {
-	AddConfigurationSetting($Context, 'INLINEIMAGES_MAX_WIDTH', '600');
+	AddConfigurationSetting($Context, 'INLINEIMAGES_MAX_WIDTH', '5120');
 }
 // ThickBox Support
 if( !array_key_exists('INLINEIMAGES_USE_THICKBOX', $Configuration)) {

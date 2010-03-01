@@ -107,7 +107,7 @@ if (!array_key_exists('ATTACHMENTS_VERSION', $Configuration)) {
 		if (!AppendToConfigurationFile($Configuration['APPLICATION_PATH'].'conf/database.php', $Structure)) $Errors = 1;
 		if ($Errors == 0) {
 			AddConfigurationSetting($Context, 'ATTACHMENTS_UPLOAD_PATH', $Configuration['APPLICATION_PATH'] . 'uploads/%year%/%month%/');
-			AddConfigurationSetting($Context, 'ATTACHMENTS_MAXIMUM_FILESIZE', '512000');
+			AddConfigurationSetting($Context, 'ATTACHMENTS_MAXIMUM_FILESIZE', '2048000');
 			AddConfigurationSetting($Context, 'ATTACHMENTS_VERSION', '2.1');
 		} else {
 			// Could not save configuration
