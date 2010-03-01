@@ -959,6 +959,7 @@ li.User.Name span {
 #Form .Button {
 	cursor: pointer;
 	color: #000 !important;
+	padding: 1px 2px;
 	}
 #Form .Button.SubmitButton {
 	margin-right:10px;
