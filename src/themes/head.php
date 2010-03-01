@@ -11,7 +11,8 @@ $HeadString = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://
 			$HeadString .= '
 			<meta name="'.$Name.'" content="'.$Content.'" />';
 		}
-
+		$HeadString .= '
+			<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/reset/reset-min.css" />';
 		if (is_array($this->StyleSheets)) {
 			while (list($Key, $StyleSheet) = each($this->StyleSheets)) {
 				$HeadString .= '
