@@ -31,6 +31,8 @@
 	<defaultexcludes add="**/.hg/**"/>
 	<defaultexcludes add="**/thumbs.db"/>
 	<defaultexcludes add="**/__MACOSX"/>
+	<defaultexcludes add="**/.DS_Store"/>
+	<defaultexcludes add="**/.localized"/>
 
 	<fileset dir="${src.dir}" id="src.fileset">
 		<include name="**/*.php"/>
@@ -47,7 +49,7 @@
 		<include name="**/*.png"/>
 		<include name="**/*.ico"/>
 		<include name="**/*.gif"/>
-		<include name="**/*.jpe?g"/>
+		<include name="**/*.jpeg"/>
 		<include name="**/*.jpg"/>
 		<include name="**/*.xml"/>
 		<include name="**/*.swf"/>

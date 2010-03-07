@@ -50,6 +50,8 @@
 	<defaultexcludes add="**/.hg/**"/>
 	<defaultexcludes add="**/thumbs.db"/>
 	<defaultexcludes add="**/__MACOSX"/>
+	<defaultexcludes add="**/.DS_Store"/>
+	<defaultexcludes add="**/.localized"/>
 
 	
     <!-- =================================
