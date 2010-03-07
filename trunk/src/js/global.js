@@ -59,15 +59,15 @@ function CompletePreferenceSet(PreferenceName) {
 	 if (Container) Container.className = 'PreferenceComplete';
 }
 
-function definition(Name, Value) {
-	var Undefined, Meta, metaName, Content, Cache = definition._cache;
+function Definition(Name, Value) {
+	var Undefined, Meta, MetaName, Content, Cache = Definition._cache;
 
 	if (Cache === Undefined && document.getElementsByTagName) {
-		Cache = definition._cache = {};
+		Cache = Definition._cache = {};
 		Meta = document.getElementsByTagName('meta');
 		
 		for (var i=0, l=Meta.length; i < l; i++) {
-			metaName =
+			MetaName =
 				Meta[i].name ||
 				Meta[i].getAttribute('name') ||
 				'';
@@ -76,8 +76,8 @@ function definition(Name, Value) {
 				Meta[i].getAttribute('content') ||
 				'';
 
-			if (metaName.substring(0, 10) === 'X-Vanilla-') {
-				Cache[metaName.substring(10)] = Content;
+			if (MetaName.substring(0, 10) === 'X-Vanilla-') {
+				Cache[MetaName.substring(10)] = Content;
 			}
 		}
 	}

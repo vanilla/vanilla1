@@ -11,7 +11,7 @@
 		 *
 		 */
 		init: function() {
-			this.root = definition('WebRoot') || '';
+			this.root = Definition('WebRoot') || '';
 
 			$('.notifiToggleCBox input').click(this.toggleCBox)
 			$('.notifiToggleLink').click(this.toggleLink);
