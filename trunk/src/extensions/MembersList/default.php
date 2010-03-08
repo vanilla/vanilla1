@@ -16,13 +16,9 @@ Author Url: http://www.redskiesdesign.com
 
 
 /* sort and pagination js codes */
-if (version_compare(APPLICATION_VERSION, '1.2-dev') >= 0) {
-	$Head->AddScript('extensions/MembersList/library/tablesort.js', 190);
-	$Head->AddScript('extensions/MembersList/library/paginate.js', 350);
-} else {
-	$Head->AddScript('extensions/MembersList/library/tablesort.js');
-	$Head->AddScript('extensions/MembersList/library/paginate.js');
-}
+
+$Head->AddScript('extensions/MembersList/library/tablesort.js', '~', 190);
+$Head->AddScript('extensions/MembersList/library/paginate.js', '~', 350);
 
 /*Language definitions & settings*/
 include('conf/language.php');

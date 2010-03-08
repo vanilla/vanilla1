@@ -118,8 +118,8 @@ $Html_DefaultProtocol = 'http://';
 
 // Include required JavaScript for dynamic image resizing
 if (in_array($Context->SelfUrl, array('comments.php'))) {
-	$Head->AddScript('js/jquery.js', 190);
-	$Head->AddScript('extensions/HtmlFormatter/functions.js', 310);
+	$Head->AddScript('js/jquery.js', '~', 190);
+	$Head->AddScript('extensions/HtmlFormatter/functions.js', '~', 310);
 }
 
 // Unclosed or orphaned tags
