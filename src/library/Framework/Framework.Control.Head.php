@@ -29,7 +29,12 @@ class Head extends Control {
 	var $StyleSheets;		// Stylesheet collection
 	var $Strings;			// String collection
 	var $BodyId;			// identifier assigned to the body tag
-	var $Meta;				// An associative array of meta tags/content to be added to the head.
+	var $Meta;				// An associative array of meta tags/content to be
+							//added to the head.
+	var $Tags;				// Associate a script or style type to an etag.
+							// By default Vanilla will use the last modification
+							// of the files on the server as etag unless an etag
+							// is already set.
 
 
 	/**
@@ -81,16 +86,8 @@ class Head extends Control {
 		}
 
 		$ScriptPath = $ScriptLocation;
-		$ScriptPathServer = ConcatenatePath($this->Context->Configuration['APPLICATION_PATH'], $ScriptLocation);
-
 		if ($ScriptRoot != '') {
 			$ScriptPath = ConcatenatePath($ScriptRoot, $ScriptLocation);
-		}
-
-		// If we can find the file on the server, append its last
-		// modified date after the filename in the output
-		if (file_exists($ScriptPathServer)) {
-			$ScriptPath  .= '?t='.filemtime($ScriptPathServer);
 		}
 
 		if (!array_key_exists($ScriptPath, $this->_Scripts)) {
@@ -101,39 +98,10 @@ class Head extends Control {
 	}
 
 	function AddStyleSheet($StyleSheetLocation, $Media = '', $Position = '100', $StyleRoot = '~') {
-		$NumberOfReplaces = '0'; // Needs to be variable for PHP 5.0.5+
-		$StylePathServer = '';
-
-		if ($StyleRoot == '~') {
-			$StyleRoot = $this->Context->Configuration['WEB_ROOT'];
-		}
-
-		// If the path is absolute using StyleSheetLocation, make it
-		// relative
-		if (strpos($StyleSheetLocation,$this->Context->Configuration['WEB_ROOT']) === 0) {
-			$StylePathServer = str_replace($this->Context->Configuration['WEB_ROOT'], "", $StyleSheetLocation, $NumberOfReplaces);
-		}
-		// If the path is absolute using StyleRoot, make it relative
-		elseif (strpos($StyleRoot,$this->Context->Configuration['WEB_ROOT']) === 0) {
-			$StylePathServer = str_replace($this->Context->Configuration['WEB_ROOT'], "", $StyleRoot.$StyleSheetLocation, $NumberOfReplaces);
-			$StyleSheetLocation = $this->Context->Configuration['WEB_ROOT'].$StylePathServer;
-		}
-		// Path is already relative
-		else {
-			$StylePathServer = $StyleRoot.$StyleSheetLocation;
-			$StyleSheetLocation = $StylePathServer;
-		}
-
-		$StylePathServer = $this->Context->Configuration['APPLICATION_PATH'].$StylePathServer;
-		if (!is_array($this->StyleSheets)) {
-			$this->StyleSheets = array();
-		}
+		if ($StyleRoot == '~') $StyleRoot = $this->Context->Configuration['WEB_ROOT'];
+		if (!is_array($this->StyleSheets)) $this->StyleSheets = array();
 		$StylePath = $StyleSheetLocation;
-		// If we can find the file on the server, append its last
-		// modified date after the filename in the output
-		if (file_exists($StylePathServer)) {
-			$StylePath  .= '?t='.filemtime($StylePathServer);
-		}
+		if ($StyleRoot != '') $StylePath = ConcatenatePath($StyleRoot, $StyleSheetLocation);
 		$this->InsertItemAt($this->StyleSheets,
 				array('Sheet' => $StylePath, 'Media' => $Media),
 				$Position);
@@ -148,6 +116,8 @@ class Head extends Control {
 		$this->ClearStrings();
 		$this->ClearStyleSheets();
 		$this->ClearScripts();
+		$this->Tags = array();
+		$this->Meta = array();
 	}
 
 	function ClearStrings() {
@@ -166,6 +136,7 @@ class Head extends Control {
 		$this->Name = 'Head';
 		$this->BodyId = '';
 		$this->Control($Context);
+		$this->Tags = array();
 		$this->Meta = array();
 	}
 
@@ -178,7 +149,7 @@ class Head extends Control {
 		}
 
 		// Can be used to replace css and script
-		// e.g. Use file and script
+		// e.g. Replace assets by ones from a CDN
 		$this->CallDelegate('FilterAssets');
 
 		// Sort the stylesheets
@@ -194,9 +165,65 @@ class Head extends Control {
 			$this->Scripts = array_keys($this->_Scripts);
 		}
 
+		$this->CallDelegate('GetTags');
+		$this->TagAssets();
+
 		$this->CallDelegate('PreRender');
 		include(ThemeFilePath($this->Context->Configuration, 'head.php'));
 		$this->CallDelegate('PostRender');
+	}
+
+	function TagAssets() {
+
+		if (!$this->Context->Configuration['HEAD_TAG_ASSET']) {
+			return;
+		}
+
+		foreach ($this->Scripts as &$Script) {
+			$Script = $this->_TageAsset($Script);
+		}
+		reset($this->Scripts);
+
+		foreach ($this->StyleSheets as &$Details) {
+			$Details['Sheet'] = $this->_TageAsset($Details['Sheet']);
+		}
+		reset($this->StyleSheets);
+	}
+
+	function _TageAsset($Asset) {
+
+		// Check that the asset start with the forum web root,
+		// that it is a static file
+		// and that it is not already tagged
+		if ( strpos($Asset, $this->Context->Configuration['WEB_ROOT']) !== 0
+			|| !preg_match(
+					'%^/(?:[-_.\d\w]+/)+[-_.\d\w]+\.(?:js|css)$%',
+					$Asset)
+		) {
+			return $Asset;
+		}
+
+		return $Asset . '?t=' . $this->GetTag($Asset);
+
+	}
+
+	function GetTag($Asset) {
+		if (array_key_exists($Asset, $this->Tags)) {
+			return $this->Tags[$Asset];
+		}
+
+		$AssetPath = substr_replace(
+				$Asset,
+				$this->Context->Configuration['APPLICATION_PATH'],
+				0,
+				strlen($this->Context->Configuration['WEB_ROOT'])
+				);
+
+		if (file_exists($AssetPath)) {
+			return filemtime($AssetPath);
+		}
+
+		return $this->Context->Configuration['HEAD_DEFAULT_ETAG'];
 	}
 }
 ?>
