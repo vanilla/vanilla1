@@ -64,7 +64,11 @@ class Head extends Control {
 	 * @param string $ScriptRoot Set the bas url of the script. Use '~' for the
 	 *        the forum root URL.
 	 */
-	function AddScript($ScriptLocation, $Position = Null, $ScriptRoot = '~') {
+	function AddScript($ScriptLocation, $ScriptRoot = '~', $Position = Null) {
+		if ($ScriptRoot == '~') {
+			$ScriptRoot = $this->Context->Configuration['WEB_ROOT'];
+		}
+
 		$DefaultPosition = 500;
 		if ($Position === Null) {
 			$Position = $DefaultPosition + count($this->_Scripts);
@@ -74,17 +78,6 @@ class Head extends Control {
 			$this->_Scripts = array();
 		}
 
-		// Vanilla 1.2 change the method signature
-		// $ScriptRoot was the second argument but never seen used
-		if (0 == (int) $Position) {
-			$ScriptRoot = $Position;
-			$Position = Null;
-		}
-
-		if ($ScriptRoot == '~') {
-			$ScriptRoot = $this->Context->Configuration['WEB_ROOT'];
-		}
-
 		$ScriptPath = $ScriptLocation;
 		if ($ScriptRoot != '') {
 			$ScriptPath = ConcatenatePath($ScriptRoot, $ScriptLocation);
@@ -92,8 +85,8 @@ class Head extends Control {
 
 		if (!array_key_exists($ScriptPath, $this->_Scripts)) {
 			$this->_Scripts[$ScriptPath] = $Position;
-		} else if ($this->_Scripts[$ScriptPath] === $DefaultPosition) {
-			$this->_Scripts[$ScriptPath] = (string) $Position;
+		} else if ($this->_Scripts[$ScriptPath] >= $DefaultPosition) {
+			$this->_Scripts[$ScriptPath] = $Position;
 		}
 	}
 
