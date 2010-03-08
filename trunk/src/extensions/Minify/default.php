@@ -126,8 +126,8 @@ function Minify_MinURL($FileList, $WebRoot) {
 	}
 
 	foreach ($FileList as &$Path) {
+		$Path = Minify_StripQueryString($Path);
 		$Path = Minify_MakeRelative($Path, $WebRoot);
-		$Path = substr($Path, 0, strpos($Path, "?"));
 		if ($Path === false) {
 			return false;
 		}
@@ -151,6 +151,22 @@ function Minify_MakeRelative($Path, $Base) {
 	}
 
 	return substr($Path, strlen($Base));
+}
+
+/**
+ * Remove query string from a path
+ *
+ * @param string $Path
+ * @return string
+ */
+function Minify_StripQueryString($Path) {
+	$Pos = strpos($Path, '?');
+
+	if ($Pos === false) {
+		return $Path;
+	}
+
+	return substr($Path, 0, $Pos);
 }
 
 /**

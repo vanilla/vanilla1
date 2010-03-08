@@ -105,6 +105,7 @@ $Configuration['BANNER_TITLE'] = 'Vanilla';
 $Configuration['UPDATE_REMINDER'] = 'Monthly';
 $Configuration['LAST_UPDATE'] = '';
 $Configuration['HTTP_METHOD'] = 'http'; // Could alternately be https
+$Configuration['HEAD_TAG_ASSET'] = '1';
 
 // Vanilla Settings
 $Configuration['ENABLE_WHISPERS'] = '1';
@@ -216,6 +217,7 @@ $Configuration['ADDON_NOTICE'] = '1';
 
 // Application versions
 include(dirname(__FILE__) . '/version.php');
+$Configuration['HEAD_DEFAULT_ETAG'] = APPLICATION_VERSION;
 
 // Application Mode Constants
 define('MODE_DEBUG', 'DEBUG');
