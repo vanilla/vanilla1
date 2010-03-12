@@ -160,6 +160,7 @@
     	<buildExtension name="Minify"/>
     	<buildExtension name="Notifi"/>
     	<buildExtension name="Whisperfi"/>
+		<buildExtension name="RoleHistory"/>
     	
     </target>
 	
