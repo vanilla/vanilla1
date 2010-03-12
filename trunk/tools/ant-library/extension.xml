@@ -159,7 +159,7 @@
 	<!-- - - - - - - - - - - - - - - - - - 
           target: clean                      
          - - - - - - - - - - - - - - - - - -->
-	<target name="clean"  if="build.run">
+	<target name="clean" depends="init" if="build.run">
 		<echo>Cleaning "build" directory...</echo>
 		<delete dir="${zip.target}" verbose="true"/>
 	</target>
