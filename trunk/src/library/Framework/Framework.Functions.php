@@ -653,13 +653,28 @@ function ThemeFile(&$Context, $FileName) {
 	}
 }
 
-// Checks for a custom version of the specified file
-// Returns the path to the custom file (if it exists) or the default otherwise
-function ThemeFilePath($Configuration, $FileName) {
+/**
+ * Checks for a custom version of a theme file.
+ *
+ * Returns the path to the custom file (if it exists) or the default otherwise.
+ * 
+ * @param array $Configuration Should have the APPLICATION_PATH and THEME_PATH
+ *				entries.
+ * @param string $FileName
+ * @param string $DefaultThemeDir Path to the directory containing the default
+ *				 theme file. Set to $Configuration["APPLICATION_PATH"]."themes/"
+ *				 by default.
+ * @return string
+ */
+function ThemeFilePath($Configuration, $FileName, $DefaultThemeDir=Null) {
+	if ($DefaultThemeDir === Null) {
+		$DefaultThemeDir = "themes/";
+	}
+
 	if (file_exists($Configuration['THEME_PATH'].$FileName)) {
 		return $Configuration['THEME_PATH'].$FileName;
 	} else {
-		return $Configuration["APPLICATION_PATH"]."themes/".$FileName;
+		return $Configuration["APPLICATION_PATH"].$DefaultThemeDir.$FileName;
 	}
 }
 
