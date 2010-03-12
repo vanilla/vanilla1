@@ -11,10 +11,12 @@
 		 *
 		 */
 		init: function() {
-			this.root = Definition('WebRoot') || '';
+			var self = $.Notifi;
 
-			$('.notifiToggleCBox input').click(this.toggleCBox)
-			$('.notifiToggleLink').click(this.toggleLink);
+			self.root = Definition('WebRoot') || '';
+
+			$('.notifiToggleCBox input').click(self.toggleCBox)
+			$('.notifiToggleLink').click(self.toggleLink);
 		},
 
 		/**
@@ -204,8 +206,6 @@
 	};
 
 	// On DOM ready, initialize Notifi
-	$(function(){
-		$.Notifi.init();
-	});
+	$($.Notifi.init);
 	
 })(jQuery.noConflict())
