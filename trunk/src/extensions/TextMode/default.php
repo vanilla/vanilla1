@@ -11,14 +11,9 @@ Author Url: http://www.markosullivan.ca/
  * Copyright 2010 Damien Lebrun <dinoboff@gmail.com>
  */
 
-$Context->SetDefinition('TextOnlyModeIsOn', 'Text-only mode is ON');
-$Context->SetDefinition('TextOnlyModeIsOff', 'Text-only mode is OFF');
-$Context->SetDefinition('TurnOff', 'turn off');
-$Context->SetDefinition('TurnOn', 'turn on');
-$Context->SetDefinition(
-		'DisplayTextOnlyToggle',
-		'Display text-only mode toggle on all pages');
-
+if (!defined('IN_VANILLA')) {
+	exit();
+}
 
 if (!isset($Head) || !isset($Context)) {
 	return;
@@ -27,6 +22,15 @@ if (!isset($Head) || !isset($Context)) {
 if (version_compare(PEOPLE_VERSION, '1.1.4') < 0) {
 	return;
 }
+
+
+$Context->SetDefinition('TextOnlyModeIsOn', 'Text-only mode is ON');
+$Context->SetDefinition('TextOnlyModeIsOff', 'Text-only mode is OFF');
+$Context->SetDefinition('TurnOff', 'turn off');
+$Context->SetDefinition('TurnOn', 'turn on');
+$Context->SetDefinition(
+		'DisplayTextOnlyToggle',
+		'Display text-only mode toggle on all pages');
 
 // Write the text mode switches
 if ($Context->Session->UserID > 0

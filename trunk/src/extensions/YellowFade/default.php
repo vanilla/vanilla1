@@ -13,6 +13,10 @@ Author Url: http://michaelraichelson.com/
  *
  */
 
+if (!defined('IN_VANILLA')) {
+	exit();
+}
+
 if (in_array(
 		$Context->SelfUrl,
 		array(
