@@ -47,11 +47,16 @@ if ($Context->SelfUrl == "account.php") {
 				&& $this->PostBackAction == ""
 				&& $this->Context->Database->RowCount($this->History) > 0
 			) {
-				$TemePath = ThemeFilePath(
-					$this->Context->Configuration,
-					'RoleHistory_account_role_history.php',
-					'extensions/RoleHistory/theme/');
-				include($TemePath);
+				$ThemeDir = dirname(__FILE__) . '/theme/';
+				if (version_compare(APPLICATION_VERSION, '1.2-dev', '<')) {
+					$ThemePath = $ThemeDir . 'RoleHistory_account_role_history.php';
+				} else {
+					$ThemePath = ThemeFilePath(
+						$this->Context->Configuration,
+						'RoleHistory_account_role_history.php',
+						$ThemeDir);
+				}
+				include($ThemePath);
 			}
 			$this->CallDelegate("PostRender");
 		}
