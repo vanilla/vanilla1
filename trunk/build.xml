@@ -161,6 +161,8 @@
     	<buildExtension name="Notifi"/>
     	<buildExtension name="Whisperfi"/>
 		<buildExtension name="RoleHistory"/>
+		<buildExtension name="YellowFade"/>
+		<buildExtension name="TextMode"/>
     	
     </target>
 	
