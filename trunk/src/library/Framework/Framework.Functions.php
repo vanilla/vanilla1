@@ -668,13 +668,13 @@ function ThemeFile(&$Context, $FileName) {
  */
 function ThemeFilePath($Configuration, $FileName, $DefaultThemeDir=Null) {
 	if ($DefaultThemeDir === Null) {
-		$DefaultThemeDir = "themes/";
+		$DefaultThemeDir = $Configuration["APPLICATION_PATH"]."themes/";
 	}
 
 	if (file_exists($Configuration['THEME_PATH'].$FileName)) {
 		return $Configuration['THEME_PATH'].$FileName;
 	} else {
-		return $Configuration["APPLICATION_PATH"].$DefaultThemeDir.$FileName;
+		return $DefaultThemeDir.$FileName;
 	}
 }
 
