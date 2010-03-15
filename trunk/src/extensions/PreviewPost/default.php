@@ -1,33 +1,59 @@
 <?php
 /*
 Extension Name: Preview Post
-Extension Url: http://lussumo.com/addons
+Extension Url: http://vanillaforums.org/addon/84/preview-post
 Description: Allows users to view a preview of what their post will look like.
-Version: 2.5.2
+Version: 2.5.3
 Author: SirNotAppearingOnThisForum
 Author Url: N/A
+ *
+ * Copyright 2006 Sirnot
+ * Copyright 2010 Damien Lebrun <dinoboff@gmail.com>
+ *
+ * TODO: Convert to jquery.
+ * TODO: Let the server side build the comment, not just the message.
+ * 
+ */
 
-You should cut & paste these language definitions into your
-conf/your_language.php file (replace "your_language" with your chosen language,
-of course):
-*/
-$Context->Dictionary['PostPreview'] = 'Preview';
-$Context->Dictionary['PreviewPost'] = 'Preview Post';
 
-if(in_array($Context->SelfUrl, array('post.php', 'comments.php')) && isset($Head))
-{
-	$Head->AddScript('extensions/PreviewPost/preview.js');
-	$Head->AddStyleSheet('extensions/PreviewPost/preview.css');
-	
-	$Context->AddToDelegate('DiscussionForm', 'DiscussionForm_PostSubmitRender', 'PreviewPostButton');
-	$Context->AddToDelegate('DiscussionForm', 'CommentForm_PostSubmitRender', 'PreviewPostButton');
-	
-	$PrevButtonHTML = 'showpreview(\''.$Context->Configuration['BASE_URL'].'\', {id : '.$Context->Session->User->UserID.
-		', name : \''.(!empty($Context->Session->User->Name) ? $Context->Session->User->Name : 'Guest').'\'});';
-	$PrevButtonHTML = '<input name="btnPreview" value="'.$Context->GetDefinition('PreviewPost').
-		'" class="Button SubmitButton PreviewButton" type="button" onclick="'.$PrevButtonHTML.'" />';
-	
-	function PreviewPostButton(&$Form) {echo($GLOBALS['PrevButtonHTML']);}
+if (!defined('IN_VANILLA')) {
+	exit();
 }
 
-?>
+
+$Context->SetDefinition('PostPreview', 'Preview');
+$Context->SetDefinition('PreviewPost','Preview Post');
+
+if(!in_array($Context->SelfUrl, array('post.php', 'comments.php'))
+	|| !isset($Head)
+) {
+	return;
+}
+
+
+$Head->AddScript('extensions/PreviewPost/preview.js');
+$Head->AddStyleSheet('extensions/PreviewPost/preview.css');
+
+$Context->AddToDelegate(
+	'DiscussionForm',
+	'DiscussionForm_PostSubmitRender',
+	'PreviewPostButton');
+$Context->AddToDelegate(
+	'DiscussionForm',
+	'CommentForm_PostSubmitRender',
+	'PreviewPostButton');
+
+function PreviewPostButton(&$Form) {
+	$Context = $Form->Context;
+	$User = $Context->Session->User;
+
+	printf(
+		'<input type="button" name="btnPreview" value="%s" '
+			. 'class="Button SubmitButton PreviewButton" '
+			. 'onclick="showpreview(\'%s\', {id: %d, name: \'%s\'});" />',
+		$Context->GetDefinition('PreviewPost'),
+		$Context->Configuration['BASE_URL'],
+		$User->UserID,
+		!empty($User->Name) ? FormatStringForDisplay($User->Name) : 'Guest'
+	);
+}

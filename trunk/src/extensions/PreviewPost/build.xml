@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Mon 15 Mar 2010
+
+     Preview Post
+     Package the Preview Post extension
+                                                                   
+     ====================================================================== -->
+<project name="PreviewPost" default="build">
+    
+	<description>
+            Package the Preview Post extension
+    </description>
+	
+	<property name="antlib.dir" location="../../../tools/ant-library/"/>
+	<import file="${antlib.dir}/extension.xml"/>
+	
+</project>

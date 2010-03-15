@@ -164,6 +164,7 @@
 		<buildExtension name="YellowFade"/>
 		<buildExtension name="TextMode"/>
 		<buildExtension name="PrivateAccounts"/>
+		<buildExtension name="PreviewPost"/>
     	
     </target>
 	
