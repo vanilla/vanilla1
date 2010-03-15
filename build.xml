@@ -163,6 +163,7 @@
 		<buildExtension name="RoleHistory"/>
 		<buildExtension name="YellowFade"/>
 		<buildExtension name="TextMode"/>
+		<buildExtension name="PrivateAccounts"/>
     	
     </target>
 	
