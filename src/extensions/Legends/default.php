@@ -1,9 +1,9 @@
 <?php
 /*
 Extension Name: Legends
-Extension Url: http://lussumo.com/docs/
+Extension Url: http://vanillaforums.org/addon/11/legends
 Description: Adds legends to the panel for the discussion, search, and category pages.
-Version: 1.0
+Version: 1.0.1
 Author: Mark O'Sullivan
 Author Url: http://www.markosullivan.ca/
 
@@ -15,19 +15,16 @@ You should have received a copy of the GNU General Public License along with Van
 The latest source code for Vanilla is available at www.lussumo.com
 Contact Mark O'Sullivan at mark [at] lussumo [dot] com
 
-You should cut & paste these language definitions into your
-conf/your_language.php file (replace "your_language" with your chosen language,
-of course):
 */
 
-$Context->Dictionary["Legend"] = "Legend";
-$Context->Dictionary["NewComments"] = "New comments";
-$Context->Dictionary["NoNewComments"] = "No new comments";
-$Context->Dictionary["YouWhispered"] = "You whispered";
-$Context->Dictionary["WhisperedToYou"] = "Whispered to you";
-$Context->Dictionary["UnblockedCategory"] = "Unblocked category";
-$Context->Dictionary["BlockedCategory"] = "Blocked category";
-$Context->Dictionary["DisplayListAppendices"] = "Display list appendices in the control panel";
+$Context->SetDefinition("Legend", "Legend");
+$Context->SetDefinition("NewComments", "New comments");
+$Context->SetDefinition("NoNewComments", "No new comments");
+$Context->SetDefinition("YouWhispered", "You whispered");
+$Context->SetDefinition("WhisperedToYou", "Whispered to you");
+$Context->SetDefinition("UnblockedCategory", "Unblocked category");
+$Context->SetDefinition("BlockedCategory", "Blocked category");
+$Context->SetDefinition("DisplayListAppendices", "Display list appendices in the control panel");
 
 
 
@@ -41,22 +38,28 @@ if ($Context->SelfUrl == "account.php" && ForceIncomingString("PostBackAction", 
 		"PreferencesForm_AddLegendSwitch");
 }
 
-if ($Context->SelfUrl == "index.php" && $Context->Session->UserID > 0 && $Context->Session->User->Preference("ShowAppendices")) {
-	$Head->AddStyleSheet('extensions/Legends/style.css');
+if (!$Context->Session->UserID > 0
+	|| !$Context->Session->User->Preference("ShowAppendices")
+) {
+	return;
+}
+
+if ($Context->SelfUrl == "index.php") {
+	$Head->AddStyleSheet('extensions/Legends/style.css', 'screen');
 	$Panel->AddString("<h2>".$Context->GetDefinition("Legend")."</h2>
 		<ul id=\"Legend\">
 			<li class=\"Legend NewComments\">".$Context->GetDefinition("NewComments")."</li>
 			<li class=\"Legend NoNewComments\">".$Context->GetDefinition("NoNewComments")."</li>
 		</ul>", 100);
-} elseif ($Context->SelfUrl == "categories.php" && $Context->Session->UserID > 0 && $Context->Session->User->Preference("ShowAppendices")) {
-	$Head->AddStyleSheet('extensions/Legends/style.css');
+} elseif ($Context->SelfUrl == "categories.php") {
+	$Head->AddStyleSheet('extensions/Legends/style.css', 'screen');
 	$Panel->AddString("<h2>".$Context->GetDefinition("Legend")."</h2>
 		<ul id=\"Legend\">
 			<li class=\"Legend UnblockedCategory\">".$Context->GetDefinition("UnblockedCategory")."</li>
 			<li class=\"Legend BlockedCategory\">".$Context->GetDefinition("BlockedCategory")."</li>
    	</ul>", 100);
-} elseif ($Configuration["ENABLE_WHISPERS"] && $Context->SelfUrl == "comments.php" && $Context->Session->UserID > 0 && $Context->Session->User->Preference("ShowAppendices")) {
-	$Head->AddStyleSheet('extensions/Legends/style.css');
+} elseif ($Configuration["ENABLE_WHISPERS"] && $Context->SelfUrl == "comments.php") {
+	$Head->AddStyleSheet('extensions/Legends/style.css', 'screen');
 	$Panel->AddString("<h2>".$Context->GetDefinition("Legend")."</h2>
       <ul id=\"Legend\">
          <li class=\"Legend WhisperFrom\">".$Context->GetDefinition("YouWhispered")."</li>
