@@ -168,6 +168,7 @@
 		<buildExtension name="PanelLists"/>
 		<buildExtension name="NewApplicants"/>
 		<buildExtension name="Legends"/>
+		<buildExtension name="IpHistory"/>
     	
     </target>
 	
