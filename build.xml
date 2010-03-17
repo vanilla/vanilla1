@@ -166,6 +166,7 @@
 		<buildExtension name="PrivateAccounts"/>
 		<buildExtension name="PreviewPost"/>
 		<buildExtension name="PanelLists"/>
+		<buildExtension name="NewApplicants"/>
     	
     </target>
 	
