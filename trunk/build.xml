@@ -167,6 +167,7 @@
 		<buildExtension name="PreviewPost"/>
 		<buildExtension name="PanelLists"/>
 		<buildExtension name="NewApplicants"/>
+		<buildExtension name="Legends"/>
     	
     </target>
 	
