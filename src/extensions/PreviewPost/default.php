@@ -31,8 +31,8 @@ if(!in_array($Context->SelfUrl, array('post.php', 'comments.php'))
 }
 
 
-$Head->AddScript('extensions/PreviewPost/preview.js');
-$Head->AddStyleSheet('extensions/PreviewPost/preview.css');
+$Head->AddScript('extensions/PreviewPost/preview.js', '~', 390);
+$Head->AddStyleSheet('extensions/PreviewPost/preview.css', 'screen');
 
 $Context->AddToDelegate(
 	'DiscussionForm',
