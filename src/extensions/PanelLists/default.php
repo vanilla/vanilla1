@@ -1,9 +1,9 @@
-<?php 
+<?php
 /*
 Extension Name: Panel Lists
-Extension Url: http://lussumo.com/docs/
+Extension Url: http://vanillaforums.org/addon/70/panel-lists
 Description: Allows users to display various discussion lists in the control panel. Only compatible with Vanilla >= 0.9.3
-Version: 1.2
+Version: 1.2.1
 Author: Mark O'Sullivan
 Author Url: http://www.markosullivan.ca/
 
@@ -16,10 +16,12 @@ You should have received a copy of the GNU General Public License along with Van
 The latest source code for Vanilla is available at www.lussumo.com
 Contact Mark O'Sullivan at mark [at] lussumo [dot] com
 
-You should cut & paste these language definitions into your
-conf/your_language.php file (replace "your_language" with your chosen language,
-of course):
 */
+
+if (!defined('IN_VANILLA')) {
+	exit();
+}
+
 
 $Context->SetDefinition("Bookmarks", "Bookmarks");
 $Context->SetDefinition("YourDiscussions", "Your Discussions");
@@ -43,19 +45,19 @@ CreateArrayEntry($Configuration, 'PANEL_HISTORY_COUNT', 5);
 CreateArrayEntry($Configuration, 'PANEL_USER_DISCUSSIONS_COUNT', 5);
 
 if ($Context->SelfUrl == "account.php") {
-   $Context->AddToDelegate("PreferencesForm", "PreRender", "PreferencesForm_AddPanelLists");
-   function PreferencesForm_AddPanelLists(&$PreferencesForm) {
-      $PreferencesForm->AddPreference("ControlPanel", "DisplayBookmarks", "ShowBookmarks");
-      $PreferencesForm->AddPreference("ControlPanel", "DisplayYourDiscussions", "ShowRecentDiscussions");
-      $PreferencesForm->AddPreference("ControlPanel", "DisplayBrowsingHistory", "ShowBrowsingHistory");
+	$Context->AddToDelegate("PreferencesForm", "PreRender", "PreferencesForm_AddPanelLists");
+	function PreferencesForm_AddPanelLists(&$PreferencesForm) {
+		$PreferencesForm->AddPreference("ControlPanel", "DisplayBookmarks", "ShowBookmarks");
+		$PreferencesForm->AddPreference("ControlPanel", "DisplayYourDiscussions", "ShowRecentDiscussions");
+		$PreferencesForm->AddPreference("ControlPanel", "DisplayBrowsingHistory", "ShowBrowsingHistory");
 		if ($PreferencesForm->Context->Configuration["ENABLE_WHISPERS"]) $PreferencesForm->AddPreference("ControlPanel", "DisplayPrivateDiscussions", "ShowPrivateDiscussions");
-   }
+	}
 }
 
 if (in_array($Context->SelfUrl, array("index.php", "comments.php"))) {
-   function AddBookmarksToPanel(&$Context, &$Panel, &$DiscussionManager, $OptionalDiscussionID = "0") {
-      
-      $sReturn = "";
+	function AddBookmarksToPanel(&$Context, &$Panel, &$DiscussionManager, $OptionalDiscussionID = "0") {
+
+		$sReturn = "";
 		if ($Context->Session->User->Preference("ShowBookmarks")) {
 			$UserBookmarks = $DiscussionManager->GetBookmarkedDiscussionsByUserID($Context->Session->UserID, $Context->Configuration["PANEL_BOOKMARK_COUNT"], $OptionalDiscussionID);
 			$Count = $Context->Database->RowCount($UserBookmarks);
@@ -76,190 +78,158 @@ if (in_array($Context->SelfUrl, array("index.php", "comments.php"))) {
 				if ($Count >= $Context->Configuration["PANEL_BOOKMARK_COUNT"]) {
 					$sReturn .= "<li><a href=\"".GetUrl($Context->Configuration, "index.php", "", "", "", "", "View=Bookmarks")."\">".$Context->GetDefinition("ShowAll")."</a></li>";
 				}
-	
+
 				$sReturn = "<ul><li><h2 id=\"BookmarkTitle\"".(($OtherBookmarksExist || $ThisDiscussionIsBookmarked)?"":" style=\"display: none;\"").">".$Context->GetDefinition("Bookmarks")."</h2>
 				<ul id=\"BookmarkList\"".(($OtherBookmarksExist || $ThisDiscussionIsBookmarked)?"":" style=\"display: none;\"").">"
-				.$sReturn
-				."</ul></li></ul>";
-	
+						.$sReturn
+						."</ul></li></ul>";
+
 			}
 			$sReturn .= "<form id=\"frmBookmark\" action=\"\"><div class=\"Hidden\"><input type=\"hidden\" name=\"OtherBookmarksExist\" value=\"".$OtherBookmarksExist."\" /></div></form>";
 		} else {
 			$sReturn = "<form id=\"frmBookmark\" action=\"\"><div class=\"Hidden\"><input type=\"hidden\" name=\"OtherBookmarksExist\" value=\"1\" /></div></form>";
 		}
-      $Panel->AddString($sReturn, 20);
-   }
-   
-   function AddDiscussionsToPanel(&$Context, &$Panel, $DataManager, $GetDataMethod, $MaxRecords, $ListTitle, $UrlAction, $PermissionRequirement) {
-      if ($PermissionRequirement && $Context->Session->UserID > 0) {
-         $Data = $DataManager->$GetDataMethod($Context->Session->UserID, $MaxRecords);
-         $ActualRecords = $Context->Database->RowCount($Data);
-         if ($ActualRecords > 0) {
+		$Panel->AddString($sReturn, 20);
+	}
+
+	function AddDiscussionsToPanel(&$Context, &$Panel, $DataManager, $GetDataMethod, $MaxRecords, $ListTitle, $UrlAction, $PermissionRequirement) {
+		if ($PermissionRequirement && $Context->Session->UserID > 0) {
+			$Data = $DataManager->$GetDataMethod($Context->Session->UserID, $MaxRecords);
+			$ActualRecords = $Context->Database->RowCount($Data);
+			if ($ActualRecords > 0) {
 				$Panel->AddList($ListTitle, 21);
-            $Discussion = $Context->ObjectFactory->NewContextObject($Context, "Discussion");
-            while ($Row = $Context->Database->GetRow($Data)) {
-               $Discussion->Clear();
-               $Discussion->GetPropertiesFromDataSet($Row, $Context->Configuration);
-               $Discussion->FormatPropertiesForDisplay();
-               $Suffix = "";
-               if ($Discussion->NewComments > 0) $Suffix .= str_replace('//1', $Discussion->NewComments, $Context->GetDefinition("XNew"));
-               $Panel->AddListItem($ListTitle, $Discussion->Name, GetUnreadQuerystring($Discussion, $Context->Configuration, $Context->Session->User->Preference('JumpToLastReadComment')), $Suffix);
-            }
-            if ($ActualRecords >= $MaxRecords) $Panel->AddListItem($ListTitle, $Context->GetDefinition("ShowAll"), GetUrl($Context->Configuration, "index.php", "", "", "", "", "View=".$UrlAction));
-         }
-      }
-   }
-   
+				$Discussion = $Context->ObjectFactory->NewContextObject($Context, "Discussion");
+				while ($Row = $Context->Database->GetRow($Data)) {
+					$Discussion->Clear();
+					$Discussion->GetPropertiesFromDataSet($Row, $Context->Configuration);
+					$Discussion->FormatPropertiesForDisplay();
+					$Suffix = "";
+					if ($Discussion->NewComments > 0) $Suffix .= str_replace('//1', $Discussion->NewComments, $Context->GetDefinition("XNew"));
+					$Panel->AddListItem($ListTitle, $Discussion->Name, GetUnreadQuerystring($Discussion, $Context->Configuration, $Context->Session->User->Preference('JumpToLastReadComment')), $Suffix);
+				}
+				if ($ActualRecords >= $MaxRecords) $Panel->AddListItem($ListTitle, $Context->GetDefinition("ShowAll"), GetUrl($Context->Configuration, "index.php", "", "", "", "", "View=".$UrlAction));
+			}
+		}
+	}
+
 	$DiscussionManager = $Context->ObjectFactory->NewContextObject($Context, "DiscussionManager");
 	AddBookmarksToPanel($Context, $Panel, $DiscussionManager, ForceIncomingInt("DiscussionID", 0));
 	AddDiscussionsToPanel($Context, $Panel, $DiscussionManager, "GetDiscussionsByUserID",$Configuration["PANEL_USER_DISCUSSIONS_COUNT"], $Context->GetDefinition("YourDiscussions"), "YourDiscussions", $Context->Session->User->Preference("ShowRecentDiscussions"));
 	AddDiscussionsToPanel($Context, $Panel, $DiscussionManager, "GetViewedDiscussionsByUserID", $Configuration["PANEL_HISTORY_COUNT"], $Context->GetDefinition('BrowsingHistory'), "History", $Context->Session->User->Preference("ShowBrowsingHistory"));
-   if ($Configuration["ENABLE_WHISPERS"] && $Context->Session->User->Preference("ShowPrivateDiscussions")) {
-      AddDiscussionsToPanel($Context, $Panel, $DiscussionManager, "GetPrivateDiscussionsByUserID", $Configuration["PANEL_PRIVATE_COUNT"], $Context->GetDefinition("WhisperedDiscussions"), "Private", $Context->Session->User->Preference("ShowPrivateDiscussions"));
+	if ($Configuration["ENABLE_WHISPERS"] && $Context->Session->User->Preference("ShowPrivateDiscussions")) {
+		AddDiscussionsToPanel($Context, $Panel, $DiscussionManager, "GetPrivateDiscussionsByUserID", $Configuration["PANEL_PRIVATE_COUNT"], $Context->GetDefinition("WhisperedDiscussions"), "Private", $Context->Session->User->Preference("ShowPrivateDiscussions"));
 	}
-	
+
 }
 
 if ($Context->SelfUrl == "comments.php") {
 	if ($Context->Session->User->Preference("ShowBookmarks")) {
 		// Include the js required to remove/add the discussions to the panel when
 		// items are un/bookmarked
-		$Head->AddScript('extensions/PanelLists/functions.js');
+		$Head->AddScript('extensions/PanelLists/functions.js', '~', 390);
 		$Context->PassThruVars['SetBookmarkOnClick'] .= ' SetBookmarkList('.ForceIncomingInt('DiscussionID', 0).');';
 	}
 }
 
 // Apply discussion filters
 if ($Context->SelfUrl == 'index.php') {
-   $View = ForceIncomingString("View", "");
-   switch ($View) {
-      case "Bookmarks":
-         $Context->PageTitle = $Context->GetDefinition("Bookmarks");
-         function DiscussionManager_FilterToBookmarks(&$DiscussionManager) {
-            $s = &$DiscussionManager->DelegateParameters['SqlBuilder'];
-            $s->AddWhere('b', 'DiscussionID', 't', 'DiscussionID', '=', 'and', '', 0, 1);
-            $s->AddWhere('b', 'UserID', '', $DiscussionManager->Context->Session->UserID, '=');
-            $s->EndWhereGroup();
-         }
-         $Context->AddToDelegate("DiscussionManager",
-            "PreGetDiscussionList",
-            "DiscussionManager_FilterToBookmarks");
-         $Context->AddToDelegate("DiscussionManager",
-            "PreGetDiscussionCount",
-            "DiscussionManager_FilterToBookmarks");
-         break;
-      
-      case "YourDiscussions":
-         $Context->PageTitle = $Context->GetDefinition("YourDiscussions");
-         function DiscussionManager_FilterToYourDiscussions(&$DiscussionManager) {
-            $s = &$DiscussionManager->DelegateParameters['SqlBuilder'];
-      		$s->AddWhere('t', 'AuthUserID', '', $DiscussionManager->Context->Session->UserID, '=');            
-         }
-         $Context->AddToDelegate("DiscussionManager",
-            "PreGetDiscussionList",
-            "DiscussionManager_FilterToYourDiscussions");
-         $Context->AddToDelegate("DiscussionManager",
-            "PreGetDiscussionCount",
-            "DiscussionManager_FilterToYourDiscussions");
-         break;
-      
-      case "Private":
-         $Context->PageTitle = $Context->GetDefinition("WhisperedDiscussions");
-         function DiscussionManager_FilterToPrivateDiscussions(&$DiscussionManager) {
-            $s = &$DiscussionManager->DelegateParameters['SqlBuilder'];
-            $s->AddWhere('t', 'WhisperUserID', '', $DiscussionManager->Context->Session->UserID, '=', 'and', '', 0, 1);
-            $s->AddWhere('t', 'AuthUserID', '', $DiscussionManager->Context->Session->UserID, '=', 'or', '', 0, 1);
-            $s->AddWhere('t', 'WhisperUserID', '', 0, '>', 'and');
-            $s->EndWhereGroup();
-            $s->EndWhereGroup();
-         }
-         $Context->AddToDelegate("DiscussionManager",
-            "PreGetDiscussionList",
-            "DiscussionManager_FilterToPrivateDiscussions");
-         $Context->AddToDelegate("DiscussionManager",
-            "PreGetDiscussionCount",
-            "DiscussionManager_FilterToPrivateDiscussions");
-         break;
-      case "History":
-         $Context->PageTitle = $Context->GetDefinition("BrowsingHistory");
-         function DiscussionManager_FilterToDiscussionHistory(&$DiscussionManager) {
-            $s = &$DiscussionManager->DelegateParameters['SqlBuilder'];
+	$View = ForceIncomingString("View", "");
+	switch ($View) {
+		case "Bookmarks":
+			$Context->PageTitle = $Context->GetDefinition("Bookmarks");
+			function DiscussionManager_FilterToBookmarks(&$DiscussionManager) {
+				$s = &$DiscussionManager->DelegateParameters['SqlBuilder'];
+				$s->AddWhere('b', 'DiscussionID', 't', 'DiscussionID', '=', 'and', '', 0, 1);
+				$s->AddWhere('b', 'UserID', '', $DiscussionManager->Context->Session->UserID, '=');
+				$s->EndWhereGroup();
+			}
+			$Context->AddToDelegate("DiscussionManager",
+					"PreGetDiscussionList",
+					"DiscussionManager_FilterToBookmarks");
+			$Context->AddToDelegate("DiscussionManager",
+					"PreGetDiscussionCount",
+					"DiscussionManager_FilterToBookmarks");
+			break;
+
+		case "YourDiscussions":
+			$Context->PageTitle = $Context->GetDefinition("YourDiscussions");
+			function DiscussionManager_FilterToYourDiscussions(&$DiscussionManager) {
+				$s = &$DiscussionManager->DelegateParameters['SqlBuilder'];
+				$s->AddWhere('t', 'AuthUserID', '', $DiscussionManager->Context->Session->UserID, '=');
+			}
+			$Context->AddToDelegate("DiscussionManager",
+					"PreGetDiscussionList",
+					"DiscussionManager_FilterToYourDiscussions");
+			$Context->AddToDelegate("DiscussionManager",
+					"PreGetDiscussionCount",
+					"DiscussionManager_FilterToYourDiscussions");
+			break;
+
+		case "Private":
+			$Context->PageTitle = $Context->GetDefinition("WhisperedDiscussions");
+			function DiscussionManager_FilterToPrivateDiscussions(&$DiscussionManager) {
+				$s = &$DiscussionManager->DelegateParameters['SqlBuilder'];
+				$s->AddWhere('t', 'WhisperUserID', '', $DiscussionManager->Context->Session->UserID, '=', 'and', '', 0, 1);
+				$s->AddWhere('t', 'AuthUserID', '', $DiscussionManager->Context->Session->UserID, '=', 'or', '', 0, 1);
+				$s->AddWhere('t', 'WhisperUserID', '', 0, '>', 'and');
+				$s->EndWhereGroup();
+				$s->EndWhereGroup();
+			}
+			$Context->AddToDelegate("DiscussionManager",
+					"PreGetDiscussionList",
+					"DiscussionManager_FilterToPrivateDiscussions");
+			$Context->AddToDelegate("DiscussionManager",
+					"PreGetDiscussionCount",
+					"DiscussionManager_FilterToPrivateDiscussions");
+			break;
+		case "History":
+			$Context->PageTitle = $Context->GetDefinition("BrowsingHistory");
+			function DiscussionManager_FilterToDiscussionHistory(&$DiscussionManager) {
+				$s = &$DiscussionManager->DelegateParameters['SqlBuilder'];
 				$s->AddWhere('utw', 'UserID', '', $DiscussionManager->Context->Session->UserID, '=');
 				$s->AddOrderBy('LastViewed', 'utw', 'desc');
-         }
-         $Context->AddToDelegate("DiscussionManager",
-            "PreGetDiscussionList",
-            "DiscussionManager_FilterToDiscussionHistory");
-				
+			}
+			$Context->AddToDelegate("DiscussionManager",
+					"PreGetDiscussionList",
+					"DiscussionManager_FilterToDiscussionHistory");
+
 			function DiscussionManager_FilterToHistoryCount(&$DiscussionManager) {
 				$s = &$DiscussionManager->DelegateParameters['SqlBuilder'];
 				$s->AddJoin('UserDiscussionWatch', 'utw', 'DiscussionID', 't', 'DiscussionID', 'left join', ' and utw.'.$DiscussionManager->Context->DatabaseColumns['UserDiscussionWatch']['UserID'].' = '.$DiscussionManager->Context->Session->UserID);
 				$s->AddWhere('utw', 'UserID', '', $DiscussionManager->Context->Session->UserID, '=');
 			}
 			$Context->AddToDelegate('DiscussionManager',
-				'PreGetDiscussionCount',
-				'DiscussionManager_FilterToHistoryCount');				
-				
+					'PreGetDiscussionCount',
+					'DiscussionManager_FilterToHistoryCount');
+
 			function DiscussionGrid_ClearPageJump(&$DiscussionGrid) {
 				$DiscussionGrid->PageJump = '';
 			}
 			$Context->AddToDelegate('DiscussionGrid',
-				'PreDataLoad',
-				'DiscussionGrid_ClearPageJump');
-				
-         break;
-   }   
+					'PreDataLoad',
+					'DiscussionGrid_ClearPageJump');
+
+			break;
+	}
 }
 
 // Add the preferences to the globals form
 if ($Context->SelfUrl == 'settings.php') {
 	function GlobalsForm_AddPanelFilterCounts(&$GlobalsForm) {
-		echo '<li>
-            <label for="ddMaxBookmarksInPanel">'.$GlobalsForm->Context->GetDefinition('MaxBookmarksInPanel').'</label>
-            ';
-            $Selector = $GlobalsForm->Context->ObjectFactory->NewObject($GlobalsForm->Context, 'Select');
-            $Selector->CssClass = 'SmallSelect';
-            $Selector->Attributes = ' id="ddMaxBookmarksInPanel"';
-            $Selector->Name = 'PANEL_BOOKMARK_COUNT';
-            for ($i = 3; $i < 11; $i++) {
-               $Selector->AddOption($i, $i);
-            }
-            for ($i = 15; $i < 51; $i++) {
-               $Selector->AddOption($i, $i);
-               $i += 4;
-            }
-            $Selector->SelectedValue = $GlobalsForm->ConfigurationManager->GetSetting('PANEL_BOOKMARK_COUNT');
-            echo $Selector->Get().'
-         </li>
-         <li>
-            <label for="ddMaxPrivateInPanel">'.$GlobalsForm->Context->GetDefinition('MaxPrivateInPanel').'</label>
-            ';
-            $Selector->Name = 'PANEL_PRIVATE_COUNT';
-            $Selector->Attributes = ' id="ddMaxPrivateInPanel"';
-            $Selector->SelectedValue = $GlobalsForm->ConfigurationManager->GetSetting('PANEL_PRIVATE_COUNT');
-            echo $Selector->Get().'
-         </li>
-         <li>
-            <label for="ddMaxBrowsingHistoryInPanel">'.$GlobalsForm->Context->GetDefinition('MaxBrowsingHistoryInPanel').'</label>
-            ';
-            $Selector->Name = 'PANEL_HISTORY_COUNT';
-            $Selector->Attributes = ' id="ddMaxBrowsingHistoryInPanel"';
-            $Selector->SelectedValue = $GlobalsForm->ConfigurationManager->GetSetting('PANEL_HISTORY_COUNT');
-            echo $Selector->Get().'
-         </li>
-         <li>
-            <label for="ddMaxDiscussionsInPanel">'.$GlobalsForm->Context->GetDefinition('MaxDiscussionsInPanel').'</label>
-            ';
-            $Selector->Name = 'PANEL_USER_DISCUSSIONS_COUNT';
-            $Selector->Attributes = ' id="ddMaxDiscussionsInPanel"';
-            $Selector->SelectedValue = $GlobalsForm->ConfigurationManager->GetSetting('PANEL_USER_DISCUSSIONS_COUNT');
-            echo $Selector->Get().'
-         </li>';
+		$DefaultThemeDir = dirname(__FILE__) . '/theme/';
+		if (version_compare(APPLICATION_VERSION, '1.2-dev', '<')) {
+			$ThemeFile = $DefaultThemeDir . 'PanelLists_global_form.php';
+		} else {
+			$ThemeFile = ThemeFilePath(
+					$GlobalsForm->Context->Configuration,
+					'PanelLists_global_form.php',
+					$DefaultThemeDir);
+		}
+		include($ThemeFile);
 	}
-	
-	$Context->AddToDelegate('GlobalsForm',
-		'PostCounts',
-		'GlobalsForm_AddPanelFilterCounts');
 
-}  
-?>
+	$Context->AddToDelegate('GlobalsForm',
+			'PostCounts',
+			'GlobalsForm_AddPanelFilterCounts');
+
+}

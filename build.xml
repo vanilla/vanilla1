@@ -165,6 +165,7 @@
 		<buildExtension name="TextMode"/>
 		<buildExtension name="PrivateAccounts"/>
 		<buildExtension name="PreviewPost"/>
+		<buildExtension name="PanelLists"/>
     	
     </target>
 	
