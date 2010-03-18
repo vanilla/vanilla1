@@ -1,17 +1,25 @@
 <?php
 /*
-Extension Name: Hide Success
+Extension Name: http://vanillaforums.org/addon/44/hide-success
 Extension Url: http://lussumo.com/addons/
 Description: Makes "Your changes were saved" messages disappear with a shrink effect after a moment.
-Version: 1.0
+Version: 1.1
 Author: Mark O'Sullivan
 Author Url: http://www.markosullivan.ca/
-*/
+ *
+ * Copyright 2006 Mark O'Sullivan <http://www.markosullivan.ca/>
+ * Copyright 2010 Damien Lebrun <dinoboff@gmail.com>
+ * 
+ */
 
 
-if (in_array($Context->SelfUrl, array('settings.php', 'account.php'))) {
-   $Head->AddScript('extensions/HideSuccess/functions.js');
-   $Head->AddString("
+if (!in_array($Context->SelfUrl, array('settings.php', 'account.php'))) {
+	return;
+}
+
+if (version_compare(APPLICATION_VERSION, '1.2-dev', '<')) {
+	$Head->AddScript('extensions/HideSuccess/functions.js');
+	$Head->AddString("
       <script type=\"text/javascript\">
          // Initialize hide effects
          var EffectTimer;
@@ -19,5 +27,7 @@ if (in_array($Context->SelfUrl, array('settings.php', 'account.php'))) {
          setTimeout(\"ExecuteEffect('Success', 'HideEffect', 9);\", 2000);
       </script>
       ");
+} else {
+	$Head->AddScript('js/jquery.js', '~', 190);
+	$Head->AddScript('extensions/HideSuccess/jquery.hidesuccess.js', '~', 310);
 }
-?>
