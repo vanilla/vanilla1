@@ -20,7 +20,7 @@ $Context->SetDefinition(
 		'FriendlyUrlRememder',
 		'<strong>Friendly Url is not yet configured.</strong> <br/>'
 			. 'Copy the content of '
-			. '<var>extensions/FriendlyUrls/.htaccess</var> '
+			. '<var>extensions/FriendlyUrls/apache.conf</var> '
 			. 'to <var>/Path/To/Forum/Root/.htaccess</var>; <br/>'
 			. ' then add <code>'
 			. '$Configuration[\'URL_BUILDING_METHOD\'] = \'mod_rewrite\';'
