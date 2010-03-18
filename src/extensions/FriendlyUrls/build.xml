@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+	 Thu 18 Mar
+
+	 Friendly Urls
+	 Package the Friendly Urls extension
+
+====================================================================== -->
+<project name="FriendlyUrls" default="build">
+
+	<description>
+		Package the Friendly Urls extension
+	</description>
+
+	<property name="antlib.dir" location="../../../tools/ant-library/"/>
+	<import file="${antlib.dir}/extension.xml"/>
+
+</project>
