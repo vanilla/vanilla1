@@ -170,6 +170,7 @@
 		<buildExtension name="Legends"/>
 		<buildExtension name="IpHistory"/>
 		<buildExtension name="HideSuccess"/>
+		<buildExtension name="GuestWelcome"/>
 
     	
     </target>
