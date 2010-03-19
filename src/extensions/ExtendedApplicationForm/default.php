@@ -1,11 +1,11 @@
 <?php
 /*
 Extension Name: Extended Application Form
-Extension Url: http://lussumo.com/docs/
+Extension Url: http://vanillaforums.org/addon/69/extended-application-form
 Description: Extends the application form so that the user's first and last name are required. It also checks that the user actually clicked to read the Terms of Service.
-Version: 1.0
+Version: 1.0.1
 Author: Mark O'Sullivan
-Author Url: N/A
+Author Url: http://markosullivan.ca/
 
 Copyright 2003 - 2005 Mark O'Sullivan
 This file is part of Lussumo's Software Library.
@@ -14,55 +14,64 @@ Lussumo's Software Library is distributed in the hope that it will be useful, bu
 You should have received a copy of the GNU General Public License along with Vanilla; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 The latest source code is available at www.lussumo.com
 Contact Mark O'Sullivan at mark [at] lussumo [dot] com
-
-You should cut & paste these language definitions into your
-conf/your_language.php file (replace "your_language" with your chosen language,
-of course):
 */
-$Context->Dictionary["FirstName"] = "First name";
-$Context->Dictionary["LastName"] = "Last name";
-$Context->Dictionary["FirstNameLower"] = "first name";
-$Context->Dictionary["LastNameLower"] = "last name";
-$Context->Dictionary["ErrReadTOS"] = "You must READ the terms of service.";
+
+if (!defined('IN_VANILLA')) exit();
 
 
-if ($Context->SelfUrl == 'people.php' && in_array(ForceIncomingString('PostBackAction', ''), array('ApplyForm', 'Apply'))) {
-   
-	// Add the Real name inputs to the application form
-	function ApplicationForm_AddRealNameInputs($ApplyForm) {
-		echo '<li>
-			<label for="txtFirstName">'.$ApplyForm->Context->GetDefinition('FirstName').'</label>
-			<input id="txtFirstName" type="text" name="FirstName" value="'.$ApplyForm->Applicant->FirstName.'" class="Input" maxlength="40" />
-		</li>
-		<li>
-			<label for="LastName">'.$ApplyForm->Context->GetDefinition('LastName').'</label>
-			<input id="txtLastName" type="text" name="LastName" value="'.$ApplyForm->Applicant->LastName.'" class="Input" maxlength="40" />
-		</li>';
+$Context->SetDefinition("FirstName", "First name");
+$Context->SetDefinition("LastName", "Last name");
+$Context->SetDefinition("FirstNameLower", "first name");
+$Context->SetDefinition("LastNameLower", "last name");
+$Context->SetDefinition("ErrReadTOS", "You must READ the terms of service.");
+
+
+if (!$Context->SelfUrl == 'people.php' 
+	|| !in_array(
+		ForceIncomingString('PostBackAction', ''),
+		array('ApplyForm', 'Apply'))
+) {
+	return;
+}
+
+
+// Add the Real name inputs to the application form
+function ApplicationForm_AddRealNameInputs($ApplyForm) {
+	$DefaultThemeDir = dirname(__FILE__) . '/theme/';
+	if (version_compare(APPLICATION_VERSION, '1.2-dev', '<')) {
+		$ThemeFile = $DefaultThemeDir . 'ExtendedApplicationForm_aply_form.php';
+	} else {
+		$ThemeFile = ThemeFilePath(
+				$ApplyForm->Context->Configuration,
+				'ExtendedApplicationForm_aply_form.php',
+				$DefaultThemeDir);
 	}
-   
-   $Context->AddToDelegate('ApplyForm',
-      'PreInputsRender',
-      'ApplicationForm_AddRealNameInputs');
-      
-      
-   // Add the requirements to the membership application processing
-   function ApplicationForm_AddRequirements(&$ApplyForm) {
-      $SafeUser = $ApplyForm->Applicant;
-      $SafeUser->FormatPropertiesForDatabaseInput();
-		Validate($ApplyForm->Context->GetDefinition('FirstNameLower'), 1, $SafeUser->FirstName, 50, "", $ApplyForm->Context);
-		Validate($ApplyForm->Context->GetDefinition('LastNameLower'), 1, $SafeUser->LastName, 50, "", $ApplyForm->Context);
-      // Make sure that they actually read the terms of service
-		if (!$SafeUser->ReadTerms) $ApplyForm->Context->WarningCollector->Add($ApplyForm->Context->GetDefinition("ErrReadTOS"));
-   }
+	include($ThemeFile);
+}
 
-   $Context->AddToDelegate('ApplyForm',
-      'PreCreateUser',
-      'ApplicationForm_AddRequirements');
-		
-		
-	// Remove the existing javascript for this page and add my own
-   $Head->ClearScripts();
-   $Head->AddString('
+$Context->AddToDelegate('ApplyForm',
+		'PreInputsRender',
+		'ApplicationForm_AddRealNameInputs');
+
+
+// Add the requirements to the membership application processing
+function ApplicationForm_AddRequirements(&$ApplyForm) {
+	$SafeUser = $ApplyForm->Applicant;
+	$SafeUser->FormatPropertiesForDatabaseInput();
+	Validate($ApplyForm->Context->GetDefinition('FirstNameLower'), 1, $SafeUser->FirstName, 50, "", $ApplyForm->Context);
+	Validate($ApplyForm->Context->GetDefinition('LastNameLower'), 1, $SafeUser->LastName, 50, "", $ApplyForm->Context);
+	// Make sure that they actually read the terms of service
+	if (!$SafeUser->ReadTerms) $ApplyForm->Context->WarningCollector->Add($ApplyForm->Context->GetDefinition("ErrReadTOS"));
+}
+
+$Context->AddToDelegate('ApplyForm',
+		'PreCreateUser',
+		'ApplicationForm_AddRequirements');
+
+
+// Remove the existing javascript for this page and add my own
+$Head->ClearScripts();
+$Head->AddString('
 	<script language="javascript">
 		function PopTermsOfService(Url) {
 			var frm = document.getElementById("ApplicationForm");
@@ -71,18 +80,16 @@ if ($Context->SelfUrl == 'people.php' && in_array(ForceIncomingString('PostBackA
 		}
 	</script>
 	', 0, 1);
-      
-   // Add the requirement to the identity form on the account page as well
-   function IdentityForm_AddRequirements(&$IdentityForm) {
-      $SafeUser = $IdentityForm->User;
-      $SafeUser->FormatPropertiesForDatabaseInput();
-		Validate($IdentityForm->Context->GetDefinition('FirstNameLower'), 1, $SafeUser->FirstName, 50, '', $IdentityForm->Context);
-		Validate($IdentityForm->Context->GetDefinition('LastNameLower'), 1, $SafeUser->LastName, 50, '', $IdentityForm->Context);
-   }
 
-   $Context->AddToDelegate('IdentityForm',
-      'PreSaveIdentity',
-      'IdentityForm_AddRequirements');   
-   
+// Add the requirement to the identity form on the account page as well
+function IdentityForm_AddRequirements(&$IdentityForm) {
+	$SafeUser = $IdentityForm->User;
+	$SafeUser->FormatPropertiesForDatabaseInput();
+	Validate($IdentityForm->Context->GetDefinition('FirstNameLower'), 1, $SafeUser->FirstName, 50, '', $IdentityForm->Context);
+	Validate($IdentityForm->Context->GetDefinition('LastNameLower'), 1, $SafeUser->LastName, 50, '', $IdentityForm->Context);
 }
-?>
+
+$Context->AddToDelegate('IdentityForm',
+		'PreSaveIdentity',
+		'IdentityForm_AddRequirements');
+
