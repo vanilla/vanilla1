@@ -172,6 +172,7 @@
 		<buildExtension name="HideSuccess"/>
 		<buildExtension name="GuestWelcome"/>
 		<buildExtension name="FriendlyUrls"/>
+		<buildExtension name="ExtendedApplicationForm"/>
 
     	
     </target>
