@@ -173,6 +173,7 @@
 		<buildExtension name="GuestWelcome"/>
 		<buildExtension name="FriendlyUrls"/>
 		<buildExtension name="ExtendedApplicationForm"/>
+		<buildExtension name="DiscussionFilters"/>
 
     	
     </target>
