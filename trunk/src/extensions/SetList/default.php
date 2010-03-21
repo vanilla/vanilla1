@@ -13,6 +13,8 @@ if ( 'settings.php' != $Context->SelfUrl ) {
 	return;
 }
 
+$Context->SetDefinition("ExtensionOptions", "Extension Options");
+
 /**
  * Displays an extension's settings form based on an array of form data.
  *
