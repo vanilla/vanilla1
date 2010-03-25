@@ -11,7 +11,7 @@ echo '<div id="Form" class="Account Extensions Applicants">';
 
 		<ul>';
 			if ($this->Context->Database->RowCount($this->ApplicantData) > 0) {
-				echo '<li class="CheckController"><p>'.$this->Context->GetDefinition('Check')				." <a href=\"./\" onclick=\"CheckAll('ApplicantID'); return false;\">".$this->Context->GetDefinition('All').'</a>, '				." <a href=\"./\" onclick=\"CheckNone('ApplicantID'); return false;\">".$this->Context->GetDefinition('None').'</a></p></li>';
+				echo '<li class="CheckController"><p>'.$this->Context->GetDefinition('Check')				." <a href=\"./\" onclick=\"CheckAll('ApplicantID'); return false;\">".$this->Context->GetDefinition('All').'</a>, '				." <a href=\"./\" onclick=\"CheckNone('ApplicantID'); return false;\">".$this->Context->GetDefinition('None').'</a></p></li>';
 
 				$ApplicantList = '';
 				$Applicant = $this->Context->ObjectFactory->NewContextObject($this->Context, 'User');
