@@ -47,7 +47,7 @@ echo '<div id="Form" class="Account RoleEditForm">
 				<br />'.$this->Context->GetDefinition('RoleAbilitiesNotes').'
 			</p>
 		</li>
-		<li>			<p class="Description">			'.$this->Context->GetDefinition('Check')			." <a href=\"./\" onclick=\"CheckAll('PERMISSION_'); return false;\">".$this->Context->GetDefinition('All').'</a>, '			." <a href=\"./\" onclick=\"CheckNone('PERMISSION_'); return false;\">".$this->Context->GetDefinition('None').'</a>			</p>		</li>';
+		<li>			<p class="Description">			'.$this->Context->GetDefinition('Check')			." <a href=\"./\" onclick=\"CheckAll('PERMISSION_'); return false;\">".$this->Context->GetDefinition('All').'</a>, '			." <a href=\"./\" onclick=\"CheckNone('PERMISSION_'); return false;\">".$this->Context->GetDefinition('None').'</a>			</p>		</li>';
 
 		while (list($PermissionKey, $PermissionValue) = each($this->Role->Permissions)) {
 			echo '<li>
@@ -64,7 +64,7 @@ echo '<div id="Form" class="Account RoleEditForm">
 					<br /><strong>'.$this->Context->GetDefinition('RoleCategoryNotes').'</strong>
 				</p>
 			</li>
-			<li>				<p class="Description">				'.$this->Context->GetDefinition('Check')				." <a href=\"./\" onclick=\"CheckAll('AllowedCategoryID'); return false;\">".$this->Context->GetDefinition('All').'</a>, '				." <a href=\"./\" onclick=\"CheckNone('AllowedCategoryID'); return false;\">".$this->Context->GetDefinition('None').'</a>				</p>			</li>';
+			<li>				<p class="Description">				'.$this->Context->GetDefinition('Check')				." <a href=\"./\" onclick=\"CheckAll('AllowedCategoryID'); return false;\">".$this->Context->GetDefinition('All').'</a>, '				." <a href=\"./\" onclick=\"CheckNone('AllowedCategoryID'); return false;\">".$this->Context->GetDefinition('None').'</a>				</p>			</li>';
 
 			while ($Row = $this->Context->Database->GetRow($this->CategoryData)) {
 				echo '<li>
