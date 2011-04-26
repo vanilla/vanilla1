@@ -101,7 +101,8 @@ if(HTML_VIDEO_TAG)
 				<param name="allowscriptaccess" value="always" />
 				<param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=VIDEO_ID&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=0&amp;show_portrait=0&amp;color=00ADEF&amp;fullscreen=1" />
 				<embed src="http://vimeo.com/moogaloop.swf?clip_id=VIDEO_ID&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=0&amp;show_portrait=0&amp;color=00ADEF&amp;fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="640" height="360"></embed>
-			</object>'
+			</object>',
+		'flickr' => '<object type="application/x-shockwave-flash" width="400" height="300" data="http://www.flickr.com/apps/video/stewart.swf?v=VIDEO_ID" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"> <param name="flashvars" value="intl_lang=en-us&amp;photo_secret=a80915961b&amp;photo_id=3379790266"></param> <param name="movie" value="http://www.flickr.com/apps/video/stewart.swf?v=VIDEO_ID"></param> <param name="bgcolor" value="#000000"></param> <param name="allowFullScreen" value="true"></param><embed type="application/x-shockwave-flash" src="http://www.flickr.com/apps/video/stewart.swf?v=VIDEO_ID" bgcolor="#000000" allowfullscreen="true" flashvars="intl_lang=en-us&amp;photo_secret=a80915961b&amp;photo_id=3379790266" height="300" width="400"></embed></object>'
 	);
 
 // Which tags should simply be removed (be warned, most of these are here because they are not safe
