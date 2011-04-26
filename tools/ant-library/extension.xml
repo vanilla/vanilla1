@@ -139,7 +139,7 @@
           target: getVersion                      
          - - - - - - - - - - - - - - - - - -->
 	<target name="getVersion" unless="package.version">
-		<echo>Gettings extension version...</echo>
+		<echo>Getting extension version...</echo>
 		<loadproperties srcfile="${src.dir}/default.php">
 			<filterchain>
 				<containsregex pattern="\s*Version\:\s*(.*)" replace="package.version = \1"/>
