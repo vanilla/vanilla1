@@ -1,5 +1,0 @@
-Expire: Automatically close or sink old discussions.
-2008 squirrel <szquirrel@gmail.com>
-
-The author of this code hereby releases it into the public domain.
-Do what you will with it.
