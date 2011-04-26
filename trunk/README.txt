@@ -41,10 +41,11 @@ Like on OSX 10.6, but you will have first to install Ant and subversion:
 On Windows
 ----------
 
-- Install a Java development kit 
+- Install a Java Development Kit or put its files in a folder called "jdk" in the tools folder
   (<http://java.sun.com/javase/downloads/index.jsp>, version 1.5 or higher);
   
-- Install Ant (http://ant.apache.org/bindownload.cgi). 
+- Install Ant or put its files in a folder called "ant" in the tools folder
+  (http://ant.apache.org/bindownload.cgi).
   You just need to unzip the binary version anywhere 
   on your computer and set some environment variables 
   (on Windows Vista, open the control panel and search for "environment variables").
