@@ -30,7 +30,7 @@ if (in_array(
 			)
 		)
 ){
-	if (version_compare(APPLICATION_VERSION, '1.2-dev') < 0) {
+	if (version_compare(APPLICATION_VERSION, '1.2') < 0) {
 		$Head->AddScript('extensions/YellowFade/functions.js', '~');
 	} else {
 		$Head->AddScript('js/jquery.js', '~', 190);

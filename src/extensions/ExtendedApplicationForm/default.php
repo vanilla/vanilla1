@@ -38,7 +38,7 @@ if (!$Context->SelfUrl == 'people.php'
 // Add the Real name inputs to the application form
 function ApplicationForm_AddRealNameInputs($ApplyForm) {
 	$DefaultThemeDir = dirname(__FILE__) . '/theme/';
-	if (version_compare(APPLICATION_VERSION, '1.2-dev', '<')) {
+	if (version_compare(APPLICATION_VERSION, '1.2', '<')) {
 		$ThemeFile = $DefaultThemeDir . 'ExtendedApplicationForm_aply_form.php';
 	} else {
 		$ThemeFile = ThemeFilePath(

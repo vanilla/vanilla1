@@ -50,7 +50,7 @@ if ($Context->SelfUrl == "account.php") {
 		function Render() {
 			if ($this->History && $this->PostBackAction == "") {
 				$DefaultThemeDir = dirname(__FILE__) . '/';
-				if (version_compare(APPLICATION_VERSION, '1.2-dev', '<')) {
+				if (version_compare(APPLICATION_VERSION, '1.2', '<')) {
 					$ThemeFile = $DefaultThemeDir . 'account_ip_history.php';
 				} else {
 					$ThemeFile = ThemeFilePath(

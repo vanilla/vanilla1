@@ -48,7 +48,7 @@ if ($Context->SelfUrl == "account.php") {
 				&& $this->Context->Database->RowCount($this->History) > 0
 			) {
 				$ThemeDir = dirname(__FILE__) . '/theme/';
-				if (version_compare(APPLICATION_VERSION, '1.2-dev', '<')) {
+				if (version_compare(APPLICATION_VERSION, '1.2', '<')) {
 					$ThemePath = $ThemeDir . 'RoleHistory_account_role_history.php';
 				} else {
 					$ThemePath = ThemeFilePath(
