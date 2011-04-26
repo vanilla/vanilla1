@@ -17,7 +17,7 @@ if (!in_array($Context->SelfUrl, array('settings.php', 'account.php'))) {
 	return;
 }
 
-if (version_compare(APPLICATION_VERSION, '1.2-dev', '<')) {
+if (version_compare(APPLICATION_VERSION, '1.2', '<')) {
 	$Head->AddScript('extensions/HideSuccess/functions.js');
 	$Head->AddString("
       <script type=\"text/javascript\">

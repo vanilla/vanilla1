@@ -217,7 +217,7 @@ if ($Context->SelfUrl == 'index.php') {
 if ($Context->SelfUrl == 'settings.php') {
 	function GlobalsForm_AddPanelFilterCounts(&$GlobalsForm) {
 		$DefaultThemeDir = dirname(__FILE__) . '/theme/';
-		if (version_compare(APPLICATION_VERSION, '1.2-dev', '<')) {
+		if (version_compare(APPLICATION_VERSION, '1.2', '<')) {
 			$ThemeFile = $DefaultThemeDir . 'PanelLists_global_form.php';
 		} else {
 			$ThemeFile = ThemeFilePath(
