@@ -72,6 +72,12 @@ if(HTML_VIDEO_TAG)
 				<embed src="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D22" type="application/x-shockwave-flash" width="853" height="505"></embed>
 			</object>',
 
+		'youtubehd' => '
+			<object width="853" height="505">
+				<param name="movie" value="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D22"></param>
+				<embed src="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D22" type="application/x-shockwave-flash" width="853" height="505"></embed>
+			</object>',
+
 		'youtubesd' => '
 			<object width="640" height="385">
 				<param name="movie" value="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D18"></param>
