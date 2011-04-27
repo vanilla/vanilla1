@@ -1429,9 +1429,9 @@ div.Applicants ul {
 	width:48% !important;
 	}
 .ProfileTitle.WithIcon h2 {
-	padding-left:4px !important;
-	width: auto;
-	}
+	padding-left:		10px !important;
+	width:			auto;
+}
 .ProfileTitle.WithIcon .ProfileIcon {
 	padding:9px 0 9px 30px;
 	background: #fff no-repeat center center;
@@ -1459,8 +1459,8 @@ div.Applicants ul {
 	margin-bottom: 6px;
 	}
 #AccountHistory {
-	margin-left:320px;
-	}
+	margin:			33px 0 0 320px;
+}
 html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
 	margin-left:300px !important;
 	}
@@ -1503,6 +1503,9 @@ html>body #AccountHistory { /* ugly hack, but fixes display error in IE. */
 	padding-bottom:0;
 	font-style:italic;
 	}
+#AccountPage #Content #Form {
+	float:			left;
+}
 
 /* Settings Home */
 
