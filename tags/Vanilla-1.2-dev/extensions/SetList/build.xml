@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Jan 24, 2010 20:21:00 PM                                                        
+
+     SetList
+     Package the SetList extension
+                                                                   
+     ====================================================================== -->
+<project name="SetList" default="build">
+    
+	<description>
+            Package the SetList extension
+    </description>
+	
+	<property name="antlib.dir" location="../../../tools/ant-library/"/>
+	<import file="${antlib.dir}/extension.xml"/>
+	
+</project>

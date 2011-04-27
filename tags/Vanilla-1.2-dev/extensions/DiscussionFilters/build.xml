@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+	 Sat 20 Mar
+
+	 DiscussionFilters
+	 Package the Discussion Filters extension
+
+====================================================================== -->
+<project name="DiscussionFilters" default="build">
+
+	<description>
+		Package the Discussion Filters extension
+	</description>
+
+	<property name="antlib.dir" location="../../../tools/ant-library/"/>
+	<import file="${antlib.dir}/extension.xml"/>
+
+</project>
