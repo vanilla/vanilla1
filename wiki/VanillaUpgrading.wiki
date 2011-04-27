@@ -1,4 +1,5 @@
 #summary How to upgrade Vanilla.
+#labels Phase-Deploy
 
 =How to upgrade Vanilla=
 
@@ -6,7 +7,11 @@
 
 _Problems?_
 
-Ask for help at the [http://lussumo.com/community community forum].
+Ask for help at the [http://vanillaforums.org/discussions community forum].
+
+== Upgrading from Vanilla 1.1.10 to Vanilla 1.2.1 ==
+
+Unzip the package and upload it to your server like normal.
 
 == Upgrading from Vanilla 1.1.9 to Vanilla 1.1.10 ==
 
