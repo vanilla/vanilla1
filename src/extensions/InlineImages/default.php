@@ -3,7 +3,7 @@
 Extension Name: Inline Images
 Extension Url: http://vanillaforums.org/addon/154/inline-images
 Description: Requires the Attachments extension. Displays attached images instead of linking to them.
-Version: 1.3
+Version: 1.4
 Author: Maurice (Jazzman) Krijtenberg
 Author Url: http://www.krijtenberg.nl
 
@@ -18,12 +18,16 @@ Version 1.2 - 04.12.2006, Jazzman
 Version 1.3 - 11.01.2006, Jazzman
 - Removed security patch again, as it was not neccesary and resulted in errors
 - Added ThickBox support using the JQuery and JQThickBox extension from Stash
+
+Version 1.4 - 27.04.2011, SubJunk
+- Added support for the HtmlFormatter 2.5+ dynamic image resizing feature
+- Increased default maximum width
 */
 
 $Context->Dictionary['ExtensionOptions'] = 'Extension Options';
 $Context->Dictionary['InlineImages'] = 'Inline Images';
 $Context->Dictionary['InlineImagesSettings'] = 'Inline Images Settings';
-$Context->Dictionary['InlineImagesNotes'] = 'These settings are specific to inline images. With inline images you can display image attachments directly into your comments by using [Image_%AttachmentID%]. If an image width exceeds the maximum width it will be automatically resized.';
+$Context->Dictionary['InlineImagesNotes'] = 'These settings are specific to inline images. With Inline Images you can display image attachments directly into your comments by using [Image_%AttachmentID%]. If an image width exceeds the maximum width it will be automatically resized.';
 $Context->Dictionary['InlineImagesMaxWidth'] = 'Maximum Width';
 $Context->Dictionary['UseThickBox'] = 'Use ThickBox (Requires JQuery and JQThickBox extensions!)';
 
@@ -83,18 +87,18 @@ if (in_array($Context->SelfUrl, array('comments.php', 'post.php')) ) {
 		$AttachmentList .= '</li>';
 
 		// We don't want this attachment to be processed
-		// by other renderers, so we clear the attachment object		
+		// by other renderers, so we clear the attachment object
 		$AttachmentManager->DelegateParameters['Attachment'] = false;
 	}
 
 
 	$Context->AddToDelegate('AttachmentManager',
-							'PreRender_Attachment',
-							'InlineImages_RenderAttachment');
+		'PreRender_Attachment',
+		'InlineImages_RenderAttachment');
 
 	$Context->AddToDelegate('AttachmentManager',
-							'AttachmentsListItem',
-							'InlineImages_AttachmentsListItem');
+		'AttachmentsListItem',
+		'InlineImages_AttachmentsListItem');
 
 
 }
