@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+	 Dec 7, 2009 17:51:00 PM
+
+	 Hide Success
+	 Package the Hide Success extension
+
+====================================================================== -->
+<project name="HideSuccess" default="build">
+
+	<description>
+		Package the Hide Success extension
+	</description>
+
+	<property name="antlib.dir" location="../../../tools/ant-library/"/>
+	<import file="${antlib.dir}/extension.xml"/>
+
+</project>
