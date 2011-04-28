@@ -574,10 +574,11 @@ html>body#CommentsPage .ContentInfo h1 {
 	border-bottom:0;
 	}
 #Comments .CommentHeader li div.CommentIcon {
-	padding:9px 0 9px 30px;
-	margin-right: 6px;
+	height: 32px;
+	width: 32px;
+	margin-right: 10px;
 	background-repeat:no-repeat;
-	display: inline;
+	float: left;
 	background: center center no-repeat;
 	}
 #Comments .CommentHeader li span {
