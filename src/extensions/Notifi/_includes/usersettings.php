@@ -84,7 +84,7 @@
 	          <li>
 		        <p class="notifiToggleCBox">
 			       <span>
-			          <label for="NotifiAll">
+			          <label for="NotifiAllField">
 			             <input type="checkbox" name="NOTIFI_ALL" id="NotifiAllField" '.$Active.' /> '
 					     . $this->Context->GetDefinition("NotificationForum") .'
 			          </label>
