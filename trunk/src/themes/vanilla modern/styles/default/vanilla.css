@@ -276,6 +276,10 @@ a:hover {
 	white-space:nowrap;
 	overflow: hidden;
 	}
+.ContentInfo.Top h1,
+.ContentInfo.Top h1 a {
+	font-size: 18px !important;
+	}
 #AccountPage #Content,
 #CommentsPage #Content,
 #DiscussionsPage #Content,
@@ -344,7 +348,7 @@ html>body#CommentsPage .ContentInfo h1 {
 	font-weight:bold;
 	}
 #CommentsPage .ContentInfo.Top .PageInfo{
-		margin:5px 0 0 0 !important;
+	margin:10px 0 0 0 !important;
 	}
 .PageInfo p {
 	margin:0;
