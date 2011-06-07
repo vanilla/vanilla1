@@ -3,13 +3,13 @@
 Extension Name: Html Formatter
 Extension Url: http://vanillaforums.org/addon/33/html-formatter
 Description: Allows html to be used in strings, but breaks out all "script" related activities.
-Version: 2.5
+Version: 2.6
 Author: SirNot
 Author Url: N/A
 */
 
 
-//SETTINGS, EDIT WHAT YOU WANT HERE
+// SETTINGS, EDIT WHAT YOU WANT HERE
 
 // If you want lots of control over what users can put, set this to 1
 // Array $Html_AllowedTags describes what tags and attributes are allowed
@@ -59,8 +59,8 @@ define('HTML_POLICE_TAGS', 1);
 // Allow videos to be posted
 define('HTML_VIDEO_TAG', 1);
 
-//index = type (what you specify in the tag)
-//value = replacement html; VIDEO_ID = video id (duh) (can only contain numbers, letters, - and _)
+// index = type (what you specify in the tag)
+// value = replacement html; VIDEO_ID = video id (duh) (can only contain numbers, letters, - and _)
 if(HTML_VIDEO_TAG)
 	$Html_VideoLinks = array(
 		'google' => '
@@ -101,6 +101,14 @@ if(HTML_VIDEO_TAG)
 				<param name="allowscriptaccess" value="always" />
 				<param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=VIDEO_ID&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=0&amp;show_portrait=0&amp;color=00ADEF&amp;fullscreen=1" />
 				<embed src="http://vimeo.com/moogaloop.swf?clip_id=VIDEO_ID&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=0&amp;show_portrait=0&amp;color=00ADEF&amp;fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="640" height="360"></embed>
+			</object>',
+
+		'facebook' => '
+			<object width="640" height="360">
+				<param name="allowfullscreen" value="true" />
+				<param name="allowscriptaccess" value="always" />
+				<param name="movie" value="http://www.facebook.com/v/VIDEO_ID" />
+				<embed src="http://www.facebook.com/v/VIDEO_ID" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="640" height="360"></embed>
 			</object>',
 		'flickr' => '<object type="application/x-shockwave-flash" width="400" height="300" data="http://www.flickr.com/apps/video/stewart.swf?v=VIDEO_ID" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"> <param name="flashvars" value="intl_lang=en-us&amp;photo_secret=a80915961b&amp;photo_id=3379790266"></param> <param name="movie" value="http://www.flickr.com/apps/video/stewart.swf?v=VIDEO_ID"></param> <param name="bgcolor" value="#000000"></param> <param name="allowFullScreen" value="true"></param><embed type="application/x-shockwave-flash" src="http://www.flickr.com/apps/video/stewart.swf?v=VIDEO_ID" bgcolor="#000000" allowfullscreen="true" flashvars="intl_lang=en-us&amp;photo_secret=a80915961b&amp;photo_id=3379790266" height="300" width="400"></embed></object>'
 	);
