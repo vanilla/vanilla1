@@ -18,7 +18,7 @@ $DiscussionList .= '
 			<span>'.$this->Context->GetDefinition('DiscussionType').'</span>'.DiscussionPrefix($this->Context, $Discussion).'
 		</li>
 		<li class="DiscussionTopic">
-			<span>'.$this->Context->GetDefinition('DiscussionTopic').'</span><a href="'.$UnreadUrl.'">'.$Discussion->Name.'</a>
+			<span>'.$this->Context->GetDefinition('DiscussionTopic').'</span><a href="'.$UnreadUrl.'" class="DiscussionTopicName">'.$Discussion->Name.'</a>
 		</li>
 		';
 		if ($this->Context->Configuration['USE_CATEGORIES']) {
