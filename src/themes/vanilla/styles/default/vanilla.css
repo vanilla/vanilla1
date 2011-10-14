@@ -428,6 +428,12 @@ html>body#CommentsPage .ContentInfo h1 {
 .DiscussionTopic a:hover {
 	text-decoration: none !important;
 	}
+
+.DiscussionExtraInfo {
+	overflow:		hidden;
+	height:			16px;
+}
+
 .DiscussionCategory, .DiscussionStarted, .DiscussionComments, .DiscussionLastComment, .DiscussionActive, .DiscussionNew {
 	width: auto;
 	display:inline;
