@@ -20,6 +20,7 @@ $DiscussionList .= '
 		<li class="DiscussionTopic">
 			<span>'.$this->Context->GetDefinition('DiscussionTopic').'</span><a href="'.$UnreadUrl.'" class="DiscussionTopicName">'.$Discussion->Name.'</a>
 		</li>
+		<div class="DiscussionExtraInfo">
 		';
 		if ($this->Context->Configuration['USE_CATEGORIES']) {
 			$DiscussionList .= '
@@ -50,7 +51,7 @@ $DiscussionList .= '
 
 	$this->CallDelegate('PostDiscussionOptionsRender');
 
-$DiscussionList .= '</ul>
+$DiscussionList .= '</div></ul>
 </li>';
 $this->CallDelegate('PostDiscussionRender');
 ?>
