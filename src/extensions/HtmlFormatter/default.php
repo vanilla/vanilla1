@@ -34,6 +34,8 @@ if(HTML_USE_WHITELIST)
 		'ol' => 0, 
 		'center' => 0, 
 		'abbr' => array('title'), 
+		'blockquote' => 0,
+		'cite' => 0,
 		//etc...
 	);
 
