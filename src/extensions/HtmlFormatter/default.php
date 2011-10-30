@@ -44,7 +44,7 @@ if(HTML_USE_WHITELIST)
 define('HTML_ALLOW_INLINE_STYLING', 1);
 
 // Should we convert newlines (ie. \n;\r;\r\n) to line-breaks (<br />) or leave them as they are?
-if ($Context->Configuration['JQUERY_PLUGIN_CKEDITOR'] == 1) {
+if (isset($Context->Configuration['JQUERY_PLUGIN_CKEDITOR']) && $Context->Configuration['JQUERY_PLUGIN_CKEDITOR'] == 1) {
 	define('HTML_CONVERT_NEWLINES', 0);
 }
 else {
@@ -228,9 +228,8 @@ class HtmlFormatter extends StringFormatter
 				'<br />', 
 				$sReturn
 			);
-		
-		//return '<samp>'.nl2br(htmlspecialchars($sReturn)).'</samp>';
-		$sReturn = str_replace('img', 'img class="InlineImage"', $sReturn);
+
+		$sReturn = str_replace('<img', '<img class="InlineImage"', $sReturn);
 		return $sReturn;
 	}
 	
