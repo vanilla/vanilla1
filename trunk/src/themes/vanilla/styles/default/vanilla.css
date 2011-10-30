@@ -967,9 +967,11 @@ li.User.Name span {
 	color: #000 !important;
 	padding: 1px 2px;
 	}
+
 #Form .Button.SubmitButton {
-	margin-right:10px;
-	}
+	margin-right: 10px;
+	padding: 2px 4px;
+}
 
 /* Add Comment & Start Discussion Forms */
 
