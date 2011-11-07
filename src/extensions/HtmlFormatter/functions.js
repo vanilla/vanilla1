@@ -1,25 +1,25 @@
 (function($){
-    $.HtmlFormatter = {
-        margin: 290,
+	$.HtmlFormatter = {
+		margin: 290,
 
-        getDesiredWidth: function() {
-            var innerWidth = window.innerWidth ||
-                document.documentElement.clientWidth;
-            return innerWidth - $.HtmlFormatter.margin;
-        },
+		getDesiredWidth: function() {
+			var innerWidth = window.innerWidth || document.documentElement.clientWidth;
+			return innerWidth - $.HtmlFormatter.margin;
+		},
 
-        changeDimensions: function() {
-            var $img = $('img.InlineImage'),
-                desiredWidth = $.HtmlFormatter.getDesiredWidth();
+		changeDimensions: function() {
+			var $img = $('img.InlineImage'),
+			desiredWidth = $.HtmlFormatter.getDesiredWidth();
 
-            $img.width('auto');
-            if ($img.width() > desiredWidth) {
-                $img.width(desiredWidth);
-            }
-        }
-    };
+			$img.width('auto');
+			$img.each(function () {
+				var el = $img(this); 
+				if (el.width() > desiredWidth) {
+					el.width(desiredWidth);
+				}
+			});
+		}
+	};
 
-    $(window).bind('load resize', $.HtmlFormatter.changeDimensions);
-
-
+	$(window).bind('load resize', $.HtmlFormatter.changeDimensions);
 })(jQuery.noConflict());
