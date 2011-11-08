@@ -28,6 +28,5 @@ if (version_compare(APPLICATION_VERSION, '1.2', '<')) {
       </script>
       ");
 } else {
-	$Head->AddScript('js/jquery.js', '~', 190);
 	$Head->AddScript('extensions/HideSuccess/jquery.hidesuccess.js', '~', 310);
 }

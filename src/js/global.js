@@ -10,21 +10,20 @@
 * Description: Non-application specific utility functions
 */
 
-
 if(document.all && !document.getElementById) {
 	document.getElementById = function(id) {
-		 return document.all[id];
+		return document.all[id];
 	}
 }
 
 function BlockSubmit(evt, Handler) {
-	 var Key = evt.keyCode || evt.which;
-	 if (Key == 13) {
-		  Handler();
-		  return false;
-	 } else {
-		  return true;
-	 }
+	var Key = evt.keyCode || evt.which;
+	if (Key == 13) {
+		Handler();
+		return false;
+	} else {
+		return true;
+	}
 }
 
 function CheckAll(IdToMatch) {
@@ -55,8 +54,8 @@ function ClearContents(Container) {
 }
 
 function CompletePreferenceSet(PreferenceName) {
-	 var Container = document.getElementById(PreferenceName);
-	 if (Container) Container.className = 'PreferenceComplete';
+	var Container = document.getElementById(PreferenceName);
+	if (Container) Container.className = 'PreferenceComplete';
 }
 
 function Definition(Name, Value) {
@@ -155,12 +154,12 @@ function PreferenceSet(Request) {
 }
 
 function RefreshPage(Timeout) {
-	 if (!Timeout) Timeout = 400;
-	 setTimeout("document.location.reload();", Timeout);
+	if (!Timeout) Timeout = 400;
+	setTimeout("document.location.reload();", Timeout);
 }
 
 function RefreshPageWhenAjaxComplete(Request) {
-	 RefreshPage();
+	RefreshPage();
 }
 
 function SubmitForm(FormName, Sender, WaitText) {
@@ -169,17 +168,17 @@ function SubmitForm(FormName, Sender, WaitText) {
 }
 
 function SwitchElementClass(ElementToChangeID, SenderID, StyleA, StyleB, CommentA, CommentB) {
-	 var Element = document.getElementById(ElementToChangeID);
-	 Sender = document.getElementById(SenderID);
-	 if (Element && Sender) {
-		  if (Element.className == StyleB) {
-				Element.className = StyleA;
-				Sender.innerHTML = CommentA;
-		  } else {
-				Element.className = StyleB;
-				Sender.innerHTML = CommentB;
-		  }
-	 }
+	var Element = document.getElementById(ElementToChangeID);
+	Sender = document.getElementById(SenderID);
+	if (Element && Sender) {
+		if (Element.className == StyleB) {
+			Element.className = StyleA;
+			Sender.innerHTML = CommentA;
+		} else {
+			Element.className = StyleB;
+			Sender.innerHTML = CommentB;
+		}
+	}
 }
 
 function SwitchExtension(AjaxUrl, ExtensionKey, PostBackKey) {
@@ -187,7 +186,7 @@ function SwitchExtension(AjaxUrl, ExtensionKey, PostBackKey) {
 	if (Item) Item.className = "Processing";
 	var Parameters = "ExtensionKey="+ExtensionKey+"&PostBackKey="+PostBackKey;
 	var dm = new DataManager();
-	 dm.Param = ExtensionKey;
+	dm.Param = ExtensionKey;
 	dm.RequestFailedEvent = SwitchExtensionResult;
 	dm.RequestCompleteEvent = SwitchExtensionResult;
 	dm.LoadData(AjaxUrl+"?"+Parameters);
@@ -196,10 +195,10 @@ function SwitchExtension(AjaxUrl, ExtensionKey, PostBackKey) {
 function SwitchExtensionResult(Request) {
 	var Item = document.getElementById(Trim(Request.responseText));
 	if (Item) {
-		  setTimeout("SwitchExtensionItemClass('"+Trim(Request.responseText)+"')",400);
-	 } else {
-		  alert(Trim(Request.responseText));
-	 }
+		setTimeout("SwitchExtensionItemClass('"+Trim(Request.responseText)+"')",400);
+	} else {
+		alert(Trim(Request.responseText));
+	}
 }
 
 function SwitchExtensionItemClass(ItemID) {
@@ -226,7 +225,7 @@ function SwitchPreference(AjaxUrl, PreferenceName, RefreshPageWhenComplete, Post
 }
 
 function Trim(String) {
-   return String.replace(/^\s*|\s*$/g,"");
+	return String.replace(/^\s*|\s*$/g,"");
 }
 
 function UpdateCheck(AjaxUrl, RequestName, PostBackKey) {
@@ -292,14 +291,14 @@ function Wait(Sender, WaitText) {
 function WriteEmail(Domain, Name, Label, Reference) {
 	if (document.createElement && document.getElementById) {
 		var link, script, textNode;
-		//Create link
+		// Create link
 		link = document.createElement('a');
 		link.href = 'mai'+'lto:'+Name+'@'+Domain;
-		//Create text link
+		// Create text link
 		Label = Label || Name+"@"+Domain;
 		textNode = document.createTextNode(Label);
 		link.appendChild(textNode);
-		//Append link
+		// Append link
 		script = document.getElementById(Reference);
 		if (script) {
 			script.parentNode.appendChild(link);
@@ -310,3 +309,21 @@ function WriteEmail(Domain, Name, Label, Reference) {
 function showById(id){
 	document.getElementById(id).style.display='block';
 }
+
+(function(a){
+	a.ScrollFixedPosition={
+		panel:function(){
+			var windowTop = a(window).scrollTop();
+			var panelOffset = a('#Panel').offset();
+			var bodyOffset = a('#Body').offset();
+			if (windowTop > panelOffset.top) {
+				a('#Panel').css('position', "fixed");
+				a('#Panel').css('top', "0");
+			} else if (windowTop <= bodyOffset.top) {
+				a('#Panel').css('position', "");
+				a('#Panel').css('top', "");
+			}
+		}
+	};
+	a(window).bind("scroll",a.ScrollFixedPosition.panel);
+})(jQuery.noConflict());
