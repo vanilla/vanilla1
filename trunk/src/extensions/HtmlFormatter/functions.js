@@ -13,7 +13,7 @@
 
 			$img.width('auto');
 			$img.each(function () {
-				var el = $img(this); 
+				var el = $(this); 
 				if (el.width() > desiredWidth) {
 					el.width(desiredWidth);
 				}
