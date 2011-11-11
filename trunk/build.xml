@@ -156,8 +156,10 @@
 		</csscompressor>
 
 		<!-- Build extensions -->
+		<buildExtension name="AjaxQuote"/>
 		<buildExtension name="Attachments"/>
 		<buildExtension name="DiscussionFilters"/>
+		<buildExtension name="DiscussionPages"/>
 		<buildExtension name="ExtendedApplicationForm"/>
 		<buildExtension name="FriendlyUrls"/>
 		<buildExtension name="GuestWelcome"/>
@@ -166,6 +168,7 @@
 		<buildExtension name="InlineImages"/>
 		<buildExtension name="IpHistory"/>
 		<buildExtension name="Legends"/>
+		<buildExtension name="MembersList"/>
 		<buildExtension name="Minify"/>
 		<buildExtension name="MultiFileUpload"/>
 		<buildExtension name="NewApplicants"/>
