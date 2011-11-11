@@ -156,27 +156,27 @@
 		</csscompressor>
 
 		<!-- Build extensions -->
-		<buildExtension name="HtmlFormatter"/>
-		<buildExtension name="Minify"/>
-		<buildExtension name="Notifi"/>
-		<buildExtension name="Whisperfi"/>
-		<buildExtension name="RoleHistory"/>
-		<buildExtension name="YellowFade"/>
-		<buildExtension name="TextMode"/>
-		<buildExtension name="PrivateAccounts"/>
-		<buildExtension name="PreviewPost"/>
-		<buildExtension name="PanelLists"/>
-		<buildExtension name="NewApplicants"/>
-		<buildExtension name="Legends"/>
-		<buildExtension name="IpHistory"/>
-		<buildExtension name="HideSuccess"/>
-		<buildExtension name="GuestWelcome"/>
-		<buildExtension name="FriendlyUrls"/>
-		<buildExtension name="ExtendedApplicationForm"/>
-		<buildExtension name="DiscussionFilters"/>
 		<buildExtension name="Attachments"/>
-		<buildExtension name="MultiFileUpload"/>
+		<buildExtension name="DiscussionFilters"/>
+		<buildExtension name="ExtendedApplicationForm"/>
+		<buildExtension name="FriendlyUrls"/>
+		<buildExtension name="GuestWelcome"/>
+		<buildExtension name="HideSuccess"/>
+		<buildExtension name="HtmlFormatter"/>
 		<buildExtension name="InlineImages"/>
+		<buildExtension name="IpHistory"/>
+		<buildExtension name="Legends"/>
+		<buildExtension name="Minify"/>
+		<buildExtension name="MultiFileUpload"/>
+		<buildExtension name="NewApplicants"/>
+		<buildExtension name="Notifi"/>
+		<buildExtension name="PanelLists"/>
+		<buildExtension name="PreviewPost"/>
+		<buildExtension name="PrivateAccounts"/>
+		<buildExtension name="RoleHistory"/>
+		<buildExtension name="TextMode"/>
+		<buildExtension name="Whisperfi"/>
+		<buildExtension name="YellowFade"/>
 	</target>
 
 	<!--
