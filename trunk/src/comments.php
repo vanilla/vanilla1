@@ -122,8 +122,8 @@ if ($CommentGrid->Discussion) {
 	$Page->AddRenderControl($CommentGrid, $Configuration["CONTROL_POSITION_BODY_ITEM"]);
 	if ($CommentGrid->ShowForm) {
 		$Page->AddRenderControl($CommentForm, $Configuration["CONTROL_POSITION_BODY_ITEM"] + 10);
-		$Page->AddRenderControl($CommentFoot, $Configuration["CONTROL_POSITION_BODY_ITEM"] + 11);
 	}
+	$Page->AddRenderControl($CommentFoot, $Configuration["CONTROL_POSITION_BODY_ITEM"] + 11);
 	$Page->AddRenderControl($Foot, $Configuration["CONTROL_POSITION_FOOT"]);
 	$Page->AddRenderControl($PageEnd, $Configuration["CONTROL_POSITION_PAGE_END"]);
 
