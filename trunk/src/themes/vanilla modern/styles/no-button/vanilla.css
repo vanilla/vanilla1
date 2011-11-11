@@ -12,6 +12,7 @@ body, div, table, td {
 	font-size:12px;
 	color:#062971;
 	}
+
 a {
 	color: #3354AA;
 	text-decoration: underline;
@@ -235,6 +236,7 @@ a:hover {
 #Panel ul ul li a:hover {
 	background-color:#ffc;
 	}
+
 #AboutVanilla {
 	margin: 10px 0 0 0 !important;
 	border-top:1px solid #ccc;
@@ -252,6 +254,53 @@ a:hover {
 	color:#aaa !important;
 	text-decoration:underline;
 	}
+
+/* Fixed footer */
+
+#BackToDiscussions,
+#TopOfPage {
+	position:		fixed;
+	bottom:			0;
+	text-align:		left;
+	font-size:		12px;
+	color:			#999;
+	padding:		4px 8px;
+	border-top:		1px solid #ccc;
+	display:		none;
+	background:		#fff;
+}
+
+#BackToDiscussions:hover,
+#TopOfPage:hover {
+	color:			#444;
+	border-top:		1px solid #666;
+}
+
+#BackToDiscussions {
+	left:			0;
+	border-right:		1px solid #ccc;
+	-moz-border-radius-topright:2px;
+	-webkit-border-top-right-radius:2px;
+	-khtml-border-radius-topright:2px;
+	border-top-right-radius:2px;
+}
+
+#TopOfPage {
+	right:			0;
+	border-left:		1px solid #ccc;
+	-moz-border-radius-topleft:2px;
+	-webkit-border-top-left-radius:2px;
+	-khtml-border-radius-topleft:2px;
+	border-top-left-radius:2px;
+}
+
+#BackToDiscussions:hover  {
+	border-right:		1px solid #666;
+}
+
+#TopOfPage:hover {
+	border-left:		1px solid #666;
+}
 
 /* Content.. */
 

@@ -319,9 +319,13 @@ function showById(id){
 			if (windowTop > panelOffset.top) {
 				a('#Panel').css('position', "fixed");
 				a('#Panel').css('top', "0");
+				a('#BackToDiscussions').slideDown('fast');
+				a('#TopOfPage').slideDown('fast');
 			} else if (windowTop <= bodyOffset.top) {
 				a('#Panel').css('position', "");
 				a('#Panel').css('top', "");
+				a('#BackToDiscussions').slideUp('fast');
+				a('#TopOfPage').slideUp('fast');
 			}
 		}
 	};
