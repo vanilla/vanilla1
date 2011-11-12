@@ -16,7 +16,7 @@ $Context->SetDefinition('Unsubscribe',                            'Unsubscribe')
 $Context->SetDefinition('UnsubscribeFrom',                        'Unsubscribe from');
 $Context->SetDefinition('Forum',                                  'forum');
 $Context->SetDefinition('SubscribeUnsubscribeForumTitle',         'Start/stop receiving an email whenever there is a new post in this forum');
-$Context->SetDefinition('Category',                               'category');
+$Context->SetDefinition('CategoryLC',                             'category');
 $Context->SetDefinition('SubscribeUnsubscribeCategoryTitle',      'Start/stop receive an email whenever there is a new post in this category');
 $Context->SetDefinition('Discussion',                             'discussion');
 $Context->SetDefinition('SubscribeUnsubscribeDiscussionTitle',    'Start/stop receiving an email whenever there is a new post in this discussion');
@@ -169,7 +169,7 @@ if ($Context->Session->UserID > 0 && isset($Panel) && $Context->Configuration['N
 			. '<span class="notifiSep"> / </span>'
 			. '<span class="'. $UnsubscribeClass .'">'
 			. $Context->GetDefinition('Unubscribe') .'</span> '
-			. $Context->GetDefinition('Category');
+			. $Context->GetDefinition('CategoryLC');
 		$Panel->AddListItem(
 				$Context->GetDefinition('Notification'), $LinkContent,
 				"./#Notifi_CATEGORY_" . $CategoryID,"",
