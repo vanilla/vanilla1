@@ -103,7 +103,7 @@
 
 		<!-- Filter php and html files for the version number -->
 		<echo>Copying text files, with token filtering...</echo>
-		<echo>Tokens: @@VANILLA-VERSION@@, @@FRAMEWORK-VERSION@@ and @@PEOPLE-VERSION@@</echo>
+		<echo>Tokens: @@VANILLA-VERSION@@</echo>
 
 		<copy todir="${build.app.dir}" verbose="true"  encoding="UTF-8" outputencoding="UTF-8">
 			<fileset dir="${src.dir}" id="src.tofilter.fileset">
@@ -112,8 +112,6 @@
 			</fileset>
 			<filterset begintoken="@@" endtoken="@@">
 				<filter token="VANILLA-VERSION" value="${app.version}"/>
-				<filter token="FRAMEWORK-VERSION" value="${app.version}"/>
-				<filter token="PEOPLE-VERSION" value="${app.version}"/>
 			</filterset>
 		</copy>
 
