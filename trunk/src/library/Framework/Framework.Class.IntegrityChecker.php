@@ -15,7 +15,6 @@
  * @copyright 2008 Lussumo.com
  * @license http://lussumo.com/community/gpl.txt GPL 2
  * @package Framework
- * @version @@FRAMEWORK-VERSION@@
  */
 
 include_once 'Framework.Class.DirectoryScanner.php';
