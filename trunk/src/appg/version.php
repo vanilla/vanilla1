@@ -14,10 +14,10 @@
 
 /**
  * Previous version:
- * Previous_vanilla_version: 1.2.1
+ * Previous_vanilla_version: 1.2.2
  */
 define('APPLICATION', 'Vanilla');
-define('APPLICATION_VERSION', '1.2.2');
+define('APPLICATION_VERSION', '1.2.3');
 define('FRAMEWORK_VERSION', APPLICATION_VERSION);
 define('PEOPLE_VERSION', APPLICATION_VERSION);
 
