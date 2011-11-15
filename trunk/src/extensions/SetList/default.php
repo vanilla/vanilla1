@@ -387,6 +387,13 @@ class SetListManager extends Control
 		}
 
 		// Check out the form data and make repairs.
+
+		// Starting by the form array
+		$defaultForm = array('permission' => Null);
+		$form['form'] = empty($form['form']) ? $defaultForm : array_merge($defaultForm, $form['form']);
+
+
+		// Then the elements array
 		foreach ($form['elements'] as $elemKey => $element) {
 			// Set defaults for all expected attributes.
 			$default = array();
@@ -531,7 +538,13 @@ class SetListManager extends Control
 			$extensionOptions = $this->Context->GetDefinition('ExtensionOptions');
 			$Panel->AddList($extensionOptions, 20);
 			foreach ($this->forms as $key => $val) {
-				$Panel->AddListItem($extensionOptions, $extensions[$key]->Name, GetUrl($this->Context->Configuration, 'settings.php', '', '', '', '', 'PostBackAction='.$key));
+				// Check permission
+				if (!$val['form']['permission'] || $this->Context->Session->User->Permission($val['form']['permission'])) {
+					$Panel->AddListItem($extensionOptions, $extensions[$key]->Name, GetUrl($this->Context->Configuration, 'settings.php', '', '', '', '', 'PostBackAction='.$key));
+				} else {
+					// Permission failed, we can dump the form details
+					unset($this->forms[$key]);
+				}
 			}
 		}
 
