@@ -723,13 +723,27 @@ html>body#CommentsPage .ContentInfo h1 {
 #CommentsPage .ContentInfo.Bottom {
 	margin-bottom: 20px;
 	}
-#Comments code {
+#Comments code,
+#Comments pre,
+#Comments pre code,
+#Comments code pre {
 	border-left: 6px solid #FFFFAA;
 	background: #FFE;
 	padding: 8px;
 	padding-left: 16px;
 	display: block;
-	white-space: pre;
+	/*	[-Stash-] 2010-03-23 16:23:31
+	 *	I want to make my SoftWrap plugin obsolete
+	 *	Good stuff here... https://developer.mozilla.org/en/CSS/white-space
+	 */
+	white-space: pre;			/* CSS 2 */
+	word-wrap: break-word;		/* IE 5.5-7 */
+	white-space: -hp-pre-wrap;	/* HP printers */
+	white-space: -pre-wrap;		/* Opera 4-6 */
+	white-space: -o-pre-wrap;	/* Opera 7 */
+	white-space: -moz-pre-wrap;	/* Mozilla 1-2, since 1999 */
+	white-space: pre-wrap;		/* CSS 2.1 */
+	width: 95%;					/* Any more than this and you risk scroll bars.   Feel free to change it to best match your style. */
 	}
 
 /* Thanks to Bergamot */
@@ -975,18 +989,24 @@ li.User.Name span {
 
 /* Forms.. */
 
-#Form * {
-	margin:0;
-	padding:0;
-	list-style:none;
-	}
+/*	[-Stash-] 2010-03-23 16:28:39
+ *	This replaces the old problematic code that removed padding and margin from --> #Form *
+ */
 #Form {
-	margin-bottom: 10px;
+	padding:0;
+	margin:0 0 10px 0;
 	}
 #Form fieldset {
 	border:0;
 	clear:none;
-	margin-bottom: 20px;
+	padding:0;
+	margin:0 0 20px 0;
+	}
+/*	[-Stash-] 2010-03-25 09:43:13
+ *	This replaces the old problematic code that removed padding and margin from --> #Form *
+ */
+#Form dl {
+	margin:0;
 	}
 #Form fieldset legend {
 	padding: 4px 0 4px 0;
@@ -1000,6 +1020,14 @@ li.User.Name span {
 	border-left:0;
 	border-right:0;
 	background-color:#fef9e9;
+	}
+/*	[-Stash-] 2010-03-23 16:27:21
+ *	This replaces the old problematic code that removed padding and margin from --> #Form *
+ */
+#Form ul {
+	margin:0;
+	padding:0;
+	list-style:none;
 	}
 #Form li {
 	margin-bottom:10px;
@@ -1115,6 +1143,13 @@ li.User.Name span {
 .Account {
 	width:450px;
 	margin: 0 !important;
+	}
+/*	[-Stash-] 2010-03-23 16:25:02
+ *	This replaces the old problematic code that removed padding and margin from --> #Form *
+ */
+.Account * {
+	padding:0;
+	margin:0;
 	}
 #Form.Account * {
 	color:#84733d;
