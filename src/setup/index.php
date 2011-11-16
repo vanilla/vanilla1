@@ -23,7 +23,7 @@ include('../appg/version.php');
 
 				<div id="Upgrading">
 					<div id="UpgradeFrom">Upgrade from Vanilla 1.x:</div>
-					<a href="http://lussumo.com/upgrade/" style="color:#000;font-weight:bold;">Read the upgrade instructions online</a>.<br /><br />
+					<a href="http://code.google.com/p/lussumo-vanilla/wiki/VanillaUpgrading" style="color:#000;font-weight:bold;">Read the upgrade instructions online</a>.<br /><br />
 
 					<div id="UpgradeFrom">Upgrade from Vanilla 0.9.2.x:</div>
 					<ul>
