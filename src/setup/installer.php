@@ -511,6 +511,10 @@ if (!defined(\'IN_VANILLA\')) exit();
 				<div class="Button"><input type="submit" value="Click here to check your installation and proceed to the next step" /></div>
 				</form>';
 			} elseif ($CurrentStep == 2) {
+					$DBHostDisplay = FormatStringForDisplay($DBHost, 1);
+					if (empty($DBHostDisplay)) {
+						$DBHostDisplay = "localhost";
+					}
 					echo '<h2>Vanilla Installation Wizard (Step 2 of 3)</h2>';
 					if ($Context->WarningCollector->Count() > 0) {
 						echo '<div class="Warnings">
@@ -525,7 +529,7 @@ if (!defined(\'IN_VANILLA\')) exit();
 							<ul>
 								<li>
 									<label for="tDBHost">MySQL Server</label>
-									<input type="text" id="tDBHost" name="DBHost" value="'.FormatStringForDisplay($DBHost, 1).'" />
+									<input type="text" id="tDBHost" name="DBHost" value="'.$DBHostDisplay.'" />
 								</li>
 								<li>
 									<label for="tDBName">MySQL Database Name</label>
