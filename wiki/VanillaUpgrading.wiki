@@ -9,19 +9,22 @@ _Problems?_
 
 Ask for help at the [http://vanillaforums.org/discussions community forum].
 
+
 == Upgrading from Vanilla 1.2.1 to Vanilla 1.2.2 ==
 
-Unzip the package and upload it to your server like normal.
+Unzip the package and overwrite your existing files with its contents.
+
 
 == Upgrading from Vanilla 1.1.10 to Vanilla 1.2.1 ==
 
-Unzip the package and upload it to your server like normal.
+Unzip the package and overwrite your existing files with its contents.
+
 
 == Upgrading from Vanilla 1.1.9 to Vanilla 1.1.10 ==
 
-This upgrade patches a bug with the installer.
+Unzip the package and overwrite your existing files with its contents.
 
-To upgrade, download the new [http://code.google.com/p/lussumo-vanilla/downloads/list Vanilla-1.1.10 package] and replace the following files in your 1.1.9 installation:
+The following files were changed:
 
 {{{
 appg/settings.php
@@ -47,27 +50,28 @@ themes/vanilla/styles/default/people.css
 themes/vanilla/styles/default/vanilla.css
 }}}
 
+
 == Upgrading from Vanilla 1.1.8 to Vanilla 1.1.9 ==
 
-This upgrade patches a bug with the installer.
+Unzip the package and overwrite your existing files with its contents.
 
-To upgrade, download the new [http://code.google.com/p/lussumo-vanilla/downloads/list Vanilla-1.1.9 package] and replace the following files in your 1.1.8 installation:
+Also, if you installed Vanilla 1.1.8, you should check `$Configuration['HTTP_METHOD']`
+in `conf/settings.php` does not end with "://" (there might not be any `$Configuration['HTTP_METHOD']`). It should either be set to "http" or
+"https".
+
+The following files were changed:
 
 {{{
 appg/version.php
 setup/installer.php
 }}}
 
-Also, if you installed Vanilla 1.1.8, you should check `$Configuration['HTTP_METHOD']`
-in `conf/settings.php` does not end with "://" (there might not be any `$Configuration['HTTP_METHOD']`). It should either be set to "http" or
-"https".
-
 
 == Upgrading from Vanilla 1.1.7 to Vanilla 1.1.8 ==
 
-This upgrade patches an xss vulnerability discovered in the update checker.
+Unzip the package and overwrite your existing files with its contents.
 
-To upgrade, download the new Vanilla-1.1.8 package from [http://getvanilla.com getvanilla.com] and replace the following files in your 1.1.7 installation:
+The following files were changed:
 
 {{{
 ajax/updatecheck.php
@@ -77,9 +81,9 @@ appg/version.php
 
 == Upgrading from Vanilla 1.1.6 to Vanilla 1.1.7 ==
 
-This upgrade is only related to the installer. Upgrading will only be necessary if you need to (re)install Vanilla.
+Unzip the package and overwrite your existing files with its contents.
 
-To upgrade, download the new Vanilla-1.1.7 package from [http://getvanilla.com getvanilla.com] and replace the following files in your 1.1.6 installation:
+The following files were changed:
 
 {{{
 appg/version.php
@@ -90,7 +94,9 @@ setup/mysql.sql
 
 == Upgrading from Vanilla 1.1.5a to Vanilla 1.1.6 ==
 
-After downloading the new Vanilla-1.1.6 package from [http://getvanilla.com getvanilla.com], the following files should be replaced in your 1.1.5a installation:
+Unzip the package and overwrite your existing files with its contents.
+
+The following files were changed:
 
 {{{
 comments.php
@@ -122,7 +128,9 @@ themes/vanilla/styles/default/vanilla.css
 
 == Upgrading from Vanilla 1.1.5 to Vanilla 1.1.5a ==
 
-After downloading the new Vanilla-1.1.5a package from [http://getvanilla.com getvanilla.com], the following files should be replaced in your 1.1.5a installation:
+Unzip the package and overwrite your existing files with its contents.
+
+The following files were changed:
 
 {{{
 appg/version.php
@@ -132,9 +140,12 @@ library/People/People.Class.UserManager.php
 setup/installer.php
 }}}
 
+
 == Upgrading from Vanilla 1.1.4 to Vanilla 1.1.5 ==
 
-Vanilla 1.1.4 contained XSS and CSRF vulnerabilities and should be patched. After downloading the new Vanilla-1.1.5 package from [http://getvanilla.com getvanilla.com], the following files should be replaced in your 1.1.5 installation: 
+Unzip the package and overwrite your existing files with its contents.
+
+The following files were changed:
 
 {{{
 comments.php
@@ -209,10 +220,11 @@ themes/vanilla/styles/default/vanilla.print.css
 }}}
 
 
-
 ==Upgrading from Vanilla 1.1.3 to Vanilla 1.1.4==
 
-Vanilla 1.1.3 contained a serious vulnerability and should be patched. After downloading the new Vanilla-1.1.4 package from getvanilla.com, the following files should be replaced in your 1.1.3 installation:
+Unzip the package and overwrite your existing files with its contents.
+
+The following files were changed:
 
 {{{
 /ajax/sortcategories.php
@@ -229,80 +241,18 @@ Vanilla 1.1.3 contained a serious vulnerability and should be patched. After dow
 }}}
 
 
-
-
-
-
-
 ==Upgrading from Vanilla 1.1.2 to Vanilla 1.1.3==
 
-Every single file in Vanilla has been changed since the release of 1.1.2, but the vast majority of changes were formatting and documentation changes which are not required to gain the added functionality and bugfixes of version 1.1.3.
-The actual files which need replacing are:
-{{{
-/account.php
-/categories.php
-/comments.php
-/settings.php
-/appg/headers.php
-/appg/settings.php
-/js/builder.js
-/js/controls.js
-/js/dragdrop.js
-/js/effects.js
-/js/global.js
-/js/prototype.js
-/js/scriptaculous.js
-/js/slider.js
-/library/Framework/Framework.Class.ConfigurationManager.php
-/library/Framework/Framework.Class.Context.php
-/library/Framework/Framework.Class.ErrorManager.php
-/library/Framework/Framework.Class.Page.php
-/library/Framework/Framework.Class.PageList.php
-/library/Framework/Framework.Class.StringManipulator.php
-/library/Framework/Framework.Class.Uploader.php
-/library/Framework/Framework.Control.Head.php
-/library/Framework/Framework.Control.LanguageForm.php
-/library/Framework/Framework.Control.UpdateCheck.php
-/library/Framework/Framework.Functions.php
-/library/People/People.Class.Authenticator.php
-/library/People/People.Class.Session.php
-/library/People/People.Class.User.php
-/library/People/People.Class.UserManager.php
-/library/People/People.Control.ApplyForm.php
-/library/People/People.Control.RoleForm.php
-/library/People/People.Control.SignInForm.php
-/library/Vanilla/Vanilla.Class.CategoryManager.php
-/library/Vanilla/Vanilla.Class.CommentManager.php
-/library/Vanilla/Vanilla.Control.AccountRoleForm.php
-/library/Vanilla/Vanilla.Control.CategoryForm.php
-/library/Vanilla/Vanilla.Control.CommentGrid.php
-/library/Vanilla/Vanilla.Control.DiscussionForm.php
-/library/Vanilla/Vanilla.Control.GlobalsForm.php
-/library/Vanilla/Vanilla.Control.IdentityForm.php
-/library/Vanilla/Vanilla.Control.PasswordForm.php
-/library/Vanilla/Vanilla.Control.ThemeAndStyleForm.php
-/themes/foot.php
-/themes/head.php
-/themes/settings_applicants_form.php
-/themes/settings_category_edit.php
-/themes/vanilla/styles/default/people.css
-/themes/vanilla/styles/default/vanilla.css
-}}}
+Unzip the package and overwrite your existing files with its contents.
 
-The following files aren't necessary to update in order to have a working version of 1.1.3, but they have also been altered since the release of Vanilla 1.1.2:
+All files were changed.
 
-{{{
-/readme.html
-/setup/index.html
-/setup/installer.php
-/setup/style.css
-/setup/upgrader.php
-/themes/account_profile.php
-}}}
 
 ==Upgrading from Vanilla 1.1 or 1.1.1 to Vanilla 1.1.2==
 
-There were a number of small patches applied to the core since the release of Vanilla 1.1. If you download the Vanilla-1.1.2.zip and open it, here are the files you need to update in order to patch your copy of Vanilla:
+Unzip the package and overwrite your existing files with its contents.
+
+The following files were changed:
 
 {{{
 /comments.php
@@ -322,19 +272,11 @@ There were a number of small patches applied to the core since the release of Va
 /themes/comments.php
 /themes/discussion_form.php
 /themes/settings_applicants_form.php
-}}}
-
-The following files aren't necessary to update in order to have a working version of 1.1.2, but they have also been altered since the release of Vanilla 1.1:
-
-{{{
 /readme.html
 /setup/index.html
 /setup/installer.php
 /setup/upgrader.php
 }}}
-
-You may find that some features don't work immediately after an upgrade. If this happens, make sure that your browser does not have cached versions of the javascript files that have been updated. If it does, it will break a lot of ajax functionality.
-
 
 
 ==Upgrading from Vanilla 1, 1.0.1, 1.0.2, or 1.0.3 to Vanilla 1.1.x==
