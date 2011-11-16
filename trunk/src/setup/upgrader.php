@@ -733,7 +733,7 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 
 				<form id=\"frmPermissions\" method=\"post\" action=\"upgrader.php\">
 				<input type=\"hidden\" name=\"PostBackAction\" value=\"Permissions\" />
-				<div class=\"Button\"><input type=\"submit\" value=\"Click here to check your permissions and proceed to the next step\" /></div>
+				<div class=\"ButtonContainer\"><input type=\"submit\" class=\"Button\" value=\"Click here to check your file permissions\" /></div>
 				</form>";
 			} elseif ($CurrentStep == 2) {
 					echo "<h2>Vanilla Upgrade Wizard (Step 2 of 3)</h2>";
@@ -765,7 +765,7 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 									<input type=\"password\" id=\"tDBPass\" name=\"DBPass\" value=\"".FormatStringForDisplay($DBPass, 1)."\" />
 								</li>
 							</ul>
-							<div class=\"Button\"><input type=\"submit\" value=\"Click here to create Vanilla's database and proceed to the next step\" /></div>
+							<div class=\"ButtonContainer\"><input type=\"submit\" class=\"Button\" value=\"Click here to create Vanilla's database\" /></div>
 						</form>
 					</fieldset>";
 				} elseif ($CurrentStep == 3) {
@@ -813,7 +813,7 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 								<input id="tCookiePath" type="text" name="CookiePath" value="'.FormatStringForDisplay($CookiePath, 1).'" />
 							</li>
 						</ul>
-						<div class="Button"><input type="submit" value="Click here to complete the setup process!" /></div>
+						<div class="ButtonContainer"><input type="submit" class="Button" value="Click here to complete the setup process!" /></div>
 						</form>
 					</fieldset>';
 				} else {
@@ -827,7 +827,7 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 					</ul>
 
 					<p>If you find that there was some unforseen problem with the upgrade procedure, visit <a href=\"http://lussumo.com/community/\" target=\"Lussumo\">Lussumo Community Forum</a> for help.</p>
-					<div class=\"Button\"><a href=\"../people.php\">Go sign in and have some fun!</a></div>";
+					<div class=\"ButtonContainer\"><a href=\"../people.php\" class=\"Button\">Go sign in and have some fun!</a></div>";
 				}
 				?>
 			</div>
