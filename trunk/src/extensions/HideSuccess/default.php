@@ -1,7 +1,7 @@
 <?php
 /*
-Extension Name: http://vanillaforums.org/addon/44/hide-success
-Extension Url: http://lussumo.com/addons/
+Extension Name: Hide Success
+Extension Url: http://vanillaforums.org/addon/44/hide-success
 Description: Makes "Your changes were saved" messages disappear with a shrink effect after a moment.
 Version: 1.1
 Author: Mark O'Sullivan
