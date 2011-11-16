@@ -19,18 +19,22 @@ Changes:        https://code.google.com/p/lussumo-vanilla/source/list?num=149&st
 Version:        1.1.10
 Date:           2009-11-21
 Changes:        https://code.google.com/p/lussumo-vanilla/source/list?num=21&start=847
+Summary:        - Fixed a bug with the installer
 
 Version:        1.1.9
 Date:           2009-08-30
 Changes:        https://code.google.com/p/lussumo-vanilla/source/list?num=5&start=826
+Summary:        - Fixed a bug with the installer
 
 Version:        1.1.8
 Date:           2009-05-15
 Changes:        https://code.google.com/p/lussumo-vanilla/source/list?num=5&start=821
+Summary         - Fixed an XSS vulnerability discovered in the update checker.
 
 Version:        1.1.7
 Date:           2009-04-24
 Changes:        https://code.google.com/p/lussumo-vanilla/source/list?num=4&start=816
+Summary:        - Fixed a bug with the installer
 
 Version:        1.1.6
 Date:           2009-04-13
@@ -39,6 +43,8 @@ Changes:        https://code.google.com/p/lussumo-vanilla/source/list?num=47&sta
 Version:        1.1.5
 Date:           2008-09-22
 Changes:        https://code.google.com/p/lussumo-vanilla/source/list?num=99&start=765
+Summary         - Fixed XSS and CSRF vulnerabilities
 
 Version:        1.1.4
 Date:           2007-10-23
+Summary:        - Fixed a serious security vulnerability
