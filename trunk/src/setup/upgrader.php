@@ -700,7 +700,7 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 	</head>
 	<body>
 		<h1>
-			<span><strong><?php echo APPLICATION . ' ' . APPLICATION_VERSION; ?></strong> Upgrader</span>
+			<img src="../themes/vanilla modern/styles/default/logo.png" alt="logo" />
 		</h1>
 		<div class="Container">
 			<div class="Content">
@@ -743,7 +743,7 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 							".$Context->WarningCollector->GetMessages()."
 						</div>";
 					}
-					echo "<p>Below you can provide the connection parameters for the mysql server where your existing Vanilla database is set up so it can be upgraded. If you haven't done it yet, <strong>back up your existing Vanilla database before continuing</strong>.</p>
+					echo "<p>Specify the MySQL connection parameters for your database below:</strong></p>
 					<fieldset>
 						<form id=\"frmDatabase\" method=\"post\" action=\"upgrader.php\">
 						<input type=\"hidden\" name=\"PostBackAction\" value=\"Database\" />
@@ -765,7 +765,7 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 									<input type=\"password\" id=\"tDBPass\" name=\"DBPass\" value=\"".FormatStringForDisplay($DBPass, 1)."\" />
 								</li>
 							</ul>
-							<div class=\"ButtonContainer\"><input type=\"submit\" class=\"Button\" value=\"Click here to create Vanilla's database\" /></div>
+							<div class=\"ButtonContainer\"><input type=\"submit\" class=\"Button\" value=\"Click here to upgrade Vanilla's database\" /></div>
 						</form>
 					</fieldset>";
 				} elseif ($CurrentStep == 3) {
