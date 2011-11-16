@@ -508,7 +508,7 @@ if (!defined(\'IN_VANILLA\')) exit();
 
 				echo '<form id="frmPermissions" method="post" action="installer.php">
 				<input type="hidden" name="PostBackAction" value="Permissions" />
-				<div class="Button"><input type="submit" value="Click here to check your installation and proceed to the next step" /></div>
+				<div class="ButtonContainer"><input type="submit" value="Click here to check your file permissions" class="Button" /></div>
 				</form>';
 			} elseif ($CurrentStep == 2) {
 					$DBHostDisplay = FormatStringForDisplay($DBHost, 1);
@@ -548,7 +548,7 @@ if (!defined(\'IN_VANILLA\')) exit();
 									<input type="text" id="tDBTablePrefix" name="DBTablePrefix" value="'.FormatStringForDisplay($DBTablePrefix, 1).'" />
 								</li>
 							</ul>
-							<div class="Button"><input type="submit" value="Click here to create Vanilla&#8217;s database and proceed to the next step" /></div>
+							<div class="ButtonContainer"><input type="submit" value="Click here to create Vanilla&#8217;s database" class="Button" /></div>
 						</form>
 					</fieldset>';
 				} elseif ($CurrentStep == 3) {
@@ -601,7 +601,7 @@ if (!defined(\'IN_VANILLA\')) exit();
 						</ul>
 						<input id="tCookieDomain" type="hidden" name="CookieDomain" value="'.FormatStringForDisplay($CookieDomain, 1).'" />
 						<input id="tCookiePath" type="hidden" name="CookiePath" value="'.FormatStringForDisplay($CookiePath, 1).'" />
-						<div class="Button"><input type="submit" value="Click here to complete the setup process!" /></div>
+						<div class="ButtonContainer"><input type="submit" value="Click here to complete the setup process!" class="Button" /></div>
 						</form>
 					</fieldset>';
 				} else {
@@ -625,7 +625,7 @@ if (!defined(\'IN_VANILLA\')) exit();
 					<p>All of these configuration options (and many more) are available in the settings tab of your Vanilla forum.</p>
 
 					<p>If you need some help getting started with administering your new Vanilla forum, you can <a href="http://lussumo.com/docs" target="Lussumo">read the complete documentation</a> or ask for help on the <a href="http://lussumo.com/community/" target="Lussumo">Lussumo Community Forum</a>. Enough talking...</p>
-					<div class="Button"><a href="../people.php">Go sign in and have some fun!</a></div>';
+					<div class="ButtonContainer"><a class="Button" href="../people.php">Go sign in and have some fun!</a></div>';
 				}
 				?>
 			</div>

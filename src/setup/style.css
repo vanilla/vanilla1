@@ -3,6 +3,7 @@ body {
 	margin: 0;
 	padding: 0;
 	text-align: center;
+	color: #444;
 }
 body, div, p, blockquote, h1, h2, input {
 	font-family: "Trebuchet MS", Arial, Verdana;
@@ -74,8 +75,13 @@ fieldset {
 fieldset ul {
 	list-style: none;
 	margin: 0;
-	padding: 8px 8px 2px 8px;
+	padding: 8px 8px 2px 12px;
 	background: #efefef;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	border-radius: 5px;
+	border:1px solid #ccc;
 }
 fieldset label {
 	float: left;
@@ -96,22 +102,35 @@ fieldset ul li input {
 	width: 50%;
 }
 .Button {
-	padding: 10px 0 20px 0;
-}
-.Button input {
-	font-size: 14px;
+	margin-top: 20px;
+	color: #666 !important;
+	font-size: 16px;
+	font-family: "myriad pro","lucida grande","trebuchet ms",Arial,Helvetica,sans-serif;
 	font-weight: bold;
-	border: 0;
-	margin: 0;
-	padding: 0;
-	background: none;
+	padding: 9px 20px;
+	background: url('../themes/vanilla modern/styles/default/button-overlay.png') repeat-x center #ffcc00;
+	background-color: rgba(255,204,0,1);
+	border: 1px solid #ffcc00;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	border-bottom: 1px solid #9f9f9f;
+	-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+	-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+	box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
 	cursor: pointer;
-	color: #64AE18;
+	text-decoration: none !important;
 }
-.Button a {
-	font-size: 14px;
-	font-weight: bold;
-	color: #64AE18;
+.Button:hover {
+	background-color: rgba(255,204,0,0.8);
+}
+.Button:active {
+	position: relative;
+	top: 2px;
+}
+.ButtonContainer {
+	text-align: center;
+	margin-bottom: 10px;
 }
 .Warnings {
 	background: url(../themes/vanilla/styles/default/alert.gif) left top no-repeat #FFFECC;
@@ -151,8 +170,25 @@ fieldset ul li input {
 #Upgrading {
 	display: none;
 	border: 1px #acbedf solid;
-	margin: 20px 0 0 0;
+	margin: 30px 0 0 0;
 	padding: 10px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	border-radius: 5px;
+}
+
+#UpgradeFrom {
+	padding: 8px;
+	border: 1px solid #D53F90;
+	background: #FFE6F4;
+	color: #A52068;
+	font-weight: bold;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	border-radius: 3px;
+	margin-bottom: 10px;
 }
 
 #ShowUpgrade {
