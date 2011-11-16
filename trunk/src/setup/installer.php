@@ -599,17 +599,8 @@ if (!defined(\'IN_VANILLA\')) exit();
 								<input id="tApplicationTitle" type="text" name="ApplicationTitle" value="'.FormatStringForDisplay($ApplicationTitle, 1).'" />
 							</li>
 						</ul>
-						<p>The cookie domain is where you want cookies assigned to for Vanilla. Typically the cookie domain will be something like www.yourdomain.com. Cookies can be further defined to a particular path on your website using the "Cookie Path" setting. (TIP: If you want your Vanilla cookies to apply to all subdomains of your domain, use ".yourdomain.com" as the cookie domain).</p>
-						<ul>
-							<li>
-								<label for="tCookieDomain">Cookie Domain</label>
-								<input id="tCookieDomain" type="text" name="CookieDomain" value="'.FormatStringForDisplay($CookieDomain, 1).'" />
-							</li>
-							<li>
-								<label for="tCookiePath">Cookie Path</label>
-								<input id="tCookiePath" type="text" name="CookiePath" value="'.FormatStringForDisplay($CookiePath, 1).'" />
-							</li>
-						</ul>
+						<input id="tCookieDomain" type="hidden" name="CookieDomain" value="'.FormatStringForDisplay($CookieDomain, 1).'" />
+						<input id="tCookiePath" type="hidden" name="CookiePath" value="'.FormatStringForDisplay($CookiePath, 1).'" />
 						<div class="Button"><input type="submit" value="Click here to complete the setup process!" /></div>
 						</form>
 					</fieldset>';
