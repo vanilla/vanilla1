@@ -177,10 +177,25 @@ if ($PostBackAction == 'Permissions') {
 if (!defined(\'IN_VANILLA\')) exit();
 // Enabled Extensions
 ';
+
+		// The following extensions will be enabled by default:
+		if (file_exists($RootDirectory.'extensions/DiscussionPages/default.php')) {
+			$Contents .= 'include($Configuration[\'EXTENSIONS_PATH\']."DiscussionPages/default.php");
+';
+		}
+		if (file_exists($RootDirectory.'extensions/NewApplicants/default.php')) {
+			$Contents .= 'include($Configuration[\'EXTENSIONS_PATH\']."NewApplicants/default.php");
+';
+		}
+		if (file_exists($RootDirectory.'extensions/PreviewPost/default.php')) {
+			$Contents .= 'include($Configuration[\'EXTENSIONS_PATH\']."PreviewPost/default.php");
+';
+		}
 		if (file_exists($RootDirectory.'extensions/Whisperfi/default.php')) {
 			$Contents .= 'include($Configuration[\'EXTENSIONS_PATH\']."Whisperfi/default.php");
 ';
 		}
+
 		$Contents .= '?>';
 		CreateFile($RootDirectory.'conf/extensions.php', $Contents, $Context);
 		$Contents = '<?php
