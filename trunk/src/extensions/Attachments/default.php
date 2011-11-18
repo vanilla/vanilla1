@@ -37,7 +37,7 @@ $Context->Configuration['ATTACHMENTS_ALLOWED_FILETYPES'] = array (
 $Context->Dictionary['Attachments'] = 'Attachments';
 $Context->Dictionary['DeleteAttachment'] = 'Delete';
 $Context->Dictionary['ExtensionOptions'] = 'Extension Options';
-$Context->Dictionary['AttachmentSettings'] = 'Attachments Settings';
+$Context->Dictionary['AttachmentSettings'] = 'Attachments';
 $Context->Dictionary['AttachmentUploadSettings'] = 'Upload Settings';
 $Context->Dictionary['AttachmentUploadSettingsInfo'] = 'The path to the upload directory should be an absolute path. Use a path outside your webroot for better security. Remember that the folder should be writable. You can use the following replacement tags: %day%, %month%, %year%, %userid%
 ';
