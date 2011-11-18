@@ -141,7 +141,7 @@ if ($Context->Session->UserID > 0 && isset($Panel) && $Context->Configuration['N
 			. $Context->GetDefinition('Forum');
 		$Panel->AddListItem(
 				$Context->GetDefinition('Notification'), $LinkContent,"./#Notify_ALL","",
-				'title="'.$Context->GetDefinition('SubscribeUnubscribeForumTitle')
+				'title="'.$Context->GetDefinition('SubscribeUnsubscribeForumTitle')
 					. '" id="SetNotifiAll" class="notifiToggleLink"');
 		unset($SubscribeClass, $UnsubscribeClass, $LinkContent);
 	}
