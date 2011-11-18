@@ -22,7 +22,6 @@ $Context->SetDefinition('Discussion',                             'discussion');
 $Context->SetDefinition('SubscribeUnsubscribeDiscussionTitle',    'Start/stop receiving an email whenever there is a new post in this discussion');
 $Context->SetDefinition('NotificationManagement',                 'Notification Management');
 $Context->SetDefinition('NotificationOptions',                    'Notification options');
-$Context->SetDefinition('NotifiSettings',                         'Notifi Settings');
 $Context->SetDefinition('Notifi',                                 'Notifi');
 $Context->SetDefinition('RememberToSetNotifiSettingsPermissions', 'Remember to customize the Notifi settings for you and your users. You can do it at the <a href="'.GetUrl($Context->Configuration, 'settings.php', '', '', '', '', 'PostBackAction=Notifi').'">Notification Settings</a> page.');
 
@@ -34,7 +33,6 @@ $Context->SetDefinition('KeepEmailingExplanation',                'Email me ever
 $Context->SetDefinition('NotificationForum',                      'Subscribe me to the entire forum (discludes unauthorized categories)');
 
 // Definitions for admin page
-$Context->SetDefinition('NotifiAdminNotes',                       'This page controls how Notifi works on your forum');
 $Context->SetDefinition('AdminAllowAll',                          'Allow users to subscribe to the entire forum');
 $Context->SetDefinition('AdminAllowCategories',                   'Allow users to subscribe to categories');
 $Context->SetDefinition('AdminAllowDiscussions',                  'Allow users to subscribe to discussions');

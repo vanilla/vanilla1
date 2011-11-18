@@ -42,10 +42,9 @@
 					}
 					echo '
 		     <fieldset>
-			<legend>'.$this->Context->GetDefinition("NotifiSettings").'</legend>
+			<legend>'.$this->Context->GetDefinition("Notifi").'</legend>
 			'.$this->Get_Warnings().'
 			'.$this->Get_PostBackForm('frmNotifi').'
-			<p>'.$this->Context->GetDefinition("NotifiAdminNotes").'</p>
 			<ul>
 			   <li>
 			      <p><span>'.GetDynamicCheckBox('NOTIFI_ALLOW_ALL', 1, $this->ConfigurationManager->GetSetting('NOTIFI_ALLOW_ALL'), '', $this->Context->GetDefinition('AdminAllowAll')).'</span></p>
