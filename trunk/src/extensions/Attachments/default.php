@@ -39,7 +39,7 @@ $Context->Dictionary['DeleteAttachment'] = 'Delete';
 $Context->Dictionary['ExtensionOptions'] = 'Extension Options';
 $Context->Dictionary['AttachmentSettings'] = 'Attachments';
 $Context->Dictionary['AttachmentUploadSettings'] = 'Upload Settings';
-$Context->Dictionary['AttachmentUploadSettingsInfo'] = 'The path to the upload directory should be an absolute path. Use a path outside your webroot for better security. Remember that the folder should be writable. You can use the following replacement tags: %day%, %month%, %year%, %userid%
+$Context->Dictionary['AttachmentUploadSettingsInfo'] = 'The path to the upload directory should be an absolute path. Use a path outside of your webroot for better security. Remember that the folder should be writable.<br><br>You can use the following replacement tags:<br>%day%, %month%, %year%, %userid%
 ';
 $Context->Dictionary['UploadPath'] = 'Upload Path';
 $Context->Dictionary['MaximumFilesize'] = 'Maximum Filesize <small>(bytes)</small>';
