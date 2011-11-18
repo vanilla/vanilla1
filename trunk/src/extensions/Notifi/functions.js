@@ -2,7 +2,7 @@
 	
 	$.Notifi = {
 		root: null,
-		ajaxUrl: '/extensions/Notifi/ajax.php',
+		ajaxUrl: 'extensions/Notifi/ajax.php',
 		postBackKey: '',
 
 		/**
