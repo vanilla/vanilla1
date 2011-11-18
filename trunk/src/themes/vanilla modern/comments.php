@@ -81,7 +81,7 @@ if ($this->Context->WarningCollector->Count() > 0) {
 			<div class="CommentHeader">
 				<ul>
 					<li>
-						'.($ShowIcon?'<div class="CommentIcon" style="'."background-image:url('".$Comment->AuthIcon."');".'">&nbsp;</div>':'<div class="CommentIcon" style="'."background-image:url('".$Configuration['BASE_URL']."themes/vanilla modern/styles/default/avatar.png');".'">&nbsp;</div>').'
+						'.($ShowIcon?'<div class="CommentIcon" style="'."background-image:url('".$Comment->AuthIcon."');".'">&nbsp;</div>':'<div class="CommentIcon" style="'."background-image:url('".$this->Context->Configuration['BASE_URL']."themes/vanilla modern/styles/default/avatar.png');".'">&nbsp;</div>').'
 						<span>'.$this->Context->GetDefinition('CommentAuthor').'</span><a href="'.GetUrl($this->Context->Configuration, 'account.php', '', 'u', $Comment->AuthUserID).'">'.$Comment->AuthUsername.'</a>';
 
 						// Point out who it was whispered to if necessary
