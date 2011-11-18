@@ -188,7 +188,7 @@ function DefineExtensions(&$Context) {
 		while (false !== ($Item = readdir($FolderHandle))) {
 			$Extension = $Context->ObjectFactory->NewObject($Context, 'Extension');
 			$RecordItem = true;
-			// skip directories and hidden files
+			// Skip directories and hidden files
 			if (
 				strlen($Item) < 1
 				|| !is_dir($Context->Configuration["EXTENSIONS_PATH"].$Item)
@@ -225,7 +225,7 @@ function DefineExtensions(&$Context) {
 							$Extension->AuthorUrl = FormatStringForDisplay($val);
 							break;
 						default:
-							// nothing
+							// Nothing
 					}
 				}
 				if ($Extension->IsValid()) {

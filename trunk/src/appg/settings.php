@@ -126,7 +126,7 @@ $Configuration['DISCUSSION_THRESHOLD_PUNISHMENT'] = '120';
 $Configuration['COMMENT_POST_THRESHOLD'] = '5';
 $Configuration['COMMENT_TIME_THRESHOLD'] = '60';
 $Configuration['COMMENT_THRESHOLD_PUNISHMENT'] = '120';
-$Configuration['UPDATE_URL'] = 'http://lussumo.com/updatecheck/default.php';
+$Configuration['UPDATE_URL'] = 'http://www.vanilla1forums.com/updater/';
 
 // Vanilla Control Positions
 $Configuration['CONTROL_POSITION_HEAD'] = '100';
