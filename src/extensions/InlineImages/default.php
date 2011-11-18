@@ -26,8 +26,7 @@ Version 1.4 - 27.04.2011, SubJunk
 
 $Context->Dictionary['ExtensionOptions'] = 'Extension Options';
 $Context->Dictionary['InlineImages'] = 'Inline Images';
-$Context->Dictionary['InlineImagesSettings'] = 'Inline Images Settings';
-$Context->Dictionary['InlineImagesNotes'] = 'These settings are specific to inline images. With Inline Images you can display image attachments directly into your comments by using [Image_%AttachmentID%]. If an image width exceeds the maximum width it will be automatically resized.';
+$Context->Dictionary['InlineImagesNotes'] = 'With Inline Images you can display image attachments directly into your comments by using [Image_%AttachmentID%].<br>If an image width exceeds the maximum width it will be automatically resized.';
 $Context->Dictionary['InlineImagesMaxWidth'] = 'Maximum Width';
 $Context->Dictionary['UseThickBox'] = 'Use ThickBox (Requires JQuery and JQThickBox extensions!)';
 
@@ -141,7 +140,7 @@ if ($Context->SelfUrl == "settings.php" && $Context->Session->User->Permission('
 					if (ForceIncomingInt('Success', 0)) echo '<div id="Success">'.$this->Context->GetDefinition('ChangesSaved').'</div>';
 					echo '
 						<fieldset>
-							<legend>'.$this->Context->GetDefinition("InlineImagesSettings").'</legend>
+							<legend>'.$this->Context->GetDefinition("InlineImages").'</legend>
 							'.$this->Get_Warnings().'
 							'.$this->Get_PostBackForm('frmInlineImages').'
 							<p>'.$this->Context->GetDefinition("InlineImagesNotes").'</p>
