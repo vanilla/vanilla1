@@ -163,7 +163,7 @@ function DecodeHtmlEntities($String) {
 }
 
 // Functions
-function DefineExtensions(&$Context) {
+function DefineExtensions(&$Context, $update=false) {
 	$Extensions = array();
 	$CurrExtensions = array();
 	$CurrentExtensions = @file($Context->Configuration["APPLICATION_PATH"].'conf/extensions.php');
@@ -229,8 +229,23 @@ function DefineExtensions(&$Context) {
 					}
 				}
 				if ($Extension->IsValid()) {
-					$Extension->Enabled = in_array($Item, $CurrExtensions);
-					$Extensions[FormatExtensionKey($Extension->Name)] = $Extension;
+					$match = false;
+
+					// Loop through the list of official extensions so we know to exclude them from update checking
+					if ($update == true) {
+						$OfficialExtensionsArray = explode (';', $Context->Configuration['OFFICIAL_EXTENSIONS']);
+						foreach ($OfficialExtensionsArray as $OfficialExtension) {
+							if ($Extension->Name == $OfficialExtension) {
+								$match = true;
+							}
+						}
+					}
+
+					// If this isn't an official extension, add it to the list of extensions to be checked for updates
+					if ($match == false) {
+						$Extension->Enabled = in_array($Item, $CurrExtensions);
+						$Extensions[FormatExtensionKey($Extension->Name)] = $Extension;
+					}
 				}
 			}
 		}

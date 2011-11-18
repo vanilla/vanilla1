@@ -50,7 +50,7 @@ class UpdateCheck extends PostBackControl {
 
 		if ($this->IsPostBack && $this->PostBackAction == 'ProcessUpdateCheck') {
 			// Load the extensions
-			$this->Extensions = DefineExtensions($this->Context);
+			$this->Extensions = DefineExtensions($this->Context, true);
 			// Add an onload event to the document body
 			$this->Context->BodyAttributes .=
 				" onload=\"UpdateCheck('"

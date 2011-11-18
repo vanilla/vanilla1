@@ -128,6 +128,9 @@ $Configuration['COMMENT_TIME_THRESHOLD'] = '60';
 $Configuration['COMMENT_THRESHOLD_PUNISHMENT'] = '120';
 $Configuration['UPDATE_URL'] = 'http://www.vanilla1forums.com/updater/';
 
+// Semicolon-delimited list of official extensions
+$Configuration['OFFICIAL_EXTENSIONS'] = 'AjaxQuote;Attachments;Discussion Filters;Discussion Pages;Expire;Extended Application Form;Friendly Urls;Guest Welcome Message;Hide Success;Html Formatter;IP History;Inline Images;Legends;MembersList;Minify;Multi File Upload;New Applicants;Notifi;Panel Lists;Preview Post;Private Accounts;Role History;Set List;Text Mode Switch;Whisperfi;Yellow Fade;reCAPTCHA';
+
 // Vanilla Control Positions
 $Configuration['CONTROL_POSITION_HEAD'] = '100';
 $Configuration['CONTROL_POSITION_MENU'] = '200';

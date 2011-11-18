@@ -44,7 +44,7 @@ if ($PostBackKey != ''
 	}
 } else {
 	// Load all extensions for version information
-	$Extensions = DefineExtensions($Context);
+	$Extensions = DefineExtensions($Context, true);
 	if (!is_array($Extensions)) {
 		echo $SafeRequestName.'|[ERROR]'.$Context->WarningCollector->GetPlainMessages();
 	} elseif (count($Extensions) > 0) {
