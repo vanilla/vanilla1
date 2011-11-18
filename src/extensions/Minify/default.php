@@ -2,7 +2,7 @@
 /*
 Extension Name: Minify
 Extension Url: subjunk@gmail.com
-Description: Vanilla bridge for Minify which packed JS and CSS file together. Improve client-side load by limiting request for external filea.
+Description: Vanilla bridge for Minify which packs JS and CSS files together. Improve client-side load by limiting request for external files.
 Version: 1.0
 Author: Klaus Burton
 Author Url: http://www.redskiesdesign.com/
