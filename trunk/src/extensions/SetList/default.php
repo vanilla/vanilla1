@@ -190,10 +190,6 @@ class SetListForm extends PostBackControl
 					. ' ' . $label . '</label></span></p>';
 				break;
 
-			case 'header':
-				$html = '<h2>' . $label . '</h2>';
-				break;
-
 			case 'text':
 				$html = '<input type="text" name="' . $element
 					. '" value="' . $value
