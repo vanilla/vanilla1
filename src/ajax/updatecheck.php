@@ -73,7 +73,9 @@ if ($PostBackKey != ''
 			$CurrentVersion = OpenUrl($Context->Configuration['UPDATE_URL']
 				.'?name='.unhtmlspecialchars($Extension->Name),
 				$Context);
-			if ($CurrentVersion <= $Extension->Version) {
+			if ($CurrentVersion == "UNKNOWN") {
+				echo $CheckExtension.'|[UNKNOWN]'.$Context->GetDefinition('ExtensionStatusUnknown');
+			} else if ($CurrentVersion <= $Extension->Version) {
 				echo $CheckExtension.'|[GOOD]'.$Context->GetDefinition('ExtensionStatusGood');
 			} elseif ($CurrentVersion >= $Extension->Version) {
 				$ExtensionName = $Extension->Name;
@@ -81,8 +83,6 @@ if ($PostBackKey != ''
 				$ExtensionURL = strtolower($ExtensionURL);
 				$ExtensionURL = $Context->Configuration['UPDATE_URL'].'../extensions/'.$ExtensionURL;
 				echo $CheckExtension.'|[OLD]'.str_replace(array('\\1','\\2'), array($CurrentVersion, $ExtensionURL), $Context->GetDefinition('NewVersionAvailable'));
-			} elseif ($CurrentVersion == "UNKNOWN") {
-				echo $CheckExtension.'|[UNKNOWN]'.$Context->GetDefinition('ExtensionStatusUnknown');
 			}
 		} else {
 			if ($RequestName == '[NEXT]') {
