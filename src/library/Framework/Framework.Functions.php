@@ -249,7 +249,7 @@ function DefineExtensions(&$Context, $update=false) {
 				}
 			}
 		}
-		natcasesort(array_keys($Extensions));
+		uksort($Extensions, "strnatcasecmp");
 		return $Extensions;
 	}
 }
