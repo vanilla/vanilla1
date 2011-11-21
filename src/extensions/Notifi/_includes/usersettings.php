@@ -25,9 +25,9 @@
 					$u = $this->Context->Session->UserID;
 					echo '
                   <div id="Form" class="Account Preferences Notifications">
-		     <form method="post" action="">
-		        <fieldset>
-			   <legend>'.$this->Context->GetDefinition("NotificationManagement").'</legend>
+		     <fieldset>
+		        <legend>'.$this->Context->GetDefinition("EmailNotification").'</legend>
+		           <form method="post" action="">
 			   <p class="Description"><strong>Changes will be made <strong style="color:#c00;">instantly</strong> when you check/uncheck the boxes.<br />There is <strong style="color:#c00;">no submit button</strong></strong></p>
 			   <h2>'.$this->Context->GetDefinition("NotificationOptions").'</h2>
 			   <ul>
@@ -153,8 +153,8 @@
 					}
 					echo '
 	          </span>
-		  </fieldset>
-	       </form>
+	          </form>
+	       </fieldset>
 	    </div>';
 				}
 			}

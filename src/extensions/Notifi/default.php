@@ -19,7 +19,6 @@ $Context->SetDefinition('CategoryLC',                             'category');
 $Context->SetDefinition('SubscribeUnsubscribeCategoryTitle',      'Start/stop receive an email whenever there is a new post in this category');
 $Context->SetDefinition('Discussion',                             'discussion');
 $Context->SetDefinition('SubscribeUnsubscribeDiscussionTitle',    'Start/stop receiving an email whenever there is a new post in this discussion');
-$Context->SetDefinition('NotificationManagement',                 'Notification Management');
 $Context->SetDefinition('NotificationOptions',                    'Notification options');
 $Context->SetDefinition('Notifi',                                 'Notifi');
 $Context->SetDefinition('RememberToSetNotifiSettingsPermissions', 'Remember to customize the Notifi settings for you and your users. You can do it at the <a href="'.GetUrl($Context->Configuration, 'settings.php', '', '', '', '', 'PostBackAction=Notifi').'">Notification Settings</a> page.');
