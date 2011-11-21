@@ -10,9 +10,8 @@ Author Url: http://www.redskiesdesign.com/
 
 
 // General definitions
-$Context->SetDefinition('Notification',                           'Notification');
+$Context->SetDefinition('EmailNotification',                      'Email Notification');
 $Context->SetDefinition('SubscribeTo',                            'Subscribe to');
-$Context->SetDefinition('Unsubscribe',                            'Unsubscribe');
 $Context->SetDefinition('UnsubscribeFrom',                        'Unsubscribe from');
 $Context->SetDefinition('Forum',                                  'forum');
 $Context->SetDefinition('SubscribeUnsubscribeForumTitle',         'Start/stop receiving an email whenever there is a new post in this forum');
@@ -122,10 +121,9 @@ function notifiCheck($Context,$Target) {
 
 // Add "subscribe/unsubscribe" links to the panel
 if ($Context->Session->UserID > 0 && isset($Panel) && $Context->Configuration['NOTIFI_AUTO_ALL'] == 0) {
-	$Panel->AddList($Context->GetDefinition('Notification'), 100);
+	$Panel->AddList($Context->GetDefinition('EmailNotification'), 100);
 
 	if ($Context->Configuration['NOTIFI_ALLOW_ALL'] == 1 && in_array($Context->SelfUrl, array('comments.php','index.php','categories.php'))) {
-
 		$SubscribeClass = 'notifiSubscribe';
 		$UnsubscribeClass = 'notifiUnSubscribe';
 		if (CheckNotifi($Context,'ALL',0)) {
@@ -137,10 +135,10 @@ if ($Context->Session->UserID > 0 && isset($Panel) && $Context->Configuration['N
 			. $Context->GetDefinition('SubscribeTo') .'</span>'
 			. '<span class="notifiSep"> / </span>'
 			. '<span class="'. $UnsubscribeClass .'">'
-			. $Context->GetDefinition('Unsubscribe') .'</span> '
+			. $Context->GetDefinition('UnsubscribeFrom') .'</span> '
 			. $Context->GetDefinition('Forum');
 		$Panel->AddListItem(
-				$Context->GetDefinition('Notification'), $LinkContent,"./#Notify_ALL","",
+				$Context->GetDefinition('EmailNotification'), $LinkContent,"./#Notify_ALL","",
 				'title="'.$Context->GetDefinition('SubscribeUnsubscribeForumTitle')
 					. '" id="SetNotifiAll" class="notifiToggleLink"');
 		unset($SubscribeClass, $UnsubscribeClass, $LinkContent);
@@ -154,7 +152,6 @@ if ($Context->Session->UserID > 0 && isset($Panel) && $Context->Configuration['N
 		$CategoryID = ForceIncomingInt('CategoryID',0);
 	}
 	if ($Context->Configuration['NOTIFI_ALLOW_CATEGORY'] == 1 && in_array($Context->SelfUrl, array('index.php','comments.php')) AND ($CategoryID > 0)) {
-
 		$SubscribeClass = 'notifiSubscribe';
 		$UnsubscribeClass = 'notifiUnSubscribe';
 		if (CheckNotifi($Context,'CATEGORY',$CategoryID) == true) {
@@ -166,17 +163,16 @@ if ($Context->Session->UserID > 0 && isset($Panel) && $Context->Configuration['N
 			. $Context->GetDefinition('SubscribeTo') .'</span>'
 			. '<span class="notifiSep"> / </span>'
 			. '<span class="'. $UnsubscribeClass .'">'
-			. $Context->GetDefinition('Unubscribe') .'</span> '
+			. $Context->GetDefinition('UnsubscribeFrom') .'</span> '
 			. $Context->GetDefinition('CategoryLC');
 		$Panel->AddListItem(
-				$Context->GetDefinition('Notification'), $LinkContent,
+				$Context->GetDefinition('EmailNotification'), $LinkContent,
 				"./#Notifi_CATEGORY_" . $CategoryID,"",
 				'title="'.$Context->GetDefinition('SubscribeUnsubscribeCategoryTitle')
 					. '" id="SetNotifiCategory_'.$CategoryID.'" class="notifiToggleLink"');
 		unset($SubscribeClass, $UnsubscribeClass, $LinkContent);
 	}
 	if ($Context->Configuration['NOTIFI_ALLOW_DISCUSSION'] == 1 && in_array($Context->SelfUrl, array('comments.php')) AND $DiscussionID > 0) {
-
 		$SubscribeClass = 'notifiSubscribe';
 		$UnsubscribeClass = 'notifiUnSubscribe';
 		if (CheckNotifi($Context,'DISCUSSION',$DiscussionID) == true) {
@@ -188,10 +184,10 @@ if ($Context->Session->UserID > 0 && isset($Panel) && $Context->Configuration['N
 			. $Context->GetDefinition('SubscribeTo') .'</span>'
 			. '<span class="notifiSep"> / </span>'
 			. '<span class="'. $UnsubscribeClass .'">'
-			. $Context->GetDefinition('Unubscribe') .'</span> '
+			. $Context->GetDefinition('UnsubscribeFrom') .'</span> '
 			. $Context->GetDefinition('Discussion');
 		$Panel->AddListItem(
-			$Context->GetDefinition('Notification'),$LinkContent,
+			$Context->GetDefinition('EmailNotification'),$LinkContent,
 				"./#Notifi_DISCUSSION_".$DiscussionID,"",
 				'title="'. $Context->GetDefinition('SubscribeUnsubscribeDiscussionTitle')
 					. '" id=\"SetNotifiDiscussion_'.$DiscussionID.'" class="notifiToggleLink"');
@@ -457,12 +453,12 @@ if (in_array($Context->SelfUrl, array('account.php'))) {
 			if (isset($_GET['u'])) {
 				if ($_GET['u'] == $AccountUser->UserID) {
 					include('_includes/usersettings.php');
-					$Panel->AddListItem($Context->GetDefinition('AccountOptions'), $Context->GetDefinition('Notification'), GetUrl($Configuration, $Context->SelfUrl, "", "", "", "", "u=".ForceIncomingInt('u',$Context->Session->UserID)."&amp;PostBackAction=Notification"), "", "", 92);
+					$Panel->AddListItem($Context->GetDefinition('AccountOptions'), $Context->GetDefinition('EmailNotification'), GetUrl($Configuration, $Context->SelfUrl, "", "", "", "", "u=".ForceIncomingInt('u',$Context->Session->UserID)."&amp;PostBackAction=Notification"), "", "", 92);
 					$Page->AddRenderControl($Context->ObjectFactory->NewContextObject($Context, "NotificationControl"), $Configuration["CONTROL_POSITION_BODY_ITEM"]);
 				}
 			} else {
 				include('_includes/usersettings.php');
-				$Panel->AddListItem($Context->GetDefinition('AccountOptions'), $Context->GetDefinition('Notification'), GetUrl($Configuration, $Context->SelfUrl, "", "", "", "", "u=".ForceIncomingInt('u',$Context->Session->UserID)."&amp;PostBackAction=Notification"), "", "", 92);
+				$Panel->AddListItem($Context->GetDefinition('AccountOptions'), $Context->GetDefinition('EmailNotification'), GetUrl($Configuration, $Context->SelfUrl, "", "", "", "", "u=".ForceIncomingInt('u',$Context->Session->UserID)."&amp;PostBackAction=Notification"), "", "", 92);
 				$Page->AddRenderControl($Context->ObjectFactory->NewContextObject($Context, "NotificationControl"), $Configuration["CONTROL_POSITION_BODY_ITEM"]);
 			}
 		}
