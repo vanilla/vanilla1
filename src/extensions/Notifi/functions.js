@@ -1,5 +1,4 @@
 (function($){
-	
 	$.Notifi = {
 		root: null,
 		ajaxUrl: 'extensions/Notifi/ajax.php',
@@ -39,7 +38,6 @@
 			authRetry = (function(){
 				var tries = 1;
 				return function(wwwAuthenticate) {
-
 					if (wwwAuthenticate.indexOf('Vanilla-Csrf-Check') >= 0 &&
 						$.Notifi.updatePostBackKey(wwwAuthenticate) &&
 						tries++ < 3
@@ -49,9 +47,7 @@
 						return true;
 					}
 					return false;
-					
 				};
-
 			})();
 
 			param = {
@@ -79,7 +75,6 @@
 					Value: value,
 					PostBackKey: this.postBackKey
 				}};
-
 			$.Notifi._update(param);
 			return true;
 		},
@@ -90,7 +85,6 @@
 		_update: function(param) {
 			$.ajax($.extend({}, param));
 		},
-
 
 		/**
 		 * Toggle a Notifi option represented by a checkbox.
@@ -113,7 +107,6 @@
 			inputName = $input.attr('name').split('_');
 			type = inputName[1];
 			id = inputName.length === 3 ? inputName[2] : 0;
-
 
 			$.Notifi.update(type, id, value, {
 				beforeSend: function(){
@@ -143,7 +136,6 @@
 							$('#NotifiOwnCont').show();
 						}
 					}
-
 
 				},
 				undo: function(){
@@ -202,10 +194,8 @@
 			this.postBackKey = parts[1].replace('"', '');
 			return true;
 		}
-
 	};
 
 	// On DOM ready, initialize Notifi
 	$($.Notifi.init);
-	
 })(jQuery.noConflict())
