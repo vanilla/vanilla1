@@ -65,47 +65,54 @@ define('HTML_VIDEO_TAG', 1);
 // value = replacement html; VIDEO_ID = video id (duh) (can only contain numbers, letters, - and _)
 if (HTML_VIDEO_TAG) {
 	$Html_VideoLinks = array(
-		'google' => '
-			<embed style="width: 400px; height: 326px;" id="VideoPlayback" type="application/x-shockwave-flash" src="http://video.google.com/googleplayer.swf?docId=VIDEO_ID"></embed>',
-		'youtube' => '
-			<object width="853" height="505">
-				<param name="movie" value="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D22"></param>
-				<embed src="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D22" type="application/x-shockwave-flash" width="853" height="505"></embed>
-			</object>',
-		'youtubehd' => '
-			<object width="853" height="505">
-				<param name="movie" value="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D22"></param>
-				<embed src="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D22" type="application/x-shockwave-flash" width="853" height="505"></embed>
-			</object>',
-		'youtubesd' => '
-			<object width="640" height="385">
-				<param name="movie" value="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D18"></param>
-				<embed src="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D18" type="application/x-shockwave-flash" width="640" height="385"></embed>
-			</object>',
-		'myspace' => '
-			<embed src="http://lads.myspace.com/videos/vplayer.swf" flashvars="m=VIDEO_ID&type=video" type="application/x-shockwave-flash" width="430" height="346"></embed>',
-		'own3d' => '
-			<object width="636" height="380">
-				<param name="movie" value="http://www.own3d.tv/stream/VIDEO_ID" />
-				<param name="allowfullscreen" value="true" />
-				<param name="wmode" value="transparent" />
-				<embed src="http://www.own3d.tv/stream/VIDEO_ID" type="application/x-shockwave-flash" allowfullscreen="true" width="636" height="380" wmode="transparent"></embed>
-			</object>',
-		'vimeo' => '
-			<object width="640" height="360">
-				<param name="allowfullscreen" value="true" />
-				<param name="allowscriptaccess" value="always" />
-				<param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=VIDEO_ID&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=0&amp;show_portrait=0&amp;color=00ADEF&amp;fullscreen=1" />
-				<embed src="http://vimeo.com/moogaloop.swf?clip_id=VIDEO_ID&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=0&amp;show_portrait=0&amp;color=00ADEF&amp;fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="640" height="360"></embed>
-			</object>',
-		'facebook' => '
-			<object width="640" height="360">
-				<param name="allowfullscreen" value="true" />
-				<param name="allowscriptaccess" value="always" />
-				<param name="movie" value="http://www.facebook.com/v/VIDEO_ID" />
-				<embed src="http://www.facebook.com/v/VIDEO_ID" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="640" height="360"></embed>
-			</object>',
-		'flickr' => '<object type="application/x-shockwave-flash" width="400" height="300" data="http://www.flickr.com/apps/video/stewart.swf?v=VIDEO_ID" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"> <param name="flashvars" value="intl_lang=en-us&amp;photo_secret=a80915961b&amp;photo_id=3379790266"></param> <param name="movie" value="http://www.flickr.com/apps/video/stewart.swf?v=VIDEO_ID"></param> <param name="bgcolor" value="#000000"></param> <param name="allowFullScreen" value="true"></param><embed type="application/x-shockwave-flash" src="http://www.flickr.com/apps/video/stewart.swf?v=VIDEO_ID" bgcolor="#000000" allowfullscreen="true" flashvars="intl_lang=en-us&amp;photo_secret=a80915961b&amp;photo_id=3379790266" height="300" width="400"></embed></object>'
+		'google' =>
+			'<embed style="width: 400px; height: 326px;" id="VideoPlayback" type="application/x-shockwave-flash" src="http://video.google.com/googleplayer.swf?docId=VIDEO_ID"></embed>',
+		'youtube' =>
+			'<object width="853" height="505">'.
+				'<param name="movie" value="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D22"></param>'.
+				'<embed src="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D22" type="application/x-shockwave-flash" width="853" height="505"></embed>'.
+			'</object>',
+		'youtubehd' =>
+			'<object width="853" height="505">'.
+				'<param name="movie" value="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D22"></param>'.
+				'<embed src="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D22" type="application/x-shockwave-flash" width="853" height="505"></embed>'.
+			'</object>',
+		'youtubesd' =>
+			'<object width="640" height="385">'.
+				'<param name="movie" value="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D18"></param>'.
+				'<embed src="http://www.youtube.com/v/VIDEO_ID&ap=%2526fmt%3D18" type="application/x-shockwave-flash" width="640" height="385"></embed>'.
+			'</object>',
+		'myspace' =>
+			'<embed src="http://lads.myspace.com/videos/vplayer.swf" flashvars="m=VIDEO_ID&type=video" type="application/x-shockwave-flash" width="430" height="346"></embed>',
+		'own3d' =>
+			'<object width="636" height="380">'.
+				'<param name="movie" value="http://www.own3d.tv/stream/VIDEO_ID" />'.
+				'<param name="allowfullscreen" value="true" />'.
+				'<param name="wmode" value="transparent" />'.
+				'<embed src="http://www.own3d.tv/stream/VIDEO_ID" type="application/x-shockwave-flash" allowfullscreen="true" width="636" height="380" wmode="transparent"></embed>'.
+			'</object>',
+		'vimeo' =>
+			'<object width="640" height="360">'.
+				'<param name="allowfullscreen" value="true" />'.
+				'<param name="allowscriptaccess" value="always" />'.
+				'<param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=VIDEO_ID&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=0&amp;show_portrait=0&amp;color=00ADEF&amp;fullscreen=1" />'.
+				'<embed src="http://vimeo.com/moogaloop.swf?clip_id=VIDEO_ID&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=0&amp;show_portrait=0&amp;color=00ADEF&amp;fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="640" height="360"></embed>'.
+			'</object>',
+		'facebook' =>
+			'<object width="640" height="360">'.
+				'<param name="allowfullscreen" value="true" />'.
+				'<param name="allowscriptaccess" value="always" />'.
+				'<param name="movie" value="http://www.facebook.com/v/VIDEO_ID" />'.
+				'<embed src="http://www.facebook.com/v/VIDEO_ID" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="640" height="360"></embed>'.
+			'</object>',
+		'flickr' =>
+			'<object type="application/x-shockwave-flash" width="400" height="300" data="http://www.flickr.com/apps/video/stewart.swf?v=VIDEO_ID" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000">'.
+				'<param name="flashvars" value="intl_lang=en-us&amp;photo_secret=a80915961b&amp;photo_id=3379790266" />'.
+				'<param name="movie" value="http://www.flickr.com/apps/video/stewart.swf?v=VIDEO_ID" />'.
+				'<param name="bgcolor" value="#000000" />'.
+				'<param name="allowFullScreen" value="true" />'.
+				'<embed type="application/x-shockwave-flash" src="http://www.flickr.com/apps/video/stewart.swf?v=VIDEO_ID" bgcolor="#000000" allowfullscreen="true" flashvars="intl_lang=en-us&amp;photo_secret=a80915961b&amp;photo_id=3379790266" height="300" width="400"></embed>'.
+			'</object>'
 	);
 }
 
