@@ -89,7 +89,7 @@ $Menu->AddTab($Context->GetDefinition('Discussions'), 'discussions', GetUrl($Con
 if ($Configuration['USE_CATEGORIES']) $Menu->AddTab($Context->GetDefinition('Categories'), 'categories', GetUrl($Configuration, 'categories.php'), '', $Configuration['TAB_POSITION_CATEGORIES']);
 $Menu->AddTab($Context->GetDefinition('Search'), 'search', GetUrl($Configuration, 'search.php'), '', $Configuration['TAB_POSITION_SEARCH']);
 if ($Context->Session->UserID > 0) {
-	// Make sure they should be seeing the settings tab
+	// The user will not have access to the Settings page unless they have one of the following permissions.
 	$RequiredPermissions = array(
 		'PERMISSION_CHECK_FOR_UPDATES',
 		'PERMISSION_APPROVE_APPLICANTS',
