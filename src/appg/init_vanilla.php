@@ -90,7 +90,8 @@ if ($Configuration['USE_CATEGORIES']) $Menu->AddTab($Context->GetDefinition('Cat
 $Menu->AddTab($Context->GetDefinition('Search'), 'search', GetUrl($Configuration, 'search.php'), '', $Configuration['TAB_POSITION_SEARCH']);
 if ($Context->Session->UserID > 0) {
 	// Make sure they should be seeing the settings tab
-	$RequiredPermissions = array('PERMISSION_CHECK_FOR_UPDATES',
+	$RequiredPermissions = array(
+		'PERMISSION_CHECK_FOR_UPDATES',
 		'PERMISSION_APPROVE_APPLICANTS',
 		'PERMISSION_MANAGE_REGISTRATION',
 		'PERMISSION_ADD_ROLES',
@@ -104,15 +105,16 @@ if ($Context->Session->UserID > 0) {
 		'PERMISSION_MANAGE_EXTENSIONS',
 		'PERMISSION_MANAGE_LANGUAGE',
 		'PERMISSION_MANAGE_STYLES',
-		'PERMISSION_MANAGE_THEMES');
+		'PERMISSION_MANAGE_THEMES'
+	);
 
-	$RequiredPermissionsCount = count($RequiredPermissions);
 	$i = 0;
-	for ($i = 0; $i < $RequiredPermissionsCount; $i++) {
-		if ($Context->Session->User->Permission($RequiredPermissions[$i])) {
+	foreach ($RequiredPermissions as $RequiredPermission) {
+		if ($Context->Session->User->Permission($RequiredPermission)) {
 			$Menu->AddTab($Context->GetDefinition('Settings'), 'settings', GetUrl($Configuration, 'settings.php'), '', $Configuration['TAB_POSITION_SETTINGS']);
 			break;
 		}
+		$i++;
 	}
 
 	// Add the account tab
