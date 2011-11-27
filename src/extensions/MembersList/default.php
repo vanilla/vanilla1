@@ -15,14 +15,52 @@ Author Url: http://www.redskiesdesign.com
 */
 
 
-/* sort and pagination js codes */
-
+// Sort and pagination js codes
 $Head->AddScript('extensions/MembersList/library/tablesort.js', '~', 190);
 $Head->AddScript('extensions/MembersList/library/paginate.js', '~', 350);
 
-/*Language definitions & settings*/
-include('conf/language.php');
-include('conf/settings.php');
+// General language
+$Context->Dictionary['Members'] = 'Members'; // Tab title
+$Context->Dictionary['AvatarDefinition'] = 'Avatar'; // Avatar Cell Title
+$Context->Dictionary['Username'] = 'Username'; // Username Cell Title
+$Context->Dictionary['NameTag'] = 'Name'; // Name & Lastname Cell Title
+$Context->Dictionary['Visit'] = 'Visit'; // Total Visit Count Title
+$Context->Dictionary['Role'] = 'Role'; // Role Description Cell Title
+$Context->Dictionary['Email'] = 'Email'; // Email Cell Title
+$Context->Dictionary['Posts'] = 'Posts'; // Total Posts Title
+$Context->Dictionary['Registered'] = 'Registration Date'; // Registration Date Title
+$Context->Dictionary['Gizli'] = 'Secret'; // Secret Fields
+$Context->Dictionary['notAvail'] = 'N/A'; // Not Available Fields (empty fields)
+
+// Admin language
+$Context->Dictionary['PERMISSION_VIEW_MEMBER'] = 'MembersList: Can see the Members tab';
+$Context->Dictionary['PERMISSION_VIEW_MEMBER_SECRET_DATA'] = 'MembersList: Can see names and email addresses on the Members tab';
+
+// Set configuration options
+$Context->Configuration['PERMISSION_VIEW_MEMBER'] = '0';
+$Context->Configuration['PERMISSION_VIEW_MEMBER_SECRET_DATA'] = '0';
+
+// Adds the cell to the list for defined parameters 1 is to view 0 is hidden.
+$eMembersConfig['c_avatar'] = '0'; // avatar
+$eMembersConfig['c_name'] = '0'; // name & lastname
+$eMembersConfig['c_email'] = '1'; // email
+$eMembersConfig['c_visit'] = '1'; // visit count
+$eMembersConfig['c_posts'] = '1'; // posts count
+$eMembersConfig['c_registered'] = '1'; // registered date
+$eMembersConfig['c_role'] = '1'; // role description
+
+/*
+ * Excluded roles from the list, comma-delimited
+ * Default is excluding banned members. 
+ */
+$eMembersConfig['x_role'] = '2'; 
+
+// Shows how many members showed in one page
+$eMembersConfig['paginate'] = '15';
+
+// Shows how many page numbers show on the paging navigation. 
+$eMembersConfig['maxPage'] = '10';
+
 
 /*****************************************************************************/
 /************************** MODIFICATION CODE BELOW **************************/
