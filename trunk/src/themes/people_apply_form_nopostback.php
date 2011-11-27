@@ -26,6 +26,10 @@ echo '<div class="About">
 				<label for="txtUsername">'.$this->Context->GetDefinition('Username').'</label>
 				<input id="txtUsername" type="text" name="Name" value="'.$this->Applicant->Name.'" class="Input" maxlength="20" />
 			</li>
+			<li id="NameListItem">
+				<label for="txtName">Name</label>
+				<input id="txtName" type="text" name="Username" class="Input" maxlength="20" />
+			</li>
 			<li>
 				<label for="txtNewPassword">'.$this->Context->GetDefinition('Password').'</label>
 				<input id="txtNewPassword" type="password" name="NewPassword" value="'.$this->Applicant->NewPassword.'" class="Input" />

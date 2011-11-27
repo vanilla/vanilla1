@@ -269,6 +269,11 @@ class UserManager extends Delegation {
 		if ($SafeUser->NewPassword != $SafeUser->ConfirmPassword) $this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrPasswordsMatchBad'));
 		if (!$SafeUser->AgreeToTerms) $this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrAgreeTOS'));
 
+		// This is the honeypot field.
+		if (!empty($SafeUser->Username)) {
+			$this->Context->WarningCollector->Add($this->Context->GetDefinition('ErrHoneypotTriggered'));
+		}
+
 		// Ensure the username isn't taken already
 		$s = $this->Context->ObjectFactory->NewContextObject($this->Context, 'SqlBuilder');
 		$s->SetMainTable('User', 'u');

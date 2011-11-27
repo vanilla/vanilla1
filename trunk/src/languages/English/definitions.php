@@ -383,6 +383,7 @@ $Context->Dictionary['ErrNewPasswordMatchBad'] = 'Your new password confirmation
 $Context->Dictionary['ErrPasswordsMatchBad'] = 'The passwords you entered did not match.';
 $Context->Dictionary['ErrAgreeTOS'] = 'You must agree to the terms of service.';
 $Context->Dictionary['ErrUsernameTaken'] = 'The username you entered is already taken by another user.';
+$Context->Dictionary['ErrHoneypotTriggered'] = 'Forum registration is closed.';
 $Context->Dictionary['ErrUserNotFound'] = 'The requested user could not be found.';
 $Context->Dictionary['ErrRemoveUserStyle'] = 'The user could not be removed because he/she is the author of a style.';
 $Context->Dictionary['ErrRemoveUserComments'] = 'The user could not be removed because s/he has authored discussion comments.';

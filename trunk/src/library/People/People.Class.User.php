@@ -254,6 +254,7 @@ class User {
 		$this->StyleID = ForceIncomingInt('StyleID', 0);
 		$this->CustomStyle = ForceIncomingString('CustomStyle', '');
 		$this->Name = ForceIncomingString('Name', '');
+		$this->Username = ForceIncomingString('Username', '');
 		$this->FirstName = ForceIncomingString('FirstName', '');
 		$this->LastName = ForceIncomingString('LastName', '');
 		$this->ShowName = ForceIncomingBool('ShowName', 0);
