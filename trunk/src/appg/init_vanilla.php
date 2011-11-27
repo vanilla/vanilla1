@@ -109,9 +109,11 @@ if ($Context->Session->UserID > 0) {
 	);
 
 	$i = 0;
+	$SettingsPageAccess = false;
 	foreach ($RequiredPermissions as $RequiredPermission) {
 		if ($Context->Session->User->Permission($RequiredPermission)) {
 			$Menu->AddTab($Context->GetDefinition('Settings'), 'settings', GetUrl($Configuration, 'settings.php'), '', $Configuration['TAB_POSITION_SETTINGS']);
+			$SettingsPageAccess = true;
 			break;
 		}
 		$i++;

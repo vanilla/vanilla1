@@ -15,32 +15,8 @@ include('appg/settings.php');
 $Configuration['SELF_URL'] = 'settings.php';
 include('appg/init_vanilla.php');
 
-// Ensure the user is allowed to view this page (they must have at least one of the following permissions)
-$RequiredPermissions = array('PERMISSION_CHECK_FOR_UPDATES',
-	'PERMISSION_APPROVE_APPLICANTS',
-	'PERMISSION_MANAGE_REGISTRATION',
-	'PERMISSION_ADD_ROLES',
-	'PERMISSION_EDIT_ROLES',
-	'PERMISSION_REMOVE_ROLES',
-	'PERMISSION_ADD_CATEGORIES',
-	'PERMISSION_EDIT_CATEGORIES',
-	'PERMISSION_REMOVE_CATEGORIES',
-	'PERMISSION_SORT_CATEGORIES',
-	'PERMISSION_CHANGE_APPLICATION_SETTINGS',
-	'PERMISSION_MANAGE_EXTENSIONS',
-	'PERMISSION_MANAGE_LANGUAGE',
-	'PERMISSION_MANAGE_STYLES',
-	'PERMISSION_MANAGE_THEMES');
-$Allowed = 0;
-$RequiredPermissionsCount = count($RequiredPermissions);
-$i = 0;
-for ($i = 0; $i < $RequiredPermissionsCount; $i++) {
-	if ($Context->Session->User->Permission($RequiredPermissions[$i])) {
-		$Allowed = 1;
-		break;
-	}
-}
-if (!$Allowed) {
+// $SettingsPageAccess is set in appg/init_vanilla.php
+if (!$SettingsPageAccess) {
 	Redirect(GetUrl($Configuration, 'index.php'));
 }
 
