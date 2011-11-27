@@ -68,7 +68,14 @@ $PageEnd = $Context->ObjectFactory->CreateControl($Context, 'PageEnd');
 // BUILD THE PAGE HEAD
 // Every page will require some basic definitions for the header.
 $Head->AddScript('js/global.js', '~', 250);
-$Head->AddStyleSheet($Context->StyleUrl.'people.css', 'screen', 100, '');
+
+// Add the People CSS stylesheet.
+// This should always be very small, containing only CSS that is essential to
+// Vanilla functioning since we don't want to interfere with theme styles.
+$Head->AddStyleSheet('css/people.css', 'screen', 100, '');
+
+// Add the theme stylesheet
+$Head->AddStyleSheet($Context->StyleUrl.'people.css', 'screen', 101, '');
 
 // INCLUDE EXTENSIONS
 if ($Configuration['PEOPLE_USE_EXTENSIONS']) {
