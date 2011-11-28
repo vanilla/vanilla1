@@ -31,6 +31,7 @@ class Extension {
 	var $AuthorUrl;
 	var $FileName;
 	var $Enabled;
+	var $Official;
 
 	function Clear() {
 		$this->Name = '';
@@ -41,6 +42,7 @@ class Extension {
 		$this->AuthorUrl = '';
 		$this->FileName = '';
 		$this->Enabled = 0;
+		$this->Official = 0;
 	}
 
 	function Extension() {
