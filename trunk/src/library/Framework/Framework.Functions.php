@@ -229,22 +229,30 @@ function DefineExtensions(&$Context, $update=false) {
 					}
 				}
 				if ($Extension->IsValid()) {
-					$match = false;
+					$isOfficial = false;
 
 					// Loop through the list of official extensions so we know to exclude them from update checking
-					if ($update == true) {
-						$OfficialExtensionsArray = explode (';', $Context->Configuration['OFFICIAL_EXTENSIONS']);
-						foreach ($OfficialExtensionsArray as $OfficialExtension) {
-							if ($Extension->Name == $OfficialExtension) {
-								$match = true;
-							}
+					$OfficialExtensionsArray = explode (';', $Context->Configuration['OFFICIAL_EXTENSIONS']);
+					foreach ($OfficialExtensionsArray as $OfficialExtension) {
+						if ($Extension->Name == $OfficialExtension) {
+							$isOfficial = true;
 						}
 					}
 
-					// If this isn't an official extension, add it to the list of extensions to be checked for updates
-					if ($match == false) {
+					// If the user is on the "Updates & Reminders" page
+					if ($update == true) {
+						// If this isn't an official extension, add it to the list of extensions to be checked for updates
+						if ($isOfficial == false) {
+							$Extension->Enabled = in_array($Item, $CurrExtensions);
+							$Extensions[FormatExtensionKey($Extension->Name)] = $Extension;
+						}
+					// If the user is on the Extensions page
+					} else {
 						$Extension->Enabled = in_array($Item, $CurrExtensions);
 						$Extensions[FormatExtensionKey($Extension->Name)] = $Extension;
+						if ($isOfficial == true) {
+							$Extension->Official = 1;
+						}
 					}
 				}
 			}

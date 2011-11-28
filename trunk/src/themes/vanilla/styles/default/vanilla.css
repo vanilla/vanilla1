@@ -1277,9 +1277,12 @@ div.Extensions h3 span.AuthorUrl a {
 	color: #84733d !important;
 	text-decoration: underline;
 }
+div.Extensions strong.ExtensionNameColor {
+	color: #1EB136 !important;
+}
 div.Extensions h3 span.Author,
 div.Extensions h3 span.Author a {
-	color: #1EB136 !important
+	color: #9f8e56 !important
 }
 div.Extensions ul li input {
 	width: auto !important;
