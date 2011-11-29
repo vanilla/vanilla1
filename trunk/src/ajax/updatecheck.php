@@ -20,15 +20,11 @@ $ExtensionKey = ForceIncomingString('ExtensionKey', '');
 $RequestName = ForceIncomingString('RequestName', '');
 $SafeRequestName = htmlentities($RequestName);
 
-if ($PostBackKey != '' 
-	&& $PostBackKey != $Context->Session->GetCsrfValidationKey()
-) {
+if ($PostBackKey != '' && $PostBackKey != $Context->Session->GetCsrfValidationKey()) {
 	echo $SafeRequestName.'|[ERROR]'.$Context->GetDefinition('ErrPostBackKeyInvalid');
 } else if ($RequestName == 'Core') {
 	// Ping the Lussumo server with core version information
-	$CurrentVersion = OpenUrl($Context->Configuration['UPDATE_URL']
-		.'?name=Vanilla',
-		$Context);
+	$CurrentVersion = OpenUrl($Context->Configuration['UPDATE_URL'].'?name=Vanilla', $Context);
 
 	// Also record that the check occurred
 	$SettingsFile = $Context->Configuration['APPLICATION_PATH'].'conf/settings.php';
@@ -70,9 +66,7 @@ if ($PostBackKey != ''
 			$Extension = $Extensions[$CheckExtension];
 
 			// Ping the Lussumo server with extension version information
-			$CurrentVersion = OpenUrl($Context->Configuration['UPDATE_URL']
-				.'?name='.unhtmlspecialchars($Extension->Name),
-				$Context);
+			$CurrentVersion = OpenUrl($Context->Configuration['UPDATE_URL'].'?name='.unhtmlspecialchars($Extension->Name), $Context);
 			if ($CurrentVersion == "UNKNOWN") {
 				echo $CheckExtension.'|[UNKNOWN]'.$Context->GetDefinition('ExtensionStatusUnknown');
 			} else if ($CurrentVersion <= $Extension->Version) {
@@ -80,8 +74,7 @@ if ($PostBackKey != ''
 			} elseif ($CurrentVersion >= $Extension->Version) {
 				$ExtensionName = $Extension->Name;
 				$ExtensionURL = str_replace(' ', '', $ExtensionName);
-				$ExtensionURL = strtolower($ExtensionURL);
-				$ExtensionURL = $Context->Configuration['UPDATE_URL'].'../extensions/'.$ExtensionURL;
+				$ExtensionURL = $Context->Configuration['UPDATE_URL'].'../extensions/'.$ExtensionURL.'/';
 				echo $CheckExtension.'|[OLD]'.str_replace(array('\\1','\\2'), array($CurrentVersion, $ExtensionURL), $Context->GetDefinition('NewVersionAvailable'));
 			}
 		} else {
