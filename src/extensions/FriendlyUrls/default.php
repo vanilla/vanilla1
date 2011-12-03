@@ -2,7 +2,7 @@
 /*
 Extension Name: Friendly Urls
 Extension Url: http://vanillaforums.org/addon/30/friendly-urls
-Description: make your Vanilla installation use search-engine-friendly urls.
+Description: Make your Vanilla installation use search-engine-friendly URLs.
 Version: 1.0.1
 Author: Mark O'Sullivan
 Author Url: http://markosullivan.ca/
