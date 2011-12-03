@@ -24,17 +24,13 @@
  */
 class Head extends Control {
 	var $_Scripts;
-	var $Scripts;           // Script collection
-	var $StyleSheets;		// Stylesheet collection
-	var $Strings;			// String collection
-	var $BodyId;			// identifier assigned to the body tag
-	var $Meta;				// An associative array of meta tags/content to be
-							//added to the head.
-	var $Tags;				// Associate a script or style type to an etag.
-							// By default Vanilla will use the last modification
-							// of the files on the server as etag unless an etag
-							// is already set.
-
+	var $Scripts;       // Script collection
+	var $StyleSheets;   // Stylesheet collection
+	var $Strings;       // String collection
+	var $BodyId;        // identifier assigned to the body tag
+	var $Meta;          // An associative array of meta tags/content to be added to the head.
+	var $Tags;          // Associate a script or style type to an etag.
+	                    // By default Vanilla will use the last modification of the files on the server as etag unless an etag is already set.
 
 	/**
 	 * Add an external script for the page.
@@ -94,9 +90,11 @@ class Head extends Control {
 		if (!is_array($this->StyleSheets)) $this->StyleSheets = array();
 		$StylePath = $StyleSheetLocation;
 		if ($StyleRoot != '') $StylePath = ConcatenatePath($StyleRoot, $StyleSheetLocation);
-		$this->InsertItemAt($this->StyleSheets,
-				array('Sheet' => $StylePath, 'Media' => $Media),
-				$Position);
+		$this->InsertItemAt(
+			$this->StyleSheets,
+			array('Sheet' => $StylePath, 'Media' => $Media),
+			$Position
+		);
 	}
 
 	function AddString($String) {
@@ -133,7 +131,6 @@ class Head extends Control {
 	}
 
 	function Render() {
-
 		foreach ($this->Context->JSDictionary as $Key => $Value) {
 			$Key = 'X-Vanilla-' . FormatStringForDisplay($Key);
 			$Value = FormatStringForDisplay($Value);
@@ -166,7 +163,6 @@ class Head extends Control {
 	}
 
 	function TagAssets() {
-
 		if (!$this->Context->Configuration['HEAD_TAG_ASSET']) {
 			return;
 		}
@@ -183,20 +179,17 @@ class Head extends Control {
 	}
 
 	function _TageAsset($Asset) {
-
 		// Check that the asset start with the forum web root,
 		// that it is a static file
 		// and that it is not already tagged
-		if ( strpos($Asset, $this->Context->Configuration['WEB_ROOT']) !== 0
-			|| !preg_match(
-					'%^/(?:[-_.\d\w]+/)+[-_.\d\w]+\.(?:js|css)$%',
-					$Asset)
+		if (
+			strpos($Asset, $this->Context->Configuration['WEB_ROOT']) !== 0 ||
+			!preg_match('%^/(?:[-_.\d\w]+/)+[-_.\d\w]+\.(?:js|css)$%', $Asset)
 		) {
 			return $Asset;
 		}
 
 		return $Asset . '?t=' . $this->GetTag($Asset);
-
 	}
 
 	function GetTag($Asset) {
@@ -205,11 +198,11 @@ class Head extends Control {
 		}
 
 		$AssetPath = substr_replace(
-				$Asset,
-				$this->Context->Configuration['APPLICATION_PATH'],
-				0,
-				strlen($this->Context->Configuration['WEB_ROOT'])
-				);
+			$Asset,
+			$this->Context->Configuration['APPLICATION_PATH'],
+			0,
+			strlen($this->Context->Configuration['WEB_ROOT'])
+		);
 
 		if (file_exists($AssetPath)) {
 			return filemtime($AssetPath);
