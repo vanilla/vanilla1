@@ -33,8 +33,8 @@ if (in_array(
 	if (version_compare(APPLICATION_VERSION, '1.2') < 0) {
 		$Head->AddScript('extensions/YellowFade/functions.js', '~');
 	} else {
-		$Head->AddScript('js/jquery-ui/jquery.effects.core.js', '~', 191);
-		$Head->AddScript('js/jquery-ui/jquery.effects.highlight.js', '~', 192);
+		$Head->AddScript('js/jquery-ui/jquery.effects.core.js', '~', 251);
+		$Head->AddScript('js/jquery-ui/jquery.effects.highlight.js', '~', 252);
 		$Head->AddScript('extensions/YellowFade/jquery.yellowfade.js', '~', 260);
 	}
 }
