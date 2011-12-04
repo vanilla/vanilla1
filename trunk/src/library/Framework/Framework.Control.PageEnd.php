@@ -28,6 +28,7 @@ class PageEnd extends Control {
 	}
 	function Render() {
 		$this->CallDelegate('PreRender');
+		include(ThemeFilePath($this->Context->Configuration, 'overall_footer.php'));
 		include(ThemeFilePath($this->Context->Configuration, 'page_end.php'));
 		$this->CallDelegate('PostRender');
 	}
