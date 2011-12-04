@@ -26,10 +26,12 @@ class Foot extends Control {
 	var $Links;
 
 	function AddLink($Url, $Text, $Target, $Position, $ForcePosition = '0') {
-		$this->AddItemToCollection($this->Links,
+		$this->AddItemToCollection(
+			$this->Links,
 			array('Url' => $Url, 'Text' => $Text, 'Target' => $Target),
 			$Position,
-			$ForcePosition);
+			$ForcePosition
+		);
 	}
 
 	function Foot(&$Context, $CssClass = '') {
@@ -37,16 +39,21 @@ class Foot extends Control {
 		$this->Control($Context);
 		if ($CssClass != '') $this->CssClass = ' '.$CssClass;
 		$this->Links = array();
+
 		// Add the default links
-		$this->AddLink('javascript:PopTermsOfService();',
+		$this->AddLink(
+			'javascript:PopTermsOfService();',
 			$this->Context->GetDefinition('TermsOfService'),
 			'',
-			100);
+			100
+		);
 
-		$this->AddLink('http://lussumo.com/docs/',
+		$this->AddLink(
+			'http://lussumo.com/docs/',
 			$this->Context->GetDefinition('Documentation'),
 			'_blank',
-			200);
+			200
+		);
 
 		$this->CallDelegate('PostConstructor');
 	}

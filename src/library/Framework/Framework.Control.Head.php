@@ -159,6 +159,7 @@ class Head extends Control {
 
 		$this->CallDelegate('PreRender');
 		include(ThemeFilePath($this->Context->Configuration, 'head.php'));
+		include(ThemeFilePath($this->Context->Configuration, 'overall_header.php'));
 		$this->CallDelegate('PostRender');
 	}
 
