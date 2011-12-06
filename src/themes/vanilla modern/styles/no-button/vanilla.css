@@ -103,6 +103,7 @@ a:hover {
 	background: url('waves.blue.gif') repeat-x left top #E5EAF6;
 	border-top:1px solid #acbedf;
 	border-bottom:1px solid #acbedf;
+	position:relative;
 }
 #Header * {
 	margin:0;
