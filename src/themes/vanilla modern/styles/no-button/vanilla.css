@@ -443,7 +443,7 @@ html>body#CommentsPage .ContentInfo h1 {
 	background-color:#fffeec !important;
 }
 .NewComments,
-#Discussions li.Read.NewComments ul {
+#Discussions li.NewComments ul {
 	background-color:#ffff9b !important;
 }
 #Discussions li ul {
