@@ -2,7 +2,7 @@
 /*
 Extension Name: New Applicants
 Extension Url: http://vanillaforums.org/addon/45/new-applicants
-Description: Places notification above discussion list for users with sufficient priviledges that there are new applicants seeking membership approval.
+Description: Places a notification above the discussion list for users with sufficient privileges that there are new applicants seeking membership approval.
 Version: 1.3
 Author: Mark O'Sullivan
 Author Url: http://www.markosullivan.ca/
