@@ -709,6 +709,9 @@ html>body#CommentsPage .ContentInfo h1 {
 	border-bottom:none;
 	padding:0;
 }
+#Comments .CommentBody img {
+	max-width: 100%;
+}
 #CommentsPage .ContentInfo.Middle .PageInfo {
 	border-top: 0;
 	margin:0;
