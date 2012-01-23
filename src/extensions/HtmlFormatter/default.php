@@ -131,10 +131,6 @@ $Html_AllowedProtocols = array('http', 'https', 'ftp', 'news', 'nntp', 'feed', '
 $Html_DefaultProtocol = 'http://';
 
 // END SETTINGS
-// Include required JavaScript for dynamic image resizing
-if (in_array($Context->SelfUrl, array('comments.php'))) {
-	$Head->AddScript('extensions/HtmlFormatter/functions.js', '~', 310);
-}
 
 // Unclosed or orphaned tags
 $Html_TagArray = array();
