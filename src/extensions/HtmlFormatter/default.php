@@ -68,11 +68,11 @@ if (HTML_VIDEO_TAG) {
 		'google' =>
 			'<embed style="width:400px;height:326px;" id="VideoPlayback" type="application/x-shockwave-flash" src="http://video.google.com/googleplayer.swf?docId=VIDEO_ID"></embed>',
 		'youtube' =>
-			'<iframe width="853" height="510" src="http://www.youtube.com/embed/VIDEO_ID?rel=0" frameborder="0" style="max-width:100%;" allowfullscreen></iframe>',
+			'<iframe width="853" height="510" src="http://www.youtube-nocookie.com/embed/VIDEO_ID?rel=0" frameborder="0" style="max-width:100%;" allowfullscreen></iframe>',
 		'youtubehd' =>
-			'<iframe width="853" height="510" src="http://www.youtube.com/embed/VIDEO_ID?rel=0" frameborder="0" style="max-width:100%;" allowfullscreen></iframe>',
+			'<iframe width="853" height="510" src="http://www.youtube-nocookie.com/embed/VIDEO_ID?rel=0" frameborder="0" style="max-width:100%;" allowfullscreen></iframe>',
 		'youtubesd' =>
-			'<iframe width="640" height="385" src="http://www.youtube.com/embed/VIDEO_ID?rel=0" frameborder="0" style="max-width:100%;" allowfullscreen></iframe>',
+			'<iframe width="640" height="385" src="http://www.youtube-nocookie.com/embed/VIDEO_ID?rel=0" frameborder="0" style="max-width:100%;" allowfullscreen></iframe>',
 		'myspace' =>
 			'<embed src="http://lads.myspace.com/videos/vplayer.swf" flashvars="m=VIDEO_ID&type=video" type="application/x-shockwave-flash" width="430" height="346"></embed>',
 		'own3d' =>
