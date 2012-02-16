@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+	 Thu 18 Mar
+
+	 Friendly Urls
+	 Package the Friendly Urls extension
+
+====================================================================== -->
+<project name="FriendlyUrls" default="build">
+
+	<description>
+		Package the Friendly Urls extension
+	</description>
+
+	<property name="antlib.dir" location="../../../tools/ant-library/"/>
+	<import file="${antlib.dir}/extension.xml"/>
+
+	<fileset dir="${src.dir}" id="src.fileset">
+		<include name="**/*.php"/>
+		<include name="**/*.txt"/>
+		<include name="**/*.conf"/>
+		<exclude name="build/**"/>
+		<exclude name="dist/**"/>
+		<exclude name="build.xml"/>
+		<exclude name="build.properties"/>
+	</fileset>
+
+</project>

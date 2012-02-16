@@ -1,0 +1,71 @@
+<html>
+<head>
+<title>Expire - Vanilla Extension</title>
+<style><!--
+dd { margin-bottom: 1em; }
+blockquote { margin: 1em; padding: 1em; border: 1px solid black; }
+--></style>
+</head>
+
+<body>
+
+<h1 id="top">Expire</h1>
+<p>Expire is a Vanilla extension that will automatically close, sink or hide
+discussions that have no new comments for a certain number of days. Sticky
+discussions are always active and will never expire. No more than once per
+day, Expire will check for inactive discussions and hide those discussions or
+mark them as Closed or Sink.</p>
+
+<h2 id="toc">Table of Contents</h2>
+<ul>
+<li><a href="#install">Installing and Enabling Expire</a></li>
+<li><a href="#config">Configuration Settings</a></li>
+<li><a href="#develop">Development</a></li>
+</ul>
+
+<hr />
+<h2 id="install">Installing and Enabling Expire</h2>
+<p>In order for Vanilla to recognize an extension, it must be contained within
+its own directory within the extensions directory. So, once you have
+downloaded and unzipped the Expire files, you can then place the folder
+containing the default.php file into your installation of Vanilla. The path to
+Expire's default.php file should look like this:</p>
+<blockquote><code>/path/to/vanilla/extensions/Expire/default.php</code></blockquote>
+<p>Once this is complete, you can enable Expire through the "Manage
+Extensions" form on the settings tab in Vanilla.</p>
+
+<hr />
+<h2 id="config">Configuration Settings</h2>
+<p>The easiest way to change Expire's settings is to install and enable
+<a href="http://code.google.com/p/vanilla-friends/wiki/SetList">SetList</a>.
+Once you enable SetList, forum administrators will see a link to Expire in
+the side panel of the Vanilla settings page.</p>
+<p>Expire has four settings. They are stored in Vanilla's
+<code>conf/settings.php</code> file.</p>
+<dl>
+<dt><strong>$Configuration['Expire.DaysOld']</strong></dt>
+<dd>The number of days with no new comments before a discussion expires. If
+this value is "0", old discussions will never expire.</dd>
+<dt><strong>$Configuration['Expire.Action']</strong></dt>
+<dd>"Close" - Old discussions will be closed.</dd>
+<dd>"Sink"  - Old discussions will be sunk.</dd>
+<dd>"Hide"  - Old discussions will be hidden.</dd>
+<dt><strong>$Configuration['Expire.IgnoreWhispers']</strong></dt>
+<dd>By default a discussion will not expire if it has recent whispers. Set
+this value to "1" to force a discussion to expire if it has no recent visible
+comments.</dd>
+<dt><strong>$Configuration['Expire.LastLook']</strong></dt>
+<dd>The last time Expire went looking for old discussions. Set this value to
+"0" to force Expire to go looking immediately.</dd>
+</dl>
+
+<hr />
+<h2 id="develop">Development</h2>
+<p>Expire was written by
+<a href="mailto:squirrel@digitalsquirrel.com">squirrel</a>. Part of the
+<a href="http://code.google.com/p/vanilla-friends/">Vanilla Friends</a>
+project.</p>
+
+</body>
+</html>
+

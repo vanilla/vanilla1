@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Thu 11 Mar 12:24
+
+     YellowFade
+     Package the Yellow Fade extension
+                                                                   
+     ====================================================================== -->
+<project name="YellowFade" default="build">
+    
+	<description>
+            Package the YellowFade extension
+    </description>
+	
+	<property name="antlib.dir" location="../../../tools/ant-library/"/>
+	<import file="${antlib.dir}/extension.xml"/>
+	
+</project>
