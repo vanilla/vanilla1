@@ -5,7 +5,7 @@
 * Vanilla is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 * Vanilla is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 * You should have received a copy of the GNU General Public License along with Vanilla; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-* The latest source code for Vanilla is available at www.lussumo.com
+* The latest source code is available at www.vanilla1forums.com
 * Contact Mark O'Sullivan at mark [at] lussumo [dot] com
 *
 * Description: English language dictionary
@@ -340,7 +340,7 @@ $Context->Dictionary['PasswordResetRequest'] = 'Password Reset Request';
 $Context->Dictionary['LanguageManagement'] = 'Languages';
 $Context->Dictionary['LanguageChangesSaved'] = 'The language has been changed successfully.';
 $Context->Dictionary['ChangeLanguage'] = 'Choose a language';
-$Context->Dictionary['ChangeLanguageNotes'] = 'If your language does not appear here, you can <a href="http://lussumo.com/addons/">download the latest languages from Lussumo</a>.';
+$Context->Dictionary['ChangeLanguageNotes'] = 'If your language does not appear here, you can <a href="http://www.vanilla1forums.com/extensions/">download the latest languages from Lussumo</a>.';
 $Context->Dictionary['CloseThisDiscussion'] = 'Close this discussion';
 $Context->Dictionary['ReOpenThisDiscussion'] = 'Reopen this discussion';
 $Context->Dictionary['MakeThisDiscussionUnsticky'] = 'Unstick this discussion';
@@ -472,7 +472,7 @@ $Context->Dictionary['XSecondAgo'] = '//1 second ago';
 $Context->Dictionary['XSecondsAgo'] = '//1 seconds ago';
 $Context->Dictionary['nothing'] = 'nothing';
 $Context->Dictionary['EnableWhispers'] = 'Enable Whispers';
-$Context->Dictionary['ExtensionFormNotes'] = 'Extensions are used to add new functionality into Vanilla. Listed below are all of the extensions you currently have installed. To enable an extension, check the box next to the extension name.<br /><br />Official extensions are <strong class="ExtensionNameColor">this color</strong> while unofficial ones are <strong>this color</strong>.<br /><br /><a href="http://vanillaforums.org/addon/browse/all/recent/1/">Click here to find extensions to download</a>.';
+$Context->Dictionary['ExtensionFormNotes'] = 'Extensions are used to add new functionality into Vanilla. Listed below are all of the extensions you currently have installed. To enable an extension, check the box next to the extension name.<br /><br />Official extensions are <strong class="ExtensionNameColor">this color</strong> while unofficial ones are <strong>this color</strong>.<br /><br /><a href="http://www.vanilla1forums.com/extensions/">Click here to find extensions to download</a>.';
 $Context->Dictionary['EnabledExtensions'] = 'Enabled Extensions';
 $Context->Dictionary['DisabledExtensions'] = 'Disabled Extensions';
 $Context->Dictionary['ErrExtensionNotFound'] = 'The specified extension could not be found.';
@@ -481,7 +481,7 @@ $Context->Dictionary['UpdateCheck'] = 'Check for Updates';
 $Context->Dictionary['UpdateCheckNotes'] = 'Vanilla is constantly being updated and upgraded as issues are discovered and features are added (or removed) by the community. In order to make sure that your installation is up to date and secure, it is important that you check for updates to the codebase regularly.';
 $Context->Dictionary['CheckForUpdates'] = 'Check for updates now';
 $Context->Dictionary['ErrUpdateCheckFailure'] = 'Failed to retrieve information from Lussumo about the latest version of Vanilla. Please try again later.';
-$Context->Dictionary['PleaseUpdateYourInstallation'] = '<strong>WARNING:</strong> Your installation of Vanilla is //1, but <span class="Highlight">the most recent version of Vanilla available is //2</span>. Please upgrade your installation immediately by downloading the latest version of Vanilla from <a href="http://getvanilla.com">http://getvanilla.com</a>.';
+$Context->Dictionary['PleaseUpdateYourInstallation'] = '<strong>WARNING:</strong> Your installation of Vanilla is //1, but <span class="Highlight">the most recent version of Vanilla available is //2</span>. Please upgrade your installation immediately by downloading the latest version of Vanilla from <a href="http://www.vanilla1forums.com/">http://www.vanilla1forums.com/</a>.';
 $Context->Dictionary['YourInstallationIsUpToDate'] = 'Your installation of Vanilla is up to date. Please check again soon!';
 $Context->Dictionary['ErrPermissionHideDiscussions'] = 'You do not have permission to delete discussions.';
 $Context->Dictionary['ErrPermissionCloseDiscussions'] = 'You do not have permission to close discussions.';
@@ -559,7 +559,7 @@ $Context->Dictionary['XDaysSinceUpdateCheck'] = 'It has been //1 days since you 
 $Context->Dictionary['CheckForUpdatesNow'] = 'Click here to check for updates now';
 $Context->Dictionary['ManageThemeAndStyle'] = 'Themes &amp; Styles';
 $Context->Dictionary['ThemeChangesSaved'] = 'Your changes have been saved successfully';
-$Context->Dictionary['ThemeAndStyleNotes'] =  "Themes and Styles are used to change Vanilla's structure and appearance respectively. For more themes and styles from Lussumo, or to find out how to create your own, <a href=\"http://lussumo.com/addons/\">check out the Vanilla Add-on Directory</a>.";
+$Context->Dictionary['ThemeAndStyleNotes'] =  "Themes and Styles are used to change Vanilla's structure and appearance respectively. For more themes and styles from Lussumo, or to find out how to create your own, <a href=\"http://www.vanilla1forums.com/extensions/\">check out the Vanilla Add-on Directory</a>.";
 $Context->Dictionary['ThemeLabel'] = 'Themes currently available in your installation of Vanilla';
 $Context->Dictionary['StyleLabel'] = 'Styles available for the selected theme';
 $Context->Dictionary['ApplyStyleToAllUsers'] = 'Apply this style to all users';
@@ -572,7 +572,7 @@ $Context->Dictionary['ErrorFopen'] = "An error occurred while attempting to retr
 $Context->Dictionary['ErrorFromPHP'] = " Here is the message reported by PHP: \\1";
 $Context->Dictionary['InvalidHostName'] = 'The supplied host name was invalid: \\1';
 $Context->Dictionary['WelcomeToVanillaGetSomeAddons'] = '<strong>Welcome to Vanilla!</strong>
-<br />You will quickly notice that it is very ... vanilla. You should definitely spice things up with some <a href="http://lussumo.com/addons/">add-ons</a>.';
+<br />You will quickly notice that it is very ... vanilla. You should definitely spice things up with some <a href="http://www.vanilla1forums.com/extensions/">add-ons</a>.';
 $Context->Dictionary['RemoveThisNotice'] = 'Remove this message';
 $Context->Dictionary['OtherSettings'] = 'Other settings';
 $Context->Dictionary['ChangesSaved'] = 'Your changes were saved successfully';
@@ -607,6 +607,6 @@ $Context->Dictionary['ErrPermissionSortCategories'] = 'You do not have the permi
 //Added for Vanilla 1.1.5 on 2008-05-25
 $Context->Dictionary['EditYourDiscussion'] = 'Edit your discussion';
 /* Please do not remove or alter this definition */
-$Context->Dictionary['PanelFooter'] = '<p id="AboutVanilla"><a href="http://getvanilla.com">Vanilla '.APPLICATION_VERSION.'</a> is a product of <a href="http://lussumo.com">Lussumo</a>. More Information: <a href="http://lussumo.com/docs">Documentation</a>, <a href="http://lussumo.com/community">Community Support</a>.</p>';
+$Context->Dictionary['PanelFooter'] = '<p id="AboutVanilla"><a href="http://www.vanilla1forums.com">Vanilla '.APPLICATION_VERSION.'</a> is a product of Lussumo. More Information: <a href="http://lussumo.com/docs">Documentation</a>, <a href="http://www.vanilla1forums.com/community/">Community Support</a>.</p>';
 
 ?>

@@ -629,7 +629,7 @@ if (!defined(\'IN_VANILLA\')) exit();
 						<li>Add Atom and RSS feeds to your forum</li>
 						<li>Allow users to quote other users in discussions</li>
 					</ul>
-					<p>All of these extensions (and a lot more) are available in <a href="http://lussumo.com/addons/" target="Lussumo">the Vanilla Add-on directory</a>.</p>
+					<p>All of these extensions (and a lot more) are available in <a href="http://www.vanilla1forums.com/extensions/" target="Vanilla 1 Forums">the Vanilla Add-on directory</a>.</p>
 					<p>You&#8217;ll also want to fine-tune your application settings, like:</p>
 					<ul>
 						<li>Change the number of discussions or comments per page</li>
@@ -639,7 +639,7 @@ if (!defined(\'IN_VANILLA\')) exit();
 					</ul>
 					<p>All of these configuration options (and many more) are available in the settings tab of your Vanilla forum.</p>
 
-					<p>If you need some help getting started with administering your new Vanilla forum, you can <a href="http://lussumo.com/docs" target="Lussumo">read the complete documentation</a> or ask for help on the <a href="http://lussumo.com/community/" target="Lussumo">Lussumo Community Forum</a>. Enough talking...</p>
+					<p>If you need some help getting started with administering your new Vanilla forum, you can <a href="http://lussumo.com/docs" target="Lussumo">read the complete documentation</a> or ask for help on the <a href="http://www.vanilla1forums.com/community/" target="Community Forum">Community Forum</a>. Enough talking...</p>
 					<div class="ButtonContainer"><a class="Button" href="../people.php">Go sign in and have some fun!</a></div>';
 				}
 				?>
