@@ -1,13 +1,16 @@
 Version:        1.3.0
-Date:           ?
-Changes:        ?
+Date:           2012-02-17
+Changes:        https://code.google.com/p/lussumo-vanilla/source/list?num=78&start=1096
 Summary:        - Update checker works (#44)
                 - Added invisible protection against spambot registration
                 - "Top of Page" and "Back to Discussions" links stick to the bottom when the main menu isn't on-screen anymore
                 - CSS fixes
                 - Installation is more user-friendly
+		- Added overall_footer and overall_header to themes (#53)
+		- Language improvements
+		- Dynamic image resizing is done with CSS now instead of JavaScript, making it faster
                 - Added the extensions AjaxQuote, DiscussionPages and MembersList to the official package
-                - Made improvements/bugfixes to the extensions Notifi, SetList, Hide Success, HTMLFormatter, Attachments
+                - Made improvements/bugfixes to the extensions Notifi, SetList, Hide Success, HTMLFormatter, Attachments, YellowFade, Friendly Urls, New Applicants
 
 Version:        1.2.2
 Date:           2011-11-09
