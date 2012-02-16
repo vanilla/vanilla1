@@ -819,14 +819,14 @@ VALUES ('Unauthenticated','1','1','1','1','a:32:{s:23:\"PERMISSION_ADD_COMMENTS\
 				} else {
 					echo "<h2>Vanilla Upgrade Wizard (Complete)</h2>
 					<p><strong>That's it! Vanilla has been upgraded.</strong></p>
-					<p>Things in Vanilla 1 are quite different to what you're used to. The best new feature is, without a doubt, the new extension engine. You should definitely head over to the <a href=\"http://lussumo.com/addons/\" target=\"Lussumo\">Vanilla Add-on directory</a> right away to find all of your favourite old extensions, plus a bunch of new ones.</p>
+					<p>Things in Vanilla 1 are quite different to what you're used to. The best new feature is, without a doubt, the new extension engine. You should definitely head over to the <a href=\"http://www.vanilla1forums.com/extensions/\" title=\"Vanilla 1 Forums extensions\">Vanilla Add-on directory</a> right away to find all of your favourite old extensions, plus a bunch of new ones.</p>
 					<p>Of course you will also want to go make sure your application was upgraded properly. Here are a few things you should take a look at:</p>
 					<ul>
 						<li>Public &amp; Private browsing on the Registration Management Form</li>
 						<li>On public forums, make sure that the unauthenticated role has access to all public discussion categories</li>
 					</ul>
 
-					<p>If you find that there was some unforseen problem with the upgrade procedure, visit <a href=\"http://lussumo.com/community/\" target=\"Lussumo\">Lussumo Community Forum</a> for help.</p>
+					<p>If you find that there was some unforseen problem with the upgrade procedure, visit <a href=\"http://www.vanilla1forums.com/community/\" target=\"Lussumo\">Lussumo Community Forum</a> for help.</p>
 					<div class=\"ButtonContainer\"><a href=\"../people.php\" class=\"Button\">Go sign in and have some fun!</a></div>";
 				}
 				?>
