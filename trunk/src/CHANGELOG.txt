@@ -1,6 +1,6 @@
 Version:        1.3.0
 Date:           2012-02-17
-Changes:        https://code.google.com/p/lussumo-vanilla/source/list?num=78&start=1096
+Changes:        https://code.google.com/p/lussumo-vanilla/source/list?num=82&start=1100
 Summary:        - Update checker works (#44)
                 - Added invisible protection against spambot registration
                 - "Top of Page" and "Back to Discussions" links stick to the bottom when the main menu isn't on-screen anymore
