@@ -617,6 +617,7 @@ html>body#CommentsPage .ContentInfo h1 {
 	margin:0;
 	padding:10px 0;
 	border-bottom:1px solid #ccc;
+	word-wrap:break-word;
 }
 #Comments li.Hidden {
 	background: url('hidden-tile.gif') top left repeat-x #fafafa;
