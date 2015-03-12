@@ -1,10 +1,13 @@
-The last development version is available at http://lussumo-vanilla.googlecode.com/svn/trunk/.
+Vanilla 1 Development Has Ended
+===============================
 
-The content of the "src" folder can be used for testing and development.
+Please use the [Vanilla Porter](http://vanillaforums.org/addon/porter-core) to upgrade to [Vanilla 2](http://vanillaforums.org/addon/vanilla-core). See the [upgrade instructions](https://github.com/vanilla/vanilla#migrating-to-vanilla) for more information. 
+
+Vanilla 1 is no longer vetted for security issues or otherwise maintained in any way. This repository is for historical reference only.
 
 
-Building Vanilla
-================
+Building Vanilla 1
+==================
 
 For production, you probably will want to build Vanilla;
 the build process will compress js and css files and produce a zip archive.
